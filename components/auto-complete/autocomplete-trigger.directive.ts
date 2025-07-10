@@ -31,18 +31,18 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { delay, filter, tap } from 'rxjs/operators';
 
-import { NzSafeAny, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
-import { NzInputGroupWhitSuffixOrPrefixDirective } from 'ng-zorro-antd/input';
+import { TriSafeAny, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
+import { TriInputGroupWhitSuffixOrPrefixDirective } from 'ng-zorro-antd/input';
 
-import { NzAutocompleteOptionComponent } from './autocomplete-option.component';
-import { NzAutocompleteComponent } from './autocomplete.component';
+import { TriAutocompleteOptionComponent } from './autocomplete-option.component';
+import { TriAutocompleteComponent } from './autocomplete.component';
 
 /**
  * @deprecated Internally used, will be removed in v21, please do not use it.
  */
 export const NZ_AUTOCOMPLETE_VALUE_ACCESSOR: ExistingProvider = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => NzAutocompleteTriggerDirective),
+  useExisting: forwardRef(() => TriAutocompleteTriggerDirective),
   multi: true
 };
 
@@ -59,7 +59,7 @@ export function getNzAutocompleteMissingPanelError(): Error {
 
 @Directive({
   selector: `input[nzAutocomplete], textarea[nzAutocomplete]`,
-  exportAs: 'nzAutocompleteTrigger',
+  exportAs: 'triAutocompleteTrigger',
   providers: [NZ_AUTOCOMPLETE_VALUE_ACCESSOR],
   host: {
     autocomplete: 'off',
@@ -71,23 +71,23 @@ export function getNzAutocompleteMissingPanelError(): Error {
     '(click)': 'handleClick()'
   }
 })
-export class NzAutocompleteTriggerDirective implements AfterViewInit, ControlValueAccessor {
+export class TriAutocompleteTriggerDirective implements AfterViewInit, ControlValueAccessor {
   private ngZone = inject(NgZone);
   private elementRef = inject(ElementRef<HTMLElement>);
   private overlay = inject(Overlay);
   private viewContainerRef = inject(ViewContainerRef);
   private destroyRef = inject(DestroyRef);
   /** Bind nzAutocomplete component */
-  @Input() nzAutocomplete!: NzAutocompleteComponent;
+  @Input() autocomplete!: TriAutocompleteComponent;
 
   onChange: OnChangeType = () => {};
   onTouched: OnTouchedType = () => {};
   panelOpen: boolean = false;
 
   /** Current active option */
-  get activeOption(): NzAutocompleteOptionComponent | null {
-    if (this.nzAutocomplete && this.nzAutocomplete.options.length) {
-      return this.nzAutocomplete.activeItem;
+  get activeOption(): TriAutocompleteOptionComponent | null {
+    if (this.autocomplete && this.autocomplete.options.length) {
+      return this.autocomplete.activeItem;
     } else {
       return null;
     }
@@ -101,7 +101,7 @@ export class NzAutocompleteTriggerDirective implements AfterViewInit, ControlVal
   private optionsChangeSubscription!: Subscription;
   private overlayOutsideClickSubscription!: Subscription;
   private document: Document = inject(DOCUMENT);
-  private nzInputGroupWhitSuffixOrPrefixDirective = inject(NzInputGroupWhitSuffixOrPrefixDirective, { optional: true });
+  private inputGroupWhitSuffixOrPrefixDirective = inject(TriInputGroupWhitSuffixOrPrefixDirective, { optional: true });
 
   constructor() {
     this.destroyRef.onDestroy(() => {
@@ -110,8 +110,8 @@ export class NzAutocompleteTriggerDirective implements AfterViewInit, ControlVal
   }
 
   ngAfterViewInit(): void {
-    if (this.nzAutocomplete) {
-      this.nzAutocomplete.animationStateChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(event => {
+    if (this.autocomplete) {
+      this.autocomplete.animationStateChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(event => {
         if (event.toState === 'void') {
           if (this.overlayRef) {
             this.overlayRef.dispose();
@@ -122,7 +122,7 @@ export class NzAutocompleteTriggerDirective implements AfterViewInit, ControlVal
     }
   }
 
-  writeValue(value: NzSafeAny): void {
+  writeValue(value: TriSafeAny): void {
     this.ngZone.runOutsideAngular(() => {
       Promise.resolve(null).then(() => this.setTriggerValue(value));
     });
@@ -150,7 +150,7 @@ export class NzAutocompleteTriggerDirective implements AfterViewInit, ControlVal
 
   closePanel(): void {
     if (this.panelOpen) {
-      this.nzAutocomplete.isOpen = this.panelOpen = false;
+      this.autocomplete.isOpen = this.panelOpen = false;
 
       if (this.overlayRef && this.overlayRef.hasAttached()) {
         this.overlayRef.detach();
@@ -177,7 +177,7 @@ export class NzAutocompleteTriggerDirective implements AfterViewInit, ControlVal
       }
       this.closePanel();
     } else if (this.panelOpen && keyCode === ENTER) {
-      if (this.nzAutocomplete.showPanel) {
+      if (this.autocomplete.showPanel) {
         event.preventDefault();
         if (this.activeOption) {
           this.activeOption.selectViaInteraction();
@@ -185,13 +185,13 @@ export class NzAutocompleteTriggerDirective implements AfterViewInit, ControlVal
           this.closePanel();
         }
       }
-    } else if (this.panelOpen && isArrowKey && this.nzAutocomplete.showPanel) {
+    } else if (this.panelOpen && isArrowKey && this.autocomplete.showPanel) {
       event.stopPropagation();
       event.preventDefault();
       if (keyCode === UP_ARROW) {
-        this.nzAutocomplete.setPreviousItemActive();
+        this.autocomplete.setPreviousItemActive();
       } else {
-        this.nzAutocomplete.setNextItemActive();
+        this.autocomplete.setNextItemActive();
       }
       if (this.activeOption) {
         this.activeOption.scrollIntoViewIfNeeded();
@@ -238,7 +238,7 @@ export class NzAutocompleteTriggerDirective implements AfterViewInit, ControlVal
    * Subscription data source changes event
    */
   private subscribeOptionsChange(): Subscription {
-    const optionChanges = this.nzAutocomplete.options.changes.pipe(
+    const optionChanges = this.autocomplete.options.changes.pipe(
       tap(() => this.positionStrategy.reapplyLastPosition()),
       delay(0)
     );
@@ -254,7 +254,7 @@ export class NzAutocompleteTriggerDirective implements AfterViewInit, ControlVal
    * Subscription option changes event and set the value
    */
   private subscribeSelectionChange(): Subscription {
-    return this.nzAutocomplete.selectionChange.subscribe((option: NzAutocompleteOptionComponent) => {
+    return this.autocomplete.selectionChange.subscribe((option: TriAutocompleteOptionComponent) => {
       this.setValueAndClose(option);
     });
   }
@@ -268,12 +268,12 @@ export class NzAutocompleteTriggerDirective implements AfterViewInit, ControlVal
   }
 
   private attachOverlay(): void {
-    if (!this.nzAutocomplete) {
+    if (!this.autocomplete) {
       throw getNzAutocompleteMissingPanelError();
     }
 
-    if (!this.portal && this.nzAutocomplete.template) {
-      this.portal = new TemplatePortal(this.nzAutocomplete.template, this.viewContainerRef);
+    if (!this.portal && this.autocomplete.template) {
+      this.portal = new TemplatePortal(this.autocomplete.template, this.viewContainerRef);
     }
 
     if (!this.overlayRef) {
@@ -292,14 +292,14 @@ export class NzAutocompleteTriggerDirective implements AfterViewInit, ControlVal
           this.closePanel();
         });
     }
-    this.nzAutocomplete.isOpen = this.panelOpen = true;
+    this.autocomplete.isOpen = this.panelOpen = true;
   }
 
   private updateStatus(): void {
     if (this.overlayRef) {
-      this.overlayRef.updateSize({ width: this.nzAutocomplete.nzWidth || this.getHostWidth() });
+      this.overlayRef.updateSize({ width: this.autocomplete.width || this.getHostWidth() });
     }
-    this.nzAutocomplete.setVisibility();
+    this.autocomplete.setVisibility();
     this.resetActiveItem();
     if (this.activeOption) {
       this.activeOption.scrollIntoViewIfNeeded();
@@ -318,12 +318,12 @@ export class NzAutocompleteTriggerDirective implements AfterViewInit, ControlVal
       disposeOnNavigation: true,
       scrollStrategy: this.overlay.scrollStrategies.reposition(),
       // default host element width
-      width: this.nzAutocomplete.nzWidth || this.getHostWidth()
+      width: this.autocomplete.width || this.getHostWidth()
     });
   }
 
   private getConnectedElement(): ElementRef {
-    return this.nzInputGroupWhitSuffixOrPrefixDirective?.elementRef ?? this.elementRef;
+    return this.inputGroupWhitSuffixOrPrefixDirective?.elementRef ?? this.elementRef;
   }
 
   private getHostWidth(): number {
@@ -346,36 +346,36 @@ export class NzAutocompleteTriggerDirective implements AfterViewInit, ControlVal
   }
 
   private resetActiveItem(): void {
-    const index = this.nzAutocomplete.getOptionIndex(this.previousValue);
-    this.nzAutocomplete.clearSelectedOptions(null, true);
+    const index = this.autocomplete.getOptionIndex(this.previousValue);
+    this.autocomplete.clearSelectedOptions(null, true);
     if (index !== -1) {
-      this.nzAutocomplete.setActiveItem(index);
-      this.nzAutocomplete.activeItem!.select(false);
+      this.autocomplete.setActiveItem(index);
+      this.autocomplete.activeItem!.select(false);
     } else {
-      this.nzAutocomplete.setActiveItem(this.nzAutocomplete.nzDefaultActiveFirstOption ? 0 : -1);
+      this.autocomplete.setActiveItem(this.autocomplete.defaultActiveFirstOption ? 0 : -1);
     }
   }
 
-  private setValueAndClose(option: NzAutocompleteOptionComponent): void {
-    const value = option.nzValue;
+  private setValueAndClose(option: TriAutocompleteOptionComponent): void {
+    const value = option.value;
     this.setTriggerValue(option.getLabel());
     this.onChange(value);
     this.elementRef.nativeElement.focus();
     this.closePanel();
   }
 
-  private setTriggerValue(value: NzSafeAny): void {
-    const option = this.nzAutocomplete.getOption(value);
+  private setTriggerValue(value: TriSafeAny): void {
+    const option = this.autocomplete.getOption(value);
     const displayValue = option ? option.getLabel() : value;
     this.elementRef.nativeElement.value = displayValue != null ? displayValue : '';
-    if (!this.nzAutocomplete.nzBackfill) {
+    if (!this.autocomplete.backfill) {
       this.previousValue = displayValue;
     }
   }
 
   private doBackfill(): void {
-    if (this.nzAutocomplete.nzBackfill && this.nzAutocomplete.activeItem) {
-      this.setTriggerValue(this.nzAutocomplete.activeItem.getLabel());
+    if (this.autocomplete.backfill && this.autocomplete.activeItem) {
+      this.setTriggerValue(this.autocomplete.activeItem.getLabel());
     }
   }
 

@@ -1,27 +1,27 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { TriAutocompleteModule } from 'ng-zorro-antd/auto-complete';
+import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: 'nz-demo-auto-complete-basic',
-  imports: [FormsModule, NzAutocompleteModule, NzInputModule],
+  selector: '',
+  imports: [FormsModule, TriAutocompleteModule, TriInputModule],
   encapsulation: ViewEncapsulation.None,
   template: `
     <div class="example-input">
       <input
         placeholder="input here"
-        nz-input
+        tri-input
         [(ngModel)]="inputValue"
         (input)="onInput($event)"
-        [nzAutocomplete]="auto"
+        [autocomplete]="auto"
       />
-      <nz-autocomplete [nzDataSource]="options" nzBackfill #auto></nz-autocomplete>
+      <tri-autocomplete [dataSource]="options" backfill #auto></tri-autocomplete>
     </div>
   `
 })
-export class NzDemoAutoCompleteBasicComponent {
+export class TriDemoAutoCompleteBasicComponent {
   inputValue?: string;
   options: string[] = [];
 

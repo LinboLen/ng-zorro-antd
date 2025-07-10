@@ -8,7 +8,7 @@ import { ReplaySubject, Subject } from 'rxjs';
 
 import { CandyDate, cloneDate, CompatibleValue, NormalizedMode, normalizeRangeValue } from 'ng-zorro-antd/core/time';
 
-import { CompatibleDate, NzDateMode, RangePartType } from './standard-types';
+import { CompatibleDate, TriDateMode, RangePartType } from './standard-types';
 
 @Injectable()
 export class DatePickerService implements OnDestroy {
@@ -48,7 +48,7 @@ export class DatePickerService implements OnDestroy {
   }
 
   setActiveDate(value: CompatibleValue, hasTimePicker: boolean = false, mode: NormalizedMode = 'month'): void {
-    const parentPanels: Partial<Record<NzDateMode, NormalizedMode>> = {
+    const parentPanels: Partial<Record<TriDateMode, NormalizedMode>> = {
       date: 'month',
       month: 'year',
       quarter: 'year',

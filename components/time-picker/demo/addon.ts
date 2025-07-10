@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
 
 @Component({
-  selector: 'nz-demo-time-picker-addon',
-  imports: [FormsModule, NzButtonModule, NzTimePickerModule],
+  selector: '',
+  imports: [FormsModule, TriButtonModule, TriTimePickerModule],
   template: `
-    <nz-time-picker [(ngModel)]="time" [nzAddOn]="addOnTemplate" #timePicker></nz-time-picker>
+    <tri-time-picker [(ngModel)]="time" [addOn]="addOnTemplate" #timePicker></tri-time-picker>
     <ng-template #addOnTemplate>
-      <button nz-button nzSize="small" nzType="primary" (click)="timePicker.close()">Ok</button>
+      <button tri-button size="small" type="primary" (click)="timePicker.close()">Ok</button>
     </ng-template>
   `
 })
-export class NzDemoTimePickerAddonComponent {
+export class TriDemoTimePickerAddonComponent {
   time: Date | null = null;
 }

@@ -10,12 +10,12 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { dispatchMouseEvent } from 'ng-zorro-antd/core/testing';
 
-import { NzPopoverDirective } from './popover';
-import { NzPopoverModule } from './popover.module';
+import { TriPopoverDirective } from './popover';
+import { TriPopoverModule } from './popover.module';
 
 describe('NzPopover', () => {
-  let fixture: ComponentFixture<NzPopoverTestComponent>;
-  let component: NzPopoverTestComponent;
+  let fixture: ComponentFixture<TriPopoverTestComponent>;
+  let component: TriPopoverTestComponent;
   let overlayContainer: OverlayContainer;
   let overlayContainerElement: HTMLElement;
 
@@ -23,7 +23,7 @@ describe('NzPopover', () => {
     TestBed.configureTestingModule({
       providers: [provideNoopAnimations()]
     });
-    fixture = TestBed.createComponent(NzPopoverTestComponent);
+    fixture = TestBed.createComponent(TriPopoverTestComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
@@ -158,36 +158,36 @@ describe('NzPopover', () => {
 });
 
 @Component({
-  imports: [NzPopoverModule],
+  imports: [TriPopoverModule],
   template: `
     <a
       #stringPopover
-      nz-popover
-      nzPopoverTitle="title-string"
-      nzPopoverContent="content-string"
-      [nzPopoverOverlayClassName]="class"
+      tri-popover
+      popoverTitle="title-string"
+      popoverContent="content-string"
+      [popoverOverlayClassName]="class"
       >Show</a
     >
 
-    <a #templatePopover nz-popover [nzPopoverTitle]="templateTitle" [nzPopoverContent]="templateContent">Show</a>
+    <a #templatePopover tri-popover [popoverTitle]="templateTitle" [popoverContent]="templateContent">Show</a>
 
-    <a #changePopover nz-popover nzPopoverTitle="title-change" [nzPopoverContent]="content"></a>
+    <a #changePopover tri-popover popoverTitle="title-change" [popoverContent]="content"></a>
 
     <a
       #backdropPopover
-      nz-popover
-      nzPopoverContent="content-string"
-      nzPopoverTrigger="click"
-      [nzPopoverBackdrop]="true"
+      tri-popover
+      popoverContent="content-string"
+      popoverTrigger="click"
+      [popoverBackdrop]="true"
     ></a>
 
     <a
       #hideTemplate
-      nz-popover
-      nzPopoverContent="content-string"
-      nzPopoverTrigger="click"
-      [nzPopoverBackdrop]="true"
-      [nzPopoverOverlayClickable]="false"
+      tri-popover
+      popoverContent="content-string"
+      popoverTrigger="click"
+      [popoverBackdrop]="true"
+      [popoverOverlayClickable]="false"
     >
     </a>
 
@@ -197,39 +197,39 @@ describe('NzPopover', () => {
 
     <a
       #contextPopover
-      nz-popover
-      [nzPopoverTitle]="templateTitleContext"
-      [nzPopoverContent]="templateContentContext"
-      [nzPopoverTitleContext]="'titleContextTest'"
-      [nzPopoverContentContext]="'contentContextTest'"
+      tri-popover
+      [popoverTitle]="templateTitleContext"
+      [popoverContent]="templateContentContext"
+      [popoverTitleContext]="'titleContextTest'"
+      [popoverContentContext]="'contentContextTest'"
     >
     </a>
     <ng-template #templateTitleContext let-item>{{ item }}</ng-template>
     <ng-template #templateContentContext let-item>{{ item }}</ng-template>
   `
 })
-export class NzPopoverTestComponent {
+export class TriPopoverTestComponent {
   @ViewChild('stringPopover', { static: false }) stringPopover!: ElementRef;
-  @ViewChild('stringPopover', { static: false, read: NzPopoverDirective })
-  stringPopoverNzPopoverDirective!: NzPopoverDirective;
+  @ViewChild('stringPopover', { static: false, read: TriPopoverDirective })
+  stringPopoverNzPopoverDirective!: TriPopoverDirective;
 
   @ViewChild('templatePopover', { static: false }) templatePopover!: ElementRef;
-  @ViewChild('templatePopover', { static: false, read: NzPopoverDirective })
-  templatePopoverNzPopoverDirective!: NzPopoverDirective;
+  @ViewChild('templatePopover', { static: false, read: TriPopoverDirective })
+  templatePopoverNzPopoverDirective!: TriPopoverDirective;
 
   @ViewChild('changePopover', { static: true }) changePopover!: ElementRef;
-  @ViewChild('changePopover', { static: true, read: NzPopoverDirective })
-  changePopoverNzPopoverDirective!: NzPopoverDirective;
+  @ViewChild('changePopover', { static: true, read: TriPopoverDirective })
+  changePopoverNzPopoverDirective!: TriPopoverDirective;
 
   @ViewChild('hideTemplate', { static: false }) hideTemplate!: ElementRef;
-  @ViewChild('hideTemplate', { static: false, read: NzPopoverDirective })
-  hideTemplateDirective!: NzPopoverDirective;
+  @ViewChild('hideTemplate', { static: false, read: TriPopoverDirective })
+  hideTemplateDirective!: TriPopoverDirective;
 
   @ViewChild('backdropPopover', { static: true }) backdropPopover!: ElementRef;
 
   @ViewChild('contextPopover', { static: false }) contextPopover!: ElementRef;
-  @ViewChild('contextPopover', { static: false, read: NzPopoverDirective })
-  contextPopoverNzPopoverDirective!: NzPopoverDirective;
+  @ViewChild('contextPopover', { static: false, read: TriPopoverDirective })
+  contextPopoverNzPopoverDirective!: TriPopoverDirective;
 
   content = 'content';
   visible = false;

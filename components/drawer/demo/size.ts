@@ -1,39 +1,39 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDrawerModule } from 'ng-zorro-antd/drawer';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriDrawerModule } from 'ng-zorro-antd/drawer';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: 'nz-demo-drawer-size',
-  imports: [NzButtonModule, NzDrawerModule, NzSpaceModule],
+  selector: '',
+  imports: [TriButtonModule, TriDrawerModule, TriSpaceModule],
   template: `
-    <nz-space>
-      <button *nzSpaceItem nz-button nzType="primary" (click)="showDefault()">Open Default Size (378px)</button>
-      <button *nzSpaceItem nz-button nzType="primary" (click)="showLarge()">Open Large Size (736px)</button>
-    </nz-space>
-    <nz-drawer
-      [nzSize]="size"
-      [nzVisible]="visible"
-      nzPlacement="right"
-      [nzTitle]="title"
-      [nzExtra]="extra"
-      (nzOnClose)="close()"
+    <tri-space>
+      <button *spaceItem tri-button type="primary" (click)="showDefault()">Open Default Size (378px)</button>
+      <button *spaceItem tri-button type="primary" (click)="showLarge()">Open Large Size (736px)</button>
+    </tri-space>
+    <tri-drawer
+      [size]="size"
+      [visible]="visible"
+      placement="right"
+      [title]="title"
+      [extra]="extra"
+      (onClose)="close()"
     >
-      <ng-container *nzDrawerContent>
+      <ng-container *drawerContent>
         <p>Some contents...</p>
         <p>Some contents...</p>
         <p>Some contents...</p>
       </ng-container>
-    </nz-drawer>
+    </tri-drawer>
     <ng-template #extra>
-      <button nz-button nzType="default" (click)="close()">Cancel</button>
+      <button tri-button type="default" (click)="close()">Cancel</button>
       &nbsp;
-      <button nz-button nzType="primary" (click)="close()">OK</button>
+      <button tri-button type="primary" (click)="close()">OK</button>
     </ng-template>
   `
 })
-export class NzDemoDrawerSizeComponent {
+export class TriDemoDrawerSizeComponent {
   visible = false;
   size: 'large' | 'default' = 'default';
 

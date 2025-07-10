@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzCodeEditorComponent } from './code-editor.component';
+import { TriCodeEditorComponent } from './code-editor.component';
 
 @NgModule({
-  imports: [NzCodeEditorComponent],
-  exports: [NzCodeEditorComponent]
+  imports: [TriCodeEditorComponent],
+  exports: [TriCodeEditorComponent]
 })
-export class NzCodeEditorModule {}
+export class TriCodeEditorModule {}

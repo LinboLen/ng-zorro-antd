@@ -5,30 +5,30 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzAutosizeDirective } from './autosize.directive';
-import { NzInputGroupSlotComponent } from './input-group-slot.component';
-import { NzInputGroupComponent, NzInputGroupWhitSuffixOrPrefixDirective } from './input-group.component';
-import { NzInputOtpComponent } from './input-otp.component';
-import { NzInputDirective } from './input.directive';
-import { NzTextareaCountComponent } from './textarea-count.component';
+import { TriAutosizeDirective } from './autosize.directive';
+import { TriInputGroupSlotComponent } from './input-group-slot.component';
+import { TriInputGroupComponent, TriInputGroupWhitSuffixOrPrefixDirective } from './input-group.component';
+import { TriInputOtpComponent } from './input-otp.component';
+import { TriInputDirective } from './input.directive';
+import { TriTextareaCountComponent } from './textarea-count.component';
 
 @NgModule({
   imports: [
-    NzTextareaCountComponent,
-    NzInputDirective,
-    NzInputGroupComponent,
-    NzAutosizeDirective,
-    NzInputGroupSlotComponent,
-    NzInputGroupWhitSuffixOrPrefixDirective,
-    NzInputOtpComponent
+    TriTextareaCountComponent,
+    TriInputDirective,
+    TriInputGroupComponent,
+    TriAutosizeDirective,
+    TriInputGroupSlotComponent,
+    TriInputGroupWhitSuffixOrPrefixDirective,
+    TriInputOtpComponent
   ],
   exports: [
-    NzTextareaCountComponent,
-    NzInputDirective,
-    NzInputGroupComponent,
-    NzAutosizeDirective,
-    NzInputGroupWhitSuffixOrPrefixDirective,
-    NzInputOtpComponent
+    TriTextareaCountComponent,
+    TriInputDirective,
+    TriInputGroupComponent,
+    TriAutosizeDirective,
+    TriInputGroupWhitSuffixOrPrefixDirective,
+    TriInputOtpComponent
   ]
 })
-export class NzInputModule {}
+export class TriInputModule {}

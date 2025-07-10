@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriEmptyModule } from 'ng-zorro-antd/empty';
 
 @Component({
-  selector: 'nz-demo-empty-customize',
-  imports: [NzButtonModule, NzEmptyModule],
+  selector: '',
+  imports: [TriButtonModule, TriEmptyModule],
   template: `
-    <nz-empty
-      nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-      [nzNotFoundContent]="contentTpl"
-      [nzNotFoundFooter]="footerTpl"
+    <tri-empty
+      notFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+      [notFoundContent]="contentTpl"
+      [notFoundFooter]="footerTpl"
     >
       <ng-template #contentTpl>
         <span>
@@ -19,12 +19,12 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
         </span>
       </ng-template>
       <ng-template #footerTpl>
-        <button nz-button nzType="primary" (click)="onClick()">Create Now</button>
+        <button tri-button type="primary" (click)="onClick()">Create Now</button>
       </ng-template>
-    </nz-empty>
+    </tri-empty>
   `
 })
-export class NzDemoEmptyCustomizeComponent {
+export class TriDemoEmptyCustomizeComponent {
   onClick(): void {
     console.log('clicked');
   }

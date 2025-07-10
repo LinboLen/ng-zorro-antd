@@ -1,30 +1,30 @@
 import { Component } from '@angular/core';
 
-import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-demo-breadcrumb-separator',
-  imports: [NzBreadCrumbModule, NzIconModule],
+  selector: '',
+  imports: [TriBreadCrumbModule, TriIconModule],
   template: `
     <h4>String</h4>
-    <nz-breadcrumb nzSeparator=">">
-      <nz-breadcrumb-item>Home</nz-breadcrumb-item>
-      <nz-breadcrumb-item>
+    <tri-breadcrumb separator=">">
+      <tri-breadcrumb-item>Home</tri-breadcrumb-item>
+      <tri-breadcrumb-item>
         <a>Application List</a>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item>An Application</nz-breadcrumb-item>
-    </nz-breadcrumb>
+      </tri-breadcrumb-item>
+      <tri-breadcrumb-item>An Application</tri-breadcrumb-item>
+    </tri-breadcrumb>
     <br />
     <h4>TemplateRef</h4>
-    <nz-breadcrumb [nzSeparator]="iconTemplate">
-      <nz-breadcrumb-item>Home</nz-breadcrumb-item>
-      <nz-breadcrumb-item>
+    <tri-breadcrumb [separator]="iconTemplate">
+      <tri-breadcrumb-item>Home</tri-breadcrumb-item>
+      <tri-breadcrumb-item>
         <a>Application List</a>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item>An Application</nz-breadcrumb-item>
-    </nz-breadcrumb>
-    <ng-template #iconTemplate><nz-icon nzType="arrow-right" /></ng-template>
+      </tri-breadcrumb-item>
+      <tri-breadcrumb-item>An Application</tri-breadcrumb-item>
+    </tri-breadcrumb>
+    <ng-template #iconTemplate><tri-icon type="arrow-right" /></ng-template>
   `,
   styles: [
     `
@@ -41,4 +41,4 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     `
   ]
 })
-export class NzDemoBreadcrumbSeparatorComponent {}
+export class TriDemoBreadcrumbSeparatorComponent {}

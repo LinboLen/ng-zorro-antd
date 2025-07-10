@@ -1,24 +1,24 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: 'nz-demo-radio-radiogroup-more',
-  imports: [FormsModule, NzInputModule, NzRadioModule],
+  selector: '',
+  imports: [FormsModule, TriInputModule, TriRadioModule],
   template: `
-    <nz-radio-group [(ngModel)]="radioValue">
-      <label nz-radio nzValue="A">Option A</label>
-      <label nz-radio nzValue="B">Option B</label>
-      <label nz-radio nzValue="C">Option C</label>
-      <label nz-radio nzValue="M">
+    <tri-radio-group [(ngModel)]="radioValue">
+      <label tri-radio value="A">Option A</label>
+      <label tri-radio value="B">Option B</label>
+      <label tri-radio value="C">Option C</label>
+      <label tri-radio value="M">
         More...
         @if (radioValue === 'M') {
-          <input type="text" nz-input />
+          <input type="text" tri-input />
         }
       </label>
-    </nz-radio-group>
+    </tri-radio-group>
   `,
   styles: [
     `
@@ -35,6 +35,6 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
     `
   ]
 })
-export class NzDemoRadioRadiogroupMoreComponent {
+export class TriDemoRadioRadiogroupMoreComponent {
   radioValue = 'A';
 }

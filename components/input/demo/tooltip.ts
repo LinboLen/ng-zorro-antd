@@ -1,23 +1,23 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
-  selector: 'nz-demo-input-tooltip',
-  imports: [FormsModule, NzInputModule, NzToolTipModule],
+  selector: '',
+  imports: [FormsModule, TriInputModule, TriToolTipModule],
   template: `
     <input
       #inputElement
       style="width: 120px"
-      nz-input
-      nz-tooltip
-      nzTooltipTrigger="focus"
-      nzTooltipPlacement="topLeft"
-      nzTooltipOverlayClassName="numeric-input"
+      tri-input
+      tri-tooltip
+      tooltipTrigger="focus"
+      tooltipPlacement="topLeft"
+      tooltipOverlayClassName="numeric-input"
       [ngModel]="value"
-      [nzTooltipTitle]="title"
+      [tooltipTitle]="title"
       placeholder="Input a number"
       (ngModelChange)="onChange($event)"
       (blur)="onBlur()"
@@ -36,7 +36,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     `
   ]
 })
-export class NzDemoInputTooltipComponent {
+export class TriDemoInputTooltipComponent {
   value = '';
   title = 'Input a number';
 

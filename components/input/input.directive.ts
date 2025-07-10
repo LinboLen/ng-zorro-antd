@@ -26,49 +26,49 @@ import { NgControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { distinctUntilChanged, filter } from 'rxjs/operators';
 
-import { NzFormItemFeedbackIconComponent, NzFormNoStatusService, NzFormStatusService } from 'ng-zorro-antd/core/form';
-import { NgClassInterface, NzSizeLDSType, NzStatus, NzValidateStatus, NzVariant } from 'ng-zorro-antd/core/types';
+import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
+import { NgClassInterface, TriSizeLDSType, TriStatus, TriValidateStatus, TriVariant } from 'ng-zorro-antd/core/types';
 import { getStatusClassNames } from 'ng-zorro-antd/core/util';
-import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, NzSpaceCompactItemDirective } from 'ng-zorro-antd/space';
+import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
 @Directive({
-  selector: 'input[nz-input],textarea[nz-input]',
-  exportAs: 'nzInput',
+  selector: '',
+  exportAs: 'triInput',
   host: {
-    class: 'ant-input',
-    '[class.ant-input-disabled]': 'disabled',
-    '[class.ant-input-borderless]': `nzVariant === 'borderless' || (nzVariant === 'outlined' && nzBorderless)`,
-    '[class.ant-input-filled]': `nzVariant === 'filled'`,
-    '[class.ant-input-underlined]': `nzVariant === 'underlined'`,
-    '[class.ant-input-lg]': `finalSize() === 'large'`,
-    '[class.ant-input-sm]': `finalSize() === 'small'`,
+    class: 'tri-input',
+    '[class.tri-input-disabled]': 'disabled',
+    '[class.tri-input-borderless]': `variant === 'borderless' || (variant === 'outlined' && borderless)`,
+    '[class.tri-input-filled]': `variant === 'filled'`,
+    '[class.tri-input-underlined]': `variant === 'underlined'`,
+    '[class.tri-input-lg]': `finalSize() === 'large'`,
+    '[class.tri-input-sm]': `finalSize() === 'small'`,
     '[attr.disabled]': 'disabled || null',
-    '[class.ant-input-rtl]': `dir=== 'rtl'`,
-    '[class.ant-input-stepperless]': `nzStepperless`,
-    '[class.ant-input-focused]': 'focused()'
+    '[class.tri-input-rtl]': `dir=== 'rtl'`,
+    '[class.tri-input-stepperless]': `stepperless`,
+    '[class.tri-input-focused]': 'focused()'
   },
-  hostDirectives: [NzSpaceCompactItemDirective],
+  hostDirectives: [TriSpaceCompactItemDirective],
   providers: [{ provide: NZ_SPACE_COMPACT_ITEM_TYPE, useValue: 'input' }]
 })
-export class NzInputDirective implements OnChanges, OnInit {
+export class TriInputDirective implements OnChanges, OnInit {
   private renderer = inject(Renderer2);
   private elementRef = inject(ElementRef);
   protected hostView = inject(ViewContainerRef);
   private directionality = inject(Directionality);
   private compactSize = inject(NZ_SPACE_COMPACT_SIZE, { optional: true });
   private destroyRef = inject(DestroyRef);
-  private nzFormStatusService = inject(NzFormStatusService, { optional: true });
-  private nzFormNoStatusService = inject(NzFormNoStatusService, { optional: true });
+  private formStatusService = inject(TriFormStatusService, { optional: true });
+  private formNoStatusService = inject(TriFormNoStatusService, { optional: true });
   private focusMonitor = inject(FocusMonitor);
 
   /**
    * @deprecated Will be removed in v21. It is recommended to use `nzVariant` instead.
    */
-  @Input({ transform: booleanAttribute }) nzBorderless = false;
-  @Input() nzVariant: NzVariant = 'outlined';
-  @Input() nzSize: NzSizeLDSType = 'default';
-  @Input({ transform: booleanAttribute }) nzStepperless: boolean = true;
-  @Input() nzStatus: NzStatus = '';
+  @Input({ transform: booleanAttribute }) borderless = false;
+  @Input() variant: TriVariant = 'outlined';
+  @Input() size: TriSizeLDSType = 'default';
+  @Input({ transform: booleanAttribute }) stepperless: boolean = true;
+  @Input() status: TriStatus = '';
   @Input({ transform: booleanAttribute })
   get disabled(): boolean {
     if (this.ngControl && this.ngControl.disabled !== null) {
@@ -85,11 +85,11 @@ export class NzInputDirective implements OnChanges, OnInit {
   dir: Direction = 'ltr';
   // status
   prefixCls: string = 'ant-input';
-  status: NzValidateStatus = '';
+  _status: TriValidateStatus = '';
   statusCls: NgClassInterface = {};
   hasFeedback: boolean = false;
-  feedbackRef: ComponentRef<NzFormItemFeedbackIconComponent> | null = null;
-  components: Array<ComponentRef<NzFormItemFeedbackIconComponent>> = [];
+  feedbackRef: ComponentRef<TriFormItemFeedbackIconComponent> | null = null;
+  components: Array<ComponentRef<TriFormItemFeedbackIconComponent>> = [];
   ngControl = inject(NgControl, { self: true, optional: true });
 
   protected focused = signal<boolean>(false);
@@ -97,10 +97,10 @@ export class NzInputDirective implements OnChanges, OnInit {
     if (this.compactSize) {
       return this.compactSize();
     }
-    return this.size();
+    return this.#size();
   });
 
-  private size = signal<NzSizeLDSType>(this.nzSize);
+  #size = signal<TriSizeLDSType>(this.size);
 
   constructor() {
     this.destroyRef.onDestroy(() => {
@@ -109,7 +109,7 @@ export class NzInputDirective implements OnChanges, OnInit {
   }
 
   ngOnInit(): void {
-    this.nzFormStatusService?.formStatusChanges
+    this.formStatusService?.formStatusChanges
       .pipe(
         distinctUntilChanged((pre, cur) => {
           return pre.status === cur.status && pre.hasFeedback === cur.hasFeedback;
@@ -147,16 +147,16 @@ export class NzInputDirective implements OnChanges, OnInit {
       this.disabled$.next(this.disabled);
     }
     if (nzStatus) {
-      this.setStatusStyles(this.nzStatus, this.hasFeedback);
+      this.setStatusStyles(this.status, this.hasFeedback);
     }
     if (nzSize) {
-      this.size.set(nzSize.currentValue);
+      this.#size.set(nzSize.currentValue);
     }
   }
 
-  private setStatusStyles(status: NzValidateStatus, hasFeedback: boolean): void {
+  private setStatusStyles(status: TriValidateStatus, hasFeedback: boolean): void {
     // set inner status
-    this.status = status;
+    this._status = status;
     this.hasFeedback = hasFeedback;
     this.renderFeedbackIcon();
     // render status if nzStatus is set
@@ -171,16 +171,16 @@ export class NzInputDirective implements OnChanges, OnInit {
   }
 
   private renderFeedbackIcon(): void {
-    if (!this.status || !this.hasFeedback || !!this.nzFormNoStatusService) {
+    if (!this._status || !this.hasFeedback || !!this.formNoStatusService) {
       // remove feedback
       this.hostView.clear();
       this.feedbackRef = null;
       return;
     }
 
-    this.feedbackRef = this.feedbackRef || this.hostView.createComponent(NzFormItemFeedbackIconComponent);
+    this.feedbackRef = this.feedbackRef || this.hostView.createComponent(TriFormItemFeedbackIconComponent);
     this.feedbackRef.location.nativeElement.classList.add('ant-input-suffix');
-    this.feedbackRef.instance.status = this.status;
+    this.feedbackRef.instance.status = this._status;
     this.feedbackRef.instance.updateIcon();
   }
 }

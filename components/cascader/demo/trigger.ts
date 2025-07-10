@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzCascaderModule, NzCascaderOption } from 'ng-zorro-antd/cascader';
+import { TriCascaderModule, TriCascaderOption } from 'ng-zorro-antd/cascader';
 
-const options: NzCascaderOption[] = [
+const options: TriCascaderOption[] = [
   {
     value: 'zhejiang',
     label: 'Zhejiang',
@@ -46,23 +46,23 @@ const options: NzCascaderOption[] = [
 ];
 
 @Component({
-  selector: 'nz-demo-cascader-trigger',
-  imports: [FormsModule, NzCascaderModule],
+  selector: '',
+  imports: [FormsModule, TriCascaderModule],
   template: `
     {{ text }}
-    <nz-cascader
-      [nzShowInput]="false"
-      [nzOptions]="nzOptions"
+    <tri-cascader
+      [showInput]="false"
+      [options]="options"
       [(ngModel)]="values"
       (ngModelChange)="onChanges($event)"
-      (nzSelectionChange)="onSelectionChange($event)"
+      (selectionChange)="onSelectionChange($event)"
     >
       <a href="javascript: void(0)">Change city</a>
-    </nz-cascader>
+    </tri-cascader>
   `
 })
-export class NzDemoCascaderTriggerComponent {
-  nzOptions: NzCascaderOption[] = options;
+export class TriDemoCascaderTriggerComponent {
+  options: TriCascaderOption[] = options;
   values: string[] | null = null;
   text = 'Unselect';
 
@@ -70,7 +70,7 @@ export class NzDemoCascaderTriggerComponent {
     console.log(values, this.values);
   }
 
-  onSelectionChange(selectedOptions: NzCascaderOption[]): void {
+  onSelectionChange(selectedOptions: TriCascaderOption[]): void {
     this.text = selectedOptions.map(o => o.label).join(', ');
   }
 }

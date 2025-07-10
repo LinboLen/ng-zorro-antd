@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzDividerComponent } from './divider.component';
+import { TriDividerComponent } from './divider.component';
 
 @NgModule({
-  imports: [NzDividerComponent],
-  exports: [NzDividerComponent]
+  imports: [TriDividerComponent],
+  exports: [TriDividerComponent]
 })
-export class NzDividerModule {}
+export class TriDividerModule {}

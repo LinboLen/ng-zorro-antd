@@ -3,30 +3,30 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export type NzMark = string | NzMarkObj;
+export type TriMark = string | TriMarkObj;
 
-export interface NzMarkObj {
+export interface TriMarkObj {
   style?: object;
   label: string;
 }
 
-export class NzMarks {
-  [key: string]: NzMark;
+export class TriMarks {
+  [key: string]: TriMark;
 }
 
 /**
  * Processed steps that would be passed to sub components.
  */
-export interface NzExtendedMark {
+export interface TriExtendedMark {
   value: number;
   offset: number;
-  config: NzMark;
+  config: TriMark;
 }
 
 /**
  * Marks that would be rendered.
  */
-export interface NzDisplayedMark extends NzExtendedMark {
+export interface TriDisplayedMark extends TriExtendedMark {
   active: boolean;
   label: string;
   style?: object;
@@ -35,16 +35,16 @@ export interface NzDisplayedMark extends NzExtendedMark {
 /**
  * Steps that would be rendered.
  */
-export interface NzDisplayedStep extends NzExtendedMark {
+export interface TriDisplayedStep extends TriExtendedMark {
   active: boolean;
   style?: object;
 }
 
-export type NzSliderShowTooltip = 'always' | 'never' | 'default';
+export type TriSliderShowTooltip = 'always' | 'never' | 'default';
 
-export type NzSliderValue = number[] | number;
+export type TriSliderValue = number[] | number;
 
-export interface NzSliderHandler {
+export interface TriSliderHandler {
   offset: number | null;
   value: number | null;
   active: boolean;

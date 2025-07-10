@@ -17,30 +17,30 @@ import {
   inject
 } from '@angular/core';
 
-import { NzCronExpressionCronErrorI18n } from 'ng-zorro-antd/i18n';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriCronExpressionCronErrorI18n } from 'ng-zorro-antd/i18n';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-cron-expression-preview',
-  exportAs: 'nzCronExpressionPreview',
+  selector: '',
+  exportAs: 'triCronExpressionPreview',
   template: `
-    <div class="ant-collapse ant-collapse-borderless ant-cron-expression-preview">
-      <div class="ant-cron-expression-preview-dateTime" [class.ant-cron-expression-preview-dateTime-center]="!isExpand">
+    <div class="tri-collapse tri-collapse-borderless tri-cron-expression-preview">
+      <div class="tri-cron-expression-preview-dateTime" [class.tri-cron-expression-preview-dateTime-center]="!isExpand">
         @if (visible) {
-          @if (!nzSemantic) {
+          @if (!semantic) {
             {{ TimeList[0] | date: 'yyyy-MM-dd HH:mm:ss' }}
           } @else {
-            <ng-template [ngTemplateOutlet]="nzSemantic" />
+            <ng-template [ngTemplateOutlet]="semantic" />
           }
         } @else {
           {{ locale.cronError }}
         }
       </div>
       @if (visible && !isExpand) {
-        <div class="ant-cron-expression-preview-content">
-          <ul class="ant-cron-expression-preview-list">
+        <div class="tri-cron-expression-preview-content">
+          <ul class="tri-cron-expression-preview-list">
             @for (item of TimeList; track item) {
               <li>
                 {{ item | date: 'yyyy-MM-dd HH:mm:ss' }}
@@ -51,23 +51,23 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
         </div>
       }
 
-      <ul class="ant-cron-expression-preview-icon">
+      <ul class="tri-cron-expression-preview-icon">
         @if (isExpand) {
-          <li><nz-icon nzType="down" nzTheme="outline" (click)="setExpand()" /></li>
+          <li><tri-icon type="down" theme="outline" (click)="setExpand()" /></li>
         } @else {
-          <li><nz-icon nzType="up" nzTheme="outline" (click)="setExpand()" /></li>
+          <li><tri-icon type="up" theme="outline" (click)="setExpand()" /></li>
         }
       </ul>
     </div>
   `,
-  imports: [NgTemplateOutlet, DatePipe, NzIconModule]
+  imports: [NgTemplateOutlet, DatePipe, TriIconModule]
 })
-export class NzCronExpressionPreviewComponent {
+export class TriCronExpressionPreviewComponent {
   private cdr = inject(ChangeDetectorRef);
   @Input() TimeList: Date[] = [];
   @Input({ transform: booleanAttribute }) visible: boolean = true;
-  @Input() locale!: NzCronExpressionCronErrorI18n;
-  @Input() nzSemantic: TemplateRef<void> | null = null;
+  @Input() locale!: TriCronExpressionCronErrorI18n;
+  @Input() semantic: TemplateRef<void> | null = null;
   @Output() readonly loadMorePreview = new EventEmitter<void>();
 
   isExpand: boolean = true;

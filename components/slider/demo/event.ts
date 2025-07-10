@@ -1,27 +1,27 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzSliderModule } from 'ng-zorro-antd/slider';
+import { TriSliderModule } from 'ng-zorro-antd/slider';
 
 @Component({
-  selector: 'nz-demo-slider-event',
-  imports: [FormsModule, NzSliderModule],
+  selector: '',
+  imports: [FormsModule, TriSliderModule],
   template: `
-    <nz-slider
+    <tri-slider
       [(ngModel)]="singleValue"
       (ngModelChange)="onChange($event)"
-      (nzOnAfterChange)="onAfterChange($event)"
-    ></nz-slider>
-    <nz-slider
-      nzRange
-      [nzStep]="10"
+      (onAfterChange)="onAfterChange($event)"
+    ></tri-slider>
+    <tri-slider
+      range
+      [step]="10"
       [(ngModel)]="rangeValue"
       (ngModelChange)="onChange($event)"
-      (nzOnAfterChange)="onAfterChange($event)"
-    ></nz-slider>
+      (onAfterChange)="onAfterChange($event)"
+    ></tri-slider>
   `
 })
-export class NzDemoSliderEventComponent {
+export class TriDemoSliderEventComponent {
   singleValue = 30;
   rangeValue = [20, 50];
 

@@ -23,14 +23,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzProgressModule } from 'ng-zorro-antd/progress';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriProgressModule } from 'ng-zorro-antd/progress';
+import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
 
-import { NzIconRenderTemplate, NzShowUploadList, NzUploadFile, NzUploadListType } from './interface';
+import { TriIconRenderTemplate, TriShowUploadList, TriUploadFile, TriUploadListType } from './interface';
 
 const isImageFileType = (type: string): boolean => !!type && type.indexOf('image/') === 0;
 
@@ -38,7 +38,7 @@ const MEASURE_SIZE = 200;
 
 type UploadListIconType = '' | 'uploading' | 'thumbnail';
 
-interface UploadListFile extends NzUploadFile {
+interface UploadListFile extends TriUploadFile {
   isImageUrl?: boolean;
   isUploading?: boolean;
   iconType?: UploadListIconType;
@@ -46,8 +46,8 @@ interface UploadListFile extends NzUploadFile {
 }
 
 @Component({
-  selector: 'nz-upload-list',
-  exportAs: 'nzUploadList',
+  selector: '',
+  exportAs: 'triUploadList',
   templateUrl: './upload-list.component.html',
   animations: [
     trigger('itemState', [
@@ -59,36 +59,36 @@ interface UploadListFile extends NzUploadFile {
     ])
   ],
   host: {
-    class: 'ant-upload-list',
-    '[class.ant-upload-list-rtl]': `dir === 'rtl'`,
-    '[class.ant-upload-list-text]': `listType === 'text'`,
-    '[class.ant-upload-list-picture]': `listType === 'picture'`,
-    '[class.ant-upload-list-picture-card]': `listType === 'picture-card'`
+    class: 'tri-upload-list',
+    '[class.tri-upload-list-rtl]': `dir === 'rtl'`,
+    '[class.tri-upload-list-text]': `listType === 'text'`,
+    '[class.tri-upload-list-picture]': `listType === 'picture'`,
+    '[class.tri-upload-list-picture-card]': `listType === 'picture-card'`
   },
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NzToolTipModule, NgTemplateOutlet, NzIconModule, NzButtonModule, NzProgressModule]
+  imports: [TriToolTipModule, NgTemplateOutlet, TriIconModule, TriButtonModule, TriProgressModule]
 })
-export class NzUploadListComponent implements OnChanges {
+export class TriUploadListComponent implements OnChanges {
   list: UploadListFile[] = [];
 
   private get showPic(): boolean {
     return this.listType === 'picture' || this.listType === 'picture-card';
   }
 
-  @Input() locale: NzSafeAny = {};
-  @Input() listType!: NzUploadListType;
+  @Input() locale: TriSafeAny = {};
+  @Input() listType!: TriUploadListType;
   @Input()
-  set items(list: NzUploadFile[]) {
+  set items(list: TriUploadFile[]) {
     this.list = list;
   }
-  @Input() icons!: NzShowUploadList;
-  @Input() onPreview?: (file: NzUploadFile) => void;
-  @Input() onRemove!: (file: NzUploadFile) => void;
-  @Input() onDownload?: (file: NzUploadFile) => void;
-  @Input() previewFile?: (file: NzUploadFile) => Observable<string>;
-  @Input() previewIsImage?: (file: NzUploadFile) => boolean;
-  @Input() iconRender: NzIconRenderTemplate | null = null;
+  @Input() icons!: TriShowUploadList;
+  @Input() onPreview?: (file: TriUploadFile) => void;
+  @Input() onRemove!: (file: TriUploadFile) => void;
+  @Input() onDownload?: (file: TriUploadFile) => void;
+  @Input() previewFile?: (file: TriUploadFile) => Observable<string>;
+  @Input() previewIsImage?: (file: TriUploadFile) => boolean;
+  @Input() iconRender: TriIconRenderTemplate | null = null;
   @Input() dir: Direction = 'ltr';
 
   private document: Document = inject(DOCUMENT);
@@ -97,7 +97,7 @@ export class NzUploadListComponent implements OnChanges {
   private cdr = inject(ChangeDetectorRef);
   private platform = inject(Platform);
 
-  private genErr(file: NzUploadFile): string {
+  private genErr(file: TriUploadFile): string {
     if (file.response && typeof file.response === 'string') {
       return file.response;
     }
@@ -111,7 +111,7 @@ export class NzUploadListComponent implements OnChanges {
     return (/\.[^./\\]*$/.exec(filenameWithoutSuffix) || [''])[0];
   }
 
-  isImageUrl(file: NzUploadFile): boolean {
+  isImageUrl(file: TriUploadFile): boolean {
     if (isImageFileType(file.type!)) {
       return true;
     }
@@ -193,7 +193,7 @@ export class NzUploadListComponent implements OnChanges {
       return;
     }
 
-    const win = window as NzSafeAny;
+    const win = window as TriSafeAny;
     if (
       !this.showPic ||
       typeof document === 'undefined' ||
@@ -224,7 +224,7 @@ export class NzUploadListComponent implements OnChanges {
       });
   }
 
-  private showDownload(file: NzUploadFile): boolean {
+  private showDownload(file: TriUploadFile): boolean {
     return !!(this.icons.showDownloadIcon && file.status === 'done');
   }
 
@@ -239,7 +239,7 @@ export class NzUploadListComponent implements OnChanges {
     });
   }
 
-  handlePreview(file: NzUploadFile, e: Event): void {
+  handlePreview(file: TriUploadFile, e: Event): void {
     if (!this.onPreview) {
       return;
     }
@@ -248,14 +248,14 @@ export class NzUploadListComponent implements OnChanges {
     return this.onPreview(file);
   }
 
-  handleRemove(file: NzUploadFile, e: Event): void {
+  handleRemove(file: TriUploadFile, e: Event): void {
     e.preventDefault();
     if (this.onRemove) {
       this.onRemove(file);
     }
   }
 
-  handleDownload(file: NzUploadFile): void {
+  handleDownload(file: TriUploadFile): void {
     if (typeof this.onDownload === 'function') {
       this.onDownload(file);
     } else if (file.url) {

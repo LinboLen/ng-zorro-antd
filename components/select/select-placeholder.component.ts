@@ -5,21 +5,21 @@
 
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 @Component({
-  selector: 'nz-select-placeholder',
+  selector: '',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <ng-container *nzStringTemplateOutlet="placeholder">
+    <ng-container *stringTemplateOutlet="placeholder">
       {{ placeholder }}
     </ng-container>
   `,
-  host: { class: 'ant-select-selection-placeholder' },
-  imports: [NzOutletModule]
+  host: { class: 'tri-select-selection-placeholder' },
+  imports: [TriOutletModule]
 })
-export class NzSelectPlaceholderComponent {
-  @Input() placeholder: TemplateRef<NzSafeAny> | string | null = null;
+export class TriSelectPlaceholderComponent {
+  @Input() placeholder: TemplateRef<TriSafeAny> | string | null = null;
 }

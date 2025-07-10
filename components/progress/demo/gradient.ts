@@ -1,27 +1,27 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
-import { NzProgressModule } from 'ng-zorro-antd/progress';
+import { TriProgressModule } from 'ng-zorro-antd/progress';
 
 @Component({
-  selector: 'nz-demo-progress-gradient',
-  imports: [NzProgressModule],
+  selector: '',
+  imports: [TriProgressModule],
   template: `
-    <nz-progress [nzPercent]="99.9" [nzStrokeColor]="{ '0%': '#108ee9', '100%': '#87d068' }"></nz-progress>
-    <nz-progress
-      [nzPercent]="99.9"
-      [nzStrokeColor]="{ '0%': '#108ee9', '100%': '#87d068' }"
-      nzStatus="active"
-    ></nz-progress>
-    <nz-progress
-      nzType="circle"
-      [nzPercent]="90"
-      [nzStrokeColor]="{ '0%': '#108ee9', '50%': '#2db7f5', '100%': '#87d068' }"
-    ></nz-progress>
-    <nz-progress
-      nzType="dashboard"
-      [nzPercent]="100"
-      [nzStrokeColor]="{ '0%': '#108ee9', '100%': '#87d068' }"
-    ></nz-progress>
+    <tri-progress [percent]="99.9" [strokeColor]="{ '0%': '#108ee9', '100%': '#87d068' }"></tri-progress>
+    <tri-progress
+      [percent]="99.9"
+      [strokeColor]="{ '0%': '#108ee9', '100%': '#87d068' }"
+      status="active"
+    ></tri-progress>
+    <tri-progress
+      type="circle"
+      [percent]="90"
+      [strokeColor]="{ '0%': '#108ee9', '50%': '#2db7f5', '100%': '#87d068' }"
+    ></tri-progress>
+    <tri-progress
+      type="dashboard"
+      [percent]="100"
+      [strokeColor]="{ '0%': '#108ee9', '100%': '#87d068' }"
+    ></tri-progress>
   `,
   styles: [
     `
@@ -34,4 +34,4 @@ import { NzProgressModule } from 'ng-zorro-antd/progress';
   ],
   encapsulation: ViewEncapsulation.None
 })
-export class NzDemoProgressGradientComponent {}
+export class TriDemoProgressGradientComponent {}

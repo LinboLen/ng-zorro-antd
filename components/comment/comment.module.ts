@@ -6,22 +6,22 @@
 import { NgModule } from '@angular/core';
 
 import {
-  NzCommentActionComponent,
-  NzCommentActionHostDirective,
-  NzCommentAvatarDirective,
-  NzCommentContentDirective
+  TriCommentActionComponent,
+  TriCommentActionHostDirective,
+  TriCommentAvatarDirective,
+  TriCommentContentDirective
 } from './comment-cells';
-import { NzCommentComponent } from './comment.component';
+import { TriCommentComponent } from './comment.component';
 
 const NZ_COMMENT_CELLS = [
-  NzCommentAvatarDirective,
-  NzCommentContentDirective,
-  NzCommentActionComponent,
-  NzCommentActionHostDirective
+  TriCommentAvatarDirective,
+  TriCommentContentDirective,
+  TriCommentActionComponent,
+  TriCommentActionHostDirective
 ];
 
 @NgModule({
-  imports: [NzCommentComponent, ...NZ_COMMENT_CELLS],
-  exports: [NzCommentComponent, ...NZ_COMMENT_CELLS]
+  imports: [TriCommentComponent, ...NZ_COMMENT_CELLS],
+  exports: [TriCommentComponent, ...NZ_COMMENT_CELLS]
 })
-export class NzCommentModule {}
+export class TriCommentModule {}

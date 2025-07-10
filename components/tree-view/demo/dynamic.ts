@@ -4,8 +4,8 @@ import { Component } from '@angular/core';
 import { BehaviorSubject, Observable, merge, of } from 'rxjs';
 import { delay, map, tap } from 'rxjs/operators';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzTreeViewModule } from 'ng-zorro-antd/tree-view';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriTreeViewModule } from 'ng-zorro-antd/tree-view';
 
 interface FlatNode {
   expandable: boolean;
@@ -124,30 +124,30 @@ class DynamicDatasource implements DataSource<FlatNode> {
 }
 
 @Component({
-  selector: 'nz-demo-tree-view-dynamic',
-  imports: [NzIconModule, NzTreeViewModule],
+  selector: '',
+  imports: [TriIconModule, TriTreeViewModule],
   template: `
-    <nz-tree-view [nzTreeControl]="treeControl" [nzDataSource]="dataSource">
-      <nz-tree-node *nzTreeNodeDef="let node" nzTreeNodePadding>
+    <tri-tree-view [treeControl]="treeControl" [dataSource]="dataSource">
+      <tri-tree-node *treeNodeDef="let node" treeNodePadding>
         {{ node.label }}
-      </nz-tree-node>
+      </tri-tree-node>
 
-      <nz-tree-node *nzTreeNodeDef="let node; when: hasChild" nzTreeNodePadding>
+      <tri-tree-node *treeNodeDef="let node; treeNodeDefWhen: hasChild" treeNodePadding>
         @if (!node.loading) {
-          <nz-tree-node-toggle>
-            <nz-icon nzType="caret-down" nzTreeNodeToggleRotateIcon />
-          </nz-tree-node-toggle>
+          <tri-tree-node-toggle>
+            <tri-icon type="caret-down" treeNodeToggleRotateIcon />
+          </tri-tree-node-toggle>
         } @else {
-          <nz-tree-node-toggle nzTreeNodeNoopToggle>
-            <nz-icon nzType="loading" nzTreeNodeToggleActiveIcon />
-          </nz-tree-node-toggle>
+          <tri-tree-node-toggle treeNodeNoopToggle>
+            <tri-icon type="loading" treeNodeToggleActiveIcon />
+          </tri-tree-node-toggle>
         }
         {{ node.label }}
-      </nz-tree-node>
-    </nz-tree-view>
+      </tri-tree-node>
+    </tri-tree-view>
   `
 })
-export class NzDemoTreeViewDynamicComponent {
+export class TriDemoTreeViewDynamicComponent {
   treeControl = new FlatTreeControl<FlatNode>(
     node => node.level,
     node => node.expandable

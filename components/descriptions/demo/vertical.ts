@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
 
-import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { TriDescriptionsModule } from 'ng-zorro-antd/descriptions';
 
 @Component({
-  selector: 'nz-demo-descriptions-vertical',
-  imports: [NzDescriptionsModule],
+  selector: '',
+  imports: [TriDescriptionsModule],
   template: `
-    <nz-descriptions nzTitle="User Info" nzLayout="vertical">
-      <nz-descriptions-item nzTitle="UserName">Zhou Maomao</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Telephone">1810000000</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Live">Hangzhou, Zhejiang</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Address" [nzSpan]="2">
+    <tri-descriptions title="User Info" layout="vertical">
+      <tri-descriptions-item title="UserName">Zhou Maomao</tri-descriptions-item>
+      <tri-descriptions-item title="Telephone">1810000000</tri-descriptions-item>
+      <tri-descriptions-item title="Live">Hangzhou, Zhejiang</tri-descriptions-item>
+      <tri-descriptions-item title="Address" [span]="2">
         No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
-      </nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Remark">empty</nz-descriptions-item>
-    </nz-descriptions>
+      </tri-descriptions-item>
+      <tri-descriptions-item title="Remark">empty</tri-descriptions-item>
+    </tri-descriptions>
   `
 })
-export class NzDemoDescriptionsVerticalComponent {}
+export class TriDemoDescriptionsVerticalComponent {}

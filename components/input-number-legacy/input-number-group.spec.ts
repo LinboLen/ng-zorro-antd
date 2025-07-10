@@ -10,14 +10,14 @@ import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { dispatchFakeEvent } from 'ng-zorro-antd/core/testing';
-import { NzSizeLDSType, NzStatus } from 'ng-zorro-antd/core/types';
-import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriSizeLDSType, TriStatus } from 'ng-zorro-antd/core/types';
+import { TriGridModule } from 'ng-zorro-antd/grid';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
-import { NzFormControlStatusType, NzFormModule } from '../form';
-import { NzInputNumberGroupComponent } from './input-number-group.component';
-import { NzInputNumberLegacyModule } from './input-number.module';
+import { TriFormControlStatusType, TriFormModule } from '../form';
+import { TriInputNumberGroupComponent } from './input-number-group.component';
+import { TriInputNumberLegacyModule } from './input-number.module';
 
 describe('input-number-group', () => {
   beforeEach(waitForAsync(() => {
@@ -28,15 +28,15 @@ describe('input-number-group', () => {
 
   describe('input number group', () => {
     describe('addon', () => {
-      let testComponent: NzTestInputNumberGroupAddonComponent;
-      let fixture: ComponentFixture<NzTestInputNumberGroupAddonComponent>;
+      let testComponent: TriTestInputNumberGroupAddonComponent;
+      let fixture: ComponentFixture<TriTestInputNumberGroupAddonComponent>;
       let inputNumberGroupElement: HTMLElement;
 
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestInputNumberGroupAddonComponent);
+        fixture = TestBed.createComponent(TriTestInputNumberGroupAddonComponent);
         testComponent = fixture.debugElement.componentInstance;
         fixture.detectChanges();
-        inputNumberGroupElement = fixture.debugElement.query(By.directive(NzInputNumberGroupComponent)).nativeElement;
+        inputNumberGroupElement = fixture.debugElement.query(By.directive(TriInputNumberGroupComponent)).nativeElement;
       });
 
       it('should not show addon without before and after content', () => {
@@ -98,15 +98,15 @@ describe('input-number-group', () => {
     });
 
     describe('affix', () => {
-      let fixture: ComponentFixture<NzTestInputNumberGroupAffixComponent>;
-      let testComponent: NzTestInputNumberGroupAffixComponent;
+      let fixture: ComponentFixture<TriTestInputNumberGroupAffixComponent>;
+      let testComponent: TriTestInputNumberGroupAffixComponent;
       let inputNumberGroupElement: HTMLElement;
 
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestInputNumberGroupAffixComponent);
+        fixture = TestBed.createComponent(TriTestInputNumberGroupAffixComponent);
         testComponent = fixture.debugElement.componentInstance;
         fixture.detectChanges();
-        inputNumberGroupElement = fixture.debugElement.query(By.directive(NzInputNumberGroupComponent)).nativeElement;
+        inputNumberGroupElement = fixture.debugElement.query(By.directive(TriInputNumberGroupComponent)).nativeElement;
       });
 
       it('should not show addon without before and after content', () => {
@@ -181,15 +181,15 @@ describe('input-number-group', () => {
     });
 
     describe('multiple', () => {
-      let fixture: ComponentFixture<NzTestInputNumberGroupMultipleComponent>;
-      let testComponent: NzTestInputNumberGroupMultipleComponent;
+      let fixture: ComponentFixture<TriTestInputNumberGroupMultipleComponent>;
+      let testComponent: TriTestInputNumberGroupMultipleComponent;
       let inputNumberGroupElement: HTMLElement;
 
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestInputNumberGroupMultipleComponent);
+        fixture = TestBed.createComponent(TriTestInputNumberGroupMultipleComponent);
         testComponent = fixture.debugElement.componentInstance;
         fixture.detectChanges();
-        inputNumberGroupElement = fixture.debugElement.query(By.directive(NzInputNumberGroupComponent)).nativeElement;
+        inputNumberGroupElement = fixture.debugElement.query(By.directive(TriInputNumberGroupComponent)).nativeElement;
       });
 
       it('should size work', () => {
@@ -204,13 +204,13 @@ describe('input-number-group', () => {
     });
 
     describe('col', () => {
-      let fixture: ComponentFixture<NzTestInputNumberGroupColComponent>;
+      let fixture: ComponentFixture<TriTestInputNumberGroupColComponent>;
       let inputNumberGroupElement: HTMLElement;
 
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestInputNumberGroupColComponent);
+        fixture = TestBed.createComponent(TriTestInputNumberGroupColComponent);
         fixture.detectChanges();
-        inputNumberGroupElement = fixture.debugElement.query(By.directive(NzInputNumberGroupComponent)).nativeElement;
+        inputNumberGroupElement = fixture.debugElement.query(By.directive(TriInputNumberGroupComponent)).nativeElement;
       });
 
       it('should size work', () => {
@@ -219,13 +219,13 @@ describe('input-number-group', () => {
     });
 
     describe('mix', () => {
-      let fixture: ComponentFixture<NzTestInputNumberGroupMixComponent>;
+      let fixture: ComponentFixture<TriTestInputNumberGroupMixComponent>;
       let inputGroupElement: HTMLElement;
 
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestInputNumberGroupMixComponent);
+        fixture = TestBed.createComponent(TriTestInputNumberGroupMixComponent);
         fixture.detectChanges();
-        inputGroupElement = fixture.debugElement.query(By.directive(NzInputNumberGroupComponent)).nativeElement;
+        inputGroupElement = fixture.debugElement.query(By.directive(TriInputNumberGroupComponent)).nativeElement;
       });
 
       it('should mix work', () => {
@@ -236,13 +236,13 @@ describe('input-number-group', () => {
     });
 
     describe('status', () => {
-      let fixture: ComponentFixture<NzTestInputNumberGroupWithStatusComponent>;
+      let fixture: ComponentFixture<TriTestInputNumberGroupWithStatusComponent>;
       let inputNumberGroupElement: DebugElement;
 
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestInputNumberGroupWithStatusComponent);
+        fixture = TestBed.createComponent(TriTestInputNumberGroupWithStatusComponent);
         fixture.detectChanges();
-        inputNumberGroupElement = fixture.debugElement.query(By.directive(NzInputNumberGroupComponent));
+        inputNumberGroupElement = fixture.debugElement.query(By.directive(TriInputNumberGroupComponent));
       });
 
       it('should className correct with prefix', () => {
@@ -268,7 +268,7 @@ describe('input-number-group', () => {
         fixture.componentInstance.isAddon = true;
         fixture.detectChanges();
         // re-query input element
-        inputNumberGroupElement = fixture.debugElement.query(By.directive(NzInputNumberGroupComponent));
+        inputNumberGroupElement = fixture.debugElement.query(By.directive(TriInputNumberGroupComponent));
         expect(inputNumberGroupElement.nativeElement.classList).toContain(
           'ant-input-number-group-wrapper-status-error'
         );
@@ -288,13 +288,13 @@ describe('input-number-group', () => {
     });
 
     describe('dir', () => {
-      let fixture: ComponentFixture<NzTestInputNumberGroupWithDirComponent>;
+      let fixture: ComponentFixture<TriTestInputNumberGroupWithDirComponent>;
       let inputNumberGroupElement: HTMLElement;
 
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestInputNumberGroupWithDirComponent);
+        fixture = TestBed.createComponent(TriTestInputNumberGroupWithDirComponent);
         fixture.detectChanges();
-        inputNumberGroupElement = fixture.debugElement.query(By.directive(NzInputNumberGroupComponent)).nativeElement;
+        inputNumberGroupElement = fixture.debugElement.query(By.directive(TriInputNumberGroupComponent)).nativeElement;
       });
 
       it('should dir work', () => {
@@ -306,13 +306,13 @@ describe('input-number-group', () => {
     });
 
     describe('in form', () => {
-      let fixture: ComponentFixture<NzTestInputNumberGroupInFormComponent>;
+      let fixture: ComponentFixture<TriTestInputNumberGroupInFormComponent>;
       let inputNumberGroupElement: DebugElement;
 
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestInputNumberGroupInFormComponent);
+        fixture = TestBed.createComponent(TriTestInputNumberGroupInFormComponent);
         fixture.detectChanges();
-        inputNumberGroupElement = fixture.debugElement.query(By.directive(NzInputNumberGroupComponent));
+        inputNumberGroupElement = fixture.debugElement.query(By.directive(TriInputNumberGroupComponent));
       });
 
       it('should className correct', () => {
@@ -356,132 +356,132 @@ describe('input-number-group', () => {
 });
 
 @Component({
-  imports: [NzInputNumberLegacyModule],
+  imports: [TriInputNumberLegacyModule],
   template: `
-    <nz-input-number-group [nzAddOnBefore]="beforeContent" [nzAddOnAfter]="afterContent" [nzSize]="size">
-      <nz-input-number></nz-input-number>
-    </nz-input-number-group>
+    <tri-input-number-group [addOnBefore]="beforeContent" [addOnAfter]="afterContent" [size]="size">
+      <tri-input-number></tri-input-number>
+    </tri-input-number-group>
     <ng-template #beforeTemplate>beforeTemplate</ng-template>
     <ng-template #afterTemplate>afterTemplate</ng-template>
   `
 })
-export class NzTestInputNumberGroupAddonComponent {
+export class TriTestInputNumberGroupAddonComponent {
   @ViewChild('beforeTemplate', { static: false }) beforeTemplate!: TemplateRef<void>;
   @ViewChild('afterTemplate', { static: false }) afterTemplate!: TemplateRef<void>;
   beforeContent?: string | TemplateRef<void>;
   afterContent?: string | TemplateRef<void>;
-  size: NzSizeLDSType = 'default';
+  size: TriSizeLDSType = 'default';
 }
 
 @Component({
-  imports: [NzInputNumberLegacyModule],
+  imports: [TriInputNumberLegacyModule],
   template: `
-    <nz-input-number-group [nzPrefix]="beforeContent" [nzSuffix]="afterContent" [nzSize]="size">
-      <nz-input-number [nzDisabled]="disabled"></nz-input-number>
-    </nz-input-number-group>
+    <tri-input-number-group [prefix]="beforeContent" [suffix]="afterContent" [size]="size">
+      <tri-input-number [disabled]="disabled"></tri-input-number>
+    </tri-input-number-group>
     <ng-template #beforeTemplate>beforeTemplate</ng-template>
     <ng-template #afterTemplate>afterTemplate</ng-template>
   `
 })
-export class NzTestInputNumberGroupAffixComponent {
+export class TriTestInputNumberGroupAffixComponent {
   @ViewChild('beforeTemplate', { static: false }) beforeTemplate!: TemplateRef<void>;
   @ViewChild('afterTemplate', { static: false }) afterTemplate!: TemplateRef<void>;
   beforeContent?: string | TemplateRef<void>;
   afterContent?: string | TemplateRef<void>;
-  size: NzSizeLDSType = 'default';
+  size: TriSizeLDSType = 'default';
   disabled = false;
 }
 
 @Component({
-  imports: [NzInputNumberLegacyModule],
+  imports: [TriInputNumberLegacyModule],
   template: `
-    <nz-input-number-group [nzSize]="size">
-      <nz-input-number></nz-input-number>
-      <nz-input-number></nz-input-number>
-    </nz-input-number-group>
+    <tri-input-number-group [size]="size">
+      <tri-input-number></tri-input-number>
+      <tri-input-number></tri-input-number>
+    </tri-input-number-group>
   `
 })
-export class NzTestInputNumberGroupMultipleComponent {
-  size: NzSizeLDSType = 'default';
+export class TriTestInputNumberGroupMultipleComponent {
+  size: TriSizeLDSType = 'default';
 }
 
 @Component({
-  imports: [FormsModule, NzGridModule, NzInputNumberLegacyModule],
+  imports: [FormsModule, TriGridModule, TriInputNumberLegacyModule],
   template: `
-    <nz-input-number-group nz-row nzSize="large">
-      <div nz-col nzSpan="8">
-        <nz-input-number [ngModel]="1234" [nzStep]="1"></nz-input-number>
+    <tri-input-number-group tri-row size="large">
+      <div tri-col span="8">
+        <tri-input-number [ngModel]="1234" [step]="1"></tri-input-number>
       </div>
-      <div nz-col nzSpan="8">
-        <nz-input-number [ngModel]="5678" [nzStep]="1"></nz-input-number>
+      <div tri-col span="8">
+        <tri-input-number [ngModel]="5678" [step]="1"></tri-input-number>
       </div>
-    </nz-input-number-group>
+    </tri-input-number-group>
   `
 })
-export class NzTestInputNumberGroupColComponent {}
+export class TriTestInputNumberGroupColComponent {}
 
 @Component({
-  imports: [NzInputNumberLegacyModule],
+  imports: [TriInputNumberLegacyModule],
   template: `
-    <nz-input-number-group nzPrefixIcon="user" nzAddOnAfter="@example.com">
-      <nz-input-number></nz-input-number>
-    </nz-input-number-group>
+    <tri-input-number-group prefixIcon="user" addOnAfter="@example.com">
+      <tri-input-number></tri-input-number>
+    </tri-input-number-group>
   `
 })
-export class NzTestInputNumberGroupMixComponent {}
+export class TriTestInputNumberGroupMixComponent {}
 
 @Component({
-  imports: [NzIconModule, NzInputNumberLegacyModule],
+  imports: [TriIconModule, TriInputNumberLegacyModule],
   template: `
     @if (!isAddon) {
-      <nz-input-number-group [nzPrefix]="prefixTemplateClock" [nzStatus]="status">
-        <nz-input-number />
-      </nz-input-number-group>
+      <tri-input-number-group [prefix]="prefixTemplateClock" [status]="status">
+        <tri-input-number />
+      </tri-input-number-group>
       <ng-template #prefixTemplateClock>
-        <nz-icon nzType="clock-circle" nzTheme="outline" />
+        <tri-icon type="clock-circle" theme="outline" />
       </ng-template>
     } @else {
-      <nz-input-number-group nzAddOnAfterIcon="setting" [nzStatus]="status">
-        <nz-input-number />
-      </nz-input-number-group>
+      <tri-input-number-group addOnAfterIcon="setting" [status]="status">
+        <tri-input-number />
+      </tri-input-number-group>
     }
   `
 })
-export class NzTestInputNumberGroupWithStatusComponent {
+export class TriTestInputNumberGroupWithStatusComponent {
   isAddon = false;
-  status: NzStatus = 'error';
+  status: TriStatus = 'error';
 }
 
 @Component({
-  imports: [BidiModule, NzInputNumberLegacyModule],
+  imports: [BidiModule, TriInputNumberLegacyModule],
   template: `
     <div [dir]="dir">
-      <nz-input-number-group nzAddOnAfterIcon="setting">
-        <nz-input-number></nz-input-number>
-      </nz-input-number-group>
+      <tri-input-number-group addOnAfterIcon="setting">
+        <tri-input-number></tri-input-number>
+      </tri-input-number-group>
     </div>
   `
 })
-export class NzTestInputNumberGroupWithDirComponent {
+export class TriTestInputNumberGroupWithDirComponent {
   dir: Direction = 'ltr';
 }
 
 @Component({
-  imports: [NzFormModule, NzInputNumberLegacyModule],
+  imports: [TriFormModule, TriInputNumberLegacyModule],
   template: `
-    <form nz-form>
-      <nz-form-item>
-        <nz-form-control [nzHasFeedback]="feedback" [nzValidateStatus]="status">
-          <nz-input-number-group [nzAddOnBefore]="addon">
-            <nz-input-number></nz-input-number>
-          </nz-input-number-group>
-        </nz-form-control>
-      </nz-form-item>
+    <form tri-form>
+      <tri-form-item>
+        <tri-form-control [hasFeedback]="feedback" [validateStatus]="status">
+          <tri-input-number-group [addOnBefore]="addon">
+            <tri-input-number></tri-input-number>
+          </tri-input-number-group>
+        </tri-form-control>
+      </tri-form-item>
     </form>
   `
 })
-export class NzTestInputNumberGroupInFormComponent {
-  status: NzFormControlStatusType = 'error';
+export class TriTestInputNumberGroupInFormComponent {
+  status: TriFormControlStatusType = 'error';
   feedback = true;
   addon: string = '';
 }

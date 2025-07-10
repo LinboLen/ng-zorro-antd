@@ -6,12 +6,12 @@
 import { NgModule } from '@angular/core';
 
 import { ɵNzTransitionPatchModule as NzTransitionPatchModule } from 'ng-zorro-antd/core/transition-patch';
-import { NzWaveModule } from 'ng-zorro-antd/core/wave';
+import { TriWaveModule } from 'ng-zorro-antd/core/wave';
 
-import { NzButtonComponent } from './button.component';
+import { TriButtonComponent } from './button.component';
 
 @NgModule({
-  imports: [NzButtonComponent],
-  exports: [NzButtonComponent, NzTransitionPatchModule, NzWaveModule]
+  imports: [TriButtonComponent],
+  exports: [TriButtonComponent, NzTransitionPatchModule, TriWaveModule]
 })
-export class NzButtonModule {}
+export class TriButtonModule {}

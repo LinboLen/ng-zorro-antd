@@ -1,22 +1,22 @@
 import { Component } from '@angular/core';
 
-import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { TriCardModule } from 'ng-zorro-antd/card';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: 'nz-demo-space-vertical',
-  imports: [NzCardModule, NzSpaceModule],
+  selector: '',
+  imports: [TriCardModule, TriSpaceModule],
   template: `
-    <nz-space nzDirection="vertical">
-      <nz-card *nzSpaceItem nzTitle="Card" style="width: 300px">
+    <tri-space direction="vertical">
+      <tri-card *spaceItem title="Card" style="width: 300px">
         <p>Card content</p>
         <p>Card content</p>
-      </nz-card>
-      <nz-card *nzSpaceItem nzTitle="Card" style="width: 300px">
+      </tri-card>
+      <tri-card *spaceItem title="Card" style="width: 300px">
         <p>Card content</p>
         <p>Card content</p>
-      </nz-card>
-    </nz-space>
+      </tri-card>
+    </tri-space>
   `
 })
-export class NzDemoSpaceVerticalComponent {}
+export class TriDemoSpaceVerticalComponent {}

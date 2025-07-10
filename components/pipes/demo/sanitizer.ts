@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
-import { NzSanitizerPipe } from 'ng-zorro-antd/pipes';
+import { TriSanitizerPipe } from 'ng-zorro-antd/pipes';
 
 @Component({
-  selector: 'nz-demo-pipes-sanitizer',
-  imports: [NzSanitizerPipe],
+  selector: '',
+  imports: [TriSanitizerPipe],
   template: `<div [innerHTML]="html | nzSanitizer: 'html'"></div>`
 })
-export class NzDemoPipesSanitizerComponent {
+export class TriDemoPipesSanitizerComponent {
   html = `<span>I am <code>innerHTML</code></span>`;
 }

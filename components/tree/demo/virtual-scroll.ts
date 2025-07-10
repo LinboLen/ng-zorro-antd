@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
-import { NzTreeModule, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
+import { TriTreeModule, TriTreeNodeOptions } from 'ng-zorro-antd/tree';
 
-function dig(path = '0', level = 3): NzTreeNodeOptions[] {
-  const list: NzTreeNodeOptions[] = [];
+function dig(path = '0', level = 3): TriTreeNodeOptions[] {
+  const list: TriTreeNodeOptions[] = [];
   for (let i = 0; i < 10; i += 1) {
     const key = `${path}-${i}`;
-    const treeNode: NzTreeNodeOptions = {
+    const treeNode: TriTreeNodeOptions = {
       title: key,
       key,
       expanded: true,
@@ -26,10 +26,10 @@ function dig(path = '0', level = 3): NzTreeNodeOptions[] {
 }
 
 @Component({
-  selector: 'nz-demo-tree-virtual-scroll',
-  imports: [NzTreeModule],
-  template: `<nz-tree [nzData]="nodes" nzBlockNode nzVirtualHeight="300px"></nz-tree>`
+  selector: '',
+  imports: [TriTreeModule],
+  template: `<tri-tree [data]="nodes" blockNode virtualHeight="300px"></tri-tree>`
 })
-export class NzDemoTreeVirtualScrollComponent {
-  nodes: NzTreeNodeOptions[] = dig();
+export class TriDemoTreeVirtualScrollComponent {
+  nodes: TriTreeNodeOptions[] = dig();
 }

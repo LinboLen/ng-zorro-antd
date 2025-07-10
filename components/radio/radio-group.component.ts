@@ -21,59 +21,59 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { NzSafeAny, NzSizeLDSType, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
+import { TriSafeAny, TriSizeLDSType, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
 
-import { NzRadioService } from './radio.service';
+import { TriRadioService } from './radio.service';
 
-export type NzRadioButtonStyle = 'outline' | 'solid';
+export type TriRadioButtonStyle = 'outline' | 'solid';
 
 @Component({
-  selector: 'nz-radio-group',
-  exportAs: 'nzRadioGroup',
+  selector: '',
+  exportAs: 'triRadioGroup',
   template: `<ng-content></ng-content>`,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
-    NzRadioService,
+    TriRadioService,
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NzRadioGroupComponent),
+      useExisting: forwardRef(() => TriRadioGroupComponent),
       multi: true
     }
   ],
   host: {
-    class: 'ant-radio-group',
-    '[class.ant-radio-group-large]': `nzSize === 'large'`,
-    '[class.ant-radio-group-small]': `nzSize === 'small'`,
-    '[class.ant-radio-group-solid]': `nzButtonStyle === 'solid'`,
-    '[class.ant-radio-group-rtl]': `dir === 'rtl'`
+    class: 'tri-radio-group',
+    '[class.tri-radio-group-large]': `size === 'large'`,
+    '[class.tri-radio-group-small]': `size === 'small'`,
+    '[class.tri-radio-group-solid]': `buttonStyle === 'solid'`,
+    '[class.tri-radio-group-rtl]': `dir === 'rtl'`
   }
 })
-export class NzRadioGroupComponent implements OnInit, ControlValueAccessor, OnChanges {
+export class TriRadioGroupComponent implements OnInit, ControlValueAccessor, OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
-  private readonly nzRadioService = inject(NzRadioService);
+  private readonly radioService = inject(TriRadioService);
   private readonly directionality = inject(Directionality);
   private readonly destroyRef = inject(DestroyRef);
 
-  private value: NzSafeAny | null = null;
+  private value: TriSafeAny | null = null;
   private isNzDisableFirstChange: boolean = true;
   onChange: OnChangeType = () => {};
   onTouched: OnTouchedType = () => {};
-  @Input({ transform: booleanAttribute }) nzDisabled = false;
-  @Input() nzButtonStyle: NzRadioButtonStyle = 'outline';
-  @Input() nzSize: NzSizeLDSType = 'default';
-  @Input() nzName: string | null = null;
+  @Input({ transform: booleanAttribute }) disabled = false;
+  @Input() buttonStyle: TriRadioButtonStyle = 'outline';
+  @Input() size: TriSizeLDSType = 'default';
+  @Input() name: string | null = null;
 
   dir: Direction = 'ltr';
 
   ngOnInit(): void {
-    this.nzRadioService.selected$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(value => {
+    this.radioService.selected$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(value => {
       if (this.value !== value) {
         this.value = value;
         this.onChange(this.value);
       }
     });
-    this.nzRadioService.touched$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+    this.radioService.touched$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       Promise.resolve().then(() => this.onTouched());
     });
 
@@ -88,16 +88,16 @@ export class NzRadioGroupComponent implements OnInit, ControlValueAccessor, OnCh
   ngOnChanges(changes: SimpleChanges): void {
     const { nzDisabled, nzName } = changes;
     if (nzDisabled) {
-      this.nzRadioService.setDisabled(this.nzDisabled);
+      this.radioService.setDisabled(this.disabled);
     }
     if (nzName) {
-      this.nzRadioService.setName(this.nzName!);
+      this.radioService.setName(this.name!);
     }
   }
 
-  writeValue(value: NzSafeAny): void {
+  writeValue(value: TriSafeAny): void {
     this.value = value;
-    this.nzRadioService.select(value);
+    this.radioService.select(value);
     this.cdr.markForCheck();
   }
 
@@ -110,9 +110,9 @@ export class NzRadioGroupComponent implements OnInit, ControlValueAccessor, OnCh
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.nzDisabled = (this.isNzDisableFirstChange && this.nzDisabled) || isDisabled;
+    this.disabled = (this.isNzDisableFirstChange && this.disabled) || isDisabled;
     this.isNzDisableFirstChange = false;
-    this.nzRadioService.setDisabled(this.nzDisabled);
+    this.radioService.setDisabled(this.disabled);
     this.cdr.markForCheck();
   }
 }

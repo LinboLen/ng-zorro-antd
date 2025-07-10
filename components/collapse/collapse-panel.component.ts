@@ -24,75 +24,75 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs/operators';
 
 import { collapseMotion } from 'ng-zorro-antd/core/animation';
-import { NzConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
-import { NzNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
-import { NzCollapseComponent } from './collapse.component';
+import { TriCollapseComponent } from './collapse.component';
 
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'collapsePanel';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'collapsePanel';
 
 @Component({
-  selector: 'nz-collapse-panel',
-  exportAs: 'nzCollapsePanel',
+  selector: '',
+  exportAs: 'triCollapsePanel',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   animations: [collapseMotion],
   template: `
-    <div #collapseHeader role="button" [attr.aria-expanded]="nzActive" class="ant-collapse-header">
-      @if (nzShowArrow) {
+    <div #collapseHeader role="button" [attr.aria-expanded]="active" class="tri-collapse-header">
+      @if (showArrow) {
         <div>
-          <ng-container *nzStringTemplateOutlet="nzExpandedIcon; let expandedIcon">
-            <nz-icon [nzType]="expandedIcon || 'right'" class="ant-collapse-arrow" [nzRotate]="nzActive ? 90 : 0" />
+          <ng-container *stringTemplateOutlet="expandedIcon; let expandedIcon">
+            <tri-icon [type]="expandedIcon || 'right'" class="tri-collapse-arrow" [rotate]="active ? 90 : 0" />
           </ng-container>
         </div>
       }
-      <span class="ant-collapse-header-text">
-        <ng-container *nzStringTemplateOutlet="nzHeader">{{ nzHeader }}</ng-container>
+      <span class="tri-collapse-header-text">
+        <ng-container *stringTemplateOutlet="header">{{ header }}</ng-container>
       </span>
-      @if (nzExtra) {
-        <div class="ant-collapse-extra">
-          <ng-container *nzStringTemplateOutlet="nzExtra">{{ nzExtra }}</ng-container>
+      @if (extra) {
+        <div class="tri-collapse-extra">
+          <ng-container *stringTemplateOutlet="extra">{{ extra }}</ng-container>
         </div>
       }
     </div>
     <div
-      class="ant-collapse-content"
-      [class.ant-collapse-content-active]="nzActive"
+      class="tri-collapse-content"
+      [class.tri-collapse-content-active]="active"
       [@.disabled]="!!noAnimation?.nzNoAnimation"
-      [@collapseMotion]="nzActive ? 'expanded' : 'hidden'"
+      [@collapseMotion]="active ? 'expanded' : 'hidden'"
     >
-      <div class="ant-collapse-content-box">
+      <div class="tri-collapse-content-box">
         <ng-content></ng-content>
       </div>
     </div>
   `,
   host: {
-    class: 'ant-collapse-item',
-    '[class.ant-collapse-no-arrow]': '!nzShowArrow',
-    '[class.ant-collapse-item-active]': 'nzActive',
-    '[class.ant-collapse-item-disabled]': 'nzDisabled'
+    class: 'tri-collapse-item',
+    '[class.tri-collapse-no-arrow]': '!showArrow',
+    '[class.tri-collapse-item-active]': 'active',
+    '[class.tri-collapse-item-disabled]': 'disabled'
   },
-  imports: [NzOutletModule, NzIconModule]
+  imports: [TriOutletModule, TriIconModule]
 })
-export class NzCollapsePanelComponent implements OnInit {
+export class TriCollapsePanelComponent implements OnInit {
   private ngZone = inject(NgZone);
   private cdr = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
-  private nzCollapseComponent = inject(NzCollapseComponent, { host: true });
-  noAnimation = inject(NzNoAnimationDirective, { optional: true });
+  private collapseComponent = inject(TriCollapseComponent, { host: true });
+  noAnimation = inject(TriNoAnimationDirective, { optional: true });
 
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
 
-  @Input({ transform: booleanAttribute }) nzActive = false;
-  @Input({ transform: booleanAttribute }) nzDisabled = false;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzShowArrow: boolean = true;
-  @Input() nzExtra?: string | TemplateRef<void>;
-  @Input() nzHeader?: string | TemplateRef<void>;
-  @Input() nzExpandedIcon?: string | TemplateRef<void>;
-  @Output() readonly nzActiveChange = new EventEmitter<boolean>();
+  @Input({ transform: booleanAttribute }) active = false;
+  @Input({ transform: booleanAttribute }) disabled = false;
+  @Input({ transform: booleanAttribute }) @WithConfig() showArrow: boolean = true;
+  @Input() extra?: string | TemplateRef<void>;
+  @Input() header?: string | TemplateRef<void>;
+  @Input() expandedIcon?: string | TemplateRef<void>;
+  @Output() readonly activeChange = new EventEmitter<boolean>();
 
   @ViewChild('collapseHeader', { static: true }) collapseHeader!: ElementRef<HTMLElement>;
 
@@ -104,21 +104,21 @@ export class NzCollapsePanelComponent implements OnInit {
     onConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME, () => this.cdr.markForCheck());
 
     this.destroyRef.onDestroy(() => {
-      this.nzCollapseComponent.removePanel(this);
+      this.collapseComponent.removePanel(this);
     });
   }
 
   ngOnInit(): void {
-    this.nzCollapseComponent.addPanel(this);
+    this.collapseComponent.addPanel(this);
 
     fromEventOutsideAngular(this.collapseHeader.nativeElement, 'click')
       .pipe(
-        filter(() => !this.nzDisabled),
+        filter(() => !this.disabled),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(() => {
         this.ngZone.run(() => {
-          this.nzCollapseComponent.click(this);
+          this.collapseComponent.click(this);
           this.cdr.markForCheck();
         });
       });

@@ -16,45 +16,45 @@ import {
 import { FormsModule } from '@angular/forms';
 
 import { toNumber } from 'ng-zorro-antd/core/util';
-import { NzPaginationI18nInterface } from 'ng-zorro-antd/i18n';
-import { NzSelectModule } from 'ng-zorro-antd/select';
+import { TriPaginationI18nInterface } from 'ng-zorro-antd/i18n';
+import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: 'li[nz-pagination-options]',
+  selector: '',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (showSizeChanger) {
-      <nz-select
-        class="ant-pagination-options-size-changer"
-        [nzDisabled]="disabled"
-        [nzSize]="nzSize"
+      <tri-select
+        class="tri-pagination-options-size-changer"
+        [disabled]="disabled"
+        [size]="size"
         [ngModel]="pageSize"
         (ngModelChange)="onPageSizeChange($event)"
       >
         @for (option of listOfPageSizeOption; track option.value) {
-          <nz-option [nzLabel]="option.label" [nzValue]="option.value" />
+          <tri-option [label]="option.label" [value]="option.value" />
         }
-      </nz-select>
+      </tri-select>
     }
 
     @if (showQuickJumper) {
-      <div class="ant-pagination-options-quick-jumper">
+      <div class="tri-pagination-options-quick-jumper">
         {{ locale.jump_to }}
         <input [disabled]="disabled" (keydown.enter)="jumpToPageViaInput($event)" />
         {{ locale.page }}
       </div>
     }
   `,
-  host: { class: 'ant-pagination-options' },
-  imports: [NzSelectModule, FormsModule]
+  host: { class: 'tri-pagination-options' },
+  imports: [TriSelectModule, FormsModule]
 })
-export class NzPaginationOptionsComponent implements OnChanges {
-  @Input() nzSize: 'default' | 'small' = 'default';
+export class TriPaginationOptionsComponent implements OnChanges {
+  @Input() size: 'default' | 'small' = 'default';
   @Input() disabled = false;
   @Input() showSizeChanger = false;
   @Input() showQuickJumper = false;
-  @Input() locale!: NzPaginationI18nInterface;
+  @Input() locale!: TriPaginationI18nInterface;
   @Input() total = 0;
   @Input() pageIndex = 1;
   @Input() pageSize = 10;

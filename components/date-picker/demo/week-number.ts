@@ -1,22 +1,22 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: 'nz-demo-date-picker-week-number',
-  imports: [FormsModule, NzDatePickerModule, NzRadioModule],
+  selector: '',
+  imports: [FormsModule, TriDatePickerModule, TriRadioModule],
   template: `
-    <nz-radio-group [(ngModel)]="showWeekNumber">
-      <label nz-radio-button [nzValue]="true">true</label>
-      <label nz-radio-button [nzValue]="false">false</label>
-    </nz-radio-group>
+    <tri-radio-group [(ngModel)]="showWeekNumber">
+      <label tri-radio-button [value]="true">true</label>
+      <label tri-radio-button [value]="false">false</label>
+    </tri-radio-group>
     <br />
     <br />
-    <nz-date-picker [nzShowWeekNumber]="showWeekNumber"></nz-date-picker>
+    <tri-date-picker [showWeekNumber]="showWeekNumber"></tri-date-picker>
     <br />
-    <nz-range-picker [nzShowWeekNumber]="showWeekNumber"></nz-range-picker>
+    <tri-range-picker [showWeekNumber]="showWeekNumber"></tri-range-picker>
   `,
   styles: [
     `
@@ -27,6 +27,6 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
     `
   ]
 })
-export class NzDemoDatePickerWeekNumberComponent {
+export class TriDemoDatePickerWeekNumberComponent {
   showWeekNumber: boolean = false;
 }

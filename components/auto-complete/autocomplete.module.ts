@@ -5,23 +5,23 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzAutocompleteOptgroupComponent } from './autocomplete-optgroup.component';
-import { NzAutocompleteOptionComponent } from './autocomplete-option.component';
-import { NzAutocompleteTriggerDirective } from './autocomplete-trigger.directive';
-import { NzAutocompleteComponent } from './autocomplete.component';
+import { TriAutocompleteOptgroupComponent } from './autocomplete-optgroup.component';
+import { TriAutocompleteOptionComponent } from './autocomplete-option.component';
+import { TriAutocompleteTriggerDirective } from './autocomplete-trigger.directive';
+import { TriAutocompleteComponent } from './autocomplete.component';
 
 @NgModule({
   exports: [
-    NzAutocompleteComponent,
-    NzAutocompleteOptionComponent,
-    NzAutocompleteTriggerDirective,
-    NzAutocompleteOptgroupComponent
+    TriAutocompleteComponent,
+    TriAutocompleteOptionComponent,
+    TriAutocompleteTriggerDirective,
+    TriAutocompleteOptgroupComponent
   ],
   imports: [
-    NzAutocompleteComponent,
-    NzAutocompleteOptionComponent,
-    NzAutocompleteTriggerDirective,
-    NzAutocompleteOptgroupComponent
+    TriAutocompleteComponent,
+    TriAutocompleteOptionComponent,
+    TriAutocompleteTriggerDirective,
+    TriAutocompleteOptgroupComponent
   ]
 })
-export class NzAutocompleteModule {}
+export class TriAutocompleteModule {}

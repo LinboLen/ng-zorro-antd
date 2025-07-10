@@ -1,35 +1,35 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: 'nz-demo-space-align',
-  imports: [NzButtonModule, NzSpaceModule],
+  selector: '',
+  imports: [TriButtonModule, TriSpaceModule],
   template: `
     <div class="space-align-container">
-      <div nz-space nzAlign="center" class="space-align-block">
-        <ng-container *nzSpaceItem>center</ng-container>
-        <button *nzSpaceItem nz-button nzType="primary">Button</button>
-        <span *nzSpaceItem class="mock-block">Block</span>
+      <div tri-space align="center" class="space-align-block">
+        <ng-container *spaceItem>center</ng-container>
+        <button *spaceItem tri-button type="primary">Button</button>
+        <span *spaceItem class="mock-block">Block</span>
       </div>
 
-      <div nz-space nzAlign="start" class="space-align-block">
-        <ng-container *nzSpaceItem>start</ng-container>
-        <button *nzSpaceItem nz-button nzType="primary">Button</button>
-        <span *nzSpaceItem class="mock-block">Block</span>
+      <div tri-space align="start" class="space-align-block">
+        <ng-container *spaceItem>start</ng-container>
+        <button *spaceItem tri-button type="primary">Button</button>
+        <span *spaceItem class="mock-block">Block</span>
       </div>
 
-      <div nz-space nzAlign="end" class="space-align-block">
-        <ng-container *nzSpaceItem>end</ng-container>
-        <button *nzSpaceItem nz-button nzType="primary">Button</button>
-        <span *nzSpaceItem class="mock-block">Block</span>
+      <div tri-space align="end" class="space-align-block">
+        <ng-container *spaceItem>end</ng-container>
+        <button *spaceItem tri-button type="primary">Button</button>
+        <span *spaceItem class="mock-block">Block</span>
       </div>
 
-      <div nz-space nzAlign="baseline" class="space-align-block">
-        <ng-container *nzSpaceItem>baseline</ng-container>
-        <button *nzSpaceItem nz-button nzType="primary">Button</button>
-        <span *nzSpaceItem class="mock-block">Block</span>
+      <div tri-space align="baseline" class="space-align-block">
+        <ng-container *spaceItem>baseline</ng-container>
+        <button *spaceItem tri-button type="primary">Button</button>
+        <span *spaceItem class="mock-block">Block</span>
       </div>
     </div>
   `,
@@ -54,4 +54,4 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
     `
   ]
 })
-export class NzDemoSpaceAlignComponent {}
+export class TriDemoSpaceAlignComponent {}

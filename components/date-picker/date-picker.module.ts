@@ -6,34 +6,34 @@
 import { NgModule } from '@angular/core';
 
 import { CalendarFooterComponent } from './calendar-footer.component';
-import { NzDatePickerComponent } from './date-picker.component';
+import { TriDatePickerComponent } from './date-picker.component';
 import { DateRangePopupComponent } from './date-range-popup.component';
 import { InnerPopupComponent } from './inner-popup.component';
-import { NzMonthPickerComponent } from './month-picker.component';
-import { NzQuarterPickerComponent } from './quarter-picker.component';
-import { NzRangePickerComponent } from './range-picker.component';
-import { NzWeekPickerComponent } from './week-picker.component';
-import { NzYearPickerComponent } from './year-picker.component';
+import { TriMonthPickerComponent } from './month-picker.component';
+import { TriQuarterPickerComponent } from './quarter-picker.component';
+import { TriRangePickerComponent } from './range-picker.component';
+import { TriWeekPickerComponent } from './week-picker.component';
+import { TriYearPickerComponent } from './year-picker.component';
 
 @NgModule({
   imports: [
-    NzDatePickerComponent,
-    NzMonthPickerComponent,
-    NzYearPickerComponent,
-    NzWeekPickerComponent,
-    NzRangePickerComponent,
+    TriDatePickerComponent,
+    TriMonthPickerComponent,
+    TriYearPickerComponent,
+    TriWeekPickerComponent,
+    TriRangePickerComponent,
     CalendarFooterComponent,
     InnerPopupComponent,
     DateRangePopupComponent,
-    NzQuarterPickerComponent
+    TriQuarterPickerComponent
   ],
   exports: [
-    NzDatePickerComponent,
-    NzRangePickerComponent,
-    NzMonthPickerComponent,
-    NzYearPickerComponent,
-    NzWeekPickerComponent,
-    NzQuarterPickerComponent
+    TriDatePickerComponent,
+    TriRangePickerComponent,
+    TriMonthPickerComponent,
+    TriYearPickerComponent,
+    TriWeekPickerComponent,
+    TriQuarterPickerComponent
   ]
 })
-export class NzDatePickerModule {}
+export class TriDatePickerModule {}

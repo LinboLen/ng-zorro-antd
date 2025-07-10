@@ -6,12 +6,12 @@
 import { Directive, Input } from '@angular/core';
 
 @Directive({
-  selector: 'nz-row-indent',
+  selector: '',
   host: {
-    class: 'ant-table-row-indent',
+    class: 'tri-table-row-indent',
     '[style.padding-left.px]': 'indentSize'
   }
 })
-export class NzRowIndentDirective {
+export class TriRowIndentDirective {
   @Input() indentSize = 0;
 }

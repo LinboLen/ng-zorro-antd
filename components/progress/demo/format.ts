@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 
-import { NzProgressModule } from 'ng-zorro-antd/progress';
+import { TriProgressModule } from 'ng-zorro-antd/progress';
 
 @Component({
-  selector: 'nz-demo-progress-format',
-  imports: [NzProgressModule],
+  selector: '',
+  imports: [TriProgressModule],
   template: `
-    <nz-progress [nzPercent]="75" nzType="circle" [nzFormat]="formatOne"></nz-progress>
-    <nz-progress [nzPercent]="100" nzType="circle" [nzFormat]="formatTwo"></nz-progress>
+    <tri-progress [percent]="75" type="circle" [format]="formatOne"></tri-progress>
+    <tri-progress [percent]="100" type="circle" [format]="formatTwo"></tri-progress>
   `,
   styles: [
     `
@@ -19,7 +19,7 @@ import { NzProgressModule } from 'ng-zorro-antd/progress';
     `
   ]
 })
-export class NzDemoProgressFormatComponent {
+export class TriDemoProgressFormatComponent {
   formatOne = (percent: number): string => `${percent} Days`;
   formatTwo = (): string => `Done`;
 }

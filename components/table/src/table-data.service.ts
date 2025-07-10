@@ -9,35 +9,35 @@ import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, skip, switchMap } from 'rxjs/operators';
 
 import {
-  NzCustomColumn,
-  NzTableFilterFn,
-  NzTableFilterValue,
-  NzTableQueryParams,
-  NzTableSortFn,
-  NzTableSortOrder
+  TriCustomColumn,
+  TriTableFilterFn,
+  TriTableFilterValue,
+  TriTableQueryParams,
+  TriTableSortFn,
+  TriTableSortOrder
 } from './table.types';
 
 @Injectable()
-export class NzTableDataService<T> {
+export class TriTableDataService<T> {
   private destroyRef = inject(DestroyRef);
   private pageIndex$ = new BehaviorSubject<number>(1);
   private frontPagination$ = new BehaviorSubject<boolean>(true);
   private pageSize$ = new BehaviorSubject<number>(10);
   private listOfData$ = new BehaviorSubject<readonly T[]>([]);
-  listOfCustomColumn$ = new BehaviorSubject<NzCustomColumn[]>([]);
+  listOfCustomColumn$ = new BehaviorSubject<TriCustomColumn[]>([]);
   pageIndexDistinct$ = this.pageIndex$.pipe(distinctUntilChanged());
   pageSizeDistinct$ = this.pageSize$.pipe(distinctUntilChanged());
   listOfCalcOperator$ = new BehaviorSubject<
     Array<{
       key?: string;
-      sortFn: NzTableSortFn<T> | null | boolean;
-      sortOrder: NzTableSortOrder;
-      filterFn: NzTableFilterFn<T> | null | boolean;
-      filterValue: NzTableFilterValue;
+      sortFn: TriTableSortFn<T> | null | boolean;
+      sortOrder: TriTableSortOrder;
+      filterFn: TriTableFilterFn<T> | null | boolean;
+      filterValue: TriTableFilterValue;
       sortPriority: number | boolean;
     }>
   >([]);
-  queryParams$: Observable<NzTableQueryParams> = combineLatest([
+  queryParams$: Observable<TriTableQueryParams> = combineLatest([
     this.pageIndexDistinct$,
     this.pageSizeDistinct$,
     this.listOfCalcOperator$
@@ -74,7 +74,7 @@ export class NzTableDataService<T> {
       });
       for (const item of listOfFilterOperator) {
         const { filterFn, filterValue } = item;
-        listOfDataAfterCalc = listOfDataAfterCalc.filter(data => (filterFn as NzTableFilterFn<T>)(filterValue, data));
+        listOfDataAfterCalc = listOfDataAfterCalc.filter(data => (filterFn as TriTableFilterFn<T>)(filterValue, data));
       }
       const listOfSortOperator = listOfCalcOperator
         .filter(item => item.sortOrder !== null && typeof item.sortFn === 'function')
@@ -84,7 +84,7 @@ export class NzTableDataService<T> {
           for (const item of listOfSortOperator) {
             const { sortFn, sortOrder } = item;
             if (sortFn && sortOrder) {
-              const compareResult = (sortFn as NzTableSortFn<T>)(record1, record2, sortOrder);
+              const compareResult = (sortFn as TriTableSortFn<T>)(record1, record2, sortOrder);
               if (compareResult !== 0) {
                 return sortOrder === 'ascend' ? compareResult : -compareResult;
               }
@@ -130,7 +130,7 @@ export class NzTableDataService<T> {
   updateListOfData(list: readonly T[]): void {
     this.listOfData$.next(list);
   }
-  updateListOfCustomColumn(list: NzCustomColumn[]): void {
+  updateListOfCustomColumn(list: TriCustomColumn[]): void {
     this.listOfCustomColumn$.next(list);
   }
 }

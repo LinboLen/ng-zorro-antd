@@ -2,16 +2,16 @@ import { Component } from '@angular/core';
 
 import type { editor } from 'monaco-editor';
 
-import { NzCodeEditorModule } from 'ng-zorro-antd/code-editor';
+import { TriCodeEditorModule } from 'ng-zorro-antd/code-editor';
 
 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
 declare const monaco: any;
 
 @Component({
-  selector: 'nz-demo-code-editor-full-control',
-  imports: [NzCodeEditorModule],
+  selector: '',
+  imports: [TriCodeEditorModule],
   template: `
-    <nz-code-editor class="editor" [nzFullControl]="true" (nzEditorInitialized)="onEditorInit($event)"></nz-code-editor>
+    <tri-code-editor class="editor" [fullControl]="true" (editorInitialized)="onEditorInit($event)"></tri-code-editor>
   `,
   styles: [
     `
@@ -21,7 +21,7 @@ declare const monaco: any;
     `
   ]
 })
-export class NzDemoCodeEditorFullControlComponent {
+export class TriDemoCodeEditorFullControlComponent {
   editor?: editor.ICodeEditor | editor.IEditor;
 
   onEditorInit(e: editor.ICodeEditor | editor.IEditor): void {

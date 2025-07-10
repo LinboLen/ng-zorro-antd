@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzFlexDirective } from './nz-flex.directive';
+import { TriFlexDirective } from './nz-flex.directive';
 
 @NgModule({
-  imports: [NzFlexDirective],
-  exports: [NzFlexDirective]
+  imports: [TriFlexDirective],
+  exports: [TriFlexDirective]
 })
-export class NzFlexModule {}
+export class TriFlexModule {}

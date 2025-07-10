@@ -1,25 +1,25 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzFloatButtonModule } from 'ng-zorro-antd/float-button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { TriFloatButtonModule } from 'ng-zorro-antd/float-button';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
-  selector: 'nz-demo-float-button-open',
-  imports: [FormsModule, NzFloatButtonModule, NzIconModule, NzSwitchModule],
+  selector: '',
+  imports: [FormsModule, TriFloatButtonModule, TriIconModule, TriSwitchModule],
   template: `
     <div class="open">
-      <nz-float-button-group [nzIcon]="icon" [nzOpen]="isOpen" nzType="primary" nzTrigger="hover" style="right: 24px">
-        <nz-float-button></nz-float-button>
-        <nz-float-button [nzIcon]="inner"></nz-float-button>
-      </nz-float-button-group>
-      <nz-switch [(ngModel)]="isOpen"></nz-switch>
+      <tri-float-button-group [icon]="icon" [open]="isOpen" type="primary" trigger="hover" style="right: 24px">
+        <tri-float-button></tri-float-button>
+        <tri-float-button [icon]="inner"></tri-float-button>
+      </tri-float-button-group>
+      <tri-switch [(ngModel)]="isOpen"></tri-switch>
       <ng-template #icon>
-        <nz-icon nzType="customer-service" nzTheme="outline"></nz-icon>
+        <tri-icon type="customer-service" theme="outline"></tri-icon>
       </ng-template>
       <ng-template #inner>
-        <nz-icon nzType="comment" nzTheme="outline"></nz-icon>
+        <tri-icon type="comment" theme="outline"></tri-icon>
       </ng-template>
     </div>
   `,
@@ -36,6 +36,6 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
     `
   ]
 })
-export class NzDemoFloatButtonOpenComponent {
+export class TriDemoFloatButtonOpenComponent {
   isOpen: boolean = true;
 }

@@ -1,44 +1,44 @@
 import { LowerCasePipe } from '@angular/common';
 import { Component } from '@angular/core';
 
-import { NzContextMenuService, NzDropdownMenuComponent, NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzFormatEmitEvent, NzTreeModule, NzTreeNode } from 'ng-zorro-antd/tree';
+import { TriContextMenuService, TriDropdownMenuComponent, TriDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriFormatEmitEvent, TriTreeModule, TriTreeNode } from 'ng-zorro-antd/tree';
 
 @Component({
-  selector: 'nz-demo-tree-directory',
-  imports: [NzDropDownModule, NzIconModule, NzTreeModule, LowerCasePipe],
+  selector: '',
+  imports: [TriDropDownModule, TriIconModule, TriTreeModule, LowerCasePipe],
   template: `
-    <nz-tree
-      nzBlockNode
-      [nzData]="nodes"
-      (nzClick)="activeNode($event)"
-      (nzDblClick)="openFolder($event)"
-      [nzTreeTemplate]="nzTreeTemplate"
-    ></nz-tree>
+    <tri-tree
+      blockNode
+      [data]="nodes"
+      (click)="activeNode($event)"
+      (dblClick)="openFolder($event)"
+      [treeTemplate]="treeTemplate"
+    ></tri-tree>
     <ng-template #nzTreeTemplate let-node let-origin="origin">
       <span class="custom-node">
         @if (!node.isLeaf) {
           <span (contextmenu)="contextMenu($event, menu)">
-            <nz-icon [nzType]="node.isExpanded ? 'folder-open' : 'folder'" (click)="openFolder(node)" />
+            <tri-icon [type]="node.isExpanded ? 'folder-open' : 'folder'" (click)="openFolder(node)" />
             <span class="folder-name">{{ node.title }}</span>
             <span class="folder-desc">created by {{ origin.author | lowercase }}</span>
           </span>
         } @else {
           <span (contextmenu)="contextMenu($event, menu)">
-            <nz-icon nzType="file" />
+            <tri-icon type="file" />
             <span class="file-name">{{ node.title }}</span>
             <span class="file-desc">modified by {{ origin.author | lowercase }}</span>
           </span>
         }
       </span>
     </ng-template>
-    <nz-dropdown-menu #menu="nzDropdownMenu">
-      <ul nz-menu>
-        <li nz-menu-item (click)="selectDropdown()">Action 1</li>
-        <li nz-menu-item (click)="selectDropdown()">Action 2</li>
+    <tri-dropdown-menu #menu="nzDropdownMenu">
+      <ul tri-menu>
+        <li tri-menu-item (click)="selectDropdown()">Action 1</li>
+        <li tri-menu-item (click)="selectDropdown()">Action 2</li>
       </ul>
-    </nz-dropdown-menu>
+    </tri-dropdown-menu>
   `,
   styles: [
     `
@@ -72,8 +72,8 @@ import { NzFormatEmitEvent, NzTreeModule, NzTreeNode } from 'ng-zorro-antd/tree'
     `
   ]
 })
-export class NzDemoTreeDirectoryComponent {
-  activatedNode?: NzTreeNode;
+export class TriDemoTreeDirectoryComponent {
+  activatedNode?: TriTreeNode;
   readonly nodes = [
     {
       title: 'parent 0',
@@ -96,11 +96,11 @@ export class NzDemoTreeDirectoryComponent {
     }
   ];
 
-  constructor(private nzContextMenuService: NzContextMenuService) {}
+  constructor(private nzContextMenuService: TriContextMenuService) {}
 
-  openFolder(data: NzTreeNode | NzFormatEmitEvent): void {
+  openFolder(data: TriTreeNode | TriFormatEmitEvent): void {
     // do something if u want
-    if (data instanceof NzTreeNode) {
+    if (data instanceof TriTreeNode) {
       data.isExpanded = !data.isExpanded;
     } else {
       const node = data.node;
@@ -110,11 +110,11 @@ export class NzDemoTreeDirectoryComponent {
     }
   }
 
-  activeNode(data: NzFormatEmitEvent): void {
+  activeNode(data: TriFormatEmitEvent): void {
     this.activatedNode = data.node!;
   }
 
-  contextMenu($event: MouseEvent, menu: NzDropdownMenuComponent): void {
+  contextMenu($event: MouseEvent, menu: TriDropdownMenuComponent): void {
     this.nzContextMenuService.create($event, menu);
   }
 

@@ -2,18 +2,18 @@ import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzAlertModule } from 'ng-zorro-antd/alert';
-import { NzCalendarModule } from 'ng-zorro-antd/calendar';
+import { TriAlertModule } from 'ng-zorro-antd/alert';
+import { TriCalendarModule } from 'ng-zorro-antd/calendar';
 
 @Component({
-  selector: 'nz-demo-calendar-select',
-  imports: [DatePipe, FormsModule, NzAlertModule, NzCalendarModule],
+  selector: '',
+  imports: [DatePipe, FormsModule, TriAlertModule, TriCalendarModule],
   template: `
-    <nz-alert nzMessage="Your selected date: {{ selectedValue | date: 'yyyy-MM-dd' }}"></nz-alert>
-    <nz-calendar [(ngModel)]="selectedValue" (nzSelectChange)="selectChange($event)"></nz-calendar>
+    <tri-alert message="Your selected date: {{ selectedValue | date: 'yyyy-MM-dd' }}"></tri-alert>
+    <tri-calendar [(ngModel)]="selectedValue" (selectChange)="selectChange($event)"></tri-calendar>
   `
 })
-export class NzDemoCalendarSelectComponent {
+export class TriDemoCalendarSelectComponent {
   selectedValue = new Date('2017-01-25');
 
   selectChange(select: Date): void {

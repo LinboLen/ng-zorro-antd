@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzSelectModule } from 'ng-zorro-antd/select';
+import { TriSelectModule } from 'ng-zorro-antd/select';
 
 function alphabet(): string[] {
   const children: string[] = [];
@@ -12,14 +12,14 @@ function alphabet(): string[] {
 }
 
 @Component({
-  selector: 'nz-demo-select-tags',
-  imports: [FormsModule, NzSelectModule],
+  selector: '',
+  imports: [FormsModule, TriSelectModule],
   template: `
-    <nz-select nzMode="tags" nzPlaceHolder="Tag Mode" [(ngModel)]="listOfTagOptions">
+    <tri-select mode="tags" placeHolder="Tag Mode" [(ngModel)]="listOfTagOptions">
       @for (option of listOfOption; track option) {
-        <nz-option [nzLabel]="option" [nzValue]="option"></nz-option>
+        <tri-option [label]="option" [value]="option"></tri-option>
       }
-    </nz-select>
+    </tri-select>
   `,
   styles: [
     `
@@ -29,7 +29,7 @@ function alphabet(): string[] {
     `
   ]
 })
-export class NzDemoSelectTagsComponent {
+export class TriDemoSelectTagsComponent {
   readonly listOfOption: string[] = alphabet();
   listOfTagOptions: string[] = [];
 }

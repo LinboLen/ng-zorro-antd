@@ -5,12 +5,12 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzCountdownComponent } from './countdown.component';
-import { NzStatisticNumberComponent } from './statistic-number.component';
-import { NzStatisticComponent } from './statistic.component';
+import { TriCountdownComponent } from './countdown.component';
+import { TriStatisticNumberComponent } from './statistic-number.component';
+import { TriStatisticComponent } from './statistic.component';
 
 @NgModule({
-  imports: [NzStatisticComponent, NzCountdownComponent, NzStatisticNumberComponent],
-  exports: [NzStatisticComponent, NzCountdownComponent, NzStatisticNumberComponent]
+  imports: [TriStatisticComponent, TriCountdownComponent, TriStatisticNumberComponent],
+  exports: [TriStatisticComponent, TriCountdownComponent, TriStatisticNumberComponent]
 })
-export class NzStatisticModule {}
+export class TriStatisticModule {}

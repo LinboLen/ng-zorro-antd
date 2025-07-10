@@ -1,43 +1,43 @@
 import { Component } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzLayoutModule } from 'ng-zorro-antd/layout';
-import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriLayoutModule } from 'ng-zorro-antd/layout';
+import { TriMenuModule } from 'ng-zorro-antd/menu';
 
 @Component({
-  selector: 'nz-demo-layout-responsive',
-  imports: [NzIconModule, NzMenuModule, NzLayoutModule],
+  selector: '',
+  imports: [TriIconModule, TriMenuModule, TriLayoutModule],
   template: `
-    <nz-layout class="layout">
-      <nz-sider nzCollapsible nzBreakpoint="lg" [nzCollapsedWidth]="0">
+    <tri-layout class="layout">
+      <tri-sider collapsible breakpoint="lg" [collapsedWidth]="0">
         <div class="logo"></div>
-        <ul nz-menu nzTheme="dark" nzMode="inline">
-          <li nz-menu-item>
-            <nz-icon nzType="user" />
+        <ul tri-menu theme="dark" mode="inline">
+          <li tri-menu-item>
+            <tri-icon type="user" />
             <span>nav 1</span>
           </li>
-          <li nz-menu-item>
-            <nz-icon nzType="video-camera" />
+          <li tri-menu-item>
+            <tri-icon type="video-camera" />
             <span>nav 2</span>
           </li>
-          <li nz-menu-item>
-            <nz-icon nzType="upload" />
+          <li tri-menu-item>
+            <tri-icon type="upload" />
             <span>nav 3</span>
           </li>
-          <li nz-menu-item>
-            <nz-icon nzType="user" />
+          <li tri-menu-item>
+            <tri-icon type="user" />
             <span>nav 4</span>
           </li>
         </ul>
-      </nz-sider>
-      <nz-layout>
-        <nz-header></nz-header>
-        <nz-content>
+      </tri-sider>
+      <tri-layout>
+        <tri-header></tri-header>
+        <tri-content>
           <div class="inner-content">Content</div>
-        </nz-content>
-        <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
-      </nz-layout>
-    </nz-layout>
+        </tri-content>
+        <tri-footer>Ant Design ©2020 Implement By Angular</tri-footer>
+      </tri-layout>
+    </tri-layout>
   `,
   styles: [
     `
@@ -72,4 +72,4 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
     `
   ]
 })
-export class NzDemoLayoutResponsiveComponent {}
+export class TriDemoLayoutResponsiveComponent {}

@@ -7,29 +7,29 @@ import { DestroyRef, inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
-import { NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/core/tree';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriTreeNode, TriTreeNodeOptions } from 'ng-zorro-antd/core/tree';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { isNotNil, wrapIntoObservable } from 'ng-zorro-antd/core/util';
 
-import { isShowSearchObject, NzCascaderComponentAsSource, NzCascaderFilter, NzCascaderOption } from './typings';
+import { isShowSearchObject, TriCascaderComponentAsSource, TriCascaderFilter, TriCascaderOption } from './typings';
 import { isChildNode, isParentNode } from './utils';
 
 /**
  * All data is stored and parsed in NzCascaderService.
  */
 @Injectable()
-export class NzCascaderService {
+export class TriCascaderService {
   private destroyRef = inject(DestroyRef);
   /** Activated options in each column. */
-  activatedNodes: NzTreeNode[] = [];
+  activatedNodes: TriTreeNode[] = [];
 
   /** An array to store cascader items arranged in different layers. */
-  columns: NzTreeNode[][] = [];
+  columns: TriTreeNode[][] = [];
 
   /** If user has entered searching mode. */
   inSearchingMode = false;
 
-  values: NzSafeAny[] = [];
+  values: TriSafeAny[] = [];
 
   /**
    * Emit an event when loading state changes.
@@ -47,7 +47,7 @@ export class NzCascaderService {
    * Emit an event when an option gets selected.
    * Emit true if a leaf options is selected.
    */
-  readonly $nodeSelected = new Subject<NzTreeNode | null>();
+  readonly $nodeSelected = new Subject<TriTreeNode | null>();
 
   /**
    * Emit an event to notify cascader it needs to quit searching mode.
@@ -56,11 +56,11 @@ export class NzCascaderService {
   readonly $quitSearching = new Subject<void>();
 
   /** To hold columns before entering searching mode. */
-  private columnSnapshot: NzTreeNode[][] = [[]];
+  private columnSnapshot: TriTreeNode[][] = [[]];
 
-  private cascaderComponent!: NzCascaderComponentAsSource;
+  private cascaderComponent!: TriCascaderComponentAsSource;
 
-  private searchOptionPathMap = new Map<NzTreeNode, NzCascaderOption[]>();
+  private searchOptionPathMap = new Map<TriTreeNode, TriCascaderOption[]>();
 
   constructor() {
     this.destroyRef.onDestroy(() => {
@@ -73,14 +73,14 @@ export class NzCascaderService {
   }
 
   /** Return cascader options in the first layer. */
-  get nzOptions(): NzCascaderOption[] {
+  get options(): TriCascaderOption[] {
     return this.cascaderComponent.treeService.toOptions(this.columns[0] || []);
   }
 
   /**
    * Bind cascader component so this service could use inputs.
    */
-  withComponent(cascaderComponent: NzCascaderComponentAsSource): void {
+  withComponent(cascaderComponent: TriCascaderComponentAsSource): void {
     this.cascaderComponent = cascaderComponent;
   }
 
@@ -94,7 +94,7 @@ export class NzCascaderService {
    * @param loadingChildren Try to load children asynchronously.
    */
   setNodeActivated(
-    node: NzTreeNode,
+    node: TriTreeNode,
     columnIndex: number,
     performSelect: boolean = false,
     multiple: boolean = false,
@@ -133,15 +133,15 @@ export class NzCascaderService {
    * @param index
    * @param multiple
    */
-  setNodeSelected(node: NzTreeNode, index: number, multiple: boolean = false): void {
-    const changeOn = this.cascaderComponent.nzChangeOn;
-    const shouldPerformSelection = (o: NzCascaderOption, i: number): boolean =>
+  setNodeSelected(node: TriTreeNode, index: number, multiple: boolean = false): void {
+    const changeOn = this.cascaderComponent.changeOn;
+    const shouldPerformSelection = (o: TriCascaderOption, i: number): boolean =>
       typeof changeOn === 'function' ? changeOn(o, i) : false;
 
     if (
       multiple ||
       node.isLeaf ||
-      this.cascaderComponent.nzChangeOnSelect ||
+      this.cascaderComponent.changeOnSelect ||
       shouldPerformSelection(node.origin, index)
     ) {
       node.isSelected = true;
@@ -164,7 +164,7 @@ export class NzCascaderService {
    * @param node
    * @param multiple
    */
-  setSearchOptionSelected(node: NzTreeNode, multiple = false): void {
+  setSearchOptionSelected(node: TriTreeNode, multiple = false): void {
     this.setNodeSelected(node, node.level, multiple);
 
     setTimeout(() => {
@@ -191,17 +191,17 @@ export class NzCascaderService {
    * @param searchValue The string user wants to search.
    */
   prepareSearchOptions(searchValue: string): void {
-    const results: NzTreeNode[] = []; // Search results only have one layer.
-    const path: NzTreeNode[] = [];
-    const defaultFilter: NzCascaderFilter = (i, p) =>
+    const results: TriTreeNode[] = []; // Search results only have one layer.
+    const path: TriTreeNode[] = [];
+    const defaultFilter: TriCascaderFilter = (i, p) =>
       p.some(o => {
         const label = this.getOptionLabel(o);
         return !!label && label.indexOf(i) !== -1;
       });
-    const showSearch = this.cascaderComponent.nzShowSearch;
+    const showSearch = this.cascaderComponent.showSearch;
     const filter = isShowSearchObject(showSearch) && showSearch.filter ? showSearch.filter : defaultFilter;
     const sorter = isShowSearchObject(showSearch) && showSearch.sorter ? showSearch.sorter : null;
-    const loopChild = (node: NzTreeNode, forceDisabled = false): void => {
+    const loopChild = (node: TriTreeNode, forceDisabled = false): void => {
       path.push(node);
       const cPath = this.cascaderComponent.treeService.toOptions(path);
       if (filter(searchValue, cPath)) {
@@ -212,7 +212,7 @@ export class NzCascaderService {
       }
       path.pop();
     };
-    const loopParent = (node: NzTreeNode, forceDisabled = false): void => {
+    const loopParent = (node: TriTreeNode, forceDisabled = false): void => {
       const disabled = forceDisabled || node.isDisabled;
       path.push(node);
       node.children!.forEach(sNode => {
@@ -285,12 +285,12 @@ export class NzCascaderService {
     this.$nodeSelected.next(null);
   }
 
-  getOptionLabel(o: NzCascaderOption): string {
-    return o[this.cascaderComponent.nzLabelProperty || 'label'] as string;
+  getOptionLabel(o: TriCascaderOption): string {
+    return o[this.cascaderComponent.labelProperty || 'label'] as string;
   }
 
-  getOptionValue(o: NzCascaderOption): NzSafeAny {
-    return o[this.cascaderComponent.nzValueProperty || 'value'];
+  getOptionValue(o: TriCascaderOption): TriSafeAny {
+    return o[this.cascaderComponent.valueProperty || 'value'];
   }
 
   /**
@@ -299,7 +299,7 @@ export class NzCascaderService {
    * @param nodes Options to insert
    * @param columnIndex Position
    */
-  setColumnData(nodes: NzTreeNode[], columnIndex: number): void {
+  setColumnData(nodes: TriTreeNode[], columnIndex: number): void {
     this.columns[columnIndex] = nodes;
     this.dropBehindColumns(columnIndex);
   }
@@ -343,10 +343,10 @@ export class NzCascaderService {
   /**
    * Load children of an option asynchronously.
    */
-  loadChildren(node: NzTreeNode | null, columnIndex: number, onLoaded?: (options: NzCascaderOption[]) => void): void {
+  loadChildren(node: TriTreeNode | null, columnIndex: number, onLoaded?: (options: TriCascaderOption[]) => void): void {
     const isRoot = columnIndex < 0 || !isNotNil(node);
-    const option: NzCascaderOption = node?.origin || {};
-    const loadFn = this.cascaderComponent.nzLoadData;
+    const option: TriCascaderOption = node?.origin || {};
+    const loadFn = this.cascaderComponent.loadData;
 
     if (loadFn) {
       // If there isn't any option in columns.
@@ -368,7 +368,7 @@ export class NzCascaderService {
           next: () => {
             if (option.children) {
               if (!isRoot) {
-                const nodes = option.children.map(o => new NzTreeNode(o as NzTreeNodeOptions, node));
+                const nodes = option.children.map(o => new TriTreeNode(o as TriTreeNodeOptions, node));
                 node.children = nodes;
                 this.setColumnData(nodes, columnIndex + 1);
               } else {

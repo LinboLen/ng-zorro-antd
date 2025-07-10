@@ -1,57 +1,57 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzCascaderModule } from 'ng-zorro-antd/cascader';
-import { NzConfigService } from 'ng-zorro-antd/core/config';
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzEmptyModule } from 'ng-zorro-antd/empty';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzListModule } from 'ng-zorro-antd/list';
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzSwitchModule } from 'ng-zorro-antd/switch';
-import { NzTableModule } from 'ng-zorro-antd/table';
-import { NzTransferModule } from 'ng-zorro-antd/transfer';
-import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
+import { TriCascaderModule } from 'ng-zorro-antd/cascader';
+import { TriConfigService } from 'ng-zorro-antd/core/config';
+import { TriDividerModule } from 'ng-zorro-antd/divider';
+import { TriEmptyModule } from 'ng-zorro-antd/empty';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriListModule } from 'ng-zorro-antd/list';
+import { TriSelectModule } from 'ng-zorro-antd/select';
+import { TriSwitchModule } from 'ng-zorro-antd/switch';
+import { TriTableModule } from 'ng-zorro-antd/table';
+import { TriTransferModule } from 'ng-zorro-antd/transfer';
+import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
 @Component({
-  selector: 'nz-demo-empty-config',
+  selector: '',
   imports: [
     FormsModule,
-    NzCascaderModule,
-    NzDividerModule,
-    NzEmptyModule,
-    NzIconModule,
-    NzListModule,
-    NzSelectModule,
-    NzSwitchModule,
-    NzTableModule,
-    NzTransferModule,
-    NzTreeSelectModule
+    TriCascaderModule,
+    TriDividerModule,
+    TriEmptyModule,
+    TriIconModule,
+    TriListModule,
+    TriSelectModule,
+    TriSwitchModule,
+    TriTableModule,
+    TriTransferModule,
+    TriTreeSelectModule
   ],
   template: `
-    <nz-switch
-      [nzUnCheckedChildren]="'default'"
-      [nzCheckedChildren]="'customize'"
+    <tri-switch
+      [unCheckedChildren]="'default'"
+      [checkedChildren]="'customize'"
       [(ngModel)]="customize"
       (ngModelChange)="onConfigChange()"
-    ></nz-switch>
+    ></tri-switch>
 
-    <nz-divider></nz-divider>
+    <tri-divider></tri-divider>
 
     <h3>Select</h3>
-    <nz-select style="width: 200px"></nz-select>
+    <tri-select style="width: 200px"></tri-select>
 
     <h3>TreeSelect</h3>
-    <nz-tree-select style="width: 200px;"></nz-tree-select>
+    <tri-tree-select style="width: 200px;"></tri-tree-select>
 
     <h3>Cascader</h3>
-    <nz-cascader style="width: 200px;" [nzShowSearch]="true" [nzOptions]="[]"></nz-cascader>
+    <tri-cascader style="width: 200px;" [showSearch]="true" [options]="[]"></tri-cascader>
 
     <h3>Transfer</h3>
-    <nz-transfer></nz-transfer>
+    <tri-transfer></tri-transfer>
 
     <h3>Table</h3>
-    <nz-table [nzData]="[]">
+    <tri-table [data]="[]">
       <thead>
         <tr>
           <th>Title</th>
@@ -59,14 +59,14 @@ import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
         </tr>
       </thead>
       <tbody></tbody>
-    </nz-table>
+    </tri-table>
 
     <h3>List</h3>
-    <nz-list [nzDataSource]="[]"></nz-list>
+    <tri-list [dataSource]="[]"></tri-list>
 
     <ng-template #customTpl let-name>
       <div style="text-align: center;">
-        <nz-icon nzType="smile" style="font-size: 20px;" />
+        <tri-icon type="smile" style="font-size: 20px;" />
         <p>Data Not Found in {{ name }}</p>
       </div>
     </ng-template>
@@ -80,12 +80,12 @@ import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
     `
   ]
 })
-export class NzDemoEmptyConfigComponent {
+export class TriDemoEmptyConfigComponent {
   @ViewChild('customTpl', { static: false }) customTpl?: TemplateRef<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 
   customize = false;
 
-  constructor(private nzConfigService: NzConfigService) {}
+  constructor(private nzConfigService: TriConfigService) {}
 
   onConfigChange(): void {
     if (this.customize) {

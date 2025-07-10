@@ -6,21 +6,21 @@
 import { ChangeDetectorRef, Directive, ElementRef, inject } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 
-import { NzResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
+import { TriResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
 
 @Directive({
-  selector: '[nzOverflowSuffix]',
+  selector: '',
   host: {
     '[style]': 'suffixStyle'
   }
 })
-export class NzOverflowSuffixDirective {
-  private nzResizeObserver = inject(NzResizeObserver);
+export class TriOverflowSuffixDirective {
+  private resizeObserver = inject(TriResizeObserver);
   private elementRef = inject(ElementRef);
   private cdr = inject(ChangeDetectorRef);
 
   suffixStyle = {};
-  suffixWidth$ = this.nzResizeObserver.observe(this.elementRef.nativeElement).pipe(
+  suffixWidth$ = this.resizeObserver.observe(this.elementRef.nativeElement).pipe(
     map(([item]) => (item.target as HTMLElement).offsetWidth),
     tap(width => (this.suffixWidth = width))
   );

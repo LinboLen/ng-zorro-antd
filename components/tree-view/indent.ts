@@ -16,8 +16,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { animationFrameScheduler, asapScheduler, merge } from 'rxjs';
 import { auditTime } from 'rxjs/operators';
 
-import { NzNodeBase } from './node-base';
-import { NzTreeView } from './tree';
+import { TriNodeBase } from './node-base';
+import { TriTreeView } from './tree';
 import { getNextSibling, getParent } from './utils';
 
 /**
@@ -30,31 +30,31 @@ function booleanArrayToString(arr: boolean[]): string {
 const BUILD_INDENTS_SCHEDULER = typeof requestAnimationFrame !== 'undefined' ? animationFrameScheduler : asapScheduler;
 
 @Component({
-  selector: 'nz-tree-node-indents',
+  selector: '',
   template: `
     @for (isEnd of indents; track isEnd) {
-      <span class="ant-tree-indent-unit" [class.ant-tree-indent-unit-end]="!isEnd"></span>
+      <span class="tri-tree-indent-unit" [class.tri-tree-indent-unit-end]="!isEnd"></span>
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'ant-tree-indent'
+    class: 'tri-tree-indent'
   }
 })
-export class NzTreeNodeIndentsComponent {
+export class TriTreeNodeIndentsComponent {
   @Input() indents: boolean[] = [];
 }
 
 @Directive({
-  selector: 'nz-tree-node[nzTreeNodeIndentLine]',
+  selector: '',
   host: {
-    class: 'ant-tree-show-line',
-    '[class.ant-tree-treenode-leaf-last]': 'isLast && isLeaf'
+    class: 'tri-tree-show-line',
+    '[class.tri-tree-treenode-leaf-last]': 'isLast && isLeaf'
   }
 })
-export class NzTreeNodeIndentLineDirective<T> {
-  private treeNode = inject(NzNodeBase<T>);
-  private tree = inject(NzTreeView<T>);
+export class TriTreeNodeIndentLineDirective<T> {
+  private treeNode = inject(TriNodeBase<T>);
+  private tree = inject(TriTreeView<T>);
   private cdr = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
 

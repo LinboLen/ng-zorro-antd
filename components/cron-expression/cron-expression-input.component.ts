@@ -14,19 +14,19 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { TriInputModule } from 'ng-zorro-antd/input';
 
 import { CronChangeType, TimeType } from './typings';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-cron-expression-input',
-  exportAs: 'nzCronExpressionInput',
+  selector: '',
+  exportAs: 'triCronExpressionInput',
   template: `
-    <div class="ant-cron-expression-input">
+    <div class="tri-cron-expression-input">
       <input
-        nz-input
+        tri-input
         [(ngModel)]="value"
         [name]="label"
         [disabled]="disabled"
@@ -36,9 +36,9 @@ import { CronChangeType, TimeType } from './typings';
       />
     </div>
   `,
-  imports: [NzInputModule, FormsModule]
+  imports: [TriInputModule, FormsModule]
 })
-export class NzCronExpressionInputComponent {
+export class TriCronExpressionInputComponent {
   @Input() value: string = '0';
   @Input() label: TimeType = 'second';
   @Input({ transform: booleanAttribute }) disabled: boolean = false;

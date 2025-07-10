@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzPopconfirmComponent, NzPopconfirmDirective } from './popconfirm';
+import { TriPopconfirmComponent, TriPopconfirmDirective } from './popconfirm';
 
 @NgModule({
-  imports: [NzPopconfirmComponent, NzPopconfirmDirective],
-  exports: [NzPopconfirmComponent, NzPopconfirmDirective]
+  imports: [TriPopconfirmComponent, TriPopconfirmDirective],
+  exports: [TriPopconfirmComponent, TriPopconfirmDirective]
 })
-export class NzPopconfirmModule {}
+export class TriPopconfirmModule {}

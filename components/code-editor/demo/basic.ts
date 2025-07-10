@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzCodeEditorModule } from 'ng-zorro-antd/code-editor';
+import { TriCodeEditorModule } from 'ng-zorro-antd/code-editor';
 
 @Component({
-  selector: 'nz-demo-code-editor-basic',
-  imports: [FormsModule, NzCodeEditorModule],
+  selector: '',
+  imports: [FormsModule, TriCodeEditorModule],
   template: `
-    <nz-code-editor class="editor" [ngModel]="code" [nzEditorOption]="{ language: 'typescript' }"></nz-code-editor>
+    <tri-code-editor class="editor" [ngModel]="code" [editorOption]="{ language: 'typescript' }"></tri-code-editor>
   `,
   styles: [
     `
@@ -17,7 +17,7 @@ import { NzCodeEditorModule } from 'ng-zorro-antd/code-editor';
     `
   ]
 })
-export class NzDemoCodeEditorBasicComponent {
+export class TriDemoCodeEditorBasicComponent {
   code = `import { NzCodeEditorModule } from 'ng-zorro-antd/code-editor'
 
 @Component({})

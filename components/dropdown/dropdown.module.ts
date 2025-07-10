@@ -5,22 +5,22 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { TriMenuModule } from 'ng-zorro-antd/menu';
 
-import { NzContextMenuServiceModule } from './context-menu.service.module';
-import { NzDropDownADirective } from './dropdown-a.directive';
-import { NzDropdownButtonDirective } from './dropdown-button.directive';
-import { NzDropdownMenuComponent } from './dropdown-menu.component';
-import { NzDropDownDirective } from './dropdown.directive';
+import { TriContextMenuServiceModule } from './context-menu.service.module';
+import { TriDropDownADirective } from './dropdown-a.directive';
+import { TriDropdownButtonDirective } from './dropdown-button.directive';
+import { TriDropdownMenuComponent } from './dropdown-menu.component';
+import { TriDropDownDirective } from './dropdown.directive';
 
 @NgModule({
   imports: [
-    NzDropDownDirective,
-    NzDropDownADirective,
-    NzDropdownMenuComponent,
-    NzDropdownButtonDirective,
-    NzContextMenuServiceModule
+    TriDropDownDirective,
+    TriDropDownADirective,
+    TriDropdownMenuComponent,
+    TriDropdownButtonDirective,
+    TriContextMenuServiceModule
   ],
-  exports: [NzMenuModule, NzDropDownDirective, NzDropDownADirective, NzDropdownMenuComponent, NzDropdownButtonDirective]
+  exports: [TriMenuModule, TriDropDownDirective, TriDropDownADirective, TriDropdownMenuComponent, TriDropdownButtonDirective]
 })
-export class NzDropDownModule {}
+export class TriDropDownModule {}

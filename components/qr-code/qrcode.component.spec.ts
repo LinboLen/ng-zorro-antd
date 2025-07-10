@@ -8,8 +8,8 @@ import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzQRCodeComponent } from './qrcode.component';
-import { NzQRCodeModule } from './qrcode.module';
+import { TriQRCodeComponent } from './qrcode.component';
+import { TriQRCodeModule } from './qrcode.module';
 
 describe('nz-qrcode', () => {
   beforeEach(() => {
@@ -19,15 +19,15 @@ describe('nz-qrcode', () => {
   });
 
   describe('basic', () => {
-    let fixture: ComponentFixture<NzTestQrCodeBasicComponent>;
-    let testComponent: NzTestQrCodeBasicComponent;
+    let fixture: ComponentFixture<TriTestQrCodeBasicComponent>;
+    let testComponent: TriTestQrCodeBasicComponent;
     let resultEl: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestQrCodeBasicComponent);
+      fixture = TestBed.createComponent(TriTestQrCodeBasicComponent);
       fixture.detectChanges();
       testComponent = fixture.componentInstance;
-      resultEl = fixture.debugElement.query(By.directive(NzQRCodeComponent));
+      resultEl = fixture.debugElement.query(By.directive(TriQRCodeComponent));
     });
 
     it('qr code bordered', () => {
@@ -68,16 +68,16 @@ describe('nz-qrcode', () => {
 });
 
 @Component({
-  imports: [NzQRCodeModule],
-  template: `<nz-qrcode
-    [nzValue]="value"
-    [nzSize]="size"
-    [nzBordered]="bordered"
-    [nzStatus]="status"
-    [nzStatusRender]="statusRender"
-  ></nz-qrcode>`
+  imports: [TriQRCodeModule],
+  template: `<tri-qrcode
+    [value]="value"
+    [size]="size"
+    [bordered]="bordered"
+    [status]="status"
+    [statusRender]="statusRender"
+  ></tri-qrcode>`
 })
-export class NzTestQrCodeBasicComponent {
+export class TriTestQrCodeBasicComponent {
   value: string = 'https://ng.ant.design/';
   size: number = 160;
   bordered: boolean = true;

@@ -1,25 +1,25 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzInputNumberLegacyModule } from 'ng-zorro-antd/input-number-legacy';
+import { TriInputNumberLegacyModule } from 'ng-zorro-antd/input-number-legacy';
 
 @Component({
-  selector: 'nz-demo-input-number-legacy-precision',
-  imports: [FormsModule, NzInputNumberLegacyModule],
+  selector: '',
+  imports: [FormsModule, TriInputNumberLegacyModule],
   template: `
-    <nz-input-number [(ngModel)]="toFixedValue" [nzPrecision]="precision" nzPlaceHolder="toFixed"></nz-input-number>
-    <nz-input-number
+    <tri-input-number [(ngModel)]="toFixedValue" [precision]="precision" placeHolder="toFixed"></tri-input-number>
+    <tri-input-number
       [(ngModel)]="cutValue"
-      [nzPrecision]="precision"
-      nzPrecisionMode="cut"
-      nzPlaceHolder="cut off"
-    ></nz-input-number>
-    <nz-input-number
+      [precision]="precision"
+      precisionMode="cut"
+      placeHolder="cut off"
+    ></tri-input-number>
+    <tri-input-number
       [(ngModel)]="customFnValue"
-      [nzPrecision]="precision"
-      [nzPrecisionMode]="customPrecisionFn"
-      nzPlaceHolder="cut off"
-    ></nz-input-number>
+      [precision]="precision"
+      [precisionMode]="customPrecisionFn"
+      placeHolder="cut off"
+    ></tri-input-number>
   `,
   styles: [
     `
@@ -29,7 +29,7 @@ import { NzInputNumberLegacyModule } from 'ng-zorro-antd/input-number-legacy';
     `
   ]
 })
-export class NzDemoInputNumberLegacyPrecisionComponent {
+export class TriDemoInputNumberLegacyPrecisionComponent {
   toFixedValue = 2;
   cutValue = 2;
   customFnValue = 2;

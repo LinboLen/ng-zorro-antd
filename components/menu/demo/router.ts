@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { TriMenuModule } from 'ng-zorro-antd/menu';
 
 @Component({
-  selector: 'nz-demo-menu-router',
-  imports: [RouterLink, NzMenuModule],
+  selector: '',
+  imports: [RouterLink, TriMenuModule],
   template: `
-    <ul nz-menu nzMode="horizontal">
-      <li nz-menu-item nzMatchRouter>
+    <ul tri-menu mode="horizontal">
+      <li tri-menu-item matchRouter>
         <a [routerLink]="['/', 'components', 'menu', 'en']">English Menu Document</a>
       </li>
-      <li nz-menu-item nzMatchRouter>
+      <li tri-menu-item matchRouter>
         <a [routerLink]="['/', 'components', 'menu', 'zh']">Chinese Menu Document</a>
       </li>
     </ul>
   `
 })
-export class NzDemoMenuRouterComponent {}
+export class TriDemoMenuRouterComponent {}

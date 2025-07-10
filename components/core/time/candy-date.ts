@@ -34,7 +34,7 @@ import {
 } from 'date-fns';
 
 import { warn } from 'ng-zorro-antd/core/logger';
-import { IndexableObject, NzSafeAny } from 'ng-zorro-antd/core/types';
+import { IndexableObject, TriSafeAny } from 'ng-zorro-antd/core/types';
 
 export type CandyDateMode = 'decade' | 'year' | 'quarter' | 'month' | 'day' | 'hour' | 'minute' | 'second';
 export type NormalizedMode = 'decade' | 'year' | 'month';
@@ -349,7 +349,7 @@ export class CandyDate implements IndexableObject {
     return isLastDayOfMonth(this.nativeDate);
   }
 
-  private toNativeDate(date: NzSafeAny): Date {
+  private toNativeDate(date: TriSafeAny): Date {
     return date instanceof CandyDate ? date.nativeDate : date;
   }
 }

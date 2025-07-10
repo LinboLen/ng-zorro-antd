@@ -1,28 +1,28 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { NzTimelineMode, NzTimelineModule } from 'ng-zorro-antd/timeline';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
+import { TriTimelineMode, TriTimelineModule } from 'ng-zorro-antd/timeline';
 
 @Component({
-  selector: 'nz-demo-timeline-label',
-  imports: [FormsModule, NzRadioModule, NzTimelineModule],
+  selector: '',
+  imports: [FormsModule, TriRadioModule, TriTimelineModule],
   template: `
-    <nz-radio-group [(ngModel)]="mode">
-      <label nz-radio nzValue="left">Left</label>
-      <label nz-radio nzValue="right">Right</label>
-      <label nz-radio nzValue="alternate">Alternative</label>
-    </nz-radio-group>
+    <tri-radio-group [(ngModel)]="mode">
+      <label tri-radio value="left">Left</label>
+      <label tri-radio value="right">Right</label>
+      <label tri-radio value="alternate">Alternative</label>
+    </tri-radio-group>
     <br />
     <br />
-    <nz-timeline [nzMode]="mode">
-      <nz-timeline-item nzLabel="2015-09-01">Create a services</nz-timeline-item>
-      <nz-timeline-item nzLabel="2015-09-01 09:12:11">Solve initial network problems</nz-timeline-item>
-      <nz-timeline-item>Technical testing</nz-timeline-item>
-      <nz-timeline-item nzLabel="2015-09-01 09:12:11">Network problems being solved</nz-timeline-item>
-    </nz-timeline>
+    <tri-timeline [mode]="mode">
+      <tri-timeline-item label="2015-09-01">Create a services</tri-timeline-item>
+      <tri-timeline-item label="2015-09-01 09:12:11">Solve initial network problems</tri-timeline-item>
+      <tri-timeline-item>Technical testing</tri-timeline-item>
+      <tri-timeline-item label="2015-09-01 09:12:11">Network problems being solved</tri-timeline-item>
+    </tri-timeline>
   `
 })
-export class NzDemoTimelineLabelComponent {
-  mode: NzTimelineMode = 'left';
+export class TriDemoTimelineLabelComponent {
+  mode: TriTimelineMode = 'left';
 }

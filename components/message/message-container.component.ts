@@ -9,8 +9,8 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 import { MessageConfig, onConfigChangeEventForComponent } from 'ng-zorro-antd/core/config';
 import { toCssPixel } from 'ng-zorro-antd/core/util';
 
-import { NzMNContainerComponent } from './base';
-import { NzMessageComponent } from './message.component';
+import { TriMNContainerComponent } from './base';
+import { TriMessageComponent } from './message.component';
 
 const NZ_CONFIG_COMPONENT_NAME = 'message';
 
@@ -26,19 +26,19 @@ const NZ_MESSAGE_DEFAULT_CONFIG: Required<MessageConfig> = {
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-message-container',
-  exportAs: 'nzMessageContainer',
+  selector: '',
+  exportAs: 'triMessageContainer',
   template: `
-    <div class="ant-message" [class.ant-message-rtl]="dir === 'rtl'" [style.top]="top">
+    <div class="tri-message" [class.tri-message-rtl]="dir === 'rtl'" [style.top]="top">
       @for (instance of instances; track instance) {
-        <nz-message [instance]="instance" (destroyed)="remove($event.id, $event.userAction)"></nz-message>
+        <tri-message [instance]="instance" (destroyed)="remove($event.id, $event.userAction)"></tri-message>
       }
     </div>
   `,
-  imports: [NzMessageComponent]
+  imports: [TriMessageComponent]
 })
-export class NzMessageContainerComponent extends NzMNContainerComponent {
-  dir: Direction = this.nzConfigService.getConfigForComponent(NZ_CONFIG_COMPONENT_NAME)?.nzDirection || 'ltr';
+export class TriMessageContainerComponent extends TriMNContainerComponent {
+  dir: Direction = this.configService.getConfigForComponent(NZ_CONFIG_COMPONENT_NAME)?.nzDirection || 'ltr';
   top?: string | null;
 
   constructor() {
@@ -49,7 +49,7 @@ export class NzMessageContainerComponent extends NzMNContainerComponent {
   protected subscribeConfigChange(): void {
     onConfigChangeEventForComponent(NZ_CONFIG_COMPONENT_NAME, () => {
       this.updateConfig();
-      this.dir = this.nzConfigService.getConfigForComponent(NZ_CONFIG_COMPONENT_NAME)?.nzDirection || this.dir;
+      this.dir = this.configService.getConfigForComponent(NZ_CONFIG_COMPONENT_NAME)?.nzDirection || this.dir;
     });
   }
 
@@ -57,7 +57,7 @@ export class NzMessageContainerComponent extends NzMNContainerComponent {
     this.config = {
       ...NZ_MESSAGE_DEFAULT_CONFIG,
       ...this.config,
-      ...this.nzConfigService.getConfigForComponent(NZ_CONFIG_COMPONENT_NAME)
+      ...this.configService.getConfigForComponent(NZ_CONFIG_COMPONENT_NAME)
     };
 
     this.top = toCssPixel(this.config.nzTop);

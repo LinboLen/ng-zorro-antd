@@ -1,44 +1,44 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { NzTabPosition, NzTabsModule } from 'ng-zorro-antd/tabs';
+import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
+import { TriTabPosition, TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: 'nz-demo-tabs-slide',
-  imports: [FormsModule, NzInputNumberModule, NzRadioModule, NzTabsModule],
+  selector: '',
+  imports: [FormsModule, TriInputNumberModule, TriRadioModule, TriTabsModule],
   template: `
-    <nz-radio-group [(ngModel)]="nzTabPosition" style="margin-bottom: 8px;">
-      <label nz-radio-button [nzValue]="'top'">Horizontal</label>
-      <label nz-radio-button [nzValue]="'left'">Vertical</label>
-    </nz-radio-group>
-    <nz-input-number style="float:right;" [nzMin]="0" [nzMax]="29" [(ngModel)]="selectedIndex"></nz-input-number>
+    <tri-radio-group [(ngModel)]="tabPosition" style="margin-bottom: 8px;">
+      <label tri-radio-button [value]="'top'">Horizontal</label>
+      <label tri-radio-button [value]="'left'">Vertical</label>
+    </tri-radio-group>
+    <tri-input-number style="float:right;" [min]="0" [max]="29" [(ngModel)]="selectedIndex"></tri-input-number>
 
-    <nz-tabs
+    <tri-tabs
       style="height:220px;"
-      [nzTabPosition]="nzTabPosition"
-      [(nzSelectedIndex)]="selectedIndex"
-      (nzSelectChange)="log([$event])"
+      [tabPosition]="tabPosition"
+      [(selectedIndexChange)]="selectedIndex"
+      (selectChange)="log([$event])"
     >
       @for (tab of tabs; track tab) {
-        <nz-tab
-          [nzTitle]="tab.name"
-          [nzDisabled]="tab.disabled"
-          (nzSelect)="log(['select', tab])"
-          (nzClick)="log(['click', tab])"
-          (nzContextmenu)="log(['contextmenu', tab])"
-          (nzDeselect)="log(['deselect', tab])"
+        <tri-tab
+          [title]="tab.name"
+          [disabled]="tab.disabled"
+          (select)="log(['select', tab])"
+          (click)="log(['click', tab])"
+          (contextmenu)="log(['contextmenu', tab])"
+          (deselect)="log(['deselect', tab])"
         >
           {{ tab.content }}
-        </nz-tab>
+        </tri-tab>
       }
-    </nz-tabs>
+    </tri-tabs>
   `
 })
-export class NzDemoTabsSlideComponent implements OnInit {
+export class TriDemoTabsSlideComponent implements OnInit {
   tabs: Array<{ name: string; content: string; disabled: boolean }> = [];
-  nzTabPosition: NzTabPosition = 'top';
+  tabPosition: TriTabPosition = 'top';
   selectedIndex = 27;
 
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */

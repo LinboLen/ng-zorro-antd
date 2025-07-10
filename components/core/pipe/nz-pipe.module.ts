@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzTimeRangePipe } from './time-range.pipe';
+import { TriTimeRangePipe } from './time-range.pipe';
 
 @NgModule({
-  imports: [NzTimeRangePipe],
-  exports: [NzTimeRangePipe]
+  imports: [TriTimeRangePipe],
+  exports: [TriTimeRangePipe]
 })
-export class NzPipesModule {}
+export class TriPipesModule {}

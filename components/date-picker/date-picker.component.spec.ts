@@ -21,24 +21,24 @@ import {
   dispatchMouseEvent,
   typeInElement
 } from 'ng-zorro-antd/core/testing';
-import { NgStyleInterface, NzSafeAny, NzStatus, NzVariant } from 'ng-zorro-antd/core/types';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NZ_DATE_LOCALE, NzI18nService } from 'ng-zorro-antd/i18n';
+import { NgStyleInterface, TriSafeAny, TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
+import { TriFormModule } from 'ng-zorro-antd/form';
+import { NZ_DATE_LOCALE, TriI18nService } from 'ng-zorro-antd/i18n';
 import en_US from 'ng-zorro-antd/i18n/languages/en_US';
 
-import { NzDatePickerComponent, NzDatePickerSizeType, NzPlacement } from './date-picker.component';
-import { NzDatePickerModule } from './date-picker.module';
-import { CompatibleDate, NzPanelChangeType } from './standard-types';
+import { TriDatePickerComponent, TriDatePickerSizeType, TriPlacement } from './date-picker.component';
+import { TriDatePickerModule } from './date-picker.module';
+import { CompatibleDate, TriPanelChangeType } from './standard-types';
 import { ENTER_EVENT, getPickerAbstract, getPickerInput } from './testing/util';
 import { PREFIX_CLASS } from './util';
 
 describe('NzDatePickerComponent', () => {
-  let fixture: ComponentFixture<NzTestDatePickerComponent>;
-  let fixtureInstance: NzTestDatePickerComponent;
+  let fixture: ComponentFixture<TriTestDatePickerComponent>;
+  let fixtureInstance: TriTestDatePickerComponent;
   let debugElement: DebugElement;
   let overlayContainer: OverlayContainer;
   let overlayContainerElement: HTMLElement;
-  let i18nService: NzI18nService;
+  let i18nService: TriI18nService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -47,13 +47,13 @@ describe('NzDatePickerComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NzTestDatePickerComponent);
+    fixture = TestBed.createComponent(TriTestDatePickerComponent);
     fixtureInstance = fixture.componentInstance;
     debugElement = fixture.debugElement;
   });
 
   beforeEach(
-    testingInject([OverlayContainer, NzI18nService], (oc: OverlayContainer, i18n: NzI18nService) => {
+    testingInject([OverlayContainer, TriI18nService], (oc: OverlayContainer, i18n: TriI18nService) => {
       overlayContainer = oc;
       overlayContainerElement = oc.getContainerElement();
       i18nService = i18n;
@@ -81,7 +81,7 @@ describe('NzDatePickerComponent', () => {
 
     it('should open and close method work', fakeAsync(() => {
       fixture.detectChanges();
-      fixtureInstance.datePicker.open();
+      fixtureInstance.datePicker._open();
       fixture.detectChanges();
       tick(500);
       fixture.detectChanges();
@@ -128,7 +128,7 @@ describe('NzDatePickerComponent', () => {
     }));
 
     it('should open by click, focus on inner calendar input, and submit on enter', fakeAsync(() => {
-      fixtureInstance.nzValue = new Date();
+      fixtureInstance.value = new Date();
       fixture.detectChanges();
       openPickerByClickTrigger();
       expect(document.activeElement).toEqual(getPickerInput(fixture.debugElement));
@@ -250,41 +250,41 @@ describe('NzDatePickerComponent', () => {
 
     it('should support nzAllowClear and work properly', fakeAsync(() => {
       const clearBtnSelector = By.css(`.${PREFIX_CLASS}-clear`);
-      const initial = (fixtureInstance.nzValue = new Date());
-      fixtureInstance.nzAllowClear = false;
+      const initial = (fixtureInstance.value = new Date());
+      fixtureInstance.allowClear = false;
       fixture.detectChanges();
       expect(debugElement.query(clearBtnSelector)).toBeFalsy();
 
-      fixtureInstance.nzAllowClear = true;
+      fixtureInstance.allowClear = true;
       tick(500);
       fixture.detectChanges();
-      expect(fixtureInstance.nzValue).toBe(initial);
+      expect(fixtureInstance.value).toBe(initial);
       expect(debugElement.query(clearBtnSelector)).toBeDefined();
 
       const nzOnChange = spyOn(fixtureInstance, 'nzOnChange');
       debugElement.query(clearBtnSelector).nativeElement.click();
       fixture.detectChanges();
-      expect(fixtureInstance.nzValue).toBe(initial);
+      expect(fixtureInstance.value).toBe(initial);
       expect(nzOnChange).toHaveBeenCalledWith(null);
       expect(debugElement.query(clearBtnSelector)).toBeFalsy();
     }));
 
     it('should support nzAutoFocus', () => {
-      fixtureInstance.nzAutoFocus = true;
+      fixtureInstance.autoFocus = true;
       fixture.detectChanges();
       expect(getPickerInput(fixture.debugElement) === document.activeElement).toBeTruthy();
     });
 
     it('should support nzDisabled', fakeAsync(() => {
       fixtureInstance.useSuite = 4;
-      fixtureInstance.nzDisabled = true;
-      fixtureInstance.nzAllowClear = true; // Make sure picker clear button shown up
-      fixtureInstance.nzValue = new Date();
+      fixtureInstance.disabled = true;
+      fixtureInstance.allowClear = true; // Make sure picker clear button shown up
+      fixtureInstance.value = new Date();
       fixtureInstance.control = new FormControl(new Date());
       fixture.detectChanges();
       flush();
 
-      const datePickerElement = fixture.debugElement.query(By.directive(NzDatePickerComponent)).nativeElement;
+      const datePickerElement = fixture.debugElement.query(By.directive(TriDatePickerComponent)).nativeElement;
       const inputElement = fixture.debugElement.query(By.css('input')).nativeElement as HTMLInputElement;
 
       expect(datePickerElement.classList).toContain('ant-picker-disabled');
@@ -320,7 +320,7 @@ describe('NzDatePickerComponent', () => {
       fixtureInstance.control = new FormControl<Date | null>(null);
       fixture.detectChanges();
       flush();
-      const datePickerElement = fixture.debugElement.query(By.directive(NzDatePickerComponent)).nativeElement;
+      const datePickerElement = fixture.debugElement.query(By.directive(TriDatePickerComponent)).nativeElement;
       openPickerByClickTrigger();
       expect(datePickerElement.classList).toContain('ng-untouched');
       triggerInputBlur();
@@ -331,11 +331,11 @@ describe('NzDatePickerComponent', () => {
     }));
 
     it('should support nzInputReadOnly', fakeAsync(() => {
-      fixtureInstance.nzInputReadOnly = true;
+      fixtureInstance.inputReadOnly = true;
       fixture.detectChanges();
       expect(getPickerInput(fixture.debugElement).readOnly).toBeTruthy();
 
-      fixtureInstance.nzInputReadOnly = false;
+      fixtureInstance.inputReadOnly = false;
       fixture.detectChanges();
       expect(getPickerInput(fixture.debugElement).readOnly).not.toBeTruthy();
     }));
@@ -347,13 +347,13 @@ describe('NzDatePickerComponent', () => {
       tick(500);
       fixture.detectChanges();
       expect(getPickerContainer()).toBeNull();
-      fixtureInstance.nzOpen = true;
+      fixtureInstance.open = true;
       fixture.detectChanges();
       tick(500);
       fixture.detectChanges();
       expect(getPickerContainer()).not.toBeNull();
 
-      fixtureInstance.nzOpen = false;
+      fixtureInstance.open = false;
       fixture.detectChanges();
       tick(500);
       fixture.detectChanges();
@@ -361,8 +361,8 @@ describe('NzDatePickerComponent', () => {
     }));
 
     it('should support nzFormat', fakeAsync(() => {
-      fixtureInstance.nzFormat = 'dd.MM.yyyy';
-      fixtureInstance.nzValue = new Date('2020-03-04');
+      fixtureInstance.format = 'dd.MM.yyyy';
+      fixtureInstance.value = new Date('2020-03-04');
       fixture.detectChanges();
       openPickerByClickTrigger();
       const input = getPickerInput(fixture.debugElement);
@@ -375,15 +375,15 @@ describe('NzDatePickerComponent', () => {
     }));
 
     it('should rerender input value when nzFormat changed', fakeAsync(() => {
-      fixtureInstance.nzFormat = 'dd.MM.yyyy';
-      fixtureInstance.nzValue = new Date('2025-05-23');
+      fixtureInstance.format = 'dd.MM.yyyy';
+      fixtureInstance.value = new Date('2025-05-23');
       fixture.detectChanges();
       flush();
       fixture.detectChanges();
       const input = getPickerInput(fixture.debugElement);
       expect(input.value).toBe('23.05.2025');
       const nzOnChange = spyOn(fixtureInstance, 'nzOnChange');
-      fixtureInstance.nzFormat = 'dd/MM/yyyy';
+      fixtureInstance.format = 'dd/MM/yyyy';
       fixture.detectChanges();
       flush();
       fixture.detectChanges();
@@ -394,8 +394,8 @@ describe('NzDatePickerComponent', () => {
     it('should support nzDisabledDate', fakeAsync(() => {
       fixture.detectChanges();
       const compareDate = new Date('2018-11-15 00:00:00');
-      fixtureInstance.nzValue = new Date('2018-11-11 12:12:12');
-      fixtureInstance.nzDisabledDate = (current: Date) => isSameDay(current, compareDate);
+      fixtureInstance.value = new Date('2018-11-11 12:12:12');
+      fixtureInstance.disabledDate = (current: Date) => isSameDay(current, compareDate);
       fixture.detectChanges();
       flush();
       fixture.detectChanges();
@@ -422,8 +422,8 @@ describe('NzDatePickerComponent', () => {
     // #5633
     it('should support disable year and month right', fakeAsync(() => {
       fixture.detectChanges();
-      fixtureInstance.nzValue = new Date(2020, 0, 1);
-      fixtureInstance.nzDisabledDate = (date: Date): boolean =>
+      fixtureInstance.value = new Date(2020, 0, 1);
+      fixtureInstance.disabledDate = (date: Date): boolean =>
         date >= new Date(2019, 0, 1) && date < new Date(2019, 0, 2);
       fixture.detectChanges();
       flush();
@@ -448,37 +448,37 @@ describe('NzDatePickerComponent', () => {
 
     it('should support nzLocale', () => {
       const featureKey = 'TEST_PLACEHOLDER';
-      fixtureInstance.nzLocale = { lang: { placeholder: featureKey } };
+      fixtureInstance.locale = { lang: { placeholder: featureKey } };
       fixture.detectChanges();
       expect(getPickerInput(fixture.debugElement).getAttribute('placeholder')).toBe(featureKey);
     });
 
     it('should support nzPlaceHolder', () => {
-      const featureKey = (fixtureInstance.nzPlaceHolder = 'TEST_PLACEHOLDER');
+      const featureKey = (fixtureInstance.placeHolder = 'TEST_PLACEHOLDER');
       fixture.detectChanges();
       expect(getPickerInput(fixture.debugElement).getAttribute('placeholder')).toBe(featureKey);
     });
 
     it('should support nzPopupStyle', fakeAsync(() => {
-      fixtureInstance.nzPopupStyle = { color: 'red' };
+      fixtureInstance.popupStyle = { color: 'red' };
       fixture.detectChanges();
       openPickerByClickTrigger();
       expect(queryFromOverlay(`.${PREFIX_CLASS}-dropdown`).style.color).toBe('red');
     }));
 
     it('should support nzDropdownClassName', fakeAsync(() => {
-      const keyCls = (fixtureInstance.nzDropdownClassName = 'my-test-class');
+      const keyCls = (fixtureInstance.dropdownClassName = 'my-test-class');
       fixture.detectChanges();
       openPickerByClickTrigger();
       expect(queryFromOverlay(`.${PREFIX_CLASS}-dropdown`).classList.contains(keyCls)).toBeTruthy();
     }));
 
     it('should support nzSize', () => {
-      fixtureInstance.nzSize = 'large';
+      fixtureInstance.size = 'large';
       fixture.detectChanges();
       expect(getPickerAbstract(fixture.debugElement).classList.contains(`${PREFIX_CLASS}-large`)).toBeTruthy();
 
-      fixtureInstance.nzSize = 'small';
+      fixtureInstance.size = 'small';
       fixture.detectChanges();
       expect(getPickerAbstract(fixture.debugElement).classList.contains(`${PREFIX_CLASS}-small`)).toBeTruthy();
     });
@@ -509,7 +509,7 @@ describe('NzDatePickerComponent', () => {
     it('should not emit nzOnOpenChange when nzOpen is false and input is clicked', fakeAsync(() => {
       const nzOnOpenChange = spyOn(fixtureInstance, 'nzOnOpenChange');
       fixtureInstance.useSuite = 2;
-      fixtureInstance.nzOpen = false;
+      fixtureInstance.open = false;
 
       fixture.detectChanges();
       openPickerByClickTrigger();
@@ -518,8 +518,8 @@ describe('NzDatePickerComponent', () => {
     }));
 
     it('should support nzValue', fakeAsync(() => {
-      fixtureInstance.nzDefaultPickerValue = new Date('2015-09-17');
-      fixtureInstance.nzValue = new Date('2018-11-11');
+      fixtureInstance.defaultPickerValue = new Date('2015-09-17');
+      fixtureInstance.value = new Date('2018-11-11');
       fixture.detectChanges();
       flush();
       fixture.detectChanges();
@@ -528,7 +528,7 @@ describe('NzDatePickerComponent', () => {
     }));
 
     it('should support nzOnChange', fakeAsync(() => {
-      fixtureInstance.nzValue = new Date('2018-11-11');
+      fixtureInstance.value = new Date('2018-11-11');
       const nzOnChange = spyOn(fixtureInstance, 'nzOnChange');
       const nzOnCalendarChange = spyOn(fixtureInstance, 'nzOnCalendarChange');
       fixture.detectChanges();
@@ -548,7 +548,7 @@ describe('NzDatePickerComponent', () => {
 
     it('should support nzDefaultPickerValue', fakeAsync(() => {
       fixture.detectChanges();
-      fixtureInstance.nzDefaultPickerValue = new Date('2015-09-17');
+      fixtureInstance.defaultPickerValue = new Date('2015-09-17');
       fixture.detectChanges();
       flush();
       fixture.detectChanges();
@@ -558,13 +558,13 @@ describe('NzDatePickerComponent', () => {
     }));
 
     it('should support custom suffixIcon', fakeAsync(() => {
-      fixtureInstance.nzSuffixIcon = 'clock-circle';
+      fixtureInstance.suffixIcon = 'clock-circle';
       fixture.detectChanges();
       expect(debugElement.query(By.css(`.anticon-clock-circle`))).toBeDefined();
     }));
 
     it('should support nzBorderless', fakeAsync(() => {
-      fixtureInstance.nzBorderless = true;
+      fixtureInstance.borderless = true;
       fixture.detectChanges();
       expect(debugElement.query(By.css(`.ant-picker-borderless`))).toBeDefined();
     }));
@@ -573,7 +573,7 @@ describe('NzDatePickerComponent', () => {
       it('borderless', () => {
         fixture.detectChanges();
         expect(debugElement.query(By.css(`.ant-picker-borderless`))).toBeNull();
-        fixtureInstance.nzVariant = 'borderless';
+        fixtureInstance.variant = 'borderless';
         fixture.detectChanges();
         expect(debugElement.query(By.css(`.ant-picker-borderless`))).toBeDefined();
       });
@@ -581,7 +581,7 @@ describe('NzDatePickerComponent', () => {
       it('filled', () => {
         fixture.detectChanges();
         expect(debugElement.query(By.css(`.ant-picker-filled`))).toBeNull();
-        fixtureInstance.nzVariant = 'filled';
+        fixtureInstance.variant = 'filled';
         fixture.detectChanges();
         expect(debugElement.query(By.css(`.ant-picker-filled`))).toBeDefined();
       });
@@ -589,7 +589,7 @@ describe('NzDatePickerComponent', () => {
       it('underlined', () => {
         fixture.detectChanges();
         expect(debugElement.query(By.css(`.ant-picker-underlined`))).toBeNull();
-        fixtureInstance.nzVariant = 'underlined';
+        fixtureInstance.variant = 'underlined';
         fixture.detectChanges();
         expect(debugElement.query(By.css(`.ant-picker-underlined`))).toBeDefined();
       });
@@ -597,7 +597,7 @@ describe('NzDatePickerComponent', () => {
 
     it('should support nzInline', fakeAsync(() => {
       const nzOnChange = spyOn(fixtureInstance, 'nzOnChange');
-      fixtureInstance.nzInline = true;
+      fixtureInstance.inline = true;
       fixture.detectChanges();
       overlayContainerElement = debugElement.nativeElement as HTMLLIElement;
       const cell = getFirstCell(); // Use the first cell
@@ -612,7 +612,7 @@ describe('NzDatePickerComponent', () => {
     }));
 
     it('should not run change detection when inline mode is enabled and the `date-range-popup` is clicked', () => {
-      fixtureInstance.nzInline = true;
+      fixtureInstance.inline = true;
       fixture.detectChanges();
 
       const appRef = TestBed.inject(ApplicationRef);
@@ -628,7 +628,7 @@ describe('NzDatePickerComponent', () => {
     });
 
     it('should support nzBackdrop', fakeAsync(() => {
-      fixtureInstance.nzBackdrop = true;
+      fixtureInstance.backdrop = true;
       fixture.detectChanges();
       openPickerByClickTrigger();
       expect(overlayContainerElement.children[0].classList).toContain('cdk-overlay-backdrop');
@@ -636,7 +636,7 @@ describe('NzDatePickerComponent', () => {
 
     // TODO: why this works well locally but fails on CI?
     xit('should support nzPlacement', fakeAsync(() => {
-      fixtureInstance.nzPlacement = 'bottomLeft';
+      fixtureInstance.placement = 'bottomLeft';
       fixture.detectChanges();
       openPickerByClickTrigger();
       let element = queryFromOverlay('.ant-picker-dropdown');
@@ -648,7 +648,7 @@ describe('NzDatePickerComponent', () => {
       fixture.detectChanges();
       tick(500);
 
-      fixtureInstance.nzPlacement = 'bottomRight';
+      fixtureInstance.placement = 'bottomRight';
       fixture.detectChanges();
       openPickerByClickTrigger();
       element = queryFromOverlay('.ant-picker-dropdown');
@@ -657,7 +657,7 @@ describe('NzDatePickerComponent', () => {
       expect(element.classList.contains('ant-picker-dropdown-placement-bottomRight')).toBe(true);
       expect(element.classList.contains('ant-picker-dropdown-placement-topRight')).toBe(false);
 
-      fixtureInstance.nzPlacement = 'topLeft';
+      fixtureInstance.placement = 'topLeft';
       fixture.detectChanges();
       openPickerByClickTrigger();
       element = queryFromOverlay('.ant-picker-dropdown');
@@ -666,7 +666,7 @@ describe('NzDatePickerComponent', () => {
       expect(element.classList.contains('ant-picker-dropdown-placement-bottomRight')).toBe(false);
       expect(element.classList.contains('ant-picker-dropdown-placement-topRight')).toBe(false);
 
-      fixtureInstance.nzPlacement = 'topRight';
+      fixtureInstance.placement = 'topRight';
       fixture.detectChanges();
       openPickerByClickTrigger();
       element = queryFromOverlay('.ant-picker-dropdown');
@@ -682,11 +682,11 @@ describe('NzDatePickerComponent', () => {
     }));
 
     it('should support nzShowWeekNumber', fakeAsync(() => {
-      fixtureInstance.nzShowWeekNumber = true;
+      fixtureInstance.showWeekNumber = true;
       fixture.detectChanges();
       openPickerByClickTrigger();
       expect(queryFromOverlay('.ant-picker-week-panel-row .ant-picker-cell-week')).toBeDefined();
-      fixtureInstance.nzShowWeekNumber = false;
+      fixtureInstance.showWeekNumber = false;
       fixture.detectChanges();
       tick(500);
       openPickerByClickTrigger();
@@ -698,7 +698,7 @@ describe('NzDatePickerComponent', () => {
     beforeEach(() => (fixtureInstance.useSuite = 1));
 
     it('should support date panel changes on click month', fakeAsync(() => {
-      fixtureInstance.nzValue = new Date('2018-11-11');
+      fixtureInstance.value = new Date('2018-11-11');
       fixture.detectChanges();
       flush();
       fixture.detectChanges();
@@ -721,7 +721,7 @@ describe('NzDatePickerComponent', () => {
     }));
 
     it('should support date panel changes', fakeAsync(() => {
-      fixtureInstance.nzValue = new Date('2018-11-11');
+      fixtureInstance.value = new Date('2018-11-11');
       fixture.detectChanges();
       flush();
       fixture.detectChanges();
@@ -761,7 +761,7 @@ describe('NzDatePickerComponent', () => {
     }));
 
     it('should support month panel changes', fakeAsync(() => {
-      fixtureInstance.nzValue = new Date('2018-11-11');
+      fixtureInstance.value = new Date('2018-11-11');
       fixture.detectChanges();
       flush();
       fixture.detectChanges();
@@ -798,7 +798,7 @@ describe('NzDatePickerComponent', () => {
     }));
 
     it('should support year panel changes', fakeAsync(() => {
-      fixtureInstance.nzValue = new Date('2018-11-11');
+      fixtureInstance.value = new Date('2018-11-11');
       fixture.detectChanges();
       flush();
       fixture.detectChanges();
@@ -847,7 +847,7 @@ describe('NzDatePickerComponent', () => {
     }));
 
     it('should support decade panel changes', fakeAsync(() => {
-      fixtureInstance.nzValue = new Date('2018-11-11');
+      fixtureInstance.value = new Date('2018-11-11');
       fixture.detectChanges();
       tick(500);
       fixture.detectChanges();
@@ -902,7 +902,7 @@ describe('NzDatePickerComponent', () => {
     beforeEach(() => (fixtureInstance.useSuite = 1));
 
     it('should support nzDateRender', fakeAsync(() => {
-      fixtureInstance.nzDateRender = fixtureInstance.tplDateRender;
+      fixtureInstance.dateRender = fixtureInstance.tplDateRender;
       fixture.detectChanges();
       openPickerByClickTrigger();
       expect(queryFromOverlay('.test-first-day').textContent!.trim()).toBe('1');
@@ -910,15 +910,15 @@ describe('NzDatePickerComponent', () => {
 
     it('should support nzDateRender with typeof function', fakeAsync(() => {
       const featureKey = 'TEST_FIRST_DAY';
-      fixtureInstance.nzDateRender = (d: Date) => (d.getDate() === 1 ? featureKey : d.getDate());
+      fixtureInstance.dateRender = (d: Date) => (d.getDate() === 1 ? featureKey : d.getDate());
       fixture.detectChanges();
       openPickerByClickTrigger();
       expect(overlayContainerElement.textContent!.indexOf(featureKey) > -1).toBeTruthy();
     }));
 
     it('should support nzShowTime', fakeAsync(() => {
-      fixtureInstance.nzValue = new Date('2018-11-11 11:22:33');
-      fixtureInstance.nzShowTime = '' as NzSafeAny;
+      fixtureInstance.value = new Date('2018-11-11 11:22:33');
+      fixtureInstance.showTime = '' as TriSafeAny;
       fixture.detectChanges();
       openPickerByClickTrigger();
       flush();
@@ -938,8 +938,8 @@ describe('NzDatePickerComponent', () => {
     }));
 
     it('should support nzShowTime.nzDefaultOpenValue', fakeAsync(() => {
-      fixtureInstance.nzValue = null;
-      fixtureInstance.nzShowTime = { nzDefaultOpenValue: new Date(0, 0, 0, 0, 1, 2) };
+      fixtureInstance.value = null;
+      fixtureInstance.showTime = { nzDefaultOpenValue: new Date(0, 0, 0, 0, 1, 2) };
       fixture.detectChanges();
       openPickerByClickTrigger();
 
@@ -958,8 +958,8 @@ describe('NzDatePickerComponent', () => {
     }));
 
     it('should not reset time', fakeAsync(() => {
-      fixtureInstance.nzValue = new Date('2019-08-02 13:03:33');
-      fixtureInstance.nzShowTime = true;
+      fixtureInstance.value = new Date('2019-08-02 13:03:33');
+      fixtureInstance.showTime = true;
       fixture.detectChanges();
       flush();
       fixture.detectChanges();
@@ -972,15 +972,15 @@ describe('NzDatePickerComponent', () => {
     }));
 
     it('should support nzShowTime.nzFormat', fakeAsync(() => {
-      fixtureInstance.nzShowTime = { nzFormat: 'HH:mm' };
+      fixtureInstance.showTime = { nzFormat: 'HH:mm' };
       fixture.detectChanges();
       openPickerByClickTrigger();
       expect(overlayContainerElement.querySelectorAll('.ant-picker-time-panel-column').length).toBe(2);
     }));
 
     it('should support nzDisabledTime and nzShowTime.nzHideDisabledOptions', fakeAsync(() => {
-      fixtureInstance.nzShowTime = true;
-      fixtureInstance.nzDisabledTime = () => ({
+      fixtureInstance.showTime = true;
+      fixtureInstance.disabledTime = () => ({
         nzDisabledHours: () => [0, 1, 2],
         nzDisabledMinutes: () => [0, 1],
         nzDisabledSeconds: () => [0]
@@ -1005,7 +1005,7 @@ describe('NzDatePickerComponent', () => {
       ).toBeTruthy();
 
       // Use nzHideDisabledOptions to hide disabled times
-      fixtureInstance.nzShowTime = { nzHideDisabledOptions: true };
+      fixtureInstance.showTime = { nzHideDisabledOptions: true };
       fixture.detectChanges();
       expect(+queryFromOverlay('.ant-picker-time-panel-column:nth-child(1) li:first-child').textContent!.trim()).toBe(
         3
@@ -1019,8 +1019,8 @@ describe('NzDatePickerComponent', () => {
     }));
 
     it('should nzDisabledTime invalid input not emit', fakeAsync(() => {
-      fixtureInstance.nzShowTime = true;
-      fixtureInstance.nzDisabledTime = () => ({
+      fixtureInstance.showTime = true;
+      fixtureInstance.disabledTime = () => ({
         nzDisabledHours: () => [0, 1, 2],
         nzDisabledMinutes: () => [0, 1],
         nzDisabledSeconds: () => [0]
@@ -1046,8 +1046,8 @@ describe('NzDatePickerComponent', () => {
     }));
 
     it('should support updating the nzDisabledTime state when the current time changes', fakeAsync(() => {
-      fixtureInstance.nzShowTime = true;
-      fixtureInstance.nzDisabledTime = (current: Date) => ({
+      fixtureInstance.showTime = true;
+      fixtureInstance.disabledTime = (current: Date) => ({
         nzDisabledHours: () => {
           if (current) {
             if (current.getMonth() === 2) {
@@ -1086,15 +1086,15 @@ describe('NzDatePickerComponent', () => {
     }));
 
     it('should support nzRenderExtraFooter', fakeAsync(() => {
-      fixtureInstance.nzRenderExtraFooter = () => fixtureInstance.tplExtraFooter;
+      fixtureInstance.renderExtraFooter = () => fixtureInstance.tplExtraFooter;
       fixture.detectChanges();
 
       openPickerByClickTrigger();
       expect(overlayContainerElement.textContent!.indexOf('TEST_EXTRA_FOOTER') > -1).toBeTruthy();
 
-      fixtureInstance.nzRenderExtraFooter = 'TEST_EXTRA_FOOTER_STRING';
+      fixtureInstance.renderExtraFooter = 'TEST_EXTRA_FOOTER_STRING';
       fixture.detectChanges();
-      expect(overlayContainerElement.textContent!.indexOf(fixtureInstance.nzRenderExtraFooter) > -1).toBeTruthy();
+      expect(overlayContainerElement.textContent!.indexOf(fixtureInstance.renderExtraFooter) > -1).toBeTruthy();
     }));
 
     it('should support nzShowToday', fakeAsync(() => {
@@ -1102,7 +1102,7 @@ describe('NzDatePickerComponent', () => {
       openPickerByClickTrigger();
       expect(overlayContainerElement.querySelector('.ant-picker-footer')).toBeDefined();
 
-      fixtureInstance.nzShowToday = true;
+      fixtureInstance.showToday = true;
       fixture.detectChanges();
       expect(overlayContainerElement.querySelector('.ant-picker-today-btn')).toBeDefined();
 
@@ -1122,13 +1122,13 @@ describe('NzDatePickerComponent', () => {
       openPickerByClickTrigger();
       expect(overlayContainerElement.querySelector('.ant-picker-footer')).toBeDefined();
 
-      fixtureInstance.nzShowTime = true;
+      fixtureInstance.showTime = true;
 
-      fixtureInstance.nzShowNow = false;
+      fixtureInstance.showNow = false;
       fixture.detectChanges();
       expect(overlayContainerElement.querySelector('.ant-picker-now-btn')).toBeNull();
 
-      fixtureInstance.nzShowNow = true;
+      fixtureInstance.showNow = true;
       fixture.detectChanges();
       expect(overlayContainerElement.querySelector('.ant-picker-now-btn')).toBeDefined();
 
@@ -1148,13 +1148,13 @@ describe('NzDatePickerComponent', () => {
     }));
 
     it('should support nzMode', fakeAsync(() => {
-      fixtureInstance.nzValue = new Date('2020-12-01');
+      fixtureInstance.value = new Date('2020-12-01');
       fixture.detectChanges();
       flush();
       fixture.detectChanges();
       expect(getPickerInput(fixture.debugElement).placeholder).toEqual('请选择日期');
 
-      fixtureInstance.nzMode = 'month';
+      fixtureInstance.mode = 'month';
       fixture.detectChanges();
       flush();
       fixture.detectChanges();
@@ -1166,7 +1166,7 @@ describe('NzDatePickerComponent', () => {
     }));
 
     it('should support nzOnPanelChange', fakeAsync(() => {
-      fixtureInstance.nzValue = new Date('2020-12-01');
+      fixtureInstance.value = new Date('2020-12-01');
       spyOn(fixtureInstance, 'nzOnPanelChange');
       fixture.detectChanges();
       openPickerByClickTrigger();
@@ -1176,11 +1176,11 @@ describe('NzDatePickerComponent', () => {
       fixture.detectChanges();
       tick(500);
       fixture.detectChanges();
-      expect(fixtureInstance.nzOnPanelChange).toHaveBeenCalledWith({ mode: 'month', date: new Date('2020-12-01') });
+      expect(fixtureInstance.onPanelChange).toHaveBeenCalledWith({ mode: 'month', date: new Date('2020-12-01') });
     }));
 
     it('should support nzOnPanelChange when next button is clicked', fakeAsync(() => {
-      fixtureInstance.nzValue = new Date('2020-11-01');
+      fixtureInstance.value = new Date('2020-11-01');
       spyOn(fixtureInstance, 'nzOnPanelChange');
       fixture.detectChanges();
       openPickerByClickTrigger();
@@ -1188,11 +1188,11 @@ describe('NzDatePickerComponent', () => {
       fixture.detectChanges();
       tick(500);
       fixture.detectChanges();
-      expect(fixtureInstance.nzOnPanelChange).toHaveBeenCalledWith({ mode: 'date', date: new Date('2020-12-01') });
+      expect(fixtureInstance.onPanelChange).toHaveBeenCalledWith({ mode: 'date', date: new Date('2020-12-01') });
     }));
 
     it('should support nzOnPanelChange when super next button is clicked', fakeAsync(() => {
-      fixtureInstance.nzValue = new Date('2020-11-01');
+      fixtureInstance.value = new Date('2020-11-01');
       spyOn(fixtureInstance, 'nzOnPanelChange');
       fixture.detectChanges();
       openPickerByClickTrigger();
@@ -1200,11 +1200,11 @@ describe('NzDatePickerComponent', () => {
       fixture.detectChanges();
       tick(500);
       fixture.detectChanges();
-      expect(fixtureInstance.nzOnPanelChange).toHaveBeenCalledWith({ mode: 'date', date: new Date('2021-11-01') });
+      expect(fixtureInstance.onPanelChange).toHaveBeenCalledWith({ mode: 'date', date: new Date('2021-11-01') });
     }));
 
     it('should support nzOnPanelChange when previous button is clicked', fakeAsync(() => {
-      fixtureInstance.nzValue = new Date('2020-11-01 11:22:33');
+      fixtureInstance.value = new Date('2020-11-01 11:22:33');
       spyOn(fixtureInstance, 'nzOnPanelChange');
       fixture.detectChanges();
       openPickerByClickTrigger();
@@ -1212,14 +1212,14 @@ describe('NzDatePickerComponent', () => {
       fixture.detectChanges();
       tick(500);
       fixture.detectChanges();
-      expect(fixtureInstance.nzOnPanelChange).toHaveBeenCalledWith({
+      expect(fixtureInstance.onPanelChange).toHaveBeenCalledWith({
         mode: 'date',
         date: new Date('2020-10-01 11:22:33')
       });
     }));
 
     it('should support nzOnPanelChange when super previous button is clicked', fakeAsync(() => {
-      fixtureInstance.nzValue = new Date('2020-11-01 11:22:33');
+      fixtureInstance.value = new Date('2020-11-01 11:22:33');
       spyOn(fixtureInstance, 'nzOnPanelChange');
       fixture.detectChanges();
       openPickerByClickTrigger();
@@ -1227,7 +1227,7 @@ describe('NzDatePickerComponent', () => {
       fixture.detectChanges();
       tick(500);
       fixture.detectChanges();
-      expect(fixtureInstance.nzOnPanelChange).toHaveBeenCalledWith({
+      expect(fixtureInstance.onPanelChange).toHaveBeenCalledWith({
         mode: 'date',
         date: new Date('2019-11-01 11:22:33')
       });
@@ -1235,8 +1235,8 @@ describe('NzDatePickerComponent', () => {
 
     it('should support nzOnOk', fakeAsync(() => {
       spyOn(fixtureInstance, 'nzOnOk');
-      fixtureInstance.nzValue = new Date('2018-11-11 11:22:33');
-      fixtureInstance.nzShowTime = true;
+      fixtureInstance.value = new Date('2018-11-11 11:22:33');
+      fixtureInstance.showTime = true;
       fixture.detectChanges();
       flush();
       fixture.detectChanges();
@@ -1247,7 +1247,7 @@ describe('NzDatePickerComponent', () => {
       fixture.detectChanges();
       tick(500);
       fixture.detectChanges();
-      expect(fixtureInstance.nzOnOk).toHaveBeenCalledWith(fixtureInstance.nzValue);
+      expect(fixtureInstance.onOk).toHaveBeenCalledWith(fixtureInstance.value);
     }));
 
     it('should custom input date', fakeAsync(() => {
@@ -1338,7 +1338,7 @@ describe('NzDatePickerComponent', () => {
       fixture.detectChanges();
       flush(); // Wait writeValue() tobe done
       fixture.detectChanges();
-      const datePickerElement = fixture.debugElement.query(By.directive(NzDatePickerComponent)).nativeElement;
+      const datePickerElement = fixture.debugElement.query(By.directive(TriDatePickerComponent)).nativeElement;
       const inputElement = fixture.debugElement.query(By.css('input')).nativeElement as HTMLInputElement;
 
       expect(datePickerElement.classList).not.toContain('ant-picker-disabled');
@@ -1379,7 +1379,7 @@ describe('NzDatePickerComponent', () => {
   }
 
   function openPickerByCode(): void {
-    fixtureInstance.datePicker.open();
+    fixtureInstance.datePicker._open();
     fixture.detectChanges();
     tick(500);
     fixture.detectChanges();
@@ -1391,8 +1391,8 @@ describe('NzDatePickerComponent', () => {
 });
 
 describe('date-fns testing', () => {
-  let fixture: ComponentFixture<NzTestDatePickerComponent>;
-  let fixtureInstance: NzTestDatePickerComponent;
+  let fixture: ComponentFixture<TriTestDatePickerComponent>;
+  let fixtureInstance: TriTestDatePickerComponent;
 
   beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
@@ -1401,14 +1401,14 @@ describe('date-fns testing', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NzTestDatePickerComponent);
+    fixture = TestBed.createComponent(TriTestDatePickerComponent);
     fixtureInstance = fixture.componentInstance;
     fixtureInstance.useSuite = 1;
   });
 
   it('should parse input value with nzFormat', fakeAsync(() => {
     const nzOnChange = spyOn(fixtureInstance, 'nzOnChange');
-    fixtureInstance.nzFormat = 'dd.MM.yyyy';
+    fixtureInstance.format = 'dd.MM.yyyy';
     fixture.detectChanges();
     dispatchMouseEvent(getPickerInput(fixture.debugElement), 'click');
     fixture.detectChanges();
@@ -1430,8 +1430,8 @@ describe('date-fns testing', () => {
 });
 
 describe('status', () => {
-  let fixture: ComponentFixture<NzTestDatePickerStatusComponent>;
-  let fixtureInstance: NzTestDatePickerStatusComponent;
+  let fixture: ComponentFixture<TriTestDatePickerStatusComponent>;
+  let fixtureInstance: TriTestDatePickerStatusComponent;
   let datePickerElement!: HTMLElement;
 
   beforeEach(() => {
@@ -1441,9 +1441,9 @@ describe('status', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NzTestDatePickerStatusComponent);
+    fixture = TestBed.createComponent(TriTestDatePickerStatusComponent);
     fixtureInstance = fixture.componentInstance;
-    datePickerElement = fixture.debugElement.query(By.directive(NzDatePickerComponent)).nativeElement;
+    datePickerElement = fixture.debugElement.query(By.directive(TriDatePickerComponent)).nativeElement;
     fixture.detectChanges();
   });
 
@@ -1461,7 +1461,7 @@ describe('status', () => {
 });
 
 describe('in form', () => {
-  let fixture: ComponentFixture<NzTestDatePickerInFormComponent>;
+  let fixture: ComponentFixture<TriTestDatePickerInFormComponent>;
   let datePickerElement!: HTMLElement;
   let formGroup: FormGroup<{
     demo: FormControl<Date | null>;
@@ -1474,8 +1474,8 @@ describe('in form', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NzTestDatePickerInFormComponent);
-    datePickerElement = fixture.debugElement.query(By.directive(NzDatePickerComponent)).nativeElement;
+    fixture = TestBed.createComponent(TriTestDatePickerInFormComponent);
+    datePickerElement = fixture.debugElement.query(By.directive(TriDatePickerComponent)).nativeElement;
     formGroup = fixture.componentInstance.validateForm;
     fixture.detectChanges();
   });
@@ -1508,58 +1508,58 @@ describe('in form', () => {
 });
 
 @Component({
-  imports: [ReactiveFormsModule, FormsModule, NzDatePickerModule],
+  imports: [ReactiveFormsModule, FormsModule, TriDatePickerModule],
   template: `
     @switch (useSuite) {
       @case (1) {
-        <nz-date-picker
-          [nzAllowClear]="nzAllowClear"
-          [nzAutoFocus]="nzAutoFocus"
-          [nzDisabled]="nzDisabled"
-          [nzInputReadOnly]="nzInputReadOnly"
-          [nzDisabledDate]="nzDisabledDate"
-          [nzFormat]="nzFormat"
-          [nzLocale]="nzLocale"
-          [nzPlaceHolder]="nzPlaceHolder"
-          [nzPopupStyle]="nzPopupStyle"
-          [nzDropdownClassName]="nzDropdownClassName"
-          [nzSize]="nzSize"
-          (nzOnOpenChange)="nzOnOpenChange($event)"
-          [ngModel]="nzValue"
-          (ngModelChange)="nzOnChange($event)"
-          [nzDefaultPickerValue]="nzDefaultPickerValue"
-          [nzDateRender]="nzDateRender"
-          [nzDisabledTime]="nzDisabledTime"
-          [nzRenderExtraFooter]="nzRenderExtraFooter"
-          [nzShowToday]="nzShowToday"
-          [nzShowNow]="nzShowNow"
-          [nzMode]="nzMode"
-          (nzOnPanelChange)="nzOnPanelChange($event)"
-          (nzOnCalendarChange)="nzOnCalendarChange($event)"
-          [nzShowTime]="nzShowTime"
-          (nzOnOk)="nzOnOk($event)"
-          [nzSuffixIcon]="nzSuffixIcon"
-          [nzBorderless]="nzBorderless"
-          [nzVariant]="nzVariant"
-          [nzInline]="nzInline"
-          [nzBackdrop]="nzBackdrop"
-          [nzPlacement]="nzPlacement"
-          [nzShowWeekNumber]="nzShowWeekNumber"
+        <tri-date-picker
+          [allowClear]="allowClear"
+          [autoFocus]="autoFocus"
+          [disabled]="disabled"
+          [inputReadOnly]="inputReadOnly"
+          [disabledDate]="disabledDate"
+          [format]="format"
+          [locale]="locale"
+          [placeHolder]="placeHolder"
+          [popupStyle]="popupStyle"
+          [dropdownClassName]="dropdownClassName"
+          [size]="size"
+          (onOpenChange)="onOpenChange($event)"
+          [ngModel]="value"
+          (ngModelChange)="onChange($event)"
+          [defaultPickerValue]="defaultPickerValue"
+          [dateRender]="dateRender"
+          [disabledTime]="disabledTime"
+          [renderExtraFooter]="renderExtraFooter"
+          [showToday]="showToday"
+          [showNow]="showNow"
+          [mode]="mode"
+          (onPanelChange)="onPanelChange($event)"
+          (onCalendarChange)="onCalendarChange($event)"
+          [showTime]="showTime"
+          (onOk)="onOk($event)"
+          [suffixIcon]="suffixIcon"
+          [borderless]="borderless"
+          [variant]="variant"
+          [inline]="inline"
+          [backdrop]="backdrop"
+          [placement]="placement"
+          [showWeekNumber]="showWeekNumber"
         />
       }
       @case (2) {
-        <nz-date-picker [nzOpen]="nzOpen" (nzOnOpenChange)="nzOnOpenChange($event)"></nz-date-picker>
+        <tri-date-picker [open]="open" (onOpenChange)="onOpenChange($event)"></tri-date-picker>
       }
       @case (3) {
-        <nz-date-picker nzOpen [(ngModel)]="modelValue"></nz-date-picker>
+        <tri-date-picker open [(ngModel)]="modelValue"></tri-date-picker>
       }
       @case (4) {
-        <nz-date-picker [formControl]="control" [nzDisabled]="nzDisabled"></nz-date-picker>
+        <tri-date-picker [formControl]="control" [disabled]="disabled"></tri-date-picker>
       }
       @case (5) {
         <ng-container>
-          <nz-date-picker [ngModel]="firstValue" (ngModelChange)="nzOnChange($event)"></nz-date-picker>
-          <nz-date-picker [ngModel]="secondValue"></nz-date-picker>
+          <tri-date-picker [ngModel]="firstValue" (ngModelChange)="onChange($event)"></tri-date-picker>
+          <tri-date-picker [ngModel]="secondValue"></tri-date-picker>
         </ng-container>
       }
     }
@@ -1569,54 +1569,54 @@ describe('in form', () => {
     <ng-template #tplExtraFooter>TEST_EXTRA_FOOTER</ng-template>
   `
 })
-class NzTestDatePickerComponent {
+class TriTestDatePickerComponent {
   useSuite!: 1 | 2 | 3 | 4 | 5;
   @ViewChild('tplDateRender', { static: true }) tplDateRender!: TemplateRef<Date>;
   @ViewChild('tplExtraFooter', { static: true }) tplExtraFooter!: TemplateRef<void>;
-  @ViewChild(NzDatePickerComponent, { static: false }) datePicker!: NzDatePickerComponent;
+  @ViewChild(TriDatePickerComponent, { static: false }) datePicker!: TriDatePickerComponent;
   // --- Suite 1
-  nzAllowClear: boolean = false;
-  nzAutoFocus: boolean = false;
-  nzDisabled: boolean = false;
-  nzInputReadOnly: boolean = false;
-  nzFormat!: string;
-  nzDisabledDate!: (d: Date) => boolean;
-  nzLocale: NzSafeAny;
-  nzPlaceHolder!: string;
-  nzPopupStyle!: NgStyleInterface;
-  nzDropdownClassName!: string;
-  nzSize!: NzDatePickerSizeType;
+  allowClear: boolean = false;
+  autoFocus: boolean = false;
+  disabled: boolean = false;
+  inputReadOnly: boolean = false;
+  format!: string;
+  disabledDate!: (d: Date) => boolean;
+  locale: TriSafeAny;
+  placeHolder!: string;
+  popupStyle!: NgStyleInterface;
+  dropdownClassName!: string;
+  size!: TriDatePickerSizeType;
 
-  nzOnChange(_: Date | null): void {}
+  onChange(_: Date | null): void {}
 
-  nzOnCalendarChange(_: Array<Date | null>): void {}
+  onCalendarChange(_: Array<Date | null>): void {}
 
-  nzOnOpenChange(_: boolean): void {}
+  onOpenChange(_: boolean): void {}
 
-  nzValue: Date | null = null;
-  nzDefaultPickerValue: Date | null = null;
-  nzDateRender: NzSafeAny;
-  nzShowTime: boolean | object = false;
-  nzDisabledTime: NzSafeAny;
-  nzRenderExtraFooter!: string | (() => TemplateRef<void> | string);
-  nzShowToday = false;
-  nzShowNow = false;
-  nzMode: string = 'date';
-  nzSuffixIcon!: string;
-  nzBorderless = false;
-  nzVariant: NzVariant = 'outlined';
-  nzInline = false;
-  nzBackdrop = false;
-  nzPlacement: NzPlacement = 'bottomLeft';
-  nzShowWeekNumber = false;
+  value: Date | null = null;
+  defaultPickerValue: Date | null = null;
+  dateRender: TriSafeAny;
+  showTime: boolean | object = false;
+  disabledTime: TriSafeAny;
+  renderExtraFooter!: string | (() => TemplateRef<void> | string);
+  showToday = false;
+  showNow = false;
+  mode: string = 'date';
+  suffixIcon!: string;
+  borderless = false;
+  variant: TriVariant = 'outlined';
+  inline = false;
+  backdrop = false;
+  placement: TriPlacement = 'bottomLeft';
+  showWeekNumber = false;
 
   // nzRanges;
-  nzOnPanelChange(_: NzPanelChangeType): void {}
+  onPanelChange(_: TriPanelChangeType): void {}
 
-  nzOnOk(_: CompatibleDate | null): void {}
+  onOk(_: CompatibleDate | null): void {}
 
   // --- Suite 2
-  nzOpen: boolean = false;
+  open: boolean = false;
 
   // --- Suite 3
   modelValue!: Date;
@@ -1630,26 +1630,26 @@ class NzTestDatePickerComponent {
 }
 
 @Component({
-  imports: [NzDatePickerModule],
-  template: `<nz-date-picker [nzStatus]="status"></nz-date-picker>`
+  imports: [TriDatePickerModule],
+  template: `<tri-date-picker [status]="status"></tri-date-picker>`
 })
-class NzTestDatePickerStatusComponent {
-  status: NzStatus = 'error';
+class TriTestDatePickerStatusComponent {
+  status: TriStatus = 'error';
 }
 
 @Component({
-  imports: [ReactiveFormsModule, NzFormModule, NzDatePickerModule],
+  imports: [ReactiveFormsModule, TriFormModule, TriDatePickerModule],
   template: `
-    <form nz-form [formGroup]="validateForm">
-      <nz-form-item>
-        <nz-form-control nzHasFeedback>
-          <nz-date-picker formControlName="demo"></nz-date-picker>
-        </nz-form-control>
-      </nz-form-item>
+    <form tri-form [formGroup]="validateForm">
+      <tri-form-item>
+        <tri-form-control hasFeedback>
+          <tri-date-picker formControlName="demo"></tri-date-picker>
+        </tri-form-control>
+      </tri-form-item>
     </form>
   `
 })
-class NzTestDatePickerInFormComponent {
+class TriTestDatePickerInFormComponent {
   private fb = inject(FormBuilder);
   validateForm = this.fb.group({
     demo: this.fb.control<Date | null>(null, Validators.required)

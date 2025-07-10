@@ -5,11 +5,11 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzCollapsePanelComponent } from './collapse-panel.component';
-import { NzCollapseComponent } from './collapse.component';
+import { TriCollapsePanelComponent } from './collapse-panel.component';
+import { TriCollapseComponent } from './collapse.component';
 
 @NgModule({
-  imports: [NzCollapsePanelComponent, NzCollapseComponent],
-  exports: [NzCollapsePanelComponent, NzCollapseComponent]
+  imports: [TriCollapsePanelComponent, TriCollapseComponent],
+  exports: [TriCollapsePanelComponent, TriCollapseComponent]
 })
-export class NzCollapseModule {}
+export class TriCollapseModule {}

@@ -16,24 +16,24 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { NzSiderComponent } from './sider.component';
+import { TriSiderComponent } from './sider.component';
 
 @Component({
-  selector: 'nz-layout',
-  exportAs: 'nzLayout',
+  selector: '',
+  exportAs: 'triLayout',
   template: `<ng-content></ng-content>`,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'ant-layout',
-    '[class.ant-layout-rtl]': `dir === 'rtl'`,
-    '[class.ant-layout-has-sider]': 'listOfNzSiderComponent.length > 0'
+    class: 'tri-layout',
+    '[class.tri-layout-rtl]': `dir === 'rtl'`,
+    '[class.tri-layout-has-sider]': 'listOfNzSiderComponent.length > 0'
   }
 })
-export class NzLayoutComponent implements OnInit {
+export class TriLayoutComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
   private directionality = inject(Directionality);
-  @ContentChildren(NzSiderComponent) listOfNzSiderComponent!: QueryList<NzSiderComponent>;
+  @ContentChildren(TriSiderComponent) listOfNzSiderComponent!: QueryList<TriSiderComponent>;
 
   dir: Direction = 'ltr';
 

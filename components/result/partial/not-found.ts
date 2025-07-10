@@ -8,8 +8,8 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-result-not-found',
-  exportAs: 'nzResultNotFound',
+  selector: '',
+  exportAs: 'triResultNotFound',
   template: `
     <svg width="252" height="294">
       <defs>
@@ -274,4 +274,4 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
     </svg>
   `
 })
-export class NzResultNotFoundComponent {}
+export class TriResultNotFoundComponent {}

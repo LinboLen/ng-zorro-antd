@@ -6,40 +6,40 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 
 @Component({
-  selector: 'nz-card-meta',
-  exportAs: 'nzCardMeta',
+  selector: '',
+  exportAs: 'triCardMeta',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
-    @if (nzAvatar) {
-      <div class="ant-card-meta-avatar">
-        <ng-template [ngTemplateOutlet]="nzAvatar" />
+    @if (avatar) {
+      <div class="tri-card-meta-avatar">
+        <ng-template [ngTemplateOutlet]="avatar" />
       </div>
     }
 
-    @if (nzTitle || nzDescription) {
-      <div class="ant-card-meta-detail">
-        @if (nzTitle) {
-          <div class="ant-card-meta-title">
-            <ng-container *nzStringTemplateOutlet="nzTitle">{{ nzTitle }}</ng-container>
+    @if (title || description) {
+      <div class="tri-card-meta-detail">
+        @if (title) {
+          <div class="tri-card-meta-title">
+            <ng-container *stringTemplateOutlet="title">{{ title }}</ng-container>
           </div>
         }
-        @if (nzDescription) {
-          <div class="ant-card-meta-description">
-            <ng-container *nzStringTemplateOutlet="nzDescription">{{ nzDescription }}</ng-container>
+        @if (description) {
+          <div class="tri-card-meta-description">
+            <ng-container *stringTemplateOutlet="description">{{ description }}</ng-container>
           </div>
         }
       </div>
     }
   `,
-  host: { class: 'ant-card-meta' },
-  imports: [NgTemplateOutlet, NzOutletModule]
+  host: { class: 'tri-card-meta' },
+  imports: [NgTemplateOutlet, TriOutletModule]
 })
-export class NzCardMetaComponent {
-  @Input() nzTitle: string | TemplateRef<void> | null = null;
-  @Input() nzDescription: string | TemplateRef<void> | null = null;
-  @Input() nzAvatar: TemplateRef<void> | null = null;
+export class TriCardMetaComponent {
+  @Input() title: string | TemplateRef<void> | null = null;
+  @Input() description: string | TemplateRef<void> | null = null;
+  @Input() avatar: TemplateRef<void> | null = null;
 }

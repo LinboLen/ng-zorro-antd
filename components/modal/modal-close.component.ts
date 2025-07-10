@@ -5,28 +5,28 @@
 
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 import { ModalOptions } from './modal-types';
 
 @Component({
-  selector: 'button[nz-modal-close]',
-  exportAs: 'nzModalCloseBuiltin',
+  selector: '',
+  exportAs: 'triModalCloseBuiltin',
   template: `
-    <span class="ant-modal-close-x">
-      <ng-container *nzStringTemplateOutlet="config.nzCloseIcon; let closeIcon">
-        <nz-icon [nzType]="closeIcon" class="ant-modal-close-icon" />
+    <span class="tri-modal-close-x">
+      <ng-container *stringTemplateOutlet="closeIcon; let closeIcon">
+        <tri-icon [type]="closeIcon" class="tri-modal-close-icon" />
       </ng-container>
     </span>
   `,
   host: {
-    class: 'ant-modal-close',
+    class: 'tri-modal-close',
     'aria-label': 'Close'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NzIconModule, NzOutletModule]
+  imports: [TriIconModule, TriOutletModule]
 })
-export class NzModalCloseComponent {
+export class TriModalCloseComponent {
   public readonly config = inject(ModalOptions);
 }

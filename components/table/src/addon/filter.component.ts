@@ -22,97 +22,97 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { arraysEqual } from 'ng-zorro-antd/core/util';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { NzI18nService, NzTableI18nInterface } from 'ng-zorro-antd/i18n';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzRadioComponent } from 'ng-zorro-antd/radio';
+import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriI18nService, TriTableI18nInterface } from 'ng-zorro-antd/i18n';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriRadioComponent } from 'ng-zorro-antd/radio';
 
-import { NzTableFilterList } from '../table.types';
-import { NzFilterTriggerComponent } from './filter-trigger.component';
+import { TriTableFilterList } from '../table.types';
+import { TriFilterTriggerComponent } from './filter-trigger.component';
 
-interface NzThItemInterface {
+interface TriThItemInterface {
   text: string;
-  value: NzSafeAny;
+  value: TriSafeAny;
   checked: boolean;
 }
 
 @Component({
-  selector: 'nz-table-filter',
+  selector: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
-    <span class="ant-table-column-title">
+    <span class="tri-table-column-title">
       <ng-template [ngTemplateOutlet]="contentTemplate"></ng-template>
     </span>
     @if (!customFilter) {
-      <nz-filter-trigger
-        [nzVisible]="isVisible"
-        [nzActive]="isChecked"
-        [nzDropdownMenu]="filterMenu"
-        (nzVisibleChange)="onVisibleChange($event)"
+      <tri-filter-trigger
+        [visible]="isVisible"
+        [active]="isChecked"
+        [dropdownMenu]="filterMenu"
+        (visibleChange)="onVisibleChange($event)"
       >
-        <nz-icon nzType="filter" nzTheme="fill" />
-      </nz-filter-trigger>
-      <nz-dropdown-menu #filterMenu="nzDropdownMenu">
-        <div class="ant-table-filter-dropdown">
-          <ul nz-menu>
+        <tri-icon type="filter" theme="fill" />
+      </tri-filter-trigger>
+      <tri-dropdown-menu #filterMenu="nzDropdownMenu">
+        <div class="tri-table-filter-dropdown">
+          <ul tri-menu>
             @for (f of listOfParsedFilter; track f.value) {
-              <li nz-menu-item [nzSelected]="f.checked" (click)="check(f)">
+              <li tri-menu-item [selected]="f.checked" (click)="check(f)">
                 @if (!filterMultiple) {
-                  <label nz-radio [ngModel]="f.checked" (ngModelChange)="check(f)"></label>
+                  <label tri-radio [ngModel]="f.checked" (ngModelChange)="check(f)"></label>
                 } @else {
-                  <label nz-checkbox [ngModel]="f.checked" (ngModelChange)="check(f)"></label>
+                  <label tri-checkbox [ngModel]="f.checked" (ngModelChange)="check(f)"></label>
                 }
                 <span>{{ f.text }}</span>
               </li>
             }
           </ul>
-          <div class="ant-table-filter-dropdown-btns">
-            <button nz-button nzType="link" nzSize="small" (click)="reset()" [disabled]="!isChecked">
+          <div class="tri-table-filter-dropdown-btns">
+            <button tri-button type="link" size="small" (click)="reset()" [disabled]="!isChecked">
               {{ locale.filterReset }}
             </button>
-            <button nz-button nzType="primary" nzSize="small" (click)="confirm()">{{ locale.filterConfirm }}</button>
+            <button tri-button type="primary" size="small" (click)="confirm()">{{ locale.filterConfirm }}</button>
           </div>
         </div>
-      </nz-dropdown-menu>
+      </tri-dropdown-menu>
     } @else {
       <ng-container [ngTemplateOutlet]="extraTemplate"></ng-container>
     }
   `,
-  host: { class: 'ant-table-filter-column' },
+  host: { class: 'tri-table-filter-column' },
   imports: [
     NgTemplateOutlet,
-    NzFilterTriggerComponent,
-    NzIconModule,
-    NzDropDownModule,
-    NzRadioComponent,
-    NzCheckboxModule,
+    TriFilterTriggerComponent,
+    TriIconModule,
+    TriDropDownModule,
+    TriRadioComponent,
+    TriCheckboxModule,
     FormsModule,
-    NzButtonModule
+    TriButtonModule
   ]
 })
-export class NzTableFilterComponent implements OnChanges, OnInit {
+export class TriTableFilterComponent implements OnChanges, OnInit {
   private readonly cdr = inject(ChangeDetectorRef);
-  private readonly i18n = inject(NzI18nService);
+  private readonly i18n = inject(TriI18nService);
   private readonly destroyRef = inject(DestroyRef);
 
-  @Input() contentTemplate: TemplateRef<NzSafeAny> | null = null;
+  @Input() contentTemplate: TemplateRef<TriSafeAny> | null = null;
   @Input() customFilter = false;
-  @Input() extraTemplate: TemplateRef<NzSafeAny> | null = null;
+  @Input() extraTemplate: TemplateRef<TriSafeAny> | null = null;
   @Input() filterMultiple = true;
-  @Input() listOfFilter: NzTableFilterList = [];
-  @Output() readonly filterChange = new EventEmitter<NzSafeAny[] | NzSafeAny>();
-  locale!: NzTableI18nInterface;
+  @Input() listOfFilter: TriTableFilterList = [];
+  @Output() readonly filterChange = new EventEmitter<TriSafeAny[] | TriSafeAny>();
+  locale!: TriTableI18nInterface;
   isChecked = false;
   isVisible = false;
-  listOfParsedFilter: NzThItemInterface[] = [];
-  listOfChecked: NzSafeAny[] = [];
+  listOfParsedFilter: TriThItemInterface[] = [];
+  listOfChecked: TriSafeAny[] = [];
 
-  check(filter: NzThItemInterface): void {
+  check(filter: TriThItemInterface): void {
     if (this.filterMultiple) {
       this.listOfParsedFilter = this.listOfParsedFilter.map(item => {
         if (item === filter) {
@@ -160,14 +160,14 @@ export class NzTableFilterComponent implements OnChanges, OnInit {
     }
   }
 
-  parseListOfFilter(listOfFilter: NzTableFilterList, reset?: boolean): NzThItemInterface[] {
+  parseListOfFilter(listOfFilter: TriTableFilterList, reset?: boolean): TriThItemInterface[] {
     return listOfFilter.map(item => {
       const checked = reset ? false : !!item.byDefault;
       return { text: item.text, value: item.value, checked };
     });
   }
 
-  getCheckedStatus(listOfParsedFilter: NzThItemInterface[]): boolean {
+  getCheckedStatus(listOfParsedFilter: TriThItemInterface[]): boolean {
     return listOfParsedFilter.some(item => item.checked);
   }
 

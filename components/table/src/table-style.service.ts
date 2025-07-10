@@ -7,22 +7,22 @@ import { Injectable, TemplateRef } from '@angular/core';
 import { BehaviorSubject, combineLatest, merge, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzThMeasureDirective } from './cell/th-measure.directive';
-import { NzTableSummaryFixedType } from './table.types';
+import { TriThMeasureDirective } from './cell/th-measure.directive';
+import { TriTableSummaryFixedType } from './table.types';
 
 @Injectable()
-export class NzTableStyleService {
-  theadTemplate$ = new ReplaySubject<TemplateRef<NzSafeAny>>(1);
-  tfootTemplate$ = new ReplaySubject<TemplateRef<NzSafeAny>>(1);
-  tfootFixed$ = new ReplaySubject<NzTableSummaryFixedType | null>(1);
+export class TriTableStyleService {
+  theadTemplate$ = new ReplaySubject<TemplateRef<TriSafeAny>>(1);
+  tfootTemplate$ = new ReplaySubject<TemplateRef<TriSafeAny>>(1);
+  tfootFixed$ = new ReplaySubject<TriTableSummaryFixedType | null>(1);
   hasFixLeft$ = new ReplaySubject<boolean>(1);
   hasFixRight$ = new ReplaySubject<boolean>(1);
   hostWidth$ = new ReplaySubject<number>(1);
   columnCount$ = new ReplaySubject<number>(1);
   showEmpty$ = new ReplaySubject<boolean>(1);
-  noResult$ = new ReplaySubject<string | TemplateRef<NzSafeAny> | undefined>(1);
+  noResult$ = new ReplaySubject<string | TemplateRef<TriSafeAny> | undefined>(1);
   private listOfThWidthConfigPx$ = new BehaviorSubject<ReadonlyArray<string | null>>([]);
   private tableWidthConfigPx$ = new BehaviorSubject<ReadonlyArray<string | null>>([]);
   manualWidthConfigPx$ = combineLatest([this.tableWidthConfigPx$, this.listOfThWidthConfigPx$]).pipe(
@@ -53,15 +53,15 @@ export class NzTableStyleService {
   listOfListOfThWidth$ = this.listOfAutoWidthPx$.pipe(map(list => list.map(width => parseInt(width, 10))));
   enableAutoMeasure$ = new ReplaySubject<boolean>(1);
 
-  setTheadTemplate(template: TemplateRef<NzSafeAny>): void {
+  setTheadTemplate(template: TemplateRef<TriSafeAny>): void {
     this.theadTemplate$.next(template);
   }
 
-  setTfootTemplate(template: TemplateRef<NzSafeAny>): void {
+  setTfootTemplate(template: TemplateRef<TriSafeAny>): void {
     this.tfootTemplate$.next(template);
   }
 
-  setTfootFixed(fixed: NzTableSummaryFixedType | null): void {
+  setTfootFixed(fixed: TriTableSummaryFixedType | null): void {
     this.tfootFixed$.next(fixed);
   }
 
@@ -77,17 +77,17 @@ export class NzTableStyleService {
     this.tableWidthConfigPx$.next(widthConfig);
   }
 
-  setListOfTh(listOfTh: readonly NzThMeasureDirective[]): void {
+  setListOfTh(listOfTh: readonly TriThMeasureDirective[]): void {
     let columnCount = 0;
     listOfTh.forEach(th => {
       columnCount += (th.colspan && +th.colspan) || (th.colSpan && +th.colSpan) || 1;
     });
-    const listOfThPx = listOfTh.map(item => item.nzWidth);
+    const listOfThPx = listOfTh.map(item => item.width);
     this.columnCount$.next(columnCount);
     this.listOfThWidthConfigPx$.next(listOfThPx);
   }
 
-  setListOfMeasureColumn(listOfTh: readonly NzThMeasureDirective[]): void {
+  setListOfMeasureColumn(listOfTh: readonly TriThMeasureDirective[]): void {
     const listOfKeys: string[] = [];
     listOfTh.forEach(th => {
       const length = (th.colspan && +th.colspan) || (th.colSpan && +th.colSpan) || 1;
@@ -106,7 +106,7 @@ export class NzTableStyleService {
     this.showEmpty$.next(showEmpty);
   }
 
-  setNoResult(noResult: string | TemplateRef<NzSafeAny> | undefined): void {
+  setNoResult(noResult: string | TemplateRef<TriSafeAny> | undefined): void {
     this.noResult$.next(noResult);
   }
 

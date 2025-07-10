@@ -3,5 +3,5 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export { NzOutletModule } from './outlet.module';
-export { NzStringTemplateOutletDirective } from './string-template-outlet.directive';
+export { TriOutletModule } from './outlet.module';
+export { TriStringTemplateOutletDirective } from './string-template-outlet.directive';

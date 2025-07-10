@@ -23,24 +23,24 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { NzOverlayModule } from 'ng-zorro-antd/core/overlay';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { TriOverlayModule } from 'ng-zorro-antd/core/overlay';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { TriEmptyModule } from 'ng-zorro-antd/empty';
 
-import { NzOptionItemGroupComponent } from './option-item-group.component';
-import { NzOptionItemComponent } from './option-item.component';
-import { NzSelectItemInterface, NzSelectModeType } from './select.types';
+import { TriOptionItemGroupComponent } from './option-item-group.component';
+import { TriOptionItemComponent } from './option-item.component';
+import { TriSelectItemInterface, TriSelectModeType } from './select.types';
 
 @Component({
-  selector: 'nz-option-container',
-  exportAs: 'nzOptionContainer',
+  selector: '',
+  exportAs: 'triOptionContainer',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
     <div>
       @if (listOfContainerItem.length === 0) {
-        <div class="ant-select-item-empty">
-          <nz-embed-empty nzComponentName="select" [specificContent]="notFoundContent!"></nz-embed-empty>
+        <div class="tri-select-item-empty">
+          <tri-embed-empty componentName="select" [specificContent]="notFoundContent!"></tri-embed-empty>
         </div>
       }
       <cdk-virtual-scroll-viewport
@@ -61,27 +61,27 @@ import { NzSelectItemInterface, NzSelectModeType } from './select.types';
         >
           @switch (item.type) {
             @case ('group') {
-              <nz-option-item-group [nzLabel]="item.groupLabel ?? null"></nz-option-item-group>
+              <tri-option-item-group [label]="item.groupLabel ?? null"></tri-option-item-group>
             }
             @case ('item') {
-              <nz-option-item
+              <tri-option-item
                 [icon]="menuItemSelectedIcon"
-                [customContent]="item.nzCustomContent"
+                [customContent]="customContent"
                 [template]="item.template ?? null"
                 [grouped]="!!item.groupLabel"
                 [disabled]="
-                  item.nzDisabled || (isMaxMultipleCountReached && !listOfSelectedValue.includes(item['nzValue']))
+                  item.nzDisabled || disabledched && !listOfSelectedValue.includes(item['nzValue']))
                 "
                 [showState]="mode === 'tags' || mode === 'multiple'"
-                [title]="item.nzTitle"
-                [label]="item.nzLabel"
+                [title]="title"
+                [label]="label"
                 [compareWith]="compareWith"
                 [activatedValue]="activatedValue"
                 [listOfSelectedValue]="listOfSelectedValue"
-                [value]="item.nzValue"
+                [value]="value"
                 (itemHover)="onItemHover($event)"
                 (itemClick)="onItemClick($event)"
-              ></nz-option-item>
+              ></tri-option-item>
             }
           }
         </ng-template>
@@ -89,47 +89,47 @@ import { NzSelectItemInterface, NzSelectModeType } from './select.types';
       <ng-template [ngTemplateOutlet]="dropdownRender"></ng-template>
     </div>
   `,
-  host: { class: 'ant-select-dropdown' },
+  host: { class: 'tri-select-dropdown' },
   imports: [
-    NzEmptyModule,
-    NzOptionItemGroupComponent,
-    NzOptionItemComponent,
+    TriEmptyModule,
+    TriOptionItemGroupComponent,
+    TriOptionItemComponent,
     NgTemplateOutlet,
     OverlayModule,
-    NzOverlayModule
+    TriOverlayModule
   ]
 })
-export class NzOptionContainerComponent implements OnChanges, AfterViewInit {
+export class TriOptionContainerComponent implements OnChanges, AfterViewInit {
   private readonly ngZone = inject(NgZone);
   private readonly platformId = inject(PLATFORM_ID);
 
-  @Input() notFoundContent: string | TemplateRef<NzSafeAny> | undefined = undefined;
-  @Input() menuItemSelectedIcon: TemplateRef<NzSafeAny> | null = null;
-  @Input() dropdownRender: TemplateRef<NzSafeAny> | null = null;
-  @Input() activatedValue: NzSafeAny | null = null;
-  @Input() listOfSelectedValue: NzSafeAny[] = [];
-  @Input() compareWith!: (o1: NzSafeAny, o2: NzSafeAny) => boolean;
-  @Input() mode: NzSelectModeType = 'default';
+  @Input() notFoundContent: string | TemplateRef<TriSafeAny> | undefined = undefined;
+  @Input() menuItemSelectedIcon: TemplateRef<TriSafeAny> | null = null;
+  @Input() dropdownRender: TemplateRef<TriSafeAny> | null = null;
+  @Input() activatedValue: TriSafeAny | null = null;
+  @Input() listOfSelectedValue: TriSafeAny[] = [];
+  @Input() compareWith!: (o1: TriSafeAny, o2: TriSafeAny) => boolean;
+  @Input() mode: TriSelectModeType = 'default';
   @Input() matchWidth = true;
   @Input() itemSize = 32;
   @Input() maxItemLength = 8;
   @Input() isMaxMultipleCountReached = false;
-  @Input() listOfContainerItem: NzSelectItemInterface[] = [];
-  @Output() readonly itemClick = new EventEmitter<NzSafeAny>();
+  @Input() listOfContainerItem: TriSelectItemInterface[] = [];
+  @Output() readonly itemClick = new EventEmitter<TriSafeAny>();
   @Output() readonly scrollToBottom = new EventEmitter<void>();
   @ViewChild(CdkVirtualScrollViewport, { static: true }) cdkVirtualScrollViewport!: CdkVirtualScrollViewport;
   private scrolledIndex = 0;
 
-  onItemClick(value: NzSafeAny): void {
+  onItemClick(value: TriSafeAny): void {
     this.itemClick.emit(value);
   }
 
-  onItemHover(value: NzSafeAny): void {
+  onItemHover(value: TriSafeAny): void {
     // TODO: keydown.enter won't activate this value
     this.activatedValue = value;
   }
 
-  trackValue(_index: number, option: NzSelectItemInterface): NzSafeAny {
+  trackValue(_index: number, option: TriSelectItemInterface): TriSafeAny {
     return option.key;
   }
 

@@ -1,26 +1,26 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzSliderModule } from 'ng-zorro-antd/slider';
+import { TriSliderModule } from 'ng-zorro-antd/slider';
 
 @Component({
-  selector: 'nz-demo-slider-vertical',
-  imports: [FormsModule, NzSliderModule],
+  selector: '',
+  imports: [FormsModule, TriSliderModule],
   template: `
     <div [style]="{ height: '300px' }">
       <div [style]="style">
-        <nz-slider nzVertical [ngModel]="30"></nz-slider>
+        <tri-slider vertical [ngModel]="30"></tri-slider>
       </div>
       <div [style]="style">
-        <nz-slider nzVertical nzRange [nzStep]="10" [ngModel]="[20, 50]"></nz-slider>
+        <tri-slider vertical range [step]="10" [ngModel]="[20, 50]"></tri-slider>
       </div>
       <div [style]="style">
-        <nz-slider nzVertical nzRange [nzMarks]="marks" [ngModel]="[26, 37]"></nz-slider>
+        <tri-slider vertical range [marks]="marks" [ngModel]="[26, 37]"></tri-slider>
       </div>
     </div>
   `
 })
-export class NzDemoSliderVerticalComponent {
+export class TriDemoSliderVerticalComponent {
   style = {
     float: 'left',
     height: '300px',

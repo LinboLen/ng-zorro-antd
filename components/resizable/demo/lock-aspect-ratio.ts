@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
 
-import { NzResizableModule, NzResizeEvent } from 'ng-zorro-antd/resizable';
+import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
 
 @Component({
-  selector: 'nz-demo-resizable-lock-aspect-ratio',
-  imports: [NzResizableModule],
+  selector: '',
+  imports: [TriResizableModule],
   template: `
     <div
       class="box"
-      nz-resizable
-      nzLockAspectRatio
-      (nzResize)="onResize($event)"
+      tri-resizable
+      lockAspectRatio
+      (resize)="onResize($event)"
       [style.height.px]="height"
       [style.width.px]="width"
     >
-      <nz-resize-handles></nz-resize-handles>
+      <tri-resize-handles></tri-resize-handles>
       content
     </div>
   `,
@@ -34,12 +34,12 @@ import { NzResizableModule, NzResizeEvent } from 'ng-zorro-antd/resizable';
     `
   ]
 })
-export class NzDemoResizableLockAspectRatioComponent {
+export class TriDemoResizableLockAspectRatioComponent {
   width = 400;
   height = 200;
   id = -1;
 
-  onResize({ width, height }: NzResizeEvent): void {
+  onResize({ width, height }: TriResizeEvent): void {
     cancelAnimationFrame(this.id);
     this.id = requestAnimationFrame(() => {
       this.width = width!;

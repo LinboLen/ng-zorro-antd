@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzCascaderModule, NzCascaderOption } from 'ng-zorro-antd/cascader';
+import { TriCascaderModule, TriCascaderOption } from 'ng-zorro-antd/cascader';
 
-const options: NzCascaderOption[] = [
+const options: TriCascaderOption[] = [
   {
     value: 'zhejiang',
     label: 'Zhejiang',
@@ -46,19 +46,19 @@ const options: NzCascaderOption[] = [
 ];
 
 @Component({
-  selector: 'nz-demo-cascader-hover',
-  imports: [FormsModule, NzCascaderModule],
+  selector: '',
+  imports: [FormsModule, TriCascaderModule],
   template: `
-    <nz-cascader
-      [nzExpandTrigger]="'hover'"
-      [nzOptions]="nzOptions"
+    <tri-cascader
+      [expandTrigger]="'hover'"
+      [options]="options"
       [(ngModel)]="values"
       (ngModelChange)="onChanges($event)"
-    ></nz-cascader>
+    ></tri-cascader>
   `
 })
-export class NzDemoCascaderHoverComponent {
-  nzOptions: NzCascaderOption[] = options;
+export class TriDemoCascaderHoverComponent {
+  options: TriCascaderOption[] = options;
   values: string[] | null = null;
 
   onChanges(values: string[]): void {

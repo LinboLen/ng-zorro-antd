@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzTableModule } from 'ng-zorro-antd/table';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriTableModule } from 'ng-zorro-antd/table';
 
 interface DataItem {
   name: string;
@@ -13,24 +13,24 @@ interface DataItem {
   address: string;
 }
 @Component({
-  selector: 'nz-demo-table-custom-filter-panel',
-  imports: [FormsModule, NzButtonModule, NzDropDownModule, NzIconModule, NzInputModule, NzTableModule],
+  selector: '',
+  imports: [FormsModule, TriButtonModule, TriDropDownModule, TriIconModule, TriInputModule, TriTableModule],
   template: `
-    <nz-table #nzTable [nzData]="listOfDisplayData" nzTableLayout="fixed">
+    <tri-table #nzTable [data]="listOfDisplayData" tableLayout="fixed">
       <thead>
         <tr>
-          <th nzCustomFilter>
+          <th customFilter>
             Name
-            <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
-              <nz-icon nzType="search" />
-            </nz-filter-trigger>
+            <tri-filter-trigger [(visibleChange)]="visible" [active]="searchValue.length > 0" [dropdownMenu]="menu">
+              <tri-icon type="search" />
+            </tri-filter-trigger>
           </th>
           <th>Age</th>
           <th>Address</th>
         </tr>
       </thead>
       <tbody>
-        @for (data of nzTable.data; track data) {
+        @for (data of table.data; track data) {
           <tr>
             <td>{{ data.name }}</td>
             <td>{{ data.age }}</td>
@@ -38,16 +38,16 @@ interface DataItem {
           </tr>
         }
       </tbody>
-    </nz-table>
-    <nz-dropdown-menu #menu="nzDropdownMenu">
-      <div class="ant-table-filter-dropdown">
+    </tri-table>
+    <tri-dropdown-menu #menu="nzDropdownMenu">
+      <div class="tri-table-filter-dropdown">
         <div class="search-box">
-          <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
-          <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">Search</button>
-          <button nz-button nzSize="small" (click)="reset()">Reset</button>
+          <input type="text" tri-input placeholder="Search name" [(ngModel)]="searchValue" />
+          <button tri-button size="small" type="primary" (click)="search()" class="search-button">Search</button>
+          <button tri-button size="small" (click)="reset()">Reset</button>
         </div>
       </div>
-    </nz-dropdown-menu>
+    </tri-dropdown-menu>
   `,
   styles: [
     `
@@ -71,7 +71,7 @@ interface DataItem {
     `
   ]
 })
-export class NzDemoTableCustomFilterPanelComponent {
+export class TriDemoTableCustomFilterPanelComponent {
   searchValue = '';
   visible = false;
   listOfData: DataItem[] = [

@@ -8,22 +8,22 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { NzColorBlockComponent, NzColorPickerModule } from 'ng-zorro-antd/color-picker';
-import { NzSizeLDSType } from 'ng-zorro-antd/core/types';
+import { TriColorBlockComponent, TriColorPickerModule } from 'ng-zorro-antd/color-picker';
+import { TriSizeLDSType } from 'ng-zorro-antd/core/types';
 
 describe('nz-color-block', () => {
-  let fixture: ComponentFixture<NzTestColorBlockComponent>;
-  let component: NzTestColorBlockComponent;
+  let fixture: ComponentFixture<TriTestColorBlockComponent>;
+  let component: TriTestColorBlockComponent;
   let resultEl: DebugElement;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [provideNoopAnimations()]
     });
-    fixture = TestBed.createComponent(NzTestColorBlockComponent);
+    fixture = TestBed.createComponent(TriTestColorBlockComponent);
     fixture.detectChanges();
     component = fixture.componentInstance;
-    resultEl = fixture.debugElement.query(By.directive(NzColorBlockComponent));
+    resultEl = fixture.debugElement.query(By.directive(TriColorBlockComponent));
   });
 
   it('color-block basic', () => {
@@ -33,7 +33,7 @@ describe('nz-color-block', () => {
   });
 
   it('color-block color', () => {
-    component.nzColor = '#ff6600';
+    component.color = '#ff6600';
     fixture.detectChanges();
     expect(resultEl.nativeElement.querySelector('.ant-color-picker-color-block-inner').style.backgroundColor).toBe(
       'rgb(255, 102, 0)'
@@ -41,12 +41,12 @@ describe('nz-color-block', () => {
   });
 
   it('color-block size', () => {
-    component.nzSize = 'small';
+    component.size = 'small';
     fixture.detectChanges();
     expect(resultEl.nativeElement.querySelector('ng-antd-color-block').parentNode.classList).toContain(
       'ant-color-picker-inline-sm'
     );
-    component.nzSize = 'large';
+    component.size = 'large';
     fixture.detectChanges();
     expect(resultEl.nativeElement.querySelector('ng-antd-color-block').parentNode.classList).toContain(
       'ant-color-picker-inline-lg'
@@ -61,14 +61,14 @@ describe('nz-color-block', () => {
 });
 
 @Component({
-  imports: [NzColorPickerModule],
+  imports: [TriColorPickerModule],
   template: `
-    <nz-color-block [nzColor]="nzColor" [nzSize]="nzSize" (nzOnClick)="clickHandle($event)"></nz-color-block>
+    <tri-color-block [color]="color" [size]="size" (onClick)="clickHandle($event)"></tri-color-block>
   `
 })
-export class NzTestColorBlockComponent {
-  nzColor = '#1677ff';
-  nzSize: NzSizeLDSType = 'default';
+export class TriTestColorBlockComponent {
+  color = '#1677ff';
+  size: TriSizeLDSType = 'default';
   isClick: boolean = false;
 
   clickHandle(value: boolean): void {

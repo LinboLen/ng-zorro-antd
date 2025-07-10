@@ -1,24 +1,24 @@
 import { Component } from '@angular/core';
 
-import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { TriTypographyModule } from 'ng-zorro-antd/typography';
 
 @Component({
-  selector: 'nz-demo-typography-text',
-  imports: [NzTypographyModule],
+  selector: '',
+  imports: [TriTypographyModule],
   template: `
-    <span nz-typography>Ant Design (default)</span>
-    <span nz-typography nzType="secondary">Ant Design (secondary)</span>
-    <span nz-typography nzType="success">Ant Design (success)</span>
-    <span nz-typography nzType="warning">Ant Design (warning)</span>
-    <span nz-typography nzType="danger">Ant Design (danger)</span>
-    <span nz-typography nzDisabled>Ant Design (disabled)</span>
-    <span nz-typography><mark>Ant Design (mark)</mark></span>
-    <span nz-typography><code>Ant Design (code)</code></span>
-    <span nz-typography><kbd>Ant Design (keyboard)</kbd></span>
-    <span nz-typography><u>Ant Design (underline)</u></span>
-    <span nz-typography><del>Ant Design (delete)</del></span>
-    <span nz-typography><strong>Ant Design (strong)</strong></span>
-    <span nz-typography>
+    <span tri-typography>Ant Design (default)</span>
+    <span tri-typography type="secondary">Ant Design (secondary)</span>
+    <span tri-typography type="success">Ant Design (success)</span>
+    <span tri-typography type="warning">Ant Design (warning)</span>
+    <span tri-typography type="danger">Ant Design (danger)</span>
+    <span tri-typography disabled>Ant Design (disabled)</span>
+    <span tri-typography><mark>Ant Design (mark)</mark></span>
+    <span tri-typography><code>Ant Design (code)</code></span>
+    <span tri-typography><kbd>Ant Design (keyboard)</kbd></span>
+    <span tri-typography><u>Ant Design (underline)</u></span>
+    <span tri-typography><del>Ant Design (delete)</del></span>
+    <span tri-typography><strong>Ant Design (strong)</strong></span>
+    <span tri-typography>
       <a href="https://ng.ant.design/" target="_blank">Ant Design</a>
     </span>
   `,
@@ -33,4 +33,4 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
     `
   ]
 })
-export class NzDemoTypographyTextComponent {}
+export class TriDemoTypographyTextComponent {}

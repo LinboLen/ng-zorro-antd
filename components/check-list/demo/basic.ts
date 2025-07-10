@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 
-import { NzCheckListModule, NzItemProps } from 'ng-zorro-antd/check-list';
+import { TriCheckListModule, TriItemProps } from 'ng-zorro-antd/check-list';
 
 @Component({
-  selector: 'nz-demo-check-list-basic',
-  imports: [NzCheckListModule],
-  template: `<nz-check-list [nzItems]="nzItems" [nzIndex]="index"></nz-check-list>`
+  selector: '',
+  imports: [TriCheckListModule],
+  template: `<tri-check-list [items]="items" [index]="index"></tri-check-list>`
 })
-export class NzDemoCheckListBasicComponent {
+export class TriDemoCheckListBasicComponent {
   index = 1;
-  readonly nzItems: NzItemProps[] = [
+  readonly items: TriItemProps[] = [
     {
       description: 'step 1',
       onClick: () => this.index++

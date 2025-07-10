@@ -5,12 +5,12 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzResizableDirective } from './resizable.directive';
-import { NzResizeHandleComponent } from './resize-handle.component';
-import { NzResizeHandlesComponent } from './resize-handles.component';
+import { TriResizableDirective } from './resizable.directive';
+import { TriResizeHandleComponent } from './resize-handle.component';
+import { TriResizeHandlesComponent } from './resize-handles.component';
 
 @NgModule({
-  imports: [NzResizableDirective, NzResizeHandleComponent, NzResizeHandlesComponent],
-  exports: [NzResizableDirective, NzResizeHandleComponent, NzResizeHandlesComponent]
+  imports: [TriResizableDirective, TriResizeHandleComponent, TriResizeHandlesComponent],
+  exports: [TriResizableDirective, TriResizeHandleComponent, TriResizeHandlesComponent]
 })
-export class NzResizableModule {}
+export class TriResizableModule {}

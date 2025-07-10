@@ -1,43 +1,43 @@
 import { Component } from '@angular/core';
 
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
-import { NzCardModule } from 'ng-zorro-antd/card';
+import { TriBadgeModule } from 'ng-zorro-antd/badge';
+import { TriCardModule } from 'ng-zorro-antd/card';
 
 @Component({
-  selector: 'nz-demo-badge-ribbon',
-  imports: [NzBadgeModule, NzCardModule],
+  selector: '',
+  imports: [TriBadgeModule, TriCardModule],
   template: `
-    <nz-ribbon nzText="Hippies">
-      <nz-card nzTitle="Pushes open the window" nzSize="small"> And raises the spyglass. </nz-card>
-    </nz-ribbon>
+    <tri-ribbon text="Hippies">
+      <tri-card title="Pushes open the window" size="small"> And raises the spyglass. </tri-card>
+    </tri-ribbon>
     <br />
-    <nz-ribbon nzText="Hippies" nzColor="pink">
-      <nz-card nzTitle="Pushes open the window" nzSize="small"> And raises the spyglass. </nz-card>
-    </nz-ribbon>
+    <tri-ribbon text="Hippies" color="pink">
+      <tri-card title="Pushes open the window" size="small"> And raises the spyglass. </tri-card>
+    </tri-ribbon>
     <br />
-    <nz-ribbon nzText="Hippies" nzColor="red">
-      <nz-card nzTitle="Pushes open the window" nzSize="small"> And raises the spyglass. </nz-card>
-    </nz-ribbon>
+    <tri-ribbon text="Hippies" color="red">
+      <tri-card title="Pushes open the window" size="small"> And raises the spyglass. </tri-card>
+    </tri-ribbon>
     <br />
-    <nz-ribbon nzText="Hippies" nzColor="cyan">
-      <nz-card nzTitle="Pushes open the window" nzSize="small"> And raises the spyglass. </nz-card>
-    </nz-ribbon>
+    <tri-ribbon text="Hippies" color="cyan">
+      <tri-card title="Pushes open the window" size="small"> And raises the spyglass. </tri-card>
+    </tri-ribbon>
     <br />
-    <nz-ribbon nzText="Hippies" nzColor="green">
-      <nz-card nzTitle="Pushes open the window" nzSize="small"> And raises the spyglass. </nz-card>
-    </nz-ribbon>
+    <tri-ribbon text="Hippies" color="green">
+      <tri-card title="Pushes open the window" size="small"> And raises the spyglass. </tri-card>
+    </tri-ribbon>
     <br />
-    <nz-ribbon nzText="Hippies" nzColor="purple">
-      <nz-card nzTitle="Pushes open the window" nzSize="small"> And raises the spyglass. </nz-card>
-    </nz-ribbon>
+    <tri-ribbon text="Hippies" color="purple">
+      <tri-card title="Pushes open the window" size="small"> And raises the spyglass. </tri-card>
+    </tri-ribbon>
     <br />
-    <nz-ribbon nzText="Hippies" nzColor="volcano">
-      <nz-card nzTitle="Pushes open the window" nzSize="small"> And raises the spyglass. </nz-card>
-    </nz-ribbon>
+    <tri-ribbon text="Hippies" color="volcano">
+      <tri-card title="Pushes open the window" size="small"> And raises the spyglass. </tri-card>
+    </tri-ribbon>
     <br />
-    <nz-ribbon nzText="Hippies" nzColor="magenta">
-      <nz-card nzTitle="Pushes open the window" nzSize="small"> And raises the spyglass. </nz-card>
-    </nz-ribbon>
+    <tri-ribbon text="Hippies" color="magenta">
+      <tri-card title="Pushes open the window" size="small"> And raises the spyglass. </tri-card>
+    </tri-ribbon>
   `
 })
-export class NzDemoBadgeRibbonComponent {}
+export class TriDemoBadgeRibbonComponent {}

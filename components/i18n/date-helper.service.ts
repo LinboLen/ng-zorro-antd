@@ -10,11 +10,11 @@ import { format as fnsFormat, getISOWeek as fnsGetISOWeek, parse as fnsParse, ge
 
 import { WeekDayIndex, ɵNgTimeParser } from 'ng-zorro-antd/core/time';
 
-import { NZ_DATE_CONFIG, NzDateConfig, mergeDateConfig } from './date-config';
-import { NzI18nService } from './nz-i18n.service';
+import { NZ_DATE_CONFIG, TriDateConfig, mergeDateConfig } from './date-config';
+import { TriI18nService } from './nz-i18n.service';
 
 export function DATE_HELPER_SERVICE_FACTORY(): DateHelperService {
-  const i18n = inject(NzI18nService);
+  const i18n = inject(TriI18nService);
   return i18n.getDateLocale() ? new DateHelperByDateFns(i18n) : new DateHelperByDatePipe(i18n);
 }
 
@@ -27,9 +27,9 @@ export function DATE_HELPER_SERVICE_FACTORY(): DateHelperService {
   useFactory: DATE_HELPER_SERVICE_FACTORY
 })
 export abstract class DateHelperService {
-  protected config: NzDateConfig = mergeDateConfig(inject(NZ_DATE_CONFIG, { optional: true }));
+  protected config: TriDateConfig = mergeDateConfig(inject(NZ_DATE_CONFIG, { optional: true }));
 
-  constructor(protected i18n: NzI18nService) {}
+  constructor(protected i18n: TriI18nService) {}
 
   abstract getISOWeek(date: Date): number;
   abstract getFirstDayOfWeek(): WeekDayIndex;

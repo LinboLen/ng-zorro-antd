@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzCascaderModule, NzCascaderOption } from 'ng-zorro-antd/cascader';
+import { TriCascaderModule, TriCascaderOption } from 'ng-zorro-antd/cascader';
 
-const options: NzCascaderOption[] = [
+const options: TriCascaderOption[] = [
   {
     value: 'zhejiang',
     label: 'Zhejiang',
@@ -45,7 +45,7 @@ const options: NzCascaderOption[] = [
   }
 ];
 
-const otherOptions: NzCascaderOption[] = [
+const otherOptions: TriCascaderOption[] = [
   {
     value: 'fujian',
     label: 'Fujian',
@@ -83,10 +83,10 @@ const otherOptions: NzCascaderOption[] = [
 ];
 
 @Component({
-  selector: 'nz-demo-cascader-basic',
-  imports: [FormsModule, NzCascaderModule],
+  selector: '',
+  imports: [FormsModule, TriCascaderModule],
   template: `
-    <nz-cascader [nzOptions]="nzOptions" [(ngModel)]="values" (ngModelChange)="onChanges($event)"></nz-cascader>
+    <tri-cascader [options]="options" [(ngModel)]="values" (ngModelChange)="onChanges($event)"></tri-cascader>
     <a (click)="changeNzOptions()" class="change-options">Change Options</a>
   `,
   styles: [
@@ -99,21 +99,21 @@ const otherOptions: NzCascaderOption[] = [
     `
   ]
 })
-export class NzDemoCascaderBasicComponent implements OnInit {
-  nzOptions: NzCascaderOption[] | null = null;
+export class TriDemoCascaderBasicComponent implements OnInit {
+  options: TriCascaderOption[] | null = null;
   values: string[] | null = null;
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.nzOptions = options;
+      this.options = options;
     }, 100);
   }
 
   changeNzOptions(): void {
-    if (this.nzOptions === options) {
-      this.nzOptions = otherOptions;
+    if (this.options === options) {
+      this.options = otherOptions;
     } else {
-      this.nzOptions = options;
+      this.options = options;
     }
   }
 

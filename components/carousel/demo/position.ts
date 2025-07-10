@@ -1,26 +1,26 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzCarouselModule } from 'ng-zorro-antd/carousel';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { TriCarouselModule } from 'ng-zorro-antd/carousel';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: 'nz-demo-carousel-position',
-  imports: [FormsModule, NzCarouselModule, NzRadioModule],
+  selector: '',
+  imports: [FormsModule, TriCarouselModule, TriRadioModule],
   template: `
-    <nz-radio-group [(ngModel)]="dotPosition">
-      <label nz-radio-button nzValue="bottom">Bottom</label>
-      <label nz-radio-button nzValue="top">Top</label>
-      <label nz-radio-button nzValue="left">Left</label>
-      <label nz-radio-button nzValue="right">Right</label>
-    </nz-radio-group>
-    <nz-carousel [nzDotPosition]="dotPosition">
+    <tri-radio-group [(ngModel)]="dotPosition">
+      <label tri-radio-button value="bottom">Bottom</label>
+      <label tri-radio-button value="top">Top</label>
+      <label tri-radio-button value="left">Left</label>
+      <label tri-radio-button value="right">Right</label>
+    </tri-radio-group>
+    <tri-carousel [dotPosition]="dotPosition">
       @for (index of array; track index) {
-        <div nz-carousel-content>
+        <div tri-carousel-content>
           <h3>{{ index }}</h3>
         </div>
       }
-    </nz-carousel>
+    </tri-carousel>
   `,
   styles: [
     `
@@ -45,7 +45,7 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
     `
   ]
 })
-export class NzDemoCarouselPositionComponent {
+export class TriDemoCarouselPositionComponent {
   array = [1, 2, 3, 4];
   dotPosition = 'bottom';
 }

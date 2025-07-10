@@ -11,10 +11,10 @@ import { generateColor } from '../util/util';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'color-gradient',
+  selector: '',
   template: `
     <div
-      class="ant-color-picker-gradient"
+      class="tri-color-picker-gradient"
       [style.background]="'linear-gradient(' + direction + ', ' + gradientColors + ')'"
     >
       <ng-content></ng-content>

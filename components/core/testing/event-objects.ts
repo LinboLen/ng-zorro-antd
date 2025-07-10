@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 /** Creates a browser MouseEvent with the specified options. */
 export function createMouseEvent(type: string, x: number = 0, y: number = 0, button: number = 0): MouseEvent {
@@ -62,7 +62,7 @@ export function createKeyboardEvent(
   metaKey?: boolean,
   shiftKey?: boolean
 ): KeyboardEvent {
-  const event = document.createEvent('KeyboardEvent') as NzSafeAny;
+  const event = document.createEvent('KeyboardEvent') as TriSafeAny;
   const originalPreventDefault = event.preventDefault;
 
   // Firefox does not support `initKeyboardEvent`, but supports `initKeyEvent`.

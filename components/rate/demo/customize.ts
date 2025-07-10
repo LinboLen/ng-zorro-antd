@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzRateModule } from 'ng-zorro-antd/rate';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriRateModule } from 'ng-zorro-antd/rate';
 
 @Component({
-  selector: 'nz-demo-rate-customize',
-  imports: [FormsModule, NzIconModule, NzRateModule],
+  selector: '',
+  imports: [FormsModule, TriIconModule, TriRateModule],
   template: `
-    <nz-rate [ngModel]="2" [nzCharacter]="characterNumber"></nz-rate>
+    <tri-rate [ngModel]="2" [character]="characterNumber"></tri-rate>
     <br />
-    <nz-rate [ngModel]="3" [nzCharacter]="characterIcon"></nz-rate>
+    <tri-rate [ngModel]="3" [character]="characterIcon"></tri-rate>
     <br />
     <ng-template #characterNumber let-index>
       {{ index + 1 }}
@@ -18,19 +18,19 @@ import { NzRateModule } from 'ng-zorro-antd/rate';
     <ng-template #characterIcon let-index>
       @switch (index) {
         @case (0) {
-          <nz-icon nzType="frown" />
+          <tri-icon type="frown" />
         }
         @case (1) {
-          <nz-icon nzType="frown" />
+          <tri-icon type="frown" />
         }
         @case (2) {
-          <nz-icon nzType="meh" />
+          <tri-icon type="meh" />
         }
         @case (3) {
-          <nz-icon nzType="smile" />
+          <tri-icon type="smile" />
         }
         @case (4) {
-          <nz-icon nzType="smile" />
+          <tri-icon type="smile" />
         }
       }
     </ng-template>
@@ -43,4 +43,4 @@ import { NzRateModule } from 'ng-zorro-antd/rate';
     `
   ]
 })
-export class NzDemoRateCustomizeComponent {}
+export class TriDemoRateCustomizeComponent {}

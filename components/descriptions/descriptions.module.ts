@@ -5,11 +5,11 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzDescriptionsItemComponent } from './descriptions-item.component';
-import { NzDescriptionsComponent } from './descriptions.component';
+import { TriDescriptionsItemComponent } from './descriptions-item.component';
+import { TriDescriptionsComponent } from './descriptions.component';
 
 @NgModule({
-  imports: [NzDescriptionsComponent, NzDescriptionsItemComponent],
-  exports: [NzDescriptionsComponent, NzDescriptionsItemComponent]
+  imports: [TriDescriptionsComponent, TriDescriptionsItemComponent],
+  exports: [TriDescriptionsComponent, TriDescriptionsItemComponent]
 })
-export class NzDescriptionsModule {}
+export class TriDescriptionsModule {}

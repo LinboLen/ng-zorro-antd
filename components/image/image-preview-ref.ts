@@ -8,15 +8,15 @@ import { OverlayRef } from '@angular/cdk/overlay';
 import { Subject } from 'rxjs';
 import { filter, switchMap, take, takeUntil } from 'rxjs/operators';
 
-import { NzImagePreviewOptions } from './image-preview-options';
-import { NzImagePreviewComponent } from './image-preview.component';
+import { TriImagePreviewOptions } from './image-preview-options';
+import { TriImagePreviewComponent } from './image-preview.component';
 
-export class NzImagePreviewRef {
+export class TriImagePreviewRef {
   private destroy$ = new Subject<void>();
 
   constructor(
-    public previewInstance: NzImagePreviewComponent,
-    private config: NzImagePreviewOptions,
+    public previewInstance: TriImagePreviewComponent,
+    private config: TriImagePreviewOptions,
     private overlayRef: OverlayRef
   ) {
     overlayRef
@@ -24,7 +24,7 @@ export class NzImagePreviewRef {
       .pipe(
         filter(
           event =>
-            (this.config.nzKeyboard as boolean) &&
+            (this.config.keyboard as boolean) &&
             (event.keyCode === ESCAPE || event.keyCode === LEFT_ARROW || event.keyCode === RIGHT_ARROW) &&
             !hasModifierKey(event)
         )

@@ -6,13 +6,13 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'nz-form-split',
-  exportAs: 'nzFormSplit',
+  selector: '',
+  exportAs: 'triFormSplit',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<ng-content></ng-content>`,
   host: {
-    class: 'ant-form-split'
+    class: 'tri-form-split'
   }
 })
-export class NzFormSplitComponent {}
+export class TriFormSplitComponent {}

@@ -1,37 +1,37 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzColorPickerModule } from 'ng-zorro-antd/color-picker';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriColorPickerModule } from 'ng-zorro-antd/color-picker';
+import { TriFormModule } from 'ng-zorro-antd/form';
+import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: 'nz-demo-color-picker-use',
-  imports: [ReactiveFormsModule, NzButtonModule, NzColorPickerModule, NzFormModule, NzInputModule],
+  selector: '',
+  imports: [ReactiveFormsModule, TriButtonModule, TriColorPickerModule, TriFormModule, TriInputModule],
   template: `
-    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="4">name</nz-form-label>
-        <nz-form-control [nzSpan]="16">
-          <input nz-input formControlName="username" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="4">color</nz-form-label>
-        <nz-form-control [nzSpan]="16">
-          <nz-color-picker formControlName="colorPicker" nzShowText></nz-color-picker>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-control>
-          <button nz-button nzType="primary">submit</button>
-        </nz-form-control>
-      </nz-form-item>
+    <form tri-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+      <tri-form-item>
+        <tri-form-label [span]="4">name</tri-form-label>
+        <tri-form-control [span]="16">
+          <input tri-input formControlName="username" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [span]="4">color</tri-form-label>
+        <tri-form-control [span]="16">
+          <tri-color-picker formControlName="colorPicker" showText></tri-color-picker>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-control>
+          <button tri-button type="primary">submit</button>
+        </tri-form-control>
+      </tri-form-item>
     </form>
   `
 })
-export class NzDemoColorPickerUseComponent {
+export class TriDemoColorPickerUseComponent {
   private formBuilder = inject(FormBuilder);
   validateForm = this.formBuilder.group({
     username: ['color-picker', [Validators.required]],

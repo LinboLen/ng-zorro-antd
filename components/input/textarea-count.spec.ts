@@ -8,19 +8,19 @@ import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testi
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { NzInputModule } from 'ng-zorro-antd/input/input.module';
-import { NzTextareaCountComponent } from 'ng-zorro-antd/input/textarea-count.component';
+import { TriInputModule } from 'ng-zorro-antd/input/input.module';
+import { TriTextareaCountComponent } from 'ng-zorro-antd/input/textarea-count.component';
 
 describe('textarea-count', () => {
   describe('without-max-length', () => {
-    let fixture: ComponentFixture<NzTestInputTextareaCountWithoutMaxComponent>;
-    let testComponent: NzTestInputTextareaCountWithoutMaxComponent;
+    let fixture: ComponentFixture<TriTestInputTextareaCountWithoutMaxComponent>;
+    let testComponent: TriTestInputTextareaCountWithoutMaxComponent;
     let textareaCountElement: HTMLElement;
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestInputTextareaCountWithoutMaxComponent);
+      fixture = TestBed.createComponent(TriTestInputTextareaCountWithoutMaxComponent);
       testComponent = fixture.debugElement.componentInstance;
       fixture.detectChanges();
-      textareaCountElement = fixture.debugElement.query(By.directive(NzTextareaCountComponent)).nativeElement;
+      textareaCountElement = fixture.debugElement.query(By.directive(TriTextareaCountComponent)).nativeElement;
     });
     it('should count work', () => {
       expect(textareaCountElement.getAttribute('data-count')).toBe('0');
@@ -34,14 +34,14 @@ describe('textarea-count', () => {
     }));
   });
   describe('with-max-length', () => {
-    let fixture: ComponentFixture<NzTestInputTextareaCountWithMaxComponent>;
-    let testComponent: NzTestInputTextareaCountWithMaxComponent;
+    let fixture: ComponentFixture<TriTestInputTextareaCountWithMaxComponent>;
+    let testComponent: TriTestInputTextareaCountWithMaxComponent;
     let textareaCountElement: HTMLElement;
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestInputTextareaCountWithMaxComponent);
+      fixture = TestBed.createComponent(TriTestInputTextareaCountWithMaxComponent);
       testComponent = fixture.debugElement.componentInstance;
       fixture.detectChanges();
-      textareaCountElement = fixture.debugElement.query(By.directive(NzTextareaCountComponent)).nativeElement;
+      textareaCountElement = fixture.debugElement.query(By.directive(TriTextareaCountComponent)).nativeElement;
     });
     it('should count with max length work', () => {
       expect(textareaCountElement.getAttribute('data-count')).toBe('0/100');
@@ -57,25 +57,25 @@ describe('textarea-count', () => {
 });
 
 @Component({
-  imports: [FormsModule, NzInputModule],
+  imports: [FormsModule, TriInputModule],
   template: `
-    <nz-textarea-count>
-      <textarea rows="4" nz-input [(ngModel)]="inputValue"></textarea>
-    </nz-textarea-count>
+    <tri-textarea-count>
+      <textarea rows="4" tri-input [(ngModel)]="inputValue"></textarea>
+    </tri-textarea-count>
   `
 })
-export class NzTestInputTextareaCountWithoutMaxComponent {
+export class TriTestInputTextareaCountWithoutMaxComponent {
   inputValue = '';
 }
 
 @Component({
-  imports: [FormsModule, NzInputModule],
+  imports: [FormsModule, TriInputModule],
   template: `
-    <nz-textarea-count [nzMaxCharacterCount]="100">
-      <textarea rows="4" nz-input [(ngModel)]="inputValue"></textarea>
-    </nz-textarea-count>
+    <tri-textarea-count [maxCharacterCount]="100">
+      <textarea rows="4" tri-input [(ngModel)]="inputValue"></textarea>
+    </tri-textarea-count>
   `
 })
-export class NzTestInputTextareaCountWithMaxComponent {
+export class TriTestInputTextareaCountWithMaxComponent {
   inputValue = '';
 }

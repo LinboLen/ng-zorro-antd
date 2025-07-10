@@ -5,11 +5,11 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzSegmentedItemComponent } from './segmented-item.component';
-import { NzSegmentedComponent } from './segmented.component';
+import { TriSegmentedItemComponent } from './segmented-item.component';
+import { TriSegmentedComponent } from './segmented.component';
 
 @NgModule({
-  imports: [NzSegmentedComponent, NzSegmentedItemComponent],
-  exports: [NzSegmentedComponent, NzSegmentedItemComponent]
+  imports: [TriSegmentedComponent, TriSegmentedItemComponent],
+  exports: [TriSegmentedComponent, TriSegmentedItemComponent]
 })
-export class NzSegmentedModule {}
+export class TriSegmentedModule {}

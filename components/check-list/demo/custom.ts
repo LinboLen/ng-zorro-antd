@@ -1,74 +1,74 @@
 import { Component, inject } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzCheckListModule, NzItemProps } from 'ng-zorro-antd/check-list';
-import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriCheckListModule, TriItemProps } from 'ng-zorro-antd/check-list';
+import { TriCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { TriFormModule } from 'ng-zorro-antd/form';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
 
 @Component({
-  selector: 'nz-demo-check-list-custom',
+  selector: '',
   imports: [
-    NzCheckListModule,
-    NzButtonModule,
-    NzFormModule,
+    TriCheckListModule,
+    TriButtonModule,
+    TriFormModule,
     ReactiveFormsModule,
-    NzCheckboxModule,
-    NzInputModule,
-    NzSegmentedModule
+    TriCheckboxModule,
+    TriInputModule,
+    TriSegmentedModule
   ],
   template: `
-    <form nz-form nzLayout="vertical" [formGroup]="form">
-      <nz-form-item>
-        <nz-form-label>Visible</nz-form-label>
-        <nz-form-control>
-          <label nz-checkbox formControlName="nzVisible"></label>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>Show Progress</nz-form-label>
-        <nz-form-control>
-          <label nz-checkbox formControlName="nzProgress"></label>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>Index</nz-form-label>
-        <nz-form-control>
-          <nz-segmented [nzOptions]="options" (nzValueChange)="handleIndexChange($event)"></nz-segmented>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>Trigger Render</nz-form-label>
-        <nz-form-control>
-          <input nz-input formControlName="nzTriggerRender" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>Title</nz-form-label>
-        <nz-form-control>
-          <input nz-input formControlName="nzTitle" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>Footer</nz-form-label>
-        <nz-form-control>
-          <input nz-input formControlName="nzFooter" />
-        </nz-form-control>
-      </nz-form-item>
+    <form tri-form layout="vertical" [formGroup]="form">
+      <tri-form-item>
+        <tri-form-label>Visible</tri-form-label>
+        <tri-form-control>
+          <label tri-checkbox formControlName="nzVisible"></label>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label>Show Progress</tri-form-label>
+        <tri-form-control>
+          <label tri-checkbox formControlName="nzProgress"></label>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label>Index</tri-form-label>
+        <tri-form-control>
+          <tri-segmented [options]="options" (valueChange)="handleIndexChange($event)"></tri-segmented>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label>Trigger Render</tri-form-label>
+        <tri-form-control>
+          <input tri-input formControlName="nzTriggerRender" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label>Title</tri-form-label>
+        <tri-form-control>
+          <input tri-input formControlName="nzTitle" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label>Footer</tri-form-label>
+        <tri-form-control>
+          <input tri-input formControlName="nzFooter" />
+        </tri-form-control>
+      </tri-form-item>
     </form>
 
-    <nz-check-list
-      [nzItems]="nzItems"
-      [nzVisible]="form.controls.nzVisible.value"
-      [nzIndex]="form.controls.nzIndex.value || 0"
-      [nzProgress]="form.controls.nzProgress.value"
-      [nzTriggerRender]="form.controls.nzTriggerRender.value"
-      [nzTitle]="form.controls.nzTitle.value"
-      [nzFooter]="form.controls.nzFooter.value"
-      (nzHide)="hideCancel($event)"
-    ></nz-check-list>
+    <tri-check-list
+      [items]="items"
+      [visible]="visible.value"
+      [index]="index.value || 0"
+      [progress]="progress.value"
+      [triggerRender]="triggerRender.value"
+      [title]="title.value"
+      [footer]="footer.value"
+      (hide)="hideCancel($event)"
+    ></tri-check-list>
   `,
   styles: [
     `
@@ -84,9 +84,9 @@ import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
     `
   ]
 })
-export class NzDemoCheckListCustomComponent {
+export class TriDemoCheckListCustomComponent {
   private fb = inject(NonNullableFormBuilder);
-  readonly nzItems: NzItemProps[] = [
+  readonly items: TriItemProps[] = [
     {
       description: 'step 1',
       onClick: () => console.log('step 1')
@@ -104,7 +104,7 @@ export class NzDemoCheckListCustomComponent {
       onClick: () => console.log('step 4')
     }
   ];
-  readonly options = this.nzItems.map((_, index) => index).concat(this.nzItems.length + 1);
+  readonly options = this.items.map((_, index) => index).concat(this.items.length + 1);
   form = this.fb.group({
     nzProgress: true,
     nzVisible: true,

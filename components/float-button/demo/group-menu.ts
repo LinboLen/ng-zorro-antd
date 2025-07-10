@@ -1,39 +1,39 @@
 import { Component } from '@angular/core';
 
-import { NzFloatButtonModule } from 'ng-zorro-antd/float-button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriFloatButtonModule } from 'ng-zorro-antd/float-button';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-demo-float-button-group-menu',
-  imports: [NzFloatButtonModule, NzIconModule],
+  selector: '',
+  imports: [TriFloatButtonModule, TriIconModule],
   template: `
     <div class="menu">
-      <nz-float-button-group
-        [nzIcon]="icon"
-        nzType="primary"
-        nzTrigger="click"
+      <tri-float-button-group
+        [icon]="icon"
+        type="primary"
+        trigger="click"
         style="right: 24px"
-        (nzOnOpenChange)="openChange($event)"
+        (onOpenChange)="openChange($event)"
       >
-        <nz-float-button></nz-float-button>
-        <nz-float-button [nzIcon]="inner"></nz-float-button>
-      </nz-float-button-group>
-      <nz-float-button-group
-        [nzIcon]="icon"
-        nzType="primary"
-        nzTrigger="hover"
+        <tri-float-button></tri-float-button>
+        <tri-float-button [icon]="inner"></tri-float-button>
+      </tri-float-button-group>
+      <tri-float-button-group
+        [icon]="icon"
+        type="primary"
+        trigger="hover"
         style="right: 94px"
-        (nzOnOpenChange)="openChange($event)"
+        (onOpenChange)="openChange($event)"
       >
-        <nz-float-button></nz-float-button>
-        <nz-float-button [nzIcon]="inner"></nz-float-button>
-      </nz-float-button-group>
+        <tri-float-button></tri-float-button>
+        <tri-float-button [icon]="inner"></tri-float-button>
+      </tri-float-button-group>
     </div>
     <ng-template #icon>
-      <nz-icon nzType="customer-service" nzTheme="outline"></nz-icon>
+      <tri-icon type="customer-service" theme="outline"></tri-icon>
     </ng-template>
     <ng-template #inner>
-      <nz-icon nzType="comment" nzTheme="outline"></nz-icon>
+      <tri-icon type="comment" theme="outline"></tri-icon>
     </ng-template>
   `,
   styles: [
@@ -49,7 +49,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     `
   ]
 })
-export class NzDemoFloatButtonGroupMenuComponent {
+export class TriDemoFloatButtonGroupMenuComponent {
   openChange(status: boolean): void {
     console.log(status);
   }

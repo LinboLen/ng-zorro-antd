@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 
-import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { TriAlertModule } from 'ng-zorro-antd/alert';
 
 @Component({
-  selector: 'nz-demo-alert-style',
-  imports: [NzAlertModule],
+  selector: '',
+  imports: [TriAlertModule],
   template: `
-    <nz-alert nzType="success" nzMessage="Success Text"></nz-alert>
-    <nz-alert nzType="info" nzMessage="Info Text"></nz-alert>
-    <nz-alert nzType="warning" nzMessage="Warning Text"></nz-alert>
-    <nz-alert nzType="error" nzMessage="Error Text"></nz-alert>
+    <tri-alert type="success" message="Success Text"></tri-alert>
+    <tri-alert type="info" message="Info Text"></tri-alert>
+    <tri-alert type="warning" message="Warning Text"></tri-alert>
+    <tri-alert type="error" message="Error Text"></tri-alert>
   `,
   styles: [
     `
@@ -19,4 +19,4 @@ import { NzAlertModule } from 'ng-zorro-antd/alert';
     `
   ]
 })
-export class NzDemoAlertStyleComponent {}
+export class TriDemoAlertStyleComponent {}

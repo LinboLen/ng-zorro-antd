@@ -5,19 +5,19 @@
 
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 @Component({
-  selector: 'nz-option-item-group',
-  template: `<ng-container *nzStringTemplateOutlet="nzLabel">{{ nzLabel }}</ng-container>`,
+  selector: '',
+  template: `<ng-container *stringTemplateOutlet="label">{{ label }}</ng-container>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
-    class: 'ant-select-item ant-select-item-group'
+    class: 'tri-select-item ant-select-item-group'
   },
-  imports: [NzOutletModule]
+  imports: [TriOutletModule]
 })
-export class NzOptionItemGroupComponent {
-  @Input() nzLabel: string | number | TemplateRef<NzSafeAny> | null = null;
+export class TriOptionItemGroupComponent {
+  @Input() label: string | number | TemplateRef<TriSafeAny> | null = null;
 }

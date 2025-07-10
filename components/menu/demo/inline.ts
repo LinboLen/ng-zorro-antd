@@ -1,51 +1,51 @@
 import { Component } from '@angular/core';
 
-import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { TriMenuModule } from 'ng-zorro-antd/menu';
 
 @Component({
-  selector: 'nz-demo-menu-inline',
-  imports: [NzMenuModule],
+  selector: '',
+  imports: [TriMenuModule],
   template: `
-    <ul nz-menu nzMode="inline">
-      <li nz-submenu nzTitle="Navigation One" nzIcon="mail" nzOpen>
+    <ul tri-menu mode="inline">
+      <li tri-submenu title="Navigation One" icon="mail" open>
         <ul>
-          <li nz-menu-group nzTitle="Item 1">
+          <li tri-menu-group title="Item 1">
             <ul>
-              <li nz-menu-item nzSelected>Option 1</li>
-              <li nz-menu-item>Option 2</li>
+              <li tri-menu-item selected>Option 1</li>
+              <li tri-menu-item>Option 2</li>
             </ul>
           </li>
-          <li nz-menu-group nzTitle="Item 2">
+          <li tri-menu-group title="Item 2">
             <ul>
-              <li nz-menu-item>Option 3</li>
-              <li nz-menu-item>Option 4</li>
+              <li tri-menu-item>Option 3</li>
+              <li tri-menu-item>Option 4</li>
             </ul>
           </li>
         </ul>
       </li>
-      <li nz-submenu nzTitle="Navigation Two" nzIcon="appstore">
+      <li tri-submenu title="Navigation Two" icon="appstore">
         <ul>
-          <li nz-menu-item>Option 5</li>
-          <li nz-menu-item>Option 6</li>
-          <li nz-submenu nzTitle="Submenu">
+          <li tri-menu-item>Option 5</li>
+          <li tri-menu-item>Option 6</li>
+          <li tri-submenu title="Submenu">
             <ul>
-              <li nz-menu-item>Option 7</li>
-              <li nz-menu-item>Option 8</li>
-              <li nz-submenu nzTitle="Submenu">
+              <li tri-menu-item>Option 7</li>
+              <li tri-menu-item>Option 8</li>
+              <li tri-submenu title="Submenu">
                 <ul>
-                  <li nz-menu-item>Option 9</li>
-                  <li nz-menu-item>Option 10</li>
+                  <li tri-menu-item>Option 9</li>
+                  <li tri-menu-item>Option 10</li>
                 </ul>
               </li>
             </ul>
           </li>
         </ul>
       </li>
-      <li nz-submenu nzTitle="Navigation Three" nzIcon="setting">
+      <li tri-submenu title="Navigation Three" icon="setting">
         <ul>
-          <li nz-menu-item>Option 11</li>
-          <li nz-menu-item>Option 12</li>
-          <li nz-menu-item>Option 13</li>
+          <li tri-menu-item>Option 11</li>
+          <li tri-menu-item>Option 12</li>
+          <li tri-menu-item>Option 13</li>
         </ul>
       </li>
     </ul>
@@ -58,4 +58,4 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
     `
   ]
 })
-export class NzDemoMenuInlineComponent {}
+export class TriDemoMenuInlineComponent {}

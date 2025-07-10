@@ -20,14 +20,14 @@ import { filter, map } from 'rxjs/operators';
 
 import { ThemeType } from '@ant-design/icons-angular';
 
-import { NzConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
 import { InputObservable } from 'ng-zorro-antd/core/types';
 
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'form';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'form';
 
-export type NzFormLayoutType = 'horizontal' | 'vertical' | 'inline';
+export type TriFormLayoutType = 'horizontal' | 'vertical' | 'inline';
 
-export type NzLabelAlignType = 'left' | 'right';
+export type TriLabelAlignType = 'left' | 'right';
 
 export const DefaultTooltipIcon = {
   type: 'question-circle',
@@ -35,29 +35,29 @@ export const DefaultTooltipIcon = {
 } as const;
 
 @Directive({
-  selector: '[nz-form]',
-  exportAs: 'nzForm',
+  selector: '',
+  exportAs: 'triForm',
   host: {
-    class: 'ant-form',
-    '[class.ant-form-horizontal]': `nzLayout === 'horizontal'`,
-    '[class.ant-form-vertical]': `nzLayout === 'vertical'`,
-    '[class.ant-form-inline]': `nzLayout === 'inline'`,
-    '[class.ant-form-rtl]': `dir === 'rtl'`
+    class: 'tri-form',
+    '[class.tri-form-horizontal]': `layout === 'horizontal'`,
+    '[class.tri-form-vertical]': `layout === 'vertical'`,
+    '[class.tri-form-inline]': `layout === 'inline'`,
+    '[class.tri-form-rtl]': `dir === 'rtl'`
   }
 })
-export class NzFormDirective implements OnChanges, InputObservable {
+export class TriFormDirective implements OnChanges, InputObservable {
   private destroyRef = inject(DestroyRef);
   private directionality = inject(Directionality);
 
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
 
-  @Input() nzLayout: NzFormLayoutType = 'horizontal';
-  @Input({ transform: booleanAttribute }) @WithConfig() nzNoColon: boolean = false;
-  @Input() @WithConfig() nzAutoTips: Record<string, Record<string, string>> = {};
-  @Input({ transform: booleanAttribute }) nzDisableAutoTips = false;
-  @Input() @WithConfig() nzTooltipIcon: string | { type: string; theme: ThemeType } = DefaultTooltipIcon;
-  @Input() nzLabelAlign: NzLabelAlignType = 'right';
-  @Input({ transform: booleanAttribute }) @WithConfig() nzLabelWrap: boolean = false;
+  @Input() layout: TriFormLayoutType = 'horizontal';
+  @Input({ transform: booleanAttribute }) @WithConfig() noColon: boolean = false;
+  @Input() @WithConfig() autoTips: Record<string, Record<string, string>> = {};
+  @Input({ transform: booleanAttribute }) disableAutoTips = false;
+  @Input() @WithConfig() tooltipIcon: string | { type: string; theme: ThemeType } = DefaultTooltipIcon;
+  @Input() labelAlign: TriLabelAlignType = 'right';
+  @Input({ transform: booleanAttribute }) @WithConfig() labelWrap: boolean = false;
 
   dir: Direction = 'ltr';
   private inputChanges$ = new Subject<SimpleChanges>();

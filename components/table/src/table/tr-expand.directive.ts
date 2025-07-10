@@ -6,12 +6,12 @@
 import { booleanAttribute, Directive, Input } from '@angular/core';
 
 @Directive({
-  selector: 'tr[nzExpand]',
+  selector: '',
   host: {
-    class: 'ant-table-expanded-row',
+    class: 'tri-table-expanded-row',
     '[hidden]': `!nzExpand`
   }
 })
-export class NzTrExpandDirective {
-  @Input({ transform: booleanAttribute }) nzExpand = true;
+export class TriTrExpandDirective {
+  @Input({ transform: booleanAttribute }) expand = true;
 }

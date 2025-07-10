@@ -9,12 +9,12 @@ import { Subject } from 'rxjs';
 
 import { IconDefinition, IconService } from '@ant-design/icons-angular';
 
-import { IconConfig, NzConfigService, onConfigChangeEventForComponent } from 'ng-zorro-antd/core/config';
+import { IconConfig, TriConfigService, onConfigChangeEventForComponent } from 'ng-zorro-antd/core/config';
 import { warn } from 'ng-zorro-antd/core/logger';
 
 import { NZ_ICONS_USED_BY_ZORRO } from './icons';
 
-export interface NzIconfontOption {
+export interface TriIconfontOption {
   scriptUrl: string;
 }
 
@@ -28,8 +28,8 @@ export const DEFAULT_TWOTONE_COLOR = '#1890ff';
 @Injectable({
   providedIn: 'root'
 })
-export class NzIconService extends IconService {
-  protected nzConfigService = inject(NzConfigService);
+export class TriIconService extends IconService {
+  protected configService = inject(TriConfigService);
   private platform = inject(Platform);
 
   configUpdated$ = new Subject<void>();
@@ -53,7 +53,7 @@ export class NzIconService extends IconService {
     }
   }
 
-  fetchFromIconfont(opt: NzIconfontOption): void {
+  fetchFromIconfont(opt: TriIconfontOption): void {
     const { scriptUrl } = opt;
     if (this._document && !this.iconfontCache.has(scriptUrl)) {
       const script = this._renderer.createElement('script');
@@ -107,18 +107,18 @@ export class NzIconService extends IconService {
   }
 
   private getConfig(): IconConfig {
-    return this.nzConfigService.getConfigForComponent('icon') || {};
+    return this.configService.getConfigForComponent('icon') || {};
   }
 }
 
 export const NZ_ICONS_PATCH = new InjectionToken<IconDefinition[]>('nz_icons_patch');
 
 @Injectable()
-export class NzIconPatchService {
+export class TriIconPatchService {
   patched = false;
   private extraIcons = inject(NZ_ICONS_PATCH, { self: true });
 
-  constructor(private rootIconService: NzIconService) {}
+  constructor(private rootIconService: TriIconService) {}
 
   doPatch(): void {
     if (this.patched) {

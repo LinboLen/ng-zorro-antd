@@ -3,14 +3,14 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { NzSafeAny } from './any';
+import { TriSafeAny } from './any';
 
 export type NgClassType = string | string[] | NgClassInterface;
 
 export interface NgClassInterface {
-  [klass: string]: NzSafeAny;
+  [klass: string]: TriSafeAny;
 }
 
 export interface NgStyleInterface {
-  [klass: string]: NzSafeAny;
+  [klass: string]: TriSafeAny;
 }

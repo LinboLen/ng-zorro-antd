@@ -17,15 +17,15 @@ import {
 import { ComponentFixture, TestBed, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { BooleanInput, NzDirectionVHType, NzSizeDSType } from 'ng-zorro-antd/core/types';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { BooleanInput, TriDirectionVHType, TriSizeDSType } from 'ng-zorro-antd/core/types';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
-import { NzDemoStepsClickableComponent } from './demo/clickable';
-import { NzDemoStepsNavComponent } from './demo/nav';
-import { NzStepComponent } from './step.component';
-import { NzProgressDotTemplate, NzStatusType, NzStepsComponent } from './steps.component';
-import { NzStepsModule } from './steps.module';
+import { TriDemoStepsClickableComponent } from './demo/clickable';
+import { TriDemoStepsNavComponent } from './demo/nav';
+import { TriStepComponent } from './step.component';
+import { TriProgressDotTemplate, TriStatusType, TriStepsComponent } from './steps.component';
+import { TriStepsModule } from './steps.module';
 
 describe('steps', () => {
   beforeEach(waitForAsync(() => {
@@ -34,16 +34,16 @@ describe('steps', () => {
     });
   }));
   describe('outer steps', () => {
-    let fixture: ComponentFixture<NzTestOuterStepsComponent>;
-    let testComponent: NzTestOuterStepsComponent;
+    let fixture: ComponentFixture<TriTestOuterStepsComponent>;
+    let testComponent: TriTestOuterStepsComponent;
     let outStep: DebugElement;
     let innerSteps: DebugElement[];
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestOuterStepsComponent);
+      fixture = TestBed.createComponent(TriTestOuterStepsComponent);
       testComponent = fixture.componentInstance;
-      outStep = fixture.debugElement.query(By.directive(NzStepsComponent));
-      innerSteps = fixture.debugElement.queryAll(By.directive(NzStepComponent));
+      outStep = fixture.debugElement.query(By.directive(TriStepsComponent));
+      innerSteps = fixture.debugElement.queryAll(By.directive(TriStepComponent));
     });
 
     it('should init className correct', fakeAsync(() => {
@@ -263,14 +263,14 @@ describe('steps', () => {
   });
 
   describe('inner step string', () => {
-    let fixture: ComponentFixture<NzTestInnerStepStringComponent>;
-    let testComponent: NzTestInnerStepStringComponent;
+    let fixture: ComponentFixture<TriTestInnerStepStringComponent>;
+    let testComponent: TriTestInnerStepStringComponent;
     let innerSteps: DebugElement[];
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestInnerStepStringComponent);
+      fixture = TestBed.createComponent(TriTestInnerStepStringComponent);
       testComponent = fixture.debugElement.componentInstance;
-      innerSteps = fixture.debugElement.queryAll(By.directive(NzStepComponent));
+      innerSteps = fixture.debugElement.queryAll(By.directive(TriStepComponent));
     });
 
     it('should status display correct', () => {
@@ -320,12 +320,12 @@ describe('steps', () => {
   });
 
   describe('inner step template', () => {
-    let fixture: ComponentFixture<NzTestInnerStepTemplateComponent>;
+    let fixture: ComponentFixture<TriTestInnerStepTemplateComponent>;
     let innerSteps: DebugElement[];
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestInnerStepTemplateComponent);
-      innerSteps = fixture.debugElement.queryAll(By.directive(NzStepComponent));
+      fixture = TestBed.createComponent(TriTestInnerStepTemplateComponent);
+      innerSteps = fixture.debugElement.queryAll(By.directive(TriStepComponent));
     });
 
     it('should title display correct', () => {
@@ -364,11 +364,11 @@ describe('steps', () => {
 
   describe('step ng for', () => {
     it('should title display correct', () => {
-      TestBed.createComponent(NzTestStepForComponent).detectChanges();
+      TestBed.createComponent(TriTestStepForComponent).detectChanges();
     });
 
     it('should push works correct', () => {
-      const comp = TestBed.createComponent(NzTestStepForComponent);
+      const comp = TestBed.createComponent(TriTestStepForComponent);
       comp.detectChanges();
       comp.debugElement.componentInstance.updateSteps();
       comp.detectChanges();
@@ -377,17 +377,17 @@ describe('steps', () => {
 
   describe('step async assign steps', () => {
     it('should allow steps assigned asynchronously', fakeAsync(() => {
-      const fixture: ComponentFixture<NzTestStepAsyncComponent> = TestBed.createComponent(NzTestStepAsyncComponent);
+      const fixture: ComponentFixture<TriTestStepAsyncComponent> = TestBed.createComponent(TriTestStepAsyncComponent);
       let innerSteps: DebugElement[];
 
       fixture.detectChanges();
-      innerSteps = fixture.debugElement.queryAll(By.directive(NzStepComponent));
+      innerSteps = fixture.debugElement.queryAll(By.directive(TriStepComponent));
       expect(innerSteps.length).toBe(0);
 
       tick(1000);
       fixture.detectChanges();
       tick();
-      innerSteps = fixture.debugElement.queryAll(By.directive(NzStepComponent));
+      innerSteps = fixture.debugElement.queryAll(By.directive(TriStepComponent));
       fixture.detectChanges();
       expect(innerSteps.length).toBe(3);
       expect(innerSteps[0].nativeElement.className).toBe('ant-steps-item ant-steps-item-finish');
@@ -399,14 +399,14 @@ describe('steps', () => {
   });
 
   describe('step clickable', () => {
-    let fixture: ComponentFixture<NzDemoStepsClickableComponent>;
-    let testComponent: NzDemoStepsClickableComponent;
+    let fixture: ComponentFixture<TriDemoStepsClickableComponent>;
+    let testComponent: TriDemoStepsClickableComponent;
     let innerSteps: DebugElement[];
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzDemoStepsClickableComponent);
+      fixture = TestBed.createComponent(TriDemoStepsClickableComponent);
       testComponent = fixture.debugElement.componentInstance;
-      innerSteps = fixture.debugElement.queryAll(By.directive(NzStepComponent));
+      innerSteps = fixture.debugElement.queryAll(By.directive(TriStepComponent));
     });
 
     it('should clickable', fakeAsync(() => {
@@ -475,12 +475,12 @@ describe('steps', () => {
   });
 
   describe('navigation', () => {
-    let fixture: ComponentFixture<NzDemoStepsNavComponent>;
+    let fixture: ComponentFixture<TriDemoStepsNavComponent>;
     let steps: DebugElement[];
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzDemoStepsNavComponent);
-      steps = fixture.debugElement.queryAll(By.directive(NzStepsComponent));
+      fixture = TestBed.createComponent(TriDemoStepsNavComponent);
+      steps = fixture.debugElement.queryAll(By.directive(TriStepsComponent));
     });
 
     it('should clickable', fakeAsync(() => {
@@ -497,8 +497,8 @@ describe('steps', () => {
   });
   describe('RTL', () => {
     it('should className correct on dir change', fakeAsync(() => {
-      const fixture = TestBed.createComponent(NzTestOuterStepsRtlComponent);
-      const outStep = fixture.debugElement.query(By.directive(NzStepsComponent));
+      const fixture = TestBed.createComponent(TriTestOuterStepsRtlComponent);
+      const outStep = fixture.debugElement.query(By.directive(TriStepsComponent));
       fixture.componentInstance.direction = 'rtl';
       fixture.detectChanges();
       tick();
@@ -513,22 +513,22 @@ describe('steps', () => {
 });
 
 @Component({
-  selector: 'nz-test-outer-steps',
-  imports: [NgTemplateOutlet, NzStepsModule],
+  selector: '',
+  imports: [NgTemplateOutlet, TriStepsModule],
   template: `
-    <nz-steps
-      [nzCurrent]="current"
-      [nzDirection]="direction"
-      [nzLabelPlacement]="labelPlacement"
-      [nzSize]="size"
-      [nzStatus]="status"
-      [nzProgressDot]="progressDot"
-      [nzStartIndex]="startIndex"
+    <tri-steps
+      [current]="current"
+      [direction]="direction"
+      [labelPlacement]="labelPlacement"
+      [size]="size"
+      [status]="status"
+      [progressDot]="progressDot"
+      [startIndex]="startIndex"
     >
-      <nz-step nzTitle="0title" [nzSubtitle]="subtitle" nzDescription="0description"></nz-step>
-      <nz-step nzTitle="1title" nzDescription="1description"></nz-step>
-      <nz-step nzTitle="2title" nzDescription="2description"></nz-step>
-    </nz-steps>
+      <tri-step title="0title" [subtitle]="subtitle" description="0description"></tri-step>
+      <tri-step title="1title" description="1description"></tri-step>
+      <tri-step title="2title" description="2description"></tri-step>
+    </tri-steps>
     <ng-template #progressTemplate let-dot let-status="status" let-index="index">
       <span class="insert-span">{{ status }}{{ index }}</span>
       <ng-template [ngTemplateOutlet]="dot"></ng-template>
@@ -536,33 +536,33 @@ describe('steps', () => {
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NzTestOuterStepsComponent {
-  @ViewChild('progressTemplate', { static: false }) progressTemplate?: NzProgressDotTemplate;
+export class TriTestOuterStepsComponent {
+  @ViewChild('progressTemplate', { static: false }) progressTemplate?: TriProgressDotTemplate;
   current = 0;
-  direction: NzDirectionVHType = 'horizontal';
-  labelPlacement: NzDirectionVHType = 'horizontal';
-  size: NzSizeDSType = 'default';
-  status: NzStatusType = 'process';
+  direction: TriDirectionVHType = 'horizontal';
+  labelPlacement: TriDirectionVHType = 'horizontal';
+  size: TriSizeDSType = 'default';
+  status: TriStatusType = 'process';
   subtitle?: string | TemplateRef<void>;
-  progressDot: BooleanInput | NzProgressDotTemplate | undefined | null = false;
+  progressDot: BooleanInput | TriProgressDotTemplate | undefined | null = false;
   startIndex = 0;
   constructor(public cdr: ChangeDetectorRef) {}
 }
 
 @Component({
-  imports: [NzIconModule, NzStepsModule],
+  imports: [TriIconModule, TriStepsModule],
   template: `
-    <nz-steps [nzCurrent]="current">
-      <nz-step [nzTitle]="title" [nzDescription]="description" [nzIcon]="icon" [nzStatus]="status"></nz-step>
-      <nz-step [nzTitle]="title" [nzDescription]="description" [nzIcon]="icon" [nzStatus]="status"></nz-step>
-      <nz-step [nzTitle]="title" [nzDescription]="description" [nzIcon]="icon" [nzStatus]="status"></nz-step>
-    </nz-steps>
+    <tri-steps [current]="current">
+      <tri-step [title]="title" [description]="description" [icon]="icon" [status]="status"></tri-step>
+      <tri-step [title]="title" [description]="description" [icon]="icon" [status]="status"></tri-step>
+      <tri-step [title]="title" [description]="description" [icon]="icon" [status]="status"></tri-step>
+    </tri-steps>
     <ng-template #titleTemplate>titleTemplate</ng-template>
     <ng-template #descriptionTemplate>descriptionTemplate</ng-template>
-    <ng-template #iconTemplate><nz-icon nzType="smile-o" /></ng-template>
+    <ng-template #iconTemplate><tri-icon type="smile-o" /></ng-template>
   `
 })
-export class NzTestInnerStepStringComponent {
+export class TriTestInnerStepStringComponent {
   @ViewChild('titleTemplate', { static: false }) titleTemplate?: TemplateRef<void>;
   @ViewChild('descriptionTemplate', { static: false }) descriptionTemplate?: TemplateRef<void>;
   @ViewChild('iconTemplate', { static: false }) iconTemplate?: TemplateRef<void>;
@@ -574,31 +574,31 @@ export class NzTestInnerStepStringComponent {
 }
 
 @Component({
-  imports: [NzIconModule, NzStepsModule],
+  imports: [TriIconModule, TriStepsModule],
   template: `
-    <nz-steps [nzCurrent]="1">
-      <nz-step [nzTitle]="titleTemplate" [nzDescription]="descriptionTemplate" [nzIcon]="iconTemplate"></nz-step>
-      <nz-step [nzTitle]="titleTemplate" [nzDescription]="descriptionTemplate" [nzIcon]="iconTemplate"></nz-step>
-      <nz-step [nzTitle]="titleTemplate" [nzDescription]="descriptionTemplate" [nzIcon]="iconTemplate"></nz-step>
-    </nz-steps>
+    <tri-steps [current]="1">
+      <tri-step [title]="titleTemplate" [description]="descriptionTemplate" [icon]="iconTemplate"></tri-step>
+      <tri-step [title]="titleTemplate" [description]="descriptionTemplate" [icon]="iconTemplate"></tri-step>
+      <tri-step [title]="titleTemplate" [description]="descriptionTemplate" [icon]="iconTemplate"></tri-step>
+    </tri-steps>
     <ng-template #titleTemplate>titleTemplate</ng-template>
     <ng-template #descriptionTemplate>descriptionTemplate</ng-template>
-    <ng-template #iconTemplate><nz-icon nzType="smile-o" /></ng-template>
+    <ng-template #iconTemplate><tri-icon type="smile-o" /></ng-template>
   `
 })
-export class NzTestInnerStepTemplateComponent {}
+export class TriTestInnerStepTemplateComponent {}
 
 @Component({
-  imports: [NzStepsModule],
+  imports: [TriStepsModule],
   template: `
-    <nz-steps>
+    <tri-steps>
       @for (step of steps; track step) {
-        <nz-step></nz-step>
+        <tri-step></tri-step>
       }
-    </nz-steps>
+    </tri-steps>
   `
 })
-export class NzTestStepForComponent {
+export class TriTestStepForComponent {
   steps = [1, 2, 3];
   updateSteps(): void {
     this.steps.push(4);
@@ -606,16 +606,16 @@ export class NzTestStepForComponent {
 }
 
 @Component({
-  imports: [NzStepsModule],
+  imports: [TriStepsModule],
   template: `
-    <nz-steps [nzCurrent]="1">
+    <tri-steps [current]="1">
       @for (step of steps; track step) {
-        <nz-step></nz-step>
+        <tri-step></tri-step>
       }
-    </nz-steps>
+    </tri-steps>
   `
 })
-export class NzTestStepAsyncComponent implements OnInit {
+export class TriTestStepAsyncComponent implements OnInit {
   steps: number[] = [];
 
   ngOnInit(): void {
@@ -626,10 +626,10 @@ export class NzTestStepAsyncComponent implements OnInit {
 }
 
 @Component({
-  imports: [BidiModule, NzTestOuterStepsComponent],
-  template: `<nz-test-outer-steps [dir]="direction"></nz-test-outer-steps>`
+  imports: [BidiModule, TriTestOuterStepsComponent],
+  template: `<tri-test-outer-steps [dir]="direction"></tri-test-outer-steps>`
 })
-export class NzTestOuterStepsRtlComponent {
+export class TriTestOuterStepsRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 }

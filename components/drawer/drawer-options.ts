@@ -6,44 +6,44 @@
 import { Direction } from '@angular/cdk/bidi';
 import { InjectionToken, TemplateRef, Type } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzDrawerRef } from './drawer-ref';
+import { TriDrawerRef } from './drawer-ref';
 
 export const DRAWER_DEFAULT_SIZE = 378;
 export const DRAWER_LARGE_SIZE = 736;
-export type NzDrawerPlacement = 'left' | 'right' | 'top' | 'bottom';
-export type NzDrawerSize = 'default' | 'large';
+export type TriDrawerPlacement = 'left' | 'right' | 'top' | 'bottom';
+export type TriDrawerSize = 'default' | 'large';
 
-export interface NzDrawerOptionsOfComponent<T = NzSafeAny, D = NzSafeAny> {
+export interface TriDrawerOptionsOfComponent<T = TriSafeAny, D = TriSafeAny> {
   nzClosable?: boolean;
   nzMaskClosable?: boolean;
-  nzCloseOnNavigation?: boolean;
-  nzDirection?: Direction;
+  closeOnNavigation?: boolean;
+  direction?: Direction;
   nzMask?: boolean;
   nzKeyboard?: boolean;
   nzNoAnimation?: boolean;
   nzTitle?: string | TemplateRef<{}>;
-  nzExtra?: string | TemplateRef<{}>;
-  nzFooter?: string | TemplateRef<{}>;
-  nzContent?: TemplateRef<{ $implicit: D; drawerRef: NzDrawerRef }> | Type<T>;
+  extra?: string | TemplateRef<{}>;
+  footer?: string | TemplateRef<{}>;
+  content?: TemplateRef<{ $implicit: D; drawerRef: TriDrawerRef }> | Type<T>;
   /**@Deprecated**/
-  nzContentParams?: Partial<T & D>;
-  nzData?: D;
+  contentParams?: Partial<T & D>;
+  data?: D;
   nzMaskStyle?: object;
   nzBodyStyle?: object;
   nzWrapClassName?: string;
-  nzSize?: NzDrawerSize;
+  size?: TriDrawerSize;
   nzWidth?: number | string;
   nzHeight?: number | string;
-  nzPlacement?: NzDrawerPlacement;
+  nzPlacement?: TriDrawerPlacement;
   nzZIndex?: number;
   nzOffsetX?: number;
   nzOffsetY?: number;
 }
 
-export interface NzDrawerOptions<T = NzSafeAny, D = NzSafeAny> extends NzDrawerOptionsOfComponent<T, D> {
-  nzOnCancel?(): Promise<NzSafeAny>;
+export interface TriDrawerOptions<T = TriSafeAny, D = TriSafeAny> extends TriDrawerOptionsOfComponent<T, D> {
+  nzOnCancel?(): Promise<TriSafeAny>;
 }
 
-export const NZ_DRAWER_DATA = new InjectionToken<NzSafeAny>('NZ_DRAWER_DATA');
+export const NZ_DRAWER_DATA = new InjectionToken<TriSafeAny>('NZ_DRAWER_DATA');

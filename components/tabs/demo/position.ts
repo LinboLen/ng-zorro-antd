@@ -1,30 +1,30 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzTabPosition, NzTabsModule } from 'ng-zorro-antd/tabs';
+import { TriSelectModule } from 'ng-zorro-antd/select';
+import { TriTabPosition, TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: 'nz-demo-tabs-position',
-  imports: [FormsModule, NzSelectModule, NzTabsModule],
+  selector: '',
+  imports: [FormsModule, TriSelectModule, TriTabsModule],
   template: `
     <div style="margin-bottom: 16px;">
       Tab position:
-      <nz-select [(ngModel)]="position" style="width: 80px;">
+      <tri-select [(ngModel)]="position" style="width: 80px;">
         @for (option of options; track option.value) {
-          <nz-option [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+          <tri-option [label]="option.label" [value]="option.value"></tri-option>
         }
-      </nz-select>
+      </tri-select>
     </div>
-    <nz-tabs [nzTabPosition]="position">
+    <tri-tabs [tabPosition]="position">
       @for (tab of tabs; track tab) {
-        <nz-tab [nzTitle]="'Tab ' + tab">Content of tab {{ tab }}</nz-tab>
+        <tri-tab [title]="'Tab ' + tab">Content of tab {{ tab }}</tri-tab>
       }
-    </nz-tabs>
+    </tri-tabs>
   `
 })
-export class NzDemoTabsPositionComponent {
-  position: NzTabPosition = 'top';
+export class TriDemoTabsPositionComponent {
+  position: TriTabPosition = 'top';
   tabs = [1, 2, 3];
   options = [
     { value: 'top', label: 'top' },

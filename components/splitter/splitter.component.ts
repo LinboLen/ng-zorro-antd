@@ -26,14 +26,14 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { map, merge, Subject, takeUntil } from 'rxjs';
 import { pairwise, startWith } from 'rxjs/operators';
 
-import { NzResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
-import { NzDestroyService } from 'ng-zorro-antd/core/services';
+import { TriResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
+import { TriDestroyService } from 'ng-zorro-antd/core/services';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 import { getEventWithPoint } from 'ng-zorro-antd/resizable';
 
-import { NzSplitterBarComponent } from './splitter-bar.component';
-import { NzSplitterPanelComponent } from './splitter-panel.component';
-import { NzSplitterCollapseOption, NzSplitterLayout } from './typings';
+import { TriSplitterBarComponent } from './splitter-bar.component';
+import { TriSplitterPanelComponent } from './splitter-panel.component';
+import { TriSplitterCollapseOption, TriSplitterLayout } from './typings';
 import { coerceCollapsible, getPercentValue, isPercent } from './utils';
 
 interface PanelSize {
@@ -55,22 +55,22 @@ interface PanelSize {
 
 interface ResizableInfo {
   resizable: boolean;
-  collapsible: Required<NzSplitterCollapseOption>;
+  collapsible: Required<TriSplitterCollapseOption>;
 }
 
 const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: true });
 
 @Component({
-  selector: 'nz-splitter',
-  exportAs: 'nzSplitter',
+  selector: '',
+  exportAs: 'triSplitter',
   template: `
     @for (panel of panelProps(); let i = $index; track i; let last = $last) {
       @let size = sizes()[i];
       @let flexBasis = !!size.size ? size.size : 'auto';
       @let flexGrow = !!size.size ? 0 : 1;
       <div
-        class="ant-splitter-panel"
-        [class.ant-splitter-panel-hidden]="size.postPxSize === 0"
+        class="tri-splitter-panel"
+        [class.tri-splitter-panel-hidden]="size.postPxSize === 0"
         [style.flex-basis]="flexBasis"
         [style.flex-grow]="flexGrow"
       >
@@ -81,15 +81,15 @@ const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: t
         @let resizableInfo = resizableInfos()[i];
         @let ariaInfo = ariaInfos()[i];
         <div
-          nz-splitter-bar
+          tri-splitter-bar
           [ariaNow]="ariaInfo.ariaNow"
           [ariaMin]="ariaInfo.ariaMin"
           [ariaMax]="ariaInfo.ariaMax"
           [resizable]="resizableInfo.resizable"
           [collapsible]="resizableInfo.collapsible"
           [active]="movingIndex()?.index === i"
-          [vertical]="nzLayout() === 'vertical'"
-          [lazy]="nzLazy()"
+          [vertical]="layout() === 'vertical'"
+          [lazy]="lazy()"
           [constrainedOffset]="constrainedOffset()"
           (offsetStart)="startResize(i, $event)"
           (collapse)="collapse(i, $event)"
@@ -101,51 +101,51 @@ const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: t
     @if (movingIndex() !== null) {
       <div
         aria-hidden
-        class="ant-splitter-mask"
-        [class.ant-splitter-mask-horizontal]="nzLayout() === 'horizontal'"
-        [class.ant-splitter-mask-vertical]="nzLayout() === 'vertical'"
+        class="tri-splitter-mask"
+        [class.tri-splitter-mask-horizontal]="layout() === 'horizontal'"
+        [class.tri-splitter-mask-vertical]="layout() === 'vertical'"
       ></div>
     }
   `,
-  imports: [NgTemplateOutlet, NzSplitterBarComponent],
-  providers: [NzDestroyService],
+  imports: [NgTemplateOutlet, TriSplitterBarComponent],
+  providers: [TriDestroyService],
   host: {
-    class: 'ant-splitter',
-    '[class.ant-splitter-horizontal]': 'nzLayout() === "horizontal"',
-    '[class.ant-splitter-vertical]': 'nzLayout() === "vertical"',
-    '[class.ant-splitter-rtl]': 'dir() === "rtl"'
+    class: 'tri-splitter',
+    '[class.tri-splitter-horizontal]': 'layout() === "horizontal"',
+    '[class.tri-splitter-vertical]': 'layout() === "vertical"',
+    '[class.tri-splitter-rtl]': 'dir() === "rtl"'
   },
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NzSplitterComponent {
+export class TriSplitterComponent {
   /** ------------------- Props ------------------- */
-  readonly nzLayout = input<NzSplitterLayout>('horizontal');
-  readonly nzLazy = input(false, { transform: booleanAttribute });
-  readonly nzResizeStart = output<number[]>();
-  readonly nzResize = output<number[]>();
-  readonly nzResizeEnd = output<number[]>();
+  readonly layout = input<TriSplitterLayout>('horizontal');
+  readonly lazy = input(false, { transform: booleanAttribute });
+  readonly resizeStart = output<number[]>();
+  readonly resize = output<number[]>();
+  readonly resizeEnd = output<number[]>();
 
-  protected readonly destroy$ = inject(NzDestroyService);
+  protected readonly destroy$ = inject(TriDestroyService);
   protected readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   protected readonly directionality = inject(Directionality);
-  protected readonly resizeObserver = inject(NzResizeObserver);
+  protected readonly resizeObserver = inject(TriResizeObserver);
   protected readonly document = inject(DOCUMENT);
 
   protected readonly dir = toSignal(this.directionality.change, { initialValue: this.directionality.value });
 
   /** ------------------- Panels ------------------- */
   // Get all panels from content children
-  protected readonly panels = contentChildren(NzSplitterPanelComponent);
+  protected readonly panels = contentChildren(TriSplitterPanelComponent);
   // Subscribe to the change of properties
   protected readonly panelProps = computed(() =>
     this.panels().map(panel => ({
-      defaultSize: panel.nzDefaultSize(),
-      size: panel.nzSize(),
-      min: panel.nzMin(),
-      max: panel.nzMax(),
-      resizable: panel.nzResizable(),
-      collapsible: coerceCollapsible(panel.nzCollapsible()),
+      defaultSize: panel.defaultSize(),
+      size: panel.size(),
+      min: panel.min(),
+      max: panel.max(),
+      resizable: panel.resizable(),
+      collapsible: coerceCollapsible(panel.collapsible()),
       contentTemplate: panel.contentTemplate()
     }))
   );
@@ -170,7 +170,7 @@ export class NzSplitterComponent {
    * The size of the container, used to calculate the percentage size and flex basis of each panel.
    */
   protected readonly containerSize = computed(() =>
-    this.nzLayout() === 'horizontal' ? this.containerBox().width : this.containerBox().height
+    this.layout() === 'horizontal' ? this.containerBox().width : this.containerBox().height
   );
   /**
    * Derived from defaultSize of each panel.
@@ -350,7 +350,7 @@ export class NzSplitterComponent {
    */
   protected startResize(index: number, startPos: [x: number, y: number]): void {
     this.movingIndex.set({ index, confirmed: false });
-    this.nzResizeStart.emit(this.getPxSizes());
+    this.resizeStart.emit(this.getPxSizes());
     const end$ = new Subject<void>();
 
     // Updated constraint calculation
@@ -387,15 +387,15 @@ export class NzSplitterComponent {
     )
       .pipe(
         map(event => getEventWithPoint(event)),
-        map(({ pageX, pageY }) => (this.nzLayout() === 'horizontal' ? pageX - startPos[0] : pageY - startPos[1])),
+        map(({ pageX, pageY }) => (this.layout() === 'horizontal' ? pageX - startPos[0] : pageY - startPos[1])),
         // flip the offset if the direction is rtl
-        map(offset => (this.nzLayout() === 'horizontal' && this.dir() === 'rtl' ? -offset : offset)),
+        map(offset => (this.layout() === 'horizontal' && this.dir() === 'rtl' ? -offset : offset)),
         startWith(0),
         pairwise(),
         takeUntil(merge(end$, this.destroy$))
       )
       .subscribe(([prev, next]) => {
-        if (this.nzLazy() && next !== 0) {
+        if (this.lazy() && next !== 0) {
           handleLazyMove(next);
         } else {
           const deltaOffset = next - prev;
@@ -413,11 +413,11 @@ export class NzSplitterComponent {
     )
       .pipe(takeUntil(merge(end$, this.destroy$)))
       .subscribe(() => {
-        if (this.nzLazy()) {
+        if (this.lazy()) {
           handleLazyEnd();
         }
         this.movingIndex.set(null);
-        this.nzResizeEnd.emit(this.getPxSizes());
+        this.resizeEnd.emit(this.getPxSizes());
         end$.next();
       });
   }
@@ -488,7 +488,7 @@ export class NzSplitterComponent {
     pxSizes[mergedIndex] += mergedOffset;
     pxSizes[nextIndex] -= mergedOffset;
     this.innerSizes.set(pxSizes);
-    this.nzResize.emit(pxSizes);
+    this.resize.emit(pxSizes);
   }
 
   /** ------------------ Resize ------------------ */
@@ -558,7 +558,7 @@ export class NzSplitterComponent {
     }
 
     this.innerSizes.set(currentSizes);
-    this.nzResize.emit(currentSizes);
-    this.nzResizeEnd.emit(currentSizes);
+    this.resize.emit(currentSizes);
+    this.resizeEnd.emit(currentSizes);
   }
 }

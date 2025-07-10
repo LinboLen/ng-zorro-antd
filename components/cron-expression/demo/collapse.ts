@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
-import { NzCronExpressionModule } from 'ng-zorro-antd/cron-expression';
+import { TriCronExpressionModule } from 'ng-zorro-antd/cron-expression';
 
 @Component({
-  selector: 'nz-demo-cron-expression-collapse',
-  imports: [NzCronExpressionModule],
-  template: `<nz-cron-expression [nzCollapseDisable]="true"></nz-cron-expression>`
+  selector: '',
+  imports: [TriCronExpressionModule],
+  template: `<tri-cron-expression [collapseDisable]="true"></tri-cron-expression>`
 })
-export class NzDemoCronExpressionCollapseComponent {}
+export class TriDemoCronExpressionCollapseComponent {}

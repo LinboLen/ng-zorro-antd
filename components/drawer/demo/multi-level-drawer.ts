@@ -1,60 +1,60 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDrawerModule } from 'ng-zorro-antd/drawer';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzListModule } from 'ng-zorro-antd/list';
-import { NzTagModule } from 'ng-zorro-antd/tag';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriDrawerModule } from 'ng-zorro-antd/drawer';
+import { TriFormModule } from 'ng-zorro-antd/form';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriListModule } from 'ng-zorro-antd/list';
+import { TriTagModule } from 'ng-zorro-antd/tag';
 
 @Component({
-  selector: 'nz-demo-drawer-multi-level-drawer',
-  imports: [NzButtonModule, NzDrawerModule, NzFormModule, NzInputModule, NzListModule, NzTagModule],
+  selector: '',
+  imports: [TriButtonModule, TriDrawerModule, TriFormModule, TriInputModule, TriListModule, TriTagModule],
   template: `
-    <button nz-button nzType="primary" (click)="open()">New Cookbook</button>
-    <nz-drawer
-      [nzClosable]="false"
-      [nzOffsetX]="childrenVisible ? 180 : 0"
-      [nzWidth]="320"
-      [nzVisible]="visible"
-      nzTitle="Cookbook"
-      (nzOnClose)="close()"
+    <button tri-button type="primary" (click)="open()">New Cookbook</button>
+    <tri-drawer
+      [closable]="false"
+      [offsetX]="childrenVisible ? 180 : 0"
+      [width]="320"
+      [visible]="visible"
+      title="Cookbook"
+      (onClose)="close()"
     >
-      <form *nzDrawerContent nz-form>
-        <div nz-row>
-          <div nz-col nzSpan="24">
-            <nz-form-item>
-              <nz-form-label>Name</nz-form-label>
-              <nz-form-control>
-                <input nz-input placeholder="please enter cookbook name" />
-              </nz-form-control>
-            </nz-form-item>
+      <form *drawerContent tri-form>
+        <div tri-row>
+          <div tri-col span="24">
+            <tri-form-item>
+              <tri-form-label>Name</tri-form-label>
+              <tri-form-control>
+                <input tri-input placeholder="please enter cookbook name" />
+              </tri-form-control>
+            </tri-form-item>
           </div>
         </div>
-        <div nz-row>
-          <div nz-col nzSpan="24">
-            <nz-form-item>
-              <nz-form-label>Food</nz-form-label>
-              <nz-form-control>
-                <nz-tag>potato</nz-tag>
-                <nz-tag>eggplant</nz-tag>
-                <nz-tag (click)="openChildren()">+</nz-tag>
-              </nz-form-control>
-            </nz-form-item>
+        <div tri-row>
+          <div tri-col span="24">
+            <tri-form-item>
+              <tri-form-label>Food</tri-form-label>
+              <tri-form-control>
+                <tri-tag>potato</tri-tag>
+                <tri-tag>eggplant</tri-tag>
+                <tri-tag (click)="openChildren()">+</tri-tag>
+              </tri-form-control>
+            </tri-form-item>
           </div>
         </div>
       </form>
-      <nz-drawer [nzClosable]="false" [nzVisible]="childrenVisible" nzTitle="Food" (nzOnClose)="closeChildren()">
-        <nz-list *nzDrawerContent [nzDataSource]="vegetables" [nzRenderItem]="item">
+      <tri-drawer [closable]="false" [visible]="childrenVisible" title="Food" (onClose)="closeChildren()">
+        <tri-list *drawerContent [dataSource]="vegetables" [renderItem]="item">
           <ng-template #item let-item>
-            <nz-list-item [nzContent]="item"></nz-list-item>
+            <tri-list-item [content]="item"></tri-list-item>
           </ng-template>
-        </nz-list>
-      </nz-drawer>
-    </nz-drawer>
+        </tri-list>
+      </tri-drawer>
+    </tri-drawer>
   `
 })
-export class NzDemoDrawerMultiLevelDrawerComponent {
+export class TriDemoDrawerMultiLevelDrawerComponent {
   visible = false;
   childrenVisible = false;
 

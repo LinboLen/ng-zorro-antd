@@ -9,23 +9,23 @@ import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testi
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzCheckboxWrapperComponent } from './checkbox-wrapper.component';
-import { NzCheckboxComponent } from './checkbox.component';
-import { NzCheckboxModule } from './checkbox.module';
+import { TriCheckboxWrapperComponent } from './checkbox-wrapper.component';
+import { TriCheckboxComponent } from './checkbox.component';
+import { TriCheckboxModule } from './checkbox.module';
 
 describe('checkbox', () => {
   describe('checkbox basic', () => {
-    let fixture: ComponentFixture<NzTestCheckboxSingleComponent>;
-    let testComponent: NzTestCheckboxSingleComponent;
+    let fixture: ComponentFixture<TriTestCheckboxSingleComponent>;
+    let testComponent: TriTestCheckboxSingleComponent;
     let checkbox: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestCheckboxSingleComponent);
+      fixture = TestBed.createComponent(TriTestCheckboxSingleComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      checkbox = fixture.debugElement.query(By.directive(NzCheckboxComponent));
+      checkbox = fixture.debugElement.query(By.directive(TriCheckboxComponent));
     });
 
     it('should className correct', () => {
@@ -108,10 +108,10 @@ describe('checkbox', () => {
     it('should focus and blur function work', () => {
       fixture.detectChanges();
       expect(checkbox.nativeElement.querySelector('input') === document.activeElement).toBe(false);
-      testComponent.nzCheckboxComponent.focus();
+      testComponent.checkboxComponent.focus();
       fixture.detectChanges();
       expect(checkbox.nativeElement.querySelector('input') === document.activeElement).toBe(true);
-      testComponent.nzCheckboxComponent.blur();
+      testComponent.checkboxComponent.blur();
       fixture.detectChanges();
       expect(checkbox.nativeElement.querySelector('input') === document.activeElement).toBe(false);
     });
@@ -123,7 +123,7 @@ describe('checkbox', () => {
         spyOn(appRef, 'tick');
         spyOn(event, 'stopPropagation').and.callThrough();
 
-        const nzCheckbox = fixture.debugElement.query(By.directive(NzCheckboxComponent));
+        const nzCheckbox = fixture.debugElement.query(By.directive(TriCheckboxComponent));
         nzCheckbox.nativeElement.querySelector('.ant-checkbox-input').dispatchEvent(event);
 
         expect(appRef.tick).not.toHaveBeenCalled();
@@ -139,7 +139,7 @@ describe('checkbox', () => {
         spyOn(appRef, 'tick');
         spyOn(event, 'preventDefault').and.callThrough();
 
-        const nzCheckbox = fixture.debugElement.query(By.directive(NzCheckboxComponent));
+        const nzCheckbox = fixture.debugElement.query(By.directive(TriCheckboxComponent));
         nzCheckbox.nativeElement.dispatchEvent(event);
 
         expect(appRef.tick).not.toHaveBeenCalled();
@@ -149,17 +149,17 @@ describe('checkbox', () => {
   });
 
   describe('checkbox form', () => {
-    let fixture: ComponentFixture<NzTestCheckboxFormComponent>;
-    let testComponent: NzTestCheckboxFormComponent;
+    let fixture: ComponentFixture<TriTestCheckboxFormComponent>;
+    let testComponent: TriTestCheckboxFormComponent;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestCheckboxFormComponent);
+      fixture = TestBed.createComponent(TriTestCheckboxFormComponent);
       testComponent = fixture.componentInstance;
     });
     it('should be in pristine, untouched, and valid states and enable initially', fakeAsync(() => {
       fixture.detectChanges();
       flush();
-      const checkbox = fixture.debugElement.query(By.directive(NzCheckboxComponent));
+      const checkbox = fixture.debugElement.query(By.directive(TriCheckboxComponent));
       const inputElement = checkbox.nativeElement.querySelector('input') as HTMLInputElement;
       expect(checkbox.nativeElement.firstElementChild!.classList).not.toContain('ant-checkbox-disabled');
       expect(inputElement.disabled).toBeFalsy();
@@ -171,7 +171,7 @@ describe('checkbox', () => {
       testComponent.disable();
       fixture.detectChanges();
       flush();
-      const checkbox = fixture.debugElement.query(By.directive(NzCheckboxComponent));
+      const checkbox = fixture.debugElement.query(By.directive(TriCheckboxComponent));
       const inputElement = checkbox.nativeElement.querySelector('input') as HTMLInputElement;
       expect(checkbox.nativeElement.firstElementChild!.classList).toContain('ant-checkbox-disabled');
       expect(inputElement.disabled).toBeTruthy();
@@ -180,7 +180,7 @@ describe('checkbox', () => {
       testComponent.disabled = true;
       fixture.detectChanges();
       flush();
-      const checkbox = fixture.debugElement.query(By.directive(NzCheckboxComponent));
+      const checkbox = fixture.debugElement.query(By.directive(TriCheckboxComponent));
       const inputElement = checkbox.nativeElement.querySelector('input') as HTMLInputElement;
 
       expect(checkbox.nativeElement.firstElementChild!.classList).toContain('ant-checkbox-disabled');
@@ -213,18 +213,18 @@ describe('checkbox', () => {
   });
 
   describe('checkbox wrapper', () => {
-    let fixture: ComponentFixture<NzTestCheckboxWrapperComponent>;
-    let testComponent: NzTestCheckboxWrapperComponent;
+    let fixture: ComponentFixture<TriTestCheckboxWrapperComponent>;
+    let testComponent: TriTestCheckboxWrapperComponent;
     let checkboxWrapper: DebugElement;
     let inputElement: HTMLInputElement;
 
     beforeEach(fakeAsync(() => {
-      fixture = TestBed.createComponent(NzTestCheckboxWrapperComponent);
+      fixture = TestBed.createComponent(TriTestCheckboxWrapperComponent);
       fixture.detectChanges();
       flush();
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      checkboxWrapper = fixture.debugElement.query(By.directive(NzCheckboxWrapperComponent));
+      checkboxWrapper = fixture.debugElement.query(By.directive(TriCheckboxWrapperComponent));
       inputElement = checkboxWrapper.nativeElement.querySelector('input') as HTMLInputElement;
     }));
     it('should className correct', fakeAsync(() => {
@@ -240,8 +240,8 @@ describe('checkbox', () => {
   });
   describe('RTL', () => {
     it('should single checkbox className correct on dir change', () => {
-      const fixture = TestBed.createComponent(NzTestCheckboxSingleRtlComponent);
-      const checkbox = fixture.debugElement.query(By.directive(NzCheckboxComponent));
+      const fixture = TestBed.createComponent(TriTestCheckboxSingleRtlComponent);
+      const checkbox = fixture.debugElement.query(By.directive(TriCheckboxComponent));
       fixture.detectChanges();
       expect(checkbox.nativeElement.classList).toContain('ant-checkbox-rtl');
 
@@ -253,23 +253,23 @@ describe('checkbox', () => {
 });
 
 @Component({
-  imports: [FormsModule, NzCheckboxModule],
-  selector: 'nz-test-single-checkbox',
+  imports: [FormsModule, TriCheckboxModule],
+  selector: '',
   template: `
     <label
-      nz-checkbox
-      [nzDisabled]="disabled"
+      tri-checkbox
+      [disabled]="disabled"
       [(ngModel)]="checked"
-      [nzAutoFocus]="autoFocus"
-      [nzIndeterminate]="indeterminate"
+      [autoFocus]="autoFocus"
+      [indeterminate]="indeterminate"
       (ngModelChange)="modelChange($event)"
     >
       Checkbox
     </label>
   `
 })
-export class NzTestCheckboxSingleComponent {
-  @ViewChild(NzCheckboxComponent, { static: false }) nzCheckboxComponent!: NzCheckboxComponent;
+export class TriTestCheckboxSingleComponent {
+  @ViewChild(TriCheckboxComponent, { static: false }) checkboxComponent!: TriCheckboxComponent;
   disabled = false;
   autoFocus = false;
   checked = false;
@@ -278,30 +278,30 @@ export class NzTestCheckboxSingleComponent {
 }
 
 @Component({
-  imports: [FormsModule, NzCheckboxModule],
+  imports: [FormsModule, TriCheckboxModule],
   template: `
-    <nz-checkbox-wrapper (nzOnChange)="onChange($event)">
-      <div><label nz-checkbox nzValue="A" [ngModel]="true">A</label></div>
-      <div><label nz-checkbox nzValue="B">B</label></div>
-      <div><label nz-checkbox nzValue="C">C</label></div>
-      <div><label nz-checkbox nzValue="D">D</label></div>
-      <div><label nz-checkbox nzValue="E">E</label></div>
-    </nz-checkbox-wrapper>
+    <tri-checkbox-wrapper (onChange)="onChange($event)">
+      <div><label tri-checkbox value="A" [ngModel]="true">A</label></div>
+      <div><label tri-checkbox value="B">B</label></div>
+      <div><label tri-checkbox value="C">C</label></div>
+      <div><label tri-checkbox value="D">D</label></div>
+      <div><label tri-checkbox value="E">E</label></div>
+    </tri-checkbox-wrapper>
   `
 })
-export class NzTestCheckboxWrapperComponent {
+export class TriTestCheckboxWrapperComponent {
   onChange = jasmine.createSpy('change callback');
 }
 
 @Component({
-  imports: [ReactiveFormsModule, NzCheckboxModule],
+  imports: [ReactiveFormsModule, TriCheckboxModule],
   template: `
     <form>
-      <label nz-checkbox [formControl]="formControl" [nzDisabled]="disabled"></label>
+      <label tri-checkbox [formControl]="formControl" [disabled]="disabled"></label>
     </form>
   `
 })
-export class NzTestCheckboxFormComponent {
+export class TriTestCheckboxFormComponent {
   formControl = new FormControl(false);
   disabled = false;
 
@@ -315,50 +315,50 @@ export class NzTestCheckboxFormComponent {
 }
 
 @Component({
-  imports: [BidiModule, NzTestCheckboxSingleComponent],
+  imports: [BidiModule, TriTestCheckboxSingleComponent],
   template: `
     <div [dir]="direction">
-      <nz-test-single-checkbox></nz-test-single-checkbox>
+      <tri-test-single-checkbox></tri-test-single-checkbox>
     </div>
   `
 })
-export class NzTestCheckboxSingleRtlComponent {
+export class TriTestCheckboxSingleRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 }
 
 describe('checkbox component', () => {
-  let fixture: ComponentFixture<NzCheckboxComponent>;
-  let component: NzCheckboxComponent;
+  let fixture: ComponentFixture<TriCheckboxComponent>;
+  let component: TriCheckboxComponent;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NzCheckboxComponent);
+    fixture = TestBed.createComponent(TriCheckboxComponent);
     component = fixture.componentInstance;
   });
 
   it('focus should be called in afterViewInit if nzAutoFocus is set', () => {
     spyOn(component, 'focus');
-    component.nzAutoFocus = false;
+    component.autoFocus = false;
     component.ngAfterViewInit();
     expect(component.focus).not.toHaveBeenCalled();
 
     spyOn(component, 'focus');
-    component.nzAutoFocus = true;
+    component.autoFocus = true;
     component.ngAfterViewInit();
     expect(component.focus).toHaveBeenCalled();
   });
 
   describe('checkbox wrapper component', () => {
-    let fixture: ComponentFixture<NzCheckboxWrapperComponent>;
-    let component: NzCheckboxWrapperComponent;
+    let fixture: ComponentFixture<TriCheckboxWrapperComponent>;
+    let component: TriCheckboxWrapperComponent;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzCheckboxWrapperComponent);
+      fixture = TestBed.createComponent(TriCheckboxWrapperComponent);
       component = fixture.componentInstance;
     });
 
     it('should emit correct value', () => {
-      (component as NzSafeAny)['checkboxList'] = [
+      (component as TriSafeAny)['checkboxList'] = [
         {
           nzChecked: true,
           nzValue: 'value 1'
@@ -372,9 +372,9 @@ describe('checkbox component', () => {
           nzValue: 'value 3'
         }
       ];
-      spyOn(component.nzOnChange, 'emit');
-      component.onChange();
-      expect(component.nzOnChange.emit).toHaveBeenCalledWith(['value 1', 'value 2']);
+      spyOn(component.onChange, 'emit');
+      component._onChange();
+      expect(component.onChange.emit).toHaveBeenCalledWith(['value 1', 'value 2']);
     });
   });
 });

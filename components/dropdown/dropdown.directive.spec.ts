@@ -11,11 +11,11 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { dispatchFakeEvent, dispatchKeyboardEvent } from 'ng-zorro-antd/core/testing';
-import { NzPlacementType } from 'ng-zorro-antd/dropdown/dropdown-menu.component';
-import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { TriPlacementType } from 'ng-zorro-antd/dropdown/dropdown-menu.component';
+import { TriMenuModule } from 'ng-zorro-antd/menu';
 
-import { NzDropDownDirective } from './dropdown.directive';
-import { NzDropDownModule } from './dropdown.module';
+import { TriDropDownDirective } from './dropdown.directive';
+import { TriDropDownModule } from './dropdown.module';
 
 describe('dropdown', () => {
   let overlayContainer: OverlayContainer;
@@ -40,12 +40,12 @@ describe('dropdown', () => {
   }));
 
   it('should hover correct', fakeAsync(() => {
-    const fixture = createComponent(NzTestDropdownComponent);
+    const fixture = createComponent(TriTestDropdownComponent);
     fixture.componentInstance.trigger = 'hover';
     fixture.detectChanges();
     expect(overlayContainerElement.textContent).toBe('');
     expect(() => {
-      const dropdownElement = fixture.debugElement.query(By.directive(NzDropDownDirective)).nativeElement;
+      const dropdownElement = fixture.debugElement.query(By.directive(TriDropDownDirective)).nativeElement;
       dispatchFakeEvent(dropdownElement, 'mouseenter');
       fixture.detectChanges();
       tick(1000);
@@ -54,12 +54,12 @@ describe('dropdown', () => {
     }).not.toThrowError();
   }));
   it('should click correct', fakeAsync(() => {
-    const fixture = createComponent(NzTestDropdownComponent);
+    const fixture = createComponent(TriTestDropdownComponent);
     fixture.componentInstance.trigger = 'click';
     fixture.detectChanges();
     expect(overlayContainerElement.textContent).toBe('');
     expect(() => {
-      const dropdownElement = fixture.debugElement.query(By.directive(NzDropDownDirective)).nativeElement;
+      const dropdownElement = fixture.debugElement.query(By.directive(TriDropDownDirective)).nativeElement;
       dispatchFakeEvent(dropdownElement, 'click');
       fixture.detectChanges();
       tick(1000);
@@ -68,12 +68,12 @@ describe('dropdown', () => {
     }).not.toThrowError();
   }));
   it('should disabled work', fakeAsync(() => {
-    const fixture = createComponent(NzTestDropdownComponent);
+    const fixture = createComponent(TriTestDropdownComponent);
     fixture.componentInstance.disabled = true;
     fixture.detectChanges();
     expect(overlayContainerElement.textContent).toBe('');
     expect(() => {
-      const dropdownElement = fixture.debugElement.query(By.directive(NzDropDownDirective)).nativeElement;
+      const dropdownElement = fixture.debugElement.query(By.directive(TriDropDownDirective)).nativeElement;
       dispatchFakeEvent(dropdownElement, 'mouseenter');
       fixture.detectChanges();
       tick(1000);
@@ -83,10 +83,10 @@ describe('dropdown', () => {
   }));
 
   describe('when nzBackdrop=true', () => {
-    let fixture: ComponentFixture<NzTestDropdownComponent>;
+    let fixture: ComponentFixture<TriTestDropdownComponent>;
 
     beforeEach(() => {
-      fixture = createComponent(NzTestDropdownComponent);
+      fixture = createComponent(TriTestDropdownComponent);
       fixture.componentInstance.backdrop = true;
     });
 
@@ -95,7 +95,7 @@ describe('dropdown', () => {
       fixture.detectChanges();
 
       expect(() => {
-        const dropdownElement = fixture.debugElement.query(By.directive(NzDropDownDirective)).nativeElement;
+        const dropdownElement = fixture.debugElement.query(By.directive(TriDropDownDirective)).nativeElement;
         dispatchFakeEvent(dropdownElement, 'click');
 
         tick(1000);
@@ -114,13 +114,13 @@ describe('dropdown', () => {
   });
 
   it('should disappear if Escape pressed', fakeAsync(() => {
-    const fixture = createComponent(NzTestDropdownComponent);
+    const fixture = createComponent(TriTestDropdownComponent);
     fixture.componentInstance.trigger = 'click';
     fixture.componentInstance.backdrop = true;
     fixture.detectChanges();
 
     expect(() => {
-      const dropdownElement = fixture.debugElement.query(By.directive(NzDropDownDirective)).nativeElement;
+      const dropdownElement = fixture.debugElement.query(By.directive(TriDropDownDirective)).nativeElement;
 
       dispatchFakeEvent(dropdownElement, 'click');
       tick(1000);
@@ -138,10 +138,10 @@ describe('dropdown', () => {
     }).not.toThrowError();
   }));
   it('should nzOverlayClassName and nzOverlayStyle work', fakeAsync(() => {
-    const fixture = createComponent(NzTestDropdownComponent);
+    const fixture = createComponent(TriTestDropdownComponent);
     fixture.detectChanges();
     expect(() => {
-      const dropdownElement = fixture.debugElement.query(By.directive(NzDropDownDirective)).nativeElement;
+      const dropdownElement = fixture.debugElement.query(By.directive(TriDropDownDirective)).nativeElement;
       dispatchFakeEvent(dropdownElement, 'mouseenter');
       fixture.detectChanges();
       tick(1000);
@@ -151,10 +151,10 @@ describe('dropdown', () => {
     }).not.toThrowError();
   }));
   it('should nzVisible & nzClickHide work', fakeAsync(() => {
-    const fixture = createComponent(NzTestDropdownVisibleComponent);
+    const fixture = createComponent(TriTestDropdownVisibleComponent);
     fixture.detectChanges();
     expect(fixture.componentInstance.triggerVisible).toHaveBeenCalledTimes(0);
-    const dropdownElement = fixture.debugElement.query(By.directive(NzDropDownDirective)).nativeElement;
+    const dropdownElement = fixture.debugElement.query(By.directive(TriDropDownDirective)).nativeElement;
     dispatchFakeEvent(dropdownElement, 'mouseenter');
     fixture.detectChanges();
     tick(1000);
@@ -184,60 +184,60 @@ describe('dropdown', () => {
 });
 
 @Component({
-  imports: [NzDropDownModule, NzMenuModule],
+  imports: [TriDropDownModule, TriMenuModule],
   template: `
     <a
-      nz-dropdown
-      [nzDropdownMenu]="menu"
-      [nzTrigger]="trigger"
-      [nzDisabled]="disabled"
-      [nzPlacement]="placement"
-      [nzBackdrop]="backdrop"
-      [nzOverlayClassName]="className"
-      [nzOverlayStyle]="overlayStyle"
+      tri-dropdown
+      [dropdownMenu]="menu"
+      [trigger]="trigger"
+      [disabled]="disabled"
+      [placement]="placement"
+      [backdrop]="backdrop"
+      [overlayClassName]="className"
+      [overlayStyle]="overlayStyle"
     >
       Trigger
     </a>
-    <nz-dropdown-menu #menu="nzDropdownMenu">
-      <ul nz-menu>
-        <li nz-menu-item>1st menu item</li>
-        <li nz-menu-item>2nd menu item</li>
-        <li nz-menu-item>3rd menu item</li>
+    <tri-dropdown-menu #menu="nzDropdownMenu">
+      <ul tri-menu>
+        <li tri-menu-item>1st menu item</li>
+        <li tri-menu-item>2nd menu item</li>
+        <li tri-menu-item>3rd menu item</li>
       </ul>
-    </nz-dropdown-menu>
+    </tri-dropdown-menu>
   `
 })
-export class NzTestDropdownComponent {
+export class TriTestDropdownComponent {
   backdrop = false;
   trigger: 'click' | 'hover' = 'hover';
-  placement: NzPlacementType = 'bottomLeft';
+  placement: TriPlacementType = 'bottomLeft';
   disabled = false;
   className = 'custom-class';
   overlayStyle = { color: '#000' };
 }
 
 @Component({
-  imports: [NzDropDownModule, NzMenuModule],
+  imports: [TriDropDownModule, TriMenuModule],
   template: `
     <a
-      nz-dropdown
-      [nzDropdownMenu]="menu"
-      [nzClickHide]="false"
-      [(nzVisible)]="visible"
-      (nzVisibleChange)="triggerVisible($event)"
+      tri-dropdown
+      [dropdownMenu]="menu"
+      [clickHide]="false"
+      [(visibleChange)]="visible"
+      (visibleChange)="triggerVisible($event)"
     >
       Hover me
     </a>
-    <nz-dropdown-menu #menu="nzDropdownMenu">
-      <ul nz-menu>
-        <li nz-menu-item class="first-menu">Clicking me will not close the menu.</li>
-        <li nz-menu-item class="second-menu">Clicking me will not close the menu also.</li>
-        <li nz-menu-item (click)="visible = false" class="close-menu">Clicking me will close the menu</li>
+    <tri-dropdown-menu #menu="nzDropdownMenu">
+      <ul tri-menu>
+        <li tri-menu-item class="first-menu">Clicking me will not close the menu.</li>
+        <li tri-menu-item class="second-menu">Clicking me will not close the menu also.</li>
+        <li tri-menu-item (click)="visible = false" class="close-menu">Clicking me will close the menu</li>
       </ul>
-    </nz-dropdown-menu>
+    </tri-dropdown-menu>
   `
 })
-export class NzTestDropdownVisibleComponent {
+export class TriTestDropdownVisibleComponent {
   visible = false;
   triggerVisible = jasmine.createSpy('visibleChange');
 }

@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
-import { NzTableModule } from 'ng-zorro-antd/table';
+import { TriTableModule } from 'ng-zorro-antd/table';
 
 @Component({
-  selector: 'nz-demo-table-template',
-  imports: [NzTableModule],
+  selector: '',
+  imports: [TriTableModule],
   template: `
-    <nz-table nzTemplateMode>
+    <tri-table templateMode>
       <thead>
         <tr>
           <th>Company</th>
@@ -46,7 +46,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
           <td>Italy</td>
         </tr>
       </tbody>
-    </nz-table>
+    </tri-table>
   `
 })
-export class NzDemoTableTemplateComponent {}
+export class TriDemoTableTemplateComponent {}

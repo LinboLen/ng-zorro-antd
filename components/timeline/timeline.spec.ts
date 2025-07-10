@@ -8,24 +8,24 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzDemoTimelineLabelComponent } from './demo/label';
-import { NzTimelineComponent } from './timeline.component';
-import { NzTimelineModule } from './timeline.module';
-import { NzTimelineMode } from './typings';
+import { TriDemoTimelineLabelComponent } from './demo/label';
+import { TriTimelineComponent } from './timeline.component';
+import { TriTimelineModule } from './timeline.module';
+import { TriTimelineMode } from './typings';
 
 describe('nz-timeline', () => {
   describe('basic', () => {
-    let fixture: ComponentFixture<NzTestTimelineBasicComponent>;
-    let testComponent: NzTestTimelineBasicComponent;
+    let fixture: ComponentFixture<TriTestTimelineBasicComponent>;
+    let testComponent: TriTestTimelineBasicComponent;
     let timeline: DebugElement;
     let items: HTMLDivElement[] = [];
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTimelineBasicComponent);
+      fixture = TestBed.createComponent(TriTestTimelineBasicComponent);
       testComponent = fixture.componentInstance;
       fixture.detectChanges();
 
-      timeline = fixture.debugElement.query(By.directive(NzTimelineComponent));
+      timeline = fixture.debugElement.query(By.directive(TriTimelineComponent));
       items = Array.from((fixture.debugElement.nativeElement as HTMLElement).querySelectorAll('.ant-timeline-item'));
     });
 
@@ -109,15 +109,15 @@ describe('nz-timeline', () => {
 
   // add another test component for simplicity
   describe('custom position', () => {
-    let fixture: ComponentFixture<NzTestTimelineCustomPositionComponent>;
+    let fixture: ComponentFixture<TriTestTimelineCustomPositionComponent>;
     let timeline: DebugElement;
     let items: HTMLDivElement[] = [];
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTimelineCustomPositionComponent);
+      fixture = TestBed.createComponent(TriTestTimelineCustomPositionComponent);
       fixture.detectChanges();
 
-      timeline = fixture.debugElement.query(By.directive(NzTimelineComponent));
+      timeline = fixture.debugElement.query(By.directive(TriTimelineComponent));
       items = Array.from((fixture.debugElement.nativeElement as HTMLElement).querySelectorAll('.ant-timeline-item'));
     });
 
@@ -128,11 +128,11 @@ describe('nz-timeline', () => {
   });
 
   describe('custom color', () => {
-    let fixture: ComponentFixture<NzTestTimelineCustomColorComponent>;
+    let fixture: ComponentFixture<TriTestTimelineCustomColorComponent>;
     let items: HTMLLIElement[];
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTimelineCustomColorComponent);
+      fixture = TestBed.createComponent(TriTestTimelineCustomColorComponent);
       fixture.detectChanges();
 
       items = Array.from((fixture.debugElement.nativeElement as HTMLElement).querySelectorAll('.ant-timeline-item'));
@@ -152,13 +152,13 @@ describe('nz-timeline', () => {
   });
 
   describe('pending', () => {
-    let fixture: ComponentFixture<NzTestTimelinePendingComponent>;
+    let fixture: ComponentFixture<TriTestTimelinePendingComponent>;
     let timeline: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTimelinePendingComponent);
+      fixture = TestBed.createComponent(TriTestTimelinePendingComponent);
       fixture.detectChanges();
-      timeline = fixture.debugElement.query(By.directive(NzTimelineComponent));
+      timeline = fixture.debugElement.query(By.directive(TriTimelineComponent));
     });
 
     it('should pending work', () => {
@@ -168,15 +168,15 @@ describe('nz-timeline', () => {
   });
 
   describe('label', () => {
-    let fixture: ComponentFixture<NzDemoTimelineLabelComponent>;
+    let fixture: ComponentFixture<TriDemoTimelineLabelComponent>;
     let timeline: DebugElement;
     let items: HTMLLIElement[];
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzDemoTimelineLabelComponent);
+      fixture = TestBed.createComponent(TriDemoTimelineLabelComponent);
       fixture.detectChanges();
 
-      timeline = fixture.debugElement.query(By.directive(NzTimelineComponent));
+      timeline = fixture.debugElement.query(By.directive(TriTimelineComponent));
       items = Array.from((fixture.debugElement.nativeElement as HTMLElement).querySelectorAll('.ant-timeline-item'));
     });
 
@@ -195,15 +195,15 @@ describe('nz-timeline', () => {
   });
 
   describe('RTL', () => {
-    let fixture: ComponentFixture<NzTestTimelineRtlComponent>;
+    let fixture: ComponentFixture<TriTestTimelineRtlComponent>;
     let timeline: DebugElement;
     let items: HTMLDivElement[] = [];
 
     beforeEach(waitForAsync(() => {
-      fixture = TestBed.createComponent(NzTestTimelineRtlComponent);
+      fixture = TestBed.createComponent(TriTestTimelineRtlComponent);
       fixture.detectChanges();
 
-      timeline = fixture.debugElement.query(By.directive(NzTimelineComponent));
+      timeline = fixture.debugElement.query(By.directive(TriTimelineComponent));
       items = Array.from((fixture.debugElement.nativeElement as HTMLElement).querySelectorAll('.ant-timeline-item'));
     }));
 
@@ -218,13 +218,13 @@ describe('nz-timeline', () => {
   });
 
   describe('clear', () => {
-    let fixture: ComponentFixture<NzTestTimelineClearItemsComponent>;
-    let timeline: NzTimelineComponent;
+    let fixture: ComponentFixture<TriTestTimelineClearItemsComponent>;
+    let timeline: TriTimelineComponent;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTimelineClearItemsComponent);
+      fixture = TestBed.createComponent(TriTestTimelineClearItemsComponent);
       fixture.detectChanges();
-      timeline = fixture.componentInstance.nzTimeLine;
+      timeline = fixture.componentInstance.timeLine;
     });
 
     it('test clear items', () => {
@@ -236,93 +236,93 @@ describe('nz-timeline', () => {
 });
 
 @Component({
-  imports: [NzTimelineModule],
-  selector: 'nz-test-basic-timeline',
+  imports: [TriTimelineModule],
+  selector: '',
   template: `
     <ng-template #dotTemplate>template</ng-template>
-    <nz-timeline [nzPending]="pending" [nzReverse]="reverse" [nzMode]="mode">
-      <nz-timeline-item [nzColor]="color" [nzDot]="dot">Create a services site 2015-09-01</nz-timeline-item>
-      <nz-timeline-item [nzDot]="dotTemplate">Solve initial network problems 2015-09-01</nz-timeline-item>
-      <nz-timeline-item>Technical testing 2015-09-01</nz-timeline-item>
-      <nz-timeline-item>Network problems being solved 2015-09-01</nz-timeline-item>
+    <tri-timeline [pending]="pending" [reverse]="reverse" [mode]="mode">
+      <tri-timeline-item [color]="color" [dot]="dot">Create a services site 2015-09-01</tri-timeline-item>
+      <tri-timeline-item [dot]="dotTemplate">Solve initial network problems 2015-09-01</tri-timeline-item>
+      <tri-timeline-item>Technical testing 2015-09-01</tri-timeline-item>
+      <tri-timeline-item>Network problems being solved 2015-09-01</tri-timeline-item>
       @if (last) {
-        <nz-timeline-item>Network problems being solved 2015-09-01</nz-timeline-item>
+        <tri-timeline-item>Network problems being solved 2015-09-01</tri-timeline-item>
       }
-    </nz-timeline>
+    </tri-timeline>
   `
 })
-export class NzTestTimelineBasicComponent {
+export class TriTestTimelineBasicComponent {
   color = 'blue';
   dot = 'dot';
   pending: boolean | string = false;
   last = false;
   reverse = false;
-  mode: NzTimelineMode = 'left';
+  mode: TriTimelineMode = 'left';
 }
 
 @Component({
-  imports: [NzTimelineModule],
+  imports: [TriTimelineModule],
   template: `
-    <nz-timeline>
-      <nz-timeline-item [nzColor]="'cyan'">Create a services site 2015-09-01</nz-timeline-item>
-      <nz-timeline-item [nzColor]="'rgb(200, 0, 0)'">Solve initial network problems 2015-09-01</nz-timeline-item>
-      <nz-timeline-item [nzColor]="'#781241'">Technical testing 2015-09-01</nz-timeline-item>
-      <nz-timeline-item [nzColor]="'red'">Network problems being solved 2015-09-01</nz-timeline-item>
-    </nz-timeline>
+    <tri-timeline>
+      <tri-timeline-item [color]="'cyan'">Create a services site 2015-09-01</tri-timeline-item>
+      <tri-timeline-item [color]="'rgb(200, 0, 0)'">Solve initial network problems 2015-09-01</tri-timeline-item>
+      <tri-timeline-item [color]="'#781241'">Technical testing 2015-09-01</tri-timeline-item>
+      <tri-timeline-item [color]="'red'">Network problems being solved 2015-09-01</tri-timeline-item>
+    </tri-timeline>
   `
 })
-export class NzTestTimelineCustomColorComponent {}
+export class TriTestTimelineCustomColorComponent {}
 
 @Component({
-  imports: [NzTimelineModule],
+  imports: [TriTimelineModule],
   template: `
     <ng-template #pendingTemplate>template</ng-template>
-    <nz-timeline [nzPending]="pendingTemplate">
-      <nz-timeline-item>Technical testing 2015-09-01</nz-timeline-item>
-      <nz-timeline-item>Network problems being solved 2015-09-01</nz-timeline-item>
-    </nz-timeline>
+    <tri-timeline [pending]="pendingTemplate">
+      <tri-timeline-item>Technical testing 2015-09-01</tri-timeline-item>
+      <tri-timeline-item>Network problems being solved 2015-09-01</tri-timeline-item>
+    </tri-timeline>
   `
 })
-export class NzTestTimelinePendingComponent {}
+export class TriTestTimelinePendingComponent {}
 
 @Component({
-  imports: [NzTimelineModule],
+  imports: [TriTimelineModule],
   template: `
-    <nz-timeline nzMode="custom">
-      <nz-timeline-item nzPosition="right">Right</nz-timeline-item>
-      <nz-timeline-item nzPosition="left">Left</nz-timeline-item>
-    </nz-timeline>
+    <tri-timeline mode="custom">
+      <tri-timeline-item position="right">Right</tri-timeline-item>
+      <tri-timeline-item position="left">Left</tri-timeline-item>
+    </tri-timeline>
   `
 })
-export class NzTestTimelineCustomPositionComponent {}
+export class TriTestTimelineCustomPositionComponent {}
 
 @Component({
-  imports: [BidiModule, NzTestTimelineBasicComponent],
+  imports: [BidiModule, TriTestTimelineBasicComponent],
   template: `
     <div [dir]="direction">
-      <nz-test-basic-timeline></nz-test-basic-timeline>
+      <tri-test-basic-timeline></tri-test-basic-timeline>
     </div>
   `
 })
-export class NzTestTimelineRtlComponent {
+export class TriTestTimelineRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 }
 
 @Component({
-  imports: [NzTimelineModule],
+  imports: [TriTimelineModule],
   template: `
-    <nz-timeline nzMode="custom">
+    <tri-timeline mode="custom">
       @for (item of data; track item) {
-        <nz-timeline-item>{{ item }}</nz-timeline-item>
+        <tri-timeline-item>{{ item }}</tri-timeline-item>
       }
-    </nz-timeline>
+    </tri-timeline>
     <span (click)="reset()">reset</span>
   `
 })
-export class NzTestTimelineClearItemsComponent {
-  @ViewChild(NzTimelineComponent)
-  nzTimeLine!: NzTimelineComponent;
+export class TriTestTimelineClearItemsComponent {
+  @ViewChild(TriTimelineComponent)
+  timeLine!: TriTimelineComponent;
   data = [1, 2, 3];
   reset(): void {
     this.data = [];

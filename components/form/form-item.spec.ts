@@ -8,19 +8,19 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { NzFormItemComponent } from './form-item.component';
-import { NzFormModule } from './form.module';
+import { TriFormItemComponent } from './form-item.component';
+import { TriFormModule } from './form.module';
 
 const testBedOptions = { imports: [NoopAnimationsModule] };
 
 describe('nz-form-item', () => {
   describe('default', () => {
-    let fixture: ComponentFixture<NzTestFormItemComponent>;
+    let fixture: ComponentFixture<TriTestFormItemComponent>;
     let formItem: DebugElement;
     beforeEach(() => {
       TestBed.configureTestingModule(testBedOptions);
-      fixture = TestBed.createComponent(NzTestFormItemComponent);
-      formItem = fixture.debugElement.query(By.directive(NzFormItemComponent));
+      fixture = TestBed.createComponent(TriTestFormItemComponent);
+      formItem = fixture.debugElement.query(By.directive(TriFormItemComponent));
     });
     it('should className correct', () => {
       expect(formItem.nativeElement.classList).toContain('ant-form-item');
@@ -29,7 +29,7 @@ describe('nz-form-item', () => {
 });
 
 @Component({
-  imports: [NzFormModule],
-  template: `<nz-form-item></nz-form-item>`
+  imports: [TriFormModule],
+  template: `<tri-form-item></tri-form-item>`
 })
-export class NzTestFormItemComponent {}
+export class TriTestFormItemComponent {}

@@ -8,21 +8,21 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { NzFormModule } from 'ng-zorro-antd/form/form.module';
+import { TriFormModule } from 'ng-zorro-antd/form/form.module';
 
-import { NzFormTextComponent } from './form-text.component';
+import { TriFormTextComponent } from './form-text.component';
 
 const testBedOptions = { imports: [NoopAnimationsModule] };
 
 describe('nz-form-text', () => {
   describe('default', () => {
-    let fixture: ComponentFixture<NzTestFormTextComponent>;
+    let fixture: ComponentFixture<TriTestFormTextComponent>;
     let text: DebugElement;
     beforeEach(() => {
       TestBed.configureTestingModule(testBedOptions);
-      fixture = TestBed.createComponent(NzTestFormTextComponent);
+      fixture = TestBed.createComponent(TriTestFormTextComponent);
       fixture.detectChanges();
-      text = fixture.debugElement.query(By.directive(NzFormTextComponent));
+      text = fixture.debugElement.query(By.directive(TriFormTextComponent));
     });
     it('should className correct', () => {
       expect(text.nativeElement.classList).toContain('ant-form-text');
@@ -31,7 +31,7 @@ describe('nz-form-text', () => {
 });
 
 @Component({
-  imports: [NzFormModule],
-  template: `<nz-form-text></nz-form-text>`
+  imports: [TriFormModule],
+  template: `<tri-form-text></tri-form-text>`
 })
-export class NzTestFormTextComponent {}
+export class TriTestFormTextComponent {}

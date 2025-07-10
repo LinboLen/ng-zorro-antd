@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
+import { TriButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
-  selector: 'nz-demo-button-block',
-  imports: [NzButtonModule],
+  selector: '',
+  imports: [TriButtonModule],
   template: `
-    <button nz-button nzType="primary" nzBlock>Primary</button>
-    <button nz-button nzType="default" nzBlock>Default</button>
-    <button nz-button nzType="dashed" nzBlock>Dashed</button>
-    <button nz-button nzType="text" nzBlock>Text</button>
-    <a nz-button nzType="link" nzBlock>Link</a>
+    <button tri-button type="primary" block>Primary</button>
+    <button tri-button type="default" block>Default</button>
+    <button tri-button type="dashed" block>Dashed</button>
+    <button tri-button type="text" block>Text</button>
+    <a tri-button type="link" block>Link</a>
   `,
   styles: [
     `
@@ -20,4 +20,4 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     `
   ]
 })
-export class NzDemoButtonBlockComponent {}
+export class TriDemoButtonBlockComponent {}

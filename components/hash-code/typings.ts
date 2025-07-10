@@ -3,4 +3,4 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export type NzModeType = 'single' | 'double' | 'strip' | 'rect';
+export type TriModeType = 'single' | 'double' | 'strip' | 'rect';

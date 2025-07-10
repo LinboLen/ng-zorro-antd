@@ -1,29 +1,29 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: 'nz-demo-space-compact-button-vertical',
-  imports: [NzSpaceModule, NzButtonModule],
+  selector: '',
+  imports: [TriSpaceModule, TriButtonModule],
   template: `
-    <nz-space>
-      <nz-space-compact *nzSpaceItem nzDirection="vertical">
-        <button nz-button>Button 1</button>
-        <button nz-button>Button 2</button>
-        <button nz-button>Button 3</button>
-      </nz-space-compact>
-      <nz-space-compact *nzSpaceItem nzDirection="vertical">
-        <button nz-button nzType="dashed">Button 1</button>
-        <button nz-button nzType="dashed">Button 2</button>
-        <button nz-button nzType="dashed">Button 3</button>
-      </nz-space-compact>
-      <nz-space-compact *nzSpaceItem nzDirection="vertical">
-        <button nz-button nzType="primary">Button 1</button>
-        <button nz-button nzType="primary">Button 2</button>
-        <button nz-button nzType="primary">Button 3</button>
-      </nz-space-compact>
-    </nz-space>
+    <tri-space>
+      <tri-space-compact *spaceItem direction="vertical">
+        <button tri-button>Button 1</button>
+        <button tri-button>Button 2</button>
+        <button tri-button>Button 3</button>
+      </tri-space-compact>
+      <tri-space-compact *spaceItem direction="vertical">
+        <button tri-button type="dashed">Button 1</button>
+        <button tri-button type="dashed">Button 2</button>
+        <button tri-button type="dashed">Button 3</button>
+      </tri-space-compact>
+      <tri-space-compact *spaceItem direction="vertical">
+        <button tri-button type="primary">Button 1</button>
+        <button tri-button type="primary">Button 2</button>
+        <button tri-button type="primary">Button 3</button>
+      </tri-space-compact>
+    </tri-space>
   `
 })
-export class NzDemoSpaceCompactButtonVerticalComponent {}
+export class TriDemoSpaceCompactButtonVerticalComponent {}

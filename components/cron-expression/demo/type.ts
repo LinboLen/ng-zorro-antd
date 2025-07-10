@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 
-import { NzCronExpressionModule } from 'ng-zorro-antd/cron-expression';
+import { TriCronExpressionModule } from 'ng-zorro-antd/cron-expression';
 
 @Component({
-  selector: 'nz-demo-cron-expression-type',
-  imports: [NzCronExpressionModule],
+  selector: '',
+  imports: [TriCronExpressionModule],
   template: `
     <div class="example-cron-expression">
-      <nz-cron-expression nzType="linux"></nz-cron-expression>
-      <nz-cron-expression nzType="spring"></nz-cron-expression>
+      <tri-cron-expression type="linux"></tri-cron-expression>
+      <tri-cron-expression type="spring"></tri-cron-expression>
     </div>
   `,
   styles: [
@@ -19,4 +19,4 @@ import { NzCronExpressionModule } from 'ng-zorro-antd/cron-expression';
     `
   ]
 })
-export class NzDemoCronExpressionTypeComponent {}
+export class TriDemoCronExpressionTypeComponent {}

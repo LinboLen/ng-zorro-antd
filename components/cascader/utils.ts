@@ -3,12 +3,12 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { NzTreeNode } from 'ng-zorro-antd/core/tree';
+import { TriTreeNode } from 'ng-zorro-antd/core/tree';
 
-export function isChildNode(node: NzTreeNode): boolean {
+export function isChildNode(node: TriTreeNode): boolean {
   return node.isLeaf || !node.children || !node.children.length;
 }
 
-export function isParentNode(node: NzTreeNode): boolean {
+export function isParentNode(node: TriTreeNode): boolean {
   return !!node.children && !!node.children.length && !node.isLeaf;
 }

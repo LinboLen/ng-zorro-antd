@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzSelectModule } from 'ng-zorro-antd/select';
+import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: 'nz-demo-select-options',
-  imports: [FormsModule, NzSelectModule],
+  selector: '',
+  imports: [FormsModule, TriSelectModule],
   template: `
-    <nz-select ngModel="lucy" [nzOptions]="listOfOption"></nz-select>
-    <nz-select
+    <tri-select ngModel="lucy" [options]="listOfOption"></tri-select>
+    <tri-select
       [(ngModel)]="selectedValue"
-      nzAllowClear
-      nzPlaceHolder="Choose"
-      [nzOptions]="listOfGroupOption"
-    ></nz-select>
+      allowClear
+      placeHolder="Choose"
+      [options]="listOfGroupOption"
+    ></tri-select>
   `,
   styles: [
     `
@@ -24,7 +24,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     `
   ]
 })
-export class NzDemoSelectOptionsComponent {
+export class TriDemoSelectOptionsComponent {
   selectedValue = 'lucy';
   readonly listOfOption = [
     { label: 'Jack', value: 'jack' },

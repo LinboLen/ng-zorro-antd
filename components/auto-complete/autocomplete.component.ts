@@ -34,12 +34,12 @@ import { Observable, Subscription, defer, merge } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 
 import { slideMotion } from 'ng-zorro-antd/core/animation';
-import { NzNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
 import { NZ_AFTER_NEXT_RENDER$ } from 'ng-zorro-antd/core/render';
-import { CompareWith, NzSafeAny } from 'ng-zorro-antd/core/types';
+import { CompareWith, TriSafeAny } from 'ng-zorro-antd/core/types';
 import { numberAttributeWithZeroFallback } from 'ng-zorro-antd/core/util';
 
-import { NzAutocompleteOptionComponent, NzOptionSelectionChange } from './autocomplete-option.component';
+import { TriAutocompleteOptionComponent, TriOptionSelectionChange } from './autocomplete-option.component';
 
 export interface AutocompleteDataSourceItem {
   value: string;
@@ -61,28 +61,28 @@ function normalizeDataSource(value: AutocompleteDataSource): AutocompleteDataSou
 }
 
 @Component({
-  selector: 'nz-autocomplete',
-  exportAs: 'nzAutocomplete',
+  selector: '',
+  exportAs: 'triAutocomplete',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  imports: [NgTemplateOutlet, NzAutocompleteOptionComponent, NzNoAnimationDirective],
+  imports: [NgTemplateOutlet, TriAutocompleteOptionComponent, TriNoAnimationDirective],
   template: `
     <ng-template>
       <div
         #panel
-        class="ant-select-dropdown ant-select-dropdown-placement-bottomLeft"
-        [class.ant-select-dropdown-hidden]="!showPanel"
-        [class.ant-select-dropdown-rtl]="dir === 'rtl'"
-        [class]="nzOverlayClassName"
-        [style]="nzOverlayStyle"
-        [nzNoAnimation]="noAnimation?.nzNoAnimation"
+        class="tri-select-dropdown tri-select-dropdown-placement-bottomLeft"
+        [class.tri-select-dropdown-hidden]="!showPanel"
+        [class.tri-select-dropdown-rtl]="dir === 'rtl'"
+        [class]="overlayClassName"
+        [style]="overlayStyle"
+        [noAnimation]="noAnimation?.nzNoAnimation"
         @slideMotion
         (@slideMotion.done)="onAnimationEvent($event)"
         [@.disabled]="!!noAnimation?.nzNoAnimation"
       >
-        <div class="ant-select-dropdown-content-wrapper">
-          <div class="ant-select-dropdown-content">
-            <ng-template *ngTemplateOutlet="nzDataSource ? optionsTemplate : contentTemplate"></ng-template>
+        <div class="tri-select-dropdown-content-wrapper">
+          <div class="tri-select-dropdown-content">
+            <ng-template *ngTemplateOutlet="dataSource ? optionsTemplate : contentTemplate"></ng-template>
           </div>
         </div>
       </div>
@@ -91,33 +91,33 @@ function normalizeDataSource(value: AutocompleteDataSource): AutocompleteDataSou
       </ng-template>
       <ng-template #optionsTemplate>
         @for (option of normalizedDataSource; track option.value) {
-          <nz-auto-option [nzValue]="option.value" [nzLabel]="option.label">
+          <tri-auto-option [value]="option.value" [label]="option.label">
             {{ option.label }}
-          </nz-auto-option>
+          </tri-auto-option>
         }
       </ng-template>
     </ng-template>
   `,
   animations: [slideMotion]
 })
-export class NzAutocompleteComponent implements AfterContentInit, AfterViewInit, OnInit, OnChanges {
+export class TriAutocompleteComponent implements AfterContentInit, AfterViewInit, OnInit, OnChanges {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
-  @Input({ transform: numberAttributeWithZeroFallback }) nzWidth?: number;
-  @Input() nzOverlayClassName = '';
-  @Input() nzOverlayStyle: Record<string, string> = {};
-  @Input({ transform: booleanAttribute }) nzDefaultActiveFirstOption = true;
-  @Input({ transform: booleanAttribute }) nzBackfill = false;
+  @Input({ transform: numberAttributeWithZeroFallback }) width?: number;
+  @Input() overlayClassName = '';
+  @Input() overlayStyle: Record<string, string> = {};
+  @Input({ transform: booleanAttribute }) defaultActiveFirstOption = true;
+  @Input({ transform: booleanAttribute }) backfill = false;
   @Input() compareWith: CompareWith = (o1, o2) => o1 === o2;
-  @Input() nzDataSource?: AutocompleteDataSource;
+  @Input() dataSource?: AutocompleteDataSource;
   @Output()
-  readonly selectionChange: EventEmitter<NzAutocompleteOptionComponent> =
-    new EventEmitter<NzAutocompleteOptionComponent>();
+  readonly selectionChange: EventEmitter<TriAutocompleteOptionComponent> =
+    new EventEmitter<TriAutocompleteOptionComponent>();
 
   showPanel: boolean = true;
   isOpen: boolean = false;
-  activeItem: NzAutocompleteOptionComponent | null = null;
+  activeItem: TriAutocompleteOptionComponent | null = null;
   dir: Direction = 'ltr';
   normalizedDataSource: AutocompleteDataSourceItem[] = [];
   animationStateChange = new EventEmitter<AnimationEvent>();
@@ -125,9 +125,9 @@ export class NzAutocompleteComponent implements AfterContentInit, AfterViewInit,
   /**
    * Options accessor, its source may be content or dataSource
    */
-  get options(): QueryList<NzAutocompleteOptionComponent> {
+  get options(): QueryList<TriAutocompleteOptionComponent> {
     // first dataSource
-    if (this.nzDataSource) {
+    if (this.dataSource) {
       return this.fromDataSourceOptions;
     } else {
       return this.fromContentOptions;
@@ -135,10 +135,10 @@ export class NzAutocompleteComponent implements AfterContentInit, AfterViewInit,
   }
 
   /** Provided by content */
-  @ContentChildren(NzAutocompleteOptionComponent, { descendants: true })
-  fromContentOptions!: QueryList<NzAutocompleteOptionComponent>;
+  @ContentChildren(TriAutocompleteOptionComponent, { descendants: true })
+  fromContentOptions!: QueryList<TriAutocompleteOptionComponent>;
   /** Provided by dataSource */
-  @ViewChildren(NzAutocompleteOptionComponent) fromDataSourceOptions!: QueryList<NzAutocompleteOptionComponent>;
+  @ViewChildren(TriAutocompleteOptionComponent) fromDataSourceOptions!: QueryList<TriAutocompleteOptionComponent>;
 
   /** cdk-overlay */
   @ViewChild(TemplateRef, { static: false }) template?: TemplateRef<{}>;
@@ -151,17 +151,17 @@ export class NzAutocompleteComponent implements AfterContentInit, AfterViewInit,
   private dataSourceChangeSubscription: Subscription | null = Subscription.EMPTY;
 
   /** Options changes listener */
-  private readonly optionSelectionChanges: Observable<NzOptionSelectionChange> = defer(() => {
+  private readonly optionSelectionChanges: Observable<TriOptionSelectionChange> = defer(() => {
     if (this.options) {
-      return merge<NzOptionSelectionChange[]>(...this.options.map(option => option.selectionChange));
+      return merge<TriOptionSelectionChange[]>(...this.options.map(option => option.selectionChange));
     }
 
     return this.afterNextRender$.pipe(switchMap(() => this.optionSelectionChanges));
   });
 
-  private readonly optionMouseEnter: Observable<NzAutocompleteOptionComponent> = defer(() => {
+  private readonly optionMouseEnter: Observable<TriAutocompleteOptionComponent> = defer(() => {
     if (this.options) {
-      return merge<NzAutocompleteOptionComponent[]>(...this.options.map(option => option.mouseEntered));
+      return merge<TriAutocompleteOptionComponent[]>(...this.options.map(option => option.mouseEntered));
     }
 
     return this.afterNextRender$.pipe(switchMap(() => this.optionMouseEnter));
@@ -169,7 +169,7 @@ export class NzAutocompleteComponent implements AfterContentInit, AfterViewInit,
 
   private afterNextRender$ = inject(NZ_AFTER_NEXT_RENDER$);
 
-  noAnimation = inject(NzNoAnimationDirective, { host: true, optional: true });
+  noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
 
   constructor() {
     this.destroyRef.onDestroy(() => {
@@ -204,13 +204,13 @@ export class NzAutocompleteComponent implements AfterContentInit, AfterViewInit,
   }
 
   ngAfterContentInit(): void {
-    if (!this.nzDataSource) {
+    if (!this.dataSource) {
       this.optionsInit();
     }
   }
 
   ngAfterViewInit(): void {
-    if (this.nzDataSource) {
+    if (this.dataSource) {
       this.optionsInit();
     }
   }
@@ -245,22 +245,22 @@ export class NzAutocompleteComponent implements AfterContentInit, AfterViewInit,
     this.setActiveItem(previousIndex);
   }
 
-  getOptionIndex(value: NzSafeAny): number {
+  getOptionIndex(value: TriSafeAny): number {
     return this.options.reduce(
-      (result: number, current: NzAutocompleteOptionComponent, index: number) =>
-        result === -1 ? (this.compareWith(value, current.nzValue) ? index : -1) : result,
+      (result: number, current: TriAutocompleteOptionComponent, index: number) =>
+        result === -1 ? (this.compareWith(value, current.value) ? index : -1) : result,
       -1
     )!;
   }
 
-  getOption(value: NzSafeAny): NzAutocompleteOptionComponent | null {
-    return this.options.find(item => this.compareWith(value, item.nzValue)) || null;
+  getOption(value: TriSafeAny): TriAutocompleteOptionComponent | null {
+    return this.options.find(item => this.compareWith(value, item.value)) || null;
   }
 
   private optionsInit(): void {
     this.setVisibility();
     this.subscribeOptionChanges();
-    const changes = this.nzDataSource ? this.fromDataSourceOptions.changes : this.fromContentOptions.changes;
+    const changes = this.dataSource ? this.fromDataSourceOptions.changes : this.fromContentOptions.changes;
     // async
     this.dataSourceChangeSubscription = changes.subscribe(e => {
       if (!e.dirty && this.isOpen) {
@@ -273,7 +273,7 @@ export class NzAutocompleteComponent implements AfterContentInit, AfterViewInit,
   /**
    * Clear the status of options
    */
-  clearSelectedOptions(skip?: NzAutocompleteOptionComponent | null, deselect: boolean = false): void {
+  clearSelectedOptions(skip?: TriAutocompleteOptionComponent | null, deselect: boolean = false): void {
     this.options.forEach(option => {
       if (option !== skip) {
         if (deselect) {
@@ -287,21 +287,21 @@ export class NzAutocompleteComponent implements AfterContentInit, AfterViewInit,
   private subscribeOptionChanges(): void {
     this.selectionChangeSubscription!.unsubscribe();
     this.selectionChangeSubscription = this.optionSelectionChanges
-      .pipe(filter((event: NzOptionSelectionChange) => event.isUserInput))
-      .subscribe((event: NzOptionSelectionChange) => {
+      .pipe(filter((event: TriOptionSelectionChange) => event.isUserInput))
+      .subscribe((event: TriOptionSelectionChange) => {
         event.source.select();
         event.source.setActiveStyles();
         this.activeItem = event.source;
-        this.activeItemIndex = this.getOptionIndex(this.activeItem.nzValue);
+        this.activeItemIndex = this.getOptionIndex(this.activeItem.value);
         this.clearSelectedOptions(event.source, true);
         this.selectionChange.emit(event.source);
       });
 
     this.optionMouseEnterSubscription!.unsubscribe();
-    this.optionMouseEnterSubscription = this.optionMouseEnter.subscribe((event: NzAutocompleteOptionComponent) => {
+    this.optionMouseEnterSubscription = this.optionMouseEnter.subscribe((event: TriAutocompleteOptionComponent) => {
       event.setActiveStyles();
       this.activeItem = event;
-      this.activeItemIndex = this.getOptionIndex(this.activeItem.nzValue);
+      this.activeItemIndex = this.getOptionIndex(this.activeItem.value);
       this.clearSelectedOptions(event);
     });
   }

@@ -16,67 +16,67 @@ import {
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzCheckListI18nInterface, NzI18nService } from 'ng-zorro-antd/i18n';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriCheckListI18nInterface, TriI18nService } from 'ng-zorro-antd/i18n';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriPopoverModule } from 'ng-zorro-antd/popover';
 
-import { NzCheckListButtonComponent } from './check-list-button.component';
-import { NzCheckListContentComponent } from './check-list-content.component';
-import { NzItemProps } from './typings';
+import { TriCheckListButtonComponent } from './check-list-button.component';
+import { TriCheckListContentComponent } from './check-list-content.component';
+import { TriItemProps } from './typings';
 
 @Component({
-  selector: 'nz-check-list',
+  selector: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  imports: [NzPopoverModule, NzIconModule, NzOutletModule, NzCheckListButtonComponent, NzCheckListContentComponent],
+  imports: [TriPopoverModule, TriIconModule, TriOutletModule, TriCheckListButtonComponent, TriCheckListContentComponent],
   template: `
-    <nz-check-list-button
-      nz-popover
-      [nzPopoverContent]="checklistTemplate"
-      nzPopoverTrigger="click"
-      nzPopoverPlacement="topRight"
-      [nzPopoverOverlayClickable]="false"
-      [nzPopoverVisible]="visible()"
-      (nzPopoverVisibleChange)="visible.set($event)"
+    <tri-check-list-button
+      tri-popover
+      [popoverContent]="checklistTemplate"
+      popoverTrigger="click"
+      popoverPlacement="topRight"
+      [popoverOverlayClickable]="false"
+      [popoverVisible]="visible()"
+      (popoverVisibleChange)="visible.set($event)"
     >
-      @if (!!nzTriggerRender()) {
-        <ng-container *nzStringTemplateOutlet="nzTriggerRender()">{{ nzTriggerRender() }}</ng-container>
+      @if (!!triggerRender()) {
+        <ng-container *stringTemplateOutlet="triggerRender()">{{ triggerRender() }}</ng-container>
       } @else {
-        <nz-icon nzType="check-circle" nzTheme="outline" class="ant-check-list-icon" />
-        <div class="ant-check-list-description">{{ locale().checkList }}</div>
+        <tri-icon type="check-circle" theme="outline" class="tri-check-list-icon" />
+        <div class="tri-check-list-description">{{ locale().checkList }}</div>
       }
-    </nz-check-list-button>
+    </tri-check-list-button>
     <ng-template #checklistTemplate>
-      <nz-check-list-content
+      <tri-check-list-content
         [locale]="locale()"
-        [items]="nzItems()"
-        [index]="nzIndex()"
-        [title]="nzTitle()"
-        [progress]="nzProgress()"
-        [footer]="nzFooter()"
+        [items]="items()"
+        [index]="index()"
+        [title]="title()"
+        [progress]="progress()"
+        [footer]="footer()"
         (closePopover)="visible.set($event)"
-        (hide)="visible.set($event); nzHide.emit($event)"
-      ></nz-check-list-content>
+        (hide)="visible.set($event); hide.emit($event)"
+      ></tri-check-list-content>
     </ng-template>
   `,
   host: {
-    class: 'ant-check-list'
+    class: 'tri-check-list'
   }
 })
-export class NzCheckListComponent {
-  nzItems = input<NzItemProps[]>([]);
-  nzVisible = input(false);
-  nzIndex = input(1);
-  nzProgress = input(true);
-  nzTriggerRender = input<TemplateRef<void> | string | null>(null);
-  nzTitle = input<TemplateRef<void> | string | null>(null);
-  nzFooter = input<TemplateRef<void> | string | null>(null);
-  readonly nzHide = output<boolean>();
+export class TriCheckListComponent {
+  items = input<TriItemProps[]>([]);
+  visible = input(false);
+  index = input(1);
+  progress = input(true);
+  triggerRender = input<TemplateRef<void> | string | null>(null);
+  title = input<TemplateRef<void> | string | null>(null);
+  footer = input<TemplateRef<void> | string | null>(null);
+  readonly hide = output<boolean>();
 
-  protected visible = linkedSignal(this.nzVisible);
-  private i18n = inject(NzI18nService);
-  locale = toSignal<NzCheckListI18nInterface>(
+  protected _visible = linkedSignal(this.visible);
+  private i18n = inject(TriI18nService);
+  locale = toSignal<TriCheckListI18nInterface>(
     this.i18n.localeChange.pipe(map(() => this.i18n.getLocaleData('CheckList'))),
     { requireSync: true }
   );

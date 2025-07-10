@@ -5,11 +5,11 @@
 
 import { NgModule } from '@angular/core';
 
-import { NZ_WAVE_GLOBAL_DEFAULT_CONFIG, NzWaveDirective, provideNzWave } from './nz-wave.directive';
+import { NZ_WAVE_GLOBAL_DEFAULT_CONFIG, TriWaveDirective, provideNzWave } from './nz-wave.directive';
 
 @NgModule({
-  imports: [NzWaveDirective],
-  exports: [NzWaveDirective],
+  imports: [TriWaveDirective],
+  exports: [TriWaveDirective],
   providers: [provideNzWave(NZ_WAVE_GLOBAL_DEFAULT_CONFIG)]
 })
-export class NzWaveModule {}
+export class TriWaveModule {}

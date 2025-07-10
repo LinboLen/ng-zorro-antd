@@ -27,28 +27,28 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { bufferCount } from 'rxjs/operators';
 
 import { ThumbAnimationProps, thumbMotion } from 'ng-zorro-antd/core/animation';
-import { NzConfigKey, NzConfigService, WithConfig } from 'ng-zorro-antd/core/config';
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzSizeLDSType, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriSizeLDSType, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
-import { NzSegmentedItemComponent } from './segmented-item.component';
-import { NzSegmentedService } from './segmented.service';
-import { normalizeOptions, NzSegmentedOption, NzSegmentedOptions } from './types';
+import { TriSegmentedItemComponent } from './segmented-item.component';
+import { TriSegmentedService } from './segmented.service';
+import { normalizeOptions, TriSegmentedOption, TriSegmentedOptions } from './types';
 
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'segmented';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'segmented';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-segmented',
-  exportAs: 'nzSegmented',
+  selector: '',
+  exportAs: 'triSegmented',
   template: `
     <!-- thumb motion div -->
-    <div class="ant-segmented-group">
+    <div class="tri-segmented-group">
       @if (animationState) {
         <div
-          class="ant-segmented-thumb ant-segmented-thumb-motion"
+          class="tri-segmented-thumb tri-segmented-thumb-motion"
           [@thumbMotion]="animationState"
           (@thumbMotion.done)="handleThumbAnimationDone($event)"
         ></div>
@@ -56,7 +56,7 @@ const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'segmented';
 
       <ng-content>
         @for (item of normalizedOptions; track item.value) {
-          <label nz-segmented-item [nzIcon]="item.icon" [nzValue]="item.value" [nzDisabled]="item.disabled">
+          <label tri-segmented-item [icon]="item.icon" [value]="item.value" [disabled]="item.disabled">
             {{ item.label }}
           </label>
         }
@@ -64,41 +64,41 @@ const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'segmented';
     </div>
   `,
   host: {
-    class: 'ant-segmented',
-    '[class.ant-segmented-disabled]': 'nzDisabled',
-    '[class.ant-segmented-rtl]': `dir === 'rtl'`,
-    '[class.ant-segmented-lg]': `nzSize === 'large'`,
-    '[class.ant-segmented-sm]': `nzSize === 'small'`,
-    '[class.ant-segmented-block]': `nzBlock`
+    class: 'tri-segmented',
+    '[class.tri-segmented-disabled]': 'disabled',
+    '[class.tri-segmented-rtl]': `dir === 'rtl'`,
+    '[class.tri-segmented-lg]': `size === 'large'`,
+    '[class.tri-segmented-sm]': `size === 'small'`,
+    '[class.tri-segmented-block]': `block`
   },
   providers: [
-    NzSegmentedService,
+    TriSegmentedService,
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NzSegmentedComponent),
+      useExisting: forwardRef(() => TriSegmentedComponent),
       multi: true
     }
   ],
   animations: [thumbMotion],
-  imports: [NzIconModule, NzOutletModule, NzSegmentedItemComponent]
+  imports: [TriIconModule, TriOutletModule, TriSegmentedItemComponent]
 })
-export class NzSegmentedComponent implements OnChanges, ControlValueAccessor {
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+export class TriSegmentedComponent implements OnChanges, ControlValueAccessor {
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
 
-  public readonly nzConfigService = inject(NzConfigService);
+  public readonly configService = inject(TriConfigService);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly directionality = inject(Directionality);
-  private readonly service = inject(NzSegmentedService);
+  private readonly service = inject(TriSegmentedService);
 
-  @Input({ transform: booleanAttribute }) nzBlock: boolean = false;
-  @Input({ transform: booleanAttribute }) nzDisabled = false;
-  @Input() nzOptions: NzSegmentedOptions = [];
-  @Input() @WithConfig() nzSize: NzSizeLDSType = 'default';
+  @Input({ transform: booleanAttribute }) block: boolean = false;
+  @Input({ transform: booleanAttribute }) disabled = false;
+  @Input() options: TriSegmentedOptions = [];
+  @Input() @WithConfig() size: TriSizeLDSType = 'default';
 
-  @Output() readonly nzValueChange = new EventEmitter<number | string>();
+  @Output() readonly valueChange = new EventEmitter<number | string>();
 
-  private viewItemCmps = viewChildren(NzSegmentedItemComponent);
-  private contentItemCmps = contentChildren(NzSegmentedItemComponent);
+  private viewItemCmps = viewChildren(TriSegmentedItemComponent);
+  private contentItemCmps = contentChildren(TriSegmentedItemComponent);
   private isDisabledFirstChange = true;
 
   protected dir: Direction = 'ltr';
@@ -107,7 +107,7 @@ export class NzSegmentedComponent implements OnChanges, ControlValueAccessor {
     value: 'to',
     params: thumbAnimationParamsOf()
   };
-  protected normalizedOptions: NzSegmentedOption[] = [];
+  protected normalizedOptions: TriSegmentedOption[] = [];
   protected onChange: OnChangeType = () => {};
   protected onTouched: OnTouchedType = () => {};
 
@@ -122,7 +122,7 @@ export class NzSegmentedComponent implements OnChanges, ControlValueAccessor {
     });
 
     this.service.change$.pipe(takeUntilDestroyed()).subscribe(value => {
-      this.nzValueChange.emit(value);
+      this.valueChange.emit(value);
       this.onChange(value);
     });
 
@@ -149,9 +149,9 @@ export class NzSegmentedComponent implements OnChanges, ControlValueAccessor {
 
       if (
         this.value === undefined || // If no value is set, select the first item
-        !itemCmps.some(item => item.nzValue === this.value) // handle value not in options
+        !itemCmps.some(item => item.value === this.value) // handle value not in options
       ) {
-        this.service.selected$.next(itemCmps[0].nzValue);
+        this.service.selected$.next(itemCmps[0].value);
       }
     });
   }
@@ -186,7 +186,7 @@ export class NzSegmentedComponent implements OnChanges, ControlValueAccessor {
   }
 
   setDisabledState(disabled: boolean): void {
-    this.nzDisabled = (this.isDisabledFirstChange && this.nzDisabled) || disabled;
+    this.disabled = (this.isDisabledFirstChange && this.disabled) || disabled;
     this.isDisabledFirstChange = false;
   }
 }

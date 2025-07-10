@@ -13,10 +13,10 @@ import {
   defaultImageSrcLoader,
   isFixedSize,
   normalizeSrc,
-  NzImageModule,
-  NzImageSrcLoader
+  TriImageModule,
+  TriImageSrcLoader
 } from 'ng-zorro-antd/experimental/image';
-import { NzImageService } from 'ng-zorro-antd/image';
+import { TriImageService } from 'ng-zorro-antd/image';
 
 describe('Experimental', () => {
   let fixture: ComponentFixture<TestImageExperimentalBaseComponent>;
@@ -25,7 +25,7 @@ describe('Experimental', () => {
 
   beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
-      providers: [NzImageService]
+      providers: [TriImageService]
     });
   }));
 
@@ -59,7 +59,7 @@ describe('Experimental', () => {
   it('should nzSrcLoader work', () => {
     const _src = 'test.jpg';
     const _width = 100;
-    const _loader: NzImageSrcLoader = ({ src, width }) => `${src}?w=${width}`;
+    const _loader: TriImageSrcLoader = ({ src, width }) => `${src}?w=${width}`;
     context.src = _src;
     context.width = _width;
     context.autoSrc = true;
@@ -126,16 +126,16 @@ describe('NzSrcLoader', () => {
 });
 
 @Component({
-  imports: [NzImageModule],
+  imports: [TriImageModule],
   template: `
-    <nz-image
-      [nzSrc]="src"
-      [nzAutoSrcset]="autoSrc"
-      [nzSrcLoader]="loader"
-      [nzWidth]="width"
-      nzHeight="200"
-      nzAlt="test"
-    ></nz-image>
+    <tri-image
+      [src]="src"
+      [autoSrcset]="autoSrc"
+      [srcLoader]="loader"
+      [width]="width"
+      height="200"
+      alt="test"
+    ></tri-image>
   `
 })
 export class TestImageExperimentalBaseComponent {

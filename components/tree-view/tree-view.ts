@@ -15,40 +15,40 @@ import {
 
 import { treeCollapseMotion } from 'ng-zorro-antd/core/animation';
 
-import { NzTreeNodeOutletDirective } from './outlet';
-import { NzTreeView } from './tree';
+import { TriTreeNodeOutletDirective } from './outlet';
+import { TriTreeView } from './tree';
 
 @Component({
-  selector: 'nz-tree-view',
-  exportAs: 'nzTreeView',
+  selector: '',
+  exportAs: 'triTreeView',
   template: `
-    <div class="ant-tree-list-holder">
+    <div class="tri-tree-list-holder">
       <div
         [@.disabled]="!_afterViewInit || !!noAnimation?.nzNoAnimation"
         [@treeCollapseMotion]="_nodeOutlet.viewContainer.length"
-        class="ant-tree-list-holder-inner"
+        class="tri-tree-list-holder-inner"
       >
-        <ng-container nzTreeNodeOutlet></ng-container>
+        <ng-container treeNodeOutlet></ng-container>
       </div>
     </div>
   `,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
-    { provide: CdkTree, useExisting: forwardRef(() => NzTreeViewComponent) },
-    { provide: NzTreeView, useExisting: forwardRef(() => NzTreeViewComponent) }
+    { provide: CdkTree, useExisting: forwardRef(() => TriTreeViewComponent) },
+    { provide: TriTreeView, useExisting: forwardRef(() => TriTreeViewComponent) }
   ],
   host: {
-    class: 'ant-tree',
-    '[class.ant-tree-block-node]': 'nzDirectoryTree || nzBlockNode',
-    '[class.ant-tree-directory]': 'nzDirectoryTree',
-    '[class.ant-tree-rtl]': `dir === 'rtl'`
+    class: 'tri-tree',
+    '[class.tri-tree-block-node]': 'directoryTree || blockNode',
+    '[class.tri-tree-directory]': 'directoryTree',
+    '[class.tri-tree-rtl]': `dir === 'rtl'`
   },
   animations: [treeCollapseMotion],
-  imports: [NzTreeNodeOutletDirective]
+  imports: [TriTreeNodeOutletDirective]
 })
-export class NzTreeViewComponent<T> extends NzTreeView<T> implements AfterViewInit {
-  @ViewChild(NzTreeNodeOutletDirective, { static: true }) nodeOutlet!: NzTreeNodeOutletDirective;
+export class TriTreeViewComponent<T> extends TriTreeView<T> implements AfterViewInit {
+  @ViewChild(TriTreeNodeOutletDirective, { static: true }) nodeOutlet!: TriTreeNodeOutletDirective;
   _afterViewInit = false;
 
   override ngAfterViewInit(): void {

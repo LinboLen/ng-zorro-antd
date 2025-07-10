@@ -26,61 +26,61 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   isPresetColor,
   isStatusColor,
-  NzPresetColor,
-  NzStatusColor,
+  TriPresetColor,
+  TriStatusColor,
   presetColors,
   statusColors
 } from 'ng-zorro-antd/core/color';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-tag',
-  exportAs: 'nzTag',
+  selector: '',
+  exportAs: 'triTag',
   template: `
     <ng-content></ng-content>
-    @if (nzMode === 'closeable') {
-      <nz-icon nzType="close" class="ant-tag-close-icon" tabindex="-1" (click)="closeTag($event)" />
+    @if (mode === 'closeable') {
+      <tri-icon type="close" class="tri-tag-close-icon" tabindex="-1" (click)="closeTag($event)" />
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
-    class: 'ant-tag',
+    class: 'tri-tag',
     '[style.background-color]': `isPresetColor ? '' : nzColor`,
-    '[class.ant-tag-has-color]': `nzColor && !isPresetColor`,
-    '[class.ant-tag-checkable]': `nzMode === 'checkable'`,
-    '[class.ant-tag-checkable-checked]': `nzChecked`,
-    '[class.ant-tag-rtl]': `dir === 'rtl'`,
-    '[class.ant-tag-borderless]': `!nzBordered`,
+    '[class.tri-tag-has-color]': `color && !isPresetColor`,
+    '[class.tri-tag-checkable]': `mode === 'checkable'`,
+    '[class.tri-tag-checkable-checked]': `checked`,
+    '[class.tri-tag-rtl]': `dir === 'rtl'`,
+    '[class.tri-tag-borderless]': `!bordered`,
     '(click)': 'updateCheckedStatus()'
   },
-  imports: [NzIconModule]
+  imports: [TriIconModule]
 })
-export class NzTagComponent implements OnChanges, OnInit {
+export class TriTagComponent implements OnChanges, OnInit {
   private cdr = inject(ChangeDetectorRef);
   private renderer = inject(Renderer2);
   private el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
 
-  @Input() nzMode: 'default' | 'closeable' | 'checkable' = 'default';
-  @Input() nzColor?: string | NzStatusColor | NzPresetColor;
-  @Input({ transform: booleanAttribute }) nzChecked = false;
-  @Input({ transform: booleanAttribute }) nzBordered = true;
-  @Output() readonly nzOnClose = new EventEmitter<MouseEvent>();
-  @Output() readonly nzCheckedChange = new EventEmitter<boolean>();
+  @Input() mode: 'default' | 'closeable' | 'checkable' = 'default';
+  @Input() color?: string | TriStatusColor | TriPresetColor;
+  @Input({ transform: booleanAttribute }) checked = false;
+  @Input({ transform: booleanAttribute }) bordered = true;
+  @Output() readonly onClose = new EventEmitter<MouseEvent>();
+  @Output() readonly checkedChange = new EventEmitter<boolean>();
   dir: Direction = 'ltr';
   isPresetColor = false;
 
   updateCheckedStatus(): void {
-    if (this.nzMode === 'checkable') {
-      this.nzChecked = !this.nzChecked;
-      this.nzCheckedChange.emit(this.nzChecked);
+    if (this.mode === 'checkable') {
+      this.checked = !this.checked;
+      this.checkedChange.emit(this.checked);
     }
   }
 
   closeTag(e: MouseEvent): void {
-    this.nzOnClose.emit(e);
+    this.onClose.emit(e);
     if (!e.defaultPrevented) {
       this.renderer.removeChild(this.renderer.parentNode(this.el), this.el);
     }
@@ -101,13 +101,13 @@ export class NzTagComponent implements OnChanges, OnInit {
 
   private setPresetColor(): void {
     this.clearPresetColor();
-    if (!this.nzColor) {
+    if (!this.color) {
       this.isPresetColor = false;
     } else {
-      this.isPresetColor = isPresetColor(this.nzColor) || isStatusColor(this.nzColor);
+      this.isPresetColor = isPresetColor(this.color) || isStatusColor(this.color);
     }
     if (this.isPresetColor) {
-      this.el.classList.add(`ant-tag-${this.nzColor}`);
+      this.el.classList.add(`ant-tag-${this.color}`);
     }
   }
 

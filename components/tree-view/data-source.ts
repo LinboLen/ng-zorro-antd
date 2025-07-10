@@ -8,7 +8,7 @@ import { FlatTreeControl, TreeControl } from '@angular/cdk/tree';
 import { BehaviorSubject, Observable, merge } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
-export class NzTreeFlattener<T, F, K = F> {
+export class TriTreeFlattener<T, F, K = F> {
   constructor(
     public transformFunction: (node: T, level: number) => F,
     public getLevel: (node: F) => number,
@@ -79,7 +79,7 @@ export class NzTreeFlattener<T, F, K = F> {
   }
 }
 
-export class NzTreeFlatDataSource<T, F, K = F> extends DataSource<F> {
+export class TriTreeFlatDataSource<T, F, K = F> extends DataSource<F> {
   _flattenedData = new BehaviorSubject<F[]>([]);
 
   _expandedData = new BehaviorSubject<F[]>([]);
@@ -88,7 +88,7 @@ export class NzTreeFlatDataSource<T, F, K = F> extends DataSource<F> {
 
   constructor(
     private _treeControl: FlatTreeControl<F, K>,
-    private _treeFlattener: NzTreeFlattener<T, F, K>,
+    private _treeFlattener: TriTreeFlattener<T, F, K>,
     initialData: T[] = []
   ) {
     super();

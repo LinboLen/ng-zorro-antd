@@ -10,10 +10,10 @@ import { Observable, Subscription } from 'rxjs';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 
 import {
-  NzTabScrollEvent,
-  NzTabScrollEventHandlerFun,
-  NzTabScrollListOffset,
-  NzTabScrollListOffsetEvent
+  TriTabScrollEvent,
+  TriTabScrollEventHandlerFun,
+  TriTabScrollListOffset,
+  TriTabScrollListOffsetEvent
 } from './interfaces';
 
 const MIN_SWIPE_DISTANCE = 0.1;
@@ -22,9 +22,9 @@ const REFRESH_INTERVAL = 20;
 const SPEED_OFF_MULTIPLE = 0.995 ** REFRESH_INTERVAL;
 
 @Directive({
-  selector: '[nzTabScrollList]'
+  selector: ''
 })
-export class NzTabScrollListDirective implements OnInit {
+export class TriTabScrollListDirective implements OnInit {
   private ngZone = inject(NgZone);
   private destroyRef = inject(DestroyRef);
   private el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
@@ -35,12 +35,12 @@ export class NzTabScrollListDirective implements OnInit {
   lastTimeDiff = 0;
   lastMixedWheel = 0;
   lastWheelPrevent = false;
-  touchPosition: NzTabScrollListOffset | null = null;
-  lastOffset: NzTabScrollListOffset | null = null;
+  touchPosition: TriTabScrollListOffset | null = null;
+  lastOffset: TriTabScrollListOffset | null = null;
   motion = -1;
 
-  @Output() readonly offsetChange = new EventEmitter<NzTabScrollListOffsetEvent>();
-  @Output() readonly tabScroll = new EventEmitter<NzTabScrollEvent>();
+  @Output() readonly offsetChange = new EventEmitter<TriTabScrollListOffsetEvent>();
+  @Output() readonly tabScroll = new EventEmitter<TriTabScrollEvent>();
 
   ngOnInit(): void {
     const wheel$ = fromEventOutsideAngular<WheelEvent>(this.el, 'wheel');
@@ -54,16 +54,16 @@ export class NzTabScrollListDirective implements OnInit {
     this.subscribeWrap('touchend', touchend$, this.onTouchEnd);
   }
 
-  private subscribeWrap<T extends NzTabScrollEvent['event']>(
-    type: NzTabScrollEvent['type'],
+  private subscribeWrap<T extends TriTabScrollEvent['event']>(
+    type: TriTabScrollEvent['type'],
     observable: Observable<T>,
-    handler: NzTabScrollEventHandlerFun<T>
+    handler: TriTabScrollEventHandlerFun<T>
   ): Subscription {
     return observable.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(event => {
       this.tabScroll.emit({
         type,
         event
-      } as NzTabScrollEvent);
+      } as TriTabScrollEvent);
       if (!event.defaultPrevented) {
         handler(event);
       }

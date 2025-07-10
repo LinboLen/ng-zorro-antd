@@ -1,37 +1,37 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzCronExpressionModule } from 'ng-zorro-antd/cron-expression';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriCronExpressionModule } from 'ng-zorro-antd/cron-expression';
+import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-demo-cron-expression-shortcuts',
-  imports: [FormsModule, NzButtonModule, NzCronExpressionModule, NzDropDownModule, NzIconModule],
+  selector: '',
+  imports: [FormsModule, TriButtonModule, TriCronExpressionModule, TriDropDownModule, TriIconModule],
   template: `
-    <nz-cron-expression
-      [nzExtra]="shortcuts"
+    <tri-cron-expression
+      [extra]="shortcuts"
       [(ngModel)]="value"
       (ngModelChange)="getValue($event)"
-    ></nz-cron-expression>
+    ></tri-cron-expression>
     <ng-template #shortcuts>
-      <button nz-button nz-dropdown [nzDropdownMenu]="menu">
+      <button tri-button tri-dropdown [dropdownMenu]="menu">
         Shortcuts
-        <nz-icon nzType="down" />
+        <tri-icon type="down" />
       </button>
-      <nz-dropdown-menu #menu="nzDropdownMenu">
-        <ul nz-menu nzSelectable>
+      <tri-dropdown-menu #menu="nzDropdownMenu">
+        <ul tri-menu selectable>
           @for (item of options; track item.value) {
-            <li nz-menu-item [value]="item.value" (click)="setValue(item.value)">{{ item.label }}</li>
+            <li tri-menu-item [value]="item.value" (click)="setValue(item.value)">{{ item.label }}</li>
           }
         </ul>
-      </nz-dropdown-menu>
+      </tri-dropdown-menu>
     </ng-template>
     <p>cron: {{ cron }} </p>
   `
 })
-export class NzDemoCronExpressionShortcutsComponent {
+export class TriDemoCronExpressionShortcutsComponent {
   value: string = '1 1 * * *';
   cron: string = '';
   options = [

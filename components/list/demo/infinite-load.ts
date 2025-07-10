@@ -6,9 +6,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { catchError, takeUntil } from 'rxjs/operators';
 
-import { NzListModule } from 'ng-zorro-antd/list';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { TriListModule } from 'ng-zorro-antd/list';
+import { TriMessageService } from 'ng-zorro-antd/message';
+import { TriSkeletonModule } from 'ng-zorro-antd/skeleton';
 
 interface ItemData {
   gender: string;
@@ -23,27 +23,27 @@ interface Name {
 }
 
 @Component({
-  selector: 'nz-demo-list-infinite-load',
-  imports: [CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf, NzListModule, NzSkeletonModule],
+  selector: '',
+  imports: [CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf, TriListModule, TriSkeletonModule],
   template: `
     <div>
       <cdk-virtual-scroll-viewport itemSize="73" class="demo-infinite-container">
-        <nz-list>
-          <nz-list-item *cdkVirtualFor="let item of ds">
+        <tri-list>
+          <tri-list-item *cdkVirtualFor="let item of ds">
             @if (item) {
-              <nz-list-item-meta
-                nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                [nzDescription]="item.email"
+              <tri-list-item-meta
+                avatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                [description]="item.email"
               >
-                <nz-list-item-meta-title>
+                <tri-list-item-meta-title>
                   <a href="https://ng.ant.design">{{ item.name.last }}</a>
-                </nz-list-item-meta-title>
-              </nz-list-item-meta>
+                </tri-list-item-meta-title>
+              </tri-list-item-meta>
             } @else {
-              <nz-skeleton [nzAvatar]="true" [nzParagraph]="{ rows: 1 }"></nz-skeleton>
+              <tri-skeleton [avatar]="true" [paragraph]="{ rows: 1 }"></tri-skeleton>
             }
-          </nz-list-item>
-        </nz-list>
+          </tri-list-item>
+        </tri-list>
       </cdk-virtual-scroll-viewport>
     </div>
   `,
@@ -62,9 +62,9 @@ interface Name {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NzDemoListInfiniteLoadComponent implements OnInit {
+export class TriDemoListInfiniteLoadComponent implements OnInit {
   private http = inject(HttpClient);
-  private nzMessage = inject(NzMessageService);
+  private message = inject(TriMessageService);
   private destroyRef = inject(DestroyRef);
 
   ds = new MyDataSource(this.http);
@@ -74,7 +74,7 @@ export class NzDemoListInfiniteLoadComponent implements OnInit {
       .completed()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
-        this.nzMessage.warning('Infinite List loaded all');
+        this.message.warning('Infinite List loaded all');
       });
   }
 }

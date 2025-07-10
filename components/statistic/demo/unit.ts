@@ -1,23 +1,23 @@
 import { DecimalPipe } from '@angular/common';
 import { Component } from '@angular/core';
 
-import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzStatisticModule } from 'ng-zorro-antd/statistic';
+import { TriGridModule } from 'ng-zorro-antd/grid';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriStatisticModule } from 'ng-zorro-antd/statistic';
 
 @Component({
-  selector: 'nz-demo-statistic-unit',
-  imports: [DecimalPipe, NzGridModule, NzIconModule, NzStatisticModule],
+  selector: '',
+  imports: [DecimalPipe, TriGridModule, TriIconModule, TriStatisticModule],
   template: `
-    <nz-row [nzGutter]="16">
-      <nz-col [nzSpan]="12">
-        <nz-statistic [nzValue]="(1128 | number)!" nzTitle="Feedback" [nzPrefix]="prefixTpl"></nz-statistic>
-        <ng-template #prefixTpl><nz-icon nzType="like" /></ng-template>
-      </nz-col>
-      <nz-col [nzSpan]="12">
-        <nz-statistic [nzValue]="93" nzTitle="Unmerged" nzSuffix="/ 100"></nz-statistic>
-      </nz-col>
-    </nz-row>
+    <tri-row [gutter]="16">
+      <tri-col [span]="12">
+        <tri-statistic [value]="(1128 | number)!" title="Feedback" [prefix]="prefixTpl"></tri-statistic>
+        <ng-template #prefixTpl><tri-icon type="like" /></ng-template>
+      </tri-col>
+      <tri-col [span]="12">
+        <tri-statistic [value]="93" title="Unmerged" suffix="/ 100"></tri-statistic>
+      </tri-col>
+    </tri-row>
   `
 })
-export class NzDemoStatisticUnitComponent {}
+export class TriDemoStatisticUnitComponent {}

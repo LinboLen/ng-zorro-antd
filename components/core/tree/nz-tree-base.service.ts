@@ -6,36 +6,36 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzTreeNode, NzTreeNodeKey } from './nz-tree-base-node';
+import { TriTreeNode, TriTreeNodeKey } from './nz-tree-base-node';
 import { flattenTreeData, isCheckDisabled, isInArray } from './nz-tree-base-util';
-import { NzFormatEmitEvent } from './nz-tree-base.definitions';
+import { TriFormatEmitEvent } from './nz-tree-base.definitions';
 
 @Injectable()
-export class NzTreeBaseService {
+export class TriTreeBaseService {
   DRAG_SIDE_RANGE = 0.25;
   DRAG_MIN_GAP = 2;
 
   isCheckStrictly: boolean = false;
   isMultiple: boolean = false;
-  selectedNode!: NzTreeNode;
-  rootNodes: NzTreeNode[] = [];
-  flattenNodes$ = new BehaviorSubject<NzTreeNode[]>([]);
-  selectedNodeList: NzTreeNode[] = [];
-  expandedNodeList: NzTreeNode[] = [];
-  checkedNodeList: NzTreeNode[] = [];
-  halfCheckedNodeList: NzTreeNode[] = [];
-  matchedNodeList: NzTreeNode[] = [];
+  selectedNode!: TriTreeNode;
+  rootNodes: TriTreeNode[] = [];
+  flattenNodes$ = new BehaviorSubject<TriTreeNode[]>([]);
+  selectedNodeList: TriTreeNode[] = [];
+  expandedNodeList: TriTreeNode[] = [];
+  checkedNodeList: TriTreeNode[] = [];
+  halfCheckedNodeList: TriTreeNode[] = [];
+  matchedNodeList: TriTreeNode[] = [];
   /**
    * handle to post process a tree node when it's instantiating, note that its children haven't been initiated yet
    */
-  treeNodePostProcessor?: (node: NzTreeNode) => void;
+  treeNodePostProcessor?: (node: TriTreeNode) => void;
 
   /**
    * reset tree nodes will clear default node list
    */
-  initTree(nzNodes: NzTreeNode[]): void {
+  initTree(nzNodes: TriTreeNode[]): void {
     this.rootNodes = nzNodes;
     this.expandedNodeList = [];
     this.selectedNodeList = [];
@@ -44,29 +44,29 @@ export class NzTreeBaseService {
     this.matchedNodeList = [];
   }
 
-  flattenTreeData(nzNodes: NzTreeNode[], expandedKeys: NzTreeNodeKey[] | true = []): void {
+  flattenTreeData(nzNodes: TriTreeNode[], expandedKeys: TriTreeNodeKey[] | true = []): void {
     this.flattenNodes$.next(flattenTreeData(nzNodes, expandedKeys).map(item => item.data));
   }
 
-  getSelectedNode(): NzTreeNode | null {
+  getSelectedNode(): TriTreeNode | null {
     return this.selectedNode;
   }
 
   /**
    * get some list
    */
-  getSelectedNodeList(): NzTreeNode[] {
+  getSelectedNodeList(): TriTreeNode[] {
     return this.conductNodeState('select');
   }
 
   /**
    * get checked node keys
    */
-  getCheckedNodeKeys(): NzTreeNodeKey[] {
-    const keys: NzTreeNodeKey[] = [];
+  getCheckedNodeKeys(): TriTreeNodeKey[] {
+    const keys: TriTreeNodeKey[] = [];
     const checkedNodes = this.getCheckedNodeList();
 
-    const calc = (nodes: NzTreeNode[]): void => {
+    const calc = (nodes: TriTreeNode[]): void => {
       nodes.forEach(node => {
         keys.push(node.key);
         if (node.children.length < 1) return;
@@ -82,43 +82,43 @@ export class NzTreeBaseService {
   /**
    * return checked nodes
    */
-  getCheckedNodeList(): NzTreeNode[] {
+  getCheckedNodeList(): TriTreeNode[] {
     return this.conductNodeState('check');
   }
 
-  getHalfCheckedNodeList(): NzTreeNode[] {
+  getHalfCheckedNodeList(): TriTreeNode[] {
     return this.conductNodeState('halfCheck');
   }
 
   /**
    * return expanded nodes
    */
-  getExpandedNodeList(): NzTreeNode[] {
+  getExpandedNodeList(): TriTreeNode[] {
     return this.conductNodeState('expand');
   }
 
   /**
    * return search matched nodes
    */
-  getMatchedNodeList(): NzTreeNode[] {
+  getMatchedNodeList(): TriTreeNode[] {
     return this.conductNodeState('match');
   }
 
-  isArrayOfNzTreeNode(value: NzSafeAny[]): boolean {
-    return value.every(item => item instanceof NzTreeNode);
+  isArrayOfNzTreeNode(value: TriSafeAny[]): boolean {
+    return value.every(item => item instanceof TriTreeNode);
   }
 
   /**
    * set drag node
    */
-  setSelectedNode(node: NzTreeNode): void {
+  setSelectedNode(node: TriTreeNode): void {
     this.selectedNode = node;
   }
 
   /**
    * set node selected status
    */
-  setNodeActive(node: NzTreeNode): void {
+  setNodeActive(node: TriTreeNode): void {
     if (!this.isMultiple && node.isSelected) {
       this.selectedNodeList.forEach(n => {
         if (node.key !== n.key) {
@@ -135,7 +135,7 @@ export class NzTreeBaseService {
   /**
    * add or remove node to selectedNodeList
    */
-  setSelectedNodeList(node: NzTreeNode, isMultiple: boolean = false): void {
+  setSelectedNodeList(node: TriTreeNode, isMultiple: boolean = false): void {
     const index = this.getIndexOfArray(this.selectedNodeList, node.key);
     if (isMultiple) {
       if (node.isSelected && index === -1) {
@@ -154,7 +154,7 @@ export class NzTreeBaseService {
   /**
    * merge checked nodes
    */
-  setHalfCheckedNodeList(node: NzTreeNode): void {
+  setHalfCheckedNodeList(node: TriTreeNode): void {
     const index = this.getIndexOfArray(this.halfCheckedNodeList, node.key);
     if (node.isHalfChecked && index === -1) {
       this.halfCheckedNodeList.push(node);
@@ -163,7 +163,7 @@ export class NzTreeBaseService {
     }
   }
 
-  setCheckedNodeList(node: NzTreeNode): void {
+  setCheckedNodeList(node: TriTreeNode): void {
     const index = this.getIndexOfArray(this.checkedNodeList, node.key);
     if (node.isChecked && index === -1) {
       this.checkedNodeList.push(node);
@@ -175,8 +175,8 @@ export class NzTreeBaseService {
   /**
    * conduct checked/selected/expanded keys
    */
-  conductNodeState(type: string = 'check'): NzTreeNode[] {
-    let resultNodesList: NzTreeNode[] = [];
+  conductNodeState(type: string = 'check'): TriTreeNode[] {
+    let resultNodesList: TriTreeNode[] = [];
     switch (type) {
       case 'select':
         resultNodesList = this.selectedNodeList;
@@ -189,7 +189,7 @@ export class NzTreeBaseService {
         break;
       case 'check': {
         resultNodesList = this.checkedNodeList;
-        const isIgnore = (node: NzTreeNode): boolean => {
+        const isIgnore = (node: TriTreeNode): boolean => {
           const parentNode = node.getParentNode();
           if (parentNode) {
             if (this.checkedNodeList.findIndex(n => n.key === parentNode.key) > -1) {
@@ -218,7 +218,7 @@ export class NzTreeBaseService {
   /**
    * set expanded nodes
    */
-  setExpandedNodeList(node: NzTreeNode): void {
+  setExpandedNodeList(node: TriTreeNode): void {
     if (node.isLeaf) {
       return;
     }
@@ -230,7 +230,7 @@ export class NzTreeBaseService {
     }
   }
 
-  setMatchedNodeList(node: NzTreeNode): void {
+  setMatchedNodeList(node: TriTreeNode): void {
     const index = this.getIndexOfArray(this.matchedNodeList, node.key);
     if (node.isMatched && index === -1) {
       this.matchedNodeList.push(node);
@@ -254,7 +254,7 @@ export class NzTreeBaseService {
   }
 
   // reset other node checked state based current node
-  conduct(node: NzTreeNode, isCheckStrictly: boolean = false): void {
+  conduct(node: TriTreeNode, isCheckStrictly: boolean = false): void {
     const isChecked = node.isChecked;
     if (node && !isCheckStrictly) {
       this.conductUp(node);
@@ -267,7 +267,7 @@ export class NzTreeBaseService {
    * 2、children all checked, parent checked
    * 3、no children checked
    */
-  conductUp(node: NzTreeNode): void {
+  conductUp(node: TriTreeNode): void {
     const parentNode = node.getParentNode();
     if (parentNode) {
       if (!isCheckDisabled(parentNode)) {
@@ -291,7 +291,7 @@ export class NzTreeBaseService {
   /**
    * reset child check state
    */
-  conductDown(node: NzTreeNode, value: boolean): void {
+  conductDown(node: TriTreeNode, value: boolean): void {
     if (!isCheckDisabled(node)) {
       node.isChecked = value;
       node.isHalfChecked = false;
@@ -306,9 +306,9 @@ export class NzTreeBaseService {
   /**
    * flush after delete node
    */
-  afterRemove(nodes: NzTreeNode[]): void {
+  afterRemove(nodes: TriTreeNode[]): void {
     // to reset selectedNodeList & expandedNodeList
-    const loopNode = (node: NzTreeNode): void => {
+    const loopNode = (node: TriTreeNode): void => {
       // remove selected node
       this.selectedNodeList = this.selectedNodeList.filter(n => n.key !== node.key);
       // remove expanded node
@@ -330,7 +330,7 @@ export class NzTreeBaseService {
   /**
    * drag event
    */
-  refreshDragNode(node: NzTreeNode): void {
+  refreshDragNode(node: TriTreeNode): void {
     if (node.children.length === 0) {
       // until root
       this.conductUp(node);
@@ -342,7 +342,7 @@ export class NzTreeBaseService {
   }
 
   // reset node level
-  resetNodeLevel(node: NzTreeNode): void {
+  resetNodeLevel(node: TriTreeNode): void {
     const parentNode = node.getParentNode();
     if (parentNode) {
       node.level = parentNode.level + 1;
@@ -373,7 +373,7 @@ export class NzTreeBaseService {
    * drop
    * 0: inner -1: pre 1: next
    */
-  dropAndApply(targetNode: NzTreeNode, dragPos: number = -1): void {
+  dropAndApply(targetNode: TriTreeNode, dragPos: number = -1): void {
     if (!targetNode || dragPos > 1) {
       return;
     }
@@ -426,8 +426,8 @@ export class NzTreeBaseService {
    * event: MouseEvent / DragEvent
    * dragNode
    */
-  formatEvent(eventName: string, node: NzTreeNode | null, event: MouseEvent | DragEvent | null): NzFormatEmitEvent {
-    const emitStructure: NzFormatEmitEvent = {
+  formatEvent(eventName: string, node: TriTreeNode | null, event: MouseEvent | DragEvent | null): TriFormatEmitEvent {
+    const emitStructure: TriFormatEmitEvent = {
       eventName,
       node,
       event
@@ -471,7 +471,7 @@ export class NzTreeBaseService {
    * New functions for flatten nodes
    */
 
-  getIndexOfArray(list: NzTreeNode[], key: string): number {
+  getIndexOfArray(list: TriTreeNode[], key: string): number {
     return list.findIndex(v => v.key === key);
   }
 
@@ -482,10 +482,10 @@ export class NzTreeBaseService {
    * @param keys
    * @param checkStrictly
    */
-  conductCheck(keys: NzTreeNodeKey[] | null, checkStrictly: boolean): void {
+  conductCheck(keys: TriTreeNodeKey[] | null, checkStrictly: boolean): void {
     this.checkedNodeList = [];
     this.halfCheckedNodeList = [];
-    const calc = (nodes: NzTreeNode[]): void => {
+    const calc = (nodes: TriTreeNode[]): void => {
       nodes.forEach(node => {
         if (keys === null) {
           // render tree if no default checked keys found
@@ -508,10 +508,10 @@ export class NzTreeBaseService {
     this.refreshCheckState(checkStrictly);
   }
 
-  conductExpandedKeys(keys: NzTreeNodeKey[] | true = []): void {
+  conductExpandedKeys(keys: TriTreeNodeKey[] | true = []): void {
     const expandedKeySet = new Set(keys === true ? [] : keys);
     this.expandedNodeList = [];
-    const calc = (nodes: NzTreeNode[]): void => {
+    const calc = (nodes: TriTreeNode[]): void => {
       nodes.forEach(node => {
         node.setExpanded(keys === true || expandedKeySet.has(node.key) || node.isExpanded === true);
         if (node.isExpanded) {
@@ -525,10 +525,10 @@ export class NzTreeBaseService {
     calc(this.rootNodes);
   }
 
-  conductSelectedKeys(keys: NzTreeNodeKey[], isMulti: boolean): void {
+  conductSelectedKeys(keys: TriTreeNodeKey[], isMulti: boolean): void {
     this.selectedNodeList.forEach(node => (node.isSelected = false));
     this.selectedNodeList = [];
-    const calc = (nodes: NzTreeNode[]): boolean =>
+    const calc = (nodes: TriTreeNode[]): boolean =>
       nodes.every(node => {
         if (isInArray(node.key, keys)) {
           node.isSelected = true;
@@ -554,8 +554,8 @@ export class NzTreeBaseService {
    *
    * @param node
    */
-  expandNodeAllParentBySearch(node: NzTreeNode): void {
-    const calc = (n: NzTreeNode | null): void => {
+  expandNodeAllParentBySearch(node: TriTreeNode): void {
+    const calc = (n: TriTreeNode | null): void => {
       if (n) {
         n.canHide = false;
         n.setExpanded(true);

@@ -5,12 +5,12 @@
 
 import { Color } from './src/interfaces/color';
 
-export type NzColorPickerFormatType = 'rgb' | 'hex' | 'hsb';
+export type TriColorPickerFormatType = 'rgb' | 'hex' | 'hsb';
 
-export type NzColorPickerTriggerType = 'click' | 'hover';
+export type TriColorPickerTriggerType = 'click' | 'hover';
 
 export interface ValidForm {
-  isFormat: NzColorPickerFormatType | null;
+  isFormat: TriColorPickerFormatType | null;
   hex: string | null;
   hsbH: number;
   hsbS: number;
@@ -23,4 +23,4 @@ export interface ValidForm {
 
 export type ValidFormKey = keyof ValidForm;
 
-export interface NzColor extends Color {}
+export interface TriColor extends Color {}

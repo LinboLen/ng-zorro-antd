@@ -21,7 +21,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgClassInterface } from 'ng-zorro-antd/core/types';
 import { isNotNil } from 'ng-zorro-antd/core/util';
 
-import { NzRowDirective } from './row.directive';
+import { TriRowDirective } from './row.directive';
 
 export interface EmbeddedProperty {
   span?: number;
@@ -32,13 +32,13 @@ export interface EmbeddedProperty {
 }
 
 @Directive({
-  selector: '[nz-col],nz-col,nz-form-control,nz-form-label',
-  exportAs: 'nzCol',
+  selector: '',
+  exportAs: 'triCol',
   host: {
     '[style.flex]': 'hostFlexStyle'
   }
 })
-export class NzColDirective implements OnInit, OnChanges, AfterViewInit {
+export class TriColDirective implements OnInit, OnChanges, AfterViewInit {
   private elementRef = inject(ElementRef);
   private renderer = inject(Renderer2);
   private directionality = inject(Directionality);
@@ -46,27 +46,27 @@ export class NzColDirective implements OnInit, OnChanges, AfterViewInit {
   private classMap: Record<string, boolean> = {};
   hostFlexStyle: string | null = null;
   dir: Direction = 'ltr';
-  @Input() nzFlex: string | number | null = null;
-  @Input() nzSpan: string | number | null = null;
-  @Input() nzOrder: string | number | null = null;
-  @Input() nzOffset: string | number | null = null;
-  @Input() nzPush: string | number | null = null;
-  @Input() nzPull: string | number | null = null;
-  @Input() nzXs: string | number | EmbeddedProperty | null = null;
-  @Input() nzSm: string | number | EmbeddedProperty | null = null;
-  @Input() nzMd: string | number | EmbeddedProperty | null = null;
-  @Input() nzLg: string | number | EmbeddedProperty | null = null;
-  @Input() nzXl: string | number | EmbeddedProperty | null = null;
-  @Input() nzXXl: string | number | EmbeddedProperty | null = null;
+  @Input() flex: string | number | null = null;
+  @Input() span: string | number | null = null;
+  @Input() order: string | number | null = null;
+  @Input() offset: string | number | null = null;
+  @Input() push: string | number | null = null;
+  @Input() pull: string | number | null = null;
+  @Input() xs: string | number | EmbeddedProperty | null = null;
+  @Input() sm: string | number | EmbeddedProperty | null = null;
+  @Input() md: string | number | EmbeddedProperty | null = null;
+  @Input() lg: string | number | EmbeddedProperty | null = null;
+  @Input() xl: string | number | EmbeddedProperty | null = null;
+  @Input() xXl: string | number | EmbeddedProperty | null = null;
 
   setHostClassMap(): void {
     const hostClassMap = {
       ['ant-col']: true,
-      [`ant-col-${this.nzSpan}`]: isNotNil(this.nzSpan),
-      [`ant-col-order-${this.nzOrder}`]: isNotNil(this.nzOrder),
-      [`ant-col-offset-${this.nzOffset}`]: isNotNil(this.nzOffset),
-      [`ant-col-pull-${this.nzPull}`]: isNotNil(this.nzPull),
-      [`ant-col-push-${this.nzPush}`]: isNotNil(this.nzPush),
+      [`ant-col-${this.span}`]: isNotNil(this.span),
+      [`ant-col-order-${this.order}`]: isNotNil(this.order),
+      [`ant-col-offset-${this.offset}`]: isNotNil(this.offset),
+      [`ant-col-pull-${this.pull}`]: isNotNil(this.pull),
+      [`ant-col-push-${this.push}`]: isNotNil(this.push),
       ['ant-col-rtl']: this.dir === 'rtl',
       ...this.generateClass()
     };
@@ -84,7 +84,7 @@ export class NzColDirective implements OnInit, OnChanges, AfterViewInit {
   }
 
   setHostFlexStyle(): void {
-    this.hostFlexStyle = this.parseFlex(this.nzFlex);
+    this.hostFlexStyle = this.parseFlex(this.flex);
   }
 
   parseFlex(flex: number | string | null): string | null {
@@ -99,7 +99,7 @@ export class NzColDirective implements OnInit, OnChanges, AfterViewInit {
   }
 
   generateClass(): object {
-    const listOfSizeInputName: Array<keyof NzColDirective> = ['nzXs', 'nzSm', 'nzMd', 'nzLg', 'nzXl', 'nzXXl'];
+    const listOfSizeInputName: Array<keyof TriColDirective> = ['nzXs', 'nzSm', 'nzMd', 'nzLg', 'nzXl', 'nzXXl'];
     const listClassMap: NgClassInterface = {};
     listOfSizeInputName.forEach(name => {
       const sizeName = name.replace('nz', '').toLowerCase();
@@ -120,7 +120,7 @@ export class NzColDirective implements OnInit, OnChanges, AfterViewInit {
     return listClassMap;
   }
 
-  nzRowDirective = inject(NzRowDirective, { host: true, optional: true });
+  rowDirective = inject(TriRowDirective, { host: true, optional: true });
 
   ngOnInit(): void {
     this.dir = this.directionality.value;
@@ -142,8 +142,8 @@ export class NzColDirective implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (this.nzRowDirective) {
-      this.nzRowDirective.actualGutter$
+    if (this.rowDirective) {
+      this.rowDirective.actualGutter$
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(([horizontalGutter, verticalGutter]) => {
           const renderGutter = (name: string, gutter: number | null): void => {

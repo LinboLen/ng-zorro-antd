@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { TriBadgeModule } from 'ng-zorro-antd/badge';
 
 @Component({
-  selector: 'nz-demo-badge-size',
-  imports: [NzBadgeModule],
+  selector: '',
+  imports: [TriBadgeModule],
   template: `
-    <nz-badge nzSize="default" [nzCount]="5">
+    <tri-badge size="default" [count]="5">
       <a class="head-example"></a>
-    </nz-badge>
-    <nz-badge nzSize="small" [nzCount]="5">
+    </tri-badge>
+    <tri-badge size="small" [count]="5">
       <a class="head-example"></a>
-    </nz-badge>
+    </tri-badge>
   `,
   styles: [
     `
@@ -30,4 +30,4 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
     `
   ]
 })
-export class NzDemoBadgeSizeComponent {}
+export class TriDemoBadgeSizeComponent {}

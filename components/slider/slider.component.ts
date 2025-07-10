@@ -33,7 +33,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Observable, Subscription, fromEvent, merge } from 'rxjs';
 import { distinctUntilChanged, filter, map, takeUntil, tap } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import {
   MouseTouchObserverConfig,
   arraysEqual,
@@ -46,118 +46,118 @@ import {
   silentEvent
 } from 'ng-zorro-antd/core/util';
 
-import { NzSliderHandleComponent } from './handle.component';
-import { NzSliderMarksComponent } from './marks.component';
-import { NzSliderStepComponent } from './step.component';
-import { NzSliderTrackComponent } from './track.component';
-import { NzExtendedMark, NzMarks, NzSliderHandler, NzSliderShowTooltip, NzSliderValue } from './typings';
+import { TriSliderHandleComponent } from './handle.component';
+import { TriSliderMarksComponent } from './marks.component';
+import { TriSliderStepComponent } from './step.component';
+import { TriSliderTrackComponent } from './track.component';
+import { TriExtendedMark, TriMarks, TriSliderHandler, TriSliderShowTooltip, TriSliderValue } from './typings';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-slider',
-  exportAs: 'nzSlider',
+  selector: '',
+  exportAs: 'triSlider',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NzSliderComponent),
+      useExisting: forwardRef(() => TriSliderComponent),
       multi: true
     }
   ],
   template: `
-    <div class="ant-slider-rail"></div>
-    <nz-slider-track
-      [vertical]="nzVertical"
-      [included]="nzIncluded"
+    <div class="tri-slider-rail"></div>
+    <tri-slider-track
+      [vertical]="vertical"
+      [included]="included"
       [offset]="track.offset!"
       [length]="track.length!"
-      [reverse]="nzReverse"
+      [reverse]="reverse"
       [dir]="dir"
-    ></nz-slider-track>
+    ></tri-slider-track>
     @if (marksArray) {
-      <nz-slider-step
-        [vertical]="nzVertical"
-        [min]="nzMin"
-        [max]="nzMax"
+      <tri-slider-step
+        [vertical]="vertical"
+        [min]="min"
+        [max]="max"
         [lowerBound]="$any(bounds.lower)"
         [upperBound]="$any(bounds.upper)"
         [marksArray]="marksArray"
-        [included]="nzIncluded"
-        [reverse]="nzReverse"
-      ></nz-slider-step>
+        [included]="included"
+        [reverse]="reverse"
+      ></tri-slider-step>
     }
     @for (handle of handles; track handle.value; let handleIndex = $index) {
-      <nz-slider-handle
-        [vertical]="nzVertical"
-        [reverse]="nzReverse"
+      <tri-slider-handle
+        [vertical]="vertical"
+        [reverse]="reverse"
         [offset]="handle.offset!"
         [value]="handle.value!"
         [active]="handle.active"
-        [tooltipFormatter]="nzTipFormatter"
-        [tooltipVisible]="nzTooltipVisible"
-        [tooltipPlacement]="nzTooltipPlacement"
+        [tooltipFormatter]="tipFormatter"
+        [tooltipVisible]="tooltipVisible"
+        [tooltipPlacement]="tooltipPlacement"
         [dragging]="dragging()"
         [dir]="dir"
         (focusin)="onHandleFocusIn(handleIndex)"
-      ></nz-slider-handle>
+      ></tri-slider-handle>
     }
     @if (marksArray) {
-      <nz-slider-marks
-        [vertical]="nzVertical"
-        [min]="nzMin"
-        [max]="nzMax"
+      <tri-slider-marks
+        [vertical]="vertical"
+        [min]="min"
+        [max]="max"
         [lowerBound]="$any(bounds.lower)"
         [upperBound]="$any(bounds.upper)"
         [marksArray]="marksArray"
-        [included]="nzIncluded"
-        [reverse]="nzReverse"
-      ></nz-slider-marks>
+        [included]="included"
+        [reverse]="reverse"
+      ></tri-slider-marks>
     }
   `,
-  imports: [NzSliderTrackComponent, NzSliderStepComponent, NzSliderHandleComponent, NzSliderMarksComponent],
+  imports: [TriSliderTrackComponent, TriSliderStepComponent, TriSliderHandleComponent, TriSliderMarksComponent],
   host: {
-    class: 'ant-slider',
-    '[class.ant-slider-rtl]': `dir === 'rtl'`,
-    '[class.ant-slider-disabled]': 'nzDisabled',
-    '[class.ant-slider-vertical]': 'nzVertical',
-    '[class.ant-slider-with-marks]': 'marksArray',
+    class: 'tri-slider',
+    '[class.tri-slider-rtl]': `dir === 'rtl'`,
+    '[class.tri-slider-disabled]': 'disabled',
+    '[class.tri-slider-vertical]': 'vertical',
+    '[class.tri-slider-with-marks]': 'marksArray',
     '(keydown)': 'onKeyDown($event)'
   }
 })
-export class NzSliderComponent implements ControlValueAccessor, OnInit, OnChanges {
+export class TriSliderComponent implements ControlValueAccessor, OnInit, OnChanges {
   public slider = inject(ElementRef<HTMLElement>);
   private destroyRef = inject(DestroyRef);
   private cdr = inject(ChangeDetectorRef);
   private platform = inject(Platform);
   private directionality = inject(Directionality);
 
-  @ViewChildren(NzSliderHandleComponent) handlerComponents!: QueryList<NzSliderHandleComponent>;
+  @ViewChildren(TriSliderHandleComponent) handlerComponents!: QueryList<TriSliderHandleComponent>;
 
-  @Input({ transform: booleanAttribute }) nzDisabled = false;
-  @Input({ transform: booleanAttribute }) nzDots: boolean = false;
-  @Input({ transform: booleanAttribute }) nzIncluded: boolean = true;
-  @Input({ transform: booleanAttribute }) nzRange: boolean = false;
-  @Input({ transform: booleanAttribute }) nzVertical: boolean = false;
-  @Input({ transform: booleanAttribute }) nzReverse: boolean = false;
-  @Input() nzDefaultValue?: NzSliderValue;
-  @Input() nzMarks: NzMarks | null = null;
-  @Input({ transform: numberAttribute }) nzMax = 100;
-  @Input({ transform: numberAttribute }) nzMin = 0;
-  @Input({ transform: numberAttributeWithZeroFallback }) nzStep: number = 1;
-  @Input() nzTooltipVisible: NzSliderShowTooltip = 'default';
-  @Input() nzTooltipPlacement: string = 'top';
-  @Input() nzTipFormatter?: null | ((value: number) => string) | TemplateRef<void>;
+  @Input({ transform: booleanAttribute }) disabled = false;
+  @Input({ transform: booleanAttribute }) dots: boolean = false;
+  @Input({ transform: booleanAttribute }) included: boolean = true;
+  @Input({ transform: booleanAttribute }) range: boolean = false;
+  @Input({ transform: booleanAttribute }) vertical: boolean = false;
+  @Input({ transform: booleanAttribute }) reverse: boolean = false;
+  @Input() defaultValue?: TriSliderValue;
+  @Input() marks: TriMarks | null = null;
+  @Input({ transform: numberAttribute }) max = 100;
+  @Input({ transform: numberAttribute }) min = 0;
+  @Input({ transform: numberAttributeWithZeroFallback }) step: number = 1;
+  @Input() tooltipVisible: TriSliderShowTooltip = 'default';
+  @Input() tooltipPlacement: string = 'top';
+  @Input() tipFormatter?: null | ((value: number) => string) | TemplateRef<void>;
 
-  @Output() readonly nzOnAfterChange = new EventEmitter<NzSliderValue>();
+  @Output() readonly onAfterChange = new EventEmitter<TriSliderValue>();
 
-  value: NzSliderValue | null = null;
+  value: TriSliderValue | null = null;
   cacheSliderStart: number | null = null;
   cacheSliderLength: number | null = null;
   activeValueIndex: number | undefined = undefined; // Current activated handle's index ONLY for range=true
   track: { offset: null | number; length: null | number } = { offset: null, length: null }; // Track's offset and length
-  handles: NzSliderHandler[] = []; // Handles' offset
-  marksArray: NzExtendedMark[] | null = null; // "steps" in array type with more data & FILTER out the invalid mark
-  bounds: { lower: NzSliderValue | null; upper: NzSliderValue | null } = { lower: null, upper: null }; // now for nz-slider-step
+  handles: TriSliderHandler[] = []; // Handles' offset
+  marksArray: TriExtendedMark[] | null = null; // "steps" in array type with more data & FILTER out the invalid mark
+  bounds: { lower: TriSliderValue | null; upper: TriSliderValue | null } = { lower: null, upper: null }; // now for nz-slider-step
   dir: Direction = 'ltr';
 
   readonly dragging = signal(false);
@@ -178,10 +178,10 @@ export class NzSliderComponent implements ControlValueAccessor, OnInit, OnChange
       this.onValueChange(this.getValue(true));
     });
 
-    this.handles = generateHandlers(this.nzRange ? 2 : 1);
-    this.marksArray = this.nzMarks ? this.generateMarkItems(this.nzMarks) : null;
+    this.handles = generateHandlers(this.range ? 2 : 1);
+    this.marksArray = this.marks ? this.generateMarkItems(this.marks) : null;
     this.bindDraggingHandlers();
-    this.toggleDragDisabled(this.nzDisabled);
+    this.toggleDragDisabled(this.disabled);
 
     if (this.getValue() === null) {
       this.setValue(this.formatValue(null));
@@ -194,22 +194,22 @@ export class NzSliderComponent implements ControlValueAccessor, OnInit, OnChange
     if (nzDisabled && !nzDisabled.firstChange) {
       this.toggleDragDisabled(nzDisabled.currentValue);
     } else if (nzMarks && !nzMarks.firstChange) {
-      this.marksArray = this.nzMarks ? this.generateMarkItems(this.nzMarks) : null;
+      this.marksArray = this.marks ? this.generateMarkItems(this.marks) : null;
     } else if (nzRange && !nzRange.firstChange) {
       this.handles = generateHandlers(nzRange.currentValue ? 2 : 1);
       this.setValue(this.formatValue(null));
     }
   }
 
-  writeValue(val: NzSliderValue | null): void {
+  writeValue(val: TriSliderValue | null): void {
     this.setValue(val, true);
   }
 
-  onValueChange(_value: NzSliderValue): void {}
+  onValueChange(_value: TriSliderValue): void {}
 
   onTouched(): void {}
 
-  registerOnChange(fn: (value: NzSliderValue) => void): void {
+  registerOnChange(fn: (value: TriSliderValue) => void): void {
     this.onValueChange = fn;
   }
 
@@ -218,9 +218,9 @@ export class NzSliderComponent implements ControlValueAccessor, OnInit, OnChange
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.nzDisabled = (this.isNzDisableFirstChange && this.nzDisabled) || isDisabled;
+    this.disabled = (this.isNzDisableFirstChange && this.disabled) || isDisabled;
     this.isNzDisableFirstChange = false;
-    this.toggleDragDisabled(this.nzDisabled);
+    this.toggleDragDisabled(this.disabled);
     this.cdr.markForCheck();
   }
 
@@ -228,7 +228,7 @@ export class NzSliderComponent implements ControlValueAccessor, OnInit, OnChange
    * Event handler is only triggered when a slider handler is focused.
    */
   onKeyDown(e: KeyboardEvent): void {
-    if (this.nzDisabled) {
+    if (this.disabled) {
       return;
     }
 
@@ -242,19 +242,19 @@ export class NzSliderComponent implements ControlValueAccessor, OnInit, OnChange
 
     e.preventDefault();
 
-    const step = (isDecrease ? -this.nzStep : this.nzStep) * (this.nzReverse ? -1 : 1) * (this.dir === 'rtl' ? -1 : 1);
-    const newVal = this.nzRange
+    const step = (isDecrease ? -this.step : this.step) * (this.reverse ? -1 : 1) * (this.dir === 'rtl' ? -1 : 1);
+    const newVal = this.range
       ? (this.value as number[])[this.activeValueIndex!] + step
       : (this.value as number) + step;
-    this.setActiveValue(ensureNumberInRange(newVal, this.nzMin, this.nzMax));
-    this.nzOnAfterChange.emit(this.getValue(true));
+    this.setActiveValue(ensureNumberInRange(newVal, this.min, this.max));
+    this.onAfterChange.emit(this.getValue(true));
   }
 
   onHandleFocusIn(index: number): void {
     this.activeValueIndex = index;
   }
 
-  private setValue(value: NzSliderValue | null, isWriteValue: boolean = false): void {
+  private setValue(value: TriSliderValue | null, isWriteValue: boolean = false): void {
     if (isWriteValue) {
       this.value = this.formatValue(value);
       this.updateTrackAndHandles();
@@ -265,7 +265,7 @@ export class NzSliderComponent implements ControlValueAccessor, OnInit, OnChange
     }
   }
 
-  private getValue(cloneAndSort: boolean = false): NzSliderValue {
+  private getValue(cloneAndSort: boolean = false): TriSliderValue {
     if (cloneAndSort && this.value && isValueRange(this.value)) {
       return [...this.value].sort((a, b) => a - b);
     }
@@ -275,7 +275,7 @@ export class NzSliderComponent implements ControlValueAccessor, OnInit, OnChange
   /**
    * Clone & sort current value and convert them to offsets, then return the new one.
    */
-  private getValueToOffset(value?: NzSliderValue): NzSliderValue {
+  private getValueToOffset(value?: TriSliderValue): TriSliderValue {
     let normalizedValue = value;
 
     if (typeof normalizedValue === 'undefined') {
@@ -349,7 +349,7 @@ export class NzSliderComponent implements ControlValueAccessor, OnInit, OnChange
     this.cacheSliderProperty();
     this.setActiveValueIndex(this.getLogicalValue(value));
     this.setActiveValue(this.getLogicalValue(value));
-    this.showHandleTooltip(this.nzRange ? this.activeValueIndex : 0);
+    this.showHandleTooltip(this.range ? this.activeValueIndex : 0);
   }
 
   private onDragMove(value: number): void {
@@ -358,21 +358,21 @@ export class NzSliderComponent implements ControlValueAccessor, OnInit, OnChange
   }
 
   private getLogicalValue(value: number): number {
-    if (this.nzReverse) {
-      if (!this.nzVertical && this.dir === 'rtl') {
+    if (this.reverse) {
+      if (!this.vertical && this.dir === 'rtl') {
         return value;
       }
-      return this.nzMax - value + this.nzMin;
+      return this.max - value + this.min;
     }
-    if (!this.nzVertical && this.dir === 'rtl') {
-      return this.nzMax - value + this.nzMin;
+    if (!this.vertical && this.dir === 'rtl') {
+      return this.max - value + this.min;
     }
 
     return value;
   }
 
   private onDragEnd(): void {
-    this.nzOnAfterChange.emit(this.getValue(true));
+    this.onAfterChange.emit(this.getValue(true));
     this.toggleDragMoving(false);
     this.cacheSliderProperty(true);
     this.hideAllHandleTooltip();
@@ -387,9 +387,9 @@ export class NzSliderComponent implements ControlValueAccessor, OnInit, OnChange
       return;
     }
     const pluckFunc: (keys: string[]) => (event: Event) => number = keys => (event: Event) =>
-      keys.reduce((acc: NzSafeAny, key: string) => acc[key] || acc, event);
+      keys.reduce((acc: TriSafeAny, key: string) => acc[key] || acc, event);
     const sliderDOM: HTMLElement = this.slider.nativeElement;
-    const orientField = this.nzVertical ? 'pageY' : 'pageX';
+    const orientField = this.vertical ? 'pageY' : 'pageX';
     const mouse: MouseTouchObserverConfig = {
       start: 'mousedown',
       move: 'mousemove',
@@ -486,27 +486,27 @@ export class NzSliderComponent implements ControlValueAccessor, OnInit, OnChange
     const sliderStart = this.getSliderStartPosition();
     const sliderLength = this.getSliderLength();
     const ratio = ensureNumberInRange((position - sliderStart) / sliderLength, 0, 1);
-    const val = (this.nzMax - this.nzMin) * (this.nzVertical ? 1 - ratio : ratio) + this.nzMin;
+    const val = (this.max - this.min) * (this.vertical ? 1 - ratio : ratio) + this.min;
     const points =
-      this.nzMarks === null
+      this.marks === null
         ? []
-        : Object.keys(this.nzMarks)
+        : Object.keys(this.marks)
             .map(parseFloat)
             .sort((a, b) => a - b);
 
-    if (this.nzStep !== 0 && !this.nzDots) {
-      const closestOne = Math.round(val / this.nzStep) * this.nzStep;
+    if (this.step !== 0 && !this.dots) {
+      const closestOne = Math.round(val / this.step) * this.step;
       points.push(closestOne);
     }
 
     const gaps = points.map(point => Math.abs(val - point));
     const closest = points[gaps.indexOf(Math.min(...gaps))];
 
-    return this.nzStep === 0 ? closest : parseFloat(closest.toFixed(getPrecision(this.nzStep)));
+    return this.step === 0 ? closest : parseFloat(closest.toFixed(getPrecision(this.step)));
   }
 
   private valueToOffset(value: number): number {
-    return getPercent(this.nzMin, this.nzMax, value);
+    return getPercent(this.min, this.max, value);
   }
 
   private getSliderStartPosition(): number {
@@ -514,7 +514,7 @@ export class NzSliderComponent implements ControlValueAccessor, OnInit, OnChange
       return this.cacheSliderStart;
     }
     const offset = getElementOffset(this.slider.nativeElement);
-    return this.nzVertical ? offset.top : offset.left;
+    return this.vertical ? offset.top : offset.left;
   }
 
   private getSliderLength(): number {
@@ -522,7 +522,7 @@ export class NzSliderComponent implements ControlValueAccessor, OnInit, OnChange
       return this.cacheSliderLength;
     }
     const sliderDOM = this.slider.nativeElement;
-    return this.nzVertical ? sliderDOM.clientHeight : sliderDOM.clientWidth;
+    return this.vertical ? sliderDOM.clientHeight : sliderDOM.clientWidth;
   }
 
   /**
@@ -533,15 +533,15 @@ export class NzSliderComponent implements ControlValueAccessor, OnInit, OnChange
     this.cacheSliderLength = remove ? null : this.getSliderLength();
   }
 
-  private formatValue(value: NzSliderValue | null): NzSliderValue {
+  private formatValue(value: TriSliderValue | null): TriSliderValue {
     if (isNil(value)) {
-      return this.nzRange ? [this.nzMin, this.nzMax] : this.nzMin;
-    } else if (assertValueValid(value, this.nzRange)) {
+      return this.range ? [this.min, this.max] : this.min;
+    } else if (assertValueValid(value, this.range)) {
       return isValueRange(value)
-        ? value.map(val => ensureNumberInRange(val, this.nzMin, this.nzMax))
-        : ensureNumberInRange(value, this.nzMin, this.nzMax);
+        ? value.map(val => ensureNumberInRange(val, this.min, this.max))
+        : ensureNumberInRange(value, this.min, this.max);
     } else {
-      return this.nzDefaultValue ? this.nzDefaultValue : this.nzRange ? [this.nzMin, this.nzMax] : this.nzMin;
+      return this.defaultValue ? this.defaultValue : this.range ? [this.min, this.max] : this.min;
     }
   }
 
@@ -556,13 +556,13 @@ export class NzSliderComponent implements ControlValueAccessor, OnInit, OnChange
     this.handles.forEach(handle => (handle.active = false));
   }
 
-  private generateMarkItems(marks: NzMarks): NzExtendedMark[] | null {
-    const marksArray: NzExtendedMark[] = [];
+  private generateMarkItems(marks: TriMarks): TriExtendedMark[] | null {
+    const marksArray: TriExtendedMark[] = [];
     for (const key in marks) {
       if (marks.hasOwnProperty(key)) {
         const mark = marks[key];
         const val = typeof key === 'number' ? key : parseFloat(key);
-        if (val >= this.nzMin && val <= this.nzMax) {
+        if (val >= this.min && val <= this.max) {
           marksArray.push({ value: val, offset: this.valueToOffset(val), config: mark });
         }
       }
@@ -577,7 +577,7 @@ function getValueTypeNotMatchError(): Error {
   );
 }
 
-function isValueRange(value: NzSliderValue): value is number[] {
+function isValueRange(value: TriSliderValue): value is number[] {
   if (value instanceof Array) {
     return value.length === 2;
   } else {
@@ -585,7 +585,7 @@ function isValueRange(value: NzSliderValue): value is number[] {
   }
 }
 
-function generateHandlers(amount: number): NzSliderHandler[] {
+function generateHandlers(amount: number): TriSliderHandler[] {
   return Array(amount)
     .fill(0)
     .map(() => ({ offset: null, value: null, active: false }));
@@ -594,7 +594,7 @@ function generateHandlers(amount: number): NzSliderHandler[] {
 /**
  * Check if value is valid and throw error if value-type/range not match.
  */
-function assertValueValid(value: NzSliderValue, isRange?: boolean): boolean {
+function assertValueValid(value: TriSliderValue, isRange?: boolean): boolean {
   if ((!isValueRange(value) && isNaN(value)) || (isValueRange(value) && value.some(v => isNaN(v)))) {
     return false;
   }
@@ -604,14 +604,14 @@ function assertValueValid(value: NzSliderValue, isRange?: boolean): boolean {
 /**
  * Assert that if `this.nzRange` is `true`, value is also a range, vice versa.
  */
-function assertValueTypeMatch(value: NzSliderValue, isRange: boolean = false): boolean {
+function assertValueTypeMatch(value: TriSliderValue, isRange: boolean = false): boolean {
   if (isValueRange(value) !== isRange) {
     throw getValueTypeNotMatchError();
   }
   return true;
 }
 
-function valuesEqual(valA: NzSliderValue, valB: NzSliderValue): boolean {
+function valuesEqual(valA: TriSliderValue, valB: TriSliderValue): boolean {
   if (typeof valA !== typeof valB) {
     return false;
   }

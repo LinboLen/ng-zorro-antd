@@ -1,55 +1,55 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzButtonModule, NzButtonSize } from 'ng-zorro-antd/button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { TriButtonModule, TriButtonSize } from 'ng-zorro-antd/button';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: 'nz-demo-button-size',
-  imports: [FormsModule, NzButtonModule, NzIconModule, NzRadioModule, NzSpaceModule],
+  selector: '',
+  imports: [FormsModule, TriButtonModule, TriIconModule, TriRadioModule, TriSpaceModule],
   template: `
-    <nz-radio-group [(ngModel)]="size">
-      <label nz-radio-button nzValue="large">Large</label>
-      <label nz-radio-button nzValue="default">Default</label>
-      <label nz-radio-button nzValue="small">Small</label>
-    </nz-radio-group>
+    <tri-radio-group [(ngModel)]="size">
+      <label tri-radio-button value="large">Large</label>
+      <label tri-radio-button value="default">Default</label>
+      <label tri-radio-button value="small">Small</label>
+    </tri-radio-group>
     <br />
     <br />
-    <button nz-button [nzSize]="size" nzType="primary">Primary</button>
-    <button nz-button [nzSize]="size" nzType="default">Default</button>
-    <button nz-button [nzSize]="size" nzType="dashed">Dashed</button>
-    <a nz-button [nzSize]="size" nzType="link">Link</a>
+    <button tri-button [size]="size" type="primary">Primary</button>
+    <button tri-button [size]="size" type="default">Default</button>
+    <button tri-button [size]="size" type="dashed">Dashed</button>
+    <a tri-button [size]="size" type="link">Link</a>
     <br />
-    <button nz-button nzType="primary" [nzSize]="size">
-      <nz-icon nzType="download" />
+    <button tri-button type="primary" [size]="size">
+      <tri-icon type="download" />
     </button>
-    <button nz-button nzType="primary" [nzSize]="size" nzShape="circle">
-      <nz-icon nzType="download" />
+    <button tri-button type="primary" [size]="size" shape="circle">
+      <tri-icon type="download" />
     </button>
-    <button nz-button nzType="primary" [nzSize]="size" nzShape="round">
-      <nz-icon nzType="download" />
+    <button tri-button type="primary" [size]="size" shape="round">
+      <tri-icon type="download" />
     </button>
-    <button nz-button nzType="primary" [nzSize]="size" nzShape="round">
-      <nz-icon nzType="download" />
+    <button tri-button type="primary" [size]="size" shape="round">
+      <tri-icon type="download" />
       Download
     </button>
-    <button nz-button nzType="primary" [nzSize]="size">
-      <nz-icon nzType="download" />
+    <button tri-button type="primary" [size]="size">
+      <tri-icon type="download" />
       Download
     </button>
     <br />
-    <nz-space-compact [nzSize]="size">
-      <button nz-button nzType="primary">
-        <nz-icon nzType="left" />
+    <tri-space-compact [size]="size">
+      <button tri-button type="primary">
+        <tri-icon type="left" />
         Backward
       </button>
-      <button nz-button nzType="primary">
+      <button tri-button type="primary">
         Forward
-        <nz-icon nzType="right" />
+        <tri-icon type="right" />
       </button>
-    </nz-space-compact>
+    </tri-space-compact>
   `,
   styles: [
     `
@@ -60,6 +60,6 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
     `
   ]
 })
-export class NzDemoButtonSizeComponent {
-  size: NzButtonSize = 'large';
+export class TriDemoButtonSizeComponent {
+  size: TriButtonSize = 'large';
 }

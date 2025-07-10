@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzResultModule } from 'ng-zorro-antd/result';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriResultModule } from 'ng-zorro-antd/result';
 
 @Component({
-  selector: 'nz-demo-result-foo',
-  imports: [NzButtonModule, NzResultModule],
+  selector: '',
+  imports: [TriButtonModule, TriResultModule],
   template: `
-    <nz-result nzStatus="500" nzTitle="500" nzSubTitle="Sorry, there is an error on server.">
-      <div nz-result-extra>
-        <button nz-button nzType="primary">Back Home</button>
+    <tri-result status="500" title="500" subTitle="Sorry, there is an error on server.">
+      <div tri-result-extra>
+        <button tri-button type="primary">Back Home</button>
       </div>
-    </nz-result>
+    </tri-result>
   `
 })
-export class NzDemoResultFooComponent {}
+export class TriDemoResultFooComponent {}

@@ -8,48 +8,48 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable, ReplaySubject, combineLatest, merge } from 'rxjs';
 import { map, mergeMap, startWith, switchMap } from 'rxjs/operators';
 
-import { NzCellFixedDirective } from '../cell/cell-fixed.directive';
-import { NzThMeasureDirective } from '../cell/th-measure.directive';
-import { NzTableStyleService } from '../table-style.service';
+import { TriCellFixedDirective } from '../cell/cell-fixed.directive';
+import { TriThMeasureDirective } from '../cell/th-measure.directive';
+import { TriTableStyleService } from '../table-style.service';
 
 @Directive({
-  selector: 'tr:not([nz-table-measure-row]):not([nzExpand]):not([nz-table-fixed-row])',
+  selector: '',
   host: {
-    '[class.ant-table-row]': 'isInsideTable'
+    '[class.tri-table-row]': 'isInsideTable'
   }
 })
-export class NzTrDirective implements AfterContentInit {
+export class TriTrDirective implements AfterContentInit {
   private destroyRef = inject(DestroyRef);
 
-  @ContentChildren(NzThMeasureDirective) listOfNzThDirective!: QueryList<NzThMeasureDirective>;
-  @ContentChildren(NzCellFixedDirective) listOfCellFixedDirective!: QueryList<NzCellFixedDirective>;
+  @ContentChildren(TriThMeasureDirective) listOfNzThDirective!: QueryList<TriThMeasureDirective>;
+  @ContentChildren(TriCellFixedDirective) listOfCellFixedDirective!: QueryList<TriCellFixedDirective>;
 
-  private listOfFixedColumns$ = new ReplaySubject<NzCellFixedDirective[]>(1);
-  private listOfColumns$ = new ReplaySubject<NzThMeasureDirective[]>(1);
-  listOfFixedColumnsChanges$: Observable<NzCellFixedDirective[]> = this.listOfFixedColumns$.pipe(
+  private listOfFixedColumns$ = new ReplaySubject<TriCellFixedDirective[]>(1);
+  private listOfColumns$ = new ReplaySubject<TriThMeasureDirective[]>(1);
+  listOfFixedColumnsChanges$: Observable<TriCellFixedDirective[]> = this.listOfFixedColumns$.pipe(
     switchMap(list =>
       merge(this.listOfFixedColumns$, ...list.map(c => c.changes$)).pipe(mergeMap(() => this.listOfFixedColumns$))
     ),
     takeUntilDestroyed(this.destroyRef)
   );
   listOfFixedLeftColumnChanges$ = this.listOfFixedColumnsChanges$.pipe(
-    map(list => list.filter(item => item.nzLeft !== false))
+    map(list => list.filter(item => item.left !== false))
   );
   listOfFixedRightColumnChanges$ = this.listOfFixedColumnsChanges$.pipe(
-    map(list => list.filter(item => item.nzRight !== false))
+    map(list => list.filter(item => item.right !== false))
   );
-  listOfColumnsChanges$: Observable<NzThMeasureDirective[]> = this.listOfColumns$.pipe(
+  listOfColumnsChanges$: Observable<TriThMeasureDirective[]> = this.listOfColumns$.pipe(
     switchMap(list =>
       merge(this.listOfColumns$, ...list.map(c => c.changes$)).pipe(mergeMap(() => this.listOfColumns$))
     ),
     takeUntilDestroyed(this.destroyRef)
   );
 
-  private nzTableStyleService = inject(NzTableStyleService, { optional: true });
-  isInsideTable = !!this.nzTableStyleService;
+  private tableStyleService = inject(TriTableStyleService, { optional: true });
+  isInsideTable = !!this.tableStyleService;
 
   ngAfterContentInit(): void {
-    if (this.nzTableStyleService) {
+    if (this.tableStyleService) {
       this.listOfCellFixedDirective.changes
         .pipe(startWith(this.listOfCellFixedDirective), takeUntilDestroyed(this.destroyRef))
         .subscribe(this.listOfFixedColumns$);
@@ -64,7 +64,7 @@ export class NzTrDirective implements AfterContentInit {
         listOfFixedRight.forEach(cell => cell.setIsFirstRight(cell === listOfFixedRight[0]));
       });
       /** calculate fixed nzLeft and nzRight **/
-      combineLatest([this.nzTableStyleService.listOfListOfThWidth$, this.listOfFixedLeftColumnChanges$])
+      combineLatest([this.tableStyleService.listOfListOfThWidth$, this.listOfFixedLeftColumnChanges$])
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(([listOfAutoWidth, listOfLeftCell]) => {
           listOfLeftCell.forEach((cell, index) => {
@@ -76,7 +76,7 @@ export class NzTrDirective implements AfterContentInit {
             }
           });
         });
-      combineLatest([this.nzTableStyleService.listOfListOfThWidth$, this.listOfFixedRightColumnChanges$])
+      combineLatest([this.tableStyleService.listOfListOfThWidth$, this.listOfFixedRightColumnChanges$])
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(([listOfAutoWidth, listOfRightCell]) => {
           listOfRightCell.forEach((_, index) => {

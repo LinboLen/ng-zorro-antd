@@ -1,36 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzTransferModule, TransferItem } from 'ng-zorro-antd/transfer';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriMessageService } from 'ng-zorro-antd/message';
+import { TriTransferModule, TransferItem } from 'ng-zorro-antd/transfer';
 
 @Component({
-  selector: 'nz-demo-transfer-advanced',
-  imports: [NzButtonModule, NzTransferModule],
+  selector: '',
+  imports: [TriButtonModule, TriTransferModule],
   template: `
-    <nz-transfer
-      [nzDataSource]="list"
-      nzShowSearch
-      [nzOperations]="['to right', 'to left']"
-      [nzListStyle]="{ 'width.px': 250, 'height.px': 300 }"
-      [nzRender]="render"
-      [nzFooter]="footer"
-      (nzSelectChange)="select($event)"
-      (nzChange)="change($event)"
+    <tri-transfer
+      [dataSource]="list"
+      showSearch
+      [operations]="['to right', 'to left']"
+      [listStyle]="{ 'width.px': 250, 'height.px': 300 }"
+      [render]="render"
+      [footer]="footer"
+      (selectChange)="select($event)"
+      (change)="change($event)"
     >
       <ng-template #render let-item>{{ item.title }}-{{ item.description }}</ng-template>
       <ng-template #footer let-direction>
-        <button nz-button (click)="reload(direction)" nzSize="small" style="float: right; margin: 5px;">
+        <button tri-button (click)="reload(direction)" size="small" style="float: right; margin: 5px;">
           reload
         </button>
       </ng-template>
-    </nz-transfer>
+    </tri-transfer>
   `
 })
-export class NzDemoTransferAdvancedComponent implements OnInit {
+export class TriDemoTransferAdvancedComponent implements OnInit {
   list: TransferItem[] = [];
 
-  constructor(private messageService: NzMessageService) {}
+  constructor(private messageService: TriMessageService) {}
 
   ngOnInit(): void {
     this.getData();

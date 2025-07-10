@@ -28,48 +28,48 @@ import {
 import { Subject } from 'rxjs';
 import { takeUntil, throttleTime } from 'rxjs/operators';
 
-import { NzAffixModule } from 'ng-zorro-antd/affix';
-import { NzConfigKey, NzConfigService, WithConfig } from 'ng-zorro-antd/core/config';
-import { NzScrollService } from 'ng-zorro-antd/core/services';
-import { NgStyleInterface, NzDirectionVHType } from 'ng-zorro-antd/core/types';
+import { TriAffixModule } from 'ng-zorro-antd/affix';
+import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriScrollService } from 'ng-zorro-antd/core/services';
+import { NgStyleInterface, TriDirectionVHType } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular, numberAttributeWithZeroFallback } from 'ng-zorro-antd/core/util';
 
-import { NzAnchorLinkComponent } from './anchor-link.component';
+import { TriAnchorLinkComponent } from './anchor-link.component';
 import { getOffsetTop } from './util';
 
 interface Section {
-  comp: NzAnchorLinkComponent;
+  comp: TriAnchorLinkComponent;
   top: number;
 }
 
 const VISIBLE_CLASSNAME = 'ant-anchor-ink-ball-visible';
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'anchor';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'anchor';
 const sharpMatcherRegx = /#([^#]+)$/;
 
 const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: true });
 
 @Component({
-  selector: 'nz-anchor',
-  exportAs: 'nzAnchor',
-  imports: [NgTemplateOutlet, NzAffixModule],
+  selector: '',
+  exportAs: 'triAnchor',
+  imports: [NgTemplateOutlet, TriAffixModule],
   template: `
-    @if (nzAffix) {
-      <nz-affix [nzOffsetTop]="nzOffsetTop" [nzTarget]="container">
+    @if (affix) {
+      <tri-affix [offsetTop]="offsetTop" [target]="container">
         <ng-template [ngTemplateOutlet]="content"></ng-template>
-      </nz-affix>
+      </tri-affix>
     } @else {
       <ng-template [ngTemplateOutlet]="content"></ng-template>
     }
 
     <ng-template #content>
       <div
-        class="ant-anchor-wrapper"
-        [class]="{ 'ant-anchor-wrapper-horizontal': nzDirection === 'horizontal' }"
+        class="tri-anchor-wrapper"
+        [class]="{ 'ant-anchor-wrapper-horizontal': direction === 'horizontal' }"
         [style]="wrapperStyle"
       >
-        <div class="ant-anchor" [class]="{ 'ant-anchor-fixed': !nzAffix && !nzShowInkInFixed }">
-          <div class="ant-anchor-ink">
-            <div class="ant-anchor-ink-ball" #ink></div>
+        <div class="tri-anchor" [class]="{ 'ant-anchor-fixed': !affix && !showInkInFixed }">
+          <div class="tri-anchor-ink">
+            <div class="tri-anchor-ink-ball" #ink></div>
           </div>
           <ng-content></ng-content>
         </div>
@@ -79,52 +79,52 @@ const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: t
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NzAnchorComponent implements AfterViewInit, OnChanges {
-  public nzConfigService = inject(NzConfigService);
-  private scrollSrv = inject(NzScrollService);
+export class TriAnchorComponent implements AfterViewInit, OnChanges {
+  public configService = inject(TriConfigService);
+  private scrollSrv = inject(TriScrollService);
   private cdr = inject(ChangeDetectorRef);
   private platform = inject(Platform);
   private renderer = inject(Renderer2);
   private doc: Document = inject(DOCUMENT);
   private destroyRef = inject(DestroyRef);
 
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
 
   @ViewChild('ink', { static: false }) private ink!: ElementRef;
 
-  @Input({ transform: booleanAttribute }) nzAffix = true;
+  @Input({ transform: booleanAttribute }) affix = true;
 
   @Input({ transform: booleanAttribute })
   @WithConfig()
-  nzShowInkInFixed: boolean = false;
+  showInkInFixed: boolean = false;
 
   @Input({ transform: numberAttribute })
   @WithConfig()
-  nzBounds: number = 5;
+  bounds: number = 5;
 
   @Input({ transform: numberAttributeWithZeroFallback })
   @WithConfig()
-  nzOffsetTop?: number = undefined;
+  offsetTop?: number = undefined;
 
   @Input({ transform: numberAttributeWithZeroFallback })
   @WithConfig()
-  nzTargetOffset?: number = undefined;
+  targetOffset?: number = undefined;
 
-  @Input() nzContainer?: string | HTMLElement;
-  @Input() nzCurrentAnchor?: string;
-  @Input() nzDirection: NzDirectionVHType = 'vertical';
+  @Input() container?: string | HTMLElement;
+  @Input() currentAnchor?: string;
+  @Input() direction: TriDirectionVHType = 'vertical';
 
-  @Output() readonly nzClick = new EventEmitter<string>();
-  @Output() readonly nzChange = new EventEmitter<string>();
-  @Output() readonly nzScroll = new EventEmitter<NzAnchorLinkComponent>();
+  @Output() readonly click = new EventEmitter<string>();
+  @Output() readonly change = new EventEmitter<string>();
+  @Output() readonly scroll = new EventEmitter<TriAnchorLinkComponent>();
 
   visible = false;
   wrapperStyle: NgStyleInterface = { 'max-height': '100vh' };
 
-  container?: HTMLElement | Window;
+  _container?: HTMLElement | Window;
   activeLink?: string;
 
-  private links: NzAnchorLinkComponent[] = [];
+  private links: TriAnchorLinkComponent[] = [];
   private animating = false;
   private destroy$ = new Subject<boolean>();
   private handleScrollTimeoutID?: ReturnType<typeof setTimeout>;
@@ -137,16 +137,16 @@ export class NzAnchorComponent implements AfterViewInit, OnChanges {
     });
   }
 
-  registerLink(link: NzAnchorLinkComponent): void {
+  registerLink(link: TriAnchorLinkComponent): void {
     this.links.push(link);
   }
 
-  unregisterLink(link: NzAnchorLinkComponent): void {
+  unregisterLink(link: TriAnchorLinkComponent): void {
     this.links.splice(this.links.indexOf(link), 1);
   }
 
   private getContainer(): HTMLElement | Window {
-    return this.container || window;
+    return this._container || window;
   }
 
   ngAfterViewInit(): void {
@@ -172,10 +172,10 @@ export class NzAnchorComponent implements AfterViewInit, OnChanges {
     }
 
     const sections: Section[] = [];
-    const offsetTop = this.nzTargetOffset ? this.nzTargetOffset : this.nzOffsetTop || 0;
-    const scope = offsetTop + this.nzBounds;
+    const offsetTop = this.targetOffset ? this.targetOffset : this.offsetTop || 0;
+    const scope = offsetTop + this.bounds;
     this.links.forEach(comp => {
-      const sharpLinkMatch = sharpMatcherRegx.exec(comp.nzHref.toString());
+      const sharpLinkMatch = sharpMatcherRegx.exec(comp.href.toString());
       if (!sharpLinkMatch) {
         return;
       }
@@ -208,30 +208,30 @@ export class NzAnchorComponent implements AfterViewInit, OnChanges {
     });
   }
 
-  private setActive(comp?: NzAnchorLinkComponent): void {
+  private setActive(comp?: TriAnchorLinkComponent): void {
     const originalActiveLink = this.activeLink;
-    const targetComp = (this.nzCurrentAnchor && this.links.find(n => n.nzHref === this.nzCurrentAnchor)) || comp;
+    const targetComp = (this.currentAnchor && this.links.find(n => n.href === this.currentAnchor)) || comp;
     if (!targetComp) return;
 
     targetComp.setActive();
     const linkNode = targetComp.getLinkTitleElement();
-    if (this.nzDirection === 'vertical') {
+    if (this.direction === 'vertical') {
       this.ink.nativeElement.style.top = `${linkNode.offsetTop + linkNode.clientHeight / 2 - 4.5}px`;
     } else {
       this.ink.nativeElement.style.left = `${linkNode.offsetLeft + linkNode.clientWidth / 2}px`;
     }
-    this.activeLink = (comp || targetComp).nzHref;
+    this.activeLink = (comp || targetComp).href;
     if (originalActiveLink !== this.activeLink) {
-      this.nzChange.emit(this.activeLink);
+      this.change.emit(this.activeLink);
     }
   }
 
-  private handleActive(comp: NzAnchorLinkComponent): void {
+  private handleActive(comp: TriAnchorLinkComponent): void {
     this.clearActive();
     this.setActive(comp);
     this.visible = true;
     this.setVisible();
-    this.nzScroll.emit(comp);
+    this.scroll.emit(comp);
   }
 
   private setVisible(): void {
@@ -245,8 +245,8 @@ export class NzAnchorComponent implements AfterViewInit, OnChanges {
     }
   }
 
-  handleScrollTo(linkComp: NzAnchorLinkComponent): void {
-    const el = this.doc.querySelector<HTMLElement>(linkComp.nzHref);
+  handleScrollTo(linkComp: TriAnchorLinkComponent): void {
+    const el = this.doc.querySelector<HTMLElement>(linkComp.href);
     if (!el) {
       return;
     }
@@ -255,26 +255,26 @@ export class NzAnchorComponent implements AfterViewInit, OnChanges {
     const containerScrollTop = this.scrollSrv.getScroll(this.getContainer());
     const elOffsetTop = getOffsetTop(el, this.getContainer());
     let targetScrollTop = containerScrollTop + elOffsetTop;
-    targetScrollTop -= this.nzTargetOffset !== undefined ? this.nzTargetOffset : this.nzOffsetTop || 0;
+    targetScrollTop -= this.targetOffset !== undefined ? this.targetOffset : this.offsetTop || 0;
     this.scrollSrv.scrollTo(this.getContainer(), targetScrollTop, {
       callback: () => {
         this.animating = false;
         this.handleActive(linkComp);
       }
     });
-    this.nzClick.emit(linkComp.nzHref);
+    this.click.emit(linkComp.href);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     const { nzOffsetTop, nzContainer, nzCurrentAnchor } = changes;
     if (nzOffsetTop) {
       this.wrapperStyle = {
-        'max-height': `calc(100vh - ${this.nzOffsetTop}px)`
+        'max-height': `calc(100vh - ${this.offsetTop}px)`
       };
     }
     if (nzContainer) {
-      const container = this.nzContainer;
-      this.container = typeof container === 'string' ? this.doc.querySelector<HTMLElement>(container)! : container;
+      const container = this.container;
+      this._container = typeof container === 'string' ? this.doc.querySelector<HTMLElement>(container)! : container;
       this.registerScrollEvent();
     }
     if (nzCurrentAnchor) {

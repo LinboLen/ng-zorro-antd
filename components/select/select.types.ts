@@ -5,37 +5,37 @@
 
 import { TemplateRef } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-export type NzSelectModeType = 'default' | 'multiple' | 'tags';
-export interface NzSelectItemInterface {
-  template?: TemplateRef<NzSafeAny> | null;
+export type TriSelectModeType = 'default' | 'multiple' | 'tags';
+export interface TriSelectItemInterface {
+  template?: TemplateRef<TriSafeAny> | null;
   nzLabel: string | number | null;
-  nzValue: NzSafeAny | null;
+  nzValue: TriSafeAny | null;
   nzTitle?: string | number | null;
   nzDisabled?: boolean;
   nzHide?: boolean;
   nzCustomContent?: boolean;
-  groupLabel?: string | number | TemplateRef<NzSafeAny> | null;
+  groupLabel?: string | number | TemplateRef<TriSafeAny> | null;
   type?: string;
-  key?: NzSafeAny;
+  key?: TriSafeAny;
 }
 
-export interface NzSelectOptionInterface {
-  label: string | number | null | TemplateRef<NzSafeAny>;
-  value: NzSafeAny | null;
+export interface TriSelectOptionInterface {
+  label: string | number | null | TemplateRef<TriSafeAny>;
+  value: TriSafeAny | null;
   title?: string | number | null;
   disabled?: boolean;
   hide?: boolean;
-  groupLabel?: string | number | TemplateRef<NzSafeAny> | null;
+  groupLabel?: string | number | TemplateRef<TriSafeAny> | null;
   key?: string | number;
 }
 
-export type NzSelectTopControlItemType = Partial<NzSelectItemInterface> & {
-  contentTemplateOutlet: TemplateRef<NzSafeAny> | null;
-  contentTemplateOutletContext: NzSafeAny;
+export type TriSelectTopControlItemType = Partial<TriSelectItemInterface> & {
+  contentTemplateOutlet: TemplateRef<TriSafeAny> | null;
+  contentTemplateOutletContext: TriSafeAny;
 };
 
-export type NzFilterOptionType = (input: string, option: NzSelectItemInterface) => boolean;
+export type TriFilterOptionType = (input: string, option: TriSelectItemInterface) => boolean;
 
-export type NzSelectPlacementType = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
+export type TriSelectPlacementType = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';

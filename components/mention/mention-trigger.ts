@@ -24,33 +24,33 @@ import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 
 import { NZ_MENTION_CONFIG } from './config';
 import { Mention } from './mention.component';
-import { NzMentionService } from './mention.service';
+import { TriMentionService } from './mention.service';
 
 /**
  * @deprecated Internally used, will be removed in v21, please do not use it.
  */
 export const NZ_MENTION_TRIGGER_ACCESSOR: ExistingProvider = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => NzMentionTriggerDirective),
+  useExisting: forwardRef(() => TriMentionTriggerDirective),
   multi: true
 };
 
 @Directive({
-  selector: 'input[nzMentionTrigger], textarea[nzMentionTrigger]',
-  exportAs: 'nzMentionTrigger',
+  selector: '',
+  exportAs: 'triMentionTrigger',
   providers: [NZ_MENTION_TRIGGER_ACCESSOR],
   host: {
     autocomplete: 'off'
   }
 })
-export class NzMentionTriggerDirective implements ControlValueAccessor, AfterViewInit {
+export class TriMentionTriggerDirective implements ControlValueAccessor, AfterViewInit {
   public readonly elementRef: ElementRef<HTMLInputElement | HTMLTextAreaElement> = inject(
     ElementRef<HTMLInputElement | HTMLTextAreaElement>
   );
   private readonly ngZone = inject(NgZone);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly nzMentionService = inject(NzMentionService);
+  private readonly mentionService = inject(TriMentionService);
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() readonly onFocusin = new EventEmitter<FocusEvent>();
@@ -117,7 +117,7 @@ export class NzMentionTriggerDirective implements ControlValueAccessor, AfterVie
   }
 
   ngAfterViewInit(): void {
-    this.nzMentionService.registerTrigger(this);
+    this.mentionService.registerTrigger(this);
 
     this.setupEventListener('blur', this.onBlur);
     this.setupEventListener('focusin', this.onFocusin);

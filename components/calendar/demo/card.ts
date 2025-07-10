@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 
-import { NzCalendarModule } from 'ng-zorro-antd/calendar';
+import { TriCalendarModule } from 'ng-zorro-antd/calendar';
 
 @Component({
-  selector: 'nz-demo-calendar-card',
-  imports: [NzCalendarModule],
+  selector: '',
+  imports: [TriCalendarModule],
   template: `
     <div class="card">
-      <nz-calendar
-        [nzFullscreen]="false"
-        (nzSelectChange)="onValueChange($event)"
-        (nzPanelChange)="onPanelChange($event)"
-      ></nz-calendar>
+      <tri-calendar
+        [fullscreen]="false"
+        (selectChange)="onValueChange($event)"
+        (panelChange)="onPanelChange($event)"
+      ></tri-calendar>
     </div>
   `,
   styles: [
@@ -24,7 +24,7 @@ import { NzCalendarModule } from 'ng-zorro-antd/calendar';
     `
   ]
 })
-export class NzDemoCalendarCardComponent {
+export class TriDemoCalendarCardComponent {
   onValueChange(value: Date): void {
     console.log(`Current value: ${value}`);
   }

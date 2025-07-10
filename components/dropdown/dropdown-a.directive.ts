@@ -6,9 +6,9 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-  selector: 'a[nz-dropdown]',
+  selector: '',
   host: {
-    class: 'ant-dropdown-link'
+    class: 'tri-dropdown-link'
   }
 })
-export class NzDropDownADirective {}
+export class TriDropDownADirective {}

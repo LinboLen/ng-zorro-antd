@@ -12,11 +12,11 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { dispatchMouseEvent } from 'ng-zorro-antd/core/testing';
 import { getPickerInput } from 'ng-zorro-antd/date-picker/testing/util';
 
-import { NzDatePickerModule } from './date-picker.module';
+import { TriDatePickerModule } from './date-picker.module';
 
 describe('NzWeekPickerComponent', () => {
-  let fixture: ComponentFixture<NzTestWeekPickerComponent>;
-  let fixtureInstance: NzTestWeekPickerComponent;
+  let fixture: ComponentFixture<TriTestWeekPickerComponent>;
+  let fixtureInstance: TriTestWeekPickerComponent;
   let overlayContainer: OverlayContainer;
   let overlayContainerElement: HTMLElement;
 
@@ -32,7 +32,7 @@ describe('NzWeekPickerComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NzTestWeekPickerComponent);
+    fixture = TestBed.createComponent(TriTestWeekPickerComponent);
     fixtureInstance = fixture.componentInstance;
     // set initial mode
     fixtureInstance.useSuite = 1;
@@ -44,14 +44,14 @@ describe('NzWeekPickerComponent', () => {
   });
 
   it('should show week num', fakeAsync(() => {
-    fixtureInstance.nzFormat = undefined; // cover branch
+    fixtureInstance.format = undefined; // cover branch
     fixture.detectChanges();
     openPickerByClickTrigger();
     expect(queryFromOverlay('.ant-picker-week-panel-row .ant-picker-cell-week')).toBeDefined();
   }));
 
   it('should change input value when click week', fakeAsync(() => {
-    fixtureInstance.nzValue = new Date('2020-02-25');
+    fixtureInstance.value = new Date('2020-02-25');
     fixture.detectChanges();
     flush();
     fixture.detectChanges();
@@ -64,7 +64,7 @@ describe('NzWeekPickerComponent', () => {
   }));
 
   it('should change panel to week from month', fakeAsync(() => {
-    fixtureInstance.nzValue = new Date('2020-02-25');
+    fixtureInstance.value = new Date('2020-02-25');
     fixture.detectChanges();
     openPickerByClickTrigger();
     dispatchMouseEvent(queryFromOverlay('.ant-picker-header-month-btn'), 'click');
@@ -79,7 +79,7 @@ describe('NzWeekPickerComponent', () => {
     fixture.whenRenderingDone().then(() => {
       tick(500);
       fixture.detectChanges();
-      fixtureInstance.nzFormat = undefined; // cover branch
+      fixtureInstance.format = undefined; // cover branch
       fixture.detectChanges();
       openPickerByClickTrigger();
       expect(queryFromOverlay('.ant-picker-week-panel-row .ant-picker-cell-week')).toBeDefined();
@@ -101,20 +101,20 @@ describe('NzWeekPickerComponent', () => {
 });
 
 @Component({
-  imports: [NzDatePickerModule, FormsModule],
+  imports: [TriDatePickerModule, FormsModule],
   template: `
     @switch (useSuite) {
       @case (1) {
-        <nz-date-picker nzMode="week" [nzFormat]="nzFormat!" [ngModel]="nzValue" />
+        <tri-date-picker mode="week" [format]="format!" [ngModel]="value" />
       }
       @case (2) {
-        <nz-week-picker [ngModel]="nzValue" />
+        <tri-week-picker [ngModel]="value" />
       }
     }
   `
 })
-export class NzTestWeekPickerComponent {
+export class TriTestWeekPickerComponent {
   useSuite!: 1 | 2;
-  nzFormat?: string;
-  nzValue: Date | null = null;
+  format?: string;
+  value: Date | null = null;
 }

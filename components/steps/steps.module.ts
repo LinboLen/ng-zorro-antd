@@ -5,11 +5,11 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzStepComponent } from './step.component';
-import { NzStepsComponent } from './steps.component';
+import { TriStepComponent } from './step.component';
+import { TriStepsComponent } from './steps.component';
 
 @NgModule({
-  imports: [NzStepsComponent, NzStepComponent],
-  exports: [NzStepsComponent, NzStepComponent]
+  imports: [TriStepsComponent, TriStepComponent],
+  exports: [TriStepsComponent, TriStepComponent]
 })
-export class NzStepsModule {}
+export class TriStepsModule {}

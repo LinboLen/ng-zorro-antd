@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: 'nz-demo-input-variant',
-  imports: [NzInputModule, NzSpaceModule],
+  selector: '',
+  imports: [TriInputModule, TriSpaceModule],
   template: `
-    <nz-space nzDirection="vertical" style="width: 100%">
-      <input *nzSpaceItem nz-input placeholder="outlined" nzVariant="outlined" />
-      <input *nzSpaceItem nz-input placeholder="filled" nzVariant="filled" />
-      <input *nzSpaceItem nz-input placeholder="borderless" nzVariant="borderless" />
-      <input *nzSpaceItem nz-input placeholder="underlined" nzVariant="underlined" />
-    </nz-space>
+    <tri-space direction="vertical" style="width: 100%">
+      <input *spaceItem tri-input placeholder="outlined" variant="outlined" />
+      <input *spaceItem tri-input placeholder="filled" variant="filled" />
+      <input *spaceItem tri-input placeholder="borderless" variant="borderless" />
+      <input *spaceItem tri-input placeholder="underlined" variant="underlined" />
+    </tri-space>
   `
 })
-export class NzDemoInputVariantComponent {}
+export class TriDemoInputVariantComponent {}

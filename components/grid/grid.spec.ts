@@ -8,13 +8,13 @@ import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { EmbeddedProperty, NzColDirective } from './col.directive';
-import { NzGridModule } from './grid.module';
-import { NzAlign, NzJustify, NzRowDirective } from './row.directive';
+import { EmbeddedProperty, TriColDirective } from './col.directive';
+import { TriGridModule } from './grid.module';
+import { TriAlign, TriJustify, TriRowDirective } from './row.directive';
 
-declare const viewport: NzSafeAny;
+declare const viewport: TriSafeAny;
 const setWindowWidth = (width: number): void => {
   viewport.set(width);
   window.dispatchEvent(new Event('resize'));
@@ -31,8 +31,8 @@ describe('grid', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(TestGridComponent);
       component = fixture.componentInstance;
-      rowElement = fixture.debugElement.query(By.directive(NzRowDirective)).nativeElement;
-      colElement = fixture.debugElement.query(By.directive(NzColDirective)).nativeElement;
+      rowElement = fixture.debugElement.query(By.directive(TriRowDirective)).nativeElement;
+      colElement = fixture.debugElement.query(By.directive(TriColDirective)).nativeElement;
     });
 
     it('should apply className', () => {
@@ -40,7 +40,7 @@ describe('grid', () => {
     });
 
     it('should apply className according to align', () => {
-      const listOfAlign: NzAlign[] = ['top', 'middle', 'bottom'];
+      const listOfAlign: TriAlign[] = ['top', 'middle', 'bottom'];
       listOfAlign.forEach(align => {
         component.align = align;
         fixture.detectChanges();
@@ -49,7 +49,7 @@ describe('grid', () => {
     });
 
     it('should apply className according to justify', () => {
-      const listOfJustify: NzJustify[] = ['start', 'end', 'center', 'space-around', 'space-between'];
+      const listOfJustify: TriJustify[] = ['start', 'end', 'center', 'space-around', 'space-between'];
       listOfJustify.forEach(justify => {
         component.justify = justify;
         fixture.detectChanges();
@@ -133,7 +133,7 @@ describe('grid', () => {
 
     beforeEach(() => {
       fixture = TestBed.createComponent(TestColComponent);
-      colElement = fixture.debugElement.query(By.directive(NzColDirective)).nativeElement;
+      colElement = fixture.debugElement.query(By.directive(TriColDirective)).nativeElement;
       component = fixture.componentInstance;
       fixture.detectChanges();
     });
@@ -197,14 +197,14 @@ describe('grid', () => {
   });
 
   describe('RTL', () => {
-    let fixture: ComponentFixture<NzTestGridRtlComponent>;
+    let fixture: ComponentFixture<TriTestGridRtlComponent>;
     let rowElement: HTMLElement;
     let colElement: HTMLElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestGridRtlComponent);
-      rowElement = fixture.debugElement.query(By.directive(NzRowDirective)).nativeElement;
-      colElement = fixture.debugElement.query(By.directive(NzColDirective)).nativeElement;
+      fixture = TestBed.createComponent(TriTestGridRtlComponent);
+      rowElement = fixture.debugElement.query(By.directive(TriRowDirective)).nativeElement;
+      colElement = fixture.debugElement.query(By.directive(TriColDirective)).nativeElement;
       fixture.detectChanges();
     });
 
@@ -233,10 +233,10 @@ describe('grid', () => {
 });
 
 @Component({
-  imports: [NzGridModule],
+  imports: [TriGridModule],
   template: `
-    <div nz-row [nzGutter]="gutter" [nzJustify]="justify" [nzAlign]="align">
-      <div nz-col></div>
+    <div tri-row [gutter]="gutter" [justify]="justify" [align]="align">
+      <div tri-col></div>
     </div>
   `
 })
@@ -249,28 +249,28 @@ export class TestGridComponent {
     | Record<string, number>
     | [Record<string, number>, Record<string, number>] = null;
   flex: string | null = null;
-  justify: NzJustify | null = null;
-  align: NzAlign | null = null;
+  justify: TriJustify | null = null;
+  align: TriAlign | null = null;
 }
 
 @Component({
-  imports: [NzGridModule],
+  imports: [TriGridModule],
   template: `
-    <div nz-row>
+    <div tri-row>
       <div
-        nz-col
-        [nzSpan]="span"
-        [nzFlex]="flex"
-        [nzOffset]="offset"
-        [nzOrder]="order"
-        [nzPull]="pull"
-        [nzPush]="push"
-        [nzXs]="xs"
-        [nzSm]="sm"
-        [nzMd]="md"
-        [nzLg]="lg"
-        [nzXl]="xl"
-        [nzXXl]="xxl"
+        tri-col
+        [span]="span"
+        [flex]="flex"
+        [offset]="offset"
+        [order]="order"
+        [pull]="pull"
+        [push]="push"
+        [xs]="xs"
+        [sm]="sm"
+        [md]="md"
+        [lg]="lg"
+        [xl]="xl"
+        [xXl]="xxl"
       ></div>
     </div>
   `
@@ -291,16 +291,16 @@ export class TestColComponent {
 }
 
 @Component({
-  imports: [BidiModule, NzGridModule],
+  imports: [BidiModule, TriGridModule],
   template: `
     <div [dir]="direction">
-      <div nz-row>
-        <div nz-col></div>
+      <div tri-row>
+        <div tri-col></div>
       </div>
     </div>
   `
 })
-export class NzTestGridRtlComponent {
+export class TriTestGridRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 }

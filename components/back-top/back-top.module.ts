@@ -5,13 +5,13 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzBackTopComponent } from './back-top.component';
+import { TriBackTopComponent } from './back-top.component';
 
 /**
  * @deprecated Will be removed in v21. It is recommended to use `<nz-float-button-top>` instead.
  */
 @NgModule({
-  exports: [NzBackTopComponent],
-  imports: [NzBackTopComponent]
+  exports: [TriBackTopComponent],
+  imports: [TriBackTopComponent]
 })
-export class NzBackTopModule {}
+export class TriBackTopModule {}

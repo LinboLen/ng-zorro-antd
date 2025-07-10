@@ -4,11 +4,11 @@ import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: 'nz-demo-tabs-draggable',
+  selector: 'tri-demo-tabs-draggable',
   imports: [NzTabsModule, CdkDrag, CdkDropList],
   template: `
-    <nz-tabs
-      [(nzSelectedIndex)]="selectedTabIndex"
+    <tri-tabs
+      [(selectedIndexChange)]="selectedTabIndex"
       class="example-drag-tabs"
       cdkDropList
       (cdkDropListDropped)="drop($event)"
@@ -16,16 +16,16 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
       cdkDropListElementContainer=".ant-tabs-nav-list"
     >
       @for (tab of tabs; track tab) {
-        <nz-tab [nzTitle]="title">
+        <tri-tab [title]="title">
           {{ tab.content }}
-        </nz-tab>
+        </tri-tab>
         <ng-template #title>
           <span cdkDrag cdkDragRootElement=".ant-tabs-tab" cdkDragPreviewClass="preview">
             {{ tab.name }}
           </span>
         </ng-template>
       }
-    </nz-tabs>
+    </tri-tabs>
   `,
   styles: [
     `
@@ -44,7 +44,7 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
     `
   ]
 })
-export class NzDemoTabsDraggableComponent {
+export class TriDemoTabsDraggableComponent {
   private cdr = inject(ChangeDetectorRef);
   tabs = [
     {

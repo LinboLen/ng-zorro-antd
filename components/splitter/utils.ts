@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { NzSplitterCollapseOption, NzSplitterCollapsible } from './typings';
+import { TriSplitterCollapseOption, TriSplitterCollapsible } from './typings';
 
 /**
  * Get the percentage value of the string. (e.g. '50%' => 0.5)
@@ -24,7 +24,7 @@ export function isPercent(size: string | number | undefined): size is string {
 /**
  * Coerce the panel collapsible option to the NzSplitterCollapseOption type.
  */
-export function coerceCollapsible(collapsible: NzSplitterCollapsible): NzSplitterCollapseOption {
+export function coerceCollapsible(collapsible: TriSplitterCollapsible): TriSplitterCollapseOption {
   if (collapsible && typeof collapsible === 'object') {
     return collapsible;
   }

@@ -5,47 +5,47 @@
 
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { TriAvatarModule } from 'ng-zorro-antd/avatar';
 
 @Component({
-  selector: 'nz-list-item-meta-title',
-  exportAs: 'nzListItemMetaTitle',
+  selector: '',
+  exportAs: 'triListItemMetaTitle',
   template: `
-    <h4 class="ant-list-item-meta-title">
+    <h4 class="tri-list-item-meta-title">
       <ng-content></ng-content>
     </h4>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NzListItemMetaTitleComponent {}
+export class TriListItemMetaTitleComponent {}
 
 @Component({
-  selector: 'nz-list-item-meta-description',
-  exportAs: 'nzListItemMetaDescription',
+  selector: '',
+  exportAs: 'triListItemMetaDescription',
   template: `
-    <div class="ant-list-item-meta-description">
+    <div class="tri-list-item-meta-description">
       <ng-content></ng-content>
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NzListItemMetaDescriptionComponent {}
+export class TriListItemMetaDescriptionComponent {}
 
 @Component({
-  selector: 'nz-list-item-meta-avatar',
-  exportAs: 'nzListItemMetaAvatar',
+  selector: '',
+  exportAs: 'triListItemMetaAvatar',
   template: `
-    <div class="ant-list-item-meta-avatar">
-      @if (nzSrc) {
-        <nz-avatar [nzSrc]="nzSrc" />
+    <div class="tri-list-item-meta-avatar">
+      @if (src) {
+        <tri-avatar [src]="src" />
       } @else {
         <ng-content />
       }
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NzAvatarModule]
+  imports: [TriAvatarModule]
 })
-export class NzListItemMetaAvatarComponent {
-  @Input() nzSrc?: string;
+export class TriListItemMetaAvatarComponent {
+  @Input() src?: string;
 }

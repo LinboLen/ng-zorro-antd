@@ -1,48 +1,48 @@
 import { Component, inject } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzFormLayoutType, NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriFormLayoutType, TriFormModule } from 'ng-zorro-antd/form';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: 'nz-demo-form-layout',
-  imports: [ReactiveFormsModule, NzButtonModule, NzFormModule, NzInputModule, NzRadioModule],
+  selector: '',
+  imports: [ReactiveFormsModule, TriButtonModule, TriFormModule, TriInputModule, TriRadioModule],
   template: `
     <form
-      nz-form
-      [nzLayout]="validateForm.controls.formLayout.value"
+      tri-form
+      [layout]="validateForm.controls.formLayout.value"
       [formGroup]="validateForm"
       (ngSubmit)="submitForm()"
     >
-      <nz-form-item>
-        <nz-form-label [nzSpan]="isHorizontal ? 4 : null">Form Layout</nz-form-label>
-        <nz-form-control [nzSpan]="isHorizontal ? 14 : null">
-          <nz-radio-group formControlName="formLayout">
-            <label nz-radio-button [nzValue]="'horizontal'">Horizontal</label>
-            <label nz-radio-button [nzValue]="'vertical'">Vertical</label>
-            <label nz-radio-button [nzValue]="'inline'">Inline</label>
-          </nz-radio-group>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="isHorizontal ? 4 : null">Field A</nz-form-label>
-        <nz-form-control [nzSpan]="isHorizontal ? 14 : null" nzErrorTip="Please input your username!">
-          <input nz-input formControlName="fieldA" placeholder="input placeholder" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="isHorizontal ? 4 : null">Field B</nz-form-label>
-        <nz-form-control [nzSpan]="isHorizontal ? 14 : null" nzErrorTip="Please input your Password!">
-          <input nz-input formControlName="filedB" placeholder="input placeholder" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-control [nzSpan]="isHorizontal ? 14 : null" [nzOffset]="isHorizontal ? 4 : null">
-          <button nz-button nzType="primary">Submit</button>
-        </nz-form-control>
-      </nz-form-item>
+      <tri-form-item>
+        <tri-form-label [span]="isHorizontal ? 4 : null">Form Layout</tri-form-label>
+        <tri-form-control [span]="isHorizontal ? 14 : null">
+          <tri-radio-group formControlName="formLayout">
+            <label tri-radio-button [value]="'horizontal'">Horizontal</label>
+            <label tri-radio-button [value]="'vertical'">Vertical</label>
+            <label tri-radio-button [value]="'inline'">Inline</label>
+          </tri-radio-group>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [span]="isHorizontal ? 4 : null">Field A</tri-form-label>
+        <tri-form-control [span]="isHorizontal ? 14 : null" errorTip="Please input your username!">
+          <input tri-input formControlName="fieldA" placeholder="input placeholder" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [span]="isHorizontal ? 4 : null">Field B</tri-form-label>
+        <tri-form-control [span]="isHorizontal ? 14 : null" errorTip="Please input your Password!">
+          <input tri-input formControlName="filedB" placeholder="input placeholder" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-control [span]="isHorizontal ? 14 : null" [offset]="isHorizontal ? 4 : null">
+          <button tri-button type="primary">Submit</button>
+        </tri-form-control>
+      </tri-form-item>
     </form>
   `,
   styles: [
@@ -53,10 +53,10 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
     `
   ]
 })
-export class NzDemoFormLayoutComponent {
+export class TriDemoFormLayoutComponent {
   private fb = inject(NonNullableFormBuilder);
   validateForm = this.fb.group({
-    formLayout: this.fb.control<NzFormLayoutType>('horizontal'),
+    formLayout: this.fb.control<TriFormLayoutType>('horizontal'),
     fieldA: this.fb.control('', [Validators.required]),
     filedB: this.fb.control('', [Validators.required])
   });

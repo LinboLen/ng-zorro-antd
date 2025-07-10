@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzQRCodeComponent } from './qrcode.component';
+import { TriQRCodeComponent } from './qrcode.component';
 
 @NgModule({
-  imports: [NzQRCodeComponent],
-  exports: [NzQRCodeComponent]
+  imports: [TriQRCodeComponent],
+  exports: [TriQRCodeComponent]
 })
-export class NzQRCodeModule {}
+export class TriQRCodeModule {}

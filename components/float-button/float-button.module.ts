@@ -5,23 +5,23 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzFloatButtonContentComponent } from './float-button-content.component';
-import { NzFloatButtonGroupComponent } from './float-button-group.component';
-import { NzFloatButtonTopComponent } from './float-button-top.component';
-import { NzFloatButtonComponent } from './float-button.component';
+import { TriFloatButtonContentComponent } from './float-button-content.component';
+import { TriFloatButtonGroupComponent } from './float-button-group.component';
+import { TriFloatButtonTopComponent } from './float-button-top.component';
+import { TriFloatButtonComponent } from './float-button.component';
 
 @NgModule({
   exports: [
-    NzFloatButtonComponent,
-    NzFloatButtonGroupComponent,
-    NzFloatButtonTopComponent,
-    NzFloatButtonContentComponent
+    TriFloatButtonComponent,
+    TriFloatButtonGroupComponent,
+    TriFloatButtonTopComponent,
+    TriFloatButtonContentComponent
   ],
   imports: [
-    NzFloatButtonComponent,
-    NzFloatButtonGroupComponent,
-    NzFloatButtonTopComponent,
-    NzFloatButtonContentComponent
+    TriFloatButtonComponent,
+    TriFloatButtonGroupComponent,
+    TriFloatButtonTopComponent,
+    TriFloatButtonContentComponent
   ]
 })
-export class NzFloatButtonModule {}
+export class TriFloatButtonModule {}

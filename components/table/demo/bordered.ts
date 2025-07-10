@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
-import { NzTableModule } from 'ng-zorro-antd/table';
+import { TriTableModule } from 'ng-zorro-antd/table';
 
 @Component({
-  selector: 'nz-demo-table-bordered',
-  imports: [NzTableModule],
+  selector: '',
+  imports: [TriTableModule],
   template: `
-    <nz-table #borderedTable nzBordered nzFooter="Footer" nzTitle="Header" [nzData]="dataSet">
+    <tri-table #borderedTable bordered footer="Footer" title="Header" [data]="dataSet">
       <thead>
         <tr>
           <th>Name</th>
@@ -23,9 +23,9 @@ import { NzTableModule } from 'ng-zorro-antd/table';
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
 
-    <nz-table #outBordered nzOuterBordered nzFooter="Footer" nzTitle="Header" [nzData]="dataSet">
+    <tri-table #outBordered outerBordered footer="Footer" title="Header" [data]="dataSet">
       <thead>
         <tr>
           <th>Name</th>
@@ -42,10 +42,10 @@ import { NzTableModule } from 'ng-zorro-antd/table';
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `
 })
-export class NzDemoTableBorderedComponent {
+export class TriDemoTableBorderedComponent {
   dataSet = [
     {
       name: 'John Brown',

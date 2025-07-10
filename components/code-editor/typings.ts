@@ -18,7 +18,7 @@ export type EditorOptions = IStandAloneEditorConstructionOptions;
 export type DiffEditorOptions = IDiffEditorConstructionOptions;
 export type JoinedEditorOptions = EditorOptions | DiffEditorOptions;
 
-export type NzEditorMode = 'normal' | 'diff';
+export type TriEditorMode = 'normal' | 'diff';
 
 export const NzCodeEditorLoadingStatus = {
   UNLOAD: 'unload',
@@ -26,4 +26,4 @@ export const NzCodeEditorLoadingStatus = {
   LOADED: 'LOADED'
 } as const;
 
-export type NzCodeEditorLoadingStatus = (typeof NzCodeEditorLoadingStatus)[keyof typeof NzCodeEditorLoadingStatus];
+export type TriCodeEditorLoadingStatus = (typeof NzCodeEditorLoadingStatus)[keyof typeof NzCodeEditorLoadingStatus];

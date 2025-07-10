@@ -18,45 +18,45 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzTableStyleService } from '../table-style.service';
-import { NzTableSummaryFixedType } from '../table.types';
+import { TriTableStyleService } from '../table-style.service';
+import { TriTableSummaryFixedType } from '../table.types';
 
-function fixedAttribute(value: NzTableSummaryFixedType | boolean | unknown): NzTableSummaryFixedType | null {
+function fixedAttribute(value: TriTableSummaryFixedType | boolean | unknown): TriTableSummaryFixedType | null {
   return value === 'top' || value === 'bottom' ? value : booleanAttribute(value) ? 'bottom' : null;
 }
 
 /* eslint-disable @angular-eslint/component-selector */
 @Component({
-  selector: 'tfoot[nzSummary]',
+  selector: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
     <ng-template #contentTemplate>
       <ng-content></ng-content>
     </ng-template>
-    @if (!isInsideTable || !nzFixed) {
+    @if (!isInsideTable || !fixed) {
       <ng-template [ngTemplateOutlet]="contentTemplate"></ng-template>
     }
   `,
   imports: [NgTemplateOutlet],
   host: {
-    '[class.ant-table-summary]': '!isInsideTable || !nzFixed'
+    '[class.tri-table-summary]': '!isInsideTable || !fixed'
   }
 })
-export class NzTfootSummaryComponent implements OnInit, OnChanges {
-  @Input({ transform: fixedAttribute }) nzFixed: NzTableSummaryFixedType | null = null;
-  @ViewChild('contentTemplate', { static: true }) templateRef!: TemplateRef<NzSafeAny>;
-  private nzTableStyleService = inject(NzTableStyleService, { optional: true });
-  isInsideTable = !!this.nzTableStyleService;
+export class TriTfootSummaryComponent implements OnInit, OnChanges {
+  @Input({ transform: fixedAttribute }) fixed: TriTableSummaryFixedType | null = null;
+  @ViewChild('contentTemplate', { static: true }) templateRef!: TemplateRef<TriSafeAny>;
+  private tableStyleService = inject(TriTableStyleService, { optional: true });
+  isInsideTable = !!this.tableStyleService;
 
   ngOnInit(): void {
-    this.nzTableStyleService?.setTfootTemplate(this.templateRef);
+    this.tableStyleService?.setTfootTemplate(this.templateRef);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     const { nzFixed } = changes;
-    this.nzTableStyleService?.setTfootFixed(nzFixed.currentValue);
+    this.tableStyleService?.setTfootFixed(nzFixed.currentValue);
   }
 }

@@ -6,10 +6,10 @@
 import { NgModule } from '@angular/core';
 
 // NOTE: the `t` is not uppercase in directives. Change this would however introduce breaking change.
-import { NzToolTipComponent, NzTooltipDirective } from './tooltip';
+import { TriToolTipComponent, TriTooltipDirective } from './tooltip';
 
 @NgModule({
-  imports: [NzToolTipComponent, NzTooltipDirective],
-  exports: [NzToolTipComponent, NzTooltipDirective]
+  imports: [TriToolTipComponent, TriTooltipDirective],
+  exports: [TriToolTipComponent, TriTooltipDirective]
 })
-export class NzToolTipModule {}
+export class TriToolTipModule {}

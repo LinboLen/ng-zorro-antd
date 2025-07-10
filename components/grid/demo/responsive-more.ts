@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 
-import { NzGridModule } from 'ng-zorro-antd/grid';
+import { TriGridModule } from 'ng-zorro-antd/grid';
 
 @Component({
-  selector: 'nz-demo-grid-responsive-more',
-  imports: [NzGridModule],
+  selector: '',
+  imports: [TriGridModule],
   template: `
-    <div nz-row>
-      <div nz-col [nzXs]="{ span: 5, offset: 1 }" [nzLg]="{ span: 6, offset: 2 }">Col</div>
-      <div nz-col [nzXs]="{ span: 11, offset: 1 }" [nzLg]="{ span: 6, offset: 2 }">Col</div>
-      <div nz-col [nzXs]="{ span: 5, offset: 1 }" [nzLg]="{ span: 6, offset: 2 }">Col</div>
+    <div tri-row>
+      <div tri-col [xs]="{ span: 5, offset: 1 }" [lg]="{ span: 6, offset: 2 }">Col</div>
+      <div tri-col [xs]="{ span: 11, offset: 1 }" [lg]="{ span: 6, offset: 2 }">Col</div>
+      <div tri-col [xs]="{ span: 5, offset: 1 }" [lg]="{ span: 6, offset: 2 }">Col</div>
     </div>
   `
 })
-export class NzDemoGridResponsiveMoreComponent {}
+export class TriDemoGridResponsiveMoreComponent {}

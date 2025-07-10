@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
 
 @Component({
-  selector: 'nz-demo-input-number-out-of-range',
-  imports: [FormsModule, NzInputNumberModule],
-  template: `<nz-input-number [(ngModel)]="value" nzMin="1" nzMax="10" />`
+  selector: '',
+  imports: [FormsModule, TriInputNumberModule],
+  template: `<tri-input-number [(ngModel)]="value" min="1" max="10" />`
 })
-export class NzDemoInputNumberOutOfRangeComponent {
+export class TriDemoInputNumberOutOfRangeComponent {
   value = 99;
 }

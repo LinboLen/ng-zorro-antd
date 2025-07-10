@@ -7,17 +7,17 @@ import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzTableModule, NzTbodyComponent } from 'ng-zorro-antd/table';
+import { TriTableModule, TriTbodyComponent } from 'ng-zorro-antd/table';
 
 describe('nz-tbody', () => {
   describe('nz-tbody in table', () => {
-    let fixture: ComponentFixture<NzTbodyTestTableComponent>;
+    let fixture: ComponentFixture<TriTbodyTestTableComponent>;
     let tbody: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTbodyTestTableComponent);
+      fixture = TestBed.createComponent(TriTbodyTestTableComponent);
       fixture.detectChanges();
-      tbody = fixture.debugElement.query(By.directive(NzTbodyComponent));
+      tbody = fixture.debugElement.query(By.directive(TriTbodyComponent));
     });
 
     it('should not add class', () => {
@@ -27,13 +27,13 @@ describe('nz-tbody', () => {
   });
 
   describe('nz-tbody in nz-table', () => {
-    let fixture: ComponentFixture<NzTbodyTestNzTableComponent>;
+    let fixture: ComponentFixture<TriTbodyTestNzTableComponent>;
     let tbody: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTbodyTestNzTableComponent);
+      fixture = TestBed.createComponent(TriTbodyTestNzTableComponent);
       fixture.detectChanges();
-      tbody = fixture.debugElement.query(By.directive(NzTbodyComponent));
+      tbody = fixture.debugElement.query(By.directive(TriTbodyComponent));
     });
     it('should not add class', () => {
       fixture.detectChanges();
@@ -43,23 +43,23 @@ describe('nz-tbody', () => {
 });
 
 @Component({
-  imports: [NzTableModule],
+  imports: [TriTableModule],
   template: `
     <table>
       <tbody></tbody>
     </table>
   `
 })
-export class NzTbodyTestTableComponent {}
+export class TriTbodyTestTableComponent {}
 
 @Component({
-  imports: [NzTableModule],
+  imports: [TriTableModule],
   template: `
-    <nz-table>
+    <tri-table>
       <tbody></tbody>
-    </nz-table>
+    </tri-table>
   `
 })
-export class NzTbodyTestNzTableComponent {
+export class TriTbodyTestNzTableComponent {
   expand = false;
 }

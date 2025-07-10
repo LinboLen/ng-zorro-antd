@@ -14,33 +14,33 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { NzDisplayedStep, NzExtendedMark } from './typings';
+import { TriDisplayedStep, TriExtendedMark } from './typings';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-slider-step',
-  exportAs: 'nzSliderStep',
+  selector: '',
+  exportAs: 'triSliderStep',
   template: `
     @for (step of steps; track step.value) {
-      <span class="ant-slider-dot" [class.ant-slider-dot-active]="step.active" [style]="step.style!"></span>
+      <span class="tri-slider-dot" [class.tri-slider-dot-active]="step.active" [style]="step.style!"></span>
     }
   `,
   host: {
-    class: 'ant-slider-step'
+    class: 'tri-slider-step'
   }
 })
-export class NzSliderStepComponent implements OnChanges {
+export class TriSliderStepComponent implements OnChanges {
   @Input() lowerBound: number | null = null;
   @Input() upperBound: number | null = null;
-  @Input() marksArray: NzExtendedMark[] = [];
+  @Input() marksArray: TriExtendedMark[] = [];
   @Input({ transform: numberAttribute }) min!: number;
   @Input({ transform: numberAttribute }) max!: number;
   @Input({ transform: booleanAttribute }) vertical = false;
   @Input({ transform: booleanAttribute }) included = false;
   @Input({ transform: booleanAttribute }) reverse!: boolean;
 
-  steps: NzDisplayedStep[] = [];
+  steps: TriDisplayedStep[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
     const { marksArray, lowerBound, upperBound, reverse } = changes;

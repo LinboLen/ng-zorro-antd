@@ -1,28 +1,28 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
+import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
 @Component({
-  selector: 'nz-demo-tree-select-multiple',
-  imports: [FormsModule, NzTreeSelectModule],
+  selector: '',
+  imports: [FormsModule, TriTreeSelectModule],
   template: `
-    <nz-tree-select
+    <tri-tree-select
       style="width: 250px"
-      nzPlaceHolder="Please select"
+      placeHolder="Please select"
       [(ngModel)]="value"
-      [nzMaxTagCount]="3"
-      [nzMaxTagPlaceholder]="omittedPlaceHolder"
-      [nzNodes]="nodes"
-      [nzDefaultExpandAll]="true"
-      [nzAllowClear]="false"
-      [nzMultiple]="true"
+      [maxTagCount]="3"
+      [maxTagPlaceholder]="omittedPlaceHolder"
+      [nodes]="nodes"
+      [defaultExpandAll]="true"
+      [allowClear]="false"
+      [multiple]="true"
       (ngModelChange)="onChange($event)"
-    ></nz-tree-select>
+    ></tri-tree-select>
     <ng-template #omittedPlaceHolder let-omittedValues>and {{ omittedValues.length }} more...</ng-template>
   `
 })
-export class NzDemoTreeSelectMultipleComponent {
+export class TriDemoTreeSelectMultipleComponent {
   value: string[] = [];
   readonly nodes = [
     {

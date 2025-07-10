@@ -1,31 +1,31 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzTagModule } from 'ng-zorro-antd/tag';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriTagModule } from 'ng-zorro-antd/tag';
 
 @Component({
-  selector: 'nz-demo-tag-control',
-  imports: [FormsModule, NzIconModule, NzInputModule, NzTagModule, NzNoAnimationDirective],
+  selector: '',
+  imports: [FormsModule, TriIconModule, TriInputModule, TriTagModule, TriNoAnimationDirective],
   template: `
     @for (tag of tags; track tag) {
-      <nz-tag [nzMode]="$index === 0 ? 'default' : 'closeable'" (nzOnClose)="handleClose(tag)">
+      <tri-tag [mode]="$index === 0 ? 'default' : 'closeable'" (onClose)="handleClose(tag)">
         {{ sliceTagName(tag) }}
-      </nz-tag>
+      </tri-tag>
     }
 
     @if (!inputVisible) {
-      <nz-tag class="editable-tag" nzNoAnimation (click)="showInput()">
-        <nz-icon nzType="plus" />
+      <tri-tag class="editable-tag" noAnimation (click)="showInput()">
+        <tri-icon type="plus" />
         New Tag
-      </nz-tag>
+      </tri-tag>
     } @else {
       <input
         #inputElement
-        nz-input
-        nzSize="small"
+        tri-input
+        size="small"
         type="text"
         [(ngModel)]="inputValue"
         style="width: 78px;"
@@ -43,7 +43,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
     `
   ]
 })
-export class NzDemoTagControlComponent {
+export class TriDemoTagControlComponent {
   tags = ['Unremovable', 'Tag 2', 'Tag 3'];
   inputVisible = false;
   inputValue = '';

@@ -9,14 +9,14 @@ import { By } from '@angular/platform-browser';
 
 import { dispatchMouseEvent, dispatchTouchEvent, MockNgZone } from 'ng-zorro-antd/core/testing';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
-import { NzResizableModule } from 'ng-zorro-antd/resizable/resizable.module';
+import { TriResizableModule } from 'ng-zorro-antd/resizable/resizable.module';
 
-import { NzDemoResizableBasicComponent } from './demo/basic';
-import { NzDemoResizableCustomizeComponent } from './demo/customize';
-import { NzDemoResizableGridComponent } from './demo/grid';
-import { NzDemoResizableLockAspectRatioComponent } from './demo/lock-aspect-ratio';
-import { NzDemoResizablePreviewComponent } from './demo/preview';
-import { NzResizableDirective, NzResizeEvent } from './resizable.directive';
+import { TriDemoResizableBasicComponent } from './demo/basic';
+import { TriDemoResizableCustomizeComponent } from './demo/customize';
+import { TriDemoResizableGridComponent } from './demo/grid';
+import { TriDemoResizableLockAspectRatioComponent } from './demo/lock-aspect-ratio';
+import { TriDemoResizablePreviewComponent } from './demo/preview';
+import { TriResizableDirective, TriResizeEvent } from './resizable.directive';
 import { DEFAULT_RESIZE_DIRECTION } from './resize-handles.component';
 
 describe('resizable', () => {
@@ -38,14 +38,14 @@ describe('resizable', () => {
   }));
 
   describe('basic', () => {
-    let fixture: ComponentFixture<NzDemoResizableBasicComponent>;
-    let testComponent: NzDemoResizableBasicComponent;
+    let fixture: ComponentFixture<TriDemoResizableBasicComponent>;
+    let testComponent: TriDemoResizableBasicComponent;
     let resizableEle: HTMLElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzDemoResizableBasicComponent);
+      fixture = TestBed.createComponent(TriDemoResizableBasicComponent);
       testComponent = fixture.debugElement.componentInstance;
-      resizableEle = fixture.debugElement.query(By.directive(NzResizableDirective)).nativeElement;
+      resizableEle = fixture.debugElement.query(By.directive(TriResizableDirective)).nativeElement;
       fixture.detectChanges();
     });
 
@@ -426,14 +426,14 @@ describe('resizable', () => {
   });
 
   describe('customize', () => {
-    let fixture: ComponentFixture<NzDemoResizableCustomizeComponent>;
-    let testComponent: NzDemoResizableCustomizeComponent;
+    let fixture: ComponentFixture<TriDemoResizableCustomizeComponent>;
+    let testComponent: TriDemoResizableCustomizeComponent;
     let resizableEle: HTMLElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzDemoResizableCustomizeComponent);
+      fixture = TestBed.createComponent(TriDemoResizableCustomizeComponent);
       testComponent = fixture.debugElement.componentInstance;
-      resizableEle = fixture.debugElement.query(By.directive(NzResizableDirective)).nativeElement;
+      resizableEle = fixture.debugElement.query(By.directive(TriResizableDirective)).nativeElement;
       fixture.detectChanges();
     });
 
@@ -469,14 +469,14 @@ describe('resizable', () => {
   });
 
   describe('lock aspect ratio', () => {
-    let fixture: ComponentFixture<NzDemoResizableLockAspectRatioComponent>;
+    let fixture: ComponentFixture<TriDemoResizableLockAspectRatioComponent>;
     let resizableEle: HTMLElement;
-    let testComponent: NzDemoResizableLockAspectRatioComponent;
+    let testComponent: TriDemoResizableLockAspectRatioComponent;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzDemoResizableLockAspectRatioComponent);
+      fixture = TestBed.createComponent(TriDemoResizableLockAspectRatioComponent);
       testComponent = fixture.debugElement.componentInstance;
-      resizableEle = fixture.debugElement.query(By.directive(NzResizableDirective)).nativeElement;
+      resizableEle = fixture.debugElement.query(By.directive(TriResizableDirective)).nativeElement;
       fixture.detectChanges();
     });
 
@@ -537,12 +537,12 @@ describe('resizable', () => {
   });
 
   describe('preview', () => {
-    let fixture: ComponentFixture<NzDemoResizablePreviewComponent>;
+    let fixture: ComponentFixture<TriDemoResizablePreviewComponent>;
     let resizableEle: HTMLElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzDemoResizablePreviewComponent);
-      resizableEle = fixture.debugElement.query(By.directive(NzResizableDirective)).nativeElement;
+      fixture = TestBed.createComponent(TriDemoResizablePreviewComponent);
+      resizableEle = fixture.debugElement.query(By.directive(TriResizableDirective)).nativeElement;
       fixture.detectChanges();
     });
 
@@ -558,14 +558,14 @@ describe('resizable', () => {
   });
 
   describe('grid', () => {
-    let fixture: ComponentFixture<NzDemoResizableGridComponent>;
+    let fixture: ComponentFixture<TriDemoResizableGridComponent>;
     let resizableEle: HTMLElement;
-    let testComponent: NzDemoResizableGridComponent;
+    let testComponent: TriDemoResizableGridComponent;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzDemoResizableGridComponent);
+      fixture = TestBed.createComponent(TriDemoResizableGridComponent);
       testComponent = fixture.debugElement.componentInstance;
-      resizableEle = fixture.debugElement.query(By.directive(NzResizableDirective)).nativeElement;
+      resizableEle = fixture.debugElement.query(By.directive(TriResizableDirective)).nativeElement;
       fixture.detectChanges();
     });
 
@@ -623,14 +623,14 @@ describe('resizable', () => {
   });
 
   describe('bounds', () => {
-    let fixture: ComponentFixture<NzTestResizableBoundsComponent>;
+    let fixture: ComponentFixture<TriTestResizableBoundsComponent>;
     let resizableEle: HTMLElement;
-    let testComponent: NzTestResizableBoundsComponent;
+    let testComponent: TriTestResizableBoundsComponent;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestResizableBoundsComponent);
+      fixture = TestBed.createComponent(TriTestResizableBoundsComponent);
       testComponent = fixture.debugElement.componentInstance;
-      resizableEle = fixture.debugElement.query(By.directive(NzResizableDirective)).nativeElement;
+      resizableEle = fixture.debugElement.query(By.directive(TriResizableDirective)).nativeElement;
       fixture.detectChanges();
     });
 
@@ -750,23 +750,23 @@ function afterNextFrameRender(callbackFn: () => void): void {
 }
 
 @Component({
-  imports: [NzResizableModule],
+  imports: [TriResizableModule],
   template: `
     <div class="box-ref" #boxRef>
       <div class="parent">
         <div
           class="box"
-          nz-resizable
-          [nzBounds]="bounds"
-          [nzMaxWidth]="maxWidth"
-          [nzMinWidth]="80"
-          [nzMaxHeight]="maxHeight"
-          [nzMinHeight]="80"
+          tri-resizable
+          [bounds]="bounds"
+          [maxWidth]="maxWidth"
+          [minWidth]="80"
+          [maxHeight]="maxHeight"
+          [minHeight]="80"
           [style.height.px]="height"
           [style.width.px]="width"
-          (nzResize)="onResize($event)"
+          (resize)="onResize($event)"
         >
-          <nz-resize-handles></nz-resize-handles>
+          <tri-resize-handles></tri-resize-handles>
           content
         </div>
       </div>
@@ -785,7 +785,7 @@ function afterNextFrameRender(callbackFn: () => void): void {
     `
   ]
 })
-class NzTestResizableBoundsComponent {
+class TriTestResizableBoundsComponent {
   @ViewChild('boxRef', { static: false }) boxRef!: ElementRef<HTMLDivElement>;
   bounds: 'window' | 'parent' | ElementRef = 'parent';
   maxWidth = 300;
@@ -794,7 +794,7 @@ class NzTestResizableBoundsComponent {
   height = 100;
   id = -1;
 
-  onResize({ width, height }: NzResizeEvent): void {
+  onResize({ width, height }: TriResizeEvent): void {
     cancelAnimationFrame(this.id);
     this.id = requestAnimationFrame(() => {
       this.width = width!;

@@ -4,10 +4,10 @@
  */
 
 export * from './interface';
-export { NzListItemMetaComponent } from './list-item-meta.component';
-export { NzListItemComponent } from './list-item.component';
-export { NzListComponent } from './list.component';
-export { NzListModule } from './list.module';
+export { TriListItemMetaComponent } from './list-item-meta.component';
+export { TriListItemComponent } from './list-item.component';
+export { TriListComponent } from './list.component';
+export { TriListModule } from './list.module';
 export * from './list-cell';
 export * from './list-item-cell';
 export * from './list-item-meta-cell';

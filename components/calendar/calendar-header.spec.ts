@@ -12,11 +12,11 @@ import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { CandyDate } from 'ng-zorro-antd/core/time';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzCalendarHeaderComponent, NzCalendarHeaderComponent as CalendarHeader } from './calendar-header.component';
-import { NzRadioGroupComponent as RadioGroup } from '../radio/index';
-import { NzSelectComponent as Select } from '../select/select.component';
+import { TriCalendarHeaderComponent, TriCalendarHeaderComponent as CalendarHeader } from './calendar-header.component';
+import { TriRadioGroupComponent as RadioGroup } from '../radio/index';
+import { TriSelectComponent as Select } from '../select/select.component';
 
 registerLocaleData(zh);
 
@@ -28,11 +28,11 @@ describe('Calendar Header', () => {
   }));
 
   describe('mode', () => {
-    let fixture: ComponentFixture<NzTestCalendarHeaderModeComponent>;
-    let component: NzTestCalendarHeaderModeComponent;
+    let fixture: ComponentFixture<TriTestCalendarHeaderModeComponent>;
+    let component: TriTestCalendarHeaderModeComponent;
 
     beforeEach(waitForAsync(() => {
-      fixture = TestBed.createComponent(NzTestCalendarHeaderModeComponent);
+      fixture = TestBed.createComponent(TriTestCalendarHeaderModeComponent);
       component = fixture.componentInstance;
     }));
 
@@ -74,11 +74,11 @@ describe('Calendar Header', () => {
   });
 
   describe('fullscreen', () => {
-    let fixture: ComponentFixture<NzTestCalendarHeaderFullscreenComponent>;
-    let component: NzTestCalendarHeaderFullscreenComponent;
+    let fixture: ComponentFixture<TriTestCalendarHeaderFullscreenComponent>;
+    let component: TriTestCalendarHeaderFullscreenComponent;
 
     beforeEach(waitForAsync(() => {
-      fixture = TestBed.createComponent(NzTestCalendarHeaderFullscreenComponent);
+      fixture = TestBed.createComponent(TriTestCalendarHeaderFullscreenComponent);
       component = fixture.componentInstance;
     }));
 
@@ -89,9 +89,9 @@ describe('Calendar Header', () => {
       const [yearSelect, monthSelect] = header.queryAll(By.directive(Select)).map(x => x.injector.get(Select));
       const modeRadioGroup = header.query(By.directive(RadioGroup)).injector.get(RadioGroup);
 
-      expect(yearSelect.nzSize).not.toBe('small');
-      expect(monthSelect.nzSize).not.toBe('small');
-      expect(modeRadioGroup.nzSize).not.toBe('small');
+      expect(yearSelect.size).not.toBe('small');
+      expect(monthSelect.size).not.toBe('small');
+      expect(modeRadioGroup.size).not.toBe('small');
     });
 
     it('should use small size when not in fullscreen', () => {
@@ -103,17 +103,17 @@ describe('Calendar Header', () => {
       const [yearSelect, monthSelect] = header.queryAll(By.directive(Select)).map(x => x.injector.get(Select));
       const modeRadioGroup = header.query(By.directive(RadioGroup)).injector.get(RadioGroup);
 
-      expect(yearSelect.nzSize).toBe('small');
-      expect(monthSelect.nzSize).toBe('small');
-      expect(modeRadioGroup.nzSize).toBe('small');
+      expect(yearSelect.size).toBe('small');
+      expect(monthSelect.size).toBe('small');
+      expect(modeRadioGroup.size).toBe('small');
     });
   });
 
   describe('activeDate', () => {
-    let fixture: ComponentFixture<NzTestCalendarHeaderActiveDateComponent>;
+    let fixture: ComponentFixture<TriTestCalendarHeaderActiveDateComponent>;
 
     beforeEach(waitForAsync(() => {
-      fixture = TestBed.createComponent(NzTestCalendarHeaderActiveDateComponent);
+      fixture = TestBed.createComponent(TriTestCalendarHeaderActiveDateComponent);
     }));
 
     it('should be now by default', () => {
@@ -136,17 +136,17 @@ describe('Calendar Header', () => {
 
       expect(yearModel.model).toBe(2001);
       expect(monthModel.model).toBe(1);
-      const headerComponent = header.injector.get(NzCalendarHeaderComponent);
+      const headerComponent = header.injector.get(TriCalendarHeaderComponent);
       expect(headerComponent.years[0].value).toBe(1991);
     });
   });
 
   describe('changes', () => {
-    let fixture: ComponentFixture<NzTestCalendarHeaderChangesComponent>;
-    let component: NzTestCalendarHeaderChangesComponent;
+    let fixture: ComponentFixture<TriTestCalendarHeaderChangesComponent>;
+    let component: TriTestCalendarHeaderChangesComponent;
 
     beforeEach(waitForAsync(() => {
-      fixture = TestBed.createComponent(NzTestCalendarHeaderChangesComponent);
+      fixture = TestBed.createComponent(TriTestCalendarHeaderChangesComponent);
       component = fixture.componentInstance;
     }));
 
@@ -178,17 +178,17 @@ describe('Calendar Header', () => {
 
     it('should update years when change year', () => {
       const header = fixture.debugElement.queryAll(By.directive(CalendarHeader))[0];
-      const headerComponent = header.injector.get(NzCalendarHeaderComponent);
+      const headerComponent = header.injector.get(TriCalendarHeaderComponent);
       headerComponent.updateYear(2010);
       expect(headerComponent.years[0].value).toBe(2000);
     });
   });
 
   describe('custom Header', () => {
-    let fixture: ComponentFixture<NzTestCalendarHeaderChangesComponent>;
+    let fixture: ComponentFixture<TriTestCalendarHeaderChangesComponent>;
 
     beforeEach(waitForAsync(() => {
-      fixture = TestBed.createComponent(NzTestCalendarHeaderChangesComponent);
+      fixture = TestBed.createComponent(TriTestCalendarHeaderChangesComponent);
     }));
 
     it('should have the default header if custom header is not passed', fakeAsync(() => {
@@ -210,54 +210,54 @@ describe('Calendar Header', () => {
 });
 
 @Component({
-  imports: [FormsModule, NzCalendarHeaderComponent],
+  imports: [FormsModule, TriCalendarHeaderComponent],
   template: `
-    <nz-calendar-header></nz-calendar-header>
-    <nz-calendar-header [(mode)]="mode"></nz-calendar-header>
+    <tri-calendar-header></tri-calendar-header>
+    <tri-calendar-header [(mode)]="mode"></tri-calendar-header>
   `
 })
-class NzTestCalendarHeaderModeComponent {
+class TriTestCalendarHeaderModeComponent {
   mode: 'month' | 'year' = 'month';
 }
 
 @Component({
-  imports: [NzCalendarHeaderComponent],
+  imports: [TriCalendarHeaderComponent],
   template: `
-    <nz-calendar-header></nz-calendar-header>
-    <nz-calendar-header [fullscreen]="fullscreen"></nz-calendar-header>
+    <tri-calendar-header></tri-calendar-header>
+    <tri-calendar-header [fullscreen]="fullscreen"></tri-calendar-header>
   `
 })
-class NzTestCalendarHeaderFullscreenComponent {
+class TriTestCalendarHeaderFullscreenComponent {
   fullscreen = true;
 }
 
 @Component({
-  imports: [NzCalendarHeaderComponent],
+  imports: [TriCalendarHeaderComponent],
   template: `
-    <nz-calendar-header></nz-calendar-header>
-    <nz-calendar-header [activeDate]="activeDate"></nz-calendar-header>
+    <tri-calendar-header></tri-calendar-header>
+    <tri-calendar-header [activeDate]="activeDate"></tri-calendar-header>
   `
 })
-class NzTestCalendarHeaderActiveDateComponent {
+class TriTestCalendarHeaderActiveDateComponent {
   activeDate = new CandyDate(new Date(2001, 1, 3));
 }
 
 @Component({
-  imports: [NzCalendarHeaderComponent],
+  imports: [TriCalendarHeaderComponent],
   template: `
-    <nz-calendar-header
-      [nzCustomHeader]="customHeader"
+    <tri-calendar-header
+      [customHeader]="customHeader"
       (yearChange)="year = $event"
       (monthChange)="month = $event"
-    ></nz-calendar-header>
+    ></tri-calendar-header>
 
     <ng-template #customHeaderElement>
       <p>custom header</p>
     </ng-template>
   `
 })
-class NzTestCalendarHeaderChangesComponent {
-  @ViewChild('customHeaderElement', { static: true }) customHeaderElement!: TemplateRef<NzSafeAny>;
+class TriTestCalendarHeaderChangesComponent {
+  @ViewChild('customHeaderElement', { static: true }) customHeaderElement!: TemplateRef<TriSafeAny>;
 
   year: number | null = null;
   month: number | null = null;

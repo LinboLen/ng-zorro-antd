@@ -5,7 +5,7 @@
 
 import { Locale } from 'date-fns';
 
-export interface NzPaginationI18nInterface {
+export interface TriPaginationI18nInterface {
   items_per_page: string;
   jump_to: string;
   jump_to_confirm: string;
@@ -20,16 +20,16 @@ export interface NzPaginationI18nInterface {
   next_3: string;
 }
 
-export interface NzGlobalI18nInterface {
+export interface TriGlobalI18nInterface {
   placeholder: string;
 }
 
-export interface NzDatePickerI18nInterface {
-  lang: NzDatePickerLangI18nInterface;
-  timePickerLocale: NzTimePickerI18nInterface;
+export interface TriDatePickerI18nInterface {
+  lang: TriDatePickerLangI18nInterface;
+  timePickerLocale: TriTimePickerI18nInterface;
 }
 
-export interface NzCalendarI18nInterface {
+export interface TriCalendarI18nInterface {
   today: string;
   now: string;
   backToToday: string;
@@ -58,7 +58,7 @@ export interface NzCalendarI18nInterface {
   nextCentury: string;
 }
 
-export interface NzDatePickerLangI18nInterface extends NzCalendarI18nInterface {
+export interface TriDatePickerLangI18nInterface extends TriCalendarI18nInterface {
   placeholder?: string;
   yearPlaceholder?: string;
   quarterPlaceholder?: string;
@@ -71,16 +71,16 @@ export interface NzDatePickerLangI18nInterface extends NzCalendarI18nInterface {
   rangeWeekPlaceholder?: string[];
 }
 
-export interface NzTimePickerI18nInterface {
+export interface TriTimePickerI18nInterface {
   placeholder?: string;
   rangePlaceholder?: string[];
 }
 
 export type ValidateMessage = string | (() => string);
 
-export type NzCascaderI18nInterface = NzGlobalI18nInterface;
+export type TriCascaderI18nInterface = TriGlobalI18nInterface;
 
-export interface NzTableI18nInterface {
+export interface TriTableI18nInterface {
   filterTitle?: string;
   filterConfirm?: string;
   filterReset?: string;
@@ -95,25 +95,25 @@ export interface NzTableI18nInterface {
   cancelSort?: string;
 }
 
-export interface NzModalI18nInterface {
+export interface TriModalI18nInterface {
   okText: string;
   cancelText: string;
   justOkText: string;
 }
 
-export interface NzPopconfirmI18nInterface {
+export interface TriPopconfirmI18nInterface {
   okText: string;
   cancelText: string;
 }
 
-export interface NzTransferI18nInterface {
+export interface TriTransferI18nInterface {
   titles?: string[];
   searchPlaceholder?: string;
   itemUnit?: string;
   itemsUnit?: string;
 }
 
-export interface NzUploadI18nInterface {
+export interface TriUploadI18nInterface {
   uploading?: string;
   removeFile?: string;
   uploadError?: string;
@@ -121,18 +121,18 @@ export interface NzUploadI18nInterface {
   downloadFile?: string;
 }
 
-export interface NzEmptyI18nInterface {
+export interface TriEmptyI18nInterface {
   description: string;
 }
 
-export interface NzTextI18nInterface {
+export interface TriTextI18nInterface {
   edit: string;
   copy: string;
   copied: string;
   expand: string;
 }
 
-export interface NzCronExpressionLabelI18n {
+export interface TriCronExpressionLabelI18n {
   second?: string;
   minute?: string;
   hour?: string;
@@ -141,19 +141,19 @@ export interface NzCronExpressionLabelI18n {
   week?: string;
 }
 
-export interface NzCronExpressionCronErrorI18n {
+export interface TriCronExpressionCronErrorI18n {
   cronError?: string;
 }
 
-export type NzCronExpressionI18nInterface = NzCronExpressionCronErrorI18n & NzCronExpressionLabelI18n;
+export type TriCronExpressionI18nInterface = TriCronExpressionCronErrorI18n & TriCronExpressionLabelI18n;
 
-export interface NzQRCodeI18nInterface {
+export interface TriQRCodeI18nInterface {
   expired: string;
   refresh: string;
   scanned: string;
 }
 
-export interface NzCheckListI18nInterface {
+export interface TriCheckListI18nInterface {
   checkList: string;
   checkListFinish: string;
   checkListClose: string;
@@ -164,23 +164,23 @@ export interface NzCheckListI18nInterface {
   checkListCheckOther: string;
 }
 
-export interface NzI18nInterface {
+export interface TriI18nInterface {
   locale: string;
-  Pagination: NzPaginationI18nInterface;
-  DatePicker: NzDatePickerI18nInterface;
-  TimePicker: NzTimePickerI18nInterface;
-  Calendar: NzDatePickerI18nInterface;
-  global?: NzGlobalI18nInterface;
-  Table: NzTableI18nInterface;
-  Modal: NzModalI18nInterface;
-  Popconfirm: NzPopconfirmI18nInterface;
-  Transfer: NzTransferI18nInterface;
-  Upload: NzUploadI18nInterface;
-  Empty: NzEmptyI18nInterface;
-  Text?: NzTextI18nInterface;
-  CronExpression?: NzCronExpressionI18nInterface;
-  QRCode?: NzQRCodeI18nInterface;
-  CheckList?: NzCheckListI18nInterface;
+  Pagination: TriPaginationI18nInterface;
+  DatePicker: TriDatePickerI18nInterface;
+  TimePicker: TriTimePickerI18nInterface;
+  Calendar: TriDatePickerI18nInterface;
+  global?: TriGlobalI18nInterface;
+  Table: TriTableI18nInterface;
+  Modal: TriModalI18nInterface;
+  Popconfirm: TriPopconfirmI18nInterface;
+  Transfer: TriTransferI18nInterface;
+  Upload: TriUploadI18nInterface;
+  Empty: TriEmptyI18nInterface;
+  Text?: TriTextI18nInterface;
+  CronExpression?: TriCronExpressionI18nInterface;
+  QRCode?: TriQRCodeI18nInterface;
+  CheckList?: TriCheckListI18nInterface;
 }
 
 export type DateLocale = Locale;

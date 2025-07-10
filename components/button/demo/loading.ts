@@ -1,26 +1,26 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-demo-button-loading',
-  imports: [NzButtonModule, NzIconModule],
+  selector: '',
+  imports: [TriButtonModule, TriIconModule],
   template: `
-    <button nz-button nzType="primary" nzLoading>
-      <nz-icon nzType="poweroff" />
+    <button tri-button type="primary" loading>
+      <tri-icon type="poweroff" />
       Loading
     </button>
-    <button nz-button nzType="primary" nzSize="small" nzLoading>Loading</button>
+    <button tri-button type="primary" size="small" loading>Loading</button>
     <br />
-    <button nz-button nzType="primary" (click)="loadOne()" [nzLoading]="isLoadingOne">Click me!</button>
-    <button nz-button nzType="primary" (click)="loadTwo()" [nzLoading]="isLoadingTwo">
-      <nz-icon nzType="poweroff" />
+    <button tri-button type="primary" (click)="loadOne()" [loading]="isLoadingOne">Click me!</button>
+    <button tri-button type="primary" (click)="loadTwo()" [loading]="isLoadingTwo">
+      <tri-icon type="poweroff" />
       Click me!
     </button>
     <br />
-    <button nz-button nzLoading nzShape="circle"></button>
-    <button nz-button nzLoading nzType="primary" nzShape="circle"></button>
+    <button tri-button loading shape="circle"></button>
+    <button tri-button loading type="primary" shape="circle"></button>
   `,
   styles: [
     `
@@ -31,7 +31,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     `
   ]
 })
-export class NzDemoButtonLoadingComponent {
+export class TriDemoButtonLoadingComponent {
   isLoadingOne = false;
   isLoadingTwo = false;
 

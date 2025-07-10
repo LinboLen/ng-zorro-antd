@@ -6,10 +6,10 @@
 import { Injectable } from '@angular/core';
 
 import { environment } from 'ng-zorro-antd/core/environments';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 interface SingletonRegistryItem {
-  target: NzSafeAny;
+  target: TriSafeAny;
 }
 
 /**
@@ -25,7 +25,7 @@ const testSingleRegistry = new Map<string, SingletonRegistryItem>();
 @Injectable({
   providedIn: 'root'
 })
-export class NzSingletonService {
+export class TriSingletonService {
   private get singletonRegistry(): Map<string, SingletonRegistryItem> {
     return environment.isTestMode ? testSingleRegistry : this._singletonRegistry;
   }
@@ -38,7 +38,7 @@ export class NzSingletonService {
    */
   private _singletonRegistry = new Map<string, SingletonRegistryItem>();
 
-  registerSingletonWithKey(key: string, target: NzSafeAny): void {
+  registerSingletonWithKey(key: string, target: TriSafeAny): void {
     const alreadyHave = this.singletonRegistry.has(key);
     const item: SingletonRegistryItem = alreadyHave ? this.singletonRegistry.get(key)! : this.withNewTarget(target);
 
@@ -57,7 +57,7 @@ export class NzSingletonService {
     return this.singletonRegistry.has(key) ? (this.singletonRegistry.get(key)!.target as T) : null;
   }
 
-  private withNewTarget(target: NzSafeAny): SingletonRegistryItem {
+  private withNewTarget(target: TriSafeAny): SingletonRegistryItem {
     return {
       target
     };

@@ -1,42 +1,42 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzSelectModule } from 'ng-zorro-antd/select';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: 'nz-demo-input-addon',
-  imports: [FormsModule, NzInputModule, NzSelectModule],
+  selector: '',
+  imports: [FormsModule, TriInputModule, TriSelectModule],
   template: `
-    <nz-input-group nzAddOnBefore="Http://" nzAddOnAfter=".com">
-      <input type="text" nz-input [(ngModel)]="inputValue" />
-    </nz-input-group>
+    <tri-input-group addOnBefore="Http://" addOnAfter=".com">
+      <input type="text" tri-input [(ngModel)]="inputValue" />
+    </tri-input-group>
     <br />
     <br />
-    <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate" [nzAddOnAfter]="addOnAfterTemplate">
-      <input type="text" nz-input [(ngModel)]="inputValue" />
-    </nz-input-group>
+    <tri-input-group [addOnBefore]="addOnBeforeTemplate" [addOnAfter]="addOnAfterTemplate">
+      <input type="text" tri-input [(ngModel)]="inputValue" />
+    </tri-input-group>
     <ng-template #addOnBeforeTemplate>
-      <nz-select [ngModel]="'Http://'">
-        <nz-option nzLabel="Http://" nzValue="Http://"></nz-option>
-        <nz-option nzLabel="Https://" nzValue="Https://"></nz-option>
-      </nz-select>
+      <tri-select [ngModel]="'Http://'">
+        <tri-option label="Http://" value="Http://"></tri-option>
+        <tri-option label="Https://" value="Https://"></tri-option>
+      </tri-select>
     </ng-template>
     <ng-template #addOnAfterTemplate>
-      <nz-select [ngModel]="'.com'">
-        <nz-option nzLabel=".com" nzValue=".com"></nz-option>
-        <nz-option nzLabel=".jp" nzValue=".jp"></nz-option>
-        <nz-option nzLabel=".cn" nzValue=".cn"></nz-option>
-        <nz-option nzLabel=".org" nzValue=".org"></nz-option>
-      </nz-select>
+      <tri-select [ngModel]="'.com'">
+        <tri-option label=".com" value=".com"></tri-option>
+        <tri-option label=".jp" value=".jp"></tri-option>
+        <tri-option label=".cn" value=".cn"></tri-option>
+        <tri-option label=".org" value=".org"></tri-option>
+      </tri-select>
     </ng-template>
     <br />
     <br />
-    <nz-input-group nzAddOnAfterIcon="setting">
-      <input type="text" nz-input [(ngModel)]="inputValue" />
-    </nz-input-group>
+    <tri-input-group addOnAfterIcon="setting">
+      <input type="text" tri-input [(ngModel)]="inputValue" />
+    </tri-input-group>
   `
 })
-export class NzDemoInputAddonComponent {
+export class TriDemoInputAddonComponent {
   inputValue: string = 'my site';
 }

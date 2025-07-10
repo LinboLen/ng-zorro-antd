@@ -44,22 +44,22 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { merge, of as observableOf, Subscription } from 'rxjs';
 import { distinctUntilChanged, map, startWith, switchMap, withLatestFrom } from 'rxjs/operators';
 
-import { NzFormItemFeedbackIconComponent, NzFormNoStatusService, NzFormStatusService } from 'ng-zorro-antd/core/form';
+import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
 import { DEFAULT_MENTION_BOTTOM_POSITIONS, DEFAULT_MENTION_TOP_POSITIONS } from 'ng-zorro-antd/core/overlay';
-import { NgClassInterface, NzSafeAny, NzStatus, NzValidateStatus } from 'ng-zorro-antd/core/types';
+import { NgClassInterface, TriSafeAny, TriStatus, TriValidateStatus } from 'ng-zorro-antd/core/types';
 import {
   fromEventOutsideAngular,
   getCaretCoordinates,
   getMentions,
   getStatusClassNames
 } from 'ng-zorro-antd/core/util';
-import { NzEmptyModule } from 'ng-zorro-antd/empty';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriEmptyModule } from 'ng-zorro-antd/empty';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 import { NZ_MENTION_CONFIG } from './config';
-import { NzMentionSuggestionDirective } from './mention-suggestions';
-import { NzMentionTriggerDirective } from './mention-trigger';
-import { NzMentionService } from './mention.service';
+import { TriMentionSuggestionDirective } from './mention-suggestions';
+import { TriMentionTriggerDirective } from './mention-trigger';
+import { TriMentionService } from './mention.service';
 
 export interface MentionOnSearchTypes {
   value: string;
@@ -75,38 +75,38 @@ export interface Mention {
 export type MentionPlacement = 'top' | 'bottom';
 
 @Component({
-  selector: 'nz-mention',
-  exportAs: 'nzMention',
+  selector: '',
+  exportAs: 'triMention',
   template: `
     <ng-content></ng-content>
     <ng-template #suggestions>
-      <div class="ant-mentions-dropdown">
-        <ul class="ant-mentions-dropdown-menu" role="menu" tabindex="0">
+      <div class="tri-mentions-dropdown">
+        <ul class="tri-mentions-dropdown-menu" role="menu" tabindex="0">
           @for (suggestion of filteredSuggestions; track suggestion) {
             <li
               #items
-              class="ant-mentions-dropdown-menu-item"
+              class="tri-mentions-dropdown-menu-item"
               role="menuitem"
               tabindex="-1"
-              [class.ant-mentions-dropdown-menu-item-active]="$index === activeIndex"
-              [class.ant-mentions-dropdown-menu-item-selected]="$index === activeIndex"
+              [class.tri-mentions-dropdown-menu-item-active]="$index === activeIndex"
+              [class.tri-mentions-dropdown-menu-item-selected]="$index === activeIndex"
               (click)="selectSuggestion(suggestion)"
             >
               @if (suggestionTemplate) {
                 <ng-container *ngTemplateOutlet="suggestionTemplate; context: { $implicit: suggestion }" />
               } @else {
-                {{ nzValueWith(suggestion) }}
+                {{ valueWith(suggestion) }}
               }
             </li>
           }
 
           @if (filteredSuggestions.length === 0) {
-            <li class="ant-mentions-dropdown-menu-item ant-mentions-dropdown-menu-item-disabled">
-              @if (nzLoading) {
-                <span><nz-icon nzType="loading" /></span>
+            <li class="tri-mentions-dropdown-menu-item tri-mentions-dropdown-menu-item-disabled">
+              @if (loading) {
+                <span><tri-icon type="loading" /></span>
               } @else {
                 <span>
-                  <nz-embed-empty nzComponentName="select" [specificContent]="nzNotFoundContent!" />
+                  <tri-embed-empty componentName="select" [specificContent]="notFoundContent!" />
                 </span>
               }
             </li>
@@ -115,18 +115,18 @@ export type MentionPlacement = 'top' | 'bottom';
       </div>
     </ng-template>
     @if (hasFeedback && !!status) {
-      <nz-form-item-feedback-icon class="ant-mentions-suffix" [status]="status" />
+      <tri-form-item-feedback-icon class="tri-mentions-suffix" [status]="status" />
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [NzMentionService],
+  providers: [TriMentionService],
   host: {
-    class: 'ant-mentions',
-    '[class.ant-mentions-rtl]': `dir === 'rtl'`
+    class: 'tri-mentions',
+    '[class.tri-mentions-rtl]': `dir === 'rtl'`
   },
-  imports: [NgTemplateOutlet, NzIconModule, NzEmptyModule, NzFormItemFeedbackIconComponent]
+  imports: [NgTemplateOutlet, TriIconModule, TriEmptyModule, TriFormItemFeedbackIconComponent]
 })
-export class NzMentionComponent implements OnInit, AfterViewInit, OnChanges {
+export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
   private ngZone = inject(NgZone);
   private directionality = inject(Directionality);
   private cdr = inject(ChangeDetectorRef);
@@ -134,25 +134,25 @@ export class NzMentionComponent implements OnInit, AfterViewInit, OnChanges {
   private viewContainerRef = inject(ViewContainerRef);
   private elementRef = inject(ElementRef);
   private renderer = inject(Renderer2);
-  private nzMentionService = inject(NzMentionService);
+  private mentionService = inject(TriMentionService);
   private destroyRef = inject(DestroyRef);
-  @Input() nzValueWith: (value: NzSafeAny) => string = value => value;
-  @Input() nzPrefix: string | string[] = '@';
-  @Input({ transform: booleanAttribute }) nzLoading = false;
-  @Input() nzNotFoundContent: string = '无匹配结果，轻敲空格完成输入';
-  @Input() nzPlacement: MentionPlacement = 'bottom';
-  @Input() nzSuggestions: NzSafeAny[] = [];
-  @Input() nzStatus: NzStatus = '';
-  @Output() readonly nzOnSelect = new EventEmitter<NzSafeAny>();
-  @Output() readonly nzOnSearchChange = new EventEmitter<MentionOnSearchTypes>();
+  @Input() valueWith: (value: TriSafeAny) => string = value => value;
+  @Input() prefix: string | string[] = '@';
+  @Input({ transform: booleanAttribute }) loading = false;
+  @Input() notFoundContent: string = '无匹配结果，轻敲空格完成输入';
+  @Input() placement: MentionPlacement = 'bottom';
+  @Input() suggestions: TriSafeAny[] = [];
+  @Input() status: TriStatus = '';
+  @Output() readonly onSelect = new EventEmitter<TriSafeAny>();
+  @Output() readonly onSearchChange = new EventEmitter<MentionOnSearchTypes>();
 
-  trigger!: NzMentionTriggerDirective;
+  trigger!: TriMentionTriggerDirective;
   @ViewChild(TemplateRef, { static: false }) suggestionsTemp?: TemplateRef<void>;
   @ViewChildren('items', { read: ElementRef })
   items!: QueryList<ElementRef>;
 
-  @ContentChild(NzMentionSuggestionDirective, { static: false, read: TemplateRef })
-  set suggestionChild(value: TemplateRef<{ $implicit: NzSafeAny }>) {
+  @ContentChild(TriMentionSuggestionDirective, { static: false, read: TemplateRef })
+  set suggestionChild(value: TemplateRef<{ $implicit: TriSafeAny }>) {
     if (value) {
       this.suggestionTemplate = value;
     }
@@ -160,13 +160,13 @@ export class NzMentionComponent implements OnInit, AfterViewInit, OnChanges {
 
   isOpen = false;
   filteredSuggestions: string[] = [];
-  suggestionTemplate: TemplateRef<{ $implicit: NzSafeAny }> | null = null;
+  suggestionTemplate: TemplateRef<{ $implicit: TriSafeAny }> | null = null;
   activeIndex = -1;
   dir: Direction = 'ltr';
   // status
   prefixCls: string = 'ant-mentions';
   statusCls: NgClassInterface = {};
-  status: NzValidateStatus = '';
+  _status: TriValidateStatus = '';
   hasFeedback: boolean = false;
 
   private previousValue: string | null = null;
@@ -191,8 +191,8 @@ export class NzMentionComponent implements OnInit, AfterViewInit, OnChanges {
     return null;
   }
 
-  private nzFormStatusService = inject(NzFormStatusService, { optional: true });
-  private nzFormNoStatusService = inject(NzFormNoStatusService, { optional: true });
+  private formStatusService = inject(TriFormStatusService, { optional: true });
+  private formNoStatusService = inject(TriFormNoStatusService, { optional: true });
 
   constructor() {
     this.destroyRef.onDestroy(() => {
@@ -201,12 +201,12 @@ export class NzMentionComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.nzFormStatusService?.formStatusChanges
+    this.formStatusService?.formStatusChanges
       .pipe(
         distinctUntilChanged((pre, cur) => {
           return pre.status === cur.status && pre.hasFeedback === cur.hasFeedback;
         }),
-        withLatestFrom(this.nzFormNoStatusService ? this.nzFormNoStatusService.noFormStatus : observableOf(false)),
+        withLatestFrom(this.formNoStatusService ? this.formNoStatusService.noFormStatus : observableOf(false)),
         map(([{ status, hasFeedback }, noStatus]) => ({ status: noStatus ? '' : status, hasFeedback })),
         takeUntilDestroyed(this.destroyRef)
       )
@@ -214,7 +214,7 @@ export class NzMentionComponent implements OnInit, AfterViewInit, OnChanges {
         this.setStatusStyles(status, hasFeedback);
       });
 
-    this.nzMentionService.triggerChanged().subscribe(trigger => {
+    this.mentionService.triggerChanged().subscribe(trigger => {
       this.trigger = trigger;
       this.bindTriggerEvents();
       this.closeDropdown();
@@ -237,7 +237,7 @@ export class NzMentionComponent implements OnInit, AfterViewInit, OnChanges {
       }
     }
     if (nzStatus) {
-      this.setStatusStyles(this.nzStatus, this.hasFeedback);
+      this.setStatusStyles(this.status, this.hasFeedback);
     }
   }
 
@@ -271,17 +271,17 @@ export class NzMentionComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   getMentions(): string[] {
-    return this.trigger ? getMentions(this.trigger.value!, this.nzPrefix) : [];
+    return this.trigger ? getMentions(this.trigger.value!, this.prefix) : [];
   }
 
   selectSuggestion(suggestion: string | {}): void {
-    const value = this.nzValueWith(suggestion);
+    const value = this.valueWith(suggestion);
     this.trigger.insertMention({
       mention: value,
       startPos: this.cursorMentionStart!,
       endPos: this.cursorMentionEnd!
     });
-    this.nzOnSelect.emit(suggestion);
+    this.onSelect.emit(suggestion);
     this.closeDropdown();
     this.activeIndex = -1;
   }
@@ -345,14 +345,14 @@ export class NzMentionComponent implements OnInit, AfterViewInit, OnChanges {
     }
     this.previousValue = value;
     if (emit) {
-      this.nzOnSearchChange.emit({
+      this.onSearchChange.emit({
         value: this.cursorMention!.substring(1),
         prefix: this.cursorMention![0]
       });
     }
     const searchValue = suggestions.toLowerCase();
-    this.filteredSuggestions = this.nzSuggestions.filter(suggestion =>
-      this.nzValueWith(suggestion).toLowerCase().includes(searchValue)
+    this.filteredSuggestions = this.suggestions.filter(suggestion =>
+      this.valueWith(suggestion).toLowerCase().includes(searchValue)
     );
   }
 
@@ -394,7 +394,7 @@ export class NzMentionComponent implements OnInit, AfterViewInit, OnChanges {
   private resetCursorMention(): void {
     const value = this.triggerNativeElement.value.replace(/[\r\n]/g, NZ_MENTION_CONFIG.split) || '';
     const selectionStart = this.triggerNativeElement.selectionStart!;
-    const prefix = typeof this.nzPrefix === 'string' ? [this.nzPrefix] : this.nzPrefix;
+    const prefix = typeof this.prefix === 'string' ? [this.prefix] : this.prefix;
     let i = prefix.length;
     while (i >= 0) {
       const startPos = value.lastIndexOf(prefix[i], selectionStart);
@@ -428,13 +428,13 @@ export class NzMentionComponent implements OnInit, AfterViewInit, OnChanges {
       coordinates.top -
       this.triggerNativeElement.getBoundingClientRect().height -
       this.triggerNativeElement.scrollTop +
-      (this.nzPlacement === 'bottom' ? coordinates.height - 6 : -6);
+      (this.placement === 'bottom' ? coordinates.height - 6 : -6);
     const left = coordinates.left - this.triggerNativeElement.scrollLeft;
     this.positionStrategy.withDefaultOffsetX(left).withDefaultOffsetY(top);
-    if (this.nzPlacement === 'bottom') {
+    if (this.placement === 'bottom') {
       this.positionStrategy.withPositions([...DEFAULT_MENTION_BOTTOM_POSITIONS]);
     }
-    if (this.nzPlacement === 'top') {
+    if (this.placement === 'top') {
       this.positionStrategy.withPositions([...DEFAULT_MENTION_TOP_POSITIONS]);
     }
     this.positionStrategy.apply();
@@ -499,9 +499,9 @@ export class NzMentionComponent implements OnInit, AfterViewInit, OnChanges {
     return this.positionStrategy;
   }
 
-  private setStatusStyles(status: NzValidateStatus, hasFeedback: boolean): void {
+  private setStatusStyles(status: TriValidateStatus, hasFeedback: boolean): void {
     // set inner status
-    this.status = status;
+    this._status = status;
     this.hasFeedback = hasFeedback;
     this.cdr.markForCheck();
     // render status if nzStatus is set

@@ -5,7 +5,7 @@
 
 export type ColumnCount = 1 | 2 | 3 | 4 | 6 | 8 | 12 | 24;
 
-export interface NzListGrid {
+export interface TriListGrid {
   gutter?: number;
   span?: number;
   column?: ColumnCount;

@@ -3,16 +3,16 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { FlattenNode, NzTreeNode, NzTreeNodeKey } from './nz-tree-base-node';
+import { FlattenNode, TriTreeNode, TriTreeNodeKey } from './nz-tree-base-node';
 
-export function isCheckDisabled(node: NzTreeNode): boolean {
+export function isCheckDisabled(node: TriTreeNode): boolean {
   const { isDisabled, isDisableCheckbox } = node;
   return !!(isDisabled || isDisableCheckbox);
 }
 
-export function isInArray(needle: NzSafeAny, haystack: NzSafeAny[]): boolean {
+export function isInArray(needle: TriSafeAny, haystack: TriSafeAny[]): boolean {
   return haystack.length > 0 && haystack.indexOf(needle) > -1;
 }
 
@@ -20,7 +20,7 @@ export function getPosition(level: string | number, index: number): string {
   return `${level}-${index}`;
 }
 
-export function getKey(key: NzTreeNodeKey, pos: string): NzTreeNodeKey {
+export function getKey(key: TriTreeNodeKey, pos: string): TriTreeNodeKey {
   if (key !== null && key !== undefined) {
     return key;
   }
@@ -35,13 +35,13 @@ export function getKey(key: NzTreeNodeKey, pos: string): NzTreeNodeKey {
  * need expanded keys, provides `true` means all expanded (used in `rc-tree-select`).
  */
 export function flattenTreeData(
-  treeNodeList: NzTreeNode[] = [],
-  expandedKeys: NzTreeNodeKey[] | true = []
+  treeNodeList: TriTreeNode[] = [],
+  expandedKeys: TriTreeNodeKey[] | true = []
 ): FlattenNode[] {
   const expandedKeySet = new Set(expandedKeys === true ? [] : expandedKeys);
   const flattenList: FlattenNode[] = [];
 
-  function dig(list: NzTreeNode[], parent: FlattenNode | null = null): FlattenNode[] {
+  function dig(list: TriTreeNode[], parent: FlattenNode | null = null): FlattenNode[] {
     return list.map((treeNode, index) => {
       const pos: string = getPosition(parent ? parent.pos : '0', index);
       const mergedKey = getKey(treeNode.key, pos);

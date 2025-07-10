@@ -5,21 +5,21 @@
 
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 
-import { NzImageDirective } from './image.directive';
+import { TriImageDirective } from './image.directive';
 
 @Component({
-  selector: 'nz-image-group',
-  exportAs: 'nzImageGroup',
+  selector: '',
+  exportAs: 'triImageGroup',
   template: '<ng-content></ng-content>',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class NzImageGroupComponent {
-  @Input() nzScaleStep: number | null = null;
+export class TriImageGroupComponent {
+  @Input() scaleStep: number | null = null;
 
-  images: NzImageDirective[] = [];
+  images: TriImageDirective[] = [];
 
-  addImage(image: NzImageDirective): void {
+  addImage(image: TriImageDirective): void {
     this.images.push(image);
   }
 }

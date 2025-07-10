@@ -18,67 +18,67 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzEmptyI18nInterface, NzI18nService } from 'ng-zorro-antd/i18n';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriEmptyI18nInterface, TriI18nService } from 'ng-zorro-antd/i18n';
 
-import { NzEmptyDefaultComponent } from './partial/default';
-import { NzEmptySimpleComponent } from './partial/simple';
+import { TriEmptyDefaultComponent } from './partial/default';
+import { TriEmptySimpleComponent } from './partial/simple';
 
 const NzEmptyDefaultImages = ['default', 'simple'] as const;
-type NzEmptyNotFoundImageType = (typeof NzEmptyDefaultImages)[number] | null | string | TemplateRef<void>;
+type TriEmptyNotFoundImageType = (typeof NzEmptyDefaultImages)[number] | null | string | TemplateRef<void>;
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-empty',
-  exportAs: 'nzEmpty',
+  selector: '',
+  exportAs: 'triEmpty',
   template: `
-    <div class="ant-empty-image">
+    <div class="tri-empty-image">
       @if (!isImageBuildIn) {
-        <ng-container *nzStringTemplateOutlet="nzNotFoundImage">
-          <img [src]="nzNotFoundImage" [alt]="isContentString ? nzNotFoundContent : 'empty'" />
+        <ng-container *stringTemplateOutlet="notFoundImage">
+          <img [src]="notFoundImage" [alt]="isContentString ? notFoundContent : 'empty'" />
         </ng-container>
       } @else {
-        @if (nzNotFoundImage === 'simple') {
-          <nz-empty-simple />
+        @if (notFoundImage === 'simple') {
+          <tri-empty-simple />
         } @else {
-          <nz-empty-default />
+          <tri-empty-default />
         }
       }
     </div>
-    @if (nzNotFoundContent !== null) {
-      <p class="ant-empty-description">
-        <ng-container *nzStringTemplateOutlet="nzNotFoundContent">
+    @if (notFoundContent !== null) {
+      <p class="tri-empty-description">
+        <ng-container *stringTemplateOutlet="notFoundContent">
           {{ isContentString ? nzNotFoundContent : locale['description'] }}
         </ng-container>
       </p>
     }
 
-    @if (nzNotFoundFooter) {
-      <div class="ant-empty-footer">
-        <ng-container *nzStringTemplateOutlet="nzNotFoundFooter">
-          {{ nzNotFoundFooter }}
+    @if (notFoundFooter) {
+      <div class="tri-empty-footer">
+        <ng-container *stringTemplateOutlet="notFoundFooter">
+          {{ notFoundFooter }}
         </ng-container>
       </div>
     }
   `,
   host: {
-    class: 'ant-empty'
+    class: 'tri-empty'
   },
-  imports: [NzOutletModule, NzEmptyDefaultComponent, NzEmptySimpleComponent]
+  imports: [TriOutletModule, TriEmptyDefaultComponent, TriEmptySimpleComponent]
 })
-export class NzEmptyComponent implements OnChanges, OnInit {
-  private i18n = inject(NzI18nService);
+export class TriEmptyComponent implements OnChanges, OnInit {
+  private i18n = inject(TriI18nService);
   private cdr = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
 
-  @Input() nzNotFoundImage: NzEmptyNotFoundImageType = 'default';
-  @Input() nzNotFoundContent?: string | TemplateRef<void> | null;
-  @Input() nzNotFoundFooter?: string | TemplateRef<void>;
+  @Input() notFoundImage: TriEmptyNotFoundImageType = 'default';
+  @Input() notFoundContent?: string | TemplateRef<void> | null;
+  @Input() notFoundFooter?: string | TemplateRef<void>;
 
   isContentString = false;
   isImageBuildIn = true;
-  locale!: NzEmptyI18nInterface;
+  locale!: TriEmptyI18nInterface;
 
   ngOnChanges(changes: SimpleChanges): void {
     const { nzNotFoundContent, nzNotFoundImage } = changes;

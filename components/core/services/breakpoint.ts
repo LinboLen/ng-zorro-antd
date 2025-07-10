@@ -9,7 +9,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, map, startWith } from 'rxjs/operators';
 
-import { NzResizeService } from './resize';
+import { TriResizeService } from './resize';
 
 export enum NzBreakpointEnum {
   xxl = 'xxl',
@@ -22,7 +22,7 @@ export enum NzBreakpointEnum {
 
 export type BreakpointMap = Record<NzBreakpointEnum, string>;
 export type BreakpointBooleanMap = Record<NzBreakpointEnum, boolean>;
-export type NzBreakpointKey = keyof typeof NzBreakpointEnum;
+export type TriBreakpointKey = keyof typeof NzBreakpointEnum;
 
 export const gridResponsiveMap: BreakpointMap = {
   xs: '(max-width: 575px)',
@@ -45,8 +45,8 @@ export const siderResponsiveMap: BreakpointMap = {
 @Injectable({
   providedIn: 'root'
 })
-export class NzBreakpointService {
-  private resizeService = inject(NzResizeService);
+export class TriBreakpointService {
+  private resizeService = inject(TriResizeService);
   private mediaMatcher = inject(MediaMatcher);
 
   constructor() {

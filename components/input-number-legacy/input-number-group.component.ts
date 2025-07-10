@@ -28,13 +28,13 @@ import {
 import { Subject, merge } from 'rxjs';
 import { distinctUntilChanged, map, mergeMap, startWith, switchMap, takeUntil } from 'rxjs/operators';
 
-import { NzFormItemFeedbackIconComponent, NzFormNoStatusService, NzFormStatusService } from 'ng-zorro-antd/core/form';
-import { NgClassInterface, NzSizeLDSType, NzStatus, NzValidateStatus } from 'ng-zorro-antd/core/types';
+import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
+import { NgClassInterface, TriSizeLDSType, TriStatus, TriValidateStatus } from 'ng-zorro-antd/core/types';
 import { getStatusClassNames } from 'ng-zorro-antd/core/util';
-import { NZ_SPACE_COMPACT_ITEM_TYPE, NzSpaceCompactItemDirective } from 'ng-zorro-antd/space';
+import { NZ_SPACE_COMPACT_ITEM_TYPE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
-import { NzInputNumberGroupSlotComponent } from './input-number-group-slot.component';
-import { NzInputNumberLegacyComponent } from './input-number.component';
+import { TriInputNumberGroupSlotComponent } from './input-number-group-slot.component';
+import { TriInputNumberLegacyComponent } from './input-number.component';
 
 /**
  * @deprecated Will be removed in v21. It is recommended to use the new version `<nz-input-number>`.
@@ -42,7 +42,7 @@ import { NzInputNumberLegacyComponent } from './input-number.component';
 @Directive({
   selector: `nz-input-number-group[nzSuffix], nz-input-number-group[nzPrefix]`
 })
-export class NzInputNumberGroupWhitSuffixOrPrefixDirective {
+export class TriInputNumberGroupWhitSuffixOrPrefixDirective {
   constructor(public elementRef: ElementRef) {}
 }
 
@@ -50,23 +50,23 @@ export class NzInputNumberGroupWhitSuffixOrPrefixDirective {
  * @deprecated Will be removed in v21. It is recommended to use the new version `<nz-input-number>`.
  */
 @Component({
-  selector: 'nz-input-number-group',
-  exportAs: 'nzInputNumberGroup',
-  imports: [NzInputNumberGroupSlotComponent, NgTemplateOutlet, NzFormItemFeedbackIconComponent],
+  selector: '',
+  exportAs: 'triInputNumberGroup',
+  imports: [TriInputNumberGroupSlotComponent, NgTemplateOutlet, TriFormItemFeedbackIconComponent],
   template: `
     @if (isAddOn) {
-      <span class="ant-input-number-wrapper ant-input-number-group">
-        @if (nzAddOnBefore || nzAddOnBeforeIcon) {
-          <div nz-input-number-group-slot type="addon" [icon]="nzAddOnBeforeIcon" [template]="nzAddOnBefore"></div>
+      <span class="tri-input-number-wrapper tri-input-number-group">
+        @if (addOnBefore || addOnBeforeIcon) {
+          <div tri-input-number-group-slot type="addon" [icon]="addOnBeforeIcon" [template]="addOnBefore"></div>
         }
 
         @if (isAffix || hasFeedback) {
           <div
-            class="ant-input-number-affix-wrapper"
-            [class.ant-input-number-affix-wrapper-disabled]="disabled"
-            [class.ant-input-number-affix-wrapper-sm]="isSmall"
-            [class.ant-input-number-affix-wrapper-lg]="isLarge"
-            [class.ant-input-number-affix-wrapper-focused]="focused"
+            class="tri-input-number-affix-wrapper"
+            [class.tri-input-number-affix-wrapper-disabled]="disabled"
+            [class.tri-input-number-affix-wrapper-sm]="isSmall"
+            [class.tri-input-number-affix-wrapper-lg]="isLarge"
+            [class.tri-input-number-affix-wrapper-focused]="focused"
             [class]="affixInGroupStatusCls"
           >
             <ng-template [ngTemplateOutlet]="affixTemplate"></ng-template>
@@ -75,8 +75,8 @@ export class NzInputNumberGroupWhitSuffixOrPrefixDirective {
           <ng-template [ngTemplateOutlet]="contentTemplate" />
         }
 
-        @if (nzAddOnAfter || nzAddOnAfterIcon) {
-          <span nz-input-number-group-slot type="addon" [icon]="nzAddOnAfterIcon" [template]="nzAddOnAfter"></span>
+        @if (addOnAfter || addOnAfterIcon) {
+          <span tri-input-number-group-slot type="addon" [icon]="addOnAfterIcon" [template]="addOnAfter"></span>
         }
       </span>
     } @else {
@@ -89,14 +89,14 @@ export class NzInputNumberGroupWhitSuffixOrPrefixDirective {
 
     <!-- Affix Template -->
     <ng-template #affixTemplate>
-      @if (nzPrefix || nzPrefixIcon) {
-        <span nz-input-number-group-slot type="prefix" [icon]="nzPrefixIcon" [template]="nzPrefix"></span>
+      @if (prefix || prefixIcon) {
+        <span tri-input-number-group-slot type="prefix" [icon]="prefixIcon" [template]="prefix"></span>
       }
       <ng-template [ngTemplateOutlet]="contentTemplate" />
-      @if (nzSuffix || nzSuffixIcon || isFeedback) {
-        <span nz-input-number-group-slot type="suffix" [icon]="nzSuffixIcon" [template]="nzSuffix">
+      @if (suffix || suffixIcon || isFeedback) {
+        <span tri-input-number-group-slot type="suffix" [icon]="suffixIcon" [template]="suffix">
           @if (isFeedback) {
-            <nz-form-item-feedback-icon [status]="status" />
+            <tri-form-item-feedback-icon [status]="status" />
           }
         </span>
       }
@@ -106,9 +106,9 @@ export class NzInputNumberGroupWhitSuffixOrPrefixDirective {
     <ng-template #contentTemplate>
       <ng-content />
       @if (!isAddOn && !isAffix && isFeedback) {
-        <span nz-input-number-group-slot type="suffix">
+        <span tri-input-number-group-slot type="suffix">
           @if (isFeedback) {
-            <nz-form-item-feedback-icon [status]="status" />
+            <tri-form-item-feedback-icon [status]="status" />
           }
         </span>
       }
@@ -116,34 +116,34 @@ export class NzInputNumberGroupWhitSuffixOrPrefixDirective {
   `,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [NzFormNoStatusService, { provide: NZ_SPACE_COMPACT_ITEM_TYPE, useValue: 'input-number' }],
+  providers: [TriFormNoStatusService, { provide: NZ_SPACE_COMPACT_ITEM_TYPE, useValue: 'input-number' }],
   host: {
-    '[class.ant-input-number-group-wrapper]': `isAddOn`,
-    '[class.ant-input-number-group-wrapper-rtl]': `isAddOn && dir === 'rtl'`,
-    '[class.ant-input-number-group-wrapper-lg]': `isAddOn && isLarge`,
-    '[class.ant-input-number-group-wrapper-sm]': `isAddOn && isSmall`,
-    '[class.ant-input-number-affix-wrapper]': `!isAddOn && isAffix`,
-    '[class.ant-input-number-affix-wrapper-rtl]': `!isAddOn && dir === 'rtl'`,
-    '[class.ant-input-number-affix-wrapper-focused]': `!isAddOn && isAffix && focused`,
-    '[class.ant-input-number-affix-wrapper-disabled]': `!isAddOn && isAffix && disabled`,
-    '[class.ant-input-number-affix-wrapper-lg]': `!isAddOn && isAffix && isLarge`,
-    '[class.ant-input-number-affix-wrapper-sm]': `!isAddOn && isAffix && isSmall`
+    '[class.tri-input-number-group-wrapper]': `isAddOn`,
+    '[class.tri-input-number-group-wrapper-rtl]': `isAddOn && dir === 'rtl'`,
+    '[class.tri-input-number-group-wrapper-lg]': `isAddOn && isLarge`,
+    '[class.tri-input-number-group-wrapper-sm]': `isAddOn && isSmall`,
+    '[class.tri-input-number-affix-wrapper]': `!isAddOn && isAffix`,
+    '[class.tri-input-number-affix-wrapper-rtl]': `!isAddOn && dir === 'rtl'`,
+    '[class.tri-input-number-affix-wrapper-focused]': `!isAddOn && isAffix && focused`,
+    '[class.tri-input-number-affix-wrapper-disabled]': `!isAddOn && isAffix && disabled`,
+    '[class.tri-input-number-affix-wrapper-lg]': `!isAddOn && isAffix && isLarge`,
+    '[class.tri-input-number-affix-wrapper-sm]': `!isAddOn && isAffix && isSmall`
   },
-  hostDirectives: [NzSpaceCompactItemDirective]
+  hostDirectives: [TriSpaceCompactItemDirective]
 })
-export class NzInputNumberGroupComponent implements AfterContentInit, OnChanges, OnInit, OnDestroy {
-  @ContentChildren(NzInputNumberLegacyComponent, { descendants: true })
-  listOfNzInputNumberComponent!: QueryList<NzInputNumberLegacyComponent>;
-  @Input() nzAddOnBeforeIcon?: string | null = null;
-  @Input() nzAddOnAfterIcon?: string | null = null;
-  @Input() nzPrefixIcon?: string | null = null;
-  @Input() nzSuffixIcon?: string | null = null;
-  @Input() nzAddOnBefore?: string | TemplateRef<void>;
-  @Input() nzAddOnAfter?: string | TemplateRef<void>;
-  @Input() nzPrefix?: string | TemplateRef<void>;
-  @Input() nzStatus: NzStatus = '';
-  @Input() nzSuffix?: string | TemplateRef<void>;
-  @Input() nzSize: NzSizeLDSType = 'default';
+export class TriInputNumberGroupComponent implements AfterContentInit, OnChanges, OnInit, OnDestroy {
+  @ContentChildren(TriInputNumberLegacyComponent, { descendants: true })
+  listOfNzInputNumberComponent!: QueryList<TriInputNumberLegacyComponent>;
+  @Input() addOnBeforeIcon?: string | null = null;
+  @Input() addOnAfterIcon?: string | null = null;
+  @Input() prefixIcon?: string | null = null;
+  @Input() suffixIcon?: string | null = null;
+  @Input() addOnBefore?: string | TemplateRef<void>;
+  @Input() addOnAfter?: string | TemplateRef<void>;
+  @Input() prefix?: string | TemplateRef<void>;
+  @Input() status: TriStatus = '';
+  @Input() suffix?: string | TemplateRef<void>;
+  @Input() size: TriSizeLDSType = 'default';
 
   isLarge = false;
   isSmall = false;
@@ -158,11 +158,11 @@ export class NzInputNumberGroupComponent implements AfterContentInit, OnChanges,
   affixStatusCls: NgClassInterface = {};
   groupStatusCls: NgClassInterface = {};
   affixInGroupStatusCls: NgClassInterface = {};
-  status: NzValidateStatus = '';
+  _status: TriValidateStatus = '';
   hasFeedback: boolean = false;
   private destroy$ = new Subject<void>();
-  private nzFormStatusService = inject(NzFormStatusService, { optional: true });
-  private nzFormNoStatusService = inject(NzFormNoStatusService, { optional: true });
+  private formStatusService = inject(TriFormStatusService, { optional: true });
+  private formNoStatusService = inject(TriFormNoStatusService, { optional: true });
 
   constructor(
     private focusMonitor: FocusMonitor,
@@ -174,12 +174,12 @@ export class NzInputNumberGroupComponent implements AfterContentInit, OnChanges,
 
   updateChildrenInputSize(): void {
     if (this.listOfNzInputNumberComponent) {
-      this.listOfNzInputNumberComponent.forEach(item => item['size'].set(this.nzSize));
+      this.listOfNzInputNumberComponent.forEach(item => item['size'].set(this.size));
     }
   }
 
   ngOnInit(): void {
-    this.nzFormStatusService?.formStatusChanges
+    this.formStatusService?.formStatusChanges
       .pipe(
         distinctUntilChanged((pre, cur) => {
           return pre.status === cur.status && pre.hasFeedback === cur.hasFeedback;
@@ -212,10 +212,10 @@ export class NzInputNumberGroupComponent implements AfterContentInit, OnChanges,
     listOfInputChange$
       .pipe(
         switchMap(list =>
-          merge(...[listOfInputChange$, ...list.map((input: NzInputNumberLegacyComponent) => input.disabled$)])
+          merge(...[listOfInputChange$, ...list.map((input: TriInputNumberLegacyComponent) => input.disabled$)])
         ),
         mergeMap(() => listOfInputChange$),
-        map(list => list.some((input: NzInputNumberLegacyComponent) => input.nzDisabled)),
+        map(list => list.some((input: TriInputNumberLegacyComponent) => input.disabled)),
         takeUntil(this.destroy$)
       )
       .subscribe(disabled => {
@@ -238,18 +238,18 @@ export class NzInputNumberGroupComponent implements AfterContentInit, OnChanges,
     } = changes;
     if (nzSize) {
       this.updateChildrenInputSize();
-      this.isLarge = this.nzSize === 'large';
-      this.isSmall = this.nzSize === 'small';
+      this.isLarge = this.size === 'large';
+      this.isSmall = this.size === 'small';
     }
     if (nzSuffix || nzPrefix || nzPrefixIcon || nzSuffixIcon) {
-      this.isAffix = !!(this.nzSuffix || this.nzPrefix || this.nzPrefixIcon || this.nzSuffixIcon);
+      this.isAffix = !!(this.suffix || this.prefix || this.prefixIcon || this.suffixIcon);
     }
     if (nzAddOnAfter || nzAddOnBefore || nzAddOnAfterIcon || nzAddOnBeforeIcon) {
-      this.isAddOn = !!(this.nzAddOnAfter || this.nzAddOnBefore || this.nzAddOnAfterIcon || this.nzAddOnBeforeIcon);
-      this.nzFormNoStatusService?.noFormStatus?.next(this.isAddOn);
+      this.isAddOn = !!(this.addOnAfter || this.addOnBefore || this.addOnAfterIcon || this.addOnBeforeIcon);
+      this.formNoStatusService?.noFormStatus?.next(this.isAddOn);
     }
     if (nzStatus) {
-      this.setStatusStyles(this.nzStatus, this.hasFeedback);
+      this.setStatusStyles(this.status, this.hasFeedback);
     }
   }
   ngOnDestroy(): void {
@@ -258,12 +258,12 @@ export class NzInputNumberGroupComponent implements AfterContentInit, OnChanges,
     this.destroy$.complete();
   }
 
-  private setStatusStyles(status: NzValidateStatus, hasFeedback: boolean): void {
+  private setStatusStyles(status: TriValidateStatus, hasFeedback: boolean): void {
     // set inner status
-    this.status = status;
+    this._status = status;
     this.hasFeedback = hasFeedback;
     this.isFeedback = !!status && hasFeedback;
-    const baseAffix = !!(this.nzSuffix || this.nzPrefix || this.nzPrefixIcon || this.nzSuffixIcon);
+    const baseAffix = !!(this.suffix || this.prefix || this.prefixIcon || this.suffixIcon);
     this.isAffix = baseAffix || (!this.isAddOn && hasFeedback);
     this.affixInGroupStatusCls =
       this.isAffix || this.isFeedback

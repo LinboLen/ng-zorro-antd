@@ -1,22 +1,22 @@
 import { Component } from '@angular/core';
 
-import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { TriBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 
 @Component({
-  selector: 'nz-demo-breadcrumb-separator-independent',
-  imports: [NzBreadCrumbModule],
+  selector: '',
+  imports: [TriBreadCrumbModule],
   template: `
-    <nz-breadcrumb [nzSeparator]="null">
-      <nz-breadcrumb-item>Location</nz-breadcrumb-item>
-      <nz-breadcrumb-separator>:</nz-breadcrumb-separator>
-      <nz-breadcrumb-item>
+    <tri-breadcrumb [separator]="null">
+      <tri-breadcrumb-item>Location</tri-breadcrumb-item>
+      <tri-breadcrumb-separator>:</tri-breadcrumb-separator>
+      <tri-breadcrumb-item>
         <a>Application Center</a>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-separator>/</nz-breadcrumb-separator>
-      <nz-breadcrumb-item>Application List</nz-breadcrumb-item>
-      <nz-breadcrumb-separator>/</nz-breadcrumb-separator>
-      <nz-breadcrumb-item>An Application</nz-breadcrumb-item>
-    </nz-breadcrumb>
+      </tri-breadcrumb-item>
+      <tri-breadcrumb-separator>/</tri-breadcrumb-separator>
+      <tri-breadcrumb-item>Application List</tri-breadcrumb-item>
+      <tri-breadcrumb-separator>/</tri-breadcrumb-separator>
+      <tri-breadcrumb-item>An Application</tri-breadcrumb-item>
+    </tri-breadcrumb>
   `
 })
-export class NzDemoBreadcrumbSeparatorIndependentComponent {}
+export class TriDemoBreadcrumbSeparatorIndependentComponent {}

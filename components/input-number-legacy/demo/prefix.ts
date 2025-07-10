@@ -1,24 +1,24 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzInputNumberLegacyModule } from 'ng-zorro-antd/input-number-legacy';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { TriInputNumberLegacyModule } from 'ng-zorro-antd/input-number-legacy';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: 'nz-demo-input-number-legacy-prefix',
-  imports: [FormsModule, NzInputNumberLegacyModule, NzSpaceModule],
+  selector: '',
+  imports: [FormsModule, TriInputNumberLegacyModule, TriSpaceModule],
   template: `
-    <nz-space nzDirection="vertical" style="width: 100%">
-      <nz-input-number-group *nzSpaceItem nzPrefix="￥" style="width: 100%">
-        <nz-input-number [nzStep]="1"></nz-input-number>
-      </nz-input-number-group>
-      <nz-input-number-group *nzSpaceItem nzAddOnBeforeIcon="user" nzPrefix="￥" style="width: 100%">
-        <nz-input-number [nzStep]="1"></nz-input-number>
-      </nz-input-number-group>
-      <nz-input-number-group *nzSpaceItem nzPrefix="￥" style="width: 100%">
-        <nz-input-number nzDisabled [nzStep]="1"></nz-input-number>
-      </nz-input-number-group>
-    </nz-space>
+    <tri-space direction="vertical" style="width: 100%">
+      <tri-input-number-group *spaceItem prefix="￥" style="width: 100%">
+        <tri-input-number [step]="1"></tri-input-number>
+      </tri-input-number-group>
+      <tri-input-number-group *spaceItem addOnBeforeIcon="user" prefix="￥" style="width: 100%">
+        <tri-input-number [step]="1"></tri-input-number>
+      </tri-input-number-group>
+      <tri-input-number-group *spaceItem prefix="￥" style="width: 100%">
+        <tri-input-number disabled [step]="1"></tri-input-number>
+      </tri-input-number-group>
+    </tri-space>
   `
 })
-export class NzDemoInputNumberLegacyPrefixComponent {}
+export class TriDemoInputNumberLegacyPrefixComponent {}

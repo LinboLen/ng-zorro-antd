@@ -14,57 +14,57 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { NzBreakpointKey } from 'ng-zorro-antd/core/services';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriBreakpointKey } from 'ng-zorro-antd/core/services';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: '[nz-sider-trigger]',
-  exportAs: 'nzSiderTrigger',
+  selector: '',
+  exportAs: 'triSiderTrigger',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (isZeroTrigger) {
-      <ng-template [ngTemplateOutlet]="nzZeroTrigger || defaultZeroTrigger" />
+      <ng-template [ngTemplateOutlet]="zeroTrigger || defaultZeroTrigger" />
     }
 
     @if (isNormalTrigger) {
-      <ng-template [ngTemplateOutlet]="nzTrigger || defaultTrigger" />
+      <ng-template [ngTemplateOutlet]="trigger || defaultTrigger" />
     }
     <ng-template #defaultTrigger>
-      @if (nzReverseArrow) {
-        <nz-icon [nzType]="nzCollapsed ? 'left' : 'right'" />
+      @if (reverseArrow) {
+        <tri-icon [type]="collapsed ? 'left' : 'right'" />
       } @else {
-        <nz-icon [nzType]="nzCollapsed ? 'right' : 'left'" />
+        <tri-icon [type]="collapsed ? 'right' : 'left'" />
       }
     </ng-template>
     <ng-template #defaultZeroTrigger>
-      <nz-icon nzType="bars" />
+      <tri-icon type="bars" />
     </ng-template>
   `,
   host: {
-    '[class.ant-layout-sider-trigger]': 'isNormalTrigger',
+    '[class.tri-layout-sider-trigger]': 'isNormalTrigger',
     '[style.width]': 'isNormalTrigger ? siderWidth : null',
-    '[class.ant-layout-sider-zero-width-trigger]': 'isZeroTrigger',
-    '[class.ant-layout-sider-zero-width-trigger-right]': 'isZeroTrigger && nzReverseArrow',
-    '[class.ant-layout-sider-zero-width-trigger-left]': 'isZeroTrigger && !nzReverseArrow'
+    '[class.tri-layout-sider-zero-width-trigger]': 'isZeroTrigger',
+    '[class.tri-layout-sider-zero-width-trigger-right]': 'isZeroTrigger && reverseArrow',
+    '[class.tri-layout-sider-zero-width-trigger-left]': 'isZeroTrigger && !reverseArrow'
   },
-  imports: [NgTemplateOutlet, NzIconModule]
+  imports: [NgTemplateOutlet, TriIconModule]
 })
-export class NzSiderTriggerComponent implements OnChanges, OnInit {
-  @Input() nzCollapsed = false;
-  @Input() nzReverseArrow = false;
-  @Input() nzZeroTrigger: TemplateRef<void> | null = null;
-  @Input() nzTrigger: TemplateRef<void> | undefined | null = undefined;
+export class TriSiderTriggerComponent implements OnChanges, OnInit {
+  @Input() collapsed = false;
+  @Input() reverseArrow = false;
+  @Input() zeroTrigger: TemplateRef<void> | null = null;
+  @Input() trigger: TemplateRef<void> | undefined | null = undefined;
   @Input() matchBreakPoint = false;
-  @Input() nzCollapsedWidth: number | null = null;
+  @Input() collapsedWidth: number | null = null;
   @Input() siderWidth: string | null = null;
-  @Input() nzBreakpoint: NzBreakpointKey | null = null;
+  @Input() breakpoint: TriBreakpointKey | null = null;
   isZeroTrigger = false;
   isNormalTrigger = false;
   updateTriggerType(): void {
     this.isZeroTrigger =
-      this.nzCollapsedWidth === 0 && ((this.nzBreakpoint && this.matchBreakPoint) || !this.nzBreakpoint);
-    this.isNormalTrigger = this.nzCollapsedWidth !== 0;
+      this.collapsedWidth === 0 && ((this.breakpoint && this.matchBreakPoint) || !this.breakpoint);
+    this.isNormalTrigger = this.collapsedWidth !== 0;
   }
   ngOnInit(): void {
     this.updateTriggerType();

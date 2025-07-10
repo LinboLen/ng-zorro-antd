@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzAffixComponent } from './affix.component';
+import { TriAffixComponent } from './affix.component';
 
 @NgModule({
-  exports: [NzAffixComponent],
-  imports: [NzAffixComponent]
+  exports: [TriAffixComponent],
+  imports: [TriAffixComponent]
 })
-export class NzAffixModule {}
+export class TriAffixModule {}

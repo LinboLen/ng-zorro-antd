@@ -37,44 +37,44 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { animationFrameScheduler, asapScheduler, merge, of } from 'rxjs';
 import { auditTime } from 'rxjs/operators';
 
-import { NzResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
+import { TriResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
 import { requestAnimationFrame } from 'ng-zorro-antd/core/polyfill';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzTabPositionMode, NzTabScrollEvent, NzTabScrollListOffsetEvent } from './interfaces';
-import { NzTabAddButtonComponent } from './tab-add-button.component';
-import { NzTabBarExtraContentDirective } from './tab-bar-extra-content.directive';
-import { NzTabNavItemDirective } from './tab-nav-item.directive';
-import { NzTabNavOperationComponent } from './tab-nav-operation.component';
-import { NzTabScrollListDirective } from './tab-scroll-list.directive';
-import { NzTabsInkBarDirective } from './tabs-ink-bar.directive';
+import { TriTabPositionMode, TriTabScrollEvent, TriTabScrollListOffsetEvent } from './interfaces';
+import { TriTabAddButtonComponent } from './tab-add-button.component';
+import { TriTabBarExtraContentDirective } from './tab-bar-extra-content.directive';
+import { TriTabNavItemDirective } from './tab-nav-item.directive';
+import { TriTabNavOperationComponent } from './tab-nav-operation.component';
+import { TriTabScrollListDirective } from './tab-scroll-list.directive';
+import { TriTabsInkBarDirective } from './tabs-ink-bar.directive';
 
 const RESIZE_SCHEDULER = typeof requestAnimationFrame !== 'undefined' ? animationFrameScheduler : asapScheduler;
 const CSS_TRANSFORM_TIME = 150;
 
 @Component({
-  selector: 'nz-tabs-nav',
-  exportAs: 'nzTabsNav',
+  selector: '',
+  exportAs: 'triTabsNav',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
     @if (startExtraContent()) {
-      <div class="ant-tabs-extra-content">
+      <div class="tri-tabs-extra-content">
         <ng-template [ngTemplateOutlet]="startExtraContent()!.templateRef"></ng-template>
       </div>
     }
     <div
-      class="ant-tabs-nav-wrap"
-      [class.ant-tabs-nav-wrap-ping-left]="pingLeft"
-      [class.ant-tabs-nav-wrap-ping-right]="pingRight"
-      [class.ant-tabs-nav-wrap-ping-top]="pingTop"
-      [class.ant-tabs-nav-wrap-ping-bottom]="pingBottom"
+      class="tri-tabs-nav-wrap"
+      [class.tri-tabs-nav-wrap-ping-left]="pingLeft"
+      [class.tri-tabs-nav-wrap-ping-right]="pingRight"
+      [class.tri-tabs-nav-wrap-ping-top]="pingTop"
+      [class.tri-tabs-nav-wrap-ping-bottom]="pingBottom"
       #navWrap
     >
       <div
-        class="ant-tabs-nav-list"
+        class="tri-tabs-nav-list"
         #navList
-        nzTabScrollList
+        tabScrollList
         (offsetChange)="onOffsetChange($event)"
         (tabScroll)="tabScroll.emit($event)"
         role="tablist"
@@ -84,64 +84,64 @@ const CSS_TRANSFORM_TIME = 150;
           <button
             role="tab"
             [attr.tabindex]="-1"
-            nz-tab-add-button
+            tri-tab-add-button
             [addIcon]="addIcon"
             (click)="addClicked.emit()"
           ></button>
         }
-        <div nz-tabs-ink-bar [hidden]="hideBar" [position]="position" [animated]="inkBarAnimated"></div>
+        <div tri-tabs-ink-bar [hidden]="hideBar" [position]="position" [animated]="inkBarAnimated"></div>
       </div>
     </div>
-    <nz-tab-nav-operation
+    <tri-tab-nav-operation
       (addClicked)="addClicked.emit()"
       (selected)="onSelectedFromMenu($event)"
       [addIcon]="addIcon"
       [addable]="addable"
       [items]="hiddenItems"
-    ></nz-tab-nav-operation>
+    ></tri-tab-nav-operation>
     @if (endExtraContent()) {
-      <div class="ant-tabs-extra-content">
+      <div class="tri-tabs-extra-content">
         <ng-template [ngTemplateOutlet]="endExtraContent()!.templateRef"></ng-template>
       </div>
     } @else if (extraTemplate) {
-      <div class="ant-tabs-extra-content">
+      <div class="tri-tabs-extra-content">
         <ng-template [ngTemplateOutlet]="extraTemplate"></ng-template>
       </div>
     }
   `,
   host: {
-    class: 'ant-tabs-nav',
+    class: 'tri-tabs-nav',
     '(keydown)': 'handleKeydown($event)'
   },
   imports: [
-    NzTabScrollListDirective,
-    NzTabAddButtonComponent,
-    NzTabsInkBarDirective,
-    NzTabNavOperationComponent,
+    TriTabScrollListDirective,
+    TriTabAddButtonComponent,
+    TriTabsInkBarDirective,
+    TriTabNavOperationComponent,
     NgTemplateOutlet
   ]
 })
-export class NzTabNavBarComponent implements AfterViewInit, AfterContentChecked, OnChanges {
+export class TriTabNavBarComponent implements AfterViewInit, AfterContentChecked, OnChanges {
   private cdr = inject(ChangeDetectorRef);
   private ngZone = inject(NgZone);
   private viewportRuler = inject(ViewportRuler);
-  private nzResizeObserver = inject(NzResizeObserver);
+  private resizeObserver = inject(TriResizeObserver);
   private dir = inject(Directionality);
   private destroyRef = inject(DestroyRef);
 
   @Output() readonly indexFocused: EventEmitter<number> = new EventEmitter<number>();
   @Output() readonly selectFocusedIndex: EventEmitter<number> = new EventEmitter<number>();
   @Output() readonly addClicked = new EventEmitter<void>();
-  @Output() readonly tabScroll = new EventEmitter<NzTabScrollEvent>();
+  @Output() readonly tabScroll = new EventEmitter<TriTabScrollEvent>();
 
-  @Input() position: NzTabPositionMode = 'horizontal';
+  @Input() position: TriTabPositionMode = 'horizontal';
   @Input({ transform: booleanAttribute }) addable: boolean = false;
   @Input({ transform: booleanAttribute }) hideBar: boolean = false;
-  @Input() addIcon: string | TemplateRef<NzSafeAny> = 'plus';
+  @Input() addIcon: string | TemplateRef<TriSafeAny> = 'plus';
   @Input() inkBarAnimated = true;
   @Input() extraTemplate?: TemplateRef<void>;
 
-  readonly extraContents = input.required<readonly NzTabBarExtraContentDirective[]>();
+  readonly extraContents = input.required<readonly TriTabBarExtraContentDirective[]>();
 
   readonly startExtraContent = computed(() => this.extraContents().find(item => item.position() === 'start'));
   readonly endExtraContent = computed(() => this.extraContents().find(item => item.position() === 'end'));
@@ -163,10 +163,10 @@ export class NzTabNavBarComponent implements AfterViewInit, AfterContentChecked,
 
   @ViewChild('navWrap', { static: true }) navWrapRef!: ElementRef<HTMLElement>;
   @ViewChild('navList', { static: true }) navListRef!: ElementRef<HTMLElement>;
-  @ViewChild(NzTabNavOperationComponent, { static: true }) operationRef!: NzTabNavOperationComponent;
-  @ViewChild(NzTabAddButtonComponent, { static: false }) addBtnRef!: NzTabAddButtonComponent;
-  @ViewChild(NzTabsInkBarDirective, { static: true }) inkBar!: NzTabsInkBarDirective;
-  @ContentChildren(NzTabNavItemDirective, { descendants: true }) items!: QueryList<NzTabNavItemDirective>;
+  @ViewChild(TriTabNavOperationComponent, { static: true }) operationRef!: TriTabNavOperationComponent;
+  @ViewChild(TriTabAddButtonComponent, { static: false }) addBtnRef!: TriTabAddButtonComponent;
+  @ViewChild(TriTabsInkBarDirective, { static: true }) inkBar!: TriTabsInkBarDirective;
+  @ContentChildren(TriTabNavItemDirective, { descendants: true }) items!: QueryList<TriTabNavItemDirective>;
 
   /** Tracks which element has focus; used for keyboard navigation */
   get focusIndex(): number {
@@ -193,9 +193,9 @@ export class NzTabNavBarComponent implements AfterViewInit, AfterContentChecked,
   pingRight = false;
   pingTop = false;
   pingBottom = false;
-  hiddenItems: NzTabNavItemDirective[] = [];
+  hiddenItems: TriTabNavItemDirective[] = [];
 
-  private keyManager!: FocusKeyManager<NzTabNavItemDirective>;
+  private keyManager!: FocusKeyManager<TriTabNavItemDirective>;
   private _selectedIndex = 0;
   private wrapperWidth = 0;
   private wrapperHeight = 0;
@@ -224,14 +224,14 @@ export class NzTabNavBarComponent implements AfterViewInit, AfterContentChecked,
       this.updateScrollListPosition();
       this.alignInkBarToSelectedTab();
     };
-    this.keyManager = new FocusKeyManager<NzTabNavItemDirective>(this.items)
+    this.keyManager = new FocusKeyManager<TriTabNavItemDirective>(this.items)
       .withHorizontalOrientation(this.getLayoutDirection())
       .withWrap();
     this.keyManager.updateActiveItem(this.selectedIndex);
 
     requestAnimationFrame(realign);
 
-    merge(this.nzResizeObserver.observe(this.navWrapRef), this.nzResizeObserver.observe(this.navListRef))
+    merge(this.resizeObserver.observe(this.navWrapRef), this.resizeObserver.observe(this.navListRef))
       .pipe(takeUntilDestroyed(this.destroyRef), auditTime(16, RESIZE_SCHEDULER))
       .subscribe(() => {
         realign();
@@ -258,7 +258,7 @@ export class NzTabNavBarComponent implements AfterViewInit, AfterContentChecked,
     }
   }
 
-  onSelectedFromMenu(tab: NzTabNavItemDirective): void {
+  onSelectedFromMenu(tab: TriTabNavItemDirective): void {
     const tabIndex = this.items.toArray().findIndex(e => e === tab);
     if (tabIndex !== -1) {
       this.keyManager.updateActiveItem(tabIndex);
@@ -269,7 +269,7 @@ export class NzTabNavBarComponent implements AfterViewInit, AfterContentChecked,
     }
   }
 
-  onOffsetChange(e: NzTabScrollListOffsetEvent): void {
+  onOffsetChange(e: TriTabScrollListOffsetEvent): void {
     if (this.position === 'horizontal') {
       if (!this.lockAnimationTimeoutId) {
         if (this.transformX >= 0 && e.x > 0) {
@@ -335,7 +335,7 @@ export class NzTabNavBarComponent implements AfterViewInit, AfterContentChecked,
     return !!tab && !tab.disabled;
   }
 
-  private scrollToTab(tab: NzTabNavItemDirective): void {
+  private scrollToTab(tab: TriTabNavItemDirective): void {
     if (!this.items.find(e => e === tab)) {
       return;
     }

@@ -1,16 +1,16 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzQRCodeModule } from 'ng-zorro-antd/qr-code';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriQRCodeModule } from 'ng-zorro-antd/qr-code';
 
 @Component({
-  selector: 'nz-demo-qr-code-download',
-  imports: [NzButtonModule, NzQRCodeModule],
+  selector: '',
+  imports: [TriButtonModule, TriQRCodeModule],
   template: `
     <div id="download">
-      <nz-qrcode nzValue="https://ng.ant.design/"></nz-qrcode>
+      <tri-qrcode value="https://ng.ant.design/"></tri-qrcode>
       <a #download></a>
-      <button nz-button nzType="primary" (click)="downloadImg()">Download</button>
+      <button tri-button type="primary" (click)="downloadImg()">Download</button>
     </div>
   `,
   styles: [
@@ -27,7 +27,7 @@ import { NzQRCodeModule } from 'ng-zorro-antd/qr-code';
     `
   ]
 })
-export class NzDemoQrCodeDownloadComponent {
+export class TriDemoQrCodeDownloadComponent {
   @ViewChild('download', { static: false }) download!: ElementRef;
 
   downloadImg(): void {

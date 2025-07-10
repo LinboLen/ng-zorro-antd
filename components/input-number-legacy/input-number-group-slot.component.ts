@@ -5,31 +5,31 @@
 
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 /**
  * @deprecated Will be removed in v21. It is recommended to use the new version `<nz-input-number>`.
  */
 @Component({
-  selector: '[nz-input-number-group-slot]',
+  selector: '',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (icon) {
-      <nz-icon [nzType]="icon" />
+      <tri-icon [type]="icon" />
     }
-    <ng-container *nzStringTemplateOutlet="template">{{ template }}</ng-container>
+    <ng-container *stringTemplateOutlet="template">{{ template }}</ng-container>
     <ng-content></ng-content>
   `,
   host: {
-    '[class.ant-input-number-group-addon]': `type === 'addon'`,
-    '[class.ant-input-number-prefix]': `type === 'prefix'`,
-    '[class.ant-input-number-suffix]': `type === 'suffix'`
+    '[class.tri-input-number-group-addon]': `type === 'addon'`,
+    '[class.tri-input-number-prefix]': `type === 'prefix'`,
+    '[class.tri-input-number-suffix]': `type === 'suffix'`
   },
-  imports: [NzIconModule, NzOutletModule]
+  imports: [TriIconModule, TriOutletModule]
 })
-export class NzInputNumberGroupSlotComponent {
+export class TriInputNumberGroupSlotComponent {
   @Input() icon?: string | null = null;
   @Input() type: 'addon' | 'prefix' | 'suffix' | null = null;
   @Input() template?: string | TemplateRef<void> | null = null;

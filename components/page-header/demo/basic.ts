@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 
-import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { TriPageHeaderModule } from 'ng-zorro-antd/page-header';
 
 @Component({
-  selector: 'nz-demo-page-header-basic',
-  imports: [NzPageHeaderModule],
+  selector: '',
+  imports: [TriPageHeaderModule],
   template: `
-    <nz-page-header (nzBack)="onBack()" nzBackIcon nzTitle="Title" nzSubtitle="This is a subtitle"></nz-page-header>
+    <tri-page-header (back)="onBack()" backIcon title="Title" subtitle="This is a subtitle"></tri-page-header>
   `
 })
-export class NzDemoPageHeaderBasicComponent {
+export class TriDemoPageHeaderBasicComponent {
   onBack(): void {
     console.log('onBack');
   }

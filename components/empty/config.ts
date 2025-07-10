@@ -10,10 +10,10 @@
 
 import { InjectionToken, TemplateRef, Type } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-export type NzEmptySize = 'normal' | 'small' | '';
+export type TriEmptySize = 'normal' | 'small' | '';
 
-export type NzEmptyCustomContent = Type<NzSafeAny> | TemplateRef<NzSafeAny> | string | null;
+export type TriEmptyCustomContent = Type<TriSafeAny> | TemplateRef<TriSafeAny> | string | null;
 
 export const NZ_EMPTY_COMPONENT_NAME = new InjectionToken<string>('nz-empty-component-name');

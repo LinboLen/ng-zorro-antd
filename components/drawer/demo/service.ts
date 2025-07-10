@@ -1,80 +1,80 @@
 import { Component, TemplateRef, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NZ_DRAWER_DATA, NzDrawerModule, NzDrawerRef, NzDrawerService } from 'ng-zorro-antd/drawer';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriDividerModule } from 'ng-zorro-antd/divider';
+import { NZ_DRAWER_DATA, TriDrawerModule, TriDrawerRef, TriDrawerService } from 'ng-zorro-antd/drawer';
+import { TriFormModule } from 'ng-zorro-antd/form';
+import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: 'nz-demo-drawer-service',
-  imports: [FormsModule, NzButtonModule, NzDrawerModule, NzFormModule, NzInputModule],
+  selector: '',
+  imports: [FormsModule, TriButtonModule, TriDrawerModule, TriFormModule, TriInputModule],
   template: `
     <ng-template #drawerTemplate let-data let-drawerRef="drawerRef">
       value: {{ data?.value }}
       <br />
       <br />
-      <button nz-button nzType="primary" (click)="drawerRef.close()">close</button>
+      <button tri-button type="primary" (click)="drawerRef.close()">close</button>
     </ng-template>
-    <div nz-form>
-      <nz-form-item>
-        <input nz-input [(ngModel)]="value" />
-      </nz-form-item>
+    <div tri-form>
+      <tri-form-item>
+        <input tri-input [(ngModel)]="value" />
+      </tri-form-item>
     </div>
-    <button nz-button nzType="primary" (click)="openTemplate()">Use Template</button>
+    <button tri-button type="primary" (click)="openTemplate()">Use Template</button>
     &nbsp;
-    <button nz-button nzType="primary" (click)="openComponent()">Use Component</button>
+    <button tri-button type="primary" (click)="openComponent()">Use Component</button>
   `
 })
-export class NzDemoDrawerServiceComponent {
+export class TriDemoDrawerServiceComponent {
   @ViewChild('drawerTemplate', { static: false }) drawerTemplate?: TemplateRef<{
     $implicit: { value: string };
-    drawerRef: NzDrawerRef<string>;
+    drawerRef: TriDrawerRef<string>;
   }>;
   value = 'ng';
 
-  constructor(private drawerService: NzDrawerService) {}
+  constructor(private drawerService: TriDrawerService) {}
 
   openTemplate(): void {
     const drawerRef = this.drawerService.create({
       nzTitle: 'Template',
-      nzFooter: 'Footer',
-      nzExtra: 'Extra',
-      nzContent: this.drawerTemplate,
-      nzContentParams: {
+      footer: 'Footer',
+      extra: 'Extra',
+      content: this.drawerTemplate,
+      contentParams: {
         value: this.value
       }
     });
 
-    drawerRef.afterOpen.subscribe(() => {
+    drawerRef._afterOpen.subscribe(() => {
       console.log('Drawer(Template) open');
     });
 
-    drawerRef.afterClose.subscribe(() => {
+    drawerRef._afterClose.subscribe(() => {
       console.log('Drawer(Template) close');
     });
   }
 
   openComponent(): void {
-    const drawerRef = this.drawerService.create<NzDrawerCustomComponent, { value: string }, string>({
+    const drawerRef = this.drawerService.create<TriDrawerCustomComponent, { value: string }, string>({
       nzTitle: 'Component',
-      nzFooter: 'Footer',
-      nzExtra: 'Extra',
-      nzContent: NzDrawerCustomComponent,
-      nzContentParams: {
+      footer: 'Footer',
+      extra: 'Extra',
+      content: TriDrawerCustomComponent,
+      contentParams: {
         value: this.value
       },
-      nzData: {
+      data: {
         value: 'Ng Zorro'
       }
     });
 
-    drawerRef.afterOpen.subscribe(() => {
+    drawerRef._afterOpen.subscribe(() => {
       console.log('Drawer(Component) open');
     });
 
-    drawerRef.afterClose.subscribe(data => {
+    drawerRef._afterClose.subscribe(data => {
       console.log(data);
       if (typeof data === 'string') {
         this.value = data;
@@ -84,23 +84,23 @@ export class NzDemoDrawerServiceComponent {
 }
 
 @Component({
-  selector: 'nz-drawer-custom-component',
-  imports: [FormsModule, NzButtonModule, NzDividerModule, NzInputModule],
+  selector: '',
+  imports: [FormsModule, TriButtonModule, TriDividerModule, TriInputModule],
   template: `
     <div>
-      <input nz-input [(ngModel)]="nzData.value" />
-      <nz-divider></nz-divider>
-      <button nzType="primary" (click)="close()" nz-button>Confirm</button>
+      <input tri-input [(ngModel)]="data.value" />
+      <tri-divider></tri-divider>
+      <button type="primary" (click)="close()" tri-button>Confirm</button>
     </div>
   `
 })
-export class NzDrawerCustomComponent {
+export class TriDrawerCustomComponent {
   // @Input() value = '';
-  nzData: { value: string } = inject(NZ_DRAWER_DATA);
+  data: { value: string } = inject(NZ_DRAWER_DATA);
 
-  constructor(private drawerRef: NzDrawerRef<string>) {}
+  constructor(private drawerRef: TriDrawerRef<string>) {}
 
   close(): void {
-    this.drawerRef.close(this.nzData);
+    this.drawerRef.close(this.data);
   }
 }

@@ -5,11 +5,11 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzAnchorLinkComponent } from './anchor-link.component';
-import { NzAnchorComponent } from './anchor.component';
+import { TriAnchorLinkComponent } from './anchor-link.component';
+import { TriAnchorComponent } from './anchor.component';
 
 @NgModule({
-  exports: [NzAnchorComponent, NzAnchorLinkComponent],
-  imports: [NzAnchorComponent, NzAnchorLinkComponent]
+  exports: [TriAnchorComponent, TriAnchorLinkComponent],
+  imports: [TriAnchorComponent, TriAnchorLinkComponent]
 })
-export class NzAnchorModule {}
+export class TriAnchorModule {}

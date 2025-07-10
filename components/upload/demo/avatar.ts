@@ -1,30 +1,30 @@
 import { Component } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzUploadFile, NzUploadModule } from 'ng-zorro-antd/upload';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriMessageService } from 'ng-zorro-antd/message';
+import { TriUploadFile, TriUploadModule } from 'ng-zorro-antd/upload';
 
 @Component({
-  selector: 'nz-demo-upload-avatar',
-  imports: [NzIconModule, NzUploadModule],
+  selector: '',
+  imports: [TriIconModule, TriUploadModule],
   template: `
-    <nz-upload
+    <tri-upload
       class="avatar-uploader"
-      nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-      nzName="avatar"
-      nzListType="picture-card"
-      [nzShowUploadList]="false"
-      [nzBeforeUpload]="beforeUpload"
-      (nzChange)="handleChange($event)"
+      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+      name="avatar"
+      listType="picture-card"
+      [showUploadList]="false"
+      [beforeUpload]="beforeUpload"
+      (change)="handleChange($event)"
     >
       @if (!avatarUrl) {
-        <nz-icon class="upload-icon" [nzType]="loading ? 'loading' : 'plus'" />
-        <div class="ant-upload-text">Upload</div>
+        <tri-icon class="upload-icon" [type]="loading ? 'loading' : 'plus'" />
+        <div class="tri-upload-text">Upload</div>
       } @else {
         <img [src]="avatarUrl" style="width: 100%" />
       }
-    </nz-upload>
+    </tri-upload>
   `,
   styles: [
     `
@@ -35,13 +35,13 @@ import { NzUploadFile, NzUploadModule } from 'ng-zorro-antd/upload';
     `
   ]
 })
-export class NzDemoUploadAvatarComponent {
+export class TriDemoUploadAvatarComponent {
   loading = false;
   avatarUrl?: string;
 
-  constructor(private messageService: NzMessageService) {}
+  constructor(private messageService: TriMessageService) {}
 
-  beforeUpload = (file: NzUploadFile, _fileList: NzUploadFile[]): Observable<boolean> =>
+  beforeUpload = (file: TriUploadFile, _fileList: TriUploadFile[]): Observable<boolean> =>
     new Observable((observer: Observer<boolean>) => {
       const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
       if (!isJpgOrPng) {
@@ -65,7 +65,7 @@ export class NzDemoUploadAvatarComponent {
     reader.readAsDataURL(img);
   }
 
-  handleChange(info: { file: NzUploadFile }): void {
+  handleChange(info: { file: TriUploadFile }): void {
     switch (info.file.status) {
       case 'uploading':
         this.loading = true;

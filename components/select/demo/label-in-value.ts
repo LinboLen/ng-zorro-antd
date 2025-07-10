@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzSelectModule } from 'ng-zorro-antd/select';
+import { TriSelectModule } from 'ng-zorro-antd/select';
 
 interface Option {
   label: string;
@@ -10,22 +10,22 @@ interface Option {
 }
 
 @Component({
-  selector: 'nz-demo-select-label-in-value',
-  imports: [FormsModule, NzSelectModule],
+  selector: '',
+  imports: [FormsModule, TriSelectModule],
   template: `
     <p>The selected option's age is {{ selectedValue?.age }}</p>
     <br />
-    <nz-select
+    <tri-select
       [(ngModel)]="selectedValue"
       [compareWith]="compareFn"
       (ngModelChange)="log($event)"
-      nzAllowClear
-      nzPlaceHolder="Choose"
+      allowClear
+      placeHolder="Choose"
     >
       @for (option of optionList; track option) {
-        <nz-option [nzValue]="option" [nzLabel]="option.label"></nz-option>
+        <tri-option [value]="option" [label]="option.label"></tri-option>
       }
-    </nz-select>
+    </tri-select>
   `,
   styles: [
     `
@@ -35,7 +35,7 @@ interface Option {
     `
   ]
 })
-export class NzDemoSelectLabelInValueComponent {
+export class TriDemoSelectLabelInValueComponent {
   optionList: Option[] = [
     { label: 'Lucy', value: 'lucy', age: 20 },
     { label: 'Jack', value: 'jack', age: 22 }

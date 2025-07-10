@@ -7,18 +7,18 @@ import { ApplicationRef, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzCascaderModule } from 'ng-zorro-antd/cascader';
-import { NzSizeLDSType } from 'ng-zorro-antd/core/types';
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
-import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriCascaderModule } from 'ng-zorro-antd/cascader';
+import { TriSizeLDSType } from 'ng-zorro-antd/core/types';
+import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
+import { TriSelectModule } from 'ng-zorro-antd/select';
+import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
+import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
-import { NzSpaceModule } from './space.module';
-import { NzSpaceDirection } from './types';
+import { TriSpaceModule } from './space.module';
+import { TriSpaceDirection } from './types';
 
 describe('Space compact', () => {
   let component: SpaceCompactTestComponent;
@@ -209,51 +209,51 @@ describe('Space compact direction', () => {
 
 @Component({
   imports: [
-    NzSpaceModule,
-    NzButtonModule,
-    NzInputModule,
-    NzInputNumberModule,
-    NzSelectModule,
-    NzCascaderModule,
-    NzTreeSelectModule,
-    NzDatePickerModule,
-    NzTimePickerModule
+    TriSpaceModule,
+    TriButtonModule,
+    TriInputModule,
+    TriInputNumberModule,
+    TriSelectModule,
+    TriCascaderModule,
+    TriTreeSelectModule,
+    TriDatePickerModule,
+    TriTimePickerModule
   ],
   template: `
-    <nz-space-compact [nzSize]="size" [nzBlock]="block">
+    <tri-space-compact [size]="size" [block]="block">
       @if (showFirst) {
-        <input nz-input />
+        <input tri-input />
       }
-      <nz-input-group><input nz-input /></nz-input-group>
-      <nz-input-number />
-      <nz-date-picker />
-      <nz-range-picker />
-      <nz-time-picker />
-      <nz-cascader [nzOptions]="[]" />
-      <nz-select />
-      <nz-tree-select [nzNodes]="[]" />
+      <tri-input-group><input tri-input /></tri-input-group>
+      <tri-input-number />
+      <tri-date-picker />
+      <tri-range-picker />
+      <tri-time-picker />
+      <tri-cascader [options]="[]" />
+      <tri-select />
+      <tri-tree-select [nodes]="[]" />
       @if (showLast) {
-        <button nz-button nzType="primary">btn</button>
+        <button tri-button type="primary">btn</button>
       }
-    </nz-space-compact>
+    </tri-space-compact>
   `
 })
 class SpaceCompactTestComponent {
   block: boolean = false;
-  size: NzSizeLDSType = 'default';
+  size: TriSizeLDSType = 'default';
   showFirst = true;
   showLast = true;
 }
 
 @Component({
-  imports: [NzSpaceModule, NzButtonModule],
+  imports: [TriSpaceModule, TriButtonModule],
   template: `
-    <nz-space-compact [nzDirection]="direction">
-      <button nz-button nzType="primary">btn</button>
-      <button nz-button nzType="primary">btn</button>
-    </nz-space-compact>
+    <tri-space-compact [direction]="direction">
+      <button tri-button type="primary">btn</button>
+      <button tri-button type="primary">btn</button>
+    </tri-space-compact>
   `
 })
 class SpaceCompactDirectionTestComponent {
-  direction: NzSpaceDirection = 'horizontal';
+  direction: TriSpaceDirection = 'horizontal';
 }

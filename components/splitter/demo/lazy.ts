@@ -1,28 +1,28 @@
 import { Component } from '@angular/core';
 
-import { NzSplitterModule } from 'ng-zorro-antd/splitter';
+import { TriSplitterModule } from 'ng-zorro-antd/splitter';
 
 @Component({
-  selector: 'nz-demo-splitter-lazy',
-  imports: [NzSplitterModule],
+  selector: '',
+  imports: [TriSplitterModule],
   template: `
-    <nz-splitter nzLazy>
-      <nz-splitter-panel nzDefaultSize="40%" nzMin="20%" nzMax="70%">
+    <tri-splitter lazy>
+      <tri-splitter-panel defaultSize="40%" min="20%" max="70%">
         <div class="box">First</div>
-      </nz-splitter-panel>
-      <nz-splitter-panel>
+      </tri-splitter-panel>
+      <tri-splitter-panel>
         <div class="box">Second</div>
-      </nz-splitter-panel>
-    </nz-splitter>
+      </tri-splitter-panel>
+    </tri-splitter>
     <br />
-    <nz-splitter nzLazy nzLayout="vertical">
-      <nz-splitter-panel nzDefaultSize="40%" nzMin="30%" nzMax="70%">
+    <tri-splitter lazy layout="vertical">
+      <tri-splitter-panel defaultSize="40%" min="30%" max="70%">
         <div class="box">First</div>
-      </nz-splitter-panel>
-      <nz-splitter-panel>
+      </tri-splitter-panel>
+      <tri-splitter-panel>
         <div class="box">Second</div>
-      </nz-splitter-panel>
-    </nz-splitter>
+      </tri-splitter-panel>
+    </tri-splitter>
   `,
   styles: `
     nz-splitter {
@@ -38,4 +38,4 @@ import { NzSplitterModule } from 'ng-zorro-antd/splitter';
     }
   `
 })
-export class NzDemoSplitterLazyComponent {}
+export class TriDemoSplitterLazyComponent {}

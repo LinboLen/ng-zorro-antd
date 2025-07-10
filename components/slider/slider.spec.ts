@@ -13,21 +13,21 @@ import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { dispatchFakeEvent, dispatchKeyboardEvent, dispatchMouseEvent } from 'ng-zorro-antd/core/testing';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
-import { NzSliderComponent } from './slider.component';
-import { NzSliderModule } from './slider.module';
-import { NzSliderShowTooltip } from './typings';
+import { TriSliderComponent } from './slider.component';
+import { TriSliderModule } from './slider.module';
+import { TriSliderShowTooltip } from './typings';
 
 describe('nz-slider', () => {
   let sliderDebugElement: DebugElement;
   let sliderNativeElement: HTMLElement;
-  let sliderInstance: NzSliderComponent;
+  let sliderInstance: TriSliderComponent;
   let overlayContainerElement: HTMLElement;
 
-  function getReferenceFromFixture(fixture: ComponentFixture<NzSafeAny>): void {
-    sliderDebugElement = fixture.debugElement.query(By.directive(NzSliderComponent));
+  function getReferenceFromFixture(fixture: ComponentFixture<TriSafeAny>): void {
+    sliderDebugElement = fixture.debugElement.query(By.directive(TriSliderComponent));
     sliderInstance = sliderDebugElement.componentInstance;
     sliderNativeElement = sliderInstance.slider.nativeElement;
   }
@@ -39,11 +39,11 @@ describe('nz-slider', () => {
   });
 
   describe('basic', () => {
-    let fixture: ComponentFixture<NzTestSliderComponent>;
+    let fixture: ComponentFixture<TriTestSliderComponent>;
     let trackFillElement: HTMLElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestSliderComponent);
+      fixture = TestBed.createComponent(TriTestSliderComponent);
       fixture.detectChanges();
 
       getReferenceFromFixture(fixture);
@@ -52,8 +52,8 @@ describe('nz-slider', () => {
 
     it('should set the default values', () => {
       expect(sliderInstance.value).toBe(0);
-      expect(sliderInstance.nzMin).toBe(0);
-      expect(sliderInstance.nzMax).toBe(100);
+      expect(sliderInstance.min).toBe(0);
+      expect(sliderInstance.max).toBe(100);
     });
 
     it('should update the value on a click', () => {
@@ -109,7 +109,7 @@ describe('nz-slider', () => {
     it('should not change value without emitting a change event', () => {
       const onChangeSpy = jasmine.createSpy('slider onChange');
 
-      sliderInstance.nzOnAfterChange.subscribe(onChangeSpy);
+      sliderInstance.onAfterChange.subscribe(onChangeSpy);
       sliderInstance.value = 50;
       fixture.detectChanges();
 
@@ -127,10 +127,10 @@ describe('nz-slider', () => {
   });
 
   describe('disabled', () => {
-    let fixture: ComponentFixture<NzTestSliderComponent>;
+    let fixture: ComponentFixture<TriTestSliderComponent>;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestSliderComponent);
+      fixture = TestBed.createComponent(TriTestSliderComponent);
       fixture.componentInstance.disabled = true;
       fixture.detectChanges();
 
@@ -155,7 +155,7 @@ describe('nz-slider', () => {
 
     it('should not emit change when disabled', () => {
       const onChangeSpy = jasmine.createSpy('slider onChange');
-      sliderInstance.nzOnAfterChange.subscribe(onChangeSpy);
+      sliderInstance.onAfterChange.subscribe(onChangeSpy);
 
       dispatchSlideEventSequence(sliderNativeElement, 0, 0.5);
 
@@ -176,8 +176,8 @@ describe('nz-slider', () => {
       fixture.detectChanges();
 
       testComponent = fixture.componentInstance;
-      sliderDebugElement = fixture.debugElement.query(By.directive(NzSliderComponent));
-      sliderInstance = sliderDebugElement.injector.get<NzSliderComponent>(NzSliderComponent);
+      sliderDebugElement = fixture.debugElement.query(By.directive(TriSliderComponent));
+      sliderInstance = sliderDebugElement.injector.get<TriSliderComponent>(TriSliderComponent);
       sliderNativeElement = sliderInstance.slider.nativeElement;
     });
 
@@ -230,8 +230,8 @@ describe('nz-slider', () => {
       fixture.detectChanges();
 
       testComponent = fixture.componentInstance;
-      sliderDebugElement = fixture.debugElement.query(By.directive(NzSliderComponent));
-      sliderInstance = sliderDebugElement.injector.get<NzSliderComponent>(NzSliderComponent);
+      sliderDebugElement = fixture.debugElement.query(By.directive(TriSliderComponent));
+      sliderInstance = sliderDebugElement.injector.get<TriSliderComponent>(TriSliderComponent);
       sliderNativeElement = sliderInstance.slider.nativeElement;
     });
 
@@ -265,8 +265,8 @@ describe('nz-slider', () => {
       fixture = TestBed.createComponent(SliderWithValueComponent);
       fixture.detectChanges();
 
-      sliderDebugElement = fixture.debugElement.query(By.directive(NzSliderComponent));
-      sliderInstance = sliderDebugElement.injector.get<NzSliderComponent>(NzSliderComponent);
+      sliderDebugElement = fixture.debugElement.query(By.directive(TriSliderComponent));
+      sliderInstance = sliderDebugElement.injector.get<TriSliderComponent>(TriSliderComponent);
       sliderNativeElement = sliderInstance.slider.nativeElement;
     });
 
@@ -324,8 +324,8 @@ describe('nz-slider', () => {
       fixture = TestBed.createComponent(SliderWithStepComponent);
       fixture.detectChanges();
 
-      sliderDebugElement = fixture.debugElement.query(By.directive(NzSliderComponent));
-      sliderInstance = sliderDebugElement.injector.get<NzSliderComponent>(NzSliderComponent);
+      sliderDebugElement = fixture.debugElement.query(By.directive(TriSliderComponent));
+      sliderInstance = sliderDebugElement.injector.get<TriSliderComponent>(TriSliderComponent);
       sliderNativeElement = sliderInstance.slider.nativeElement;
       trackFillElement = sliderNativeElement.querySelector('.ant-slider-track') as HTMLElement;
     });
@@ -402,8 +402,8 @@ describe('nz-slider', () => {
 
     it('should set the default values from the attributes', () => {
       expect(sliderInstance.value).toBe(4);
-      expect(sliderInstance.nzMin).toBe(4);
-      expect(sliderInstance.nzMax).toBe(6);
+      expect(sliderInstance.min).toBe(4);
+      expect(sliderInstance.max).toBe(6);
     });
 
     it('should set the correct value on click', () => {
@@ -457,8 +457,8 @@ describe('nz-slider', () => {
 
     it('should set the value equal to the min value', () => {
       expect(sliderInstance.value).toBe(4);
-      expect(sliderInstance.nzMin).toBe(4);
-      expect(sliderInstance.nzMax).toBe(6);
+      expect(sliderInstance.min).toBe(4);
+      expect(sliderInstance.max).toBe(6);
     });
 
     it('should set the fill to the min value', () => {
@@ -481,8 +481,8 @@ describe('nz-slider', () => {
     it('should set the value equal to the max value', () => {
       fixture.whenStable().then(() => {
         expect(sliderInstance.value).toBe(6);
-        expect(sliderInstance.nzMin).toBe(4);
-        expect(sliderInstance.nzMax).toBe(6);
+        expect(sliderInstance.min).toBe(4);
+        expect(sliderInstance.max).toBe(6);
       });
     });
 
@@ -509,8 +509,8 @@ describe('nz-slider', () => {
     it('should set the value equal to the middle value', () => {
       fixture.whenStable().then(() => {
         expect(sliderInstance.value).toBe(0);
-        expect(sliderInstance.nzMin).toBe(-5);
-        expect(sliderInstance.nzMax).toBe(5);
+        expect(sliderInstance.min).toBe(-5);
+        expect(sliderInstance.max).toBe(5);
       });
     });
 
@@ -530,8 +530,8 @@ describe('nz-slider', () => {
       fixture = TestBed.createComponent(VerticalSliderComponent);
       fixture.detectChanges();
 
-      sliderDebugElement = fixture.debugElement.query(By.directive(NzSliderComponent));
-      sliderInstance = sliderDebugElement.injector.get<NzSliderComponent>(NzSliderComponent);
+      sliderDebugElement = fixture.debugElement.query(By.directive(TriSliderComponent));
+      sliderInstance = sliderDebugElement.injector.get<TriSliderComponent>(TriSliderComponent);
       sliderNativeElement = sliderInstance.slider.nativeElement;
       trackFillElement = sliderNativeElement.querySelector('.ant-slider-track') as HTMLElement;
     });
@@ -566,7 +566,7 @@ describe('nz-slider', () => {
       fixture = TestBed.createComponent(ReverseSliderComponent);
       fixture.detectChanges();
 
-      sliderDebugElements = fixture.debugElement.queryAll(By.directive(NzSliderComponent));
+      sliderDebugElements = fixture.debugElement.queryAll(By.directive(TriSliderComponent));
     });
 
     it('should reverse work', () => {
@@ -817,7 +817,7 @@ describe('nz-slider', () => {
       const sliderElement = sliderDebugElement.nativeElement;
 
       expect(sliderElement!.classList).toContain('ant-slider-disabled');
-      expect(sliderInstance.nzDisabled).toBe(true);
+      expect(sliderInstance.disabled).toBe(true);
     });
     it('should disable work', () => {
       testComponent.disabled = true;
@@ -825,7 +825,7 @@ describe('nz-slider', () => {
       const sliderElement = sliderDebugElement.nativeElement;
 
       expect(sliderElement!.classList).toContain('ant-slider-disabled');
-      expect(sliderInstance.nzDisabled).toBe(true);
+      expect(sliderInstance.disabled).toBe(true);
       expect(sliderControl.value).toBe(42);
       dispatchClickEventSequence(sliderNativeElement, 0.76);
       fixture.detectChanges();
@@ -834,7 +834,7 @@ describe('nz-slider', () => {
       testComponent.enable();
       fixture.detectChanges();
       expect(sliderElement!.classList).not.toContain('ant-slider-disabled');
-      expect(sliderInstance.nzDisabled).toBe(false);
+      expect(sliderInstance.disabled).toBe(false);
       dispatchClickEventSequence(sliderNativeElement, 0.76);
       fixture.detectChanges();
       expect(sliderControl.value).toBe(76);
@@ -842,7 +842,7 @@ describe('nz-slider', () => {
       testComponent.disable();
       fixture.detectChanges();
       expect(sliderElement!.classList).toContain('ant-slider-disabled');
-      expect(sliderInstance.nzDisabled).toBe(true);
+      expect(sliderInstance.disabled).toBe(true);
       dispatchSlideEventSequence(sliderNativeElement, 0.42, 0.19);
       fixture.detectChanges();
       expect(sliderControl.value).toBe(76);
@@ -875,11 +875,11 @@ describe('nz-slider', () => {
   });
 
   describe('support keyboard event', () => {
-    let fixture: ComponentFixture<NzTestSliderKeyboardComponent>;
-    let testComponent: NzTestSliderKeyboardComponent;
+    let fixture: ComponentFixture<TriTestSliderKeyboardComponent>;
+    let testComponent: TriTestSliderKeyboardComponent;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestSliderKeyboardComponent);
+      fixture = TestBed.createComponent(TriTestSliderKeyboardComponent);
       testComponent = fixture.componentInstance;
       fixture.detectChanges();
 
@@ -915,7 +915,7 @@ describe('nz-slider', () => {
     it('should trigger nzOnAfterChange', () => {
       const onChangeSpy = jasmine.createSpy('slider onChange');
 
-      sliderInstance.nzOnAfterChange.subscribe(onChangeSpy);
+      sliderInstance.onAfterChange.subscribe(onChangeSpy);
       dispatchKeyboardEvent(sliderNativeElement, 'keydown', RIGHT_ARROW);
       fixture.detectChanges();
 
@@ -961,12 +961,12 @@ describe('nz-slider', () => {
   });
 
   describe('RTL', () => {
-    let fixture: ComponentFixture<NzTestSliderRtlComponent>;
+    let fixture: ComponentFixture<TriTestSliderRtlComponent>;
     let trackFillElement: HTMLElement;
     let trackHandleElement: HTMLElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestSliderRtlComponent);
+      fixture = TestBed.createComponent(TriTestSliderRtlComponent);
       fixture.detectChanges();
 
       getReferenceFromFixture(fixture);
@@ -1030,17 +1030,17 @@ const styles = `
 `;
 
 @Component({
-  imports: [NzSliderModule],
-  template: `<nz-slider [nzDisabled]="disabled"></nz-slider>`,
+  imports: [TriSliderModule],
+  template: `<tri-slider [disabled]="disabled"></tri-slider>`,
   styles: [styles]
 })
-class NzTestSliderComponent {
+class TriTestSliderComponent {
   disabled = false;
 }
 
 @Component({
-  imports: [NzSliderModule],
-  template: `<nz-slider [nzMin]="min" [nzMax]="max"></nz-slider>`,
+  imports: [TriSliderModule],
+  template: `<tri-slider [min]="min" [max]="max"></tri-slider>`,
   styles: [styles]
 })
 class SliderWithMinAndMaxComponent {
@@ -1049,23 +1049,23 @@ class SliderWithMinAndMaxComponent {
 }
 
 @Component({
-  imports: [FormsModule, NzSliderModule],
-  template: `<nz-slider [ngModel]="26"></nz-slider>`,
+  imports: [FormsModule, TriSliderModule],
+  template: `<tri-slider [ngModel]="26"></tri-slider>`,
   styles: [styles]
 })
 class SliderWithValueComponent {}
 
 @Component({
-  imports: [NzSliderModule],
-  template: `<nz-slider [nzMarks]="marks"></nz-slider>`
+  imports: [TriSliderModule],
+  template: `<tri-slider [marks]="marks"></tri-slider>`
 })
 class SliderWithMarksComponent {
   marks: Record<number, string> = { 100: '(100%)', 0: '(0%)' };
 }
 
 @Component({
-  imports: [NzSliderModule],
-  template: `<nz-slider [nzStep]="step"></nz-slider>`,
+  imports: [TriSliderModule],
+  template: `<tri-slider [step]="step"></tri-slider>`,
   styles: [styles]
 })
 class SliderWithStepComponent {
@@ -1073,39 +1073,39 @@ class SliderWithStepComponent {
 }
 
 @Component({
-  imports: [FormsModule, NzSliderModule],
-  template: `<nz-slider [ngModel]="3" [nzMin]="4" [nzMax]="6"></nz-slider>`,
+  imports: [FormsModule, TriSliderModule],
+  template: `<tri-slider [ngModel]="3" [min]="4" [max]="6"></tri-slider>`,
   styles: [styles]
 })
 class SliderWithValueSmallerThanMinComponent {}
 
 @Component({
-  imports: [FormsModule, NzSliderModule],
-  template: `<nz-slider [ngModel]="0" [nzMin]="-5" [nzMax]="5"></nz-slider>`,
+  imports: [FormsModule, TriSliderModule],
+  template: `<tri-slider [ngModel]="0" [min]="-5" [max]="5"></tri-slider>`,
   styles: [styles]
 })
 class SliderWithValueZeroComponent {}
 
 @Component({
-  imports: [FormsModule, NzSliderModule],
-  template: `<nz-slider [ngModel]="7" [nzMin]="4" [nzMax]="6"></nz-slider>`,
+  imports: [FormsModule, TriSliderModule],
+  template: `<tri-slider [ngModel]="7" [min]="4" [max]="6"></tri-slider>`,
   styles: [styles]
 })
 class SliderWithValueGreaterThanMaxComponent {}
 
 @Component({
-  imports: [NzSliderModule],
-  template: `<nz-slider nzVertical></nz-slider>`,
+  imports: [TriSliderModule],
+  template: `<tri-slider vertical></tri-slider>`,
   styles: [styles]
 })
 class VerticalSliderComponent {}
 
 @Component({
-  imports: [NzSliderModule],
+  imports: [TriSliderModule],
   template: `
-    <nz-slider nzReverse [nzMarks]="marks"></nz-slider>
-    <nz-slider nzReverse nzRange></nz-slider>
-    <nz-slider nzVertical nzReverse></nz-slider>
+    <tri-slider reverse [marks]="marks"></tri-slider>
+    <tri-slider reverse range></tri-slider>
+    <tri-slider vertical reverse></tri-slider>
   `
 })
 class ReverseSliderComponent {
@@ -1113,25 +1113,25 @@ class ReverseSliderComponent {
 }
 
 @Component({
-  imports: [NzSliderModule],
-  template: `<nz-slider [nzMin]="4" [nzMax]="6" nzReverse></nz-slider>`,
+  imports: [TriSliderModule],
+  template: `<tri-slider [min]="4" [max]="6" reverse></tri-slider>`,
   styles: [styles]
 })
 class ReverseSliderWithMinAndMaxComponent {}
 
 @Component({
-  imports: [NzSliderModule],
+  imports: [TriSliderModule],
   template: `
-    <nz-slider
-      [nzRange]="range"
-      [nzStep]="step"
-      [nzMarks]="marks"
-      [nzDots]="dots"
-      [nzIncluded]="included"
-      [nzTipFormatter]="tipFormatter"
-      [nzMin]="min"
-      [nzMax]="max"
-    ></nz-slider>
+    <tri-slider
+      [range]="range"
+      [step]="step"
+      [marks]="marks"
+      [dots]="dots"
+      [included]="included"
+      [tipFormatter]="tipFormatter"
+      [min]="min"
+      [max]="max"
+    ></tri-slider>
   `,
   styles: [styles]
 })
@@ -1150,10 +1150,10 @@ class MixedSliderComponent {
 }
 
 @Component({
-  imports: [ReactiveFormsModule, NzSliderModule],
+  imports: [ReactiveFormsModule, TriSliderModule],
   template: `
     <form>
-      <nz-slider [formControl]="formControl" [nzDisabled]="disabled"></nz-slider>
+      <tri-slider [formControl]="formControl" [disabled]="disabled"></tri-slider>
     </form>
   `,
   styles: [styles]
@@ -1173,35 +1173,35 @@ class SliderWithFormControlComponent {
 }
 
 @Component({
-  imports: [FormsModule, NzSliderModule],
-  template: `<nz-slider [nzTooltipVisible]="show" [ngModel]="value"></nz-slider>`
+  imports: [FormsModule, TriSliderModule],
+  template: `<tri-slider [tooltipVisible]="show" [ngModel]="value"></tri-slider>`
 })
 class SliderShowTooltipComponent {
-  show: NzSliderShowTooltip = 'default';
+  show: TriSliderShowTooltip = 'default';
 
   value = 0;
 }
 
 @Component({
-  imports: [NzSliderModule],
-  template: `<nz-slider [nzRange]="range" [nzDisabled]="disabled"></nz-slider>`
+  imports: [TriSliderModule],
+  template: `<tri-slider [range]="range" [disabled]="disabled"></tri-slider>`
 })
-class NzTestSliderKeyboardComponent {
+class TriTestSliderKeyboardComponent {
   range = false;
   disabled = false;
 }
 
 @Component({
-  imports: [FormsModule, NzSliderModule],
+  imports: [FormsModule, TriSliderModule],
   template: `
-    <nz-slider [nzTooltipVisible]="show" [ngModel]="value" [nzTipFormatter]="titleTemplate"></nz-slider>
+    <tri-slider [tooltipVisible]="show" [ngModel]="value" [tipFormatter]="titleTemplate"></tri-slider>
     <ng-template #titleTemplate let-value>
       <span>Slider value: {{ value }}</span>
     </ng-template>
   `
 })
 class SliderShowTemplateTooltipComponent {
-  show: NzSliderShowTooltip = 'default';
+  show: TriSliderShowTooltip = 'default';
   value = 0;
 }
 
@@ -1310,14 +1310,14 @@ function dispatchMouseenterEvent(element: HTMLElement): void {
 }
 
 @Component({
-  imports: [BidiModule, NzSliderModule],
+  imports: [BidiModule, TriSliderModule],
   template: `
     <div [dir]="direction">
-      <nz-slider></nz-slider>
+      <tri-slider></tri-slider>
     </div>
   `
 })
-export class NzTestSliderRtlComponent {
+export class TriTestSliderRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 }

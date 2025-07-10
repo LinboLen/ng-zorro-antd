@@ -1,36 +1,36 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: 'nz-demo-radio-size',
-  imports: [FormsModule, NzRadioModule],
+  selector: '',
+  imports: [FormsModule, TriRadioModule],
   template: `
-    <nz-radio-group [(ngModel)]="radioValue" nzSize="large">
-      <label nz-radio-button nzValue="A">Hangzhou</label>
-      <label nz-radio-button nzValue="B">Shanghai</label>
-      <label nz-radio-button nzValue="C">Beijing</label>
-      <label nz-radio-button nzValue="D">Chengdu</label>
-    </nz-radio-group>
+    <tri-radio-group [(ngModel)]="radioValue" size="large">
+      <label tri-radio-button value="A">Hangzhou</label>
+      <label tri-radio-button value="B">Shanghai</label>
+      <label tri-radio-button value="C">Beijing</label>
+      <label tri-radio-button value="D">Chengdu</label>
+    </tri-radio-group>
     <br />
     <br />
-    <nz-radio-group [(ngModel)]="radioValue">
-      <label nz-radio-button nzValue="A">Hangzhou</label>
-      <label nz-radio-button nzValue="B">Shanghai</label>
-      <label nz-radio-button nzValue="C">Beijing</label>
-      <label nz-radio-button nzValue="D">Chengdu</label>
-    </nz-radio-group>
+    <tri-radio-group [(ngModel)]="radioValue">
+      <label tri-radio-button value="A">Hangzhou</label>
+      <label tri-radio-button value="B">Shanghai</label>
+      <label tri-radio-button value="C">Beijing</label>
+      <label tri-radio-button value="D">Chengdu</label>
+    </tri-radio-group>
     <br />
     <br />
-    <nz-radio-group [(ngModel)]="radioValue" nzSize="small">
-      <label nz-radio-button nzValue="A">Hangzhou</label>
-      <label nz-radio-button nzValue="B">Shanghai</label>
-      <label nz-radio-button nzValue="C">Beijing</label>
-      <label nz-radio-button nzValue="D">Chengdu</label>
-    </nz-radio-group>
+    <tri-radio-group [(ngModel)]="radioValue" size="small">
+      <label tri-radio-button value="A">Hangzhou</label>
+      <label tri-radio-button value="B">Shanghai</label>
+      <label tri-radio-button value="C">Beijing</label>
+      <label tri-radio-button value="D">Chengdu</label>
+    </tri-radio-group>
   `
 })
-export class NzDemoRadioSizeComponent {
+export class TriDemoRadioSizeComponent {
   radioValue = 'A';
 }

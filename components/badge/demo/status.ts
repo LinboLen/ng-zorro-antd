@@ -1,27 +1,27 @@
 import { Component } from '@angular/core';
 
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { TriBadgeModule } from 'ng-zorro-antd/badge';
 
 @Component({
-  selector: 'nz-demo-badge-status',
-  imports: [NzBadgeModule],
+  selector: '',
+  imports: [TriBadgeModule],
   template: `
-    <nz-badge nzStatus="success"></nz-badge>
-    <nz-badge nzStatus="error"></nz-badge>
-    <nz-badge nzStatus="default"></nz-badge>
-    <nz-badge nzStatus="processing"></nz-badge>
-    <nz-badge nzStatus="warning"></nz-badge>
+    <tri-badge status="success"></tri-badge>
+    <tri-badge status="error"></tri-badge>
+    <tri-badge status="default"></tri-badge>
+    <tri-badge status="processing"></tri-badge>
+    <tri-badge status="warning"></tri-badge>
     <br />
-    <nz-badge nzStatus="success" nzText="Success"></nz-badge>
+    <tri-badge status="success" text="Success"></tri-badge>
     <br />
-    <nz-badge nzStatus="error" nzText="Error"></nz-badge>
+    <tri-badge status="error" text="Error"></tri-badge>
     <br />
-    <nz-badge nzStatus="default" nzText="Default"></nz-badge>
+    <tri-badge status="default" text="Default"></tri-badge>
     <br />
-    <nz-badge nzStatus="processing" nzText="Processing"></nz-badge>
+    <tri-badge status="processing" text="Processing"></tri-badge>
     <br />
-    <nz-badge nzStatus="warning" nzText="Warning"></nz-badge>
+    <tri-badge status="warning" text="Warning"></tri-badge>
     <br />
   `
 })
-export class NzDemoBadgeStatusComponent {}
+export class TriDemoBadgeStatusComponent {}

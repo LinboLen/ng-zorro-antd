@@ -1,23 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzSwitchModule } from 'ng-zorro-antd/switch';
-import { NzTableModule } from 'ng-zorro-antd/table';
-import { NzTagModule } from 'ng-zorro-antd/tag';
-import { NzTransferModule, TransferChange, TransferItem, TransferSelectChange } from 'ng-zorro-antd/transfer';
+import { TriSwitchModule } from 'ng-zorro-antd/switch';
+import { TriTableModule } from 'ng-zorro-antd/table';
+import { TriTagModule } from 'ng-zorro-antd/tag';
+import { TriTransferModule, TransferChange, TransferItem, TransferSelectChange } from 'ng-zorro-antd/transfer';
 
 @Component({
-  selector: 'nz-demo-transfer-table-transfer',
-  imports: [FormsModule, NzSwitchModule, NzTableModule, NzTagModule, NzTransferModule],
+  selector: '',
+  imports: [FormsModule, TriSwitchModule, TriTableModule, TriTagModule, TriTransferModule],
   template: `
-    <nz-transfer
-      [nzDataSource]="list"
-      [nzDisabled]="disabled"
-      [nzShowSearch]="showSearch"
-      [nzShowSelectAll]="false"
-      [nzRenderList]="[renderList, renderList]"
-      (nzSelectChange)="select($event)"
-      (nzChange)="change($event)"
+    <tri-transfer
+      [dataSource]="list"
+      [disabled]="disabled"
+      [showSearch]="showSearch"
+      [showSelectAll]="false"
+      [renderList]="[renderList, renderList]"
+      (selectChange)="select($event)"
+      (change)="change($event)"
     >
       <ng-template
         #renderList
@@ -28,14 +28,14 @@ import { NzTransferModule, TransferChange, TransferItem, TransferSelectChange } 
         let-onItemSelectAll="onItemSelectAll"
         let-onItemSelect="onItemSelect"
       >
-        <nz-table #t [nzData]="$asTransferItems(items)" nzSize="small">
+        <tri-table #t [data]="$asTransferItems(items)" size="small">
           <thead>
             <tr>
               <th
-                [nzDisabled]="disabled"
-                [nzChecked]="stat.checkAll"
-                [nzIndeterminate]="stat.checkHalf"
-                (nzCheckedChange)="onItemSelectAll($event)"
+                [disabled]="disabled"
+                [checked]="stat.checkAll"
+                [indeterminate]="stat.checkHalf"
+                (checkedChange)="onItemSelectAll($event)"
               ></th>
               <th>Name</th>
               @if (direction === 'left') {
@@ -48,30 +48,30 @@ import { NzTransferModule, TransferChange, TransferItem, TransferSelectChange } 
             @for (data of t.data; track data) {
               <tr (click)="onItemSelect(data)">
                 <td
-                  [nzChecked]="!!data.checked"
-                  [nzDisabled]="disabled || data.disabled"
-                  (nzCheckedChange)="onItemSelect(data)"
+                  [checked]="!!data.checked"
+                  [disabled]="disabled || data.disabled"
+                  (checkedChange)="onItemSelect(data)"
                 ></td>
                 <td>{{ data.title }}</td>
                 @if (direction === 'left') {
                   <td>
-                    <nz-tag>{{ data.tag }}</nz-tag>
+                    <tri-tag>{{ data.tag }}</tri-tag>
                   </td>
                 }
                 <td>{{ data.description }}</td>
               </tr>
             }
           </tbody>
-        </nz-table>
+        </tri-table>
       </ng-template>
-    </nz-transfer>
+    </tri-transfer>
     <div style="margin-top: 8px;">
-      <nz-switch [(ngModel)]="disabled" nzCheckedChildren="disabled" nzUnCheckedChildren="disabled"></nz-switch>
-      <nz-switch [(ngModel)]="showSearch" nzCheckedChildren="showSearch" nzUnCheckedChildren="showSearch"></nz-switch>
+      <tri-switch [(ngModel)]="disabled" checkedChildren="disabled" unCheckedChildren="disabled"></tri-switch>
+      <tri-switch [(ngModel)]="showSearch" checkedChildren="showSearch" unCheckedChildren="showSearch"></tri-switch>
     </div>
   `
 })
-export class NzDemoTransferTableTransferComponent implements OnInit {
+export class TriDemoTransferTableTransferComponent implements OnInit {
   list: TransferItem[] = [];
   $asTransferItems = (data: unknown): TransferItem[] => data as TransferItem[];
   disabled = false;

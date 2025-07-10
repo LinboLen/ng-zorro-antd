@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 
-import { NzCarouselModule } from 'ng-zorro-antd/carousel';
+import { TriCarouselModule } from 'ng-zorro-antd/carousel';
 
 @Component({
-  selector: 'nz-demo-carousel-loop',
-  imports: [NzCarouselModule],
+  selector: '',
+  imports: [TriCarouselModule],
   template: `
-    <nz-carousel nzAutoPlay [nzEffect]="effect" [nzLoop]="false">
+    <tri-carousel autoPlay [effect]="effect" [loop]="false">
       @for (index of array; track index) {
-        <div nz-carousel-content>
+        <div tri-carousel-content>
           <h3>{{ index }}</h3>
         </div>
       }
-    </nz-carousel>
+    </tri-carousel>
   `,
   styles: [
     `
@@ -33,7 +33,7 @@ import { NzCarouselModule } from 'ng-zorro-antd/carousel';
     `
   ]
 })
-export class NzDemoCarouselLoopComponent {
+export class TriDemoCarouselLoopComponent {
   array = [1, 2, 3, 4];
   effect = 'scrollx';
 }

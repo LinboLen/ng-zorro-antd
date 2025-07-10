@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzCascaderModule, NzCascaderOption } from 'ng-zorro-antd/cascader';
+import { TriCascaderModule, TriCascaderOption } from 'ng-zorro-antd/cascader';
 
-const options: NzCascaderOption[] = [
+const options: TriCascaderOption[] = [
   {
     value: 'zhejiang',
     label: 'Zhejiang',
@@ -46,14 +46,14 @@ const options: NzCascaderOption[] = [
 ];
 
 @Component({
-  selector: 'nz-demo-cascader-default-value-and-async-options',
-  imports: [FormsModule, NzCascaderModule],
+  selector: '',
+  imports: [FormsModule, TriCascaderModule],
   template: `
-    <nz-cascader [(ngModel)]="values" [nzOptions]="nzOptions" (ngModelChange)="onChanges($event)"></nz-cascader>
+    <tri-cascader [(ngModel)]="values" [options]="options" (ngModelChange)="onChanges($event)"></tri-cascader>
   `
 })
-export class NzDemoCascaderDefaultValueAndAsyncOptionsComponent implements OnInit {
-  nzOptions: NzCascaderOption[] | null = null;
+export class TriDemoCascaderDefaultValueAndAsyncOptionsComponent implements OnInit {
+  options: TriCascaderOption[] | null = null;
   values: string[] = ['zhejiang', 'hangzhou', 'xihu'];
 
   onChanges(values: string[]): void {
@@ -62,7 +62,7 @@ export class NzDemoCascaderDefaultValueAndAsyncOptionsComponent implements OnIni
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.nzOptions = options;
+      this.options = options;
     }, 500);
   }
 }

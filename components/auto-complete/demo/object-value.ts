@@ -1,8 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { TriAutocompleteModule } from 'ng-zorro-antd/auto-complete';
+import { TriInputModule } from 'ng-zorro-antd/input';
 
 interface Option {
   label: string;
@@ -11,23 +11,23 @@ interface Option {
 }
 
 @Component({
-  selector: 'nz-demo-auto-complete-object-value',
-  imports: [FormsModule, NzAutocompleteModule, NzInputModule],
+  selector: '',
+  imports: [FormsModule, TriAutocompleteModule, TriInputModule],
   encapsulation: ViewEncapsulation.None,
   template: `
     <div class="example-input">
-      <input placeholder="input here" nz-input [(ngModel)]="inputValue" [nzAutocomplete]="auto" />
-      <nz-autocomplete #auto [compareWith]="compareFun">
+      <input placeholder="input here" tri-input [(ngModel)]="inputValue" [autocomplete]="auto" />
+      <tri-autocomplete #auto [compareWith]="compareFun">
         @for (option of options; track $index) {
-          <nz-auto-option [nzValue]="option" [nzLabel]="option.label">
+          <tri-auto-option [value]="option" [label]="option.label">
             {{ option.label }}
-          </nz-auto-option>
+          </tri-auto-option>
         }
-      </nz-autocomplete>
+      </tri-autocomplete>
     </div>
   `
 })
-export class NzDemoAutoCompleteObjectValueComponent {
+export class TriDemoAutoCompleteObjectValueComponent {
   inputValue: Option = { label: 'Lucy', value: 'lucy', age: 20 };
   options: Option[] = [
     { label: 'Lucy', value: 'lucy', age: 20 },

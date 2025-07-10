@@ -25,18 +25,18 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { filter } from 'rxjs/operators';
 
 import { fadeMotion } from 'ng-zorro-antd/core/animation';
-import { NzConfigService } from 'ng-zorro-antd/core/config';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriConfigService } from 'ng-zorro-antd/core/config';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular, isNotNil } from 'ng-zorro-antd/core/util';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 import { NZ_CONFIG_MODULE_NAME } from './image-config';
-import { NzImage, NzImagePreviewOptions } from './image-preview-options';
-import { NzImagePreviewRef } from './image-preview-ref';
-import { NzImageScaleStep, NzImageUrl } from './image.directive';
+import { TriImage, TriImagePreviewOptions } from './image-preview-options';
+import { TriImagePreviewRef } from './image-preview-ref';
+import { TriImageScaleStep, TriImageUrl } from './image.directive';
 import { getClientSize, getFitContentPosition, getOffset } from './utils';
 
-export interface NzImageContainerOperation {
+export interface TriImageContainerOperation {
   icon: string;
   type: string;
   rotate?: number;
@@ -53,46 +53,46 @@ const NZ_DEFAULT_ZOOM = 1;
 const NZ_DEFAULT_ROTATE = 0;
 
 @Component({
-  selector: 'nz-image-preview',
-  exportAs: 'nzImagePreview',
+  selector: '',
+  exportAs: 'triImagePreview',
   animations: [fadeMotion],
   template: `
-    <div class="ant-image-preview-mask"></div>
+    <div class="tri-image-preview-mask"></div>
 
-    <div class="ant-image-preview-operations-wrapper">
+    <div class="tri-image-preview-operations-wrapper">
       @if (images.length > 1) {
         <div
-          class="ant-image-preview-switch-left"
-          [class.ant-image-preview-switch-left-disabled]="index <= 0"
+          class="tri-image-preview-switch-left"
+          [class.tri-image-preview-switch-left-disabled]="index <= 0"
           (click)="onSwitchLeft($event)"
         >
-          <nz-icon nzType="left" nzTheme="outline" />
+          <tri-icon type="left" theme="outline" />
         </div>
         <div
-          class="ant-image-preview-switch-right"
-          [class.ant-image-preview-switch-right-disabled]="index >= images.length - 1"
+          class="tri-image-preview-switch-right"
+          [class.tri-image-preview-switch-right-disabled]="index >= images.length - 1"
           (click)="onSwitchRight($event)"
         >
-          <nz-icon nzType="right" nzTheme="outline" />
+          <tri-icon type="right" theme="outline" />
         </div>
       }
 
-      <ul class="ant-image-preview-operations">
+      <ul class="tri-image-preview-operations">
         @if (images.length > 1) {
-          <li class="ant-image-preview-operations-progress">{{ index + 1 }} / {{ images.length }}</li>
+          <li class="tri-image-preview-operations-progress">{{ index + 1 }} / {{ images.length }}</li>
         }
 
         @for (option of operations; track option) {
           <li
-            class="ant-image-preview-operations-operation"
-            [class.ant-image-preview-operations-operation-disabled]="zoomOutDisabled && option.type === 'zoomOut'"
+            class="tri-image-preview-operations-operation"
+            [class.tri-image-preview-operations-operation-disabled]="zoomOutDisabled && option.type === 'zoomOut'"
             (click)="option.onClick()"
           >
-            <nz-icon
-              class="ant-image-preview-operations-icon"
-              [nzType]="option.icon"
-              [nzRotate]="option.rotate ?? 0"
-              nzTheme="outline"
+            <tri-icon
+              class="tri-image-preview-operations-icon"
+              [type]="option.icon"
+              [rotate]="option.rotate ?? 0"
+              theme="outline"
             />
           </li>
         }
@@ -100,16 +100,16 @@ const NZ_DEFAULT_ROTATE = 0;
     </div>
 
     <div
-      class="ant-image-preview-wrap"
+      class="tri-image-preview-wrap"
       tabindex="-1"
       (click)="maskClosable && $event.target === $event.currentTarget && onClose()"
     >
-      <div class="ant-image-preview" role="dialog" aria-modal="true">
-        <div tabindex="0" aria-hidden="true" class="ant-image-preview-focus-trap"></div>
-        <div class="ant-image-preview-content">
-          <div class="ant-image-preview-body">
+      <div class="tri-image-preview" role="dialog" aria-modal="true">
+        <div tabindex="0" aria-hidden="true" class="tri-image-preview-focus-trap"></div>
+        <div class="tri-image-preview-content">
+          <div class="tri-image-preview-body">
             <div
-              class="ant-image-preview-img-wrapper"
+              class="tri-image-preview-img-wrapper"
               #imagePreviewWrapper
               cdkDrag
               [style.transform]="previewImageWrapperTransform"
@@ -120,7 +120,7 @@ const NZ_DEFAULT_ROTATE = 0;
                 @if (imageIndex === index) {
                   <img
                     cdkDragHandle
-                    class="ant-image-preview-img"
+                    class="tri-image-preview-img"
                     #imgRef
                     [attr.src]="sanitizerResourceUrl(image.src)"
                     [attr.srcset]="image.srcset"
@@ -134,45 +134,45 @@ const NZ_DEFAULT_ROTATE = 0;
             </div>
           </div>
         </div>
-        <div tabindex="0" aria-hidden="true" class="ant-image-preview-focus-trap"></div>
+        <div tabindex="0" aria-hidden="true" class="tri-image-preview-focus-trap"></div>
       </div>
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
-    class: 'ant-image-preview-root',
-    '[class.ant-image-preview-moving]': 'isDragging',
+    class: 'tri-image-preview-root',
+    '[class.tri-image-preview-moving]': 'isDragging',
     '[style.zIndex]': 'config.nzZIndex',
     '[@.disabled]': 'config.nzNoAnimation',
     '[@fadeMotion]': `visible ? 'enter' : 'leave'`,
     '(@fadeMotion.start)': 'onAnimationStart($event)',
     '(@fadeMotion.done)': 'onAnimationDone($event)'
   },
-  imports: [NzIconModule, CdkDragHandle, CdkDrag]
+  imports: [TriIconModule, CdkDragHandle, CdkDrag]
 })
-export class NzImagePreviewComponent implements OnInit {
+export class TriImagePreviewComponent implements OnInit {
   private document = inject(DOCUMENT);
   private ngZone = inject(NgZone);
   private cdr = inject(ChangeDetectorRef);
-  public nzConfigService = inject(NzConfigService);
-  public config = inject(NzImagePreviewOptions);
+  public configService = inject(TriConfigService);
+  public config = inject(TriImagePreviewOptions);
   private sanitizer = inject(DomSanitizer);
   private destroyRef = inject(DestroyRef);
   readonly _defaultNzZoom = NZ_DEFAULT_ZOOM;
   readonly _defaultNzScaleStep = NZ_DEFAULT_SCALE_STEP;
   readonly _defaultNzRotate = NZ_DEFAULT_ROTATE;
 
-  images: NzImage[] = [];
+  images: TriImage[] = [];
   index = 0;
   isDragging = false;
   visible = true;
   animationStateChanged = new EventEmitter<AnimationEvent>();
-  scaleStepMap: Map<NzImageUrl, NzImageScaleStep> = new Map<NzImageUrl, NzImageScaleStep>();
+  scaleStepMap: Map<TriImageUrl, TriImageScaleStep> = new Map<TriImageUrl, TriImageScaleStep>();
 
   previewImageTransform = '';
   previewImageWrapperTransform = '';
-  operations: NzImageContainerOperation[] = [
+  operations: TriImageContainerOperation[] = [
     {
       icon: 'close',
       onClick: () => {
@@ -227,25 +227,25 @@ export class NzImagePreviewComponent implements OnInit {
 
   zoomOutDisabled = false;
   position = { ...initialPosition };
-  previewRef!: NzImagePreviewRef;
+  previewRef!: TriImagePreviewRef;
   closeClick = new EventEmitter<void>();
 
   @ViewChild('imgRef') imageRef!: ElementRef<HTMLImageElement>;
   @ViewChild('imagePreviewWrapper', { static: true }) imagePreviewWrapper!: ElementRef<HTMLElement>;
 
-  private zoom = this.config.nzZoom ?? this._defaultNzZoom;
-  private rotate = this.config.nzRotate ?? this._defaultNzRotate;
-  private scaleStep = this.config.nzScaleStep ?? this._defaultNzScaleStep;
-  private flipHorizontally = this.config.nzFlipHorizontally ?? false;
-  private flipVertically = this.config.nzFlipVertically ?? false;
+  private zoom = this.config.zoom ?? this._defaultNzZoom;
+  private rotate = this.config.rotate ?? this._defaultNzRotate;
+  private scaleStep = this.config.scaleStep ?? this._defaultNzScaleStep;
+  private flipHorizontally = this.config.flipHorizontally ?? false;
+  private flipVertically = this.config.flipVertically ?? false;
 
   get animationDisabled(): boolean {
-    return this.config.nzNoAnimation ?? false;
+    return this.config.noAnimation ?? false;
   }
 
   get maskClosable(): boolean {
-    const defaultConfig: NzSafeAny = this.nzConfigService.getConfigForComponent(NZ_CONFIG_MODULE_NAME) || {};
-    return this.config.nzMaskClosable ?? defaultConfig.nzMaskClosable ?? true;
+    const defaultConfig: TriSafeAny = this.configService.getConfigForComponent(NZ_CONFIG_MODULE_NAME) || {};
+    return this.config.maskClosable ?? defaultConfig.nzMaskClosable ?? true;
   }
 
   constructor() {
@@ -280,7 +280,7 @@ export class NzImagePreviewComponent implements OnInit {
       });
   }
 
-  setImages(images: NzImage[], scaleStepMap?: Map<string, number>): void {
+  setImages(images: TriImage[], scaleStepMap?: Map<string, number>): void {
     if (scaleStepMap) this.scaleStepMap = scaleStepMap;
     this.images = images;
     this.markForCheck();
@@ -479,9 +479,9 @@ export class NzImagePreviewComponent implements OnInit {
   }
 
   private reset(): void {
-    this.zoom = this.config.nzZoom ?? this._defaultNzZoom;
-    this.scaleStep = this.config.nzScaleStep ?? this._defaultNzScaleStep;
-    this.rotate = this.config.nzRotate ?? this._defaultNzRotate;
+    this.zoom = this.config.zoom ?? this._defaultNzZoom;
+    this.scaleStep = this.config.scaleStep ?? this._defaultNzScaleStep;
+    this.rotate = this.config.rotate ?? this._defaultNzRotate;
     this.flipHorizontally = false;
     this.flipVertically = false;
     this.reCenterImage();

@@ -1,37 +1,37 @@
 import { Component } from '@angular/core';
 
-import { NzTableModule } from 'ng-zorro-antd/table';
+import { TriTableModule } from 'ng-zorro-antd/table';
 
 @Component({
-  selector: 'nz-demo-table-expand',
-  imports: [NzTableModule],
+  selector: '',
+  imports: [TriTableModule],
   template: `
-    <nz-table #nzTable [nzData]="listOfData" nzTableLayout="fixed">
+    <tri-table #nzTable [data]="listOfData" tableLayout="fixed">
       <thead>
         <tr>
-          <th nzWidth="60px"></th>
+          <th width="60px"></th>
           <th>Name</th>
           <th>Age</th>
           <th>Address</th>
         </tr>
       </thead>
       <tbody>
-        @for (data of nzTable.data; track data) {
+        @for (data of table.data; track data) {
           <tr>
-            <td [nzExpand]="expandSet.has(data.id)" (nzExpandChange)="onExpandChange(data.id, $event)"></td>
+            <td [expand]="expandSet.has(data.id)" (expandChange)="onExpandChange(data.id, $event)"></td>
             <td>{{ data.name }}</td>
             <td>{{ data.age }}</td>
             <td>{{ data.address }}</td>
           </tr>
-          <tr [nzExpand]="expandSet.has(data.id)">
+          <tr [expand]="expandSet.has(data.id)">
             <span>{{ data.description }}</span>
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `
 })
-export class NzDemoTableExpandComponent {
+export class TriDemoTableExpandComponent {
   expandSet = new Set<number>();
   onExpandChange(id: number, checked: boolean): void {
     if (checked) {

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzCascaderModule, NzCascaderOption } from 'ng-zorro-antd/cascader';
+import { TriCascaderModule, TriCascaderOption } from 'ng-zorro-antd/cascader';
 
-const options: NzCascaderOption[] = [
+const options: TriCascaderOption[] = [
   {
     value: 'zhejiang',
     label: 'Zhejiang',
@@ -46,30 +46,30 @@ const options: NzCascaderOption[] = [
 ];
 
 @Component({
-  selector: 'nz-demo-cascader-size',
-  imports: [FormsModule, NzCascaderModule],
+  selector: '',
+  imports: [FormsModule, TriCascaderModule],
   template: `
-    <nz-cascader
-      [nzSize]="'large'"
-      [nzOptions]="nzOptions"
+    <tri-cascader
+      [size]="'large'"
+      [options]="options"
       [(ngModel)]="value1"
       (ngModelChange)="onChanges($event)"
-    ></nz-cascader>
+    ></tri-cascader>
     <br />
     <br />
-    <nz-cascader [nzOptions]="nzOptions" [(ngModel)]="value2" (ngModelChange)="onChanges($event)"></nz-cascader>
+    <tri-cascader [options]="options" [(ngModel)]="value2" (ngModelChange)="onChanges($event)"></tri-cascader>
     <br />
     <br />
-    <nz-cascader
-      nzSize="small"
-      [nzOptions]="nzOptions"
+    <tri-cascader
+      size="small"
+      [options]="options"
       [(ngModel)]="value3"
       (ngModelChange)="onChanges($event)"
-    ></nz-cascader>
+    ></tri-cascader>
   `
 })
-export class NzDemoCascaderSizeComponent {
-  nzOptions: NzCascaderOption[] = options;
+export class TriDemoCascaderSizeComponent {
+  options: TriCascaderOption[] = options;
   value1: string[] | null = null;
   value2: string[] | null = null;
   value3: string[] | null = null;

@@ -20,13 +20,13 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { NzConfigService, onConfigChangeEventForComponent } from 'ng-zorro-antd/core/config';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriConfigService, onConfigChangeEventForComponent } from 'ng-zorro-antd/core/config';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NZ_EMPTY_COMPONENT_NAME, NzEmptyCustomContent, NzEmptySize } from './config';
-import { NzEmptyComponent } from './empty.component';
+import { NZ_EMPTY_COMPONENT_NAME, TriEmptyCustomContent, TriEmptySize } from './config';
+import { TriEmptyComponent } from './empty.component';
 
-function getEmptySize(componentName: string): NzEmptySize {
+function getEmptySize(componentName: string): TriEmptySize {
   switch (componentName) {
     case 'table':
     case 'list':
@@ -41,13 +41,13 @@ function getEmptySize(componentName: string): NzEmptySize {
   }
 }
 
-type NzEmptyContentType = 'component' | 'template' | 'string';
+type TriEmptyContentType = 'component' | 'template' | 'string';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-embed-empty',
-  exportAs: 'nzEmbedEmpty',
+  selector: '',
+  exportAs: 'triEmbedEmpty',
   template: `
     @if (content) {
       @if (contentType === 'string') {
@@ -59,33 +59,33 @@ type NzEmptyContentType = 'component' | 'template' | 'string';
       @if (specificContent !== null) {
         @switch (size) {
           @case ('normal') {
-            <nz-empty class="ant-empty-normal" nzNotFoundImage="simple" />
+            <tri-empty class="tri-empty-normal" notFoundImage="simple" />
           }
           @case ('small') {
-            <nz-empty class="ant-empty-small" nzNotFoundImage="simple" />
+            <tri-empty class="tri-empty-small" notFoundImage="simple" />
           }
           @default {
-            <nz-empty />
+            <tri-empty />
           }
         }
       }
     }
   `,
-  imports: [NzEmptyComponent, PortalModule]
+  imports: [TriEmptyComponent, PortalModule]
 })
-export class NzEmbedEmptyComponent implements OnChanges, OnInit {
-  private configService = inject(NzConfigService);
+export class TriEmbedEmptyComponent implements OnChanges, OnInit {
+  private configService = inject(TriConfigService);
   private viewContainerRef = inject(ViewContainerRef);
   private cdr = inject(ChangeDetectorRef);
   private injector = inject(Injector);
 
-  @Input() nzComponentName?: string;
-  @Input() specificContent?: NzEmptyCustomContent;
+  @Input() componentName?: string;
+  @Input() specificContent?: TriEmptyCustomContent;
 
-  content?: NzEmptyCustomContent;
-  contentType: NzEmptyContentType = 'string';
-  contentPortal?: Portal<NzSafeAny>;
-  size: NzEmptySize = '';
+  content?: TriEmptyCustomContent;
+  contentType: TriEmptyContentType = 'string';
+  contentPortal?: Portal<TriSafeAny>;
+  size: TriEmptySize = '';
 
   constructor() {
     onConfigChangeEventForComponent('empty', () => {
@@ -116,13 +116,13 @@ export class NzEmbedEmptyComponent implements OnChanges, OnInit {
     if (typeof content === 'string') {
       this.contentType = 'string';
     } else if (content instanceof TemplateRef) {
-      const context = { $implicit: this.nzComponentName } as NzSafeAny;
+      const context = { $implicit: this.componentName } as TriSafeAny;
       this.contentType = 'template';
       this.contentPortal = new TemplatePortal(content, this.viewContainerRef, context);
     } else if (content instanceof Type) {
       const injector = Injector.create({
         parent: this.injector,
-        providers: [{ provide: NZ_EMPTY_COMPONENT_NAME, useValue: this.nzComponentName }]
+        providers: [{ provide: NZ_EMPTY_COMPONENT_NAME, useValue: this.componentName }]
       });
       this.contentType = 'component';
       this.contentPortal = new ComponentPortal(content, this.viewContainerRef, injector);
@@ -134,7 +134,7 @@ export class NzEmbedEmptyComponent implements OnChanges, OnInit {
     this.cdr.detectChanges();
   }
 
-  private getUserDefaultEmptyContent(): Type<NzSafeAny> | TemplateRef<string> | string | undefined {
+  private getUserDefaultEmptyContent(): Type<TriSafeAny> | TemplateRef<string> | string | undefined {
     return (this.configService.getConfigForComponent('empty') || {}).nzDefaultEmptyContent;
   }
 }

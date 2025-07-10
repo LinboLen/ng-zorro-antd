@@ -10,12 +10,12 @@ import { By } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 import { badgePresetColors } from 'ng-zorro-antd/badge/preset-colors';
-import { NzRibbonComponent } from 'ng-zorro-antd/badge/ribbon.component';
-import { NzNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
-import { NgStyleInterface, NzSizeDSType } from 'ng-zorro-antd/core/types';
+import { TriRibbonComponent } from 'ng-zorro-antd/badge/ribbon.component';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { NgStyleInterface, TriSizeDSType } from 'ng-zorro-antd/core/types';
 
-import { NzBadgeComponent } from './badge.component';
-import { NzBadgeModule } from './badge.module';
+import { TriBadgeComponent } from './badge.component';
+import { TriBadgeModule } from './badge.module';
 
 describe('nz-badge', () => {
   beforeEach(() => {
@@ -25,15 +25,15 @@ describe('nz-badge', () => {
   });
 
   describe('basic', () => {
-    let fixture: ComponentFixture<NzTestBadgeBasicComponent>;
-    let testComponent: NzTestBadgeBasicComponent;
+    let fixture: ComponentFixture<TriTestBadgeBasicComponent>;
+    let testComponent: TriTestBadgeBasicComponent;
     let badgeElement: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestBadgeBasicComponent);
+      fixture = TestBed.createComponent(TriTestBadgeBasicComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      badgeElement = fixture.debugElement.query(By.directive(NzBadgeComponent));
+      badgeElement = fixture.debugElement.query(By.directive(TriBadgeComponent));
     });
 
     it('should className correct', () => {
@@ -130,7 +130,7 @@ describe('nz-badge', () => {
       fixture.detectChanges();
       tick(1000);
       fixture.detectChanges();
-      badgeElement = fixture.debugElement.query(By.directive(NzBadgeComponent));
+      badgeElement = fixture.debugElement.query(By.directive(TriBadgeComponent));
       expect(badgeElement.nativeElement.classList).toContain('ant-badge-not-a-wrapper');
       expect(badgeElement.nativeElement.querySelector('nz-badge-sup').style.backgroundColor).toBe('rgb(82, 196, 26)');
     }));
@@ -171,12 +171,12 @@ describe('nz-badge', () => {
 
     it('should set presetColor of nzColor change', fakeAsync(() => {
       let color: string | undefined;
-      const fixture = TestBed.createComponent(NzBadgeComponent);
+      const fixture = TestBed.createComponent(TriBadgeComponent);
       const component = fixture.componentInstance;
       fixture.detectChanges();
 
       color = badgePresetColors[0];
-      component.nzColor = color;
+      component.color = color;
       component.ngOnChanges({
         nzColor: new SimpleChange(undefined, color, false)
       });
@@ -184,7 +184,7 @@ describe('nz-badge', () => {
       expect(component.presetColor).toEqual(color);
 
       color = undefined;
-      component.nzColor = color;
+      component.color = color;
       component.ngOnChanges({
         nzColor: new SimpleChange(undefined, color, false)
       });
@@ -194,20 +194,20 @@ describe('nz-badge', () => {
   });
 
   describe('ribbon', () => {
-    let fixture: ComponentFixture<NzRibbonComponent>;
-    let component: NzRibbonComponent;
+    let fixture: ComponentFixture<TriRibbonComponent>;
+    let component: TriRibbonComponent;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzRibbonComponent);
+      fixture = TestBed.createComponent(TriRibbonComponent);
       component = fixture.componentInstance;
     });
 
     it('default value for nzPlacement', () => {
-      expect(component.nzPlacement).toEqual('end');
+      expect(component.placement).toEqual('end');
     });
 
     it('default value for nzText', () => {
-      expect(component.nzText).toEqual(null);
+      expect(component.text).toEqual(null);
     });
 
     it('default value for presetColor', () => {
@@ -219,7 +219,7 @@ describe('nz-badge', () => {
 
       color = badgePresetColors[1];
 
-      component.nzColor = color;
+      component.color = color;
       component.ngOnChanges({
         nzColor: new SimpleChange(undefined, color, false)
       });
@@ -227,7 +227,7 @@ describe('nz-badge', () => {
       expect(component.presetColor).toEqual(color);
 
       color = undefined;
-      component.nzColor = color;
+      component.color = color;
       component.ngOnChanges({
         nzColor: new SimpleChange(undefined, color, false)
       });
@@ -237,13 +237,13 @@ describe('nz-badge', () => {
   });
 
   describe('RTL', () => {
-    let fixture: ComponentFixture<NzTestBadgeRtlComponent>;
+    let fixture: ComponentFixture<TriTestBadgeRtlComponent>;
     let badge: DebugElement;
     let badgeElement: HTMLElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestBadgeRtlComponent);
-      badge = fixture.debugElement.query(By.directive(NzBadgeComponent));
+      fixture = TestBed.createComponent(TriTestBadgeRtlComponent);
+      badge = fixture.debugElement.query(By.directive(TriBadgeComponent));
       fixture.detectChanges();
       badgeElement = badge.nativeElement;
     });
@@ -260,29 +260,29 @@ describe('nz-badge', () => {
 });
 
 @Component({
-  imports: [NzNoAnimationDirective, NzBadgeModule],
+  imports: [TriNoAnimationDirective, TriBadgeModule],
   template: `
-    <nz-badge
-      [nzCount]="count"
-      [nzStatus]="status"
-      [nzText]="text"
-      [nzShowZero]="showZero"
-      [nzOverflowCount]="overflow"
-      [nzNoAnimation]="noAnimation"
-      [nzStyle]="style"
-      [nzDot]="dot"
-      [nzOffset]="offset"
-      [nzTitle]="title"
-      [nzStandalone]="!inner"
-      [nzSize]="size"
+    <tri-badge
+      [count]="count"
+      [status]="status"
+      [text]="text"
+      [showZero]="showZero"
+      [overflowCount]="overflow"
+      [noAnimation]="noAnimation"
+      [style]="style"
+      [dot]="dot"
+      [offset]="offset"
+      [title]="title"
+      [standalone]="!inner"
+      [size]="size"
     >
       @if (inner) {
         <a></a>
       }
-    </nz-badge>
+    </tri-badge>
   `
 })
-export class NzTestBadgeBasicComponent {
+export class TriTestBadgeBasicComponent {
   count = 5;
   dot = false;
   inner = true;
@@ -293,19 +293,19 @@ export class NzTestBadgeBasicComponent {
   text!: string;
   title?: string | null;
   offset?: [number, number];
-  size: NzSizeDSType = 'default';
+  size: TriSizeDSType = 'default';
   noAnimation = true;
 }
 
 @Component({
-  imports: [BidiModule, NzBadgeModule],
+  imports: [BidiModule, TriBadgeModule],
   template: `
     <div [dir]="direction">
-      <nz-badge [nzCount]="count"></nz-badge>
+      <tri-badge [count]="count"></tri-badge>
     </div>
   `
 })
-export class NzTestBadgeRtlComponent {
+export class TriTestBadgeRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
   count = 5;

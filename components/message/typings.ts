@@ -6,29 +6,29 @@
 import { TemplateRef } from '@angular/core';
 import { Subject } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzMNComponent } from './base';
+import { TriMNComponent } from './base';
 
-export type NzMessageType = 'success' | 'info' | 'warning' | 'error' | 'loading';
+export type TriMessageType = 'success' | 'info' | 'warning' | 'error' | 'loading';
 
-export type NzMessageContentType = string | TemplateRef<void | { $implicit: NzMNComponent; data: NzSafeAny }>;
+export type TriMessageContentType = string | TemplateRef<void | { $implicit: TriMNComponent; data: TriSafeAny }>;
 
-export interface NzMessageDataOptions {
+export interface TriMessageDataOptions {
   nzDuration?: number;
   nzAnimate?: boolean;
   nzPauseOnHover?: boolean;
-  nzData?: NzSafeAny;
+  nzData?: TriSafeAny;
 }
 
-export interface NzMessageData {
-  type?: NzMessageType | string;
-  content?: NzMessageContentType;
+export interface TriMessageData {
+  type?: TriMessageType | string;
+  content?: TriMessageContentType;
   messageId?: string;
   createdAt?: Date;
-  options?: NzMessageDataOptions;
+  options?: TriMessageDataOptions;
   state?: 'enter' | 'leave';
   onClose?: Subject<boolean>;
 }
 
-export type NzMessageRef = Pick<Required<NzMessageData>, 'onClose' | 'messageId'>;
+export type TriMessageRef = Pick<Required<TriMessageData>, 'onClose' | 'messageId'>;

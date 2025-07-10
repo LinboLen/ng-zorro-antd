@@ -1,24 +1,24 @@
 import { Component, computed, model, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzAvatarModule } from 'ng-zorro-antd/avatar';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { TriAvatarModule } from 'ng-zorro-antd/avatar';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
 
 const userList = ['Lucy', 'U', 'Tom', 'Edward'];
 const colorList = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'];
 
 @Component({
-  selector: 'nz-demo-avatar-dynamic',
-  imports: [FormsModule, NzAvatarModule, NzButtonModule, NzInputNumberModule],
+  selector: '',
+  imports: [FormsModule, TriAvatarModule, TriButtonModule, TriInputNumberModule],
   template: `
     <div>
       <label>Gap: </label>
-      <nz-input-number [nzMin]="0" [nzMax]="16" [nzStep]="1" [(ngModel)]="gap"></nz-input-number>
-      <button nz-button (click)="change()">Change Text</button>
+      <tri-input-number [min]="0" [max]="16" [step]="1" [(ngModel)]="gap"></tri-input-number>
+      <button tri-button (click)="change()">Change Text</button>
     </div>
 
-    <nz-avatar [nzGap]="gap()" [nzText]="text()" nzSize="large" [style.background-color]="color()"></nz-avatar>
+    <tri-avatar [gap]="gap()" [text]="text()" size="large" [style.background-color]="color()"></tri-avatar>
   `,
   styles: [
     `
@@ -31,7 +31,7 @@ const colorList = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'];
     `
   ]
 })
-export class NzDemoAvatarDynamicComponent {
+export class TriDemoAvatarDynamicComponent {
   index = signal(3);
   text = computed(() => userList[this.index()]);
   color = computed(() => colorList[this.index()]);

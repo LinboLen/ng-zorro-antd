@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { NzZoomTransform } from '../interface';
+import { TriZoomTransform } from '../interface';
 
 /**
  * Calculate position and scale
@@ -16,7 +16,7 @@ export const calculateTransform = (
   containerEle: SVGSVGElement,
   targetEle: SVGGElement,
   scale?: number
-): NzZoomTransform | null => {
+): TriZoomTransform | null => {
   const containerEleSize = containerEle.getBoundingClientRect();
   const targetEleSize = targetEle.getBBox();
   if (!targetEleSize.width) {

@@ -1,39 +1,39 @@
 import { Component } from '@angular/core';
 
-import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { TriCardModule } from 'ng-zorro-antd/card';
+import { TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: 'nz-demo-card-tabs',
-  imports: [NzCardModule, NzTabsModule],
+  selector: '',
+  imports: [TriCardModule, TriTabsModule],
   template: `
-    <nz-card style="width: 100%;" nzTitle="Card title" [nzExtra]="extraTemplate">
-      <nz-card-tab>
-        <nz-tabs nzSize="large" [(nzSelectedIndex)]="index1">
-          <nz-tab nzTitle="tab1"></nz-tab>
-          <nz-tab nzTitle="tab2"></nz-tab>
-        </nz-tabs>
-      </nz-card-tab>
+    <tri-card style="width: 100%;" title="Card title" [extra]="extraTemplate">
+      <tri-card-tab>
+        <tri-tabs size="large" [(selectedIndexChange)]="index1">
+          <tri-tab title="tab1"></tri-tab>
+          <tri-tab title="tab2"></tri-tab>
+        </tri-tabs>
+      </tri-card-tab>
       content{{ index1 }}
-    </nz-card>
+    </tri-card>
     <ng-template #extraTemplate>
       <a>More</a>
     </ng-template>
     <br />
     <br />
-    <nz-card style="width: 100%;">
-      <nz-card-tab>
-        <nz-tabs nzSize="large" [(nzSelectedIndex)]="index2">
-          <nz-tab nzTitle="article"></nz-tab>
-          <nz-tab nzTitle="app"></nz-tab>
-          <nz-tab nzTitle="project"></nz-tab>
-        </nz-tabs>
-      </nz-card-tab>
+    <tri-card style="width: 100%;">
+      <tri-card-tab>
+        <tri-tabs size="large" [(selectedIndexChange)]="index2">
+          <tri-tab title="article"></tri-tab>
+          <tri-tab title="app"></tri-tab>
+          <tri-tab title="project"></tri-tab>
+        </tri-tabs>
+      </tri-card-tab>
       content{{ index2 }}
-    </nz-card>
+    </tri-card>
   `
 })
-export class NzDemoCardTabsComponent {
+export class TriDemoCardTabsComponent {
   index1 = 0;
   index2 = 0;
 }

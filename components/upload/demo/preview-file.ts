@@ -3,30 +3,30 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzUploadFile, NzUploadModule } from 'ng-zorro-antd/upload';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriUploadFile, TriUploadModule } from 'ng-zorro-antd/upload';
 
 @Component({
-  selector: 'nz-demo-upload-preview-file',
-  imports: [NzButtonModule, NzIconModule, NzUploadModule],
+  selector: '',
+  imports: [TriButtonModule, TriIconModule, TriUploadModule],
   template: `
-    <nz-upload
-      nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-      nzListType="picture"
-      [nzPreviewFile]="previewFile"
+    <tri-upload
+      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+      listType="picture"
+      [previewFile]="previewFile"
     >
-      <button nz-button>
-        <nz-icon nzType="upload" />
+      <button tri-button>
+        <tri-icon type="upload" />
         Upload
       </button>
-    </nz-upload>
+    </tri-upload>
   `
 })
-export class NzDemoUploadPreviewFileComponent {
+export class TriDemoUploadPreviewFileComponent {
   constructor(private http: HttpClient) {}
 
-  previewFile = (file: NzUploadFile): Observable<string> => {
+  previewFile = (file: TriUploadFile): Observable<string> => {
     console.log('Your upload file:', file);
     return this.http
       .post<{ thumbnail: string }>(`https://next.json-generator.com/api/json/get/4ytyBoLK8`, {

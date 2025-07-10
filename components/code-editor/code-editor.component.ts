@@ -29,63 +29,63 @@ import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators'
 import type { editor, IDisposable } from 'monaco-editor';
 
 import { warn } from 'ng-zorro-antd/core/logger';
-import { NzSafeAny, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
+import { TriSafeAny, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular, inNextTick } from 'ng-zorro-antd/core/util';
-import { NzSpinComponent } from 'ng-zorro-antd/spin';
+import { TriSpinComponent } from 'ng-zorro-antd/spin';
 
-import { NzCodeEditorService } from './code-editor.service';
-import { DiffEditorOptions, EditorOptions, JoinedEditorOptions, NzEditorMode } from './typings';
+import { TriCodeEditorService } from './code-editor.service';
+import { DiffEditorOptions, EditorOptions, JoinedEditorOptions, TriEditorMode } from './typings';
 
 // Import types from monaco editor.
 type ITextModel = editor.ITextModel;
 type IStandaloneCodeEditor = editor.IStandaloneCodeEditor;
 type IStandaloneDiffEditor = editor.IStandaloneDiffEditor;
 
-declare const monaco: NzSafeAny;
+declare const monaco: TriSafeAny;
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-code-editor',
-  exportAs: 'nzCodeEditor',
+  selector: '',
+  exportAs: 'triCodeEditor',
   template: `
-    @if (nzLoading) {
-      <div class="ant-code-editor-loading">
-        <nz-spin />
+    @if (loading) {
+      <div class="tri-code-editor-loading">
+        <tri-spin />
       </div>
     }
-    @if (nzToolkit) {
-      <div class="ant-code-editor-toolkit">
-        <ng-template [ngTemplateOutlet]="nzToolkit" />
+    @if (toolkit) {
+      <div class="tri-code-editor-toolkit">
+        <ng-template [ngTemplateOutlet]="toolkit" />
       </div>
     }
   `,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NzCodeEditorComponent),
+      useExisting: forwardRef(() => TriCodeEditorComponent),
       multi: true
     }
   ],
-  imports: [NzSpinComponent, NgTemplateOutlet]
+  imports: [TriSpinComponent, NgTemplateOutlet]
 })
-export class NzCodeEditorComponent implements AfterViewInit, ControlValueAccessor {
-  private nzCodeEditorService = inject(NzCodeEditorService);
+export class TriCodeEditorComponent implements AfterViewInit, ControlValueAccessor {
+  private codeEditorService = inject(TriCodeEditorService);
   private ngZone = inject(NgZone);
   private platform = inject(Platform);
   private destroyRef = inject(DestroyRef);
 
-  @Input() nzEditorMode: NzEditorMode = 'normal';
-  @Input() nzOriginalText = '';
-  @Input({ transform: booleanAttribute }) nzLoading = false;
-  @Input({ transform: booleanAttribute }) nzFullControl = false;
-  @Input() nzToolkit?: TemplateRef<void>;
+  @Input() editorMode: TriEditorMode = 'normal';
+  @Input() originalText = '';
+  @Input({ transform: booleanAttribute }) loading = false;
+  @Input({ transform: booleanAttribute }) fullControl = false;
+  @Input() toolkit?: TemplateRef<void>;
 
-  @Input() set nzEditorOption(value: JoinedEditorOptions) {
+  @Input() set editorOption(value: JoinedEditorOptions) {
     this.editorOption$.next(value);
   }
 
-  @Output() readonly nzEditorInitialized = new EventEmitter<IStandaloneCodeEditor | IStandaloneDiffEditor>();
+  @Output() readonly editorInitialized = new EventEmitter<IStandaloneCodeEditor | IStandaloneDiffEditor>();
 
   editorOptionCached: JoinedEditorOptions = {};
 
@@ -120,7 +120,7 @@ export class NzCodeEditorComponent implements AfterViewInit, ControlValueAccesso
       return;
     }
 
-    this.nzCodeEditorService
+    this.codeEditorService
       .requestToInit()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(option => this.setup(option));
@@ -131,7 +131,7 @@ export class NzCodeEditorComponent implements AfterViewInit, ControlValueAccesso
     this.setValue();
   }
 
-  registerOnChange(fn: OnChangeType): NzSafeAny {
+  registerOnChange(fn: OnChangeType): TriSafeAny {
     this.onChange = fn;
   }
 
@@ -163,19 +163,19 @@ export class NzCodeEditorComponent implements AfterViewInit, ControlValueAccesso
           this.registerResizeChange();
           this.setValue();
 
-          if (!this.nzFullControl) {
+          if (!this.fullControl) {
             this.setValueEmitter();
           }
 
-          if (this.nzEditorInitialized.observers.length) {
-            this.ngZone.run(() => this.nzEditorInitialized.emit(this.editorInstance!));
+          if (this.editorInitialized.observers.length) {
+            this.ngZone.run(() => this.editorInitialized.emit(this.editorInstance!));
           }
         })
     );
   }
 
   private registerOptionChanges(): void {
-    combineLatest([this.editorOption$, this.nzCodeEditorService.option$])
+    combineLatest([this.editorOption$, this.codeEditorService.option$])
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(([selfOpt, defaultOpt]) => {
         this.editorOptionCached = {
@@ -190,7 +190,7 @@ export class NzCodeEditorComponent implements AfterViewInit, ControlValueAccesso
   private initMonacoEditorInstance(): void {
     this.ngZone.runOutsideAngular(() => {
       this.editorInstance =
-        this.nzEditorMode === 'normal'
+        this.editorMode === 'normal'
           ? monaco.editor.create(this.el, { ...this.editorOptionCached })
           : monaco.editor.createDiffEditor(this.el, {
               ...(this.editorOptionCached as DiffEditorOptions)
@@ -226,12 +226,12 @@ export class NzCodeEditorComponent implements AfterViewInit, ControlValueAccesso
       return;
     }
 
-    if (this.nzFullControl && this.value) {
+    if (this.fullControl && this.value) {
       warn(`should not set value when you are using full control mode! It would result in ambiguous data flow!`);
       return;
     }
 
-    if (this.nzEditorMode === 'normal') {
+    if (this.editorMode === 'normal') {
       if (this.modelSet) {
         const model = this.editorInstance.getModel() as ITextModel;
         this.preservePositionAndSelections(() => model.setValue(this.value));
@@ -246,12 +246,12 @@ export class NzCodeEditorComponent implements AfterViewInit, ControlValueAccesso
         const model = (this.editorInstance as IStandaloneDiffEditor).getModel()!;
         this.preservePositionAndSelections(() => {
           model.modified.setValue(this.value);
-          model.original.setValue(this.nzOriginalText);
+          model.original.setValue(this.originalText);
         });
       } else {
         const language = (this.editorOptionCached as EditorOptions).language;
         (this.editorInstance as IStandaloneDiffEditor).setModel({
-          original: monaco.editor.createModel(this.nzOriginalText, language),
+          original: monaco.editor.createModel(this.originalText, language),
           modified: monaco.editor.createModel(this.value, language)
         });
         this.modelSet = true;
@@ -285,7 +285,7 @@ export class NzCodeEditorComponent implements AfterViewInit, ControlValueAccesso
 
   private setValueEmitter(): void {
     const model = (
-      this.nzEditorMode === 'normal'
+      this.editorMode === 'normal'
         ? (this.editorInstance as IStandaloneCodeEditor).getModel()
         : (this.editorInstance as IStandaloneDiffEditor).getModel()!.modified
     ) as ITextModel;

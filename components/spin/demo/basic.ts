@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
-import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { TriSpinModule } from 'ng-zorro-antd/spin';
 
 @Component({
-  selector: 'nz-demo-spin-basic',
-  imports: [NzSpinModule],
-  template: `<nz-spin nzSimple></nz-spin>`
+  selector: '',
+  imports: [TriSpinModule],
+  template: `<tri-spin simple></tri-spin>`
 })
-export class NzDemoSpinBasicComponent {}
+export class TriDemoSpinBasicComponent {}

@@ -1,27 +1,27 @@
 import { Component } from '@angular/core';
 
-import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzResizableModule, NzResizeEvent, NzResizeHandleOption } from 'ng-zorro-antd/resizable';
+import { TriGridModule } from 'ng-zorro-antd/grid';
+import { TriResizableModule, TriResizeEvent, TriResizeHandleOption } from 'ng-zorro-antd/resizable';
 
 @Component({
-  selector: 'nz-demo-resizable-grid',
-  imports: [NzGridModule, NzResizableModule],
+  selector: '',
+  imports: [TriGridModule, TriResizableModule],
   template: `
-    <div nz-row>
+    <div tri-row>
       <div
         class="col"
-        nz-col
-        nz-resizable
-        (nzResize)="onResize($event)"
-        [nzMinColumn]="3"
-        [nzMaxColumn]="20"
-        [nzGridColumnCount]="24"
-        [nzSpan]="col"
+        tri-col
+        tri-resizable
+        (resize)="onResize($event)"
+        [minColumn]="3"
+        [maxColumn]="20"
+        [gridColumnCount]="24"
+        [span]="col"
       >
-        <nz-resize-handles [nzDirections]="directions"></nz-resize-handles>
+        <tri-resize-handles [directions]="directions"></tri-resize-handles>
         col-{{ col }}
       </div>
-      <div class="col right" nz-col [nzSpan]="24 - col">col-{{ 24 - col }}</div>
+      <div class="col right" tri-col [span]="24 - col">col-{{ 24 - col }}</div>
     </div>
   `,
   styles: [
@@ -43,17 +43,17 @@ import { NzResizableModule, NzResizeEvent, NzResizeHandleOption } from 'ng-zorro
     `
   ]
 })
-export class NzDemoResizableGridComponent {
+export class TriDemoResizableGridComponent {
   col = 8;
   id = -1;
-  directions: NzResizeHandleOption[] = [
+  directions: TriResizeHandleOption[] = [
     {
       direction: 'right',
       cursorType: 'grid'
     }
   ];
 
-  onResize({ col }: NzResizeEvent): void {
+  onResize({ col }: TriResizeEvent): void {
     cancelAnimationFrame(this.id);
     this.id = requestAnimationFrame(() => {
       this.col = col!;

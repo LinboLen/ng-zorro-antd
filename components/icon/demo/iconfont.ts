@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 
-import { NzIconModule, NzIconService } from 'ng-zorro-antd/icon';
+import { TriIconModule, TriIconService } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-demo-icon-iconfont',
-  imports: [NzIconModule],
+  selector: '',
+  imports: [TriIconModule],
   template: `
-    <nz-icon nzIconfont="icon-tuichu" />
-    <nz-icon nzIconfont="icon-facebook" />
-    <nz-icon nzIconfont="icon-twitter" />
+    <tri-icon iconfont="icon-tuichu" />
+    <tri-icon iconfont="icon-facebook" />
+    <tri-icon iconfont="icon-twitter" />
   `,
   styles: [
     `
@@ -19,8 +19,8 @@ import { NzIconModule, NzIconService } from 'ng-zorro-antd/icon';
     `
   ]
 })
-export class NzDemoIconIconfontComponent {
-  constructor(private iconService: NzIconService) {
+export class TriDemoIconIconfontComponent {
+  constructor(private iconService: TriIconService) {
     this.iconService.fetchFromIconfont({
       scriptUrl: 'https://at.alicdn.com/t/font_8d5l8fzk5b87iudi.js'
     });

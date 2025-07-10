@@ -1,31 +1,31 @@
 import { Component } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzSelectModule } from 'ng-zorro-antd/select';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: 'nz-demo-select-custom-template',
-  imports: [NzIconModule, NzSelectModule],
+  selector: '',
+  imports: [TriIconModule, TriSelectModule],
   template: `
-    <nz-select nzAllowClear nzPlaceHolder="Select OS" [nzCustomTemplate]="defaultTemplate">
-      <nz-option nzLabel="Windows" nzValue="windows"></nz-option>
-      <nz-option nzLabel="Apple" nzValue="apple"></nz-option>
-      <nz-option nzLabel="Android" nzValue="android"></nz-option>
-    </nz-select>
+    <tri-select allowClear placeHolder="Select OS" [customTemplate]="defaultTemplate">
+      <tri-option label="Windows" value="windows"></tri-option>
+      <tri-option label="Apple" value="apple"></tri-option>
+      <tri-option label="Android" value="android"></tri-option>
+    </tri-select>
     <ng-template #defaultTemplate let-selected>
-      <nz-icon [nzType]="selected.nzValue" />
+      <tri-icon [type]="value" />
       {{ selected.nzLabel }}
     </ng-template>
     <br />
     <br />
-    <nz-select nzAllowClear nzPlaceHolder="Select OS" nzMode="multiple" [nzCustomTemplate]="multipleTemplate">
-      <nz-option nzLabel="Windows" nzValue="windows"></nz-option>
-      <nz-option nzLabel="Apple" nzValue="apple"></nz-option>
-      <nz-option nzLabel="Android" nzValue="android"></nz-option>
-    </nz-select>
+    <tri-select allowClear placeHolder="Select OS" mode="multiple" [customTemplate]="multipleTemplate">
+      <tri-option label="Windows" value="windows"></tri-option>
+      <tri-option label="Apple" value="apple"></tri-option>
+      <tri-option label="Android" value="android"></tri-option>
+    </tri-select>
     <ng-template #multipleTemplate let-selected>
-      <div class="ant-select-selection-item-content">
-        <nz-icon [nzType]="selected.nzValue" />
+      <div class="tri-select-selection-item-content">
+        <tri-icon [type]="value" />
         {{ selected.nzLabel }}
       </div>
     </ng-template>
@@ -38,4 +38,4 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     `
   ]
 })
-export class NzDemoSelectCustomTemplateComponent {}
+export class TriDemoSelectCustomTemplateComponent {}

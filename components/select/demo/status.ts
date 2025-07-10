@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { TriSelectModule } from 'ng-zorro-antd/select';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: 'nz-demo-select-status',
-  imports: [NzSelectModule, NzSpaceModule],
+  selector: '',
+  imports: [TriSelectModule, TriSpaceModule],
   template: `
-    <nz-select nzStatus="error"></nz-select>
+    <tri-select status="error"></tri-select>
     <br />
     <br />
-    <nz-select nzStatus="warning"></nz-select>
+    <tri-select status="warning"></tri-select>
   `,
   styles: [
     `
@@ -20,4 +20,4 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
     `
   ]
 })
-export class NzDemoSelectStatusComponent {}
+export class TriDemoSelectStatusComponent {}

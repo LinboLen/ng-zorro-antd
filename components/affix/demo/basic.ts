@@ -1,34 +1,34 @@
 import { Component } from '@angular/core';
 
-import { NzAffixModule } from 'ng-zorro-antd/affix';
-import { NzButtonModule } from 'ng-zorro-antd/button';
+import { TriAffixModule } from 'ng-zorro-antd/affix';
+import { TriButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
-  selector: 'nz-demo-affix-basic',
-  imports: [NzAffixModule, NzButtonModule],
+  selector: '',
+  imports: [TriAffixModule, TriButtonModule],
   template: `
-    <nz-affix [nzOffsetTop]="offsetTop">
-      <button nz-button nzType="primary" (click)="setOffsetTop()">
+    <tri-affix [offsetTop]="offsetTop">
+      <button tri-button type="primary" (click)="setOffsetTop()">
         <span>Affix top</span>
       </button>
-    </nz-affix>
+    </tri-affix>
     <br />
-    <nz-affix [nzOffsetBottom]="nzOffsetBottom" (click)="setOffsetBottom()">
-      <button nz-button nzType="primary">
+    <tri-affix [offsetBottom]="offsetBottom" (click)="setOffsetBottom()">
+      <button tri-button type="primary">
         <span>Affix bottom</span>
       </button>
-    </nz-affix>
+    </tri-affix>
   `
 })
-export class NzDemoAffixBasicComponent {
+export class TriDemoAffixBasicComponent {
   offsetTop = 10;
-  nzOffsetBottom = 10;
+  offsetBottom = 10;
 
   setOffsetTop(): void {
     this.offsetTop += 10;
   }
 
   setOffsetBottom(): void {
-    this.nzOffsetBottom += 10;
+    this.offsetBottom += 10;
   }
 }

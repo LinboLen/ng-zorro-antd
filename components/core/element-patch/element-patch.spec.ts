@@ -6,13 +6,13 @@
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NzElementPatchDirective } from './element-patch.directive';
+import { TriElementPatchDirective } from './element-patch.directive';
 
 describe('nz-element', () => {
-  let fixture: ComponentFixture<NzTestElementPatchComponent>;
+  let fixture: ComponentFixture<TriTestElementPatchComponent>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NzTestElementPatchComponent);
+    fixture = TestBed.createComponent(TriTestElementPatchComponent);
     fixture.detectChanges();
   });
 
@@ -23,9 +23,9 @@ describe('nz-element', () => {
 });
 
 @Component({
-  imports: [NzElementPatchDirective],
-  template: `<button nz-element>Action</button> `
+  imports: [TriElementPatchDirective],
+  template: `<button tri-element>Action</button> `
 })
-export class NzTestElementPatchComponent {
-  @ViewChild(NzElementPatchDirective) element!: NzElementPatchDirective;
+export class TriTestElementPatchComponent {
+  @ViewChild(TriElementPatchDirective) element!: TriElementPatchDirective;
 }

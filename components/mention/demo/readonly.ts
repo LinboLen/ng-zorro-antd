@@ -1,36 +1,36 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzMentionModule } from 'ng-zorro-antd/mention';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriMentionModule } from 'ng-zorro-antd/mention';
 
 @Component({
-  selector: 'nz-demo-mention-readonly',
-  imports: [FormsModule, NzInputModule, NzMentionModule],
+  selector: '',
+  imports: [FormsModule, TriInputModule, TriMentionModule],
   template: `
-    <nz-mention [nzSuggestions]="suggestions" style="margin-bottom: 8px">
+    <tri-mention [suggestions]="suggestions" style="margin-bottom: 8px">
       <textarea
         rows="1"
         placeholder="this is disabled Mention"
-        nzMentionTrigger
-        nz-input
+        mentionTrigger
+        tri-input
         disabled
         [(ngModel)]="inputValue"
       ></textarea>
-    </nz-mention>
-    <nz-mention [nzSuggestions]="suggestions">
+    </tri-mention>
+    <tri-mention [suggestions]="suggestions">
       <textarea
         rows="1"
         placeholder="this is readOnly Mention"
-        nzMentionTrigger
-        nz-input
+        mentionTrigger
+        tri-input
         readOnly
         [(ngModel)]="inputValue"
       ></textarea>
-    </nz-mention>
+    </tri-mention>
   `
 })
-export class NzDemoMentionReadonlyComponent {
+export class TriDemoMentionReadonlyComponent {
   inputValue?: string;
   suggestions = ['afc163', 'benjycui', 'yiminghe', 'RaoHai', '中文', 'にほんご'];
 }

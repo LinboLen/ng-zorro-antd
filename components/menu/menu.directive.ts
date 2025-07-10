@@ -23,11 +23,11 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 
-import { NzMenuItemComponent } from './menu-item.component';
+import { TriMenuItemComponent } from './menu-item.component';
 import { MenuService } from './menu.service';
 import { NzIsMenuInsideDropDownToken, NzMenuServiceLocalToken } from './menu.token';
-import { NzMenuModeType, NzMenuThemeType } from './menu.types';
-import { NzSubMenuComponent } from './submenu.component';
+import { TriMenuModeType, TriMenuThemeType } from './menu.types';
+import { TriSubMenuComponent } from './submenu.component';
 
 export function MenuServiceFactory(): MenuService {
   const serviceInsideDropDown = inject(MenuService, { skipSelf: true, optional: true });
@@ -41,8 +41,8 @@ export function MenuDropDownTokenFactory(): boolean {
 }
 
 @Directive({
-  selector: '[nz-menu]',
-  exportAs: 'nzMenu',
+  selector: '',
+  exportAs: 'triMenu',
   providers: [
     {
       provide: NzMenuServiceLocalToken,
@@ -60,56 +60,56 @@ export function MenuDropDownTokenFactory(): boolean {
     }
   ],
   host: {
-    '[class.ant-dropdown-menu]': `isMenuInsideDropDown`,
-    '[class.ant-dropdown-menu-root]': `isMenuInsideDropDown`,
-    '[class.ant-dropdown-menu-light]': `isMenuInsideDropDown && nzTheme === 'light'`,
-    '[class.ant-dropdown-menu-dark]': `isMenuInsideDropDown && nzTheme === 'dark'`,
-    '[class.ant-dropdown-menu-vertical]': `isMenuInsideDropDown && actualMode === 'vertical'`,
-    '[class.ant-dropdown-menu-horizontal]': `isMenuInsideDropDown && actualMode === 'horizontal'`,
-    '[class.ant-dropdown-menu-inline]': `isMenuInsideDropDown && actualMode === 'inline'`,
-    '[class.ant-dropdown-menu-inline-collapsed]': `isMenuInsideDropDown && nzInlineCollapsed`,
-    '[class.ant-menu]': `!isMenuInsideDropDown`,
-    '[class.ant-menu-root]': `!isMenuInsideDropDown`,
-    '[class.ant-menu-light]': `!isMenuInsideDropDown && nzTheme === 'light'`,
-    '[class.ant-menu-dark]': `!isMenuInsideDropDown && nzTheme === 'dark'`,
-    '[class.ant-menu-vertical]': `!isMenuInsideDropDown && actualMode === 'vertical'`,
-    '[class.ant-menu-horizontal]': `!isMenuInsideDropDown && actualMode === 'horizontal'`,
-    '[class.ant-menu-inline]': `!isMenuInsideDropDown && actualMode === 'inline'`,
-    '[class.ant-menu-inline-collapsed]': `!isMenuInsideDropDown && nzInlineCollapsed`,
-    '[class.ant-menu-rtl]': `dir === 'rtl'`
+    '[class.tri-dropdown-menu]': `isMenuInsideDropDown`,
+    '[class.tri-dropdown-menu-root]': `isMenuInsideDropDown`,
+    '[class.tri-dropdown-menu-light]': `isMenuInsideDropDown && theme === 'light'`,
+    '[class.tri-dropdown-menu-dark]': `isMenuInsideDropDown && theme === 'dark'`,
+    '[class.tri-dropdown-menu-vertical]': `isMenuInsideDropDown && actualMode === 'vertical'`,
+    '[class.tri-dropdown-menu-horizontal]': `isMenuInsideDropDown && actualMode === 'horizontal'`,
+    '[class.tri-dropdown-menu-inline]': `isMenuInsideDropDown && actualMode === 'inline'`,
+    '[class.tri-dropdown-menu-inline-collapsed]': `isMenuInsideDropDown && inlineCollapsed`,
+    '[class.tri-menu]': `!isMenuInsideDropDown`,
+    '[class.tri-menu-root]': `!isMenuInsideDropDown`,
+    '[class.tri-menu-light]': `!isMenuInsideDropDown && theme === 'light'`,
+    '[class.tri-menu-dark]': `!isMenuInsideDropDown && theme === 'dark'`,
+    '[class.tri-menu-vertical]': `!isMenuInsideDropDown && actualMode === 'vertical'`,
+    '[class.tri-menu-horizontal]': `!isMenuInsideDropDown && actualMode === 'horizontal'`,
+    '[class.tri-menu-inline]': `!isMenuInsideDropDown && actualMode === 'inline'`,
+    '[class.tri-menu-inline-collapsed]': `!isMenuInsideDropDown && inlineCollapsed`,
+    '[class.tri-menu-rtl]': `dir === 'rtl'`
   }
 })
-export class NzMenuDirective implements AfterContentInit, OnInit, OnChanges {
-  private readonly nzMenuService = inject(MenuService);
+export class TriMenuDirective implements AfterContentInit, OnInit, OnChanges {
+  private readonly menuService = inject(MenuService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly directionality = inject(Directionality);
 
-  @ContentChildren(NzMenuItemComponent, { descendants: true })
-  listOfNzMenuItemDirective!: QueryList<NzMenuItemComponent>;
+  @ContentChildren(TriMenuItemComponent, { descendants: true })
+  listOfNzMenuItemDirective!: QueryList<TriMenuItemComponent>;
   isMenuInsideDropDown = inject(NzIsMenuInsideDropDownToken);
-  @ContentChildren(NzSubMenuComponent, { descendants: true }) listOfNzSubMenuComponent!: QueryList<NzSubMenuComponent>;
-  @Input() nzInlineIndent = 24;
-  @Input() nzTheme: NzMenuThemeType = 'light';
-  @Input() nzMode: NzMenuModeType = 'vertical';
-  @Input({ transform: booleanAttribute }) nzInlineCollapsed = false;
-  @Input({ transform: booleanAttribute }) nzSelectable = !this.isMenuInsideDropDown;
-  @Output() readonly nzClick = new EventEmitter<NzMenuItemComponent>();
-  actualMode: NzMenuModeType = 'vertical';
+  @ContentChildren(TriSubMenuComponent, { descendants: true }) listOfNzSubMenuComponent!: QueryList<TriSubMenuComponent>;
+  @Input() inlineIndent = 24;
+  @Input() theme: TriMenuThemeType = 'light';
+  @Input() mode: TriMenuModeType = 'vertical';
+  @Input({ transform: booleanAttribute }) inlineCollapsed = false;
+  @Input({ transform: booleanAttribute }) selectable = !this.isMenuInsideDropDown;
+  @Output() readonly click = new EventEmitter<TriMenuItemComponent>();
+  actualMode: TriMenuModeType = 'vertical';
   dir: Direction = 'ltr';
-  private inlineCollapsed$ = new BehaviorSubject<boolean>(this.nzInlineCollapsed);
-  private mode$ = new BehaviorSubject<NzMenuModeType>(this.nzMode);
-  private listOfOpenedNzSubMenuComponent: NzSubMenuComponent[] = [];
+  private inlineCollapsed$ = new BehaviorSubject<boolean>(this.inlineCollapsed);
+  private mode$ = new BehaviorSubject<TriMenuModeType>(this.mode);
+  private listOfOpenedNzSubMenuComponent: TriSubMenuComponent[] = [];
 
   setInlineCollapsed(inlineCollapsed: boolean): void {
-    this.nzInlineCollapsed = inlineCollapsed;
+    this.inlineCollapsed = inlineCollapsed;
     this.inlineCollapsed$.next(inlineCollapsed);
   }
 
   updateInlineCollapse(): void {
     if (this.listOfNzMenuItemDirective) {
-      if (this.nzInlineCollapsed) {
-        this.listOfOpenedNzSubMenuComponent = this.listOfNzSubMenuComponent.filter(submenu => submenu.nzOpen);
+      if (this.inlineCollapsed) {
+        this.listOfOpenedNzSubMenuComponent = this.listOfNzSubMenuComponent.filter(submenu => submenu.open);
         this.listOfNzSubMenuComponent.forEach(submenu => submenu.setOpenStateWithoutDebounce(false));
       } else {
         this.listOfOpenedNzSubMenuComponent.forEach(submenu => submenu.setOpenStateWithoutDebounce(true));
@@ -123,12 +123,12 @@ export class NzMenuDirective implements AfterContentInit, OnInit, OnChanges {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(([inlineCollapsed, mode]) => {
         this.actualMode = inlineCollapsed ? 'vertical' : mode;
-        this.nzMenuService.setMode(this.actualMode);
+        this.menuService.setMode(this.actualMode);
         this.cdr.markForCheck();
       });
-    this.nzMenuService.descendantMenuItemClick$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(menu => {
-      this.nzClick.emit(menu);
-      if (this.nzSelectable && !menu.nzMatchRouter) {
+    this.menuService.descendantMenuItemClick$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(menu => {
+      this.click.emit(menu);
+      if (this.selectable && !menu.nzMatchRouter) {
         this.listOfNzMenuItemDirective.forEach(item => item.setSelectedState(item === menu));
       }
     });
@@ -136,7 +136,7 @@ export class NzMenuDirective implements AfterContentInit, OnInit, OnChanges {
     this.dir = this.directionality.value;
     this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
       this.dir = direction;
-      this.nzMenuService.setMode(this.actualMode);
+      this.menuService.setMode(this.actualMode);
       this.cdr.markForCheck();
     });
   }
@@ -151,16 +151,16 @@ export class NzMenuDirective implements AfterContentInit, OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     const { nzInlineCollapsed, nzInlineIndent, nzTheme, nzMode } = changes;
     if (nzInlineCollapsed) {
-      this.inlineCollapsed$.next(this.nzInlineCollapsed);
+      this.inlineCollapsed$.next(this.inlineCollapsed);
     }
     if (nzInlineIndent) {
-      this.nzMenuService.setInlineIndent(this.nzInlineIndent);
+      this.menuService.setInlineIndent(this.inlineIndent);
     }
     if (nzTheme) {
-      this.nzMenuService.setTheme(this.nzTheme);
+      this.menuService.setTheme(this.theme);
     }
     if (nzMode) {
-      this.mode$.next(this.nzMode);
+      this.mode$.next(this.mode);
       if (!nzMode.isFirstChange() && this.listOfNzSubMenuComponent) {
         this.listOfNzSubMenuComponent.forEach(submenu => submenu.setOpenStateWithoutDebounce(false));
       }

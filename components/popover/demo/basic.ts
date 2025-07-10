@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriPopoverModule } from 'ng-zorro-antd/popover';
 
 @Component({
-  selector: 'nz-demo-popover-basic',
-  imports: [NzButtonModule, NzPopoverModule],
+  selector: '',
+  imports: [TriButtonModule, TriPopoverModule],
   template: `
-    <button nz-button nz-popover nzType="primary" nzPopoverTitle="Title" nzPopoverContent="Content">Hover me</button>
+    <button tri-button tri-popover type="primary" popoverTitle="Title" popoverContent="Content">Hover me</button>
   `
 })
-export class NzDemoPopoverBasicComponent {}
+export class TriDemoPopoverBasicComponent {}

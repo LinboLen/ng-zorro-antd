@@ -40,20 +40,20 @@ function getPosition(e: EventType): { pageX: number; pageY: number } {
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'color-slider',
+  selector: '',
   imports: [PaletteComponent, GradientComponent, HandlerComponent],
   template: `
     <div
       #slider
       (mousedown)="dragStartHandle($event)"
       (touchstart)="dragStartHandle($event)"
-      class="ant-color-picker-slider"
+      class="tri-color-picker-slider"
       [class]="'ant-color-picker-slider-' + type"
     >
       <color-palette>
         <div
           #transform
-          class="ant-color-picker-transform"
+          class="tri-color-picker-transform"
           [style.left]="offsetValue.x + 'px'"
           [style.top]="offsetValue.y + 'px'"
         >
@@ -85,8 +85,8 @@ export class SliderComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() color: Color | null = null;
   @Input() value: string | null = null;
   @Input({ transform: booleanAttribute }) disabled: boolean = false;
-  @Output() readonly nzOnChange = new EventEmitter<Color>();
-  @Output() readonly nzOnChangeComplete = new EventEmitter<HsbaColorType>();
+  @Output() readonly onChange = new EventEmitter<Color>();
+  @Output() readonly onChangeComplete = new EventEmitter<HsbaColorType>();
 
   offsetValue: TransformOffset = { x: 0, y: 0 };
   dragRef: boolean = false;
@@ -170,7 +170,7 @@ export class SliderComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     this.offsetValue = calcOffset;
-    this.nzOnChange.emit(
+    this.onChange.emit(
       calculateColor(
         calcOffset,
         this.containerRef.nativeElement,
@@ -196,7 +196,7 @@ export class SliderComponent implements OnInit, AfterViewInit, OnChanges {
     this.document.removeEventListener('touchend', this.mouseUpRef);
     this.mouseMoveRef = () => null;
     this.mouseUpRef = () => null;
-    this.nzOnChangeComplete?.emit(this.type);
+    this.onChangeComplete?.emit(this.type);
   };
 
   onDragStart: EventHandle = (e: EventType) => {

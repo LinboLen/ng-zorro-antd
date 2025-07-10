@@ -3,21 +3,21 @@ import { FormsModule } from '@angular/forms';
 
 import { endOfMonth } from 'date-fns';
 
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 @Component({
-  selector: 'nz-demo-date-picker-presetted-ranges',
-  imports: [FormsModule, NzDatePickerModule],
+  selector: '',
+  imports: [FormsModule, TriDatePickerModule],
   template: `
-    <nz-range-picker [nzRanges]="ranges" ngModel (ngModelChange)="onChange($event)"></nz-range-picker>
+    <tri-range-picker [ranges]="ranges" ngModel (ngModelChange)="onChange($event)"></tri-range-picker>
     <br />
-    <nz-range-picker
-      [nzRanges]="ranges"
-      nzShowTime
-      nzFormat="yyyy/MM/dd HH:mm:ss"
+    <tri-range-picker
+      [ranges]="ranges"
+      showTime
+      format="yyyy/MM/dd HH:mm:ss"
       ngModel
       (ngModelChange)="onChange($event)"
-    ></nz-range-picker>
+    ></tri-range-picker>
   `,
   styles: [
     `
@@ -28,7 +28,7 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
     `
   ]
 })
-export class NzDemoDatePickerPresettedRangesComponent {
+export class TriDemoDatePickerPresettedRangesComponent {
   ranges = { Today: [new Date(), new Date()], 'This Month': [new Date(), endOfMonth(new Date())] };
 
   onChange(result: Date[]): void {

@@ -1,29 +1,29 @@
 import { Component } from '@angular/core';
 
-import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { TriTypographyModule } from 'ng-zorro-antd/typography';
 
 @Component({
-  selector: 'nz-demo-typography-ellipsis',
-  imports: [NzTypographyModule],
+  selector: '',
+  imports: [TriTypographyModule],
   template: `
     <p
-      nz-typography
-      nzEllipsis
-      nzCopyable
-      nzContent="Ant Design, a design language for background applications, is refined by Ant UED Team. Ant Design, a design language for background
+      tri-typography
+      ellipsis
+      copyable
+      content="Ant Design, a design language for background applications, is refined by Ant UED Team. Ant Design, a design language for background
       applications, is refined by Ant UED Team. Ant Design, a design language for background applications, is refined by Ant UED Team. Ant
       Design, a design language for background applications, is refined by Ant UED Team. Ant Design, a design language for background
       applications, is refined by Ant UED Team. Ant Design"
     ></p>
     <br />
-    <p nz-typography nzEllipsis>
+    <p tri-typography ellipsis>
       Ant Design, a design language for background applications, is refined by Ant UED Team. Ant Design, a design
       language for background applications, is refined by Ant UED Team. Ant Design, a design language for background
       applications, is refined by Ant UED Team. Ant Design, a design language for background applications, is refined by
       Ant UED Team. Ant Design, a design language for background applications, is refined by Ant UED Team. Ant Design
     </p>
     <br />
-    <p nz-typography nzEllipsis nzExpandable [nzEllipsisRows]="3">
+    <p tri-typography ellipsis expandable [ellipsisRows]="3">
       Ant Design, a design language for background applications, is refined by Ant UED Team. Ant Design, a design
       language for background applications, is refined by Ant UED Team. Ant Design, a design language for background
       applications, is refined by Ant UED Team. Ant Design, a design language for background applications, is refined by
@@ -32,16 +32,16 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
     </p>
     <br />
     <p
-      nz-typography
-      nzEllipsis
-      nzEditable
-      [nzEllipsisRows]="2"
-      [nzContent]="dynamicContent"
-      (nzContentChange)="onChange($event)"
+      tri-typography
+      ellipsis
+      editable
+      [ellipsisRows]="2"
+      [content]="dynamicContent"
+      (contentChange)="onChange($event)"
     ></p>
   `
 })
-export class NzDemoTypographyEllipsisComponent {
+export class TriDemoTypographyEllipsisComponent {
   dynamicContent =
     'Ant Design, a design language for background applications, is refined by Ant UED Team. ' +
     'Ant Design, a design language for background applications, is refined by Ant UED Team. ' +

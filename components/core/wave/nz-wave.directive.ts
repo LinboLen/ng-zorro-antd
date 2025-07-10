@@ -19,37 +19,37 @@ import {
 } from '@angular/core';
 import { ANIMATION_MODULE_TYPE } from '@angular/platform-browser/animations';
 
-import { NzWaveRenderer } from './nz-wave-renderer';
+import { TriWaveRenderer } from './nz-wave-renderer';
 
-export interface NzWaveConfig {
+export interface TriWaveConfig {
   disabled?: boolean;
 }
 
-export const NZ_WAVE_GLOBAL_DEFAULT_CONFIG: NzWaveConfig = {
+export const NZ_WAVE_GLOBAL_DEFAULT_CONFIG: TriWaveConfig = {
   disabled: false
 };
 
-export const NZ_WAVE_GLOBAL_CONFIG = new InjectionToken<NzWaveConfig>('nz-wave-global-options');
+export const NZ_WAVE_GLOBAL_CONFIG = new InjectionToken<TriWaveConfig>('nz-wave-global-options');
 
-export function provideNzWave(config: NzWaveConfig): EnvironmentProviders {
+export function provideNzWave(config: TriWaveConfig): EnvironmentProviders {
   return makeEnvironmentProviders([{ provide: NZ_WAVE_GLOBAL_CONFIG, useValue: config }]);
 }
 
 @Directive({
-  selector: '[nz-wave],button[nz-button]:not([nzType="link"]):not([nzType="text"])',
-  exportAs: 'nzWave'
+  selector: '',
+  exportAs: 'triWave'
 })
-export class NzWaveDirective implements OnInit, OnDestroy {
-  @Input() nzWaveExtraNode = false;
+export class TriWaveDirective implements OnInit, OnDestroy {
+  @Input() waveExtraNode = false;
 
-  private waveRenderer?: NzWaveRenderer;
+  private waveRenderer?: TriWaveRenderer;
   private waveDisabled: boolean = false;
 
   get disabled(): boolean {
     return this.waveDisabled;
   }
 
-  get rendererRef(): NzWaveRenderer | undefined {
+  get rendererRef(): TriWaveRenderer | undefined {
     return this.waveRenderer;
   }
 
@@ -87,10 +87,10 @@ export class NzWaveDirective implements OnInit, OnDestroy {
 
   renderWaveIfEnabled(): void {
     if (!this.waveDisabled && this.elementRef.nativeElement) {
-      this.waveRenderer = new NzWaveRenderer(
+      this.waveRenderer = new TriWaveRenderer(
         this.elementRef.nativeElement,
         this.ngZone,
-        this.nzWaveExtraNode,
+        this.waveExtraNode,
         this.platform,
         this.cspNonce
       );

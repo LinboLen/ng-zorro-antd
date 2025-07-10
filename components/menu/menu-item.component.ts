@@ -29,85 +29,85 @@ import { numberAttributeWithZeroFallback } from 'ng-zorro-antd/core/util';
 
 import { MenuService } from './menu.service';
 import { NzIsMenuInsideDropDownToken } from './menu.token';
-import { NzSubmenuService } from './submenu.service';
+import { TriSubmenuService } from './submenu.service';
 
 @Component({
-  selector: '[nz-menu-item]',
-  exportAs: 'nzMenuItem',
+  selector: '',
+  exportAs: 'triMenuItem',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
-    <span class="ant-menu-title-content">
+    <span class="tri-menu-title-content">
       <ng-content></ng-content>
     </span>
   `,
   host: {
-    '[class.ant-dropdown-menu-item]': `isMenuInsideDropDown`,
-    '[class.ant-dropdown-menu-item-selected]': `isMenuInsideDropDown && nzSelected`,
-    '[class.ant-dropdown-menu-item-danger]': `isMenuInsideDropDown && nzDanger`,
-    '[class.ant-dropdown-menu-item-disabled]': `isMenuInsideDropDown && nzDisabled`,
-    '[class.ant-menu-item]': `!isMenuInsideDropDown`,
-    '[class.ant-menu-item-selected]': `!isMenuInsideDropDown && nzSelected`,
-    '[class.ant-menu-item-danger]': `!isMenuInsideDropDown && nzDanger`,
-    '[class.ant-menu-item-disabled]': `!isMenuInsideDropDown && nzDisabled`,
+    '[class.tri-dropdown-menu-item]': `isMenuInsideDropDown`,
+    '[class.tri-dropdown-menu-item-selected]': `isMenuInsideDropDown && selected`,
+    '[class.tri-dropdown-menu-item-danger]': `isMenuInsideDropDown && danger`,
+    '[class.tri-dropdown-menu-item-disabled]': `isMenuInsideDropDown && disabled`,
+    '[class.tri-menu-item]': `!isMenuInsideDropDown`,
+    '[class.tri-menu-item-selected]': `!isMenuInsideDropDown && selected`,
+    '[class.tri-menu-item-danger]': `!isMenuInsideDropDown && danger`,
+    '[class.tri-menu-item-disabled]': `!isMenuInsideDropDown && disabled`,
     '[style.paddingLeft.px]': `dir === 'rtl' ? null : nzPaddingLeft || inlinePaddingLeft`,
     '[style.paddingRight.px]': `dir === 'rtl' ? nzPaddingLeft || inlinePaddingLeft : null`,
     '(click)': 'clickMenuItem($event)'
   }
 })
-export class NzMenuItemComponent implements OnInit, OnChanges, AfterContentInit {
-  private readonly nzMenuService = inject(MenuService);
+export class TriMenuItemComponent implements OnInit, OnChanges, AfterContentInit {
+  private readonly menuService = inject(MenuService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly cdr = inject(ChangeDetectorRef);
-  private readonly nzSubmenuService = inject(NzSubmenuService, { optional: true });
+  private readonly submenuService = inject(TriSubmenuService, { optional: true });
   private readonly directionality = inject(Directionality);
   private readonly routerLink = inject(RouterLink, { optional: true });
   private readonly router = inject(Router, { optional: true });
   protected readonly isMenuInsideDropDown = inject(NzIsMenuInsideDropDownToken);
 
-  level = this.nzSubmenuService ? this.nzSubmenuService.level + 1 : 1;
+  level = this.submenuService ? this.submenuService.level + 1 : 1;
   selected$ = new Subject<boolean>();
   inlinePaddingLeft: number | null = null;
   dir: Direction = 'ltr';
-  @Input({ transform: numberAttributeWithZeroFallback }) nzPaddingLeft?: number;
-  @Input({ transform: booleanAttribute }) nzDisabled = false;
-  @Input({ transform: booleanAttribute }) nzSelected = false;
-  @Input({ transform: booleanAttribute }) nzDanger = false;
-  @Input({ transform: booleanAttribute }) nzMatchRouterExact = false;
-  @Input({ transform: booleanAttribute }) nzMatchRouter = false;
+  @Input({ transform: numberAttributeWithZeroFallback }) paddingLeft?: number;
+  @Input({ transform: booleanAttribute }) disabled = false;
+  @Input({ transform: booleanAttribute }) selected = false;
+  @Input({ transform: booleanAttribute }) danger = false;
+  @Input({ transform: booleanAttribute }) matchRouterExact = false;
+  @Input({ transform: booleanAttribute }) matchRouter = false;
   @ContentChildren(RouterLink, { descendants: true }) listOfRouterLink!: QueryList<RouterLink>;
 
   /** clear all item selected status except this */
   clickMenuItem(e: MouseEvent): void {
-    if (this.nzDisabled) {
+    if (this.disabled) {
       e.preventDefault();
       e.stopPropagation();
       return;
     }
-    this.nzMenuService.onDescendantMenuItemClick(this);
-    if (this.nzSubmenuService) {
+    this.menuService.onDescendantMenuItemClick(this);
+    if (this.submenuService) {
       /** menu item inside the submenu **/
-      this.nzSubmenuService.onChildMenuItemClick(this);
+      this.submenuService.onChildMenuItemClick(this);
     } else {
       /** menu item inside the root menu **/
-      this.nzMenuService.onChildMenuItemClick(this);
+      this.menuService.onChildMenuItemClick(this);
     }
   }
 
   setSelectedState(value: boolean): void {
-    this.nzSelected = value;
+    this.selected = value;
     this.selected$.next(value);
   }
 
   private updateRouterActive(): void {
-    if (!this.listOfRouterLink || !this.router || !this.router.navigated || !this.nzMatchRouter) {
+    if (!this.listOfRouterLink || !this.router || !this.router.navigated || !this.matchRouter) {
       return;
     }
     Promise.resolve().then(() => {
       const hasActiveLinks = this.hasActiveLinks();
-      if (this.nzSelected !== hasActiveLinks) {
-        this.nzSelected = hasActiveLinks;
-        this.setSelectedState(this.nzSelected);
+      if (this.selected !== hasActiveLinks) {
+        this.selected = hasActiveLinks;
+        this.setSelectedState(this.selected);
         this.cdr.markForCheck();
       }
     });
@@ -121,8 +121,8 @@ export class NzMenuItemComponent implements OnInit, OnChanges, AfterContentInit 
   private isLinkActive(router: Router): (link: RouterLink) => boolean {
     return (link: RouterLink) =>
       router.isActive(link.urlTree || '', {
-        paths: this.nzMatchRouterExact ? 'exact' : 'subset',
-        queryParams: this.nzMatchRouterExact ? 'exact' : 'subset',
+        paths: this.matchRouterExact ? 'exact' : 'subset',
+        queryParams: this.matchRouterExact ? 'exact' : 'subset',
         fragment: 'ignored',
         matrixParams: 'ignored'
       });
@@ -139,7 +139,7 @@ export class NzMenuItemComponent implements OnInit, OnChanges, AfterContentInit 
 
   ngOnInit(): void {
     /** store origin padding in padding */
-    combineLatest([this.nzMenuService.mode$, this.nzMenuService.inlineIndent$])
+    combineLatest([this.menuService.mode$, this.menuService.inlineIndent$])
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(([mode, inlineIndent]) => {
         this.inlinePaddingLeft = mode === 'inline' ? this.level * inlineIndent : null;
@@ -159,7 +159,7 @@ export class NzMenuItemComponent implements OnInit, OnChanges, AfterContentInit 
   ngOnChanges(changes: SimpleChanges): void {
     const { nzSelected } = changes;
     if (nzSelected) {
-      this.setSelectedState(this.nzSelected);
+      this.setSelectedState(this.selected);
     }
   }
 }

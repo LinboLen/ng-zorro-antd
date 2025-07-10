@@ -7,19 +7,19 @@ import { Directive, ElementRef, inject, Input, OnChanges, Renderer2 } from '@ang
 import { Subject } from 'rxjs';
 
 @Directive({
-  selector: 'td[nzRight],th[nzRight],td[nzLeft],th[nzLeft]',
+  selector: '',
   host: {
-    '[class.ant-table-cell-fix-right]': `isFixedRight`,
-    '[class.ant-table-cell-fix-left]': `isFixedLeft`,
+    '[class.tri-table-cell-fix-right]': `isFixedRight`,
+    '[class.tri-table-cell-fix-left]': `isFixedLeft`,
     '[style.position]': `isFixed? 'sticky' : null`
   }
 })
-export class NzCellFixedDirective implements OnChanges {
+export class TriCellFixedDirective implements OnChanges {
   private renderer = inject(Renderer2);
   private el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
 
-  @Input() nzRight: string | boolean = false;
-  @Input() nzLeft: string | boolean = false;
+  @Input() right: string | boolean = false;
+  @Input() left: string | boolean = false;
   @Input() colspan: number | null = null;
   @Input() colSpan: number | null = null;
   changes$ = new Subject<void>();
@@ -57,10 +57,10 @@ export class NzCellFixedDirective implements OnChanges {
   ngOnChanges(): void {
     this.setIsFirstRight(false);
     this.setIsLastLeft(false);
-    this.isAutoLeft = this.nzLeft === '' || this.nzLeft === true;
-    this.isAutoRight = this.nzRight === '' || this.nzRight === true;
-    this.isFixedLeft = this.nzLeft !== false;
-    this.isFixedRight = this.nzRight !== false;
+    this.isAutoLeft = this.left === '' || this.left === true;
+    this.isAutoRight = this.right === '' || this.right === true;
+    this.isFixedLeft = this.left !== false;
+    this.isFixedRight = this.right !== false;
     this.isFixed = this.isFixedLeft || this.isFixedRight;
     const validatePx = (value: string | boolean): string | null => {
       if (typeof value === 'string' && value !== '') {
@@ -69,8 +69,8 @@ export class NzCellFixedDirective implements OnChanges {
         return null;
       }
     };
-    this.setAutoLeftWidth(validatePx(this.nzLeft));
-    this.setAutoRightWidth(validatePx(this.nzRight));
+    this.setAutoLeftWidth(validatePx(this.left));
+    this.setAutoRightWidth(validatePx(this.right));
     this.changes$.next();
   }
 }

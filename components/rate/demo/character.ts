@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzRateModule } from 'ng-zorro-antd/rate';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriRateModule } from 'ng-zorro-antd/rate';
 
 @Component({
-  selector: 'nz-demo-rate-character',
-  imports: [FormsModule, NzIconModule, NzRateModule],
+  selector: '',
+  imports: [FormsModule, TriIconModule, TriRateModule],
   template: `
-    <nz-rate [ngModel]="0" nzAllowHalf [nzCharacter]="characterIcon"></nz-rate>
+    <tri-rate [ngModel]="0" allowHalf [character]="characterIcon"></tri-rate>
     <br />
-    <nz-rate [ngModel]="0" nzAllowHalf class="large" [nzCharacter]="characterEnLetter"></nz-rate>
+    <tri-rate [ngModel]="0" allowHalf class="large" [character]="characterEnLetter"></tri-rate>
     <br />
-    <nz-rate [ngModel]="0" nzAllowHalf [nzCharacter]="characterZhLetter"></nz-rate>
-    <ng-template #characterIcon><nz-icon nzType="heart" /></ng-template>
+    <tri-rate [ngModel]="0" allowHalf [character]="characterZhLetter"></tri-rate>
+    <ng-template #characterIcon><tri-icon type="heart" /></ng-template>
     <ng-template #characterZhLetter>好</ng-template>
     <ng-template #characterEnLetter>A</ng-template>
   `,
@@ -25,4 +25,4 @@ import { NzRateModule } from 'ng-zorro-antd/rate';
     `
   ]
 })
-export class NzDemoRateCharacterComponent {}
+export class TriDemoRateCharacterComponent {}

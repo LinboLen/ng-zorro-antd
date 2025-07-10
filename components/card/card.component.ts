@@ -22,33 +22,33 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { NzConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NgStyleInterface, NzSizeDSType } from 'ng-zorro-antd/core/types';
-import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { NgStyleInterface, TriSizeDSType } from 'ng-zorro-antd/core/types';
+import { TriSkeletonModule } from 'ng-zorro-antd/skeleton';
 
-import { NzCardGridDirective } from './card-grid.directive';
-import { NzCardTabComponent } from './card-tab.component';
+import { TriCardGridDirective } from './card-grid.directive';
+import { TriCardTabComponent } from './card-tab.component';
 
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'card';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'card';
 
 @Component({
-  selector: 'nz-card',
-  exportAs: 'nzCard',
+  selector: '',
+  exportAs: 'triCard',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
-    @if (nzTitle || nzExtra || listOfNzCardTabComponent) {
-      <div class="ant-card-head">
-        <div class="ant-card-head-wrapper">
-          @if (nzTitle) {
-            <div class="ant-card-head-title">
-              <ng-container *nzStringTemplateOutlet="nzTitle">{{ nzTitle }}</ng-container>
+    @if (title || extra || listOfNzCardTabComponent) {
+      <div class="tri-card-head">
+        <div class="tri-card-head-wrapper">
+          @if (title) {
+            <div class="tri-card-head-title">
+              <ng-container *stringTemplateOutlet="title">{{ title }}</ng-container>
             </div>
           }
-          @if (nzExtra) {
-            <div class="ant-card-extra">
-              <ng-container *nzStringTemplateOutlet="nzExtra">{{ nzExtra }}</ng-container>
+          @if (extra) {
+            <div class="tri-card-extra">
+              <ng-container *stringTemplateOutlet="extra">{{ extra }}</ng-container>
             </div>
           }
         </div>
@@ -58,23 +58,23 @@ const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'card';
       </div>
     }
 
-    @if (nzCover) {
-      <div class="ant-card-cover">
-        <ng-template [ngTemplateOutlet]="nzCover" />
+    @if (cover) {
+      <div class="tri-card-cover">
+        <ng-template [ngTemplateOutlet]="cover" />
       </div>
     }
 
-    <div class="ant-card-body" [style]="nzBodyStyle">
-      @if (nzLoading) {
-        <nz-skeleton [nzActive]="true" [nzTitle]="false" [nzParagraph]="{ rows: 4 }"></nz-skeleton>
+    <div class="tri-card-body" [style]="bodyStyle">
+      @if (loading) {
+        <tri-skeleton [active]="true" [title]="false" [paragraph]="{ rows: 4 }"></tri-skeleton>
       } @else {
         <ng-content />
       }
     </div>
-    @if (nzActions.length) {
-      <ul class="ant-card-actions">
-        @for (action of nzActions; track $index) {
-          <li [style.width.%]="100 / nzActions.length">
+    @if (actions.length) {
+      <ul class="tri-card-actions">
+        @for (action of actions; track $index) {
+          <li [style.width.%]="100 / actions.length">
             <span><ng-template [ngTemplateOutlet]="action" /></span>
           </li>
         }
@@ -82,37 +82,37 @@ const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'card';
     }
   `,
   host: {
-    class: 'ant-card',
-    '[class.ant-card-loading]': 'nzLoading',
-    '[class.ant-card-bordered]': 'nzBordered',
-    '[class.ant-card-hoverable]': 'nzHoverable',
-    '[class.ant-card-small]': 'nzSize === "small"',
-    '[class.ant-card-contain-grid]': 'listOfNzCardGridDirective && listOfNzCardGridDirective.length',
-    '[class.ant-card-type-inner]': 'nzType === "inner"',
-    '[class.ant-card-contain-tabs]': '!!listOfNzCardTabComponent',
-    '[class.ant-card-rtl]': `dir === 'rtl'`
+    class: 'tri-card',
+    '[class.tri-card-loading]': 'loading',
+    '[class.tri-card-bordered]': 'bordered',
+    '[class.tri-card-hoverable]': 'hoverable',
+    '[class.tri-card-small]': 'size === "small"',
+    '[class.tri-card-contain-grid]': 'listOfNzCardGridDirective && listOfNzCardGridDirective.length',
+    '[class.tri-card-type-inner]': 'type === "inner"',
+    '[class.tri-card-contain-tabs]': '!!listOfNzCardTabComponent',
+    '[class.tri-card-rtl]': `dir === 'rtl'`
   },
-  imports: [NzOutletModule, NgTemplateOutlet, NzSkeletonModule]
+  imports: [TriOutletModule, NgTemplateOutlet, TriSkeletonModule]
 })
-export class NzCardComponent implements OnInit {
+export class TriCardComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
 
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
 
-  @Input({ transform: booleanAttribute }) @WithConfig() nzBordered: boolean = true;
-  @Input({ transform: booleanAttribute }) nzLoading = false;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzHoverable: boolean = false;
-  @Input() nzBodyStyle: NgStyleInterface | null = null;
-  @Input() nzCover?: TemplateRef<void>;
-  @Input() nzActions: Array<TemplateRef<void>> = [];
-  @Input() nzType: string | 'inner' | null = null;
-  @Input() @WithConfig() nzSize: NzSizeDSType = 'default';
-  @Input() nzTitle?: string | TemplateRef<void>;
-  @Input() nzExtra?: string | TemplateRef<void>;
-  @ContentChild(NzCardTabComponent, { static: false }) listOfNzCardTabComponent?: NzCardTabComponent;
-  @ContentChildren(NzCardGridDirective) listOfNzCardGridDirective!: QueryList<NzCardGridDirective>;
+  @Input({ transform: booleanAttribute }) @WithConfig() bordered: boolean = true;
+  @Input({ transform: booleanAttribute }) loading = false;
+  @Input({ transform: booleanAttribute }) @WithConfig() hoverable: boolean = false;
+  @Input() bodyStyle: NgStyleInterface | null = null;
+  @Input() cover?: TemplateRef<void>;
+  @Input() actions: Array<TemplateRef<void>> = [];
+  @Input() type: string | 'inner' | null = null;
+  @Input() @WithConfig() size: TriSizeDSType = 'default';
+  @Input() title?: string | TemplateRef<void>;
+  @Input() extra?: string | TemplateRef<void>;
+  @ContentChild(TriCardTabComponent, { static: false }) listOfNzCardTabComponent?: TriCardTabComponent;
+  @ContentChildren(TriCardGridDirective) listOfNzCardGridDirective!: QueryList<TriCardGridDirective>;
   dir: Direction = 'ltr';
 
   constructor() {

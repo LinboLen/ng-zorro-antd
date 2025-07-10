@@ -17,17 +17,17 @@ import {
 } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
 import { dispatchKeyboardEvent } from 'ng-zorro-antd/core/testing';
-import { NZ_DRAWER_DATA, NzDrawerPlacement } from 'ng-zorro-antd/drawer/drawer-options';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NZ_DRAWER_DATA, TriDrawerPlacement } from 'ng-zorro-antd/drawer/drawer-options';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
-import { NzDrawerRef } from './drawer-ref';
-import { NzDrawerComponent } from './drawer.component';
-import { NzDrawerModule } from './drawer.module';
-import { NzDrawerService } from './drawer.service';
+import { TriDrawerRef } from './drawer-ref';
+import { TriDrawerComponent } from './drawer.component';
+import { TriDrawerModule } from './drawer.module';
+import { TriDrawerService } from './drawer.service';
 
 describe('NzDrawerComponent', () => {
   beforeEach(waitForAsync(() => {
@@ -37,14 +37,14 @@ describe('NzDrawerComponent', () => {
   }));
 
   describe('default', () => {
-    let component: NzTestDrawerComponent;
-    let fixture: ComponentFixture<NzTestDrawerComponent>;
+    let component: TriTestDrawerComponent;
+    let fixture: ComponentFixture<TriTestDrawerComponent>;
     let overlayContainer: OverlayContainer;
     let overlayContainerElement: HTMLElement;
     let forceScrollElement: HTMLElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestDrawerComponent);
+      fixture = TestBed.createComponent(TriTestDrawerComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
     });
@@ -77,7 +77,7 @@ describe('NzDrawerComponent', () => {
       component.open();
       fixture.detectChanges();
       expect(overlayContainerElement.querySelector('.ant-drawer')!.classList.contains('ant-drawer-open')).toBe(true);
-      expect(component.drawerComponent.nzVisible).toBe(true);
+      expect(component.drawerComponent.visible).toBe(true);
       expect(component.triggerVisible).toHaveBeenCalledTimes(2);
       expect(component.triggerVisible).toHaveBeenCalledWith(true);
     });
@@ -92,7 +92,7 @@ describe('NzDrawerComponent', () => {
       component.close();
       fixture.detectChanges();
       expect(overlayContainerElement.querySelector('.ant-drawer')!.classList.contains('ant-drawer-open')).toBe(false);
-      expect(component.drawerComponent.nzVisible).toBe(false);
+      expect(component.drawerComponent.visible).toBe(false);
       expect(component.triggerVisible).toHaveBeenCalledTimes(3);
       expect(component.triggerVisible).toHaveBeenCalledWith(false);
     });
@@ -123,7 +123,7 @@ describe('NzDrawerComponent', () => {
       component.open();
       fixture.detectChanges();
       expect(overlayContainerElement.querySelector('.ant-drawer')!.classList.contains('ant-drawer-open')).toBe(true);
-      expect(component.drawerComponent.nzVisible).toBe(true);
+      expect(component.drawerComponent.visible).toBe(true);
       expect(component.triggerVisible).toHaveBeenCalledTimes(2);
       expect(component.triggerVisible).toHaveBeenCalledWith(true);
     });
@@ -138,7 +138,7 @@ describe('NzDrawerComponent', () => {
       component.close();
       fixture.detectChanges();
       expect(overlayContainerElement.querySelector('.ant-drawer')!.classList.contains('ant-drawer-open')).toBe(false);
-      expect(component.drawerComponent.nzVisible).toBe(false);
+      expect(component.drawerComponent.visible).toBe(false);
       expect(component.triggerVisible).toHaveBeenCalledTimes(3);
       expect(component.triggerVisible).toHaveBeenCalledWith(false);
     });
@@ -207,7 +207,7 @@ describe('NzDrawerComponent', () => {
     it('should disabled ESC keydown', () => {
       expect(component.triggerVisible).toHaveBeenCalledTimes(1);
       component.open();
-      component.drawerComponent.nzKeyboard = false;
+      component.drawerComponent.keyboard = false;
       fixture.detectChanges();
       expect(component.triggerVisible).toHaveBeenCalledTimes(2);
       expect(component.triggerVisible).toHaveBeenCalledWith(true);
@@ -534,7 +534,7 @@ describe('NzDrawerComponent', () => {
       ).toBe(false);
       component.close();
       fixture.detectChanges();
-      component.placement = 'Invalid' as unknown as NzDrawerPlacement;
+      component.placement = 'Invalid' as unknown as TriDrawerPlacement;
       fixture.detectChanges();
       component.open();
       expect(
@@ -647,12 +647,12 @@ describe('NzDrawerComponent', () => {
     });
   });
   describe('RTL', () => {
-    let component: NzTestDrawerRtlComponent;
-    let fixture: ComponentFixture<NzTestDrawerRtlComponent>;
+    let component: TriTestDrawerRtlComponent;
+    let fixture: ComponentFixture<TriTestDrawerRtlComponent>;
     let overlayContainerElement: HTMLElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestDrawerRtlComponent);
+      fixture = TestBed.createComponent(TriTestDrawerRtlComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
     });
@@ -679,26 +679,26 @@ describe('NzDrawerComponent', () => {
 });
 
 describe('NzDrawerService', () => {
-  let component: NzTestDrawerWithServiceComponent;
-  let fixture: ComponentFixture<NzTestDrawerWithServiceComponent>;
+  let component: TriTestDrawerWithServiceComponent;
+  let fixture: ComponentFixture<TriTestDrawerWithServiceComponent>;
   let overlayContainer: OverlayContainer;
-  let drawerService: NzDrawerService;
+  let drawerService: TriDrawerService;
   let overlayContainerElement: HTMLElement;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      providers: [NzDrawerService, provideNoopAnimations()]
+      providers: [TriDrawerService, provideNoopAnimations()]
     });
   }));
 
   beforeEach(waitForAsync(() => {
-    fixture = TestBed.createComponent(NzTestDrawerWithServiceComponent);
+    fixture = TestBed.createComponent(TriTestDrawerWithServiceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
 
   beforeEach(
-    testingInject([OverlayContainer, NzDrawerService], (oc: OverlayContainer, ds: NzDrawerService) => {
+    testingInject([OverlayContainer, TriDrawerService], (oc: OverlayContainer, ds: TriDrawerService) => {
       overlayContainer = oc;
       drawerService = ds;
       overlayContainerElement = oc.getContainerElement();
@@ -728,12 +728,12 @@ describe('NzDrawerService', () => {
     const closeSpy = jasmine.createSpy('afterClose spy').and.returnValue(1);
     const drawerRef = drawerService.create({
       nzTitle: 'Service',
-      nzFooter: 'Footer',
-      nzContent: NzDrawerCustomComponent,
-      nzContentParams: { value: 1 }
+      footer: 'Footer',
+      content: TriDrawerCustomComponent,
+      contentParams: { value: 1 }
     });
-    drawerRef.afterOpen.subscribe(openSpy);
-    drawerRef.afterClose.subscribe(closeSpy);
+    drawerRef._afterOpen.subscribe(openSpy);
+    drawerRef._afterClose.subscribe(closeSpy);
     fixture.detectChanges();
     expect(openSpy).not.toHaveBeenCalled();
     expect(drawerRef.getContentComponent()).not.toBeNull();
@@ -754,13 +754,13 @@ describe('NzDrawerService', () => {
     const closeSpy = jasmine.createSpy('afterClose spy').and.returnValue(2);
     const drawerRef = drawerService.create({
       nzTitle: 'Service',
-      nzFooter: 'Footer',
-      nzContent: NzDrawerCustomComponent,
-      nzContentParams: { value: 1 },
-      nzData: { value: 2 }
+      footer: 'Footer',
+      content: TriDrawerCustomComponent,
+      contentParams: { value: 1 },
+      data: { value: 2 }
     });
-    drawerRef.afterOpen.subscribe(openSpy);
-    drawerRef.afterClose.subscribe(closeSpy);
+    drawerRef._afterOpen.subscribe(openSpy);
+    drawerRef._afterClose.subscribe(closeSpy);
     fixture.detectChanges();
     expect(openSpy).not.toHaveBeenCalled();
     expect(drawerRef.getContentComponent()).not.toBeNull();
@@ -782,11 +782,11 @@ describe('NzDrawerService', () => {
     const closeSpy = jasmine.createSpy('afterClose spy').and.returnValue(1);
     const drawerRef = drawerService.create({
       nzTitle: 'Service nzOnCancel',
-      nzContent: NzDrawerCustomComponent,
+      content: TriDrawerCustomComponent,
       nzOnCancel: () => Promise.resolve(canClose)
     });
-    drawerRef.afterOpen.subscribe(openSpy);
-    drawerRef.afterClose.subscribe(closeSpy);
+    drawerRef._afterOpen.subscribe(openSpy);
+    drawerRef._afterClose.subscribe(closeSpy);
     fixture.detectChanges();
     expect(openSpy).not.toHaveBeenCalled();
     tick(300);
@@ -805,11 +805,11 @@ describe('NzDrawerService', () => {
 });
 
 @Component({
-  imports: [NzDrawerModule, NzIconModule, NzNoAnimationDirective],
+  imports: [TriDrawerModule, TriIconModule, TriNoAnimationDirective],
   template: `
     <button (click)="open()">Open</button>
     <ng-template #closeIconTemplate>
-      <nz-icon nzType="close-square" nzTheme="outline" />
+      <tri-icon type="close-square" theme="outline" />
     </ng-template>
     <ng-template #titleTemplate>
       <span class="custom-title">title</span>
@@ -819,38 +819,38 @@ describe('NzDrawerService', () => {
       <span class="custom-footer">footer</span>
       <button>Submit</button>
     </ng-template>
-    <nz-drawer
-      [nzMaskStyle]="{ color: 'gray' }"
-      [nzBodyStyle]="{ color: 'gray' }"
-      [nzMaskClosable]="maskClosable"
-      [nzWrapClassName]="'test-class'"
-      [nzZIndex]="1001"
-      [nzCloseIcon]="closeIcon"
-      [nzClosable]="closable"
-      [nzMask]="showMask"
-      [nzVisible]="visible"
-      [nzSize]="size"
-      [nzWidth]="width"
-      [nzHeight]="height"
-      [nzPlacement]="placement"
-      [nzNoAnimation]="noAnimation"
-      [nzTitle]="title"
-      [nzExtra]="extra"
-      [nzFooter]="footer"
-      [nzOffsetX]="offsetX"
-      [nzOffsetY]="offsetY"
-      (nzOnClose)="close()"
-      (nzVisibleChange)="triggerVisible($event)"
+    <tri-drawer
+      [maskStyle]="{ color: 'gray' }"
+      [bodyStyle]="{ color: 'gray' }"
+      [maskClosable]="maskClosable"
+      [wrapClassName]="'test-class'"
+      [zIndex]="1001"
+      [closeIcon]="closeIcon"
+      [closable]="closable"
+      [mask]="showMask"
+      [visible]="visible"
+      [size]="size"
+      [width]="width"
+      [height]="height"
+      [placement]="placement"
+      [noAnimation]="noAnimation"
+      [title]="title"
+      [extra]="extra"
+      [footer]="footer"
+      [offsetX]="offsetX"
+      [offsetY]="offsetY"
+      (onClose)="close()"
+      (visibleChange)="triggerVisible($event)"
     >
-      <ng-container *nzDrawerContent>
+      <ng-container *drawerContent>
         <p>Some contents...</p>
         <p>Some contents...</p>
         <p>Some contents...</p>
       </ng-container>
-    </nz-drawer>
+    </tri-drawer>
   `
 })
-class NzTestDrawerComponent {
+class TriTestDrawerComponent {
   visible = false;
   closable = true;
   maskClosable = true;
@@ -862,7 +862,7 @@ class NzTestDrawerComponent {
   size: 'large' | 'default' = 'default';
   width?: string | number;
   height?: string | number;
-  placement: NzDrawerPlacement = 'left';
+  placement: TriDrawerPlacement = 'left';
   noAnimation = false;
   closeIcon!: TemplateRef<void> | string;
   offsetX = 0;
@@ -872,7 +872,7 @@ class NzTestDrawerComponent {
   @ViewChild('titleTemplate', { static: false }) titleTemplateRef!: TemplateRef<{}>;
   @ViewChild('closeIconTemplate', { static: false }) closeIconTemplateRef!: TemplateRef<void>;
   @ViewChild('customFooter', { static: false }) templateFooter!: TemplateRef<{}>;
-  @ViewChild(NzDrawerComponent, { static: false }) drawerComponent!: NzDrawerComponent;
+  @ViewChild(TriDrawerComponent, { static: false }) drawerComponent!: TriDrawerComponent;
 
   open(): void {
     this.visible = true;
@@ -890,42 +890,42 @@ class NzTestDrawerComponent {
     </ng-template>
   `
 })
-class NzTestDrawerWithServiceComponent {
+class TriTestDrawerWithServiceComponent {
   @ViewChild('drawerTemplate', { static: false }) drawerTemplate!: TemplateRef<{
     $implicit: number;
-    drawerRef: NzDrawerRef;
+    drawerRef: TriDrawerRef;
   }>;
   templateOpenSpy = jasmine.createSpy('template afterOpen spy');
   templateCloseSpy = jasmine.createSpy('template afterClose spy');
-  templateDrawerRef?: NzDrawerRef;
+  templateDrawerRef?: TriDrawerRef;
 
-  constructor(private drawerService: NzDrawerService) {}
+  constructor(private drawerService: TriDrawerService) {}
 
   openTemplate(): void {
     this.templateDrawerRef = this.drawerService.create({
       nzTitle: 'Service',
-      nzContent: this.drawerTemplate
+      content: this.drawerTemplate
     });
 
-    this.templateDrawerRef.afterOpen.subscribe(this.templateOpenSpy);
-    this.templateDrawerRef.afterClose.subscribe(this.templateCloseSpy);
+    this.templateDrawerRef._afterOpen.subscribe(this.templateOpenSpy);
+    this.templateDrawerRef._afterClose.subscribe(this.templateCloseSpy);
   }
 }
 
 @Component({
-  imports: [NzButtonModule],
+  imports: [TriButtonModule],
   template: `
     <div>
       <p>Custom Component</p>
-      <button class="close-btn" (click)="close()" nz-button>Close</button>
+      <button class="close-btn" (click)="close()" tri-button>Close</button>
     </div>
   `
 })
-export class NzDrawerCustomComponent {
+export class TriDrawerCustomComponent {
   @Input() value: any; // eslint-disable-line @typescript-eslint/no-explicit-any
-  nzData: { value: string } = inject(NZ_DRAWER_DATA);
+  data: { value: string } = inject(NZ_DRAWER_DATA);
 
-  constructor(private drawerRef: NzDrawerRef) {}
+  constructor(private drawerRef: TriDrawerRef) {}
 
   close(): void {
     this.drawerRef.close(this.value);
@@ -933,20 +933,20 @@ export class NzDrawerCustomComponent {
 }
 
 @Component({
-  imports: [BidiModule, NzDrawerModule],
+  imports: [BidiModule, TriDrawerModule],
   template: `
     <div [dir]="direction">
-      <nz-drawer [nzVisible]="visible" (nzOnClose)="close()">
-        <ng-container *nzDrawerContent>
+      <tri-drawer [visible]="visible" (onClose)="close()">
+        <ng-container *drawerContent>
           <p>Some contents...</p>
           <p>Some contents...</p>
           <p>Some contents...</p>
         </ng-container>
-      </nz-drawer>
+      </tri-drawer>
     </div>
   `
 })
-export class NzTestDrawerRtlComponent {
+export class TriTestDrawerRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
   visible = false;

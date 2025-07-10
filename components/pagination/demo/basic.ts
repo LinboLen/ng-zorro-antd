@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
-import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { TriPaginationModule } from 'ng-zorro-antd/pagination';
 
 @Component({
-  selector: 'nz-demo-pagination-basic',
-  imports: [NzPaginationModule],
-  template: `<nz-pagination [nzPageIndex]="1" [nzTotal]="50"></nz-pagination>`
+  selector: '',
+  imports: [TriPaginationModule],
+  template: `<tri-pagination [pageIndex]="1" [total]="50"></tri-pagination>`
 })
-export class NzDemoPaginationBasicComponent {}
+export class TriDemoPaginationBasicComponent {}

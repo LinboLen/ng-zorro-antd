@@ -10,30 +10,30 @@ import { ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick } from
 import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 
-import { NzResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
+import { TriResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
 import { dispatchKeyboardEvent, dispatchMouseEvent } from 'ng-zorro-antd/core/testing';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzCarouselContentDirective } from './carousel-content.directive';
-import { NzCarouselComponent } from './carousel.component';
-import { NzCarouselModule } from './carousel.module';
-import { NzCarouselFlipStrategy } from './strategies/experimental/flip-strategy';
-import { NzCarouselTransformNoLoopStrategy } from './strategies/experimental/transform-no-loop-strategy';
+import { TriCarouselContentDirective } from './carousel-content.directive';
+import { TriCarouselComponent } from './carousel.component';
+import { TriCarouselModule } from './carousel.module';
+import { TriCarouselFlipStrategy } from './strategies/experimental/flip-strategy';
+import { TriCarouselTransformNoLoopStrategy } from './strategies/experimental/transform-no-loop-strategy';
 import { NZ_CAROUSEL_CUSTOM_STRATEGIES } from './typings';
 
 describe('carousel', () => {
   describe('carousel basic', () => {
-    let fixture: ComponentFixture<NzTestCarouselBasicComponent>;
-    let testComponent: NzTestCarouselBasicComponent;
+    let fixture: ComponentFixture<TriTestCarouselBasicComponent>;
+    let testComponent: TriTestCarouselBasicComponent;
     let carouselWrapper: DebugElement;
     let carouselContents: DebugElement[];
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestCarouselBasicComponent);
+      fixture = TestBed.createComponent(TriTestCarouselBasicComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      carouselWrapper = fixture.debugElement.query(By.directive(NzCarouselComponent));
-      carouselContents = fixture.debugElement.queryAll(By.directive(NzCarouselContentDirective));
+      carouselWrapper = fixture.debugElement.query(By.directive(TriCarouselComponent));
+      carouselContents = fixture.debugElement.queryAll(By.directive(TriCarouselContentDirective));
     });
 
     it('should className correct', () => {
@@ -52,7 +52,7 @@ describe('carousel', () => {
       fixture.detectChanges();
       tick(3000);
       fixture.detectChanges();
-      carouselContents = fixture.debugElement.queryAll(By.directive(NzCarouselContentDirective));
+      carouselContents = fixture.debugElement.queryAll(By.directive(TriCarouselContentDirective));
       expect(carouselContents.length).toBe(0);
     }));
 
@@ -77,20 +77,20 @@ describe('carousel', () => {
     });
 
     it('should call layout on component resize', fakeAsync(() => {
-      testComponent.nzCarouselComponent.ngOnInit();
-      const spy = spyOn(testComponent.nzCarouselComponent, 'layout');
+      testComponent.carouselComponent.ngOnInit();
+      const spy = spyOn(testComponent.carouselComponent, 'layout');
       window.dispatchEvent(new Event('resize'));
       tick(500);
 
-      (testComponent.nzCarouselComponent['nzResizeObserver'] as NzResizeObserver)
-        .observe(testComponent.nzCarouselComponent.el)
+      (testComponent.carouselComponent['nzResizeObserver'] as TriResizeObserver)
+        .observe(testComponent.carouselComponent.el)
         .subscribe(() => {
           expect(spy).toHaveBeenCalled();
         });
     }));
 
     it('should call layout on component resize', fakeAsync(() => {
-      const spyOnResize = spyOn(testComponent.nzCarouselComponent, 'layout');
+      const spyOnResize = spyOn(testComponent.carouselComponent, 'layout');
       window.dispatchEvent(new Event('resize'));
       tick(500);
 
@@ -196,19 +196,19 @@ describe('carousel', () => {
     it('should func work', fakeAsync(() => {
       fixture.detectChanges();
       expect(carouselContents[0].nativeElement.classList).toContain('slick-active');
-      testComponent.nzCarouselComponent.next();
+      testComponent.carouselComponent.next();
       tickMilliseconds(fixture, 700);
       expect(carouselContents[1].nativeElement.classList).toContain('slick-active');
-      testComponent.nzCarouselComponent.pre();
+      testComponent.carouselComponent.pre();
       tickMilliseconds(fixture, 700);
       expect(carouselContents[0].nativeElement.classList).toContain('slick-active');
-      testComponent.nzCarouselComponent.goTo(2);
+      testComponent.carouselComponent.goTo(2);
       tickMilliseconds(fixture, 700);
       expect(carouselContents[2].nativeElement.classList).toContain('slick-active');
     }));
 
     it('should resize content after window resized', fakeAsync(() => {
-      const resizeSpy = spyOn(testComponent.nzCarouselComponent.strategy!, 'withCarouselContents');
+      const resizeSpy = spyOn(testComponent.carouselComponent.strategy!, 'withCarouselContents');
       window.dispatchEvent(new Event('resize'));
       tick(16);
       expect(resizeSpy).toHaveBeenCalledTimes(1);
@@ -216,29 +216,29 @@ describe('carousel', () => {
 
     // this test may fail on WSL
     it('should support swiping to switch', fakeAsync(() => {
-      swipe(testComponent.nzCarouselComponent, 500);
+      swipe(testComponent.carouselComponent, 500);
       tickMilliseconds(fixture, 700);
       expect(carouselContents[0].nativeElement.classList).not.toContain('slick-active');
       expect(carouselContents[1].nativeElement.classList).toContain('slick-active');
 
-      swipe(testComponent.nzCarouselComponent, -500);
+      swipe(testComponent.carouselComponent, -500);
       tickMilliseconds(fixture, 700);
-      swipe(testComponent.nzCarouselComponent, -500);
+      swipe(testComponent.carouselComponent, -500);
       tickMilliseconds(fixture, 700);
       expect(carouselContents[0].nativeElement.classList).not.toContain('slick-active');
       expect(carouselContents[3].nativeElement.classList).toContain('slick-active');
     }));
 
     it('should prevent swipes that are not long enough', fakeAsync(() => {
-      swipe(testComponent.nzCarouselComponent, 57);
+      swipe(testComponent.carouselComponent, 57);
       tickMilliseconds(fixture, 700);
       expect(carouselContents[0].nativeElement.classList).toContain('slick-active');
     }));
 
     it('should disable dragging during transitioning', fakeAsync(() => {
       tickMilliseconds(fixture, 700);
-      testComponent.nzCarouselComponent.goTo(1);
-      swipe(testComponent.nzCarouselComponent, 500);
+      testComponent.carouselComponent.goTo(1);
+      swipe(testComponent.carouselComponent, 500);
       tickMilliseconds(fixture, 700);
       expect(carouselContents[1].nativeElement.classList).toContain('slick-active');
     }));
@@ -246,19 +246,19 @@ describe('carousel', () => {
     it('should disable loop work', fakeAsync(() => {
       testComponent.loop = false;
       fixture.detectChanges();
-      swipe(testComponent.nzCarouselComponent, -10);
+      swipe(testComponent.carouselComponent, -10);
       tickMilliseconds(fixture, 700);
       expect(carouselContents[0].nativeElement.classList).toContain('slick-active');
-      swipe(testComponent.nzCarouselComponent, -1000);
+      swipe(testComponent.carouselComponent, -1000);
       tickMilliseconds(fixture, 700);
       expect(carouselContents[0].nativeElement.classList).toContain('slick-active');
 
       testComponent.loop = true;
       fixture.detectChanges();
-      swipe(testComponent.nzCarouselComponent, -1000);
+      swipe(testComponent.carouselComponent, -1000);
       tickMilliseconds(fixture, 700);
       expect(carouselContents[3].nativeElement.classList).toContain('slick-active');
-      swipe(testComponent.nzCarouselComponent, 1000);
+      swipe(testComponent.carouselComponent, 1000);
       tickMilliseconds(fixture, 700);
       expect(carouselContents[0].nativeElement.classList).toContain('slick-active');
 
@@ -273,78 +273,78 @@ describe('carousel', () => {
     }));
 
     it('should call goTo function on slick dot click', () => {
-      spyOn(testComponent.nzCarouselComponent, 'goTo');
+      spyOn(testComponent.carouselComponent, 'goTo');
       carouselWrapper.nativeElement.querySelector('.slick-dots').lastElementChild.click();
-      expect(testComponent.nzCarouselComponent.goTo).toHaveBeenCalledWith(3);
+      expect(testComponent.carouselComponent.goTo).toHaveBeenCalledWith(3);
     });
   });
 
   describe('strategies', () => {
-    let fixture: ComponentFixture<NzTestCarouselBasicComponent>;
-    let testComponent: NzTestCarouselBasicComponent;
+    let fixture: ComponentFixture<TriTestCarouselBasicComponent>;
+    let testComponent: TriTestCarouselBasicComponent;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestCarouselBasicComponent);
+      fixture = TestBed.createComponent(TriTestCarouselBasicComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
     });
 
     describe('transform strategy', () => {
       it('horizontal transform', fakeAsync(() => {
-        expect(testComponent.nzCarouselComponent.slickTrackEl.style.transform).toBe(`translate3d(0px, 0px, 0px)`);
+        expect(testComponent.carouselComponent.slickTrackEl.style.transform).toBe(`translate3d(0px, 0px, 0px)`);
 
-        testComponent.nzCarouselComponent.next();
+        testComponent.carouselComponent.next();
         tickMilliseconds(fixture, 700);
-        expect(testComponent.nzCarouselComponent.slickTrackEl.style.transform).not.toBe(`translate3d(0px, 0px, 0px)`);
+        expect(testComponent.carouselComponent.slickTrackEl.style.transform).not.toBe(`translate3d(0px, 0px, 0px)`);
 
-        testComponent.nzCarouselComponent.pre();
+        testComponent.carouselComponent.pre();
         tickMilliseconds(fixture, 700);
-        expect(testComponent.nzCarouselComponent.slickTrackEl.style.transform).toBe(`translate3d(0px, 0px, 0px)`);
+        expect(testComponent.carouselComponent.slickTrackEl.style.transform).toBe(`translate3d(0px, 0px, 0px)`);
 
         // From first to last.
-        testComponent.nzCarouselComponent.pre();
+        testComponent.carouselComponent.pre();
         tickMilliseconds(fixture, 700);
-        expect(testComponent.nzCarouselComponent.slickTrackEl.style.transform).not.toBe(`translate3d(0px, 0px, 0px)`);
+        expect(testComponent.carouselComponent.slickTrackEl.style.transform).not.toBe(`translate3d(0px, 0px, 0px)`);
 
         // From last to first.
-        testComponent.nzCarouselComponent.next();
+        testComponent.carouselComponent.next();
         tickMilliseconds(fixture, 700);
-        expect(testComponent.nzCarouselComponent.slickTrackEl.style.transform).toBe(`translate3d(0px, 0px, 0px)`);
+        expect(testComponent.carouselComponent.slickTrackEl.style.transform).toBe(`translate3d(0px, 0px, 0px)`);
       }));
 
       it('vertical', fakeAsync(() => {
         testComponent.dotPosition = 'left';
         fixture.detectChanges();
 
-        expect(testComponent.nzCarouselComponent.slickTrackEl.style.transform).toBe(`translate3d(0px, 0px, 0px)`);
+        expect(testComponent.carouselComponent.slickTrackEl.style.transform).toBe(`translate3d(0px, 0px, 0px)`);
 
-        testComponent.nzCarouselComponent.next();
+        testComponent.carouselComponent.next();
         tickMilliseconds(fixture, 700);
-        expect(testComponent.nzCarouselComponent.el.style.transform).not.toBe(`translate3d(0px, 0px, 0px)`);
+        expect(testComponent.carouselComponent.el.style.transform).not.toBe(`translate3d(0px, 0px, 0px)`);
 
-        testComponent.nzCarouselComponent.pre();
+        testComponent.carouselComponent.pre();
         tickMilliseconds(fixture, 700);
-        expect(testComponent.nzCarouselComponent.slickTrackEl.style.transform).toBe(`translate3d(0px, 0px, 0px)`);
+        expect(testComponent.carouselComponent.slickTrackEl.style.transform).toBe(`translate3d(0px, 0px, 0px)`);
 
         // From first to last.
-        testComponent.nzCarouselComponent.pre();
+        testComponent.carouselComponent.pre();
         tickMilliseconds(fixture, 700);
-        expect(testComponent.nzCarouselComponent.slickTrackEl.style.transform).not.toBe(`translate3d(0px, 0px, 0px)`);
+        expect(testComponent.carouselComponent.slickTrackEl.style.transform).not.toBe(`translate3d(0px, 0px, 0px)`);
 
         // From last to first.
-        testComponent.nzCarouselComponent.next();
+        testComponent.carouselComponent.next();
         tickMilliseconds(fixture, 700);
-        expect(testComponent.nzCarouselComponent.slickTrackEl.style.transform).toBe(`translate3d(0px, 0px, 0px)`);
+        expect(testComponent.carouselComponent.slickTrackEl.style.transform).toBe(`translate3d(0px, 0px, 0px)`);
       }));
     });
   });
 
   describe('carousel nzAfterChange return value', () => {
-    let fixture: ComponentFixture<NzTestCarouselActiveIndexComponent>;
-    let testComponent: NzTestCarouselActiveIndexComponent;
+    let fixture: ComponentFixture<TriTestCarouselActiveIndexComponent>;
+    let testComponent: TriTestCarouselActiveIndexComponent;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestCarouselActiveIndexComponent);
+      fixture = TestBed.createComponent(TriTestCarouselActiveIndexComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
     });
@@ -352,17 +352,17 @@ describe('carousel', () => {
     it('carousel activeIndex should be equal to nzAfterChange return value', fakeAsync(() => {
       fixture.detectChanges();
       [0, 1, 2, 3, 4].forEach(_ => {
-        testComponent.nzCarouselComponent.next();
+        testComponent.carouselComponent.next();
         tickMilliseconds(fixture, 700);
-        expect(testComponent.index).toBe(testComponent.nzCarouselComponent.activeIndex);
+        expect(testComponent.index).toBe(testComponent.carouselComponent.activeIndex);
       });
     }));
   });
 });
 
 describe('carousel custom strategies', () => {
-  let fixture: ComponentFixture<NzTestCarouselBasicComponent>;
-  let testComponent: NzTestCarouselBasicComponent;
+  let fixture: ComponentFixture<TriTestCarouselBasicComponent>;
+  let testComponent: TriTestCarouselBasicComponent;
   let carouselWrapper: DebugElement;
   let carouselContents: DebugElement[];
 
@@ -374,11 +374,11 @@ describe('carousel custom strategies', () => {
           useValue: [
             {
               name: 'flip',
-              strategy: NzCarouselFlipStrategy
+              strategy: TriCarouselFlipStrategy
             },
             {
               name: 'transform-no-loop',
-              strategy: NzCarouselTransformNoLoopStrategy
+              strategy: TriCarouselTransformNoLoopStrategy
             }
           ]
         }
@@ -387,11 +387,11 @@ describe('carousel custom strategies', () => {
   }));
 
   it('could use custom strategies', fakeAsync(() => {
-    fixture = TestBed.createComponent(NzTestCarouselBasicComponent);
+    fixture = TestBed.createComponent(TriTestCarouselBasicComponent);
     fixture.detectChanges();
     testComponent = fixture.debugElement.componentInstance;
-    carouselWrapper = fixture.debugElement.query(By.directive(NzCarouselComponent));
-    carouselContents = fixture.debugElement.queryAll(By.directive(NzCarouselContentDirective));
+    carouselWrapper = fixture.debugElement.query(By.directive(TriCarouselComponent));
+    carouselContents = fixture.debugElement.queryAll(By.directive(TriCarouselContentDirective));
 
     testComponent.effect = 'flip';
     fixture.detectChanges();
@@ -435,7 +435,7 @@ function tickMilliseconds<T>(fixture: ComponentFixture<T>, seconds: number = 1):
  * @param carousel: Carousel component.
  * @param Distance: Positive to right. Negative to left.
  */
-function swipe(carousel: NzCarouselComponent, distance: number): void {
+function swipe(carousel: TriCarouselComponent, distance: number): void {
   carousel.pointerDown(
     new MouseEvent('mousedown', {
       clientX: 500,
@@ -448,33 +448,33 @@ function swipe(carousel: NzCarouselComponent, distance: number): void {
 }
 
 @Component({
-  selector: 'nz-test-carousel',
-  imports: [NzCarouselModule],
+  selector: '',
+  imports: [TriCarouselModule],
   template: `
-    <nz-carousel
-      [nzEffect]="effect"
-      [nzDots]="dots"
-      [nzDotPosition]="dotPosition"
-      [nzDotRender]="dotRender"
-      [nzAutoPlay]="autoPlay"
-      [nzAutoPlaySpeed]="autoPlaySpeed"
-      [nzLoop]="loop"
-      (nzAfterChange)="afterChange($event)"
-      (nzBeforeChange)="beforeChange($event)"
+    <tri-carousel
+      [effect]="effect"
+      [dots]="dots"
+      [dotPosition]="dotPosition"
+      [dotRender]="dotRender"
+      [autoPlay]="autoPlay"
+      [autoPlaySpeed]="autoPlaySpeed"
+      [loop]="loop"
+      (afterChange)="afterChange($event)"
+      (beforeChange)="beforeChange($event)"
     >
       @for (index of array; track index) {
-        <div nz-carousel-content>
+        <div tri-carousel-content>
           <h3>{{ index }}</h3>
         </div>
       }
       <ng-template #dotRender let-index>
         <a>{{ index + 1 }}</a>
       </ng-template>
-    </nz-carousel>
+    </tri-carousel>
   `
 })
-export class NzTestCarouselBasicComponent {
-  @ViewChild(NzCarouselComponent, { static: false }) nzCarouselComponent!: NzCarouselComponent;
+export class TriTestCarouselBasicComponent {
+  @ViewChild(TriCarouselComponent, { static: false }) carouselComponent!: TriCarouselComponent;
   dots = true;
   dotPosition = 'bottom';
   effect = 'scrollx';
@@ -487,19 +487,19 @@ export class NzTestCarouselBasicComponent {
 }
 
 @Component({
-  imports: [NzCarouselModule],
+  imports: [TriCarouselModule],
   template: `
-    <nz-carousel (nzAfterChange)="afterChange($event)">
+    <tri-carousel (afterChange)="afterChange($event)">
       @for (index of array; track index) {
-        <div nz-carousel-content>
+        <div tri-carousel-content>
           <h3>{{ index }}</h3>
         </div>
       }
-    </nz-carousel>
+    </tri-carousel>
   `
 })
-export class NzTestCarouselActiveIndexComponent {
-  @ViewChild(NzCarouselComponent, { static: true }) nzCarouselComponent!: NzCarouselComponent;
+export class TriTestCarouselActiveIndexComponent {
+  @ViewChild(TriCarouselComponent, { static: true }) carouselComponent!: TriCarouselComponent;
   array = [0, 1, 2, 3, 4];
   index = 0;
 
@@ -514,8 +514,8 @@ class MockDirectionality {
 }
 
 describe('carousel', () => {
-  let fixture: ComponentFixture<NzCarouselComponent>;
-  let component: NzCarouselComponent;
+  let fixture: ComponentFixture<TriCarouselComponent>;
+  let component: TriCarouselComponent;
   let mockDirectionality: MockDirectionality;
   let mockObserve$: Subject<void>;
 
@@ -532,20 +532,20 @@ describe('carousel', () => {
           useClass: MockDirectionality
         },
         {
-          provide: NzResizeObserver,
+          provide: TriResizeObserver,
           useValue: nzResizeObserverSpy
         }
       ]
     });
 
-    fixture = TestBed.createComponent(NzCarouselComponent);
+    fixture = TestBed.createComponent(TriCarouselComponent);
     component = fixture.componentInstance;
     mockDirectionality = TestBed.inject(Directionality) as unknown as MockDirectionality;
   });
 
   it('directionality change detection', fakeAsync(() => {
-    spyOn<NzSafeAny>(component, 'markContentActive');
-    spyOn<NzSafeAny>(component['cdr'], 'detectChanges');
+    spyOn<TriSafeAny>(component, 'markContentActive');
+    spyOn<TriSafeAny>(component['cdr'], 'detectChanges');
     mockDirectionality.value = 'ltr';
     component.ngOnInit();
     expect(component.dir).toEqual('ltr');

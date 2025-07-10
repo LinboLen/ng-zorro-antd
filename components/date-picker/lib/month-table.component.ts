@@ -5,7 +5,7 @@
 
 import { ChangeDetectionStrategy, Component, inject, OnChanges, OnInit, ViewEncapsulation } from '@angular/core';
 
-import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
+import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import { CandyDate } from 'ng-zorro-antd/core/time';
 import { valueFunctionProp } from 'ng-zorro-antd/core/util';
 import { DateHelperService } from 'ng-zorro-antd/i18n';
@@ -17,9 +17,9 @@ import { DateBodyRow, DateCell } from './interface';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'month-table',
+  selector: '',
   templateUrl: 'abstract-table.html',
-  imports: [NzStringTemplateOutletDirective]
+  imports: [TriStringTemplateOutletDirective]
 })
 export class MonthTableComponent extends AbstractTable implements OnChanges, OnInit {
   private readonly dateHelper = inject(DateHelperService);

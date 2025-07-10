@@ -1,28 +1,28 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzSelectModule } from 'ng-zorro-antd/select';
+import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: 'nz-demo-select-default-value',
-  imports: [FormsModule, NzSelectModule],
+  selector: '',
+  imports: [FormsModule, TriSelectModule],
   template: `
-    <nz-select nzMode="multiple" nzPlaceHolder="Inserted are removed" [(ngModel)]="listOfSelectedValue">
+    <tri-select mode="multiple" placeHolder="Inserted are removed" [(ngModel)]="listOfSelectedValue">
       @for (option of listOfOption; track option) {
-        <nz-option [nzLabel]="option" [nzValue]="option"></nz-option>
+        <tri-option [label]="option" [value]="option"></tri-option>
       }
       @for (option of defaultOption; track option) {
-        <nz-option [nzLabel]="option" [nzValue]="option" nzHide></nz-option>
+        <tri-option [label]="option" [value]="option" hide></tri-option>
       }
-    </nz-select>
+    </tri-select>
     <br />
     <br />
-    <nz-select [(ngModel)]="selectedValue">
+    <tri-select [(ngModel)]="selectedValue">
       @for (option of listOfOption; track option) {
-        <nz-option [nzLabel]="option" [nzValue]="option"></nz-option>
+        <tri-option [label]="option" [value]="option"></tri-option>
       }
-      <nz-option nzLabel="Default Value" nzValue="Default" nzHide></nz-option>
-    </nz-select>
+      <tri-option label="Default Value" value="Default" hide></tri-option>
+    </tri-select>
   `,
   styles: [
     `
@@ -32,7 +32,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     `
   ]
 })
-export class NzDemoSelectDefaultValueComponent {
+export class TriDemoSelectDefaultValueComponent {
   listOfOption = ['Option 01', 'Option 02'];
   listOfSelectedValue = ['Default 01', 'Default 02'];
   defaultOption = [...this.listOfSelectedValue];

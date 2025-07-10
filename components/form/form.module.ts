@@ -5,32 +5,32 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzGridModule } from 'ng-zorro-antd/grid';
+import { TriGridModule } from 'ng-zorro-antd/grid';
 
-import { NzFormControlComponent } from './form-control.component';
-import { NzFormItemComponent } from './form-item.component';
-import { NzFormLabelComponent } from './form-label.component';
-import { NzFormSplitComponent } from './form-split.component';
-import { NzFormTextComponent } from './form-text.component';
-import { NzFormDirective } from './form.directive';
+import { TriFormControlComponent } from './form-control.component';
+import { TriFormItemComponent } from './form-item.component';
+import { TriFormLabelComponent } from './form-label.component';
+import { TriFormSplitComponent } from './form-split.component';
+import { TriFormTextComponent } from './form-text.component';
+import { TriFormDirective } from './form.directive';
 
 @NgModule({
   imports: [
-    NzFormDirective,
-    NzFormItemComponent,
-    NzFormLabelComponent,
-    NzFormControlComponent,
-    NzFormTextComponent,
-    NzFormSplitComponent
+    TriFormDirective,
+    TriFormItemComponent,
+    TriFormLabelComponent,
+    TriFormControlComponent,
+    TriFormTextComponent,
+    TriFormSplitComponent
   ],
   exports: [
-    NzGridModule,
-    NzFormDirective,
-    NzFormItemComponent,
-    NzFormLabelComponent,
-    NzFormControlComponent,
-    NzFormTextComponent,
-    NzFormSplitComponent
+    TriGridModule,
+    TriFormDirective,
+    TriFormItemComponent,
+    TriFormLabelComponent,
+    TriFormControlComponent,
+    TriFormTextComponent,
+    TriFormSplitComponent
   ]
 })
-export class NzFormModule {}
+export class TriFormModule {}

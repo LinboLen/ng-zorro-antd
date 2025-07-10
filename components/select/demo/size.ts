@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { NzSelectModule, NzSelectSizeType } from 'ng-zorro-antd/select';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
+import { TriSelectModule, TriSelectSizeType } from 'ng-zorro-antd/select';
 
 function alphabet(): string[] {
   const children: string[] = [];
@@ -13,42 +13,42 @@ function alphabet(): string[] {
 }
 
 @Component({
-  selector: 'nz-demo-select-size',
-  imports: [FormsModule, NzSelectModule, NzRadioModule],
+  selector: '',
+  imports: [FormsModule, TriSelectModule, TriRadioModule],
   template: `
-    <nz-radio-group [(ngModel)]="size">
-      <label nz-radio-button nzValue="large">Large</label>
-      <label nz-radio-button nzValue="default">Default</label>
-      <label nz-radio-button nzValue="small">Small</label>
-    </nz-radio-group>
+    <tri-radio-group [(ngModel)]="size">
+      <label tri-radio-button value="large">Large</label>
+      <label tri-radio-button value="default">Default</label>
+      <label tri-radio-button value="small">Small</label>
+    </tri-radio-group>
     <br />
     <br />
-    <nz-select [(ngModel)]="singleValue" [nzSize]="size">
+    <tri-select [(ngModel)]="singleValue" [size]="size">
       @for (option of listOfOption; track option) {
-        <nz-option [nzLabel]="option" [nzValue]="option"></nz-option>
+        <tri-option [label]="option" [value]="option"></tri-option>
       }
-    </nz-select>
+    </tri-select>
     <br />
     <br />
-    <nz-select [(ngModel)]="singleValue" [nzSize]="size" nzShowSearch>
+    <tri-select [(ngModel)]="singleValue" [size]="size" showSearch>
       @for (option of listOfOption; track option) {
-        <nz-option [nzLabel]="option" [nzValue]="option"></nz-option>
+        <tri-option [label]="option" [value]="option"></tri-option>
       }
-    </nz-select>
+    </tri-select>
     <br />
     <br />
-    <nz-select [(ngModel)]="multipleValue" [nzSize]="size" nzMode="multiple" nzPlaceHolder="Please select">
+    <tri-select [(ngModel)]="multipleValue" [size]="size" mode="multiple" placeHolder="Please select">
       @for (option of listOfOption; track option) {
-        <nz-option [nzLabel]="option" [nzValue]="option"></nz-option>
+        <tri-option [label]="option" [value]="option"></tri-option>
       }
-    </nz-select>
+    </tri-select>
     <br />
     <br />
-    <nz-select [(ngModel)]="tagValue" [nzSize]="size" nzMode="tags" nzPlaceHolder="Please select">
+    <tri-select [(ngModel)]="tagValue" [size]="size" mode="tags" placeHolder="Please select">
       @for (option of listOfOption; track option) {
-        <nz-option [nzLabel]="option" [nzValue]="option"></nz-option>
+        <tri-option [label]="option" [value]="option"></tri-option>
       }
-    </nz-select>
+    </tri-select>
   `,
   styles: [
     `
@@ -58,9 +58,9 @@ function alphabet(): string[] {
     `
   ]
 })
-export class NzDemoSelectSizeComponent {
+export class TriDemoSelectSizeComponent {
   readonly listOfOption: string[] = alphabet();
-  size: NzSelectSizeType = 'default';
+  size: TriSelectSizeType = 'default';
   singleValue = 'a10';
   multipleValue = ['a10', 'c12'];
   tagValue = ['a10', 'c12', 'tag'];

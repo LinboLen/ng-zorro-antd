@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export type NzSpaceDirection = 'vertical' | 'horizontal';
-export type NzSpaceAlign = 'start' | 'end' | 'center' | 'baseline';
-export type NzSpaceType = 'small' | 'middle' | 'large';
-export type NzSpaceSize = NzSpaceType | number;
+export type TriSpaceDirection = 'vertical' | 'horizontal';
+export type TriSpaceAlign = 'start' | 'end' | 'center' | 'baseline';
+export type TriSpaceType = 'small' | 'middle' | 'large';
+export type TriSpaceSize = TriSpaceType | number;

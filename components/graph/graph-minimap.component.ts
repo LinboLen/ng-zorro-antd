@@ -7,13 +7,13 @@ import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, inject, NgZ
 
 import type { ZoomBehavior } from 'd3-zoom';
 
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import type { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 import { Minimap } from './core/minimap';
-import { NzZoomTransform } from './interface';
+import { TriZoomTransform } from './interface';
 
 @Component({
-  selector: 'nz-graph-minimap',
+  selector: '',
   template: `
     <svg>
       <defs>
@@ -40,7 +40,7 @@ import { NzZoomTransform } from './interface';
     '[class.nz-graph-minimap]': 'true'
   }
 })
-export class NzGraphMinimapComponent {
+export class TriGraphMinimapComponent {
   private elementRef = inject(ElementRef<HTMLElement>);
   private ngZone = inject(NgZone);
   private destroyRef = inject(DestroyRef);
@@ -52,13 +52,13 @@ export class NzGraphMinimapComponent {
     });
   }
 
-  init(containerEle: ElementRef, zoomBehavior: ZoomBehavior<NzSafeAny, NzSafeAny>): void {
+  init(containerEle: ElementRef, zoomBehavior: ZoomBehavior<TriSafeAny, TriSafeAny>): void {
     const svgEle = containerEle.nativeElement.querySelector('svg');
     const zoomEle = containerEle.nativeElement.querySelector('svg > g');
     this.minimap = new Minimap(this.ngZone, svgEle, zoomEle, zoomBehavior, this.elementRef.nativeElement, 150, 0);
   }
 
-  zoom(transform: NzZoomTransform): void {
+  zoom(transform: TriZoomTransform): void {
     this.minimap?.zoom(transform);
   }
 

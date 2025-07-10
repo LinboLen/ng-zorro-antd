@@ -1,69 +1,69 @@
 import { Component } from '@angular/core';
 
-import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { TriMenuModule } from 'ng-zorro-antd/menu';
 
 @Component({
-  selector: 'nz-demo-menu-sider-current',
-  imports: [NzMenuModule],
+  selector: '',
+  imports: [TriMenuModule],
   template: `
-    <ul nz-menu nzMode="inline" style="width: 240px;">
+    <ul tri-menu mode="inline" style="width: 240px;">
       <li
-        nz-submenu
-        [(nzOpen)]="openMap.sub1"
-        (nzOpenChange)="openHandler('sub1')"
-        nzTitle="Navigation One"
-        nzIcon="mail"
+        tri-submenu
+        [(openChange)]="openMap.sub1"
+        (openChange)="openHandler('sub1')"
+        title="Navigation One"
+        icon="mail"
       >
         <ul>
-          <li nz-menu-group nzTitle="Item 1">
+          <li tri-menu-group title="Item 1">
             <ul>
-              <li nz-menu-item>Option 1</li>
-              <li nz-menu-item>Option 2</li>
+              <li tri-menu-item>Option 1</li>
+              <li tri-menu-item>Option 2</li>
             </ul>
           </li>
-          <li nz-menu-group nzTitle="Item 2">
+          <li tri-menu-group title="Item 2">
             <ul>
-              <li nz-menu-item>Option 3</li>
-              <li nz-menu-item>Option 4</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li
-        nz-submenu
-        [(nzOpen)]="openMap.sub2"
-        (nzOpenChange)="openHandler('sub2')"
-        nzTitle="Navigation Two"
-        nzIcon="appstore"
-      >
-        <ul>
-          <li nz-menu-item>Option 5</li>
-          <li nz-menu-item>Option 6</li>
-          <li nz-submenu nzTitle="Submenu">
-            <ul>
-              <li nz-menu-item>Option 7</li>
-              <li nz-menu-item>Option 8</li>
+              <li tri-menu-item>Option 3</li>
+              <li tri-menu-item>Option 4</li>
             </ul>
           </li>
         </ul>
       </li>
       <li
-        nz-submenu
-        [(nzOpen)]="openMap.sub3"
-        (nzOpenChange)="openHandler('sub3')"
-        nzTitle="Navigation Three"
-        nzIcon="setting"
+        tri-submenu
+        [(openChange)]="openMap.sub2"
+        (openChange)="openHandler('sub2')"
+        title="Navigation Two"
+        icon="appstore"
       >
         <ul>
-          <li nz-menu-item>Option 9</li>
-          <li nz-menu-item>Option 10</li>
-          <li nz-menu-item>Option 11</li>
+          <li tri-menu-item>Option 5</li>
+          <li tri-menu-item>Option 6</li>
+          <li tri-submenu title="Submenu">
+            <ul>
+              <li tri-menu-item>Option 7</li>
+              <li tri-menu-item>Option 8</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li
+        tri-submenu
+        [(openChange)]="openMap.sub3"
+        (openChange)="openHandler('sub3')"
+        title="Navigation Three"
+        icon="setting"
+      >
+        <ul>
+          <li tri-menu-item>Option 9</li>
+          <li tri-menu-item>Option 10</li>
+          <li tri-menu-item>Option 11</li>
         </ul>
       </li>
     </ul>
   `
 })
-export class NzDemoMenuSiderCurrentComponent {
+export class TriDemoMenuSiderCurrentComponent {
   openMap: { [name: string]: boolean } = {
     sub1: true,
     sub2: false,

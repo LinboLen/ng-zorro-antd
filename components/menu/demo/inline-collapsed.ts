@@ -1,46 +1,46 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzMenuModule } from 'ng-zorro-antd/menu';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriMenuModule } from 'ng-zorro-antd/menu';
+import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
-  selector: 'nz-demo-menu-inline-collapsed',
-  imports: [NzButtonModule, NzIconModule, NzMenuModule, NzToolTipModule],
+  selector: '',
+  imports: [TriButtonModule, TriIconModule, TriMenuModule, TriToolTipModule],
   template: `
     <div class="wrapper">
-      <button nz-button nzType="primary" (click)="toggleCollapsed()">
-        <nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" />
+      <button tri-button type="primary" (click)="toggleCollapsed()">
+        <tri-icon [type]="isCollapsed ? 'menu-unfold' : 'menu-fold'" />
       </button>
-      <ul nz-menu nzMode="inline" nzTheme="dark" [nzInlineCollapsed]="isCollapsed">
+      <ul tri-menu mode="inline" theme="dark" [inlineCollapsed]="isCollapsed">
         <li
-          nz-menu-item
-          nz-tooltip
-          nzTooltipPlacement="right"
-          [nzTooltipTitle]="isCollapsed ? 'Navigation One' : ''"
-          nzSelected
+          tri-menu-item
+          tri-tooltip
+          tooltipPlacement="right"
+          [tooltipTitle]="isCollapsed ? 'Navigation One' : ''"
+          selected
         >
-          <nz-icon nzType="mail" />
+          <tri-icon type="mail" />
           <span>Navigation One</span>
         </li>
-        <li nz-submenu nzTitle="Navigation Two" nzIcon="appstore">
+        <li tri-submenu title="Navigation Two" icon="appstore">
           <ul>
-            <li nz-menu-item>Option 5</li>
-            <li nz-menu-item>Option 6</li>
-            <li nz-submenu nzTitle="Submenu">
+            <li tri-menu-item>Option 5</li>
+            <li tri-menu-item>Option 6</li>
+            <li tri-submenu title="Submenu">
               <ul>
-                <li nz-menu-item>Option 7</li>
-                <li nz-menu-item>Option 8</li>
+                <li tri-menu-item>Option 7</li>
+                <li tri-menu-item>Option 8</li>
               </ul>
             </li>
           </ul>
         </li>
-        <li nz-submenu nzTitle="Navigation Three" nzIcon="setting">
+        <li tri-submenu title="Navigation Three" icon="setting">
           <ul>
-            <li nz-menu-item>Option 9</li>
-            <li nz-menu-item>Option 10</li>
-            <li nz-menu-item>Option 11</li>
+            <li tri-menu-item>Option 9</li>
+            <li tri-menu-item>Option 10</li>
+            <li tri-menu-item>Option 11</li>
           </ul>
         </li>
       </ul>
@@ -58,7 +58,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     `
   ]
 })
-export class NzDemoMenuInlineCollapsedComponent {
+export class TriDemoMenuInlineCollapsedComponent {
   isCollapsed = false;
 
   toggleCollapsed(): void {

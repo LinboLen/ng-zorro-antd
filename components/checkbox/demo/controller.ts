@@ -1,22 +1,22 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 @Component({
-  selector: 'nz-demo-checkbox-controller',
-  imports: [FormsModule, NzButtonModule, NzCheckboxModule],
+  selector: '',
+  imports: [FormsModule, TriButtonModule, TriCheckboxModule],
   template: `
-    <label nz-checkbox [(ngModel)]="isCheckedButton" [nzDisabled]="isDisabledButton">
+    <label tri-checkbox [(ngModel)]="isCheckedButton" [disabled]="isDisabledButton">
       {{ isCheckedButton ? 'Checked' : 'Unchecked' }} - {{ isDisabledButton ? 'Disabled' : 'Enabled' }}
     </label>
     <br />
     <br />
-    <button nz-button [nzType]="'primary'" (click)="checkButton()" [nzSize]="'small'">
+    <button tri-button [type]="'primary'" (click)="checkButton()" [size]="'small'">
       {{ !isCheckedButton ? 'Checked' : 'Unchecked' }}
     </button>
-    <button nz-button [nzType]="'primary'" (click)="disableButton()" [nzSize]="'small'">
+    <button tri-button [type]="'primary'" (click)="disableButton()" [size]="'small'">
       {{ isDisabledButton ? 'Enabled' : 'Disabled' }}
     </button>
   `,
@@ -28,7 +28,7 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
     `
   ]
 })
-export class NzDemoCheckboxControllerComponent {
+export class TriDemoCheckboxControllerComponent {
   isCheckedButton = true;
   isDisabledButton = false;
 

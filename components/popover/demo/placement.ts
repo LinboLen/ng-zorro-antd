@@ -1,118 +1,118 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriPopoverModule } from 'ng-zorro-antd/popover';
 
 @Component({
-  selector: 'nz-demo-popover-placement',
-  imports: [NzButtonModule, NzPopoverModule],
+  selector: '',
+  imports: [TriButtonModule, TriPopoverModule],
   template: `
     <div style="margin-left: 60px">
       <button
-        nz-button
-        nz-popover
-        nzPopoverTitle="Title"
-        [nzPopoverContent]="contentTemplate"
-        nzPopoverPlacement="topLeft"
+        tri-button
+        tri-popover
+        popoverTitle="Title"
+        [popoverContent]="contentTemplate"
+        popoverPlacement="topLeft"
       >
         TL
       </button>
-      <button nz-button nz-popover nzPopoverTitle="Title" [nzPopoverContent]="contentTemplate" nzPopoverPlacement="top">
+      <button tri-button tri-popover popoverTitle="Title" [popoverContent]="contentTemplate" popoverPlacement="top">
         Top
       </button>
       <button
-        nz-button
-        nz-popover
-        nzPopoverTitle="Title"
-        [nzPopoverContent]="contentTemplate"
-        nzPopoverPlacement="topRight"
+        tri-button
+        tri-popover
+        popoverTitle="Title"
+        [popoverContent]="contentTemplate"
+        popoverPlacement="topRight"
       >
         TR
       </button>
     </div>
     <div style="width: 60px; float: left;">
       <button
-        nz-button
-        nz-popover
-        nzPopoverTitle="Title"
-        [nzPopoverContent]="contentTemplate"
-        nzPopoverPlacement="leftTop"
+        tri-button
+        tri-popover
+        popoverTitle="Title"
+        [popoverContent]="contentTemplate"
+        popoverPlacement="leftTop"
       >
         LT
       </button>
       <button
-        nz-button
-        nz-popover
-        nzPopoverTitle="Title"
-        [nzPopoverContent]="contentTemplate"
-        nzPopoverPlacement="left"
+        tri-button
+        tri-popover
+        popoverTitle="Title"
+        [popoverContent]="contentTemplate"
+        popoverPlacement="left"
       >
         Left
       </button>
       <button
-        nz-button
-        nz-popover
-        nzPopoverTitle="Title"
-        [nzPopoverContent]="contentTemplate"
-        nzPopoverPlacement="leftBottom"
+        tri-button
+        tri-popover
+        popoverTitle="Title"
+        [popoverContent]="contentTemplate"
+        popoverPlacement="leftBottom"
       >
         LB
       </button>
     </div>
     <div style="width: 60px; margin-left: 252px;">
       <button
-        nz-button
-        nz-popover
-        nzPopoverTitle="Title"
-        [nzPopoverContent]="contentTemplate"
-        nzPopoverPlacement="rightTop"
+        tri-button
+        tri-popover
+        popoverTitle="Title"
+        [popoverContent]="contentTemplate"
+        popoverPlacement="rightTop"
       >
         RT
       </button>
       <button
-        nz-button
-        nz-popover
-        nzPopoverTitle="Title"
-        [nzPopoverContent]="contentTemplate"
-        nzPopoverPlacement="right"
+        tri-button
+        tri-popover
+        popoverTitle="Title"
+        [popoverContent]="contentTemplate"
+        popoverPlacement="right"
       >
         Right
       </button>
       <button
-        nz-button
-        nz-popover
-        nzPopoverTitle="Title"
-        [nzPopoverContent]="contentTemplate"
-        nzPopoverPlacement="rightBottom"
+        tri-button
+        tri-popover
+        popoverTitle="Title"
+        [popoverContent]="contentTemplate"
+        popoverPlacement="rightBottom"
       >
         RB
       </button>
     </div>
     <div style="margin-left: 60px; clear: both;">
       <button
-        nz-button
-        nz-popover
-        nzPopoverTitle="Title"
-        [nzPopoverContent]="contentTemplate"
-        nzPopoverPlacement="bottomLeft"
+        tri-button
+        tri-popover
+        popoverTitle="Title"
+        [popoverContent]="contentTemplate"
+        popoverPlacement="bottomLeft"
       >
         BL
       </button>
       <button
-        nz-button
-        nz-popover
-        nzPopoverTitle="Title"
-        [nzPopoverContent]="contentTemplate"
-        nzPopoverPlacement="bottom"
+        tri-button
+        tri-popover
+        popoverTitle="Title"
+        [popoverContent]="contentTemplate"
+        popoverPlacement="bottom"
       >
         Bottom
       </button>
       <button
-        nz-button
-        nz-popover
-        nzPopoverTitle="Title"
-        [nzPopoverContent]="contentTemplate"
-        nzPopoverPlacement="bottomRight"
+        tri-button
+        tri-popover
+        popoverTitle="Title"
+        [popoverContent]="contentTemplate"
+        popoverPlacement="bottomRight"
       >
         BR
       </button>
@@ -136,4 +136,4 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
     `
   ]
 })
-export class NzDemoPopoverPlacementComponent {}
+export class TriDemoPopoverPlacementComponent {}

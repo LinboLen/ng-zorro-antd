@@ -11,12 +11,12 @@ import { ThemeType } from '@ant-design/icons-angular';
 
 import { NzBreakpointEnum } from 'ng-zorro-antd/core/services';
 import {
-  NzSafeAny,
-  NzShapeSCType,
-  NzSizeDSType,
-  NzSizeLDSType,
-  NzSizeMDSType,
-  NzTSType
+  TriSafeAny,
+  TriShapeSCType,
+  TriSizeDSType,
+  TriSizeLDSType,
+  TriSizeMDSType,
+  TriTSType
 } from 'ng-zorro-antd/core/types';
 
 interface MonacoEnvironment {
@@ -26,7 +26,7 @@ interface MonacoEnvironment {
   getWorkerUrl?(workerId: string, label: string): string;
 }
 
-export interface NzConfig {
+export interface TriConfig {
   affix?: AffixConfig;
   select?: SelectConfig;
   alert?: AlertConfig;
@@ -91,7 +91,7 @@ export interface Theme {
 
 export interface SelectConfig {
   nzBorderless?: boolean;
-  nzSuffixIcon?: TemplateRef<NzSafeAny> | string | null;
+  nzSuffixIcon?: TemplateRef<TriSafeAny> | string | null;
   nzBackdrop?: boolean;
   nzOptionHeightPx?: number;
 }
@@ -107,8 +107,8 @@ export interface AlertConfig {
 }
 
 export interface AvatarConfig {
-  nzShape?: NzShapeSCType;
-  nzSize?: NzSizeLDSType | number;
+  nzShape?: TriShapeSCType;
+  nzSize?: TriSizeLDSType | number;
   nzGap?: number;
 }
 
@@ -135,8 +135,8 @@ export interface ButtonConfig {
 
 export interface CodeEditorConfig {
   assetsRoot?: string | SafeUrl;
-  extraConfig?: NzSafeAny;
-  defaultEditorOption?: NzSafeAny;
+  extraConfig?: TriSafeAny;
+  defaultEditorOption?: TriSafeAny;
   useStaticLoading?: boolean;
   monacoEnvironment?: MonacoEnvironment;
 
@@ -148,7 +148,7 @@ export interface CodeEditorConfig {
 }
 
 export interface CardConfig {
-  nzSize?: NzSizeDSType;
+  nzSize?: TriSizeDSType;
   nzHoverable?: boolean;
   nzBordered?: boolean;
 }
@@ -180,7 +180,7 @@ export interface CollapsePanelConfig {
 
 export interface DatePickerConfig {
   nzSeparator?: string;
-  nzSuffixIcon?: string | TemplateRef<NzSafeAny>;
+  nzSuffixIcon?: string | TemplateRef<TriSafeAny>;
   nzBackdrop?: boolean;
 }
 
@@ -203,7 +203,7 @@ export interface DropDownConfig {
 }
 
 export interface EmptyConfig {
-  nzDefaultEmptyContent?: Type<NzSafeAny> | TemplateRef<string> | string | undefined;
+  nzDefaultEmptyContent?: Type<TriSafeAny> | TemplateRef<string> | string | undefined;
 }
 
 export interface FilterTriggerConfig {
@@ -272,7 +272,7 @@ export interface RateConfig {
 }
 
 export interface SegmentedConfig {
-  nzSize?: NzSizeLDSType;
+  nzSize?: TriSizeLDSType;
 }
 
 export interface SpaceConfig {
@@ -280,18 +280,18 @@ export interface SpaceConfig {
 }
 
 export interface SpinConfig {
-  nzIndicator?: TemplateRef<NzSafeAny>;
+  nzIndicator?: TemplateRef<TriSafeAny>;
 }
 
 export interface SwitchConfig {
-  nzSize: NzSizeDSType;
+  nzSize: TriSizeDSType;
 }
 
 export interface TableConfig {
   nzBordered?: boolean;
-  nzSize?: NzSizeMDSType;
+  nzSize?: TriSizeMDSType;
   nzShowQuickJumper?: boolean;
-  nzLoadingIndicator?: TemplateRef<NzSafeAny>;
+  nzLoadingIndicator?: TemplateRef<TriSafeAny>;
   nzShowSizeChanger?: boolean;
   nzSimple?: boolean;
   nzHideOnSinglePage?: boolean;
@@ -308,7 +308,7 @@ export interface TabsConfig {
         inkBar: boolean;
         tabPane: boolean;
       };
-  nzSize?: NzSizeLDSType;
+  nzSize?: TriSizeLDSType;
   nzType?: 'line' | 'card';
   nzTabBarGutter?: number;
   nzShowPagination?: boolean;
@@ -325,7 +325,7 @@ export interface TimePickerConfig {
   nzSecondStep?: number;
   nzPopupClassName?: string;
   nzUse12Hours?: string;
-  nzSuffixIcon?: string | TemplateRef<NzSafeAny>;
+  nzSuffixIcon?: string | TemplateRef<TriSafeAny>;
   nzBackdrop?: boolean;
 }
 
@@ -346,10 +346,10 @@ export interface TreeSelectConfig {
 
 export interface TypographyConfig {
   nzEllipsisRows?: number;
-  nzCopyTooltips?: [NzTSType, NzTSType] | null;
-  nzCopyIcons: [NzTSType, NzTSType];
-  nzEditTooltip?: null | NzTSType;
-  nzEditIcon: NzTSType;
+  nzCopyTooltips?: [TriTSType, TriTSType] | null;
+  nzCopyIcons: [TriTSType, TriTSType];
+  nzEditTooltip?: null | TriTSType;
+  nzEditIcon: TriTSType;
 }
 
 export interface ImageConfig {
@@ -380,13 +380,13 @@ export interface PopoverConfig {
   nzPopoverBackdrop?: boolean;
 }
 
-export type NzConfigKey = keyof NzConfig;
+export type TriConfigKey = keyof TriConfig;
 
 /**
  * User should provide an object implements this interface to set global configurations.
  */
-export const NZ_CONFIG = new InjectionToken<NzConfig>('nz-config');
+export const NZ_CONFIG = new InjectionToken<TriConfig>('nz-config');
 
-export function provideNzConfig(config: NzConfig): EnvironmentProviders {
+export function provideNzConfig(config: TriConfig): EnvironmentProviders {
   return makeEnvironmentProviders([{ provide: NZ_CONFIG, useValue: config }]);
 }

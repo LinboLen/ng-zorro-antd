@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
 
 @Component({
-  selector: 'nz-demo-input-number-disabled',
-  imports: [FormsModule, NzButtonModule, NzInputNumberModule],
+  selector: '',
+  imports: [FormsModule, TriButtonModule, TriInputNumberModule],
   template: `
-    <nz-input-number [(ngModel)]="value" nzMin="1" nzMax="10" [nzDisabled]="isDisabled" />
+    <tri-input-number [(ngModel)]="value" min="1" max="10" [disabled]="isDisabled" />
     <br />
     <br />
-    <button nz-button nzType="primary" (click)="isDisabled = !isDisabled">Toggle Disabled</button>
+    <button tri-button type="primary" (click)="isDisabled = !isDisabled">Toggle Disabled</button>
   `
 })
-export class NzDemoInputNumberDisabledComponent {
+export class TriDemoInputNumberDisabledComponent {
   value = 3;
   isDisabled = false;
 }

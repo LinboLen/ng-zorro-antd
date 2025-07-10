@@ -16,67 +16,67 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 
 import { TimelineService } from './timeline.service';
-import { NzTimelineItemColor, NzTimelinePosition, TimelineTimeDefaultColors } from './typings';
+import { TriTimelineItemColor, TriTimelinePosition, TimelineTimeDefaultColors } from './typings';
 
 function isDefaultColor(color?: string): boolean {
   return TimelineTimeDefaultColors.findIndex(i => i === color) !== -1;
 }
 
 @Component({
-  selector: 'nz-timeline-item, [nz-timeline-item]',
-  exportAs: 'nzTimelineItem',
+  selector: '',
+  exportAs: 'triTimelineItem',
   template: `
     <ng-template #template>
       <li
-        class="ant-timeline-item"
-        [class.ant-timeline-item-right]="(nzPosition || position) === 'right'"
-        [class.ant-timeline-item-left]="(nzPosition || position) === 'left'"
-        [class.ant-timeline-item-last]="isLast"
+        class="tri-timeline-item"
+        [class.tri-timeline-item-right]="(position || position) === 'right'"
+        [class.tri-timeline-item-left]="(position || position) === 'left'"
+        [class.tri-timeline-item-last]="isLast"
       >
-        @if (nzLabel) {
-          <div class="ant-timeline-item-label">
-            <ng-container *nzStringTemplateOutlet="nzLabel">{{ nzLabel }}</ng-container>
+        @if (label) {
+          <div class="tri-timeline-item-label">
+            <ng-container *stringTemplateOutlet="label">{{ label }}</ng-container>
           </div>
         }
-        <div class="ant-timeline-item-tail"></div>
+        <div class="tri-timeline-item-tail"></div>
         <div
-          class="ant-timeline-item-head"
-          [class.ant-timeline-item-head-red]="nzColor === 'red'"
-          [class.ant-timeline-item-head-blue]="nzColor === 'blue'"
-          [class.ant-timeline-item-head-green]="nzColor === 'green'"
-          [class.ant-timeline-item-head-gray]="nzColor === 'gray'"
-          [class.ant-timeline-item-head-custom]="!!nzDot"
+          class="tri-timeline-item-head"
+          [class.tri-timeline-item-head-red]="color === 'red'"
+          [class.tri-timeline-item-head-blue]="color === 'blue'"
+          [class.tri-timeline-item-head-green]="color === 'green'"
+          [class.tri-timeline-item-head-gray]="color === 'gray'"
+          [class.tri-timeline-item-head-custom]="!!dot"
           [style.border-color]="borderColor"
         >
-          <ng-container *nzStringTemplateOutlet="nzDot">{{ nzDot }}</ng-container>
+          <ng-container *stringTemplateOutlet="dot">{{ dot }}</ng-container>
         </div>
-        <div class="ant-timeline-item-content">
+        <div class="tri-timeline-item-content">
           <ng-content></ng-content>
         </div>
       </li>
     </ng-template>
   `,
-  imports: [NzOutletModule],
+  imports: [TriOutletModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class NzTimelineItemComponent implements OnChanges {
+export class TriTimelineItemComponent implements OnChanges {
   private cdr = inject(ChangeDetectorRef);
   private timelineService = inject(TimelineService);
 
   @ViewChild('template', { static: false }) template!: TemplateRef<void>;
 
-  @Input() nzPosition?: NzTimelinePosition;
-  @Input() nzColor: NzTimelineItemColor = 'blue';
-  @Input() nzDot?: string | TemplateRef<void>;
-  @Input() nzLabel?: string | TemplateRef<void>;
+  @Input() position?: TriTimelinePosition;
+  @Input() color: TriTimelineItemColor = 'blue';
+  @Input() dot?: string | TemplateRef<void>;
+  @Input() label?: string | TemplateRef<void>;
 
   isLast = false;
   borderColor: string | null = null;
-  position?: NzTimelinePosition;
+  _position?: TriTimelinePosition;
 
   ngOnChanges(changes: SimpleChanges): void {
     this.timelineService.markForCheck();
@@ -91,6 +91,6 @@ export class NzTimelineItemComponent implements OnChanges {
   }
 
   private updateCustomColor(): void {
-    this.borderColor = isDefaultColor(this.nzColor) ? null : this.nzColor;
+    this.borderColor = isDefaultColor(this.color) ? null : this.color;
   }
 }

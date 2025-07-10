@@ -8,7 +8,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { ReplaySubject, Subject } from 'rxjs';
 
 @Injectable()
-export class NzSegmentedService implements OnDestroy {
+export class TriSegmentedService implements OnDestroy {
   readonly selected$ = new ReplaySubject<string | number>(1);
   readonly activated$ = new ReplaySubject<HTMLElement>(1);
   readonly change$ = new Subject<string | number>();

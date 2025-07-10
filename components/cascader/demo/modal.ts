@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzCascaderModule, NzCascaderOption } from 'ng-zorro-antd/cascader';
-import { NzModalModule } from 'ng-zorro-antd/modal';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriCascaderModule, TriCascaderOption } from 'ng-zorro-antd/cascader';
+import { TriModalModule } from 'ng-zorro-antd/modal';
 
-const options: NzCascaderOption[] = [
+const options: TriCascaderOption[] = [
   {
     value: 'zhejiang',
     label: 'Zhejiang',
@@ -48,28 +48,28 @@ const options: NzCascaderOption[] = [
 ];
 
 @Component({
-  selector: 'nz-demo-cascader-modal',
-  imports: [FormsModule, NzButtonModule, NzModalModule, NzCascaderModule],
+  selector: '',
+  imports: [FormsModule, TriButtonModule, TriModalModule, TriCascaderModule],
   template: `
-    <nz-modal
-      [(nzVisible)]="isVisible"
-      nzTitle="Please select"
-      (nzOnCancel)="handleCancel($event)"
-      (nzOnOk)="handleOk($event)"
+    <tri-modal
+      [(visibleChange)]="isVisible"
+      title="Please select"
+      (onCancel)="handleCancel($event)"
+      (onOk)="handleOk($event)"
     >
-      <nz-cascader
-        *nzModalContent
-        [nzOptions]="nzOptions"
+      <tri-cascader
+        *modalContent
+        [options]="options"
         [(ngModel)]="values"
         (ngModelChange)="onChanges($event)"
-      ></nz-cascader>
-    </nz-modal>
+      ></tri-cascader>
+    </tri-modal>
 
-    <button nz-button (click)="open()">Open Dialog</button>
+    <button tri-button (click)="open()">Open Dialog</button>
   `
 })
-export class NzDemoCascaderModalComponent {
-  nzOptions: NzCascaderOption[] = options;
+export class TriDemoCascaderModalComponent {
+  options: TriCascaderOption[] = options;
   values: string[] | null = null;
   isVisible = false;
 

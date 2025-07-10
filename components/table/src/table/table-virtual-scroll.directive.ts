@@ -5,18 +5,18 @@
 
 import { Directive, inject, TemplateRef } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 @Directive({
-  selector: '[nz-virtual-scroll]',
-  exportAs: 'nzVirtualScroll'
+  selector: '',
+  exportAs: 'triVirtualScroll'
 })
-export class NzTableVirtualScrollDirective<T> {
+export class TriTableVirtualScrollDirective<T> {
   templateRef: TemplateRef<{ $implicit: T; index: number }> = inject(TemplateRef);
 
   static ngTemplateContextGuard<T>(
-    _dir: NzTableVirtualScrollDirective<T>,
-    _ctx: NzSafeAny
+    _dir: TriTableVirtualScrollDirective<T>,
+    _ctx: TriSafeAny
   ): _ctx is { $implicit: T; index: number } {
     return true;
   }

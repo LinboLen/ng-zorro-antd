@@ -23,27 +23,27 @@ import { filter } from 'rxjs/operators';
 
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 
-import { NzTreeNodeComponent } from './node';
+import { TriTreeNodeComponent } from './node';
 
 @Component({
-  selector: 'nz-tree-node-option',
-  template: `<span class="ant-tree-title"><ng-content></ng-content></span>`,
+  selector: '',
+  template: `<span class="tri-tree-title"><ng-content></ng-content></span>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'ant-tree-node-content-wrapper',
-    '[class.ant-tree-node-content-wrapper-open]': 'isExpanded',
-    '[class.ant-tree-node-selected]': 'nzSelected'
+    class: 'tri-tree-node-content-wrapper',
+    '[class.tri-tree-node-content-wrapper-open]': 'isExpanded',
+    '[class.tri-tree-node-selected]': 'selected'
   }
 })
-export class NzTreeNodeOptionComponent<T> implements OnChanges, OnInit {
+export class TriTreeNodeOptionComponent<T> implements OnChanges, OnInit {
   private ngZone = inject(NgZone);
   private el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
   private destroyRef = inject(DestroyRef);
-  private treeNode = inject(NzTreeNodeComponent<T>);
+  private treeNode = inject(TriTreeNodeComponent<T>);
 
-  @Input({ transform: booleanAttribute }) nzSelected = false;
-  @Input({ transform: booleanAttribute }) nzDisabled = false;
-  @Output() readonly nzClick = new EventEmitter<MouseEvent>();
+  @Input({ transform: booleanAttribute }) selected = false;
+  @Input({ transform: booleanAttribute }) disabled = false;
+  @Output() readonly click = new EventEmitter<MouseEvent>();
 
   get isExpanded(): boolean {
     return this.treeNode.isExpanded;
@@ -71,11 +71,11 @@ export class NzTreeNodeOptionComponent<T> implements OnChanges, OnInit {
   ngOnInit(): void {
     fromEventOutsideAngular<MouseEvent>(this.el, 'click')
       .pipe(
-        filter(() => !this.nzDisabled && this.nzClick.observers.length > 0),
+        filter(() => !this.disabled && this.click.observers.length > 0),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(event => {
-        this.ngZone.run(() => this.nzClick.emit(event));
+        this.ngZone.run(() => this.click.emit(event));
       });
   }
 }

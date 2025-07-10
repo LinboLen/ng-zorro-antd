@@ -5,7 +5,7 @@
 
 import { EventEmitter, Injectable, NgZone } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 /**
  * Mock synchronous NgZone implementation that can be used
@@ -17,17 +17,17 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
  */
 @Injectable()
 export class MockNgZone extends NgZone {
-  override onStable = new EventEmitter<NzSafeAny>(false);
+  override onStable = new EventEmitter<TriSafeAny>(false);
 
   constructor() {
     super({ enableLongStackTrace: false });
   }
 
-  override run(fn: () => NzSafeAny): NzSafeAny {
+  override run(fn: () => TriSafeAny): TriSafeAny {
     return fn();
   }
 
-  override runOutsideAngular(fn: () => NzSafeAny): NzSafeAny {
+  override runOutsideAngular(fn: () => TriSafeAny): TriSafeAny {
     return fn();
   }
 

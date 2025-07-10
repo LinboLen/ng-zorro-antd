@@ -1,23 +1,23 @@
 import { Component } from '@angular/core';
 
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { TriBadgeModule } from 'ng-zorro-antd/badge';
 
 @Component({
-  selector: 'nz-demo-badge-overflow',
-  imports: [NzBadgeModule],
+  selector: '',
+  imports: [TriBadgeModule],
   template: `
-    <nz-badge [nzCount]="99">
+    <tri-badge [count]="99">
       <a class="head-example"></a>
-    </nz-badge>
-    <nz-badge [nzCount]="200">
+    </tri-badge>
+    <tri-badge [count]="200">
       <a class="head-example"></a>
-    </nz-badge>
-    <nz-badge [nzCount]="200" [nzOverflowCount]="10">
+    </tri-badge>
+    <tri-badge [count]="200" [overflowCount]="10">
       <a class="head-example"></a>
-    </nz-badge>
-    <nz-badge [nzCount]="10000" [nzOverflowCount]="999">
+    </tri-badge>
+    <tri-badge [count]="10000" [overflowCount]="999">
       <a class="head-example"></a>
-    </nz-badge>
+    </tri-badge>
   `,
   styles: [
     `
@@ -36,4 +36,4 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
     `
   ]
 })
-export class NzDemoBadgeOverflowComponent {}
+export class TriDemoBadgeOverflowComponent {}

@@ -1,40 +1,40 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzCascaderModule } from 'ng-zorro-antd/cascader';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
-import { NzSelectModule } from 'ng-zorro-antd/select';
+import { TriCascaderModule } from 'ng-zorro-antd/cascader';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
+import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: 'nz-demo-input-number-addon',
-  imports: [FormsModule, NzSelectModule, NzCascaderModule, NzInputNumberModule, NzIconModule],
+  selector: '',
+  imports: [FormsModule, TriSelectModule, TriCascaderModule, TriInputNumberModule, TriIconModule],
   template: `
-    <nz-input-number [(ngModel)]="value">
-      <span nzInputAddonBefore>+</span>
-      <span nzInputAddonAfter>$</span>
-    </nz-input-number>
+    <tri-input-number [(ngModel)]="value">
+      <span inputAddonBefore>+</span>
+      <span inputAddonAfter>$</span>
+    </tri-input-number>
 
-    <nz-input-number [(ngModel)]="value">
-      <nz-select nzInputAddonBefore [ngModel]="'add'" [style.width.px]="60">
-        <nz-option nzLabel="+" nzValue="add"></nz-option>
-        <nz-option nzLabel="-" nzValue="minus"></nz-option>
-      </nz-select>
-      <nz-select nzInputAddonAfter [ngModel]="'USD'" [style.width.px]="60">
-        <nz-option nzValue="USD" nzLabel="$"></nz-option>
-        <nz-option nzValue="EUR" nzLabel="€"></nz-option>
-        <nz-option nzValue="GBP" nzLabel="£"></nz-option>
-        <nz-option nzValue="CNY" nzLabel="¥"></nz-option>
-      </nz-select>
-    </nz-input-number>
+    <tri-input-number [(ngModel)]="value">
+      <tri-select inputAddonBefore [ngModel]="'add'" [style.width.px]="60">
+        <tri-option label="+" value="add"></tri-option>
+        <tri-option label="-" value="minus"></tri-option>
+      </tri-select>
+      <tri-select inputAddonAfter [ngModel]="'USD'" [style.width.px]="60">
+        <tri-option value="USD" label="$"></tri-option>
+        <tri-option value="EUR" label="€"></tri-option>
+        <tri-option value="GBP" label="£"></tri-option>
+        <tri-option value="CNY" label="¥"></tri-option>
+      </tri-select>
+    </tri-input-number>
 
-    <nz-input-number [(ngModel)]="value">
-      <nz-icon nzInputAddonAfter nzType="setting" />
-    </nz-input-number>
+    <tri-input-number [(ngModel)]="value">
+      <tri-icon inputAddonAfter type="setting" />
+    </tri-input-number>
 
-    <nz-input-number [(ngModel)]="value">
-      <nz-cascader nzInputAddonBefore [nzOptions]="[]" nzPlaceHolder="cascader" [style.width.px]="150" />
-    </nz-input-number>
+    <tri-input-number [(ngModel)]="value">
+      <tri-cascader inputAddonBefore [options]="[]" placeHolder="cascader" [style.width.px]="150" />
+    </tri-input-number>
   `,
   styles: [
     `
@@ -45,6 +45,6 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     `
   ]
 })
-export class NzDemoInputNumberAddonComponent {
+export class TriDemoInputNumberAddonComponent {
   value = 100;
 }

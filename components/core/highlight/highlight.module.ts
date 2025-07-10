@@ -5,13 +5,13 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzHighlightPipe } from './highlight.pipe';
+import { TriHighlightPipe } from './highlight.pipe';
 
 /**
  * @deprecated Will be removed in v21, use `NzHighlightPipe` directly instead.
  */
 @NgModule({
-  imports: [NzHighlightPipe],
-  exports: [NzHighlightPipe]
+  imports: [TriHighlightPipe],
+  exports: [TriHighlightPipe]
 })
-export class NzHighlightModule {}
+export class TriHighlightModule {}

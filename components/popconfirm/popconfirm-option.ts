@@ -3,12 +3,12 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { NzButtonType } from 'ng-zorro-antd/button';
+import { TriButtonType } from 'ng-zorro-antd/button';
 
-export interface NzPopConfirmButton {
-  nzType: NzButtonType;
+export interface TriPopConfirmButton {
+  nzType: TriButtonType;
   nzDanger: boolean;
   nzDisabled: boolean;
 }
 
-export type NzPopConfirmButtonProps = Partial<NzPopConfirmButton>;
+export type TriPopConfirmButtonProps = Partial<TriPopConfirmButton>;

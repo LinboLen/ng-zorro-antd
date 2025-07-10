@@ -8,72 +8,72 @@ import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { inject, Injectable, Injector } from '@angular/core';
 
-import { ImageConfig, NzConfigService } from 'ng-zorro-antd/core/config';
+import { ImageConfig, TriConfigService } from 'ng-zorro-antd/core/config';
 
 import { NZ_CONFIG_MODULE_NAME } from './image-config';
-import { NzImage, NzImagePreviewOptions } from './image-preview-options';
-import { NzImagePreviewRef } from './image-preview-ref';
-import { NzImagePreviewComponent } from './image-preview.component';
-import { NzImageScaleStep, NzImageUrl } from './image.directive';
+import { TriImage, TriImagePreviewOptions } from './image-preview-options';
+import { TriImagePreviewRef } from './image-preview-ref';
+import { TriImagePreviewComponent } from './image-preview.component';
+import { TriImageScaleStep, TriImageUrl } from './image.directive';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
-export interface NzImageService {
-  preview(images: NzImage[], option?: NzImagePreviewOptions): NzImagePreviewRef;
+export interface TriImageService {
+  preview(images: TriImage[], option?: TriImagePreviewOptions): TriImagePreviewRef;
 }
 
 @Injectable()
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
-export class NzImageService {
+export class TriImageService {
   private overlay = inject(Overlay);
   private injector = inject(Injector);
-  private nzConfigService = inject(NzConfigService);
+  private configService = inject(TriConfigService);
   private directionality = inject(Directionality);
 
   preview(
-    images: NzImage[],
-    options?: NzImagePreviewOptions,
-    zoomMap?: Map<NzImageUrl, NzImageScaleStep>
-  ): NzImagePreviewRef {
+    images: TriImage[],
+    options?: TriImagePreviewOptions,
+    zoomMap?: Map<TriImageUrl, TriImageScaleStep>
+  ): TriImagePreviewRef {
     return this.display(images, options, zoomMap);
   }
 
   private display(
-    images: NzImage[],
-    config?: NzImagePreviewOptions,
-    scaleStepMap?: Map<NzImageUrl, NzImageScaleStep>
-  ): NzImagePreviewRef {
-    const configMerged = { ...new NzImagePreviewOptions(), ...(config ?? {}) };
+    images: TriImage[],
+    config?: TriImagePreviewOptions,
+    scaleStepMap?: Map<TriImageUrl, TriImageScaleStep>
+  ): TriImagePreviewRef {
+    const configMerged = { ...new TriImagePreviewOptions(), ...(config ?? {}) };
     const overlayRef = this.createOverlay(configMerged);
     const previewComponent = this.attachPreviewComponent(overlayRef, configMerged);
     previewComponent.setImages(images, scaleStepMap);
-    const previewRef = new NzImagePreviewRef(previewComponent, configMerged, overlayRef);
+    const previewRef = new TriImagePreviewRef(previewComponent, configMerged, overlayRef);
 
     previewComponent.previewRef = previewRef;
     return previewRef;
   }
 
-  private attachPreviewComponent(overlayRef: OverlayRef, config: NzImagePreviewOptions): NzImagePreviewComponent {
+  private attachPreviewComponent(overlayRef: OverlayRef, config: TriImagePreviewOptions): TriImagePreviewComponent {
     const injector = Injector.create({
       parent: this.injector,
       providers: [
         { provide: OverlayRef, useValue: overlayRef },
-        { provide: NzImagePreviewOptions, useValue: config }
+        { provide: TriImagePreviewOptions, useValue: config }
       ]
     });
 
-    const containerPortal = new ComponentPortal(NzImagePreviewComponent, null, injector);
+    const containerPortal = new ComponentPortal(TriImagePreviewComponent, null, injector);
     const containerRef = overlayRef.attach(containerPortal);
 
     return containerRef.instance;
   }
 
-  private createOverlay(config: NzImagePreviewOptions): OverlayRef {
-    const globalConfig = (this.nzConfigService.getConfigForComponent(NZ_CONFIG_MODULE_NAME) as ImageConfig) || {};
+  private createOverlay(config: TriImagePreviewOptions): OverlayRef {
+    const globalConfig = (this.configService.getConfigForComponent(NZ_CONFIG_MODULE_NAME) as ImageConfig) || {};
     const overLayConfig = new OverlayConfig({
       scrollStrategy: this.overlay.scrollStrategies.block(),
       positionStrategy: this.overlay.position().global(),
-      disposeOnNavigation: config.nzCloseOnNavigation ?? globalConfig.nzCloseOnNavigation ?? true,
-      direction: config.nzDirection || globalConfig.nzDirection || this.directionality.value
+      disposeOnNavigation: config.closeOnNavigation ?? globalConfig.nzCloseOnNavigation ?? true,
+      direction: config.direction || globalConfig.nzDirection || this.directionality.value
     });
 
     return this.overlay.create(overLayConfig);

@@ -3,11 +3,11 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export { NzSliderComponent } from './slider.component';
-export { NzSliderModule } from './slider.module';
-export { NzSliderHandleComponent as ɵNzSliderHandleComponent } from './handle.component';
-export { NzSliderMarksComponent as ɵNzSliderMarksComponent } from './marks.component';
-export { NzSliderStepComponent as ɵNzSliderStepComponent } from './step.component';
-export { NzSliderTrackComponent as ɵNzSliderTrackComponent } from './track.component';
-export type { NzSliderTrackStyle } from './track.component';
+export { TriSliderComponent } from './slider.component';
+export { TriSliderModule } from './slider.module';
+export { TriSliderHandleComponent as ɵNzSliderHandleComponent } from './handle.component';
+export { TriSliderMarksComponent as ɵNzSliderMarksComponent } from './marks.component';
+export { TriSliderStepComponent as ɵNzSliderStepComponent } from './step.component';
+export { TriSliderTrackComponent as ɵNzSliderTrackComponent } from './track.component';
+export type { TriSliderTrackStyle } from './track.component';
 export * from './typings';

@@ -5,30 +5,30 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzResultNotFoundComponent } from './partial/not-found';
-import { NzResultServerErrorComponent } from './partial/server-error.component';
-import { NzResultUnauthorizedComponent } from './partial/unauthorized';
+import { TriResultNotFoundComponent } from './partial/not-found';
+import { TriResultServerErrorComponent } from './partial/server-error.component';
+import { TriResultUnauthorizedComponent } from './partial/unauthorized';
 import {
-  NzResultContentDirective,
-  NzResultExtraDirective,
-  NzResultIconDirective,
-  NzResultSubtitleDirective,
-  NzResultTitleDirective
+  TriResultContentDirective,
+  TriResultExtraDirective,
+  TriResultIconDirective,
+  TriResultSubtitleDirective,
+  TriResultTitleDirective
 } from './result-cells';
-import { NzResultComponent } from './result.component';
+import { TriResultComponent } from './result.component';
 
-const partial = [NzResultNotFoundComponent, NzResultServerErrorComponent, NzResultUnauthorizedComponent];
+const partial = [TriResultNotFoundComponent, TriResultServerErrorComponent, TriResultUnauthorizedComponent];
 
 const cellDirectives = [
-  NzResultContentDirective,
-  NzResultExtraDirective,
-  NzResultIconDirective,
-  NzResultSubtitleDirective,
-  NzResultTitleDirective
+  TriResultContentDirective,
+  TriResultExtraDirective,
+  TriResultIconDirective,
+  TriResultSubtitleDirective,
+  TriResultTitleDirective
 ];
 
 @NgModule({
-  imports: [NzResultComponent, ...cellDirectives, ...partial],
-  exports: [NzResultComponent, ...cellDirectives]
+  imports: [TriResultComponent, ...cellDirectives, ...partial],
+  exports: [TriResultComponent, ...cellDirectives]
 })
-export class NzResultModule {}
+export class TriResultModule {}

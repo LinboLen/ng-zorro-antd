@@ -11,15 +11,15 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { NzSafeAny, NzStatus } from 'ng-zorro-antd/core/types';
-import { NzFormControlStatusType, NzFormModule } from 'ng-zorro-antd/form';
+import { TriSafeAny, TriStatus } from 'ng-zorro-antd/core/types';
+import { TriFormControlStatusType, TriFormModule } from 'ng-zorro-antd/form';
 import en_US from 'ng-zorro-antd/i18n/languages/en_US';
-import { NzI18nService } from 'ng-zorro-antd/i18n/nz-i18n.service';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriI18nService } from 'ng-zorro-antd/i18n/nz-i18n.service';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 import {
-  NzTransferComponent,
-  NzTransferModule,
+  TriTransferComponent,
+  TriTransferModule,
   TransferCanMove,
   TransferChange,
   TransferDirection,
@@ -49,7 +49,7 @@ describe('transfer', () => {
 
   describe('[default]', () => {
     it('should be from left to right when via nzTargetKeys property', () => {
-      instance.nzTargetKeys = ['0', '1'];
+      instance.targetKeys = ['0', '1'];
       fixture.detectChanges();
 
       const leftKeys = instance.comp.leftDataSource.map(e => e.key);
@@ -63,19 +63,19 @@ describe('transfer', () => {
     });
 
     it('should be from left to right when via nzSelectedKeys property', () => {
-      instance.nzSelectedKeys = ['0', '1', '2'];
+      instance.selectedKeys = ['0', '1', '2'];
       fixture.detectChanges();
 
       expect(
-        instance.comp.nzSelectedKeys.every(e => {
-          const data = instance.comp.nzDataSource.find(d => d.key === e);
+        instance.comp.selectedKeys.every(e => {
+          const data = instance.comp.dataSource.find(d => d.key === e);
           return !!data?.checked;
         })
       ).toBe(true);
     });
 
     it('nzOneWay', () => {
-      instance.nzOneWay = true;
+      instance.oneWay = true;
       fixture.detectChanges();
       expect(!pageObject.rightList.querySelector('.ant-transfer-list-header .ant-transfer-list-checkbox')).toBeTrue();
       expect(debugElement.queryAll(By.css('.ant-transfer-operation .ant-btn')).length).toBe(1);
@@ -140,15 +140,15 @@ describe('transfer', () => {
         By.css('.ant-transfer-operation > button')
       );
       const transferToRightButton: HTMLElement = transferOperationButtons[1].nativeNode;
-      expect((transferToRightButton as NzSafeAny)['disabled']).toEqual(true);
+      expect((transferToRightButton as TriSafeAny)['disabled']).toEqual(true);
       pageObject.checkItem('left', 0);
-      expect((transferToRightButton as NzSafeAny)['disabled']).toEqual(false);
+      expect((transferToRightButton as TriSafeAny)['disabled']).toEqual(false);
       pageObject.checkItem('left', 0);
-      expect((transferToRightButton as NzSafeAny)['disabled']).toEqual(true);
+      expect((transferToRightButton as TriSafeAny)['disabled']).toEqual(true);
     });
 
     it('should be custom filter option', () => {
-      instance.nzFilterOption = (inputValue: string, item: NzSafeAny): boolean =>
+      instance.filterOption = (inputValue: string, item: TriSafeAny): boolean =>
         item.description.indexOf(inputValue) > -1;
       fixture.detectChanges();
       pageObject.expectLeft(LEFT_COUNT).search('left', 'description of content1');
@@ -181,7 +181,7 @@ describe('transfer', () => {
     });
 
     it('should be checkbox is disabled toggle select when setting disabled prop', () => {
-      instance.nzDataSource = [{ title: `content`, disabled: true }];
+      instance.dataSource = [{ title: `content`, disabled: true }];
       fixture.detectChanges();
       expect(instance.comp.leftDataSource.filter(w => w.checked).length).toBe(0);
       pageObject.checkItem('left', 0);
@@ -226,28 +226,28 @@ describe('transfer', () => {
 
     describe('#notFoundContent', () => {
       it('should be the left and right list have data', () => {
-        instance.nzDataSource = [{ title: `content0`, direction: 'right' }, { title: `content1` }];
+        instance.dataSource = [{ title: `content0`, direction: 'right' }, { title: `content1` }];
         fixture.detectChanges();
         expect(pageObject.rightList.querySelector('nz-embed-empty')).toBeFalsy();
         expect(pageObject.leftList.querySelector('nz-embed-empty')).toBeFalsy();
       });
 
       it('should be the right list is no data', () => {
-        instance.nzDataSource = [{ title: `content0` }, { title: `content1` }];
+        instance.dataSource = [{ title: `content0` }, { title: `content1` }];
         fixture.detectChanges();
         expect(pageObject.rightList.querySelector('nz-embed-empty')).toBeTruthy();
         expect(pageObject.leftList.querySelector('nz-embed-empty')).toBeFalsy();
       });
 
       it('should be the left list is no data', () => {
-        instance.nzDataSource = [{ title: `content0`, direction: 'right' }];
+        instance.dataSource = [{ title: `content0`, direction: 'right' }];
         fixture.detectChanges();
         expect(pageObject.rightList.querySelector('nz-embed-empty')).toBeFalsy();
         expect(pageObject.leftList.querySelector('nz-embed-empty')).toBeTruthy();
       });
 
       it('should be the left and right list is no data', () => {
-        instance.nzDataSource = [];
+        instance.dataSource = [];
         fixture.detectChanges();
         expect(pageObject.rightList.querySelector('nz-embed-empty')).toBeTruthy();
         expect(pageObject.leftList.querySelector('nz-embed-empty')).toBeTruthy();
@@ -256,7 +256,7 @@ describe('transfer', () => {
 
     describe('#nzDisabled', () => {
       it('should working', () => {
-        instance.nzDisabled = true;
+        instance.disabled = true;
         fixture.detectChanges();
         expect(debugElement.queryAll(By.css('.ant-transfer-disabled')).length).toBe(1);
         // All operation buttons muse be disabled
@@ -272,7 +272,7 @@ describe('transfer', () => {
       it('should be disabled clear', () => {
         pageObject.expectLeft(LEFT_COUNT).search('left', '1');
         expect(pageObject.leftList.querySelectorAll('.ant-transfer-list-content-item').length).toBe(1);
-        instance.nzDisabled = true;
+        instance.disabled = true;
         fixture.detectChanges();
         (pageObject.leftList.querySelector('.ant-transfer-list-search .ant-input-suffix') as HTMLElement).click();
         fixture.detectChanges();
@@ -286,7 +286,7 @@ describe('transfer', () => {
       });
 
       it('should be disabled check all when all options are disabled', () => {
-        instance.nzDataSource = [{ title: `content`, disabled: true }];
+        instance.dataSource = [{ title: `content`, disabled: true }];
         fixture.detectChanges();
         const cls = '[data-direction="left"] .ant-transfer-list-header .ant-checkbox-disabled';
         expect(debugElement.queryAll(By.css(cls)).length).toBe(1);
@@ -296,13 +296,13 @@ describe('transfer', () => {
     it('#nzShowSelectAll', () => {
       const cls = `[data-direction="left"] .ant-transfer-list-header .ant-checkbox`;
       expect(debugElement.queryAll(By.css(cls)).length).toBe(1);
-      instance.nzShowSelectAll = false;
+      instance.showSelectAll = false;
       fixture.detectChanges();
       expect(debugElement.queryAll(By.css(cls)).length).toBe(0);
     });
 
     it('#nzRenderList', () => {
-      instance.nzRenderList = [instance.renderListTpl, instance.renderListTpl];
+      instance.renderList = [instance.renderListTpl, instance.renderListTpl];
       fixture.detectChanges();
       expect(debugElement.queryAll(By.css('.ant-transfer-customize-list')).length).toBe(1);
       expect(debugElement.queryAll(By.css('.transfer-renderList')).length).toBe(2);
@@ -337,7 +337,7 @@ describe('transfer', () => {
     it('#i18n', () => {
       const tempFixture = TestBed.createComponent(TestTransferCustomRenderComponent);
       tempFixture.detectChanges();
-      TestBed.inject(NzI18nService).setLocale(en_US);
+      TestBed.inject(TriI18nService).setLocale(en_US);
       tempFixture.detectChanges();
       const searchPhText = (
         tempFixture.debugElement.query(By.css('.ant-transfer-list-search input')).nativeElement as HTMLElement
@@ -430,11 +430,11 @@ describe('transfer', () => {
 
   describe('RTL', () => {
     let componentElement: HTMLElement;
-    let fixture: ComponentFixture<NzTestTransferRtlComponent>;
+    let fixture: ComponentFixture<TriTestTransferRtlComponent>;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTransferRtlComponent);
-      componentElement = fixture.debugElement.query(By.directive(NzTransferComponent)).nativeElement;
+      fixture = TestBed.createComponent(TriTestTransferRtlComponent);
+      componentElement = fixture.debugElement.query(By.directive(TriTransferComponent)).nativeElement;
       fixture.detectChanges();
     });
 
@@ -447,13 +447,13 @@ describe('transfer', () => {
   });
 
   describe('transfer status', () => {
-    let fixture: ComponentFixture<NzTestTransferStatusComponent>;
+    let fixture: ComponentFixture<TriTestTransferStatusComponent>;
     let componentElement: HTMLElement;
-    let testComponent: NzTestTransferStatusComponent;
+    let testComponent: TriTestTransferStatusComponent;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTransferStatusComponent);
-      componentElement = fixture.debugElement.query(By.directive(NzTransferComponent)).nativeElement;
+      fixture = TestBed.createComponent(TriTestTransferStatusComponent);
+      componentElement = fixture.debugElement.query(By.directive(TriTransferComponent)).nativeElement;
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
     });
@@ -473,13 +473,13 @@ describe('transfer', () => {
   });
 
   describe('transfer in form', () => {
-    let fixture: ComponentFixture<NzTestTransferInFormComponent>;
+    let fixture: ComponentFixture<TriTestTransferInFormComponent>;
     let componentElement: HTMLElement;
-    let testComponent: NzTestTransferInFormComponent;
+    let testComponent: TriTestTransferInFormComponent;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTransferInFormComponent);
-      componentElement = fixture.debugElement.query(By.directive(NzTransferComponent)).nativeElement;
+      fixture = TestBed.createComponent(TriTestTransferInFormComponent);
+      componentElement = fixture.debugElement.query(By.directive(TriTransferComponent)).nativeElement;
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
     });
@@ -503,7 +503,7 @@ describe('transfer', () => {
   });
 
   class TransferPageObject<T extends AbstractTestTransferComponent> {
-    [key: string]: NzSafeAny;
+    [key: string]: TriSafeAny;
 
     constructor(public fixture: ComponentFixture<T>) {}
 
@@ -511,7 +511,7 @@ describe('transfer', () => {
       return this.fixture.debugElement;
     }
 
-    get transferElement(): NzTransferComponent {
+    get transferElement(): TriTransferComponent {
       return this.fixture.componentInstance.comp;
     }
 
@@ -588,36 +588,36 @@ describe('transfer', () => {
 });
 
 interface AbstractTestTransferComponent {
-  comp: NzTransferComponent;
+  comp: TriTransferComponent;
 }
 
 @Component({
-  imports: [NzTransferModule],
-  selector: 'nz-test-transfer',
+  imports: [TriTransferModule],
+  selector: '',
   template: `
-    <nz-transfer
+    <tri-transfer
       #comp
-      [nzDataSource]="nzDataSource"
-      [nzRenderList]="nzRenderList"
-      [nzShowSelectAll]="nzShowSelectAll"
-      [nzDisabled]="nzDisabled"
-      [nzTitles]="['Source', 'Target']"
-      [nzOperations]="['to right', 'to left']"
-      [nzItemUnit]="nzItemUnit"
-      [nzItemsUnit]="nzItemsUnit"
-      [nzListStyle]="nzListStyle"
-      [nzShowSearch]="nzShowSearch"
-      [nzFilterOption]="nzFilterOption"
-      [nzSearchPlaceholder]="nzSearchPlaceholder"
-      [nzNotFoundContent]="nzNotFoundContent"
-      [nzCanMove]="canMove"
-      [nzFooter]="footer"
-      [nzTargetKeys]="nzTargetKeys"
-      [nzOneWay]="nzOneWay"
-      (nzSearchChange)="search($event)"
-      (nzSelectChange)="select($event)"
-      (nzChange)="change($event)"
-    ></nz-transfer>
+      [dataSource]="dataSource"
+      [renderList]="renderList"
+      [showSelectAll]="showSelectAll"
+      [disabled]="disabled"
+      [titles]="['Source', 'Target']"
+      [operations]="['to right', 'to left']"
+      [itemUnit]="itemUnit"
+      [itemsUnit]="itemsUnit"
+      [listStyle]="listStyle"
+      [showSearch]="showSearch"
+      [filterOption]="filterOption"
+      [searchPlaceholder]="searchPlaceholder"
+      [notFoundContent]="notFoundContent"
+      [canMove]="canMove"
+      [footer]="footer"
+      [targetKeys]="targetKeys"
+      [oneWay]="oneWay"
+      (searchChange)="search($event)"
+      (selectChange)="select($event)"
+      (change)="change($event)"
+    ></tri-transfer>
     <ng-template #renderList>
       <p class="transfer-renderList">renderList</p>
     </ng-template>
@@ -627,22 +627,22 @@ interface AbstractTestTransferComponent {
   `
 })
 class TestTransferComponent implements OnInit, AbstractTestTransferComponent {
-  @ViewChild('comp', { static: false }) comp!: NzTransferComponent;
+  @ViewChild('comp', { static: false }) comp!: TriTransferComponent;
   @ViewChild('renderList', { static: false }) renderListTpl!: TemplateRef<void>;
-  nzDataSource: NzSafeAny[] = [];
-  nzRenderList: Array<TemplateRef<void> | null> = [null, null];
-  nzDisabled = false;
-  nzShowSelectAll = true;
-  nzSelectedKeys = ['0', '1', '2'];
-  nzTargetKeys: string[] = [];
-  nzItemUnit = 'item';
-  nzItemsUnit = 'items';
-  nzListStyle = { 'width.px': 300, 'height.px': 300 };
-  nzShowSearch = true;
-  nzFilterOption?: (inputValue: string, item: NzSafeAny) => boolean;
-  nzSearchPlaceholder = '请输入搜索内容';
-  nzNotFoundContent = '列表为空';
-  nzOneWay = false;
+  dataSource: TriSafeAny[] = [];
+  renderList: Array<TemplateRef<void> | null> = [null, null];
+  disabled = false;
+  showSelectAll = true;
+  selectedKeys = ['0', '1', '2'];
+  targetKeys: string[] = [];
+  itemUnit = 'item';
+  itemsUnit = 'items';
+  listStyle = { 'width.px': 300, 'height.px': 300 };
+  showSearch = true;
+  filterOption?: (inputValue: string, item: TriSafeAny) => boolean;
+  searchPlaceholder = '请输入搜索内容';
+  notFoundContent = '列表为空';
+  oneWay = false;
 
   canMove(arg: TransferCanMove): Observable<TransferItem[]> {
     // if (arg.direction === 'right' && arg.list.length > 0) arg.list.splice(0, 1);
@@ -670,7 +670,7 @@ class TestTransferComponent implements OnInit, AbstractTestTransferComponent {
         disabled: i === 20
       });
     }
-    this.nzDataSource = ret;
+    this.dataSource = ret;
   }
 
   search(_: TransferSearchChange): void {}
@@ -681,19 +681,19 @@ class TestTransferComponent implements OnInit, AbstractTestTransferComponent {
 }
 
 @Component({
-  imports: [NzIconModule, NzTransferModule],
+  imports: [TriIconModule, TriTransferModule],
   template: `
-    <nz-transfer #comp nzShowSearch [nzRender]="render" [nzDataSource]="nzDataSource">
+    <tri-transfer #comp showSearch [render]="render" [dataSource]="dataSource">
       <ng-template #render let-item>
-        <nz-icon nzType="{{ item.icon }}" />
+        <tri-icon type="{{ item.icon }}" />
         {{ item.title }}
       </ng-template>
-    </nz-transfer>
+    </tri-transfer>
   `
 })
 class TestTransferCustomRenderComponent implements OnInit, AbstractTestTransferComponent {
-  @ViewChild('comp', { static: false }) comp!: NzTransferComponent;
-  nzDataSource: Array<{ key: string; title: string; description: string; direction: TransferDirection; icon: string }> =
+  @ViewChild('comp', { static: false }) comp!: TriTransferComponent;
+  dataSource: Array<{ key: string; title: string; description: string; direction: TransferDirection; icon: string }> =
     [];
 
   ngOnInit(): void {
@@ -708,18 +708,18 @@ class TestTransferCustomRenderComponent implements OnInit, AbstractTestTransferC
         icon: `frown-o`
       });
     }
-    this.nzDataSource = ret;
+    this.dataSource = ret;
   }
 }
 
 // https://github.com/NG-ZORRO/ng-zorro-antd/issues/996
 @Component({
-  imports: [NzTransferModule],
-  template: `<nz-transfer [nzDataSource]="list"></nz-transfer>`
+  imports: [TriTransferModule],
+  template: `<tri-transfer [dataSource]="list"></tri-transfer>`
 })
 class Test996Component implements OnInit {
-  @ViewChild(NzTransferComponent, { static: true }) comp!: NzTransferComponent;
-  list: NzSafeAny[] = [];
+  @ViewChild(TriTransferComponent, { static: true }) comp!: TriTransferComponent;
+  list: TriSafeAny[] = [];
 
   ngOnInit(): void {
     for (let i = 0; i < 2; i++) {
@@ -734,36 +734,36 @@ class Test996Component implements OnInit {
   imports: [BidiModule, TestTransferComponent],
   template: `
     <div [dir]="direction">
-      <nz-test-transfer></nz-test-transfer>
+      <tri-test-transfer></tri-test-transfer>
     </div>
   `
 })
-export class NzTestTransferRtlComponent {
+export class TriTestTransferRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 }
 
 @Component({
-  imports: [NzTransferModule],
-  template: `<nz-transfer [nzDataSource]="[]" [nzStatus]="status"></nz-transfer>`
+  imports: [TriTransferModule],
+  template: `<tri-transfer [dataSource]="[]" [status]="status"></tri-transfer>`
 })
-export class NzTestTransferStatusComponent {
-  status: NzStatus = 'error';
+export class TriTestTransferStatusComponent {
+  status: TriStatus = 'error';
 }
 
 @Component({
-  imports: [NzFormModule, NzTransferModule],
+  imports: [TriFormModule, TriTransferModule],
   template: `
-    <form nz-form>
-      <nz-form-item>
-        <nz-form-control [nzHasFeedback]="feedback" [nzValidateStatus]="status">
-          <nz-transfer [nzDataSource]="[]"></nz-transfer>
-        </nz-form-control>
-      </nz-form-item>
+    <form tri-form>
+      <tri-form-item>
+        <tri-form-control [hasFeedback]="feedback" [validateStatus]="status">
+          <tri-transfer [dataSource]="[]"></tri-transfer>
+        </tri-form-control>
+      </tri-form-item>
     </form>
   `
 })
-export class NzTestTransferInFormComponent {
-  status: NzFormControlStatusType = 'error';
+export class TriTestTransferInFormComponent {
+  status: TriFormControlStatusType = 'error';
   feedback = true;
 }

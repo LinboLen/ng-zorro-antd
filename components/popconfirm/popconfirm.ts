@@ -28,41 +28,41 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter, Observable, Subject } from 'rxjs';
 import { finalize, first } from 'rxjs/operators';
 
-import { NzButtonModule, NzButtonType } from 'ng-zorro-antd/button';
+import { TriButtonModule, TriButtonType } from 'ng-zorro-antd/button';
 import { zoomBigMotion } from 'ng-zorro-antd/core/animation';
-import { NzConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
-import { NzNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzOverlayModule } from 'ng-zorro-antd/core/overlay';
-import { NgStyleInterface, NzTSType } from 'ng-zorro-antd/core/types';
+import { TriConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriOverlayModule } from 'ng-zorro-antd/core/overlay';
+import { NgStyleInterface, TriTSType } from 'ng-zorro-antd/core/types';
 import { wrapIntoObservable } from 'ng-zorro-antd/core/util';
-import { NzI18nModule } from 'ng-zorro-antd/i18n';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzTooltipBaseDirective, NzToolTipComponent, NzTooltipTrigger, PropertyMapping } from 'ng-zorro-antd/tooltip';
+import { TriI18nModule } from 'ng-zorro-antd/i18n';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriTooltipBaseDirective, TriToolTipComponent, TriTooltipTrigger, PropertyMapping } from 'ng-zorro-antd/tooltip';
 
-import { NzPopConfirmButtonProps } from './popconfirm-option';
+import { TriPopConfirmButtonProps } from './popconfirm-option';
 
-export type NzAutoFocusType = null | 'ok' | 'cancel';
+export type TriAutoFocusType = null | 'ok' | 'cancel';
 
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'popconfirm';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'popconfirm';
 
 @Directive({
-  selector: '[nz-popconfirm]',
-  exportAs: 'nzPopconfirm',
+  selector: '',
+  exportAs: 'triPopconfirm',
   host: {
-    '[class.ant-popover-open]': 'visible'
+    '[class.tri-popover-open]': 'visible'
   }
 })
-export class NzPopconfirmDirective extends NzTooltipBaseDirective {
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+export class TriPopconfirmDirective extends TriTooltipBaseDirective {
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
 
   /* eslint-disable @angular-eslint/no-input-rename, @angular-eslint/no-output-rename */
   @Input({ alias: 'nzPopconfirmArrowPointAtCenter', transform: booleanAttribute })
   override arrowPointAtCenter?: boolean;
-  @Input('nzPopconfirmTitle') override title?: NzTSType;
+  @Input('nzPopconfirmTitle') override title?: TriTSType;
   @Input('nzPopconfirmTitleContext') titleContext?: object | null = null;
-  @Input('nz-popconfirm') override directiveTitle?: NzTSType | null;
-  @Input('nzPopconfirmTrigger') override trigger?: NzTooltipTrigger = 'click';
+  @Input('nz-popconfirm') override directiveTitle?: TriTSType | null;
+  @Input('nzPopconfirmTrigger') override trigger?: TriTooltipTrigger = 'click';
   @Input('nzPopconfirmPlacement') override placement?: string | string[] = 'top';
   @Input('nzPopconfirmOrigin') override origin?: ElementRef<HTMLElement>;
   @Input('nzPopconfirmMouseEnterDelay') override mouseEnterDelay?: number;
@@ -70,66 +70,66 @@ export class NzPopconfirmDirective extends NzTooltipBaseDirective {
   @Input('nzPopconfirmOverlayClassName') override overlayClassName?: string;
   @Input('nzPopconfirmOverlayStyle') override overlayStyle?: NgStyleInterface;
   @Input('nzPopconfirmVisible') override visible?: boolean;
-  @Input() nzBeforeConfirm?: () => Observable<boolean> | Promise<boolean> | boolean;
-  @Input() nzIcon?: string | TemplateRef<void>;
-  @Input({ transform: booleanAttribute }) nzCondition: boolean = false;
-  @Input({ transform: booleanAttribute }) nzPopconfirmShowArrow: boolean = true;
-  @Input() @WithConfig() nzPopconfirmBackdrop?: boolean = false;
-  @Input() @WithConfig() nzAutofocus: NzAutoFocusType = null;
+  @Input() beforeConfirm?: () => Observable<boolean> | Promise<boolean> | boolean;
+  @Input() icon?: string | TemplateRef<void>;
+  @Input({ transform: booleanAttribute }) condition: boolean = false;
+  @Input({ transform: booleanAttribute }) popconfirmShowArrow: boolean = true;
+  @Input() @WithConfig() popconfirmBackdrop?: boolean = false;
+  @Input() @WithConfig() autofocus: TriAutoFocusType = null;
 
-  nzOkText = input<string | null>(null);
-  nzOkType = input<string>('primary');
-  nzCancelText = input<string | null>(null);
-  nzOkButtonProps = input<null | NzPopConfirmButtonProps>(null);
-  nzCancelButtonProps = input<null | NzPopConfirmButtonProps>(null);
+  okText = input<string | null>(null);
+  okType = input<string>('primary');
+  cancelText = input<string | null>(null);
+  okButtonProps = input<null | TriPopConfirmButtonProps>(null);
+  cancelButtonProps = input<null | TriPopConfirmButtonProps>(null);
   /**
    * @deprecated v21
    * please use the nzOkButton object input to describe option of the ok button
    */
-  nzOkDisabled = input(false, { transform: booleanAttribute });
+  okDisabled = input(false, { transform: booleanAttribute });
   /**
    * @deprecated v21
    * please use the nzOkButton object input to describe option of the ok button
    */
-  nzOkDanger = input(false, { transform: booleanAttribute });
+  okDanger = input(false, { transform: booleanAttribute });
 
-  private okButtonProps = computed(() => ({
-    ...this.nzOkButtonProps(),
-    nzType: this.nzOkButtonProps()?.nzType || this.nzOkType() === 'danger' ? 'primary' : this.nzOkType(),
-    nzDanger: this.nzOkDanger() || this.nzOkButtonProps()?.nzDanger || this.nzOkType() === 'danger',
-    nzDisabled: this.nzOkDisabled() || this.nzOkButtonProps()?.nzDisabled
+  #okButtonProps = computed(() => ({
+    ...this.okButtonProps(),
+    nzType: this.okButtonProps()?.nzType || this.okType() === 'danger' ? 'primary' : this.okType(),
+    nzDanger: this.okDanger() || this.okButtonProps()?.nzDanger || this.okType() === 'danger',
+    nzDisabled: this.okDisabled() || this.okButtonProps()?.nzDisabled
   }));
-  private cancelButtonProps = computed(() => ({
-    ...this.nzCancelButtonProps()
+  #cancelButtonProps = computed(() => ({
+    ...this.cancelButtonProps()
   }));
 
-  override directiveContent?: NzTSType | null = null;
-  override content?: NzTSType | null = null;
+  override directiveContent?: TriTSType | null = null;
+  override content?: TriTSType | null = null;
   override overlayClickable?: boolean;
 
   @Output('nzPopconfirmVisibleChange') override readonly visibleChange = new EventEmitter<boolean>();
-  @Output() readonly nzOnCancel = new EventEmitter<void>();
-  @Output() readonly nzOnConfirm = new EventEmitter<void>();
+  @Output() readonly onCancel = new EventEmitter<void>();
+  @Output() readonly onConfirm = new EventEmitter<void>();
 
   protected override getProxyPropertyMap(): PropertyMapping {
     return {
-      nzOkText: ['nzOkText', () => this.nzOkText],
-      nzCancelText: ['nzCancelText', () => this.nzCancelText],
-      nzOkButtonProps: ['nzOkButtonProps', () => this.okButtonProps],
-      nzCancelButtonProps: ['nzCancelButtonProps', () => this.cancelButtonProps],
-      nzBeforeConfirm: ['nzBeforeConfirm', () => this.nzBeforeConfirm],
-      nzCondition: ['nzCondition', () => this.nzCondition],
-      nzIcon: ['nzIcon', () => this.nzIcon],
-      nzPopconfirmShowArrow: ['nzPopconfirmShowArrow', () => this.nzPopconfirmShowArrow],
-      nzPopconfirmBackdrop: ['nzBackdrop', () => this.nzPopconfirmBackdrop],
+      nzOkText: ['nzOkText', () => this.okText],
+      nzCancelText: ['nzCancelText', () => this.cancelText],
+      nzOkButtonProps: ['nzOkButtonProps', () => this.#okButtonProps],
+      nzCancelButtonProps: ['nzCancelButtonProps', () => this.#cancelButtonProps],
+      nzBeforeConfirm: ['nzBeforeConfirm', () => this.beforeConfirm],
+      nzCondition: ['nzCondition', () => this.condition],
+      nzIcon: ['nzIcon', () => this.icon],
+      nzPopconfirmShowArrow: ['nzPopconfirmShowArrow', () => this.popconfirmShowArrow],
+      nzPopconfirmBackdrop: ['nzBackdrop', () => this.popconfirmBackdrop],
       nzPopconfirmContext: ['nzTitleContext', () => this.titleContext],
-      nzAutoFocus: ['nzAutoFocus', () => this.nzAutofocus],
+      nzAutoFocus: ['nzAutoFocus', () => this.autofocus],
       ...super.getProxyPropertyMap()
     };
   }
 
   constructor() {
-    super(NzPopconfirmComponent);
+    super(TriPopconfirmComponent);
   }
 
   /**
@@ -138,25 +138,25 @@ export class NzPopconfirmDirective extends NzTooltipBaseDirective {
   protected override createComponent(): void {
     super.createComponent();
 
-    (this.component as NzPopconfirmComponent).nzOnCancel.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-      this.nzOnCancel.emit();
+    (this.component as TriPopconfirmComponent).onCancel.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      this.onCancel.emit();
     });
-    (this.component as NzPopconfirmComponent).nzOnConfirm.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-      this.nzOnConfirm.emit();
+    (this.component as TriPopconfirmComponent).onConfirm.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      this.onConfirm.emit();
     });
   }
 }
 
 @Component({
-  selector: 'nz-popconfirm',
-  exportAs: 'nzPopconfirmComponent',
+  selector: '',
+  exportAs: 'triPopconfirmComponent',
   animations: [zoomBigMotion],
   template: `
     <ng-template
       #overlay="cdkConnectedOverlay"
       cdkConnectedOverlay
-      nzConnectedOverlay
-      [cdkConnectedOverlayHasBackdrop]="nzBackdrop"
+      connectedOverlay
+      [cdkConnectedOverlayHasBackdrop]="backdrop"
       [cdkConnectedOverlayOrigin]="origin"
       (overlayOutsideClick)="onClickOutside($event)"
       (detach)="hide()"
@@ -164,60 +164,60 @@ export class NzPopconfirmDirective extends NzTooltipBaseDirective {
       [cdkConnectedOverlayPositions]="_positions"
       [cdkConnectedOverlayOpen]="_visible"
       [cdkConnectedOverlayPush]="cdkConnectedOverlayPush"
-      [nzArrowPointAtCenter]="nzArrowPointAtCenter"
+      [arrowPointAtCenter]="arrowPointAtCenter"
     >
       <div
         cdkTrapFocus
-        [cdkTrapFocusAutoCapture]="nzAutoFocus !== null"
-        class="ant-popover"
+        [cdkTrapFocusAutoCapture]="autoFocus !== null"
+        class="tri-popover"
         [class]="_classMap"
-        [class.ant-popover-rtl]="dir === 'rtl'"
-        [style]="nzOverlayStyle"
+        [class.tri-popover-rtl]="dir === 'rtl'"
+        [style]="overlayStyle"
         [@.disabled]="!!noAnimation?.nzNoAnimation"
-        [nzNoAnimation]="noAnimation?.nzNoAnimation"
+        [noAnimation]="noAnimation?.nzNoAnimation"
         [@zoomBigMotion]="'active'"
       >
-        <div class="ant-popover-content">
-          @if (nzPopconfirmShowArrow) {
-            <div class="ant-popover-arrow">
-              <span class="ant-popover-arrow-content"></span>
+        <div class="tri-popover-content">
+          @if (popconfirmShowArrow) {
+            <div class="tri-popover-arrow">
+              <span class="tri-popover-arrow-content"></span>
             </div>
           }
-          <div class="ant-popover-inner">
+          <div class="tri-popover-inner">
             <div>
-              <div class="ant-popover-inner-content">
-                <div class="ant-popover-message">
-                  <ng-container *nzStringTemplateOutlet="nzTitle; context: nzTitleContext">
-                    <ng-container *nzStringTemplateOutlet="nzIcon; let icon">
-                      <span class="ant-popover-message-icon">
-                        <nz-icon [nzType]="icon || 'exclamation-circle'" nzTheme="fill" />
+              <div class="tri-popover-inner-content">
+                <div class="tri-popover-message">
+                  <ng-container *stringTemplateOutlet="title; stringTemplateOutletContext: titleContext">
+                    <ng-container *stringTemplateOutlet="icon; let icon">
+                      <span class="tri-popover-message-icon">
+                        <tri-icon [type]="icon || 'exclamation-circle'" theme="fill" />
                       </span>
                     </ng-container>
-                    <div class="ant-popover-message-title">{{ nzTitle }}</div>
+                    <div class="tri-popover-message-title">{{ title }}</div>
                   </ng-container>
                 </div>
-                <div class="ant-popover-buttons">
+                <div class="tri-popover-buttons">
                   <button
-                    nz-button
+                    tri-button
                     #cancelBtn
-                    [nzSize]="'small'"
+                    [size]="'small'"
                     (click)="onCancel()"
-                    [disabled]="nzCancelButtonProps()?.nzDisabled"
-                    [attr.cdkFocusInitial]="nzAutoFocus === 'cancel' || null"
+                    [disabled]="cancelButtonProps()?.nzDisabled"
+                    [attr.cdkFocusInitial]="autoFocus === 'cancel' || null"
                   >
                     @let cancelText = nzCancelText() || ('Modal.cancelText' | nzI18n);
                     {{ cancelText }}
                   </button>
                   <button
-                    nz-button
+                    tri-button
                     #okBtn
-                    [nzSize]="'small'"
-                    [nzType]="nzOkButtonProps().nzType"
-                    [nzDanger]="nzOkButtonProps().nzDanger"
-                    [nzLoading]="confirmLoading"
-                    [disabled]="nzOkButtonProps().nzDisabled"
+                    [size]="'small'"
+        okButtonPropspe]="type"
+          okButtonPropser]="danger"
+                    [loading]="confirmLoading"
+            okButtonPropsed]="disabled"
                     (click)="onConfirm()"
-                    [attr.cdkFocusInitial]="nzAutoFocus === 'ok' || null"
+                    [attr.cdkFocusInitial]="autoFocus === 'ok' || null"
                   >
                     @let okText = nzOkText() || ('Modal.okText' | nzI18n);
                     {{ okText }}
@@ -232,36 +232,36 @@ export class NzPopconfirmDirective extends NzTooltipBaseDirective {
   `,
   imports: [
     OverlayModule,
-    NzOverlayModule,
+    TriOverlayModule,
     A11yModule,
-    NzNoAnimationDirective,
-    NzOutletModule,
-    NzIconModule,
-    NzButtonModule,
-    NzI18nModule
+    TriNoAnimationDirective,
+    TriOutletModule,
+    TriIconModule,
+    TriButtonModule,
+    TriI18nModule
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class NzPopconfirmComponent extends NzToolTipComponent {
+export class TriPopconfirmComponent extends TriToolTipComponent {
   @ViewChildren('okBtn', { read: ElementRef }) okBtn!: QueryList<ElementRef>;
   @ViewChildren('cancelBtn', { read: ElementRef }) cancelBtn!: QueryList<ElementRef>;
 
-  nzCondition = false;
-  nzPopconfirmShowArrow = true;
-  nzIcon?: string | TemplateRef<void>;
-  nzAutoFocus: NzAutoFocusType = null;
-  nzBeforeConfirm: (() => Observable<boolean> | Promise<boolean> | boolean) | null = null;
+  condition = false;
+  popconfirmShowArrow = true;
+  icon?: string | TemplateRef<void>;
+  autoFocus: TriAutoFocusType = null;
+  beforeConfirm: (() => Observable<boolean> | Promise<boolean> | boolean) | null = null;
 
-  nzOkText = signal<string | null>(null);
-  nzCancelText = signal<string | null>(null);
-  nzOkButtonProps = signal<NzPopConfirmButtonProps & { nzType: NzButtonType }>({ nzType: 'primary' });
-  nzCancelButtonProps = signal<NzPopConfirmButtonProps | null>(null);
+  okText = signal<string | null>(null);
+  cancelText = signal<string | null>(null);
+  okButtonProps = signal<TriPopConfirmButtonProps & { nzType: TriButtonType }>({ nzType: 'primary' });
+  cancelButtonProps = signal<TriPopConfirmButtonProps | null>(null);
 
-  readonly nzOnCancel = new Subject<void>();
-  readonly nzOnConfirm = new Subject<void>();
+  readonly onCancel = new Subject<void>();
+  readonly onConfirm = new Subject<void>();
 
-  protected override _trigger: NzTooltipTrigger = 'click';
+  protected override _trigger: TriTooltipTrigger = 'click';
   private elementFocusedBeforeModalWasOpened: HTMLElement | null = null;
   private document: Document = inject(DOCUMENT);
 
@@ -272,7 +272,7 @@ export class NzPopconfirmComponent extends NzToolTipComponent {
   constructor() {
     super();
     this.destroyRef.onDestroy(() => {
-      this.nzVisibleChange.complete();
+      this.visibleChange.complete();
     });
   }
 
@@ -280,11 +280,11 @@ export class NzPopconfirmComponent extends NzToolTipComponent {
    * @override
    */
   override show(): void {
-    if (!this.nzCondition) {
+    if (!this.condition) {
       this.capturePreviouslyFocusedElement();
       super.show();
     } else {
-      this.onConfirm();
+      this._onConfirm();
     }
   }
 
@@ -294,21 +294,21 @@ export class NzPopconfirmComponent extends NzToolTipComponent {
   }
 
   handleConfirm(): void {
-    this.nzOnConfirm.next();
+    this.onConfirm.next();
     super.hide();
   }
 
-  onCancel(): void {
-    this.nzOnCancel.next();
+  _onCancel(): void {
+    this.onCancel.next();
     super.hide();
   }
 
-  onConfirm(): void {
-    if (this.nzBeforeConfirm) {
+  _onConfirm(): void {
+    if (this.beforeConfirm) {
       this.confirmLoading = true;
       this.cdr.markForCheck();
 
-      wrapIntoObservable(this.nzBeforeConfirm())
+      wrapIntoObservable(this.beforeConfirm())
         .pipe(
           first(),
           filter(Boolean),

@@ -1,23 +1,23 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzModalModule } from 'ng-zorro-antd/modal';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriModalModule } from 'ng-zorro-antd/modal';
 
 @Component({
-  selector: 'nz-demo-modal-basic',
-  imports: [NzButtonModule, NzModalModule],
+  selector: '',
+  imports: [TriButtonModule, TriModalModule],
   template: `
-    <button nz-button [nzType]="'primary'" (click)="showModal()"><span>Show Modal</span></button>
-    <nz-modal [(nzVisible)]="isVisible" nzTitle="The first Modal" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
-      <ng-container *nzModalContent>
+    <button tri-button [type]="'primary'" (click)="showModal()"><span>Show Modal</span></button>
+    <tri-modal [(visibleChange)]="isVisible" title="The first Modal" (onCancel)="handleCancel()" (onOk)="handleOk()">
+      <ng-container *modalContent>
         <p>Content one</p>
         <p>Content two</p>
         <p>Content three</p>
       </ng-container>
-    </nz-modal>
+    </tri-modal>
   `
 })
-export class NzDemoModalBasicComponent {
+export class TriDemoModalBasicComponent {
   isVisible = false;
 
   showModal(): void {

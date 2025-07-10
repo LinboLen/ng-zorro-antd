@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 
-import { NzAvatarModule } from 'ng-zorro-antd/avatar';
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { TriAvatarModule } from 'ng-zorro-antd/avatar';
+import { TriBadgeModule } from 'ng-zorro-antd/badge';
 
 @Component({
-  selector: 'nz-demo-avatar-badge',
-  imports: [NzBadgeModule, NzAvatarModule],
+  selector: '',
+  imports: [TriBadgeModule, TriAvatarModule],
   template: `
-    <nz-badge [nzCount]="5" style="margin-right: 24px">
-      <nz-avatar nzIcon="user" nzShape="square"></nz-avatar>
-    </nz-badge>
-    <nz-badge nzDot>
-      <nz-avatar nzIcon="user" nzShape="square"></nz-avatar>
-    </nz-badge>
+    <tri-badge [count]="5" style="margin-right: 24px">
+      <tri-avatar icon="user" shape="square"></tri-avatar>
+    </tri-badge>
+    <tri-badge dot>
+      <tri-avatar icon="user" shape="square"></tri-avatar>
+    </tri-badge>
   `
 })
-export class NzDemoAvatarBadgeComponent {}
+export class TriDemoAvatarBadgeComponent {}

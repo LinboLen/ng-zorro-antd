@@ -9,8 +9,8 @@ import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angul
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { NzTagComponent } from './tag.component';
-import { NzTagModule } from './tag.module';
+import { TriTagComponent } from './tag.component';
+import { TriTagModule } from './tag.module';
 
 describe('tag', () => {
   beforeEach(waitForAsync(() => {
@@ -20,15 +20,15 @@ describe('tag', () => {
   }));
 
   describe('basic tag', () => {
-    let fixture: ComponentFixture<NzTestTagBasicComponent>;
-    let testComponent: NzTestTagBasicComponent;
+    let fixture: ComponentFixture<TriTestTagBasicComponent>;
+    let testComponent: TriTestTagBasicComponent;
     let tag: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTagBasicComponent);
+      fixture = TestBed.createComponent(TriTestTagBasicComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      tag = fixture.debugElement.query(By.directive(NzTagComponent));
+      tag = fixture.debugElement.query(By.directive(TriTagComponent));
     });
 
     it('should className correct', () => {
@@ -118,13 +118,13 @@ describe('tag', () => {
   });
 
   describe('prevent tag', () => {
-    let fixture: ComponentFixture<NzTestTagPreventComponent>;
+    let fixture: ComponentFixture<TriTestTagPreventComponent>;
     let tag: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTagPreventComponent);
+      fixture = TestBed.createComponent(TriTestTagPreventComponent);
       fixture.detectChanges();
-      tag = fixture.debugElement.query(By.directive(NzTagComponent));
+      tag = fixture.debugElement.query(By.directive(TriTagComponent));
     });
 
     it('should close prevent default', fakeAsync(() => {
@@ -140,8 +140,8 @@ describe('tag', () => {
 
   describe('RTL', () => {
     it('should className correct on dir change', () => {
-      const fixture = TestBed.createComponent(NzTestTagRtlComponent);
-      const tag = fixture.debugElement.query(By.directive(NzTagComponent));
+      const fixture = TestBed.createComponent(TriTestTagRtlComponent);
+      const tag = fixture.debugElement.query(By.directive(TriTagComponent));
       fixture.detectChanges();
       expect(tag.nativeElement.className).toContain('ant-tag-rtl');
 
@@ -153,22 +153,22 @@ describe('tag', () => {
 });
 
 @Component({
-  imports: [NzTagModule],
-  selector: 'nz-test-basic-tag',
+  imports: [TriTagModule],
+  selector: '',
   template: `
-    <nz-tag
-      [nzMode]="mode"
-      [(nzChecked)]="checked"
-      [nzColor]="color"
-      [nzBordered]="bordered"
-      (nzCheckedChange)="checkedChange($event)"
-      (nzOnClose)="onClose()"
+    <tri-tag
+      [mode]="mode"
+      [(checkedChange)]="checked"
+      [color]="color"
+      [bordered]="bordered"
+      (checkedChange)="checkedChange($event)"
+      (onClose)="onClose()"
     >
       Tag 1
-    </nz-tag>
+    </tri-tag>
   `
 })
-export class NzTestTagBasicComponent {
+export class TriTestTagBasicComponent {
   mode: 'default' | 'closeable' | 'checkable' = 'default';
   color: string | undefined;
   checked = false;
@@ -179,23 +179,23 @@ export class NzTestTagBasicComponent {
 }
 
 @Component({
-  imports: [NzTagModule],
-  template: `<nz-tag nzMode="closeable" (nzOnClose)="onClose($event)">Tag 1</nz-tag>`
+  imports: [TriTagModule],
+  template: `<tri-tag mode="closeable" (onClose)="onClose($event)">Tag 1</tri-tag>`
 })
-export class NzTestTagPreventComponent {
+export class TriTestTagPreventComponent {
   onClose(e: MouseEvent): void {
     e.preventDefault();
   }
 }
 
 @Component({
-  imports: [BidiModule, NzTestTagBasicComponent],
+  imports: [BidiModule, TriTestTagBasicComponent],
   template: `
     <div [dir]="direction">
-      <nz-test-basic-tag></nz-test-basic-tag>
+      <tri-test-basic-tag></tri-test-basic-tag>
     </div>
   `
 })
-export class NzTestTagRtlComponent {
+export class TriTestTagRtlComponent {
   direction: Direction = 'rtl';
 }

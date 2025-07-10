@@ -1,109 +1,109 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import { NzDrawerModule } from 'ng-zorro-antd/drawer';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzSelectModule } from 'ng-zorro-antd/select';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { TriDrawerModule } from 'ng-zorro-antd/drawer';
+import { TriFormModule } from 'ng-zorro-antd/form';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: 'nz-demo-drawer-from-drawer',
-  imports: [NzButtonModule, NzDrawerModule, NzDatePickerModule, NzFormModule, NzInputModule, NzSelectModule],
+  selector: '',
+  imports: [TriButtonModule, TriDrawerModule, TriDatePickerModule, TriFormModule, TriInputModule, TriSelectModule],
   template: `
-    <button nz-button nzType="primary" (click)="open()">Create</button>
-    <nz-drawer
-      [nzBodyStyle]="{ overflow: 'auto' }"
-      [nzMaskClosable]="false"
-      [nzWidth]="720"
-      [nzVisible]="visible"
-      nzTitle="Create"
-      [nzFooter]="footerTpl"
-      (nzOnClose)="close()"
+    <button tri-button type="primary" (click)="open()">Create</button>
+    <tri-drawer
+      [bodyStyle]="{ overflow: 'auto' }"
+      [maskClosable]="false"
+      [width]="720"
+      [visible]="visible"
+      title="Create"
+      [footer]="footerTpl"
+      (onClose)="close()"
     >
-      <form nz-form *nzDrawerContent>
-        <div nz-row [nzGutter]="8">
-          <div nz-col nzSpan="12">
-            <nz-form-item>
-              <nz-form-label>Name</nz-form-label>
-              <nz-form-control>
-                <input nz-input placeholder="please enter user name" />
-              </nz-form-control>
-            </nz-form-item>
+      <form tri-form *drawerContent>
+        <div tri-row [gutter]="8">
+          <div tri-col span="12">
+            <tri-form-item>
+              <tri-form-label>Name</tri-form-label>
+              <tri-form-control>
+                <input tri-input placeholder="please enter user name" />
+              </tri-form-control>
+            </tri-form-item>
           </div>
-          <div nz-col nzSpan="12">
-            <nz-form-item>
-              <nz-form-label>Url</nz-form-label>
-              <nz-form-control>
-                <nz-input-group nzAddOnBefore="http://" nzAddOnAfter=".com">
-                  <input type="text" nz-input placeholder="please enter url" />
-                </nz-input-group>
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-        </div>
-        <div nz-row [nzGutter]="8">
-          <div nz-col nzSpan="12">
-            <nz-form-item>
-              <nz-form-label>Owner</nz-form-label>
-              <nz-form-control>
-                <nz-select nzPlaceHolder="Please select an owner"></nz-select>
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-          <div nz-col nzSpan="12">
-            <nz-form-item>
-              <nz-form-label>Type</nz-form-label>
-              <nz-form-control>
-                <nz-select nzPlaceHolder="Please choose the type"></nz-select>
-              </nz-form-control>
-            </nz-form-item>
+          <div tri-col span="12">
+            <tri-form-item>
+              <tri-form-label>Url</tri-form-label>
+              <tri-form-control>
+                <tri-input-group addOnBefore="http://" addOnAfter=".com">
+                  <input type="text" tri-input placeholder="please enter url" />
+                </tri-input-group>
+              </tri-form-control>
+            </tri-form-item>
           </div>
         </div>
-        <div nz-row [nzGutter]="8">
-          <div nz-col nzSpan="12">
-            <nz-form-item>
-              <nz-form-label>Approver</nz-form-label>
-              <nz-form-control>
-                <nz-select nzPlaceHolder="Please choose the approver"></nz-select>
-              </nz-form-control>
-            </nz-form-item>
+        <div tri-row [gutter]="8">
+          <div tri-col span="12">
+            <tri-form-item>
+              <tri-form-label>Owner</tri-form-label>
+              <tri-form-control>
+                <tri-select placeHolder="Please select an owner"></tri-select>
+              </tri-form-control>
+            </tri-form-item>
           </div>
-          <div nz-col nzSpan="12">
-            <nz-form-item>
-              <nz-form-label>DateTime</nz-form-label>
-              <nz-form-control>
-                <nz-range-picker></nz-range-picker>
-              </nz-form-control>
-            </nz-form-item>
+          <div tri-col span="12">
+            <tri-form-item>
+              <tri-form-label>Type</tri-form-label>
+              <tri-form-control>
+                <tri-select placeHolder="Please choose the type"></tri-select>
+              </tri-form-control>
+            </tri-form-item>
           </div>
         </div>
-        <div nz-row [nzGutter]="8">
-          <div nz-col nzSpan="24">
-            <nz-form-item>
-              <nz-form-label>Description</nz-form-label>
-              <nz-form-control>
+        <div tri-row [gutter]="8">
+          <div tri-col span="12">
+            <tri-form-item>
+              <tri-form-label>Approver</tri-form-label>
+              <tri-form-control>
+                <tri-select placeHolder="Please choose the approver"></tri-select>
+              </tri-form-control>
+            </tri-form-item>
+          </div>
+          <div tri-col span="12">
+            <tri-form-item>
+              <tri-form-label>DateTime</tri-form-label>
+              <tri-form-control>
+                <tri-range-picker></tri-range-picker>
+              </tri-form-control>
+            </tri-form-item>
+          </div>
+        </div>
+        <div tri-row [gutter]="8">
+          <div tri-col span="24">
+            <tri-form-item>
+              <tri-form-label>Description</tri-form-label>
+              <tri-form-control>
                 <textarea
-                  nz-input
+                  tri-input
                   placeholder="please enter url description"
-                  [nzAutosize]="{ minRows: 4, maxRows: 4 }"
+                  [autosize]="{ minRows: 4, maxRows: 4 }"
                 ></textarea>
-              </nz-form-control>
-            </nz-form-item>
+              </tri-form-control>
+            </tri-form-item>
           </div>
         </div>
       </form>
 
       <ng-template #footerTpl>
         <div style="float: right">
-          <button nz-button style="margin-right: 8px;" (click)="close()">Cancel</button>
-          <button nz-button nzType="primary" (click)="close()">Submit</button>
+          <button tri-button style="margin-right: 8px;" (click)="close()">Cancel</button>
+          <button tri-button type="primary" (click)="close()">Submit</button>
         </div>
       </ng-template>
-    </nz-drawer>
+    </tri-drawer>
   `
 })
-export class NzDemoDrawerFromDrawerComponent {
+export class TriDemoDrawerFromDrawerComponent {
   visible = false;
 
   open(): void {

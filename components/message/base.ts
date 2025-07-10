@@ -10,17 +10,17 @@ import { ChangeDetectorRef, Directive, EventEmitter, Injector, OnInit, inject, D
 import { Subject } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 
-import { MessageConfig, NzConfigService } from 'ng-zorro-antd/core/config';
-import { NzSingletonService } from 'ng-zorro-antd/core/services';
+import { MessageConfig, TriConfigService } from 'ng-zorro-antd/core/config';
+import { TriSingletonService } from 'ng-zorro-antd/core/services';
 
-import { NzMessageData, NzMessageDataOptions } from './typings';
+import { TriMessageData, TriMessageDataOptions } from './typings';
 
 let globalCounter = 0;
 
-export abstract class NzMNService<T extends NzMNContainerComponent> {
+export abstract class TriMNService<T extends TriMNContainerComponent> {
   protected abstract componentPrefix: string;
   protected container?: T;
-  protected nzSingletonService = inject(NzSingletonService);
+  protected singletonService = inject(TriSingletonService);
   protected overlay = inject(Overlay);
   protected injector = inject(Injector);
 
@@ -39,7 +39,7 @@ export abstract class NzMNService<T extends NzMNContainerComponent> {
   }
 
   protected withContainer(ctor: ComponentType<T>): T {
-    let containerInstance = this.nzSingletonService.getSingletonWithKey(this.componentPrefix);
+    let containerInstance = this.singletonService.getSingletonWithKey(this.componentPrefix);
     if (containerInstance) {
       return containerInstance as T;
     }
@@ -56,10 +56,10 @@ export abstract class NzMNService<T extends NzMNContainerComponent> {
 
     if (!containerInstance) {
       this.container = containerInstance = componentRef.instance;
-      this.nzSingletonService.registerSingletonWithKey(this.componentPrefix, containerInstance);
+      this.singletonService.registerSingletonWithKey(this.componentPrefix, containerInstance);
       this.container.afterAllInstancesRemoved.subscribe(() => {
         this.container = undefined;
-        this.nzSingletonService.unregisterSingletonWithKey(this.componentPrefix);
+        this.singletonService.unregisterSingletonWithKey(this.componentPrefix);
         overlayRef.dispose();
       });
     }
@@ -69,9 +69,9 @@ export abstract class NzMNService<T extends NzMNContainerComponent> {
 }
 
 @Directive()
-export abstract class NzMNContainerComponent<
+export abstract class TriMNContainerComponent<
   C extends MessageConfig = MessageConfig,
-  D extends NzMessageData = NzMessageData
+  D extends TriMessageData = TriMessageData
 > {
   config?: Required<C>;
   instances: Array<Required<D>> = [];
@@ -81,7 +81,7 @@ export abstract class NzMNContainerComponent<
   readonly afterAllInstancesRemoved = this._afterAllInstancesRemoved.asObservable();
 
   protected cdr = inject(ChangeDetectorRef);
-  protected nzConfigService = inject(NzConfigService);
+  protected configService = inject(TriConfigService);
 
   constructor() {
     this.subscribeConfigChange();
@@ -154,8 +154,8 @@ export abstract class NzMNContainerComponent<
 }
 
 @Directive()
-export abstract class NzMNComponent implements OnInit {
-  abstract instance: Required<NzMessageData>;
+export abstract class TriMNComponent implements OnInit {
+  abstract instance: Required<TriMessageData>;
   abstract index?: number;
   abstract destroyed: EventEmitter<{ id: string; userAction: boolean }>;
 
@@ -163,7 +163,7 @@ export abstract class NzMNComponent implements OnInit {
   protected destroyRef = inject(DestroyRef);
   readonly animationStateChanged: Subject<AnimationEvent> = new Subject<AnimationEvent>();
 
-  protected options!: Required<NzMessageDataOptions>;
+  protected options!: Required<TriMessageDataOptions>;
   protected autoClose?: boolean;
   protected closeTimer?: ReturnType<typeof setTimeout>;
   protected userAction: boolean = false;
@@ -181,7 +181,7 @@ export abstract class NzMNComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.options = this.instance.options as Required<NzMessageDataOptions>;
+    this.options = this.instance.options as Required<TriMessageDataOptions>;
 
     if (this.options.nzAnimate) {
       this.instance.state = 'enter';

@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
 
-import { NzResizableModule, NzResizeEvent } from 'ng-zorro-antd/resizable';
+import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
 
 @Component({
-  selector: 'nz-demo-resizable-preview',
-  imports: [NzResizableModule],
+  selector: '',
+  imports: [TriResizableModule],
   template: `
     <div
       class="box"
-      nz-resizable
-      nzPreview
-      (nzResizeEnd)="onResize($event)"
+      tri-resizable
+      preview
+      (resizeEnd)="onResize($event)"
       [style.height.px]="height"
       [style.width.px]="width"
     >
-      <nz-resize-handles></nz-resize-handles>
+      <tri-resize-handles></tri-resize-handles>
       content
     </div>
   `,
@@ -34,11 +34,11 @@ import { NzResizableModule, NzResizeEvent } from 'ng-zorro-antd/resizable';
     `
   ]
 })
-export class NzDemoResizablePreviewComponent {
+export class TriDemoResizablePreviewComponent {
   width = 400;
   height = 200;
 
-  onResize({ width, height }: NzResizeEvent): void {
+  onResize({ width, height }: TriResizeEvent): void {
     this.width = width!;
     this.height = height!;
   }

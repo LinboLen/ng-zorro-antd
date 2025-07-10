@@ -5,14 +5,14 @@
 
 import { Directive, inject } from '@angular/core';
 
-import { NzTableStyleService } from '../table-style.service';
+import { TriTableStyleService } from '../table-style.service';
 
 @Directive({
-  selector: 'th:not(.nz-disable-th), td:not(.nz-disable-td)',
+  selector: '',
   host: {
-    '[class.ant-table-cell]': 'isInsideTable'
+    '[class.tri-table-cell]': 'isInsideTable'
   }
 })
-export class NzTableCellDirective {
-  isInsideTable = !!inject(NzTableStyleService, { optional: true });
+export class TriTableCellDirective {
+  isInsideTable = !!inject(TriTableStyleService, { optional: true });
 }

@@ -3,4 +3,4 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export type NzStatisticValueType = number | string;
+export type TriStatisticValueType = number | string;

@@ -9,6 +9,6 @@ import { TemplateRef } from '@angular/core';
  * https://angular.io/errors/NG3003
  * An intermediate interface for {@link NzBreadCrumbComponent} & {@link NzBreadCrumbItemComponent}
  */
-export abstract class NzBreadcrumb {
-  abstract nzSeparator: string | TemplateRef<void> | null;
+export abstract class TriBreadcrumb {
+  abstract separator: string | TemplateRef<void> | null;
 }

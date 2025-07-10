@@ -1,25 +1,25 @@
 import { Component } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzTreeModule } from 'ng-zorro-antd/tree';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriTreeModule } from 'ng-zorro-antd/tree';
 
 @Component({
-  selector: 'nz-demo-tree-customized-icon',
-  imports: [NzIconModule, NzTreeModule],
+  selector: '',
+  imports: [TriIconModule, TriTreeModule],
   template: `
-    <nz-tree [nzData]="nodes" nzShowIcon></nz-tree>
-    <nz-tree [nzData]="nodes" nzShowIcon [nzExpandedIcon]="multiExpandedIconTpl">
+    <tri-tree [data]="nodes" showIcon></tri-tree>
+    <tri-tree [data]="nodes" showIcon [expandedIcon]="multiExpandedIconTpl">
       <ng-template #multiExpandedIconTpl let-node let-origin="origin">
         @if (!origin.isLeaf) {
-          <nz-icon [nzType]="node.isExpanded ? 'folder-open' : 'folder'" class="ant-tree-switcher-line-icon" />
+          <tri-icon [type]="node.isExpanded ? 'folder-open' : 'folder'" class="tri-tree-switcher-line-icon" />
         } @else {
-          <nz-icon nzType="file" class="ant-tree-switcher-line-icon" />
+          <tri-icon type="file" class="tri-tree-switcher-line-icon" />
         }
       </ng-template>
-    </nz-tree>
+    </tri-tree>
   `
 })
-export class NzDemoTreeCustomizedIconComponent {
+export class TriDemoTreeCustomizedIconComponent {
   readonly nodes = [
     {
       title: 'parent 1',

@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 
-import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { TriPaginationModule } from 'ng-zorro-antd/pagination';
 
 @Component({
-  selector: 'nz-demo-pagination-changer',
-  imports: [NzPaginationModule],
+  selector: '',
+  imports: [TriPaginationModule],
   template: `
-    <nz-pagination [nzPageIndex]="3" [nzTotal]="500" nzShowSizeChanger [nzPageSize]="10"></nz-pagination>
+    <tri-pagination [pageIndex]="3" [total]="500" showSizeChanger [pageSize]="10"></tri-pagination>
     <br />
-    <nz-pagination [nzPageIndex]="3" [nzTotal]="500" nzShowSizeChanger [nzPageSize]="10" nzDisabled></nz-pagination>
+    <tri-pagination [pageIndex]="3" [total]="500" showSizeChanger [pageSize]="10" disabled></tri-pagination>
   `
 })
-export class NzDemoPaginationChangerComponent {}
+export class TriDemoPaginationChangerComponent {}

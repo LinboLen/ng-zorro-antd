@@ -24,8 +24,8 @@ import { filter } from 'rxjs/operators';
 
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 
-import { NzGraph } from './graph';
-import { NzGraphGroupNode, NzGraphNode } from './interface';
+import { TriGraph } from './graph';
+import { TriGraphGroupNode, TriGraphNode } from './interface';
 
 interface Info {
   x: number;
@@ -35,7 +35,7 @@ interface Info {
 }
 
 @Component({
-  selector: '[nz-graph-node]',
+  selector: '',
   template: `
     <svg:g>
       @if (customTemplate) {
@@ -55,18 +55,18 @@ interface Info {
   },
   imports: [NgTemplateOutlet]
 })
-export class NzGraphNodeComponent implements OnInit {
+export class TriGraphNodeComponent implements OnInit {
   private readonly ngZone = inject(NgZone);
   private readonly el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
   private readonly builder = inject(AnimationBuilder);
   private readonly renderer2 = inject(Renderer2);
-  private readonly graphComponent = inject(NzGraph);
+  private readonly graphComponent = inject(TriGraph);
   private readonly destroyRef = inject(DestroyRef);
 
-  @Input() node!: NzGraphNode | NzGraphGroupNode;
+  @Input() node!: TriGraphNode | TriGraphGroupNode;
   @Input({ transform: booleanAttribute }) noAnimation?: boolean;
   @Input() customTemplate?: TemplateRef<{
-    $implicit: NzGraphNode | NzGraphGroupNode;
+    $implicit: TriGraphNode | TriGraphGroupNode;
   }>;
 
   animationInfo: Info | null = null;
@@ -78,14 +78,14 @@ export class NzGraphNodeComponent implements OnInit {
       .pipe(
         filter(event => {
           event.preventDefault();
-          return this.graphComponent.nzNodeClick.observers.length > 0;
+          return this.graphComponent.nodeClick.observers.length > 0;
         }),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(() => {
         // Re-enter the Angular zone and run the change detection only if there are any `nzNodeClick` listeners,
         // e.g.: `<nz-graph (nzNodeClick)="..."></nz-graph>`.
-        this.ngZone.run(() => this.graphComponent.nzNodeClick.emit(this.node));
+        this.ngZone.run(() => this.graphComponent.nodeClick.emit(this.node));
       });
   }
 
@@ -167,7 +167,7 @@ export class NzGraphNodeComponent implements OnInit {
   }
 
   computeCXPositionOfNodeShape(): number {
-    if ((this.node as NzGraphGroupNode).expanded) {
+    if ((this.node as TriGraphGroupNode).expanded) {
       return this.node.x;
     }
     return this.node.x - this.node.width / 2 + this.node.coreBox.width / 2;

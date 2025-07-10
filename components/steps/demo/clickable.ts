@@ -1,26 +1,26 @@
 import { Component } from '@angular/core';
 
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { TriDividerModule } from 'ng-zorro-antd/divider';
+import { TriStepsModule } from 'ng-zorro-antd/steps';
 
 @Component({
-  selector: 'nz-demo-steps-clickable',
-  imports: [NzDividerModule, NzStepsModule],
+  selector: '',
+  imports: [TriDividerModule, TriStepsModule],
   template: `
-    <nz-steps [nzCurrent]="index" (nzIndexChange)="onIndexChange($event)">
-      <nz-step nzTitle="Finished" [nzDisabled]="disable" nzDescription="This is a description."></nz-step>
-      <nz-step nzTitle="In Progress" nzDescription="This is a description."></nz-step>
-      <nz-step nzTitle="Waiting" nzDescription="This is a description."></nz-step>
-    </nz-steps>
-    <nz-divider></nz-divider>
-    <nz-steps nzDirection="vertical" [nzCurrent]="index" (nzIndexChange)="onIndexChange($event)">
-      <nz-step nzTitle="Finished" nzDescription="This is a description."></nz-step>
-      <nz-step nzTitle="In Progress" nzDescription="This is a description."></nz-step>
-      <nz-step nzTitle="Waiting" nzDescription="This is a description."></nz-step>
-    </nz-steps>
+    <tri-steps [current]="index" (indexChange)="onIndexChange($event)">
+      <tri-step title="Finished" [disabled]="disable" description="This is a description."></tri-step>
+      <tri-step title="In Progress" description="This is a description."></tri-step>
+      <tri-step title="Waiting" description="This is a description."></tri-step>
+    </tri-steps>
+    <tri-divider></tri-divider>
+    <tri-steps direction="vertical" [current]="index" (indexChange)="onIndexChange($event)">
+      <tri-step title="Finished" description="This is a description."></tri-step>
+      <tri-step title="In Progress" description="This is a description."></tri-step>
+      <tri-step title="Waiting" description="This is a description."></tri-step>
+    </tri-steps>
   `
 })
-export class NzDemoStepsClickableComponent {
+export class TriDemoStepsClickableComponent {
   index = 0;
   disable = false;
   onIndexChange(index: number): void {

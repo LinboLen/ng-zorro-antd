@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzListModule } from 'ng-zorro-antd/list';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriListModule } from 'ng-zorro-antd/list';
 
 interface ItemData {
   href: string;
@@ -12,45 +12,45 @@ interface ItemData {
 }
 
 @Component({
-  selector: 'nz-demo-list-vertical',
-  imports: [NzIconModule, NzListModule],
+  selector: '',
+  imports: [TriIconModule, TriListModule],
   template: `
-    <nz-list nzItemLayout="vertical">
+    <tri-list itemLayout="vertical">
       @for (item of data; track item) {
-        <nz-list-item>
-          <nz-list-item-meta>
-            <nz-list-item-meta-avatar [nzSrc]="item.avatar"></nz-list-item-meta-avatar>
-            <nz-list-item-meta-title>
+        <tri-list-item>
+          <tri-list-item-meta>
+            <tri-list-item-meta-avatar [src]="item.avatar"></tri-list-item-meta-avatar>
+            <tri-list-item-meta-title>
               <a href="{{ item.href }}">{{ item.title }}</a>
-            </nz-list-item-meta-title>
-            <nz-list-item-meta-description>
+            </tri-list-item-meta-title>
+            <tri-list-item-meta-description>
               {{ item.description }}
-            </nz-list-item-meta-description>
-          </nz-list-item-meta>
+            </tri-list-item-meta-description>
+          </tri-list-item-meta>
           {{ item.content }}
-          <ul nz-list-item-actions>
-            <nz-list-item-action>
-              <nz-icon nzType="star-o" style="margin-right: 8px;" />
+          <ul tri-list-item-actions>
+            <tri-list-item-action>
+              <tri-icon type="star-o" style="margin-right: 8px;" />
               156
-            </nz-list-item-action>
-            <nz-list-item-action>
-              <nz-icon nzType="star-o" style="margin-right: 8px;" />
+            </tri-list-item-action>
+            <tri-list-item-action>
+              <tri-icon type="star-o" style="margin-right: 8px;" />
               156
-            </nz-list-item-action>
-            <nz-list-item-action>
-              <nz-icon nzType="star-o" style="margin-right: 8px;" />
+            </tri-list-item-action>
+            <tri-list-item-action>
+              <tri-icon type="star-o" style="margin-right: 8px;" />
               2
-            </nz-list-item-action>
+            </tri-list-item-action>
           </ul>
-          <nz-list-item-extra>
+          <tri-list-item-extra>
             <img width="272" alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />
-          </nz-list-item-extra>
-        </nz-list-item>
+          </tri-list-item-extra>
+        </tri-list-item>
       }
-    </nz-list>
+    </tri-list>
   `
 })
-export class NzDemoListVerticalComponent implements OnInit {
+export class TriDemoListVerticalComponent implements OnInit {
   data: ItemData[] = [];
 
   ngOnInit(): void {

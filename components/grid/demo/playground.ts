@@ -1,45 +1,45 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzMarks, NzSliderModule } from 'ng-zorro-antd/slider';
+import { TriGridModule } from 'ng-zorro-antd/grid';
+import { TriMarks, TriSliderModule } from 'ng-zorro-antd/slider';
 
 @Component({
-  selector: 'nz-demo-grid-playground',
-  imports: [FormsModule, NzGridModule, NzSliderModule],
+  selector: '',
+  imports: [FormsModule, TriGridModule, TriSliderModule],
   template: `
     <div class="slider-container">
       <span>Horizontal Gutter (px):</span>
       <div class="slider">
-        <nz-slider [nzMarks]="marksHGutter" [nzStep]="null" [nzMin]="8" [nzMax]="48" [(ngModel)]="hGutter"></nz-slider>
+        <tri-slider [marks]="marksHGutter" [step]="null" [min]="8" [max]="48" [(ngModel)]="hGutter"></tri-slider>
       </div>
       <span>Vertical Gutter (px):</span>
       <div class="slider">
-        <nz-slider [nzMarks]="marksVGutter" [nzStep]="null" [nzMin]="8" [nzMax]="48" [(ngModel)]="vGutter"></nz-slider>
+        <tri-slider [marks]="marksVGutter" [step]="null" [min]="8" [max]="48" [(ngModel)]="vGutter"></tri-slider>
       </div>
       <span>Column Count:</span>
       <div class="slider">
-        <nz-slider
-          [nzMarks]="marksCount"
-          [nzStep]="null"
-          [nzMin]="2"
-          [nzMax]="12"
+        <tri-slider
+          [marks]="marksCount"
+          [step]="null"
+          [min]="2"
+          [max]="12"
           [(ngModel)]="count"
           (ngModelChange)="reGenerateArray($event)"
-        ></nz-slider>
+        ></tri-slider>
       </div>
     </div>
 
     <div class="gutter-example">
-      <div nz-row [nzGutter]="[hGutter, vGutter]">
+      <div tri-row [gutter]="[hGutter, vGutter]">
         @for (i of array; track $index) {
-          <div nz-col class="gutter-row" [nzSpan]="24 / count">
+          <div tri-col class="gutter-row" [span]="24 / count">
             <div class="grid-config">Column</div>
           </div>
         }
 
         @for (i of array; track $index) {
-          <div nz-col class="gutter-row" [nzSpan]="24 / count">
+          <div tri-col class="gutter-row" [span]="24 / count">
             <div class="grid-config">Column</div>
           </div>
         }
@@ -64,12 +64,12 @@ import { NzMarks, NzSliderModule } from 'ng-zorro-antd/slider';
     `
   ]
 })
-export class NzDemoGridPlaygroundComponent {
+export class TriDemoGridPlaygroundComponent {
   hGutter = 16;
   vGutter = 16;
   count = 4;
   array = new Array(this.count);
-  marksHGutter: NzMarks = {
+  marksHGutter: TriMarks = {
     8: '8',
     16: '16',
     24: '24',
@@ -77,7 +77,7 @@ export class NzDemoGridPlaygroundComponent {
     40: '40',
     48: '48'
   };
-  marksVGutter: NzMarks = {
+  marksVGutter: TriMarks = {
     8: '8',
     16: '16',
     24: '24',
@@ -85,7 +85,7 @@ export class NzDemoGridPlaygroundComponent {
     40: '40',
     48: '48'
   };
-  marksCount: NzMarks = {
+  marksCount: TriMarks = {
     2: '2',
     3: '3',
     4: '4',

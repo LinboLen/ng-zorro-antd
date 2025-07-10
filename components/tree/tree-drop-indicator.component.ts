@@ -17,16 +17,16 @@ import {
 import { NgStyleInterface } from 'ng-zorro-antd/core/types';
 
 @Component({
-  selector: 'nz-tree-drop-indicator',
-  exportAs: 'nzTreeDropIndicator',
+  selector: '',
+  exportAs: 'triTreeDropIndicator',
   template: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'ant-tree-drop-indicator',
+    class: 'tri-tree-drop-indicator',
     '[style]': 'style'
   }
 })
-export class NzTreeDropIndicatorComponent implements OnChanges {
+export class TriTreeDropIndicatorComponent implements OnChanges {
   @Input() dropPosition?: number;
   @Input({ transform: numberAttribute }) level: number = 1;
   @Input() direction: Direction = 'ltr';

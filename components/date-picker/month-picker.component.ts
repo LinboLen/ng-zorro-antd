@@ -5,16 +5,16 @@
 
 import { Directive, inject } from '@angular/core';
 
-import { NzDatePickerComponent } from './date-picker.component';
+import { TriDatePickerComponent } from './date-picker.component';
 
 @Directive({
-  selector: 'nz-month-picker',
-  exportAs: 'nzMonthPicker'
+  selector: '',
+  exportAs: 'triMonthPicker'
 })
-export class NzMonthPickerComponent {
-  datePicker = inject(NzDatePickerComponent, { host: true });
+export class TriMonthPickerComponent {
+  datePicker = inject(TriDatePickerComponent, { host: true });
 
   constructor() {
-    this.datePicker.nzMode = 'month';
+    this.datePicker.mode = 'month';
   }
 }

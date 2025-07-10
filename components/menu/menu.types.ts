@@ -3,6 +3,6 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export type NzMenuModeType = 'vertical' | 'horizontal' | 'inline';
-export type NzMenuThemeType = 'light' | 'dark';
-export type NzSubmenuTrigger = 'hover' | 'click';
+export type TriMenuModeType = 'vertical' | 'horizontal' | 'inline';
+export type TriMenuThemeType = 'light' | 'dark';
+export type TriSubmenuTrigger = 'hover' | 'click';

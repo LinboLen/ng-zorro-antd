@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
+import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
 
 @Component({
-  selector: 'nz-demo-time-picker-hide-column',
-  imports: [FormsModule, NzTimePickerModule],
-  template: `<nz-time-picker [(ngModel)]="time" nzFormat="HH:mm"></nz-time-picker>`
+  selector: '',
+  imports: [FormsModule, TriTimePickerModule],
+  template: `<tri-time-picker [(ngModel)]="time" format="HH:mm"></tri-time-picker>`
 })
-export class NzDemoTimePickerHideColumnComponent {
+export class TriDemoTimePickerHideColumnComponent {
   time = new Date();
 }

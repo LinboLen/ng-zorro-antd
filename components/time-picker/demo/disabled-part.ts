@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 
-import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
+import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
 
 @Component({
-  selector: 'nz-demo-time-picker-disabled-part',
-  imports: [NzTimePickerModule],
+  selector: '',
+  imports: [TriTimePickerModule],
   template: `
-    <nz-time-picker
-      [nzDisabledHours]="disabledHours"
-      [nzDisabledMinutes]="disabledMinutes"
-      [nzDisabledSeconds]="disabledSeconds"
-    ></nz-time-picker>
+    <tri-time-picker
+      [disabledHours]="disabledHours"
+      [disabledMinutes]="disabledMinutes"
+      [disabledSeconds]="disabledSeconds"
+    ></tri-time-picker>
   `
 })
-export class NzDemoTimePickerDisabledPartComponent {
+export class TriDemoTimePickerDisabledPartComponent {
   disabledHours(): number[] {
     return [1, 2, 3];
   }

@@ -6,12 +6,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'nz-avatar-group',
-  exportAs: 'nzAvatarGroup',
+  selector: '',
+  exportAs: 'triAvatarGroup',
   template: `<ng-content></ng-content>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'ant-avatar-group'
+    class: 'tri-avatar-group'
   }
 })
-export class NzAvatarGroupComponent {}
+export class TriAvatarGroupComponent {}

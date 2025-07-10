@@ -5,26 +5,26 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzMenuDividerDirective } from './menu-divider.directive';
-import { NzMenuGroupComponent } from './menu-group.component';
-import { NzMenuItemComponent } from './menu-item.component';
-import { NzMenuDirective } from './menu.directive';
-import { NzSubmenuInlineChildComponent } from './submenu-inline-child.component';
-import { NzSubmenuNoneInlineChildComponent } from './submenu-non-inline-child.component';
-import { NzSubMenuTitleComponent } from './submenu-title.component';
-import { NzSubMenuComponent } from './submenu.component';
+import { TriMenuDividerDirective } from './menu-divider.directive';
+import { TriMenuGroupComponent } from './menu-group.component';
+import { TriMenuItemComponent } from './menu-item.component';
+import { TriMenuDirective } from './menu.directive';
+import { TriSubmenuInlineChildComponent } from './submenu-inline-child.component';
+import { TriSubmenuNoneInlineChildComponent } from './submenu-non-inline-child.component';
+import { TriSubMenuTitleComponent } from './submenu-title.component';
+import { TriSubMenuComponent } from './submenu.component';
 
 @NgModule({
   imports: [
-    NzMenuDirective,
-    NzMenuItemComponent,
-    NzSubMenuComponent,
-    NzMenuDividerDirective,
-    NzMenuGroupComponent,
-    NzSubMenuTitleComponent,
-    NzSubmenuInlineChildComponent,
-    NzSubmenuNoneInlineChildComponent
+    TriMenuDirective,
+    TriMenuItemComponent,
+    TriSubMenuComponent,
+    TriMenuDividerDirective,
+    TriMenuGroupComponent,
+    TriSubMenuTitleComponent,
+    TriSubmenuInlineChildComponent,
+    TriSubmenuNoneInlineChildComponent
   ],
-  exports: [NzMenuDirective, NzMenuItemComponent, NzSubMenuComponent, NzMenuDividerDirective, NzMenuGroupComponent]
+  exports: [TriMenuDirective, TriMenuItemComponent, TriSubMenuComponent, TriMenuDividerDirective, TriMenuGroupComponent]
 })
-export class NzMenuModule {}
+export class TriMenuModule {}

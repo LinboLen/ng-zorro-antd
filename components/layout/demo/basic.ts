@@ -1,43 +1,43 @@
 import { Component } from '@angular/core';
 
-import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { TriLayoutModule } from 'ng-zorro-antd/layout';
 
 @Component({
-  selector: 'nz-demo-layout-basic',
-  imports: [NzLayoutModule],
+  selector: '',
+  imports: [TriLayoutModule],
   template: `
-    <nz-layout>
-      <nz-header>Header</nz-header>
-      <nz-content>Content</nz-content>
-      <nz-footer>Footer</nz-footer>
-    </nz-layout>
+    <tri-layout>
+      <tri-header>Header</tri-header>
+      <tri-content>Content</tri-content>
+      <tri-footer>Footer</tri-footer>
+    </tri-layout>
 
-    <nz-layout>
-      <nz-header>Header</nz-header>
-      <nz-layout>
-        <nz-sider>Sider</nz-sider>
-        <nz-content>Content</nz-content>
-      </nz-layout>
-      <nz-footer>Footer</nz-footer>
-    </nz-layout>
+    <tri-layout>
+      <tri-header>Header</tri-header>
+      <tri-layout>
+        <tri-sider>Sider</tri-sider>
+        <tri-content>Content</tri-content>
+      </tri-layout>
+      <tri-footer>Footer</tri-footer>
+    </tri-layout>
 
-    <nz-layout>
-      <nz-header>Header</nz-header>
-      <nz-layout>
-        <nz-content>Content</nz-content>
-        <nz-sider>Sider</nz-sider>
-      </nz-layout>
-      <nz-footer>Footer</nz-footer>
-    </nz-layout>
+    <tri-layout>
+      <tri-header>Header</tri-header>
+      <tri-layout>
+        <tri-content>Content</tri-content>
+        <tri-sider>Sider</tri-sider>
+      </tri-layout>
+      <tri-footer>Footer</tri-footer>
+    </tri-layout>
 
-    <nz-layout>
-      <nz-sider>Sider</nz-sider>
-      <nz-layout>
-        <nz-header>Header</nz-header>
-        <nz-content>Content</nz-content>
-        <nz-footer>Footer</nz-footer>
-      </nz-layout>
-    </nz-layout>
+    <tri-layout>
+      <tri-sider>Sider</tri-sider>
+      <tri-layout>
+        <tri-header>Header</tri-header>
+        <tri-content>Content</tri-content>
+        <tri-footer>Footer</tri-footer>
+      </tri-layout>
+    </tri-layout>
   `,
   styles: [
     `
@@ -79,4 +79,4 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
     `
   ]
 })
-export class NzDemoLayoutBasicComponent {}
+export class TriDemoLayoutBasicComponent {}

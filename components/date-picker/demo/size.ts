@@ -1,29 +1,29 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzDatePickerModule, NzDatePickerSizeType } from 'ng-zorro-antd/date-picker';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { TriDatePickerModule, TriDatePickerSizeType } from 'ng-zorro-antd/date-picker';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: 'nz-demo-date-picker-size',
-  imports: [FormsModule, NzDatePickerModule, NzRadioModule],
+  selector: '',
+  imports: [FormsModule, TriDatePickerModule, TriRadioModule],
   template: `
-    <nz-radio-group [(ngModel)]="size">
-      <label nz-radio-button nzValue="large">large</label>
-      <label nz-radio-button nzValue="default">default</label>
-      <label nz-radio-button nzValue="small">small</label>
-    </nz-radio-group>
+    <tri-radio-group [(ngModel)]="size">
+      <label tri-radio-button value="large">large</label>
+      <label tri-radio-button value="default">default</label>
+      <label tri-radio-button value="small">small</label>
+    </tri-radio-group>
     <br />
     <br />
-    <nz-date-picker [nzSize]="size"></nz-date-picker>
+    <tri-date-picker [size]="size"></tri-date-picker>
     <br />
-    <nz-date-picker nzMode="week" [nzSize]="size"></nz-date-picker>
+    <tri-date-picker mode="week" [size]="size"></tri-date-picker>
     <br />
-    <nz-date-picker nzMode="month" [nzSize]="size"></nz-date-picker>
+    <tri-date-picker mode="month" [size]="size"></tri-date-picker>
     <br />
-    <nz-date-picker nzMode="quarter" [nzSize]="size"></nz-date-picker>
+    <tri-date-picker mode="quarter" [size]="size"></tri-date-picker>
     <br />
-    <nz-range-picker [nzSize]="size"></nz-range-picker>
+    <tri-range-picker [size]="size"></tri-range-picker>
   `,
   styles: [
     `
@@ -34,6 +34,6 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
     `
   ]
 })
-export class NzDemoDatePickerSizeComponent {
-  size: NzDatePickerSizeType = 'default';
+export class TriDemoDatePickerSizeComponent {
+  size: TriDatePickerSizeType = 'default';
 }

@@ -20,12 +20,12 @@ import {
   MockNgZone,
   typeInElement
 } from 'ng-zorro-antd/core/testing';
-import { NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/core/tree';
-import { NzSizeLDSType, NzStatus, NzVariant } from 'ng-zorro-antd/core/types';
-import { NzFormControlStatusType, NzFormModule } from 'ng-zorro-antd/form';
+import { TriTreeNode, TriTreeNodeOptions } from 'ng-zorro-antd/core/tree';
+import { TriSizeLDSType, TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
+import { TriFormControlStatusType, TriFormModule } from 'ng-zorro-antd/form';
 
-import { NzTreeSelectComponent } from './tree-select.component';
-import { NzTreeSelectModule } from './tree-select.module';
+import { TriTreeSelectComponent } from './tree-select.component';
+import { TriTreeSelectModule } from './tree-select.module';
 
 describe('tree-select component', () => {
   let overlayContainer: OverlayContainer;
@@ -57,16 +57,16 @@ describe('tree-select component', () => {
   }));
 
   describe('basic', () => {
-    let fixture: ComponentFixture<NzTestTreeSelectBasicComponent>;
-    let testComponent: NzTestTreeSelectBasicComponent;
-    let treeSelectComponent: NzTreeSelectComponent;
+    let fixture: ComponentFixture<TriTestTreeSelectBasicComponent>;
+    let testComponent: TriTestTreeSelectBasicComponent;
+    let treeSelectComponent: TriTreeSelectComponent;
     let treeSelect: DebugElement;
 
     beforeEach(fakeAsync(() => {
-      fixture = TestBed.createComponent(NzTestTreeSelectBasicComponent);
+      fixture = TestBed.createComponent(TriTestTreeSelectBasicComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      treeSelect = fixture.debugElement.query(By.directive(NzTreeSelectComponent));
+      treeSelect = fixture.debugElement.query(By.directive(TriTreeSelectComponent));
       treeSelectComponent = treeSelect.componentInstance;
       fixture.detectChanges();
       flush();
@@ -125,29 +125,29 @@ describe('tree-select component', () => {
     it('should click toggle open', () => {
       treeSelect.nativeElement.click();
       fixture.detectChanges();
-      expect(treeSelectComponent.nzOpen).toBe(true);
+      expect(treeSelectComponent.open).toBe(true);
       treeSelect.nativeElement.click();
       fixture.detectChanges();
-      expect(treeSelectComponent.nzOpen).toBe(false);
+      expect(treeSelectComponent.open).toBe(false);
     });
     it('should close when the outside clicks', () => {
       treeSelect.nativeElement.click();
       fixture.detectChanges();
-      expect(treeSelectComponent.nzOpen).toBe(true);
+      expect(treeSelectComponent.open).toBe(true);
       dispatchFakeEvent(document.body, 'click');
       fixture.detectChanges();
-      expect(treeSelectComponent.nzOpen).toBe(false);
+      expect(treeSelectComponent.open).toBe(false);
       fixture.detectChanges();
     });
     it('should disabled work', fakeAsync(() => {
       testComponent.disabled = true;
       fixture.detectChanges();
       expect(treeSelect.nativeElement.classList).toContain('ant-select-disabled');
-      expect(treeSelectComponent.nzOpen).toBe(false);
+      expect(treeSelectComponent.open).toBe(false);
       treeSelect.nativeElement.click();
       fixture.detectChanges();
       tick();
-      expect(treeSelectComponent.nzOpen).toBe(false);
+      expect(treeSelectComponent.open).toBe(false);
       treeSelectComponent.openDropdown();
       treeSelect.nativeElement.click();
       fixture.detectChanges();
@@ -158,7 +158,7 @@ describe('tree-select component', () => {
       fixture.detectChanges();
       treeSelect.nativeElement.click();
       fixture.detectChanges();
-      expect(treeSelectComponent.nzOpen).toBe(true);
+      expect(treeSelectComponent.open).toBe(true);
       const overlayPane = overlayContainerElement.querySelector('.cdk-overlay-pane') as HTMLElement;
       expect(overlayPane.style.width).toBe('250px');
       treeSelectComponent.closeDropDown();
@@ -167,7 +167,7 @@ describe('tree-select component', () => {
       fixture.detectChanges();
       treeSelect.nativeElement.click();
       fixture.detectChanges();
-      expect(treeSelectComponent.nzOpen).toBe(true);
+      expect(treeSelectComponent.open).toBe(true);
       expect(overlayPane.style.minWidth).toBe('250px');
     });
     it('should clear value work', fakeAsync(() => {
@@ -185,7 +185,7 @@ describe('tree-select component', () => {
     it('should set null value work', fakeAsync(() => {
       fixture.detectChanges();
       expect(testComponent.value).toBe('10001');
-      testComponent.nzSelectTreeComponent.updateSelectedNodes();
+      testComponent.selectTreeComponent.updateSelectedNodes();
       fixture.detectChanges();
       testComponent.setNull();
       fixture.detectChanges();
@@ -194,13 +194,13 @@ describe('tree-select component', () => {
       tick();
       fixture.detectChanges();
       expect(testComponent.value).toBe(null);
-      expect(testComponent.nzSelectTreeComponent.selectedNodes.length).toEqual(0);
-      expect(testComponent.nzSelectTreeComponent.value.length).toBe(0);
+      expect(testComponent.selectTreeComponent.selectedNodes.length).toEqual(0);
+      expect(testComponent.selectTreeComponent.value.length).toBe(0);
     }));
     it('should dropdown style work', fakeAsync(() => {
       treeSelect.nativeElement.click();
       fixture.detectChanges();
-      expect(treeSelectComponent.nzOpen).toBe(true);
+      expect(treeSelectComponent.open).toBe(true);
       flush();
       const targetElement = overlayContainerElement.querySelector('.ant-select-dropdown') as HTMLElement;
       expect(targetElement.style.height).toBe('120px');
@@ -208,7 +208,7 @@ describe('tree-select component', () => {
     it('should dropdown classname work', fakeAsync(() => {
       treeSelect.nativeElement.click();
       fixture.detectChanges();
-      expect(treeSelectComponent.nzOpen).toBe(true);
+      expect(treeSelectComponent.open).toBe(true);
       flush();
       const targetElement = overlayContainerElement.querySelector('.ant-select-dropdown') as HTMLElement;
       expect(targetElement.classList).toContain('class1');
@@ -217,13 +217,13 @@ describe('tree-select component', () => {
     it('should click option close dropdown', fakeAsync(() => {
       treeSelect.nativeElement.click();
       fixture.detectChanges();
-      expect(treeSelectComponent.nzOpen).toBe(true);
+      expect(treeSelectComponent.open).toBe(true);
       fixture.detectChanges();
       const targetNode = overlayContainerElement.querySelectorAll('.ant-select-tree-node-content-wrapper')[2];
       dispatchMouseEvent(targetNode, 'click');
       fixture.detectChanges();
       flush();
-      expect(treeSelectComponent.nzOpen).toBe(false);
+      expect(treeSelectComponent.open).toBe(false);
     }));
 
     it('should be focusable', fakeAsync(() => {
@@ -242,12 +242,12 @@ describe('tree-select component', () => {
         flush();
         fixture.detectChanges();
       });
-      expect(treeSelectComponent.nzOpen).toBe(false);
+      expect(treeSelectComponent.open).toBe(false);
       await testElement.sendKeys(TestKey.ESCAPE);
-      expect(treeSelectComponent.nzOpen).toBe(false);
+      expect(treeSelectComponent.open).toBe(false);
 
       await testElement.sendKeys(TestKey.ENTER);
-      expect(treeSelectComponent.nzOpen).toBe(true);
+      expect(treeSelectComponent.open).toBe(true);
     }));
 
     it('should close dropdown when TAB keydown', fakeAsync(async () => {
@@ -257,13 +257,13 @@ describe('tree-select component', () => {
         fixture.detectChanges();
       });
 
-      treeSelectComponent.nzOpen = true;
+      treeSelectComponent.open = true;
       fixture.detectChanges();
       flush();
       fixture.detectChanges();
 
       await testElement.sendKeys(TestKey.TAB);
-      expect(treeSelectComponent.nzOpen).toBe(false);
+      expect(treeSelectComponent.open).toBe(false);
     }));
 
     it('should showSearch work', fakeAsync(() => {
@@ -346,21 +346,21 @@ describe('tree-select component', () => {
     it('should set selectable', fakeAsync(() => {
       treeSelect.nativeElement.click();
       fixture.detectChanges();
-      expect(treeSelectComponent.nzOpen).toBe(true);
+      expect(treeSelectComponent.open).toBe(true);
       let node = overlayContainerElement.querySelector('.ant-select-tree-node-content-wrapper')!;
       dispatchMouseEvent(node, 'click');
       fixture.detectChanges();
       flush();
-      expect(treeSelectComponent.nzOpen).toBe(false);
+      expect(treeSelectComponent.open).toBe(false);
       testComponent.nodes[0].selectable = false;
       treeSelect.nativeElement.click();
       fixture.detectChanges();
-      expect(treeSelectComponent.nzOpen).toBe(true);
+      expect(treeSelectComponent.open).toBe(true);
       node = overlayContainerElement.querySelector('nz-tree-node[builtin]')!;
       dispatchMouseEvent(node, 'click');
       fixture.detectChanges();
       flush();
-      expect(treeSelectComponent.nzOpen).toBe(true);
+      expect(treeSelectComponent.open).toBe(true);
     }));
 
     it('should nzBackdrop work', fakeAsync(() => {
@@ -382,16 +382,16 @@ describe('tree-select component', () => {
   });
 
   describe('checkable', () => {
-    let fixture: ComponentFixture<NzTestTreeSelectCheckableComponent>;
-    let testComponent: NzTestTreeSelectCheckableComponent;
-    let treeSelectComponent: NzTreeSelectComponent;
+    let fixture: ComponentFixture<TriTestTreeSelectCheckableComponent>;
+    let testComponent: TriTestTreeSelectCheckableComponent;
+    let treeSelectComponent: TriTreeSelectComponent;
     let treeSelect: DebugElement;
 
     beforeEach(fakeAsync(() => {
-      fixture = TestBed.createComponent(NzTestTreeSelectCheckableComponent);
+      fixture = TestBed.createComponent(TriTestTreeSelectCheckableComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      treeSelect = fixture.debugElement.query(By.directive(NzTreeSelectComponent));
+      treeSelect = fixture.debugElement.query(By.directive(TriTreeSelectComponent));
       treeSelectComponent = treeSelect.componentInstance;
       fixture.detectChanges();
       flush();
@@ -403,7 +403,7 @@ describe('tree-select component', () => {
     it('should is multiple', fakeAsync(() => {
       treeSelect.nativeElement.click();
       fixture.detectChanges();
-      expect(treeSelectComponent.nzOpen).toBe(true);
+      expect(treeSelectComponent.open).toBe(true);
       expect(treeSelectComponent.isMultiple).toBe(true);
       flush();
     }));
@@ -442,8 +442,8 @@ describe('tree-select component', () => {
       tick();
       fixture.detectChanges();
       expect(testComponent.value).toBe(null);
-      expect(testComponent.nzSelectTreeComponent.selectedNodes.length).toBe(0);
-      expect(testComponent.nzSelectTreeComponent.value.length).toBe(0);
+      expect(testComponent.selectTreeComponent.selectedNodes.length).toBe(0);
+      expect(testComponent.selectTreeComponent.value.length).toBe(0);
     }));
 
     it('should not check strictly work', fakeAsync(() => {
@@ -452,7 +452,7 @@ describe('tree-select component', () => {
       fixture.detectChanges();
       tick();
       fixture.detectChanges();
-      expect(testComponent.nzSelectTreeComponent.selectedNodes.length).toBe(1);
+      expect(testComponent.selectTreeComponent.selectedNodes.length).toBe(1);
       flush();
     }));
 
@@ -463,7 +463,7 @@ describe('tree-select component', () => {
       fixture.detectChanges();
       tick();
       fixture.detectChanges();
-      expect(testComponent.nzSelectTreeComponent.selectedNodes.length).toBe(3);
+      expect(testComponent.selectTreeComponent.selectedNodes.length).toBe(3);
       testComponent.checkStrictly = false;
       flush();
       fixture.detectChanges();
@@ -493,13 +493,13 @@ describe('tree-select component', () => {
     it('should click option not close dropdown', fakeAsync(() => {
       treeSelect.nativeElement.click();
       fixture.detectChanges();
-      expect(treeSelectComponent.nzOpen).toBe(true);
+      expect(treeSelectComponent.open).toBe(true);
       fixture.detectChanges();
       const targetNode = overlayContainerElement.querySelectorAll('nz-tree-node[builtin]')[2];
       dispatchMouseEvent(targetNode, 'click');
       fixture.detectChanges();
       flush();
-      expect(treeSelectComponent.nzOpen).toBe(true);
+      expect(treeSelectComponent.open).toBe(true);
     }));
 
     it('should prevent open the dropdown when click remove', fakeAsync(() => {
@@ -513,7 +513,7 @@ describe('tree-select component', () => {
       flush();
       fixture.detectChanges();
       expect(treeSelectComponent.selectedNodes.length).toBe(0);
-      expect(treeSelectComponent.nzOpen).toBe(false);
+      expect(treeSelectComponent.open).toBe(false);
     }));
 
     it('should display no data', fakeAsync(() => {
@@ -536,16 +536,16 @@ describe('tree-select component', () => {
   });
 
   describe('form', () => {
-    let fixture: ComponentFixture<NzTestTreeSelectFormComponent>;
-    let testComponent: NzTestTreeSelectFormComponent;
+    let fixture: ComponentFixture<TriTestTreeSelectFormComponent>;
+    let testComponent: TriTestTreeSelectFormComponent;
     let treeSelect: DebugElement;
-    let treeSelectComponent: NzTreeSelectComponent;
+    let treeSelectComponent: TriTreeSelectComponent;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTreeSelectFormComponent);
+      fixture = TestBed.createComponent(TriTestTreeSelectFormComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      treeSelect = fixture.debugElement.query(By.directive(NzTreeSelectComponent));
+      treeSelect = fixture.debugElement.query(By.directive(TriTreeSelectComponent));
       treeSelectComponent = treeSelect.componentInstance;
     });
     it('should set disabled work', fakeAsync(() => {
@@ -579,16 +579,16 @@ describe('tree-select component', () => {
   });
 
   describe('tree component', () => {
-    let fixture: ComponentFixture<NzTestTreeSelectCheckableComponent>;
-    let testComponent: NzTestTreeSelectCheckableComponent;
-    let treeSelectComponent: NzTreeSelectComponent;
+    let fixture: ComponentFixture<TriTestTreeSelectCheckableComponent>;
+    let testComponent: TriTestTreeSelectCheckableComponent;
+    let treeSelectComponent: TriTreeSelectComponent;
     let treeSelect: DebugElement;
 
     beforeEach(fakeAsync(() => {
-      fixture = TestBed.createComponent(NzTestTreeSelectCheckableComponent);
+      fixture = TestBed.createComponent(TriTestTreeSelectCheckableComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      treeSelect = fixture.debugElement.query(By.directive(NzTreeSelectComponent));
+      treeSelect = fixture.debugElement.query(By.directive(TriTreeSelectComponent));
       treeSelectComponent = treeSelect.componentInstance;
       fixture.detectChanges();
       flush();
@@ -601,8 +601,8 @@ describe('tree-select component', () => {
       testComponent.expandKeys = [];
       treeSelect.nativeElement.click();
       fixture.detectChanges();
-      expect(treeSelectComponent.nzExpandedKeys.length === 0).toBe(true);
-      expect(treeSelectComponent.nzOpen).toBe(true);
+      expect(treeSelectComponent.expandedKeys.length === 0).toBe(true);
+      expect(treeSelectComponent.open).toBe(true);
       let targetSwitcher = overlayContainerElement.querySelector('.ant-select-tree-switcher')!;
       expect(targetSwitcher.classList.contains('ant-select-tree-switcher_close')).toBe(true);
       fixture.detectChanges();
@@ -610,25 +610,25 @@ describe('tree-select component', () => {
       fixture.detectChanges();
       targetSwitcher = overlayContainerElement.querySelector('.ant-select-tree-switcher')!;
       expect(targetSwitcher.classList.contains('ant-select-tree-switcher_open')).toBe(true);
-      expect(treeSelectComponent.nzExpandedKeys[0] === '1001').toBe(true);
+      expect(treeSelectComponent.expandedKeys[0] === '1001').toBe(true);
       treeSelect.nativeElement.click();
       fixture.detectChanges();
-      expect(treeSelectComponent.nzOpen).toBe(false);
+      expect(treeSelectComponent.open).toBe(false);
       treeSelect.nativeElement.click();
       fixture.detectChanges();
       targetSwitcher = overlayContainerElement.querySelector('.ant-select-tree-switcher')!;
-      expect(treeSelectComponent.nzOpen).toBe(true);
+      expect(treeSelectComponent.open).toBe(true);
       expect(targetSwitcher.classList.contains('ant-select-tree-switcher_open')).toBe(true);
-      expect(treeSelectComponent.nzExpandedKeys[0] === '1001').toBe(true);
+      expect(treeSelectComponent.expandedKeys[0] === '1001').toBe(true);
     });
   });
 
   describe('customized icon', () => {
-    let fixture: ComponentFixture<NzTestTreeSelectCustomizedIconComponent>;
+    let fixture: ComponentFixture<TriTestTreeSelectCustomizedIconComponent>;
     let treeSelect: DebugElement;
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTreeSelectCustomizedIconComponent);
-      treeSelect = fixture.debugElement.query(By.directive(NzTreeSelectComponent));
+      fixture = TestBed.createComponent(TriTestTreeSelectCustomizedIconComponent);
+      treeSelect = fixture.debugElement.query(By.directive(TriTreeSelectComponent));
     });
     it('should display', fakeAsync(() => {
       fixture.detectChanges();
@@ -640,12 +640,12 @@ describe('tree-select component', () => {
   });
 
   describe('Status', () => {
-    let fixture: ComponentFixture<NzTestTreeSelectStatusComponent>;
+    let fixture: ComponentFixture<TriTestTreeSelectStatusComponent>;
     let treeSelect: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTreeSelectStatusComponent);
-      treeSelect = fixture.debugElement.query(By.directive(NzTreeSelectComponent));
+      fixture = TestBed.createComponent(TriTestTreeSelectStatusComponent);
+      treeSelect = fixture.debugElement.query(By.directive(TriTreeSelectComponent));
     });
 
     it('should className correct', () => {
@@ -663,12 +663,12 @@ describe('tree-select component', () => {
   });
 
   describe('in form', () => {
-    let fixture: ComponentFixture<NzTestTreeSelectInFormComponent>;
+    let fixture: ComponentFixture<TriTestTreeSelectInFormComponent>;
     let treeSelect!: HTMLElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTreeSelectInFormComponent);
-      treeSelect = fixture.debugElement.query(By.directive(NzTreeSelectComponent)).nativeElement;
+      fixture = TestBed.createComponent(TriTestTreeSelectInFormComponent);
+      treeSelect = fixture.debugElement.query(By.directive(TriTreeSelectComponent)).nativeElement;
     });
 
     it('should className correct', () => {
@@ -690,12 +690,12 @@ describe('tree-select component', () => {
   });
 
   describe('virtual scroll', () => {
-    let fixture: ComponentFixture<NzTestTreeSelectVirtualScrollComponent>;
+    let fixture: ComponentFixture<TriTestTreeSelectVirtualScrollComponent>;
     let treeSelect: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTreeSelectVirtualScrollComponent);
-      treeSelect = fixture.debugElement.query(By.directive(NzTreeSelectComponent));
+      fixture = TestBed.createComponent(TriTestTreeSelectVirtualScrollComponent);
+      treeSelect = fixture.debugElement.query(By.directive(TriTreeSelectComponent));
     });
 
     it('should set nzVirtualHeight work', fakeAsync(() => {
@@ -727,41 +727,41 @@ describe('tree-select component', () => {
 });
 
 @Component({
-  imports: [NzTreeSelectModule, FormsModule],
+  imports: [TriTreeSelectModule, FormsModule],
   template: `
-    <nz-tree-select
+    <tri-tree-select
       style="width:250px;position: relative;display: block;"
-      nzPlaceHolder="Please select"
-      [nzExpandedKeys]="expandKeys"
-      [nzNodes]="nodes"
+      placeHolder="Please select"
+      [expandedKeys]="expandKeys"
+      [nodes]="nodes"
       [(ngModel)]="value"
-      [nzSize]="size"
-      [nzVariant]="variant"
-      [nzAllowClear]="allowClear"
-      [nzDropdownMatchSelectWidth]="dropdownMatchSelectWidth"
-      [nzDisabled]="disabled"
-      [nzShowSearch]="showSearch"
-      [nzMultiple]="multiple"
-      [nzMaxTagCount]="maxTagCount"
-      [nzDropdownStyle]="{ height: '120px' }"
-      [nzBackdrop]="hasBackdrop"
-      nzDropdownClassName="class1 class2"
-    ></nz-tree-select>
+      [size]="size"
+      [variant]="variant"
+      [allowClear]="allowClear"
+      [dropdownMatchSelectWidth]="dropdownMatchSelectWidth"
+      [disabled]="disabled"
+      [showSearch]="showSearch"
+      [multiple]="multiple"
+      [maxTagCount]="maxTagCount"
+      [dropdownStyle]="{ height: '120px' }"
+      [backdrop]="hasBackdrop"
+      dropdownClassName="class1 class2"
+    ></tri-tree-select>
   `
 })
-export class NzTestTreeSelectBasicComponent {
-  @ViewChild(NzTreeSelectComponent, { static: false }) nzSelectTreeComponent!: NzTreeSelectComponent;
+export class TriTestTreeSelectBasicComponent {
+  @ViewChild(TriTreeSelectComponent, { static: false }) selectTreeComponent!: TriTreeSelectComponent;
   expandKeys = ['1001', '10001'];
   value: string | string[] | null = '10001';
-  size: NzSizeLDSType = 'default';
-  variant: NzVariant = 'outlined';
+  size: TriSizeLDSType = 'default';
+  variant: TriVariant = 'outlined';
   allowClear = false;
   disabled = false;
   showSearch = false;
   dropdownMatchSelectWidth = true;
   multiple = false;
   maxTagCount = Infinity;
-  nodes: NzTreeNodeOptions[] = [
+  nodes: TriTreeNodeOptions[] = [
     {
       title: 'root1',
       key: '1001',
@@ -828,22 +828,22 @@ export class NzTestTreeSelectBasicComponent {
 }
 
 @Component({
-  imports: [FormsModule, NzTreeSelectModule],
+  imports: [FormsModule, TriTreeSelectModule],
   template: `
-    <nz-tree-select
+    <tri-tree-select
       style="width: 250px"
-      nzPlaceHolder="Please select"
-      [nzExpandedKeys]="expandKeys"
-      [nzNodes]="nodes"
-      [nzShowSearch]="showSearch"
-      [nzCheckable]="true"
-      [nzCheckStrictly]="checkStrictly"
+      placeHolder="Please select"
+      [expandedKeys]="expandKeys"
+      [nodes]="nodes"
+      [showSearch]="showSearch"
+      [checkable]="true"
+      [checkStrictly]="checkStrictly"
       [(ngModel)]="value"
-    ></nz-tree-select>
+    ></tri-tree-select>
   `
 })
-export class NzTestTreeSelectCheckableComponent {
-  @ViewChild(NzTreeSelectComponent, { static: false }) nzSelectTreeComponent!: NzTreeSelectComponent;
+export class TriTestTreeSelectCheckableComponent {
+  @ViewChild(TriTreeSelectComponent, { static: false }) selectTreeComponent!: TriTreeSelectComponent;
   expandKeys = ['1001', '10001'];
   value: string[] | null = ['1000122'];
   showSearch = false;
@@ -914,14 +914,14 @@ export class NzTestTreeSelectCheckableComponent {
 }
 
 @Component({
-  imports: [ReactiveFormsModule, NzTreeSelectModule],
+  imports: [ReactiveFormsModule, TriTreeSelectModule],
   template: `
     <form>
-      <nz-tree-select [formControl]="formControl" style="width: 250px" [nzNodes]="nodes"></nz-tree-select>
+      <tri-tree-select [formControl]="formControl" style="width: 250px" [nodes]="nodes"></tri-tree-select>
     </form>
   `
 })
-export class NzTestTreeSelectFormComponent {
+export class TriTestTreeSelectFormComponent {
   formControl = new FormControl('10021');
   nodes = [
     {
@@ -938,7 +938,7 @@ export class NzTestTreeSelectFormComponent {
         }
       ]
     }
-  ].map(item => new NzTreeNode(item));
+  ].map(item => new TriTreeNode(item));
 
   disable(): void {
     this.formControl.disable();
@@ -950,22 +950,22 @@ export class NzTestTreeSelectFormComponent {
 }
 
 @Component({
-  imports: [FormsModule, NzTreeSelectModule],
+  imports: [FormsModule, TriTreeSelectModule],
   template: `
-    <nz-tree-select [nzNodes]="nodes" [(ngModel)]="value">
+    <tri-tree-select [nodes]="nodes" [(ngModel)]="value">
       <ng-template #nzTreeTemplate let-node>
         <span>
           <span class="anticon anticon-frown-o"></span>
           {{ node.title }}
         </span>
       </ng-template>
-    </nz-tree-select>
+    </tri-tree-select>
   `
 })
-export class NzTestTreeSelectCustomizedIconComponent {
+export class TriTestTreeSelectCustomizedIconComponent {
   value?: string;
   nodes = [
-    new NzTreeNode({
+    new TriTreeNode({
       title: 'root3',
       key: '1003',
       children: [
@@ -983,20 +983,20 @@ export class NzTestTreeSelectCustomizedIconComponent {
 }
 
 @Component({
-  imports: [FormsModule, NzTreeSelectModule],
+  imports: [FormsModule, TriTreeSelectModule],
   template: `
-    <nz-tree-select
+    <tri-tree-select
       style="width:100%;margin:20px 0;"
-      [nzNodes]="nodes"
-      nzShowSearch
-      [nzStatus]="status"
-      nzPlaceHolder="Please select"
+      [nodes]="nodes"
+      showSearch
+      [status]="status"
+      placeHolder="Please select"
       [(ngModel)]="value"
-    ></nz-tree-select>
+    ></tri-tree-select>
   `
 })
-export class NzTestTreeSelectStatusComponent {
-  status: NzStatus = 'error';
+export class TriTestTreeSelectStatusComponent {
+  status: TriStatus = 'error';
   value?: string = '1001';
   nodes = [
     {
@@ -1022,28 +1022,28 @@ export class NzTestTreeSelectStatusComponent {
 }
 
 @Component({
-  imports: [ReactiveFormsModule, NzFormModule, NzTreeSelectModule],
+  imports: [ReactiveFormsModule, TriFormModule, TriTreeSelectModule],
   template: `
-    <form nz-form>
-      <nz-form-item>
-        <nz-form-control [nzHasFeedback]="feedback" [nzValidateStatus]="status">
-          <nz-tree-select [nzNodes]="[]"></nz-tree-select>
-        </nz-form-control>
-      </nz-form-item>
+    <form tri-form>
+      <tri-form-item>
+        <tri-form-control [hasFeedback]="feedback" [validateStatus]="status">
+          <tri-tree-select [nodes]="[]"></tri-tree-select>
+        </tri-form-control>
+      </tri-form-item>
     </form>
   `
 })
-export class NzTestTreeSelectInFormComponent {
-  status: NzFormControlStatusType = 'error';
+export class TriTestTreeSelectInFormComponent {
+  status: TriFormControlStatusType = 'error';
   feedback = true;
 }
 
-function dig(path = '0', level = 3): NzTreeNodeOptions[] {
-  const list: NzTreeNodeOptions[] = [];
+function dig(path = '0', level = 3): TriTreeNodeOptions[] {
+  const list: TriTreeNodeOptions[] = [];
   for (let i = 0; i < 10; i += 1) {
     // long key for overflow
     const key = `${path}-${i}-${Array(50).join('x')}`;
-    const treeNode: NzTreeNodeOptions = {
+    const treeNode: TriTreeNodeOptions = {
       title: key,
       key,
       expanded: true,
@@ -1063,18 +1063,18 @@ function dig(path = '0', level = 3): NzTreeNodeOptions[] {
 }
 
 @Component({
-  imports: [NzTreeSelectModule],
+  imports: [TriTreeSelectModule],
   template: `
-    <nz-tree-select
-      [nzNodes]="nodes"
-      nzShowSearch
-      nzPlaceHolder="Please select"
-      nzVirtualHeight="300px"
-      nzHideUnMatched="true"
-      [nzDropdownMatchSelectWidth]="true"
-    ></nz-tree-select>
+    <tri-tree-select
+      [nodes]="nodes"
+      showSearch
+      placeHolder="Please select"
+      virtualHeight="300px"
+      hideUnMatched="true"
+      [dropdownMatchSelectWidth]="true"
+    ></tri-tree-select>
   `
 })
-export class NzTestTreeSelectVirtualScrollComponent {
-  nodes: NzTreeNodeOptions[] = dig();
+export class TriTestTreeSelectVirtualScrollComponent {
+  nodes: TriTreeNodeOptions[] = dig();
 }

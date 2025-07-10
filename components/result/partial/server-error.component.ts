@@ -8,8 +8,8 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-result-server-error',
-  exportAs: 'nzResultServerError',
+  selector: '',
+  exportAs: 'triResultServerError',
   template: `
     <svg width="254" height="294">
       <defs>
@@ -325,4 +325,4 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
     </svg>
   `
 })
-export class NzResultServerErrorComponent {}
+export class TriResultServerErrorComponent {}

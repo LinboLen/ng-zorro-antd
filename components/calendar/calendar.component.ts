@@ -29,36 +29,36 @@ import { CandyDate } from 'ng-zorro-antd/core/time';
 import { LibPackerModule } from 'ng-zorro-antd/date-picker';
 
 import {
-  NzDateCellDirective as DateCell,
-  NzDateFullCellDirective as DateFullCell,
-  NzMonthCellDirective as MonthCell,
-  NzMonthFullCellDirective as MonthFullCell
+  TriDateCellDirective as DateCell,
+  TriDateFullCellDirective as DateFullCell,
+  TriMonthCellDirective as MonthCell,
+  TriMonthFullCellDirective as MonthFullCell
 } from './calendar-cells';
-import { NzCalendarHeaderComponent } from './calendar-header.component';
+import { TriCalendarHeaderComponent } from './calendar-header.component';
 
-export type NzCalendarMode = 'month' | 'year';
-type NzCalendarDateTemplate = TemplateRef<{ $implicit: Date }>;
+export type TriCalendarMode = 'month' | 'year';
+type TriCalendarDateTemplate = TemplateRef<{ $implicit: Date }>;
 
 @Component({
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'nz-calendar',
-  exportAs: 'nzCalendar',
+  selector: '',
+  exportAs: 'triCalendar',
   template: `
-    <nz-calendar-header
-      [fullscreen]="nzFullscreen"
+    <tri-calendar-header
+      [fullscreen]="fullscreen"
       [activeDate]="activeDate"
-      [nzCustomHeader]="nzCustomHeader"
-      [(mode)]="nzMode"
+      [customHeader]="customHeader"
+      [(mode)]="mode"
       (modeChange)="onModeChange($event)"
       (yearChange)="onYearSelect($event)"
       (monthChange)="onMonthSelect($event)"
-    ></nz-calendar-header>
+    ></tri-calendar-header>
 
-    <div class="ant-picker-panel">
-      <div class="ant-picker-{{ nzMode === 'month' ? 'date' : 'month' }}-panel">
-        <div class="ant-picker-body">
-          @if (nzMode === 'month') {
+    <div class="tri-picker-panel">
+      <div class="ant-picker-{{ mode === 'month' ? 'date' : 'month' }}-panel">
+        <div class="tri-picker-body">
+          @if (mode === 'month') {
             <!--  TODO(@wenqi73) [cellRender] [fullCellRender] -->
             <date-table
               [prefixCls]="prefixCls"
@@ -66,7 +66,7 @@ type NzCalendarDateTemplate = TemplateRef<{ $implicit: Date }>;
               [activeDate]="activeDate"
               [cellRender]="$any(dateCell)"
               [fullCellRender]="$any(dateFullCell)"
-              [disabledDate]="nzDisabledDate"
+              [disabledDate]="disabledDate"
               (valueChange)="onDateSelect($event)"
             ></date-table>
           } @else {
@@ -84,15 +84,15 @@ type NzCalendarDateTemplate = TemplateRef<{ $implicit: Date }>;
     </div>
   `,
   host: {
-    class: 'ant-picker-calendar',
-    '[class.ant-picker-calendar-full]': 'nzFullscreen',
-    '[class.ant-picker-calendar-mini]': '!nzFullscreen',
-    '[class.ant-picker-calendar-rtl]': `dir === 'rtl'`
+    class: 'tri-picker-calendar',
+    '[class.tri-picker-calendar-full]': 'fullscreen',
+    '[class.tri-picker-calendar-mini]': '!fullscreen',
+    '[class.tri-picker-calendar-rtl]': `dir === 'rtl'`
   },
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => NzCalendarComponent), multi: true }],
-  imports: [NzCalendarHeaderComponent, LibPackerModule]
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TriCalendarComponent), multi: true }],
+  imports: [TriCalendarHeaderComponent, LibPackerModule]
 })
-export class NzCalendarComponent implements ControlValueAccessor, OnChanges, OnInit {
+export class TriCalendarComponent implements ControlValueAccessor, OnChanges, OnInit {
   private cdr = inject(ChangeDetectorRef);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
@@ -104,47 +104,47 @@ export class NzCalendarComponent implements ControlValueAccessor, OnChanges, OnI
   private onChangeFn: (date: Date) => void = () => {};
   private onTouchFn: () => void = () => {};
 
-  @Input() nzMode: NzCalendarMode = 'month';
-  @Input() nzValue?: Date;
-  @Input() nzDisabledDate?: (date: Date) => boolean;
+  @Input() mode: TriCalendarMode = 'month';
+  @Input() value?: Date;
+  @Input() disabledDate?: (date: Date) => boolean;
 
-  @Output() readonly nzModeChange = new EventEmitter<NzCalendarMode>();
-  @Output() readonly nzPanelChange = new EventEmitter<{ date: Date; mode: NzCalendarMode }>();
-  @Output() readonly nzSelectChange = new EventEmitter<Date>();
-  @Output() readonly nzValueChange = new EventEmitter<Date>();
+  @Output() readonly modeChange = new EventEmitter<TriCalendarMode>();
+  @Output() readonly panelChange = new EventEmitter<{ date: Date; mode: TriCalendarMode }>();
+  @Output() readonly selectChange = new EventEmitter<Date>();
+  @Output() readonly valueChange = new EventEmitter<Date>();
 
   /**
    * Cannot use @Input and @ContentChild on one variable
    * because { static: false } will make @Input property get delayed
    **/
-  @Input() nzDateCell?: NzCalendarDateTemplate;
-  @ContentChild(DateCell, { static: false, read: TemplateRef }) nzDateCellChild?: NzCalendarDateTemplate;
-  get dateCell(): NzCalendarDateTemplate {
-    return (this.nzDateCell || this.nzDateCellChild)!;
+  @Input() dateCell?: TriCalendarDateTemplate;
+  @ContentChild(DateCell, { static: false, read: TemplateRef }) dateCellChild?: TriCalendarDateTemplate;
+  get _dateCell(): TriCalendarDateTemplate {
+    return (this.dateCell || this.dateCellChild)!;
   }
 
-  @Input() nzDateFullCell?: NzCalendarDateTemplate;
-  @ContentChild(DateFullCell, { static: false, read: TemplateRef }) nzDateFullCellChild?: NzCalendarDateTemplate;
-  get dateFullCell(): NzCalendarDateTemplate {
-    return (this.nzDateFullCell || this.nzDateFullCellChild)!;
+  @Input() dateFullCell?: TriCalendarDateTemplate;
+  @ContentChild(DateFullCell, { static: false, read: TemplateRef }) dateFullCellChild?: TriCalendarDateTemplate;
+  get _dateFullCell(): TriCalendarDateTemplate {
+    return (this.dateFullCell || this.dateFullCellChild)!;
   }
 
-  @Input() nzMonthCell?: NzCalendarDateTemplate;
-  @ContentChild(MonthCell, { static: false, read: TemplateRef }) nzMonthCellChild?: NzCalendarDateTemplate;
-  get monthCell(): NzCalendarDateTemplate {
-    return (this.nzMonthCell || this.nzMonthCellChild)!;
+  @Input() monthCell?: TriCalendarDateTemplate;
+  @ContentChild(MonthCell, { static: false, read: TemplateRef }) monthCellChild?: TriCalendarDateTemplate;
+  get _monthCell(): TriCalendarDateTemplate {
+    return (this.monthCell || this.monthCellChild)!;
   }
 
-  @Input() nzMonthFullCell?: NzCalendarDateTemplate;
-  @ContentChild(MonthFullCell, { static: false, read: TemplateRef }) nzMonthFullCellChild?: NzCalendarDateTemplate;
-  get monthFullCell(): NzCalendarDateTemplate {
-    return (this.nzMonthFullCell || this.nzMonthFullCellChild)!;
+  @Input() monthFullCell?: TriCalendarDateTemplate;
+  @ContentChild(MonthFullCell, { static: false, read: TemplateRef }) monthFullCellChild?: TriCalendarDateTemplate;
+  get _monthFullCell(): TriCalendarDateTemplate {
+    return (this.monthFullCell || this.monthFullCellChild)!;
   }
 
-  @Input() nzCustomHeader?: string | TemplateRef<void>;
+  @Input() customHeader?: string | TemplateRef<void>;
 
   @Input({ transform: booleanAttribute })
-  nzFullscreen: boolean = true;
+  fullscreen: boolean = true;
 
   ngOnInit(): void {
     this.dir = this.directionality.value;
@@ -153,9 +153,9 @@ export class NzCalendarComponent implements ControlValueAccessor, OnChanges, OnI
     });
   }
 
-  onModeChange(mode: NzCalendarMode): void {
-    this.nzModeChange.emit(mode);
-    this.nzPanelChange.emit({ date: this.activeDate.nativeDate, mode });
+  onModeChange(mode: TriCalendarMode): void {
+    this.modeChange.emit(mode);
+    this.panelChange.emit({ date: this.activeDate.nativeDate, mode });
   }
 
   onYearSelect(year: number): void {
@@ -193,14 +193,14 @@ export class NzCalendarComponent implements ControlValueAccessor, OnChanges, OnI
     if (touched) {
       this.onChangeFn(date.nativeDate);
       this.onTouchFn();
-      this.nzSelectChange.emit(date.nativeDate);
-      this.nzValueChange.emit(date.nativeDate);
+      this.selectChange.emit(date.nativeDate);
+      this.valueChange.emit(date.nativeDate);
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.nzValue) {
-      this.updateDate(new CandyDate(this.nzValue), false);
+      this.updateDate(new CandyDate(this.value), false);
     }
   }
 }

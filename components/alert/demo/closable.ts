@@ -1,24 +1,24 @@
 import { Component } from '@angular/core';
 
-import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { TriAlertModule } from 'ng-zorro-antd/alert';
 
 @Component({
-  selector: 'nz-demo-alert-closable',
-  imports: [NzAlertModule],
+  selector: '',
+  imports: [TriAlertModule],
   template: `
-    <nz-alert
-      nzType="warning"
-      nzCloseable
-      nzMessage="Warning Text Warning Text Warning Text Warning Text Warning Text Warning Text Warning Text"
-      (nzOnClose)="afterClose()"
-    ></nz-alert>
-    <nz-alert
-      nzType="error"
-      nzCloseable
-      nzMessage="Error Text"
-      nzDescription="Error Description Error Description Error Description Error Description Error Description Error Description"
-      (nzOnClose)="afterClose()"
-    ></nz-alert>
+    <tri-alert
+      type="warning"
+      closeable
+      message="Warning Text Warning Text Warning Text Warning Text Warning Text Warning Text Warning Text"
+      (onClose)="afterClose()"
+    ></tri-alert>
+    <tri-alert
+      type="error"
+      closeable
+      message="Error Text"
+      description="Error Description Error Description Error Description Error Description Error Description Error Description"
+      (onClose)="afterClose()"
+    ></tri-alert>
   `,
   styles: [
     `
@@ -28,7 +28,7 @@ import { NzAlertModule } from 'ng-zorro-antd/alert';
     `
   ]
 })
-export class NzDemoAlertClosableComponent {
+export class TriDemoAlertClosableComponent {
   afterClose(): void {
     console.log('close');
   }

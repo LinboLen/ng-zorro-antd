@@ -6,13 +6,13 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'nz-footer',
-  exportAs: 'nzFooter',
+  selector: '',
+  exportAs: 'triFooter',
   template: `<ng-content></ng-content>`,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'ant-layout-footer'
+    class: 'tri-layout-footer'
   }
 })
-export class NzFooterComponent {}
+export class TriFooterComponent {}

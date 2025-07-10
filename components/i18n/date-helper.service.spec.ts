@@ -10,7 +10,7 @@ import { enUS } from 'date-fns/locale';
 import { NZ_DATE_CONFIG } from './date-config';
 import { DateHelperByDatePipe, DateHelperService } from './date-helper.service';
 import en_US from './languages/en_US';
-import { NzI18nModule } from './nz-i18n.module';
+import { TriI18nModule } from './nz-i18n.module';
 import { NZ_DATE_LOCALE, provideNzI18n } from './nz-i18n.token';
 
 describe('DateHelperService', () => {
@@ -19,7 +19,7 @@ describe('DateHelperService', () => {
   describe('Formatting with DatePipe', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [NzI18nModule],
+        imports: [TriI18nModule],
         providers: [provideNzI18n(en_US)]
       });
 
@@ -59,7 +59,7 @@ describe('DateHelperService', () => {
   describe('Formatting with Data-fns', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [NzI18nModule],
+        imports: [TriI18nModule],
         providers: [{ provide: NZ_DATE_LOCALE, useValue: enUS }]
       });
 
@@ -85,7 +85,7 @@ describe('DateHelperService', () => {
   describe('Custom firstDayOfWeek', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [NzI18nModule],
+        imports: [TriI18nModule],
         providers: [
           { provide: NZ_DATE_LOCALE, useValue: enUS },
           { provide: NZ_DATE_CONFIG, useValue: { firstDayOfWeek: 4 } }

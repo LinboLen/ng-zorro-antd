@@ -25,53 +25,53 @@ import { Observable, Subscription } from 'rxjs';
 import { filter, startWith, tap } from 'rxjs/operators';
 
 import { helpMotion } from 'ng-zorro-antd/core/animation';
-import { NzFormStatusService } from 'ng-zorro-antd/core/form';
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriFormStatusService } from 'ng-zorro-antd/core/form';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { toBoolean } from 'ng-zorro-antd/core/util';
-import { NzI18nService } from 'ng-zorro-antd/i18n';
+import { TriI18nService } from 'ng-zorro-antd/i18n';
 
-import { NzFormControlStatusType, NzFormItemComponent } from './form-item.component';
-import { NzFormDirective } from './form.directive';
+import { TriFormControlStatusType, TriFormItemComponent } from './form-item.component';
+import { TriFormDirective } from './form.directive';
 
 @Component({
-  selector: 'nz-form-control',
-  exportAs: 'nzFormControl',
+  selector: '',
+  exportAs: 'triFormControl',
   animations: [helpMotion],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="ant-form-item-control-input">
-      <div class="ant-form-item-control-input-content">
+    <div class="tri-form-item-control-input">
+      <div class="tri-form-item-control-input-content">
         <ng-content></ng-content>
       </div>
     </div>
     @if (innerTip) {
-      <div @helpMotion class="ant-form-item-explain ant-form-item-explain-connected">
+      <div @helpMotion class="tri-form-item-explain tri-form-item-explain-connected">
         <div role="alert" [class]="['ant-form-item-explain-' + status]">
-          <ng-container *nzStringTemplateOutlet="innerTip; context: { $implicit: validateControl }">{{
+          <ng-container *stringTemplateOutlet="innerTip; stringTemplateOutletContext: { $implicit: validateControl }">{{
             innerTip
           }}</ng-container>
         </div>
       </div>
     }
 
-    @if (nzExtra) {
-      <div class="ant-form-item-extra">
-        <ng-container *nzStringTemplateOutlet="nzExtra">{{ nzExtra }}</ng-container>
+    @if (extra) {
+      <div class="tri-form-item-extra">
+        <ng-container *stringTemplateOutlet="extra">{{ extra }}</ng-container>
       </div>
     }
   `,
-  providers: [NzFormStatusService],
+  providers: [TriFormStatusService],
   host: {
-    class: 'ant-form-item-control'
+    class: 'tri-form-item-control'
   },
-  imports: [NzOutletModule]
+  imports: [TriOutletModule]
 })
-export class NzFormControlComponent implements OnChanges, OnInit, AfterContentInit {
+export class TriFormControlComponent implements OnChanges, OnInit, AfterContentInit {
   private cdr = inject(ChangeDetectorRef);
-  public i18n = inject(NzI18nService);
-  private nzFormStatusService = inject(NzFormStatusService);
+  public i18n = inject(TriI18nService);
+  private formStatusService = inject(TriFormStatusService);
   private destroyRef = inject(DestroyRef);
 
   private _hasFeedback = false;
@@ -80,40 +80,40 @@ export class NzFormControlComponent implements OnChanges, OnInit, AfterContentIn
   private localeId!: string;
   private autoErrorTip?: string;
 
-  private get disableAutoTips(): boolean {
-    return this.nzDisableAutoTips !== undefined
-      ? toBoolean(this.nzDisableAutoTips)
-      : !!this.nzFormDirective?.nzDisableAutoTips;
+  get #disableAutoTips(): boolean {
+    return this.disableAutoTips !== undefined
+      ? toBoolean(this.disableAutoTips)
+      : !!this.formDirective?.disableAutoTips;
   }
 
-  status: NzFormControlStatusType = '';
+  status: TriFormControlStatusType = '';
   validateControl: AbstractControl | NgModel | null = null;
   innerTip: string | TemplateRef<{ $implicit: AbstractControl | NgModel }> | null = null;
 
   @ContentChild(NgControl, { static: false }) defaultValidateControl?: FormControlName | FormControlDirective;
-  @Input() nzSuccessTip?: string | TemplateRef<{ $implicit: AbstractControl | NgModel }>;
-  @Input() nzWarningTip?: string | TemplateRef<{ $implicit: AbstractControl | NgModel }>;
-  @Input() nzErrorTip?: string | TemplateRef<{ $implicit: AbstractControl | NgModel }>;
-  @Input() nzValidatingTip?: string | TemplateRef<{ $implicit: AbstractControl | NgModel }>;
-  @Input() nzExtra?: string | TemplateRef<void>;
-  @Input() nzAutoTips: Record<string, Record<string, string>> = {};
-  @Input({ transform: booleanAttribute }) nzDisableAutoTips?: boolean;
+  @Input() successTip?: string | TemplateRef<{ $implicit: AbstractControl | NgModel }>;
+  @Input() warningTip?: string | TemplateRef<{ $implicit: AbstractControl | NgModel }>;
+  @Input() errorTip?: string | TemplateRef<{ $implicit: AbstractControl | NgModel }>;
+  @Input() validatingTip?: string | TemplateRef<{ $implicit: AbstractControl | NgModel }>;
+  @Input() extra?: string | TemplateRef<void>;
+  @Input() autoTips: Record<string, Record<string, string>> = {};
+  @Input({ transform: booleanAttribute }) disableAutoTips?: boolean;
 
   @Input({ transform: booleanAttribute })
-  set nzHasFeedback(value: boolean) {
+  set hasFeedback(value: boolean) {
     this._hasFeedback = value;
-    this.nzFormStatusService.formStatusChanges.next({ status: this.status, hasFeedback: this._hasFeedback });
-    if (this.nzFormItemComponent) {
-      this.nzFormItemComponent.setHasFeedback(this._hasFeedback);
+    this.formStatusService.formStatusChanges.next({ status: this.status, hasFeedback: this._hasFeedback });
+    if (this.formItemComponent) {
+      this.formItemComponent.setHasFeedback(this._hasFeedback);
     }
   }
 
-  get nzHasFeedback(): boolean {
+  get hasFeedback(): boolean {
     return this._hasFeedback;
   }
 
   @Input()
-  set nzValidateStatus(value: string | AbstractControl | FormControlName | NgModel) {
+  set validateStatus(value: string | AbstractControl | FormControlName | NgModel) {
     if (value instanceof AbstractControl || value instanceof NgModel) {
       this.validateControl = value;
       this.validateString = null;
@@ -133,10 +133,10 @@ export class NzFormControlComponent implements OnChanges, OnInit, AfterContentIn
     this.validateChanges.unsubscribe();
     /** miss detect https://github.com/angular/angular/issues/10887 **/
     if (this.validateControl && this.validateControl.statusChanges) {
-      this.validateChanges = (this.validateControl.statusChanges as Observable<NzSafeAny>)
+      this.validateChanges = (this.validateControl.statusChanges as Observable<TriSafeAny>)
         .pipe(startWith(null), takeUntilDestroyed(this.destroyRef))
         .subscribe(() => {
-          if (!this.disableAutoTips) {
+          if (!this.#disableAutoTips) {
             this.updateAutoErrorTip();
           }
           this.setStatus();
@@ -148,15 +148,15 @@ export class NzFormControlComponent implements OnChanges, OnInit, AfterContentIn
   private setStatus(): void {
     this.status = this.getControlStatus(this.validateString);
     this.innerTip = this.getInnerTip(this.status);
-    this.nzFormStatusService.formStatusChanges.next({ status: this.status, hasFeedback: this.nzHasFeedback });
-    if (this.nzFormItemComponent) {
-      this.nzFormItemComponent.setWithHelpViaTips(!!this.innerTip);
-      this.nzFormItemComponent.setStatus(this.status);
+    this.formStatusService.formStatusChanges.next({ status: this.status, hasFeedback: this.hasFeedback });
+    if (this.formItemComponent) {
+      this.formItemComponent.setWithHelpViaTips(!!this.innerTip);
+      this.formItemComponent.setStatus(this.status);
     }
   }
 
-  private getControlStatus(validateString: string | null): NzFormControlStatusType {
-    let status: NzFormControlStatusType;
+  private getControlStatus(validateString: string | null): TriFormControlStatusType {
+    let status: TriFormControlStatusType;
 
     if (validateString === 'warning' || this.validateControlStatus('INVALID', 'warning')) {
       status = 'warning';
@@ -177,7 +177,7 @@ export class NzFormControlComponent implements OnChanges, OnInit, AfterContentIn
     return status;
   }
 
-  private validateControlStatus(validStatus: string, statusType?: NzFormControlStatusType): boolean {
+  private validateControlStatus(validStatus: string, statusType?: TriFormControlStatusType): boolean {
     if (!this.validateControl) {
       return false;
     } else {
@@ -189,17 +189,17 @@ export class NzFormControlComponent implements OnChanges, OnInit, AfterContentIn
   }
 
   private getInnerTip(
-    status: NzFormControlStatusType
+    status: TriFormControlStatusType
   ): string | TemplateRef<{ $implicit: AbstractControl | NgModel }> | null {
     switch (status) {
       case 'error':
-        return (!this.disableAutoTips && this.autoErrorTip) || this.nzErrorTip || null;
+        return (!this.#disableAutoTips && this.autoErrorTip) || this.errorTip || null;
       case 'validating':
-        return this.nzValidatingTip || null;
+        return this.validatingTip || null;
       case 'success':
-        return this.nzSuccessTip || null;
+        return this.successTip || null;
       case 'warning':
-        return this.nzWarningTip || null;
+        return this.warningTip || null;
       default:
         return null;
     }
@@ -213,10 +213,10 @@ export class NzFormControlComponent implements OnChanges, OnInit, AfterContentIn
         if (errors.hasOwnProperty(key)) {
           autoErrorTip =
             errors[key]?.[this.localeId] ??
-            this.nzAutoTips?.[this.localeId]?.[key] ??
-            this.nzAutoTips.default?.[key] ??
-            this.nzFormDirective?.nzAutoTips?.[this.localeId]?.[key] ??
-            this.nzFormDirective?.nzAutoTips.default?.[key];
+            this.autoTips?.[this.localeId]?.[key] ??
+            this.autoTips.default?.[key] ??
+            this.formDirective?.autoTips?.[this.localeId]?.[key] ??
+            this.formDirective?.autoTips.default?.[key];
         }
         if (autoErrorTip) {
           break;
@@ -226,9 +226,9 @@ export class NzFormControlComponent implements OnChanges, OnInit, AfterContentIn
     }
   }
 
-  private subscribeAutoTips(observable?: Observable<NzSafeAny>): void {
+  private subscribeAutoTips(observable?: Observable<TriSafeAny>): void {
     observable?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-      if (!this.disableAutoTips) {
+      if (!this.#disableAutoTips) {
         this.updateAutoErrorTip();
         this.setStatus();
         this.cdr.markForCheck();
@@ -236,16 +236,16 @@ export class NzFormControlComponent implements OnChanges, OnInit, AfterContentIn
     });
   }
 
-  private nzFormItemComponent = inject(NzFormItemComponent, { host: true, optional: true });
-  private nzFormDirective = inject(NzFormDirective, { optional: true });
+  private formItemComponent = inject(TriFormItemComponent, { host: true, optional: true });
+  private formDirective = inject(TriFormDirective, { optional: true });
 
   constructor() {
     this.subscribeAutoTips(this.i18n.localeChange.pipe(tap(locale => (this.localeId = locale.locale))));
-    this.subscribeAutoTips(this.nzFormDirective?.getInputObservable('nzAutoTips'));
+    this.subscribeAutoTips(this.formDirective?.getInputObservable('nzAutoTips'));
     this.subscribeAutoTips(
-      this.nzFormDirective
+      this.formDirective
         ?.getInputObservable('nzDisableAutoTips')
-        .pipe(filter(() => this.nzDisableAutoTips === undefined))
+        .pipe(filter(() => this.disableAutoTips === undefined))
     );
   }
 
@@ -267,9 +267,9 @@ export class NzFormControlComponent implements OnChanges, OnInit, AfterContentIn
   ngAfterContentInit(): void {
     if (!this.validateControl && !this.validateString) {
       if (this.defaultValidateControl instanceof FormControlDirective) {
-        this.nzValidateStatus = this.defaultValidateControl.control;
+        this.validateStatus = this.defaultValidateControl.control;
       } else {
-        this.nzValidateStatus = this.defaultValidateControl!;
+        this.validateStatus = this.defaultValidateControl!;
       }
     }
   }

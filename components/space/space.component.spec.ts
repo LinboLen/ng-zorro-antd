@@ -7,10 +7,10 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzSpaceAlign, NzSpaceDirection, NzSpaceSize } from 'ng-zorro-antd/space';
-import { NzSpaceComponent } from 'ng-zorro-antd/space/space.component';
+import { TriSpaceAlign, TriSpaceDirection, TriSpaceSize } from 'ng-zorro-antd/space';
+import { TriSpaceComponent } from 'ng-zorro-antd/space/space.component';
 
-import { NzSpaceModule } from './space.module';
+import { TriSpaceModule } from './space.module';
 
 describe('Space', () => {
   let component: SpaceTestComponent;
@@ -122,7 +122,7 @@ describe('Space', () => {
     component.direction = 'vertical';
     fixture.detectChanges();
 
-    const spaceComponent = fixture.debugElement.query(By.directive(NzSpaceComponent));
+    const spaceComponent = fixture.debugElement.query(By.directive(TriSpaceComponent));
 
     expect((spaceComponent.nativeElement as HTMLElement).classList).toContain('ant-space-vertical');
 
@@ -158,7 +158,7 @@ describe('Space', () => {
     component.direction = 'vertical';
     fixture.detectChanges();
 
-    const spaceComponent = fixture.debugElement.query(By.directive(NzSpaceComponent));
+    const spaceComponent = fixture.debugElement.query(By.directive(TriSpaceComponent));
     const spaceNativeElement = spaceComponent.nativeElement as HTMLElement;
     expect(spaceNativeElement.classList).toContain('ant-space-vertical');
 
@@ -217,23 +217,23 @@ describe('Space', () => {
 });
 
 @Component({
-  imports: [NzSpaceModule],
+  imports: [TriSpaceModule],
   template: `
-    <nz-space [nzSplit]="showSplit ? spaceSplit : null" [nzSize]="size" [nzDirection]="direction" [nzAlign]="align">
-      <div *nzSpaceItem>item</div>
-      <div *nzSpaceItem>item</div>
+    <tri-space [split]="showSplit ? spaceSplit : null" [size]="size" [direction]="direction" [align]="align">
+      <div *spaceItem>item</div>
+      <div *spaceItem>item</div>
       @if (show) {
-        <div *nzSpaceItem>item</div>
+        <div *spaceItem>item</div>
       }
-    </nz-space>
+    </tri-space>
 
     <ng-template #spaceSplit>|</ng-template>
   `
 })
 class SpaceTestComponent {
-  size: NzSpaceSize = 'small';
-  direction: NzSpaceDirection = 'horizontal';
+  size: TriSpaceSize = 'small';
+  direction: TriSpaceDirection = 'horizontal';
   show = false;
-  align?: NzSpaceAlign;
+  align?: TriSpaceAlign;
   showSplit = false;
 }

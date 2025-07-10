@@ -1,62 +1,62 @@
 import { Component } from '@angular/core';
 
-import { NzAvatarModule } from 'ng-zorro-antd/avatar';
-import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
+import { TriAvatarModule } from 'ng-zorro-antd/avatar';
+import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
 
 @Component({
-  selector: 'nz-demo-segmented-custom',
-  imports: [NzAvatarModule, NzSegmentedModule],
+  selector: '',
+  imports: [TriAvatarModule, TriSegmentedModule],
   template: `
-    <nz-segmented>
-      <label nz-segmented-item nzValue="user1">
+    <tri-segmented>
+      <label tri-segmented-item value="user1">
         <div [style.padding.px]="4">
-          <nz-avatar nzSrc="https://joeschmoe.io/api/v1/random" />
+          <tri-avatar src="https://joeschmoe.io/api/v1/random" />
           <div>User 1</div>
         </div>
       </label>
-      <label nz-segmented-item nzValue="user2">
+      <label tri-segmented-item value="user2">
         <div [style.padding.px]="4">
-          <nz-avatar nzText="K" [style.background]="'#f56a00'" />
+          <tri-avatar text="K" [style.background]="'#f56a00'" />
           <div>User 2</div>
         </div>
       </label>
-      <label nz-segmented-item nzValue="user3">
+      <label tri-segmented-item value="user3">
         <div [style.padding.px]="4">
-          <nz-avatar nzIcon="user" [style.background]="'#87d068'" />
+          <tri-avatar icon="user" [style.background]="'#87d068'" />
           <div>User 3</div>
         </div>
       </label>
-    </nz-segmented>
+    </tri-segmented>
 
     <br />
     <br />
 
-    <nz-segmented>
-      <label nz-segmented-item nzValue="spring">
+    <tri-segmented>
+      <label tri-segmented-item value="spring">
         <div [style.padding.px]="4">
           <div>Spring</div>
           <div>Jan-Mar</div>
         </div>
       </label>
-      <label nz-segmented-item nzValue="summer">
+      <label tri-segmented-item value="summer">
         <div [style.padding.px]="4">
           <div>Summer</div>
           <div>Apr-Jun</div>
         </div>
       </label>
-      <label nz-segmented-item nzValue="autumn">
+      <label tri-segmented-item value="autumn">
         <div [style.padding.px]="4">
           <div>Autumn</div>
           <div>Jul-Sept</div>
         </div>
       </label>
-      <label nz-segmented-item nzValue="winter">
+      <label tri-segmented-item value="winter">
         <div [style.padding.px]="4">
           <div>Winter</div>
           <div>Oct-Dec</div>
         </div>
       </label>
-    </nz-segmented>
+    </tri-segmented>
   `
 })
-export class NzDemoSegmentedCustomComponent {}
+export class TriDemoSegmentedCustomComponent {}

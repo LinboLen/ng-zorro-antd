@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NzTableModule } from 'ng-zorro-antd/table';
+import { TriTableModule } from 'ng-zorro-antd/table';
 
 interface ItemData {
   name: string;
@@ -9,14 +9,14 @@ interface ItemData {
 }
 
 @Component({
-  selector: 'nz-demo-table-fixed-header',
-  imports: [NzTableModule],
+  selector: '',
+  imports: [TriTableModule],
   template: `
-    <nz-table #headerTable [nzData]="listOfData" [nzPageSize]="50" [nzScroll]="{ y: '240px' }">
+    <tri-table #headerTable [data]="listOfData" [pageSize]="50" [scroll]="{ y: '240px' }">
       <thead>
         <tr>
           <th>Name</th>
-          <th nzWidth="100px">Age</th>
+          <th width="100px">Age</th>
           <th>Address</th>
         </tr>
       </thead>
@@ -29,10 +29,10 @@ interface ItemData {
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `
 })
-export class NzDemoTableFixedHeaderComponent implements OnInit {
+export class TriDemoTableFixedHeaderComponent implements OnInit {
   listOfData: ItemData[] = [];
 
   ngOnInit(): void {

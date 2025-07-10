@@ -1,27 +1,27 @@
 import { Component } from '@angular/core';
 
-import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzAggregatePipe } from 'ng-zorro-antd/pipes';
-import { NzStatisticModule } from 'ng-zorro-antd/statistic';
+import { TriGridModule } from 'ng-zorro-antd/grid';
+import { TriAggregatePipe } from 'ng-zorro-antd/pipes';
+import { TriStatisticModule } from 'ng-zorro-antd/statistic';
 
 @Component({
-  selector: 'nz-demo-pipes-aggregate',
-  imports: [NzGridModule, NzStatisticModule, NzAggregatePipe],
+  selector: '',
+  imports: [TriGridModule, TriStatisticModule, TriAggregatePipe],
   template: `
-    <nz-row [nzGutter]="16">
-      <nz-col [nzSpan]="6">
-        <nz-statistic [nzValue]="[7, 8, 2, 3] | nzAggregate: 'max'" nzTitle="Max [7, 8, 2, 3]"></nz-statistic>
-      </nz-col>
-      <nz-col [nzSpan]="6">
-        <nz-statistic [nzValue]="[7, 8, 2, 3] | nzAggregate: 'min'" nzTitle="Min [7, 8, 2, 3]"></nz-statistic>
-      </nz-col>
-      <nz-col [nzSpan]="6">
-        <nz-statistic [nzValue]="[7, 8, 2, 3] | nzAggregate: 'sum'" nzTitle="Sum [7, 8, 2, 3]"></nz-statistic>
-      </nz-col>
-      <nz-col [nzSpan]="6">
-        <nz-statistic [nzValue]="[7, 8, 2, 3] | nzAggregate: 'avg'" nzTitle="Avg [7, 8, 2, 3]"></nz-statistic>
-      </nz-col>
-    </nz-row>
+    <tri-row [gutter]="16">
+      <tri-col [span]="6">
+        <tri-statistic [value]="[7, 8, 2, 3] | nzAggregate: 'max'" title="Max [7, 8, 2, 3]"></tri-statistic>
+      </tri-col>
+      <tri-col [span]="6">
+        <tri-statistic [value]="[7, 8, 2, 3] | nzAggregate: 'min'" title="Min [7, 8, 2, 3]"></tri-statistic>
+      </tri-col>
+      <tri-col [span]="6">
+        <tri-statistic [value]="[7, 8, 2, 3] | nzAggregate: 'sum'" title="Sum [7, 8, 2, 3]"></tri-statistic>
+      </tri-col>
+      <tri-col [span]="6">
+        <tri-statistic [value]="[7, 8, 2, 3] | nzAggregate: 'avg'" title="Avg [7, 8, 2, 3]"></tri-statistic>
+      </tri-col>
+    </tri-row>
   `
 })
-export class NzDemoPipesAggregateComponent {}
+export class TriDemoPipesAggregateComponent {}

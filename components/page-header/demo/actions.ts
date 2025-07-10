@@ -1,69 +1,69 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
-import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
-import { NzStatisticModule } from 'ng-zorro-antd/statistic';
-import { NzTagModule } from 'ng-zorro-antd/tag';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { TriGridModule } from 'ng-zorro-antd/grid';
+import { TriPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
+import { TriStatisticModule } from 'ng-zorro-antd/statistic';
+import { TriTagModule } from 'ng-zorro-antd/tag';
 
 @Component({
-  selector: 'nz-demo-page-header-actions',
+  selector: '',
   imports: [
-    NzButtonModule,
-    NzDescriptionsModule,
-    NzGridModule,
-    NzPageHeaderModule,
-    NzSpaceModule,
-    NzStatisticModule,
-    NzTagModule
+    TriButtonModule,
+    TriDescriptionsModule,
+    TriGridModule,
+    TriPageHeaderModule,
+    TriSpaceModule,
+    TriStatisticModule,
+    TriTagModule
   ],
   template: `
-    <nz-page-header nzBackIcon>
-      <nz-page-header-title>Title</nz-page-header-title>
-      <nz-page-header-subtitle>This is a subtitle</nz-page-header-subtitle>
-      <nz-page-header-extra>
-        <nz-space>
-          <button *nzSpaceItem nz-button>Operation</button>
-          <button *nzSpaceItem nz-button>Operation</button>
-          <button *nzSpaceItem nz-button nzType="primary">Primary</button>
-        </nz-space>
-      </nz-page-header-extra>
-      <nz-page-header-content>
-        <nz-descriptions nzSize="small" [nzColumn]="3">
-          <nz-descriptions-item nzTitle="Created" [nzSpan]="1">Lili Qu</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Association" [nzSpan]="1"><a>421421</a></nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Creation Time" [nzSpan]="1">2017-01-10</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Effective Time" [nzSpan]="1">2017-10-10</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Remarks" [nzSpan]="2">
+    <tri-page-header backIcon>
+      <tri-page-header-title>Title</tri-page-header-title>
+      <tri-page-header-subtitle>This is a subtitle</tri-page-header-subtitle>
+      <tri-page-header-extra>
+        <tri-space>
+          <button *spaceItem tri-button>Operation</button>
+          <button *spaceItem tri-button>Operation</button>
+          <button *spaceItem tri-button type="primary">Primary</button>
+        </tri-space>
+      </tri-page-header-extra>
+      <tri-page-header-content>
+        <tri-descriptions size="small" [column]="3">
+          <tri-descriptions-item title="Created" [span]="1">Lili Qu</tri-descriptions-item>
+          <tri-descriptions-item title="Association" [span]="1"><a>421421</a></tri-descriptions-item>
+          <tri-descriptions-item title="Creation Time" [span]="1">2017-01-10</tri-descriptions-item>
+          <tri-descriptions-item title="Effective Time" [span]="1">2017-10-10</tri-descriptions-item>
+          <tri-descriptions-item title="Remarks" [span]="2">
             Gonghu Road, Xihu District, Hangzhou, Zhejiang, China
-          </nz-descriptions-item>
-        </nz-descriptions>
-      </nz-page-header-content>
-    </nz-page-header>
+          </tri-descriptions-item>
+        </tri-descriptions>
+      </tri-page-header-content>
+    </tri-page-header>
     <br />
-    <nz-page-header nzBackIcon>
-      <nz-page-header-title>Title</nz-page-header-title>
-      <nz-page-header-subtitle>This is a subtitle</nz-page-header-subtitle>
-      <nz-page-header-tags>
-        <nz-tag nzColor="blue">Running</nz-tag>
-      </nz-page-header-tags>
-      <nz-page-header-extra>
-        <nz-space>
-          <button *nzSpaceItem nz-button>Operation</button>
-          <button *nzSpaceItem nz-button>Operation</button>
-          <button *nzSpaceItem nz-button nzType="primary">Primary</button>
-        </nz-space>
-      </nz-page-header-extra>
-      <nz-page-header-content>
-        <nz-row>
-          <nz-statistic nzTitle="Status" nzValue="Pending"></nz-statistic>
-          <nz-statistic nzTitle="Price" [nzValue]="568.08" nzPrefix="$" style="margin: 0 32px"></nz-statistic>
-          <nz-statistic nzTitle="Balance" [nzValue]="3345.08" nzPrefix="$"></nz-statistic>
-        </nz-row>
-      </nz-page-header-content>
-    </nz-page-header>
+    <tri-page-header backIcon>
+      <tri-page-header-title>Title</tri-page-header-title>
+      <tri-page-header-subtitle>This is a subtitle</tri-page-header-subtitle>
+      <tri-page-header-tags>
+        <tri-tag color="blue">Running</tri-tag>
+      </tri-page-header-tags>
+      <tri-page-header-extra>
+        <tri-space>
+          <button *spaceItem tri-button>Operation</button>
+          <button *spaceItem tri-button>Operation</button>
+          <button *spaceItem tri-button type="primary">Primary</button>
+        </tri-space>
+      </tri-page-header-extra>
+      <tri-page-header-content>
+        <tri-row>
+          <tri-statistic title="Status" value="Pending"></tri-statistic>
+          <tri-statistic title="Price" [value]="568.08" prefix="$" style="margin: 0 32px"></tri-statistic>
+          <tri-statistic title="Balance" [value]="3345.08" prefix="$"></tri-statistic>
+        </tri-row>
+      </tri-page-header-content>
+    </tri-page-header>
   `
 })
-export class NzDemoPageHeaderActionsComponent {}
+export class TriDemoPageHeaderActionsComponent {}

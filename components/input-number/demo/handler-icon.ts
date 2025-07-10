@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
 
 @Component({
-  selector: 'nz-demo-input-number-handler-icon',
-  imports: [FormsModule, NzInputNumberModule, NzIconModule],
+  selector: '',
+  imports: [FormsModule, TriInputNumberModule, TriIconModule],
   template: `
-    <nz-input-number [(ngModel)]="value">
-      <nz-icon nzInputNumberUpIcon nzType="arrow-up" />
-      <nz-icon nzInputNumberDownIcon nzType="arrow-down" />
-    </nz-input-number>
+    <tri-input-number [(ngModel)]="value">
+      <tri-icon inputNumberUpIcon type="arrow-up" />
+      <tri-icon inputNumberDownIcon type="arrow-down" />
+    </tri-input-number>
   `
 })
-export class NzDemoInputNumberHandlerIconComponent {
+export class TriDemoInputNumberHandlerIconComponent {
   value = 3;
 }

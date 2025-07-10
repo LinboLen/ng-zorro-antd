@@ -24,35 +24,35 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { NzFormStatusService } from 'ng-zorro-antd/core/form';
-import { NzSafeAny, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
+import { TriFormStatusService } from 'ng-zorro-antd/core/form';
+import { TriSafeAny, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 
-import { NzRadioService } from './radio.service';
+import { TriRadioService } from './radio.service';
 
 @Component({
-  selector: '[nz-radio],[nz-radio-button]',
-  exportAs: 'nzRadio',
+  selector: '',
+  exportAs: 'triRadio',
   template: `
     <span
-      [class.ant-radio]="!isRadioButton"
-      [class.ant-radio-checked]="isChecked && !isRadioButton"
-      [class.ant-radio-disabled]="nzDisabled && !isRadioButton"
-      [class.ant-radio-button]="isRadioButton"
-      [class.ant-radio-button-checked]="isChecked && isRadioButton"
-      [class.ant-radio-button-disabled]="nzDisabled && isRadioButton"
+      [class.tri-radio]="!isRadioButton"
+      [class.tri-radio-checked]="isChecked && !isRadioButton"
+      [class.tri-radio-disabled]="disabled && !isRadioButton"
+      [class.tri-radio-button]="isRadioButton"
+      [class.tri-radio-button-checked]="isChecked && isRadioButton"
+      [class.tri-radio-button-disabled]="disabled && isRadioButton"
     >
       <input
         #inputElement
         type="radio"
-        [attr.autofocus]="nzAutoFocus ? 'autofocus' : null"
-        [class.ant-radio-input]="!isRadioButton"
-        [class.ant-radio-button-input]="isRadioButton"
-        [disabled]="nzDisabled"
+        [attr.autofocus]="autoFocus ? 'autofocus' : null"
+        [class.tri-radio-input]="!isRadioButton"
+        [class.tri-radio-button-input]="isRadioButton"
+        [disabled]="disabled"
         [checked]="isChecked"
         [attr.name]="name"
       />
-      <span [class.ant-radio-inner]="!isRadioButton" [class.ant-radio-button-inner]="isRadioButton"></span>
+      <span [class.tri-radio-inner]="!isRadioButton" [class.tri-radio-button-inner]="isRadioButton"></span>
     </span>
     <span><ng-content></ng-content></span>
   `,
@@ -61,31 +61,31 @@ import { NzRadioService } from './radio.service';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NzRadioComponent),
+      useExisting: forwardRef(() => TriRadioComponent),
       multi: true
     }
   ],
   host: {
-    '[class.ant-radio-wrapper-in-form-item]': '!!nzFormStatusService',
-    '[class.ant-radio-wrapper]': '!isRadioButton',
-    '[class.ant-radio-button-wrapper]': 'isRadioButton',
-    '[class.ant-radio-wrapper-checked]': 'isChecked && !isRadioButton',
-    '[class.ant-radio-button-wrapper-checked]': 'isChecked && isRadioButton',
-    '[class.ant-radio-wrapper-disabled]': 'nzDisabled && !isRadioButton',
-    '[class.ant-radio-button-wrapper-disabled]': 'nzDisabled && isRadioButton',
-    '[class.ant-radio-wrapper-rtl]': `!isRadioButton && dir === 'rtl'`,
-    '[class.ant-radio-button-wrapper-rtl]': `isRadioButton && dir === 'rtl'`
+    '[class.tri-radio-wrapper-in-form-item]': '!!formStatusService',
+    '[class.tri-radio-wrapper]': '!isRadioButton',
+    '[class.tri-radio-button-wrapper]': 'isRadioButton',
+    '[class.tri-radio-wrapper-checked]': 'isChecked && !isRadioButton',
+    '[class.tri-radio-button-wrapper-checked]': 'isChecked && isRadioButton',
+    '[class.tri-radio-wrapper-disabled]': 'disabled && !isRadioButton',
+    '[class.tri-radio-button-wrapper-disabled]': 'disabled && isRadioButton',
+    '[class.tri-radio-wrapper-rtl]': `!isRadioButton && dir === 'rtl'`,
+    '[class.tri-radio-button-wrapper-rtl]': `isRadioButton && dir === 'rtl'`
   }
 })
-export class NzRadioComponent implements ControlValueAccessor, AfterViewInit, OnInit {
+export class TriRadioComponent implements ControlValueAccessor, AfterViewInit, OnInit {
   private readonly directionality = inject(Directionality);
-  private readonly nzRadioService = inject(NzRadioService, { optional: true });
+  private readonly radioService = inject(TriRadioService, { optional: true });
   private readonly ngZone = inject(NgZone);
   private readonly elementRef = inject(ElementRef);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly focusMonitor = inject(FocusMonitor);
   private readonly destroyRef = inject(DestroyRef);
-  readonly nzFormStatusService = inject(NzFormStatusService, { optional: true });
+  readonly formStatusService = inject(TriFormStatusService, { optional: true });
 
   private isNgModel = false;
   private isNzDisableFirstChange: boolean = true;
@@ -94,9 +94,9 @@ export class NzRadioComponent implements ControlValueAccessor, AfterViewInit, On
   onChange: OnChangeType = () => {};
   onTouched: OnTouchedType = () => {};
   @ViewChild('inputElement', { static: true }) inputElement!: ElementRef<HTMLInputElement>;
-  @Input() nzValue: NzSafeAny | null = null;
-  @Input({ transform: booleanAttribute }) nzDisabled = false;
-  @Input({ transform: booleanAttribute }) nzAutoFocus = false;
+  @Input() value: TriSafeAny | null = null;
+  @Input({ transform: booleanAttribute }) disabled = false;
+  @Input({ transform: booleanAttribute }) autoFocus = false;
   @Input({ alias: 'nz-radio-button', transform: booleanAttribute }) isRadioButton = false;
 
   dir: Direction = 'ltr';
@@ -116,7 +116,7 @@ export class NzRadioComponent implements ControlValueAccessor, AfterViewInit, On
   }
 
   setDisabledState(disabled: boolean): void {
-    this.nzDisabled = (this.isNzDisableFirstChange && this.nzDisabled) || disabled;
+    this.disabled = (this.isNzDisableFirstChange && this.disabled) || disabled;
     this.isNzDisableFirstChange = false;
     this.cdr.markForCheck();
   }
@@ -136,19 +136,19 @@ export class NzRadioComponent implements ControlValueAccessor, AfterViewInit, On
   }
 
   ngOnInit(): void {
-    if (this.nzRadioService) {
-      this.nzRadioService.name$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(name => {
+    if (this.radioService) {
+      this.radioService.name$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(name => {
         this.name = name;
         this.cdr.markForCheck();
       });
-      this.nzRadioService.disabled$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(disabled => {
-        this.nzDisabled = (this.isNzDisableFirstChange && this.nzDisabled) || disabled;
+      this.radioService.disabled$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(disabled => {
+        this.disabled = (this.isNzDisableFirstChange && this.disabled) || disabled;
         this.isNzDisableFirstChange = false;
         this.cdr.markForCheck();
       });
-      this.nzRadioService.selected$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(value => {
+      this.radioService.selected$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(value => {
         const isChecked = this.isChecked;
-        this.isChecked = this.nzValue === value;
+        this.isChecked = this.value === value;
         // We don't have to run `onChange()` on each `nz-radio` button whenever the `selected$` emits.
         // If we have 8 `nz-radio` buttons within the `nz-radio-group` and they're all connected with
         // `ngModel` or `formControl` then `onChange()` will be called 8 times for each `nz-radio` button.
@@ -171,8 +171,8 @@ export class NzRadioComponent implements ControlValueAccessor, AfterViewInit, On
       .subscribe(focusOrigin => {
         if (!focusOrigin) {
           Promise.resolve().then(() => this.onTouched());
-          if (this.nzRadioService) {
-            this.nzRadioService.touch();
+          if (this.radioService) {
+            this.radioService.touch();
           }
         }
       });
@@ -188,7 +188,7 @@ export class NzRadioComponent implements ControlValueAccessor, AfterViewInit, On
   }
 
   ngAfterViewInit(): void {
-    if (this.nzAutoFocus) {
+    if (this.autoFocus) {
       this.focus();
     }
   }
@@ -200,12 +200,12 @@ export class NzRadioComponent implements ControlValueAccessor, AfterViewInit, On
         /** prevent label click triggered twice. **/
         event.stopPropagation();
         event.preventDefault();
-        if (this.nzDisabled || this.isChecked) {
+        if (this.disabled || this.isChecked) {
           return;
         }
         this.ngZone.run(() => {
           this.focus();
-          this.nzRadioService?.select(this.nzValue);
+          this.radioService?.select(this.value);
           if (this.isNgModel) {
             this.isChecked = true;
             this.onChange(true);

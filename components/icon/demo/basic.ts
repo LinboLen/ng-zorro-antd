@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-demo-icon-basic',
-  imports: [NzIconModule],
+  selector: '',
+  imports: [TriIconModule],
   template: `
     <div class="icons-list">
-      <nz-icon nzType="home" />
-      <nz-icon nzType="setting" nzTheme="fill" />
-      <nz-icon nzType="smile" nzTheme="outline" />
-      <nz-icon nzType="sync" [nzSpin]="true" />
-      <nz-icon nzType="smile" nzTheme="outline" [nzRotate]="180" />
+      <tri-icon type="home" />
+      <tri-icon type="setting" theme="fill" />
+      <tri-icon type="smile" theme="outline" />
+      <tri-icon type="sync" [spin]="true" />
+      <tri-icon type="smile" theme="outline" [rotate]="180" />
       <!-- Loading with new API would spin automatically! -->
-      <nz-icon nzType="loading" />
+      <tri-icon type="loading" />
     </div>
   `,
   styles: [
@@ -25,4 +25,4 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     `
   ]
 })
-export class NzDemoIconBasicComponent {}
+export class TriDemoIconBasicComponent {}

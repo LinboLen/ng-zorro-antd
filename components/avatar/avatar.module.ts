@@ -5,11 +5,11 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzAvatarGroupComponent } from './avatar-group.component';
-import { NzAvatarComponent } from './avatar.component';
+import { TriAvatarGroupComponent } from './avatar-group.component';
+import { TriAvatarComponent } from './avatar.component';
 
 @NgModule({
-  exports: [NzAvatarComponent, NzAvatarGroupComponent],
-  imports: [NzAvatarComponent, NzAvatarGroupComponent]
+  exports: [TriAvatarComponent, TriAvatarGroupComponent],
+  imports: [TriAvatarComponent, TriAvatarGroupComponent]
 })
-export class NzAvatarModule {}
+export class TriAvatarModule {}

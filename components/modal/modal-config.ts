@@ -5,8 +5,8 @@
 
 import { InjectionToken } from '@angular/core';
 
-import { NzConfigKey } from 'ng-zorro-antd/core/config';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriConfigKey } from 'ng-zorro-antd/core/config';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 export const ZOOM_CLASS_NAME_MAP = {
   enter: 'ant-zoom-enter',
@@ -23,5 +23,5 @@ export const FADE_CLASS_NAME_MAP = {
 };
 
 export const MODAL_MASK_CLASS_NAME = 'ant-modal-mask';
-export const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'modal';
-export const NZ_MODAL_DATA = new InjectionToken<NzSafeAny>('NZ_MODAL_DATA');
+export const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'modal';
+export const NZ_MODAL_DATA = new InjectionToken<TriSafeAny>('NZ_MODAL_DATA');

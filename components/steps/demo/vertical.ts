@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 
-import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { TriStepsModule } from 'ng-zorro-antd/steps';
 
 @Component({
-  selector: 'nz-demo-steps-vertical',
-  imports: [NzStepsModule],
+  selector: '',
+  imports: [TriStepsModule],
   template: `
-    <nz-steps [nzCurrent]="1" nzDirection="vertical">
-      <nz-step nzTitle="Finished" nzDescription="This is a description."></nz-step>
-      <nz-step nzTitle="In Progress" nzDescription="This is a description."></nz-step>
-      <nz-step nzTitle="Waiting" nzDescription="This is a description."></nz-step>
-    </nz-steps>
+    <tri-steps [current]="1" direction="vertical">
+      <tri-step title="Finished" description="This is a description."></tri-step>
+      <tri-step title="In Progress" description="This is a description."></tri-step>
+      <tri-step title="Waiting" description="This is a description."></tri-step>
+    </tri-steps>
   `
 })
-export class NzDemoStepsVerticalComponent {}
+export class TriDemoStepsVerticalComponent {}

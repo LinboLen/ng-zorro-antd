@@ -25,56 +25,56 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
-import { NzTimelineItemComponent } from './timeline-item.component';
+import { TriTimelineItemComponent } from './timeline-item.component';
 import { TimelineService } from './timeline.service';
-import { NzTimelineMode, NzTimelinePosition } from './typings';
+import { TriTimelineMode, TriTimelinePosition } from './typings';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-timeline',
+  selector: '',
   providers: [TimelineService],
-  exportAs: 'nzTimeline',
+  exportAs: 'triTimeline',
   template: `
     <ul
-      class="ant-timeline"
-      [class.ant-timeline-label]="hasLabelItem"
-      [class.ant-timeline-right]="!hasLabelItem && nzMode === 'right'"
-      [class.ant-timeline-alternate]="nzMode === 'alternate' || nzMode === 'custom'"
-      [class.ant-timeline-pending]="!!nzPending"
-      [class.ant-timeline-reverse]="nzReverse"
-      [class.ant-timeline-rtl]="dir === 'rtl'"
+      class="tri-timeline"
+      [class.tri-timeline-label]="hasLabelItem"
+      [class.tri-timeline-right]="!hasLabelItem && mode === 'right'"
+      [class.tri-timeline-alternate]="mode === 'alternate' || mode === 'custom'"
+      [class.tri-timeline-pending]="!!pending"
+      [class.tri-timeline-reverse]="reverse"
+      [class.tri-timeline-rtl]="dir === 'rtl'"
     >
       <!-- pending dot (reversed) -->
-      @if (nzReverse) {
+      @if (reverse) {
         <ng-container [ngTemplateOutlet]="pendingTemplate"></ng-container>
       }
       <!-- timeline items -->
       @for (item of timelineItems; track item) {
         <ng-template [ngTemplateOutlet]="item.template"></ng-template>
       }
-      @if (!nzReverse) {
+      @if (!reverse) {
         <ng-container [ngTemplateOutlet]="pendingTemplate"></ng-container>
       }
       <!-- pending dot -->
     </ul>
     <ng-template #pendingTemplate>
-      @if (nzPending) {
-        <li class="ant-timeline-item ant-timeline-item-pending">
-          <div class="ant-timeline-item-tail"></div>
-          <div class="ant-timeline-item-head ant-timeline-item-head-custom ant-timeline-item-head-blue">
-            <ng-container *nzStringTemplateOutlet="nzPendingDot">
-              {{ nzPendingDot }}
-              @if (!nzPendingDot) {
-                <nz-icon nzType="loading" />
+      @if (pending) {
+        <li class="tri-timeline-item tri-timeline-item-pending">
+          <div class="tri-timeline-item-tail"></div>
+          <div class="tri-timeline-item-head tri-timeline-item-head-custom tri-timeline-item-head-blue">
+            <ng-container *stringTemplateOutlet="pendingDot">
+              {{ pendingDot }}
+              @if (!pendingDot) {
+                <tri-icon type="loading" />
               }
             </ng-container>
           </div>
-          <div class="ant-timeline-item-content">
-            <ng-container *nzStringTemplateOutlet="nzPending">
+          <div class="tri-timeline-item-content">
+            <ng-container *stringTemplateOutlet="pending">
               {{ isPendingBoolean ? '' : nzPending }}
             </ng-container>
           </div>
@@ -84,23 +84,23 @@ import { NzTimelineMode, NzTimelinePosition } from './typings';
     <!-- Grasp items -->
     <ng-content></ng-content>
   `,
-  imports: [NgTemplateOutlet, NzOutletModule, NzIconModule]
+  imports: [NgTemplateOutlet, TriOutletModule, TriIconModule]
 })
-export class NzTimelineComponent implements AfterContentInit, OnChanges, OnInit {
+export class TriTimelineComponent implements AfterContentInit, OnChanges, OnInit {
   private cdr = inject(ChangeDetectorRef);
   private timelineService = inject(TimelineService);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
 
-  @ContentChildren(NzTimelineItemComponent) listOfItems!: QueryList<NzTimelineItemComponent>;
+  @ContentChildren(TriTimelineItemComponent) listOfItems!: QueryList<TriTimelineItemComponent>;
 
-  @Input() nzMode: NzTimelineMode = 'left';
-  @Input() nzPending?: string | boolean | TemplateRef<void>;
-  @Input() nzPendingDot?: string | TemplateRef<void>;
-  @Input({ transform: booleanAttribute }) nzReverse: boolean = false;
+  @Input() mode: TriTimelineMode = 'left';
+  @Input() pending?: string | boolean | TemplateRef<void>;
+  @Input() pendingDot?: string | TemplateRef<void>;
+  @Input({ transform: booleanAttribute }) reverse: boolean = false;
 
   isPendingBoolean: boolean = false;
-  timelineItems: NzTimelineItemComponent[] = [];
+  timelineItems: TriTimelineItemComponent[] = [];
   dir: Direction = 'ltr';
   hasLabelItem = false;
 
@@ -142,18 +142,18 @@ export class NzTimelineComponent implements AfterContentInit, OnChanges, OnInit 
       const length = this.listOfItems.length;
       let hasLabelItem = false;
 
-      this.listOfItems.forEach((item: NzTimelineItemComponent, index: number) => {
-        item.isLast = !this.nzReverse ? index === length - 1 : index === 0;
-        item.position = getInferredTimelineItemPosition(index, this.nzMode);
+      this.listOfItems.forEach((item: TriTimelineItemComponent, index: number) => {
+        item.isLast = !this.reverse ? index === length - 1 : index === 0;
+        item._position = getInferredTimelineItemPosition(index, this.mode);
 
-        if (!hasLabelItem && item.nzLabel) {
+        if (!hasLabelItem && item.label) {
           hasLabelItem = true;
         }
 
         item.detectChanges();
       });
 
-      this.timelineItems = this.nzReverse ? this.listOfItems.toArray().reverse() : this.listOfItems.toArray();
+      this.timelineItems = this.reverse ? this.listOfItems.toArray().reverse() : this.listOfItems.toArray();
       this.hasLabelItem = hasLabelItem;
     } else {
       this.timelineItems = [];
@@ -168,7 +168,7 @@ function simpleChangeActivated(simpleChange?: SimpleChange): boolean {
   return !!(simpleChange && (simpleChange.previousValue !== simpleChange.currentValue || simpleChange.isFirstChange()));
 }
 
-function getInferredTimelineItemPosition(index: number, mode: NzTimelineMode): NzTimelinePosition | undefined {
+function getInferredTimelineItemPosition(index: number, mode: TriTimelineMode): TriTimelinePosition | undefined {
   if (mode === 'custom') {
     return undefined;
   } else if (mode === 'left' || mode === 'right') {

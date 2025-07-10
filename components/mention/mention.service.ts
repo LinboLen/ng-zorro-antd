@@ -6,12 +6,12 @@
 import { DestroyRef, inject, Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
-import { NzMentionTriggerDirective } from './mention-trigger';
+import { TriMentionTriggerDirective } from './mention-trigger';
 
 @Injectable()
-export class NzMentionService {
-  private trigger?: NzMentionTriggerDirective;
-  private triggerChange$ = new Subject<NzMentionTriggerDirective>();
+export class TriMentionService {
+  private trigger?: TriMentionTriggerDirective;
+  private triggerChange$ = new Subject<TriMentionTriggerDirective>();
 
   constructor() {
     inject(DestroyRef).onDestroy(() => {
@@ -19,11 +19,11 @@ export class NzMentionService {
     });
   }
 
-  triggerChanged(): Observable<NzMentionTriggerDirective> {
+  triggerChanged(): Observable<TriMentionTriggerDirective> {
     return this.triggerChange$.asObservable();
   }
 
-  registerTrigger(trigger: NzMentionTriggerDirective): void {
+  registerTrigger(trigger: TriMentionTriggerDirective): void {
     if (this.trigger !== trigger) {
       this.trigger = trigger;
       this.triggerChange$.next(trigger);

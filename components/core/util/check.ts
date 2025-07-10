@@ -5,7 +5,7 @@
 
 import { TemplateRef } from '@angular/core';
 
-import { IndexableObject, NzSafeAny } from 'ng-zorro-antd/core/types';
+import { IndexableObject, TriSafeAny } from 'ng-zorro-antd/core/types';
 
 export function isNotNil<T>(value: T): value is NonNullable<T> {
   return typeof value !== 'undefined' && value !== null;
@@ -50,10 +50,10 @@ export function shallowEqual(objA?: IndexableObject, objB?: IndexableObject): bo
   return true;
 }
 
-export function isNonEmptyString(value: NzSafeAny): boolean {
+export function isNonEmptyString(value: TriSafeAny): boolean {
   return typeof value === 'string' && value !== '';
 }
 
-export function isTemplateRef<T>(value: TemplateRef<T> | NzSafeAny): value is TemplateRef<T> {
+export function isTemplateRef<T>(value: TemplateRef<T> | TriSafeAny): value is TemplateRef<T> {
   return value instanceof TemplateRef;
 }

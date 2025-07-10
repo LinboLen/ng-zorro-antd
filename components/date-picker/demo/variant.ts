@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: 'nz-demo-date-picker-variant',
-  imports: [NzDatePickerModule, NzSpaceModule],
+  selector: '',
+  imports: [TriDatePickerModule, TriSpaceModule],
   template: `
-    <nz-space nzDirection="vertical" style="width: 100%">
-      <nz-date-picker *nzSpaceItem nzVariant="outlined" />
-      <nz-date-picker *nzSpaceItem nzVariant="filled" />
-      <nz-date-picker *nzSpaceItem nzVariant="borderless" />
-      <nz-date-picker *nzSpaceItem nzVariant="underlined" />
-    </nz-space>
+    <tri-space direction="vertical" style="width: 100%">
+      <tri-date-picker *spaceItem variant="outlined" />
+      <tri-date-picker *spaceItem variant="filled" />
+      <tri-date-picker *spaceItem variant="borderless" />
+      <tri-date-picker *spaceItem variant="underlined" />
+    </tri-space>
   `,
   styles: [
     `
@@ -22,4 +22,4 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
     `
   ]
 })
-export class NzDemoDatePickerVariantComponent {}
+export class TriDemoDatePickerVariantComponent {}

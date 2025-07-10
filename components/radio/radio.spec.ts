@@ -10,23 +10,23 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { createMouseEvent } from 'ng-zorro-antd/core/testing';
-import { NzSizeLDSType } from 'ng-zorro-antd/core/types';
+import { TriSizeLDSType } from 'ng-zorro-antd/core/types';
 
-import { NzRadioGroupComponent } from './radio-group.component';
-import { NzRadioComponent } from './radio.component';
-import { NzRadioModule } from './radio.module';
+import { TriRadioGroupComponent } from './radio-group.component';
+import { TriRadioComponent } from './radio.component';
+import { TriRadioModule } from './radio.module';
 
 describe('radio', () => {
   describe('single radio basic', () => {
-    let fixture: ComponentFixture<NzTestRadioSingleComponent>;
-    let testComponent: NzTestRadioSingleComponent;
+    let fixture: ComponentFixture<TriTestRadioSingleComponent>;
+    let testComponent: TriTestRadioSingleComponent;
     let radio: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestRadioSingleComponent);
+      fixture = TestBed.createComponent(TriTestRadioSingleComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      radio = fixture.debugElement.query(By.directive(NzRadioComponent));
+      radio = fixture.debugElement.query(By.directive(TriRadioComponent));
     });
 
     it('should className correct', () => {
@@ -97,23 +97,23 @@ describe('radio', () => {
     it('should focus and blur function work', () => {
       fixture.detectChanges();
       expect(radio.nativeElement.querySelector('input') === document.activeElement).toBe(false);
-      testComponent.nzRadioComponent.focus();
+      testComponent.radioComponent.focus();
       fixture.detectChanges();
       expect(radio.nativeElement.querySelector('input') === document.activeElement).toBe(true);
-      testComponent.nzRadioComponent.blur();
+      testComponent.radioComponent.blur();
       fixture.detectChanges();
       expect(radio.nativeElement.querySelector('input') === document.activeElement).toBe(false);
     });
   });
 
   describe('single radio button', () => {
-    let fixture: ComponentFixture<NzTestRadioButtonComponent>;
+    let fixture: ComponentFixture<TriTestRadioButtonComponent>;
     let radio: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestRadioButtonComponent);
+      fixture = TestBed.createComponent(TriTestRadioButtonComponent);
       fixture.detectChanges();
-      radio = fixture.debugElement.query(By.directive(NzRadioComponent));
+      radio = fixture.debugElement.query(By.directive(TriRadioComponent));
     });
 
     it('should className correct', () => {
@@ -125,17 +125,17 @@ describe('radio', () => {
   });
 
   describe('radio group', () => {
-    let fixture: ComponentFixture<NzTestRadioGroupComponent>;
-    let testComponent: NzTestRadioGroupComponent;
+    let fixture: ComponentFixture<TriTestRadioGroupComponent>;
+    let testComponent: TriTestRadioGroupComponent;
     let radios: DebugElement[];
     let radioGroup: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestRadioGroupComponent);
+      fixture = TestBed.createComponent(TriTestRadioGroupComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      radios = fixture.debugElement.queryAll(By.directive(NzRadioComponent));
-      radioGroup = fixture.debugElement.query(By.directive(NzRadioGroupComponent));
+      radios = fixture.debugElement.queryAll(By.directive(TriRadioComponent));
+      radioGroup = fixture.debugElement.query(By.directive(TriRadioGroupComponent));
     });
 
     it('should className correct', () => {
@@ -189,15 +189,15 @@ describe('radio', () => {
   });
 
   describe('radio group disabled', () => {
-    let fixture: ComponentFixture<NzTestRadioGroupDisabledComponent>;
-    let testComponent: NzTestRadioGroupDisabledComponent;
+    let fixture: ComponentFixture<TriTestRadioGroupDisabledComponent>;
+    let testComponent: TriTestRadioGroupDisabledComponent;
     let radios: DebugElement[];
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestRadioGroupDisabledComponent);
+      fixture = TestBed.createComponent(TriTestRadioGroupDisabledComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      radios = fixture.debugElement.queryAll(By.directive(NzRadioComponent));
+      radios = fixture.debugElement.queryAll(By.directive(TriRadioComponent));
     });
 
     it('should group disable work', fakeAsync(() => {
@@ -230,13 +230,13 @@ describe('radio', () => {
   });
 
   describe('radio group solid', () => {
-    let fixture: ComponentFixture<NzTestRadioGroupSolidComponent>;
+    let fixture: ComponentFixture<TriTestRadioGroupSolidComponent>;
     let radioGroup: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestRadioGroupSolidComponent);
+      fixture = TestBed.createComponent(TriTestRadioGroupSolidComponent);
       fixture.detectChanges();
-      radioGroup = fixture.debugElement.query(By.directive(NzRadioGroupComponent));
+      radioGroup = fixture.debugElement.query(By.directive(TriRadioGroupComponent));
     });
 
     it('should support solid css', () => {
@@ -246,17 +246,17 @@ describe('radio', () => {
   });
 
   describe('radio form', () => {
-    let fixture: ComponentFixture<NzTestRadioFormComponent>;
-    let testComponent: NzTestRadioFormComponent;
+    let fixture: ComponentFixture<TriTestRadioFormComponent>;
+    let testComponent: TriTestRadioFormComponent;
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestRadioFormComponent);
+      fixture = TestBed.createComponent(TriTestRadioFormComponent);
       testComponent = fixture.componentInstance;
     });
 
     it('should be in pristine, untouched, and valid states and enable initially', fakeAsync(() => {
       fixture.detectChanges();
       flush();
-      const radio = fixture.debugElement.query(By.directive(NzRadioComponent));
+      const radio = fixture.debugElement.query(By.directive(TriRadioComponent));
       const inputElement = radio.nativeElement.querySelector('input') as HTMLInputElement;
       expect(radio.nativeElement.firstElementChild!.classList).not.toContain('ant-radio-disabled');
       expect(inputElement.disabled).toBeFalsy();
@@ -269,7 +269,7 @@ describe('radio', () => {
       testComponent.formControl.disable();
       fixture.detectChanges();
       flush();
-      const radio = fixture.debugElement.query(By.directive(NzRadioComponent));
+      const radio = fixture.debugElement.query(By.directive(TriRadioComponent));
       const inputElement = radio.nativeElement.querySelector('input') as HTMLInputElement;
       expect(radio.nativeElement.firstElementChild!.classList).toContain('ant-radio-disabled');
       expect(inputElement.disabled).toBeTruthy();
@@ -279,7 +279,7 @@ describe('radio', () => {
       testComponent.disabled = true;
       fixture.detectChanges();
       flush();
-      const radio = fixture.debugElement.query(By.directive(NzRadioComponent));
+      const radio = fixture.debugElement.query(By.directive(TriRadioComponent));
       const inputElement = radio.nativeElement.querySelector('input') as HTMLInputElement;
       expect(radio.nativeElement.firstElementChild!.classList).toContain('ant-radio-disabled');
       expect(inputElement.disabled).toBeTruthy();
@@ -309,26 +309,26 @@ describe('radio', () => {
   });
 
   describe('radio group form', () => {
-    let fixture: ComponentFixture<NzTestRadioGroupFormComponent>;
-    let testComponent: NzTestRadioGroupFormComponent;
+    let fixture: ComponentFixture<TriTestRadioGroupFormComponent>;
+    let testComponent: TriTestRadioGroupFormComponent;
 
     beforeEach(fakeAsync(() => {
-      fixture = TestBed.createComponent(NzTestRadioGroupFormComponent);
+      fixture = TestBed.createComponent(TriTestRadioGroupFormComponent);
       testComponent = fixture.componentInstance;
     }));
 
     it('should be in pristine, untouched, and valid states initially', fakeAsync(() => {
       fixture.detectChanges();
       flush();
-      const radioGroup: NzRadioGroupComponent = fixture.debugElement.query(
-        By.directive(NzRadioGroupComponent)
+      const radioGroup: TriRadioGroupComponent = fixture.debugElement.query(
+        By.directive(TriRadioGroupComponent)
       ).componentInstance;
-      const radios = fixture.debugElement.queryAll(By.directive(NzRadioComponent));
+      const radios = fixture.debugElement.queryAll(By.directive(TriRadioComponent));
       const [firstRadios] = radios;
       expect(testComponent.formControl.valid).toBe(true);
       expect(testComponent.formControl.pristine).toBe(true);
       expect(testComponent.formControl.touched).toBe(false);
-      expect(radioGroup.nzDisabled).toBeFalsy();
+      expect(radioGroup.disabled).toBeFalsy();
       expect(firstRadios.componentInstance.nzDisabled).toBeTruthy();
     }));
 
@@ -336,21 +336,21 @@ describe('radio', () => {
       testComponent.formControl.disable();
       fixture.detectChanges();
       flush();
-      const radioGroup: NzRadioGroupComponent = fixture.debugElement.query(
-        By.directive(NzRadioGroupComponent)
+      const radioGroup: TriRadioGroupComponent = fixture.debugElement.query(
+        By.directive(TriRadioGroupComponent)
       ).componentInstance;
-      expect(radioGroup.nzDisabled).toBeTruthy();
+      expect(radioGroup.disabled).toBeTruthy();
     }));
 
     it('should set disabled work', fakeAsync(() => {
-      testComponent.nzDisabled = true;
+      testComponent.disabled = true;
       fixture.detectChanges();
       flush();
-      const radios = fixture.debugElement.queryAll(By.directive(NzRadioComponent));
-      const radioGroup: NzRadioGroupComponent = fixture.debugElement.query(
-        By.directive(NzRadioGroupComponent)
+      const radios = fixture.debugElement.queryAll(By.directive(TriRadioComponent));
+      const radioGroup: TriRadioGroupComponent = fixture.debugElement.query(
+        By.directive(TriRadioGroupComponent)
       ).componentInstance;
-      expect(radioGroup.nzDisabled).toBeTruthy();
+      expect(radioGroup.disabled).toBeTruthy();
       radios[0].nativeElement.click();
       fixture.detectChanges();
       expect(testComponent.formControl.value).toBe('B');
@@ -359,7 +359,7 @@ describe('radio', () => {
       fixture.detectChanges();
       flush();
 
-      expect(radioGroup.nzDisabled).toBeFalsy();
+      expect(radioGroup.disabled).toBeFalsy();
       radios[0].nativeElement.click();
       fixture.detectChanges();
       expect(testComponent.formControl.value).toBe('A');
@@ -368,7 +368,7 @@ describe('radio', () => {
       fixture.detectChanges();
       flush();
 
-      expect(radioGroup.nzDisabled).toBeTruthy();
+      expect(radioGroup.disabled).toBeTruthy();
       radios[1].nativeElement.click();
       fixture.detectChanges();
       expect(testComponent.formControl.value).toBe('A');
@@ -378,7 +378,7 @@ describe('radio', () => {
   describe('radio group disable form', () => {
     it('expect not to thrown error', fakeAsync(() => {
       expect(() => {
-        const fixture = TestBed.createComponent(NzTestRadioGroupDisabledFormComponent);
+        const fixture = TestBed.createComponent(TriTestRadioGroupDisabledFormComponent);
         fixture.detectChanges();
       }).not.toThrow();
     }));
@@ -386,10 +386,10 @@ describe('radio', () => {
 
   describe('ngModel on the `nz-radio` button', () => {
     it('`onChange` of each `nz-radio` should emit correct values', () => {
-      const fixture = TestBed.createComponent(NzTestRadioGroupLabelNgModelComponent);
+      const fixture = TestBed.createComponent(TriTestRadioGroupLabelNgModelComponent);
       fixture.detectChanges();
 
-      const radios = fixture.debugElement.queryAll(By.directive(NzRadioComponent));
+      const radios = fixture.debugElement.queryAll(By.directive(TriRadioComponent));
 
       radios[0].nativeElement.click();
       expect(fixture.componentInstance.items).toEqual([
@@ -411,8 +411,8 @@ describe('radio', () => {
 
   describe('RTL', () => {
     it('should single radio className correct', () => {
-      const fixture = TestBed.createComponent(NzTestRadioSingleRtlComponent);
-      const radio = fixture.debugElement.query(By.directive(NzRadioComponent));
+      const fixture = TestBed.createComponent(TriTestRadioSingleRtlComponent);
+      const radio = fixture.debugElement.query(By.directive(TriRadioComponent));
       fixture.detectChanges();
       expect(radio.nativeElement.className).toContain('ant-radio-wrapper-rtl');
 
@@ -422,8 +422,8 @@ describe('radio', () => {
     });
 
     it('should radio button className correct', () => {
-      const fixture = TestBed.createComponent(NzTestRadioButtonRtlComponent);
-      const radio = fixture.debugElement.query(By.directive(NzRadioComponent));
+      const fixture = TestBed.createComponent(TriTestRadioButtonRtlComponent);
+      const radio = fixture.debugElement.query(By.directive(TriRadioComponent));
       fixture.detectChanges();
       expect(radio.nativeElement.className).toContain('ant-radio-button-wrapper-rtl');
 
@@ -433,8 +433,8 @@ describe('radio', () => {
     });
 
     it('should radio group className correct', () => {
-      const fixture = TestBed.createComponent(NzTestRadioGroupRtlComponent);
-      const radioGroup = fixture.debugElement.query(By.directive(NzRadioGroupComponent));
+      const fixture = TestBed.createComponent(TriTestRadioGroupRtlComponent);
+      const radioGroup = fixture.debugElement.query(By.directive(TriRadioGroupComponent));
       fixture.detectChanges();
       expect(radioGroup.nativeElement.classList).toContain('ant-radio-group-rtl');
 
@@ -446,22 +446,22 @@ describe('radio', () => {
 });
 
 @Component({
-  selector: 'nz-test-radio-single',
-  imports: [FormsModule, NzRadioModule],
+  selector: '',
+  imports: [FormsModule, TriRadioModule],
   template: `
     <label
-      nz-radio
+      tri-radio
       [(ngModel)]="value"
       (ngModelChange)="modelChange($event)"
-      [nzDisabled]="disabled"
-      [nzAutoFocus]="autoFocus"
+      [disabled]="disabled"
+      [autoFocus]="autoFocus"
     >
       Radio
     </label>
   `
 })
-export class NzTestRadioSingleComponent {
-  @ViewChild(NzRadioComponent, { static: false }) nzRadioComponent!: NzRadioComponent;
+export class TriTestRadioSingleComponent {
+  @ViewChild(TriRadioComponent, { static: false }) radioComponent!: TriRadioComponent;
   value = false;
   autoFocus = false;
   disabled = false;
@@ -469,31 +469,31 @@ export class NzTestRadioSingleComponent {
 }
 
 @Component({
-  imports: [FormsModule, NzRadioModule],
-  template: `<label nz-radio-button>Radio</label>`
+  imports: [FormsModule, TriRadioModule],
+  template: `<label tri-radio-button>Radio</label>`
 })
-export class NzTestRadioButtonComponent {}
+export class TriTestRadioButtonComponent {}
 
 @Component({
-  selector: 'nz-test-radio-group',
-  imports: [FormsModule, NzRadioModule],
+  selector: '',
+  imports: [FormsModule, TriRadioModule],
   template: `
-    <nz-radio-group
+    <tri-radio-group
       [(ngModel)]="value"
-      [nzName]="name"
-      [nzDisabled]="disabled"
+      [name]="name"
+      [disabled]="disabled"
       (ngModelChange)="modelChange($event)"
-      [nzSize]="size"
+      [size]="size"
     >
-      <label nz-radio-button nzValue="A">A</label>
-      <label nz-radio-button nzValue="B">B</label>
-      <label nz-radio-button nzValue="C">C</label>
-      <label nz-radio-button nzValue="D">D</label>
-    </nz-radio-group>
+      <label tri-radio-button value="A">A</label>
+      <label tri-radio-button value="B">B</label>
+      <label tri-radio-button value="C">C</label>
+      <label tri-radio-button value="D">D</label>
+    </tri-radio-group>
   `
 })
-export class NzTestRadioGroupComponent {
-  size: NzSizeLDSType = 'default';
+export class TriTestRadioGroupComponent {
+  size: TriSizeLDSType = 'default';
   value = 'A';
   disabled = false;
   name!: string;
@@ -501,14 +501,14 @@ export class NzTestRadioGroupComponent {
 }
 
 @Component({
-  imports: [ReactiveFormsModule, NzRadioModule],
+  imports: [ReactiveFormsModule, TriRadioModule],
   template: `
     <form>
-      <label nz-radio [formControl]="formControl" [nzDisabled]="disabled"></label>
+      <label tri-radio [formControl]="formControl" [disabled]="disabled"></label>
     </form>
   `
 })
-export class NzTestRadioFormComponent {
+export class TriTestRadioFormComponent {
   formControl = new FormControl(false);
 
   disabled = false;
@@ -523,21 +523,21 @@ export class NzTestRadioFormComponent {
 }
 
 @Component({
-  imports: [ReactiveFormsModule, NzRadioModule],
+  imports: [ReactiveFormsModule, TriRadioModule],
   template: `
     <form>
-      <nz-radio-group [formControl]="formControl" [nzDisabled]="nzDisabled">
-        <label nz-radio-button nzValue="A" [nzDisabled]="true">A</label>
-        <label nz-radio-button nzValue="B">B</label>
-        <label nz-radio-button nzValue="C">C</label>
-        <label nz-radio-button nzValue="D">D</label>
-      </nz-radio-group>
+      <tri-radio-group [formControl]="formControl" [disabled]="disabled">
+        <label tri-radio-button value="A" [disabled]="true">A</label>
+        <label tri-radio-button value="B">B</label>
+        <label tri-radio-button value="C">C</label>
+        <label tri-radio-button value="D">D</label>
+      </tri-radio-group>
     </form>
   `
 })
-export class NzTestRadioGroupFormComponent {
+export class TriTestRadioGroupFormComponent {
   formControl = new FormControl('B');
-  nzDisabled = false;
+  disabled = false;
 
   disable(): void {
     this.formControl.disable();
@@ -551,18 +551,18 @@ export class NzTestRadioGroupFormComponent {
 /** https://github.com/NG-ZORRO/ng-zorro-antd/issues/1543 **/
 
 @Component({
-  imports: [FormsModule, NzRadioModule],
+  imports: [FormsModule, TriRadioModule],
   template: `
-    <nz-radio-group [(ngModel)]="value" [nzName]="name" [nzDisabled]="disabled" [nzSize]="size">
-      <label nz-radio-button nzValue="A">A</label>
-      <label nz-radio-button nzValue="B">B</label>
-      <label nz-radio-button nzValue="C" [nzDisabled]="singleDisabled">C</label>
-      <label nz-radio-button nzValue="D">D</label>
-    </nz-radio-group>
+    <tri-radio-group [(ngModel)]="value" [name]="name" [disabled]="disabled" [size]="size">
+      <label tri-radio-button value="A">A</label>
+      <label tri-radio-button value="B">B</label>
+      <label tri-radio-button value="C" [disabled]="singleDisabled">C</label>
+      <label tri-radio-button value="D">D</label>
+    </tri-radio-group>
   `
 })
-export class NzTestRadioGroupDisabledComponent {
-  size: NzSizeLDSType = 'default';
+export class TriTestRadioGroupDisabledComponent {
+  size: TriSizeLDSType = 'default';
   value = 'A';
   disabled = false;
   name!: string;
@@ -571,52 +571,52 @@ export class NzTestRadioGroupDisabledComponent {
 
 /** https://github.com/NG-ZORRO/ng-zorro-antd/issues/1735 **/
 @Component({
-  imports: [ReactiveFormsModule, NzRadioModule],
+  imports: [ReactiveFormsModule, TriRadioModule],
   template: `
     <form>
-      <nz-radio-group [formControl]="formControl">
+      <tri-radio-group [formControl]="formControl">
         @for (val of radioValues; track val) {
-          <label nz-radio [nzValue]="val">{{ val }}</label>
+          <label tri-radio [value]="val">{{ val }}</label>
         }
-      </nz-radio-group>
+      </tri-radio-group>
     </form>
   `
 })
-export class NzTestRadioGroupDisabledFormComponent {
+export class TriTestRadioGroupDisabledFormComponent {
   formControl = new FormControl({ value: 'B', disabled: true });
   radioValues = ['A', 'B', 'C', 'D'];
 }
 
 @Component({
-  imports: [FormsModule, NzRadioModule],
+  imports: [FormsModule, TriRadioModule],
   template: `
-    <nz-radio-group [(ngModel)]="value" nzButtonStyle="solid">
-      <label nz-radio-button nzValue="A">A</label>
-      <label nz-radio-button nzValue="B">B</label>
-      <label nz-radio-button nzValue="C" [nzDisabled]="singleDisabled">C</label>
-      <label nz-radio-button nzValue="D">D</label>
-    </nz-radio-group>
+    <tri-radio-group [(ngModel)]="value" buttonStyle="solid">
+      <label tri-radio-button value="A">A</label>
+      <label tri-radio-button value="B">B</label>
+      <label tri-radio-button value="C" [disabled]="singleDisabled">C</label>
+      <label tri-radio-button value="D">D</label>
+    </tri-radio-group>
   `
 })
-export class NzTestRadioGroupSolidComponent {
+export class TriTestRadioGroupSolidComponent {
   value = 'A';
   singleDisabled = false;
 }
 
 /** https://github.com/NG-ZORRO/ng-zorro-antd/issues/7254 */
 @Component({
-  imports: [FormsModule, NzRadioModule],
+  imports: [FormsModule, TriRadioModule],
   template: `
-    <nz-radio-group>
+    <tri-radio-group>
       @for (item of items; track item) {
-        <label nz-radio [nzValue]="item.label" [(ngModel)]="item.checked">
+        <label tri-radio [value]="item.label" [(ngModel)]="item.checked">
           {{ item.label }}
         </label>
       }
-    </nz-radio-group>
+    </tri-radio-group>
   `
 })
-export class NzTestRadioGroupLabelNgModelComponent {
+export class TriTestRadioGroupLabelNgModelComponent {
   items = [
     {
       label: 'A',
@@ -638,40 +638,40 @@ export class NzTestRadioGroupLabelNgModelComponent {
 }
 
 @Component({
-  imports: [BidiModule, NzTestRadioSingleComponent],
+  imports: [BidiModule, TriTestRadioSingleComponent],
   template: `
     <div [dir]="direction">
-      <nz-test-radio-single></nz-test-radio-single>
+      <tri-test-radio-single></tri-test-radio-single>
     </div>
   `
 })
-export class NzTestRadioSingleRtlComponent {
+export class TriTestRadioSingleRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 }
 
 @Component({
-  imports: [BidiModule, NzRadioModule],
+  imports: [BidiModule, TriRadioModule],
   template: `
     <div [dir]="direction">
-      <label nz-radio-button>Radio</label>
+      <label tri-radio-button>Radio</label>
     </div>
   `
 })
-export class NzTestRadioButtonRtlComponent {
+export class TriTestRadioButtonRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 }
 
 @Component({
-  imports: [BidiModule, NzTestRadioGroupComponent],
+  imports: [BidiModule, TriTestRadioGroupComponent],
   template: `
     <div [dir]="direction">
-      <nz-test-radio-group></nz-test-radio-group>
+      <tri-test-radio-group></tri-test-radio-group>
     </div>
   `
 })
-export class NzTestRadioGroupRtlComponent {
+export class TriTestRadioGroupRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 }

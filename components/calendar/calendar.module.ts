@@ -6,29 +6,29 @@
 import { NgModule } from '@angular/core';
 
 import {
-  NzDateCellDirective,
-  NzDateFullCellDirective,
-  NzMonthCellDirective,
-  NzMonthFullCellDirective
+  TriDateCellDirective,
+  TriDateFullCellDirective,
+  TriMonthCellDirective,
+  TriMonthFullCellDirective
 } from './calendar-cells';
-import { NzCalendarHeaderComponent } from './calendar-header.component';
-import { NzCalendarComponent } from './calendar.component';
+import { TriCalendarHeaderComponent } from './calendar-header.component';
+import { TriCalendarComponent } from './calendar.component';
 
 @NgModule({
   imports: [
-    NzCalendarHeaderComponent,
-    NzCalendarComponent,
-    NzDateCellDirective,
-    NzDateFullCellDirective,
-    NzMonthCellDirective,
-    NzMonthFullCellDirective
+    TriCalendarHeaderComponent,
+    TriCalendarComponent,
+    TriDateCellDirective,
+    TriDateFullCellDirective,
+    TriMonthCellDirective,
+    TriMonthFullCellDirective
   ],
   exports: [
-    NzCalendarComponent,
-    NzDateCellDirective,
-    NzDateFullCellDirective,
-    NzMonthCellDirective,
-    NzMonthFullCellDirective
+    TriCalendarComponent,
+    TriDateCellDirective,
+    TriDateFullCellDirective,
+    TriMonthCellDirective,
+    TriMonthFullCellDirective
   ]
 })
-export class NzCalendarModule {}
+export class TriCalendarModule {}

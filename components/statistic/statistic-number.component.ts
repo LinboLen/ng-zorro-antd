@@ -15,35 +15,35 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { NzStatisticValueType } from './typings';
+import { TriStatisticValueType } from './typings';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-statistic-number',
-  exportAs: 'nzStatisticNumber',
+  selector: '',
+  exportAs: 'triStatisticNumber',
   template: `
-    <span class="ant-statistic-content-value">
-      @if (nzValueTemplate) {
+    <span class="tri-statistic-content-value">
+      @if (valueTemplate) {
         <ng-container
-          [ngTemplateOutlet]="nzValueTemplate"
-          [ngTemplateOutletContext]="{ $implicit: nzValue }"
+          [ngTemplateOutlet]="valueTemplate"
+          [ngTemplateOutletContext]="{ $implicit: value }"
         ></ng-container>
       } @else {
         @if (displayInt) {
-          <span class="ant-statistic-content-value-int">{{ displayInt }}</span>
+          <span class="tri-statistic-content-value-int">{{ displayInt }}</span>
         }
         @if (displayDecimal) {
-          <span class="ant-statistic-content-value-decimal">{{ displayDecimal }}</span>
+          <span class="tri-statistic-content-value-decimal">{{ displayDecimal }}</span>
         }
       }
     </span>
   `,
   imports: [NgTemplateOutlet]
 })
-export class NzStatisticNumberComponent implements OnChanges {
-  @Input() nzValue?: NzStatisticValueType;
-  @Input() nzValueTemplate?: TemplateRef<{ $implicit: NzStatisticValueType }>;
+export class TriStatisticNumberComponent implements OnChanges {
+  @Input() value?: TriStatisticValueType;
+  @Input() valueTemplate?: TemplateRef<{ $implicit: TriStatisticValueType }>;
 
   displayInt = '';
   displayDecimal = '';
@@ -56,8 +56,8 @@ export class NzStatisticNumberComponent implements OnChanges {
 
   private formatNumber(): void {
     const decimalSeparator: string =
-      typeof this.nzValue === 'number' ? '.' : getLocaleNumberSymbol(this.locale_id, NumberSymbol.Decimal);
-    const value = String(this.nzValue);
+      typeof this.value === 'number' ? '.' : getLocaleNumberSymbol(this.locale_id, NumberSymbol.Decimal);
+    const value = String(this.value);
     const [int, decimal] = value.split(decimalSeparator);
 
     this.displayInt = int;

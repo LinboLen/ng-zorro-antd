@@ -1,117 +1,117 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
+import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { TriFormModule } from 'ng-zorro-antd/form';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
+import { TriSelectModule } from 'ng-zorro-antd/select';
+import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
 
 @Component({
-  selector: 'nz-demo-form-validate-static',
+  selector: '',
   imports: [
     FormsModule,
-    NzDatePickerModule,
-    NzFormModule,
-    NzInputModule,
-    NzInputNumberModule,
-    NzSelectModule,
-    NzTimePickerModule
+    TriDatePickerModule,
+    TriFormModule,
+    TriInputModule,
+    TriInputNumberModule,
+    TriSelectModule,
+    TriTimePickerModule
   ],
   template: `
-    <form nz-form>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="5">Fail</nz-form-label>
-        <nz-form-control
-          nzValidateStatus="error"
-          [nzSpan]="12"
-          nzErrorTip="Should be combination of numbers & alphabets"
+    <form tri-form>
+      <tri-form-item>
+        <tri-form-label [span]="5">Fail</tri-form-label>
+        <tri-form-control
+          validateStatus="error"
+          [span]="12"
+          errorTip="Should be combination of numbers & alphabets"
         >
-          <input nz-input [ngModel]="'unavailable choice'" name="errorValid" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="5">Warning</nz-form-label>
-        <nz-form-control nzValidateStatus="warning" [nzSpan]="12">
-          <input nz-input [ngModel]="'Warning'" name="warningValid" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="5">Validating</nz-form-label>
-        <nz-form-control
-          [nzSpan]="12"
-          nzValidateStatus="validating"
-          nzHasFeedback
-          nzValidatingTip="I'm validating the content"
+          <input tri-input [ngModel]="'unavailable choice'" name="errorValid" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [span]="5">Warning</tri-form-label>
+        <tri-form-control validateStatus="warning" [span]="12">
+          <input tri-input [ngModel]="'Warning'" name="warningValid" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [span]="5">Validating</tri-form-label>
+        <tri-form-control
+          [span]="12"
+          validateStatus="validating"
+          hasFeedback
+          validatingTip="I'm validating the content"
         >
-          <input nz-input [ngModel]="'The content is being validated'" name="validating" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="5">Success</nz-form-label>
-        <nz-form-control [nzSpan]="12" nzValidateStatus="success" nzHasFeedback>
-          <input nz-input [ngModel]="'The content'" name="successValid" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="5">Warning</nz-form-label>
-        <nz-form-control
-          [nzSpan]="12"
-          nzValidateStatus="warning"
-          nzHasFeedback
-          nzWarningTip="Should be combination of numbers & alphabets"
+          <input tri-input [ngModel]="'The content is being validated'" name="validating" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [span]="5">Success</tri-form-label>
+        <tri-form-control [span]="12" validateStatus="success" hasFeedback>
+          <input tri-input [ngModel]="'The content'" name="successValid" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [span]="5">Warning</tri-form-label>
+        <tri-form-control
+          [span]="12"
+          validateStatus="warning"
+          hasFeedback
+          warningTip="Should be combination of numbers & alphabets"
         >
-          <input nz-input [ngModel]="'Warning'" name="warningHighValid" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="5">Fail</nz-form-label>
-        <nz-form-control
-          [nzSpan]="12"
-          nzValidateStatus="error"
-          nzHasFeedback
-          nzErrorTip="Should be combination of numbers & alphabets"
+          <input tri-input [ngModel]="'Warning'" name="warningHighValid" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [span]="5">Fail</tri-form-label>
+        <tri-form-control
+          [span]="12"
+          validateStatus="error"
+          hasFeedback
+          errorTip="Should be combination of numbers & alphabets"
         >
-          <input nz-input [ngModel]="'unavailable choice'" name="invalidValid" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="5">Success</nz-form-label>
-        <nz-form-control [nzSpan]="12" nzValidateStatus="success" nzHasFeedback>
-          <nz-date-picker name="date-picker-success"></nz-date-picker>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="5">Warning</nz-form-label>
-        <nz-form-control [nzSpan]="12" nzValidateStatus="warning" nzHasFeedback>
-          <nz-time-picker name="time-picker-warning"></nz-time-picker>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="5">Error</nz-form-label>
-        <nz-form-control [nzSpan]="12" nzValidateStatus="error" nzHasFeedback>
-          <nz-select name="select-error" [ngModel]="'Option 1'">
-            <nz-option nzValue="Option 1" nzLabel="Option 1"></nz-option>
-            <nz-option nzValue="Option 2" nzLabel="Option 2"></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="5">Validating</nz-form-label>
-        <nz-form-control [nzSpan]="12" nzValidateStatus="validating" nzHasFeedback>
-          <nz-select name="select-validate" [ngModel]="'Option 2'">
-            <nz-option nzValue="Option 1" nzLabel="Option 1"></nz-option>
-            <nz-option nzValue="Option 2" nzLabel="Option 2"></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="5">Success</nz-form-label>
-        <nz-form-control [nzSpan]="12" nzValidateStatus="success" nzHasFeedback>
-          <nz-input-number name="inputnumber-success" style="width:100%"></nz-input-number>
-        </nz-form-control>
-      </nz-form-item>
+          <input tri-input [ngModel]="'unavailable choice'" name="invalidValid" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [span]="5">Success</tri-form-label>
+        <tri-form-control [span]="12" validateStatus="success" hasFeedback>
+          <tri-date-picker name="date-picker-success"></tri-date-picker>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [span]="5">Warning</tri-form-label>
+        <tri-form-control [span]="12" validateStatus="warning" hasFeedback>
+          <tri-time-picker name="time-picker-warning"></tri-time-picker>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [span]="5">Error</tri-form-label>
+        <tri-form-control [span]="12" validateStatus="error" hasFeedback>
+          <tri-select name="select-error" [ngModel]="'Option 1'">
+            <tri-option value="Option 1" label="Option 1"></tri-option>
+            <tri-option value="Option 2" label="Option 2"></tri-option>
+          </tri-select>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [span]="5">Validating</tri-form-label>
+        <tri-form-control [span]="12" validateStatus="validating" hasFeedback>
+          <tri-select name="select-validate" [ngModel]="'Option 2'">
+            <tri-option value="Option 1" label="Option 1"></tri-option>
+            <tri-option value="Option 2" label="Option 2"></tri-option>
+          </tri-select>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [span]="5">Success</tri-form-label>
+        <tri-form-control [span]="12" validateStatus="success" hasFeedback>
+          <tri-input-number name="inputnumber-success" style="width:100%"></tri-input-number>
+        </tri-form-control>
+      </tri-form-item>
     </form>
   `,
   styles: [
@@ -131,4 +131,4 @@ import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
     `
   ]
 })
-export class NzDemoFormValidateStaticComponent {}
+export class TriDemoFormValidateStaticComponent {}

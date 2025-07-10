@@ -1,25 +1,25 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { TriFormModule } from 'ng-zorro-antd/form';
+import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: 'nz-demo-input-textarea-with-character-count',
-  imports: [ReactiveFormsModule, NzFormModule, NzInputModule],
+  selector: '',
+  imports: [ReactiveFormsModule, TriFormModule, TriInputModule],
   template: `
-    <form nz-form [formGroup]="form" nzLayout="vertical">
-      <nz-form-item>
-        <nz-form-control>
-          <nz-textarea-count [nzMaxCharacterCount]="100">
-            <textarea rows="4" formControlName="comment" nz-input></textarea>
-          </nz-textarea-count>
-        </nz-form-control>
-      </nz-form-item>
+    <form tri-form [formGroup]="form" layout="vertical">
+      <tri-form-item>
+        <tri-form-control>
+          <tri-textarea-count [maxCharacterCount]="100">
+            <textarea rows="4" formControlName="comment" tri-input></textarea>
+          </tri-textarea-count>
+        </tri-form-control>
+      </tri-form-item>
     </form>
   `
 })
-export class NzDemoInputTextareaWithCharacterCountComponent {
+export class TriDemoInputTextareaWithCharacterCountComponent {
   private fb = inject(FormBuilder);
   form = this.fb.group({ comment: this.fb.control('', [Validators.maxLength(100)]) });
 }

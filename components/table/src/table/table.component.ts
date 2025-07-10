@@ -31,60 +31,60 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 
-import { NzResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
-import { NzConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
+import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { measureScrollbar } from 'ng-zorro-antd/core/util';
-import { NzPaginationModule, PaginationItemRenderContext } from 'ng-zorro-antd/pagination';
-import { NzSpinComponent } from 'ng-zorro-antd/spin';
+import { TriPaginationModule, PaginationItemRenderContext } from 'ng-zorro-antd/pagination';
+import { TriSpinComponent } from 'ng-zorro-antd/spin';
 
-import { NzTableDataService } from '../table-data.service';
-import { NzTableStyleService } from '../table-style.service';
+import { TriTableDataService } from '../table-data.service';
+import { TriTableStyleService } from '../table-style.service';
 import {
-  NzCustomColumn,
-  NzTableLayout,
-  NzTablePaginationPosition,
-  NzTablePaginationType,
-  NzTableQueryParams,
-  NzTableSize,
-  NzTableSummaryFixedType
+  TriCustomColumn,
+  TriTableLayout,
+  TriTablePaginationPosition,
+  TriTablePaginationType,
+  TriTableQueryParams,
+  TriTableSize,
+  TriTableSummaryFixedType
 } from '../table.types';
-import { NzTableInnerDefaultComponent } from './table-inner-default.component';
-import { NzTableInnerScrollComponent } from './table-inner-scroll.component';
-import { NzTableVirtualScrollDirective } from './table-virtual-scroll.directive';
-import { NzTableTitleFooterComponent } from './title-footer.component';
+import { TriTableInnerDefaultComponent } from './table-inner-default.component';
+import { TriTableInnerScrollComponent } from './table-inner-scroll.component';
+import { TriTableVirtualScrollDirective } from './table-virtual-scroll.directive';
+import { TriTableTitleFooterComponent } from './title-footer.component';
 
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'table';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'table';
 
 @Component({
-  selector: 'nz-table',
-  exportAs: 'nzTable',
-  providers: [NzTableStyleService, NzTableDataService],
+  selector: '',
+  exportAs: 'triTable',
+  providers: [TriTableStyleService, TriTableDataService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
-    <nz-spin [nzDelay]="nzLoadingDelay" [nzSpinning]="nzLoading" [nzIndicator]="nzLoadingIndicator">
-      @if (nzPaginationPosition === 'both' || nzPaginationPosition === 'top') {
+    <tri-spin [delay]="loadingDelay" [spinning]="loading" [indicator]="loadingIndicator">
+      @if (paginationPosition === 'both' || paginationPosition === 'top') {
         <ng-template [ngTemplateOutlet]="paginationTemplate"></ng-template>
       }
       <div
         #tableMainElement
-        class="ant-table"
-        [class.ant-table-rtl]="dir === 'rtl'"
-        [class.ant-table-fixed-header]="nzData.length && scrollY"
-        [class.ant-table-fixed-column]="scrollX"
-        [class.ant-table-has-fix-left]="hasFixLeft"
-        [class.ant-table-has-fix-right]="hasFixRight"
-        [class.ant-table-bordered]="nzBordered"
-        [class.nz-table-out-bordered]="nzOuterBordered && !nzBordered"
-        [class.ant-table-middle]="nzSize === 'middle'"
-        [class.ant-table-small]="nzSize === 'small'"
+        class="tri-table"
+        [class.tri-table-rtl]="dir === 'rtl'"
+        [class.tri-table-fixed-header]="data.length && scrollY"
+        [class.tri-table-fixed-column]="scrollX"
+        [class.tri-table-has-fix-left]="hasFixLeft"
+        [class.tri-table-has-fix-right]="hasFixRight"
+        [class.tri-table-bordered]="bordered"
+        [class.nz-table-out-bordered]="outerBordered && !bordered"
+        [class.tri-table-middle]="size === 'middle'"
+        [class.tri-table-small]="size === 'small'"
       >
-        @if (nzTitle) {
-          <nz-table-title-footer [title]="nzTitle"></nz-table-title-footer>
+        @if (title) {
+          <tri-table-title-footer [title]="title"></tri-table-title-footer>
         }
         @if (scrollY || scrollX) {
-          <nz-table-inner-scroll
+          <tri-table-inner-scroll
             [data]="data"
             [scrollX]="scrollX"
             [scrollY]="scrollY"
@@ -94,50 +94,50 @@ const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'table';
             [tfootTemplate]="tfootTemplate"
             [tfootFixed]="tfootFixed"
             [verticalScrollBarWidth]="verticalScrollBarWidth"
-            [virtualTemplate]="nzVirtualScrollDirective ? nzVirtualScrollDirective.templateRef : null"
-            [virtualItemSize]="nzVirtualItemSize"
-            [virtualMaxBufferPx]="nzVirtualMaxBufferPx"
-            [virtualMinBufferPx]="nzVirtualMinBufferPx"
+            [virtualTemplate]="virtualScrollDirective ? virtualScrollDirective.templateRef : null"
+            [virtualItemSize]="virtualItemSize"
+            [virtualMaxBufferPx]="virtualMaxBufferPx"
+            [virtualMinBufferPx]="virtualMinBufferPx"
             [tableMainElement]="tableMainElement"
-            [virtualForTrackBy]="nzVirtualForTrackBy"
+            [virtualForTrackBy]="virtualForTrackBy"
             [noDataVirtualHeight]="noDataVirtualHeight"
-          ></nz-table-inner-scroll>
+          ></tri-table-inner-scroll>
         } @else {
-          <nz-table-inner-default
-            [tableLayout]="nzTableLayout"
+          <tri-table-inner-default
+            [tableLayout]="tableLayout"
             [listOfColWidth]="listOfManualColWidth"
             [theadTemplate]="theadTemplate"
             [contentTemplate]="contentTemplate"
             [tfootTemplate]="tfootTemplate"
-          ></nz-table-inner-default>
+          ></tri-table-inner-default>
         }
-        @if (nzFooter) {
-          <nz-table-title-footer [footer]="nzFooter"></nz-table-title-footer>
+        @if (footer) {
+          <tri-table-title-footer [footer]="footer"></tri-table-title-footer>
         }
       </div>
-      @if (nzPaginationPosition === 'both' || nzPaginationPosition === 'bottom') {
+      @if (paginationPosition === 'both' || paginationPosition === 'bottom') {
         <ng-template [ngTemplateOutlet]="paginationTemplate"></ng-template>
       }
-    </nz-spin>
+    </tri-spin>
     <ng-template #paginationTemplate>
-      @if (nzShowPagination && data.length) {
-        <nz-pagination
+      @if (showPagination && data.length) {
+        <tri-pagination
           [hidden]="!showPagination"
-          class="ant-table-pagination ant-table-pagination-right"
-          [nzShowSizeChanger]="nzShowSizeChanger"
-          [nzPageSizeOptions]="nzPageSizeOptions"
-          [nzItemRender]="nzItemRender!"
-          [nzShowQuickJumper]="nzShowQuickJumper"
-          [nzHideOnSinglePage]="nzHideOnSinglePage"
-          [nzShowTotal]="nzShowTotal"
-          [nzSize]="nzPaginationType === 'small' ? 'small' : nzSize === 'default' ? 'default' : 'small'"
-          [nzPageSize]="nzPageSize"
-          [nzTotal]="nzTotal"
-          [nzSimple]="nzSimple"
-          [nzPageIndex]="nzPageIndex"
-          (nzPageSizeChange)="onPageSizeChange($event)"
-          (nzPageIndexChange)="onPageIndexChange($event)"
-        ></nz-pagination>
+          class="tri-table-pagination tri-table-pagination-right"
+          [showSizeChanger]="showSizeChanger"
+          [pageSizeOptions]="pageSizeOptions"
+          [itemRender]="itemRender!"
+          [showQuickJumper]="showQuickJumper"
+          [hideOnSinglePage]="hideOnSinglePage"
+          [showTotal]="showTotal"
+          [size]="paginationType === 'small' ? 'small' : size === 'default' ? 'default' : 'small'"
+          [pageSize]="pageSize"
+          [total]="total"
+          [simple]="simple"
+          [pageIndex]="pageIndex"
+          (pageSizeChange)="onPageSizeChange($event)"
+          (pageIndexChange)="onPageIndexChange($event)"
+        ></tri-pagination>
       }
     </ng-template>
     <ng-template #contentTemplate>
@@ -145,96 +145,96 @@ const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'table';
     </ng-template>
   `,
   host: {
-    class: 'ant-table-wrapper',
-    '[class.ant-table-wrapper-rtl]': 'dir === "rtl"',
-    '[class.ant-table-custom-column]': `nzCustomColumn.length`
+    class: 'tri-table-wrapper',
+    '[class.tri-table-wrapper-rtl]': 'dir === "rtl"',
+    '[class.tri-table-custom-column]': `customColumn.length`
   },
   imports: [
-    NzSpinComponent,
+    TriSpinComponent,
     NgTemplateOutlet,
-    NzTableTitleFooterComponent,
-    NzTableInnerScrollComponent,
-    NzTableInnerDefaultComponent,
-    NzPaginationModule
+    TriTableTitleFooterComponent,
+    TriTableInnerScrollComponent,
+    TriTableInnerDefaultComponent,
+    TriPaginationModule
   ]
 })
-export class NzTableComponent<T> implements OnInit, OnChanges, AfterViewInit {
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+export class TriTableComponent<T> implements OnInit, OnChanges, AfterViewInit {
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
 
   private elementRef = inject(ElementRef);
-  private nzResizeObserver = inject(NzResizeObserver);
+  private resizeObserver = inject(TriResizeObserver);
   private cdr = inject(ChangeDetectorRef);
-  private nzTableStyleService = inject(NzTableStyleService);
-  private nzTableDataService = inject(NzTableDataService<T>);
+  private tableStyleService = inject(TriTableStyleService);
+  private tableDataService = inject(TriTableDataService<T>);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
 
-  @Input() nzTableLayout: NzTableLayout = 'auto';
-  @Input() nzShowTotal: TemplateRef<{ $implicit: number; range: [number, number] }> | null = null;
-  @Input() nzItemRender: TemplateRef<PaginationItemRenderContext> | null = null;
-  @Input() nzTitle: string | TemplateRef<NzSafeAny> | null = null;
-  @Input() nzFooter: string | TemplateRef<NzSafeAny> | null = null;
-  @Input() nzNoResult: string | TemplateRef<NzSafeAny> | undefined = undefined;
-  @Input() nzPageSizeOptions = [10, 20, 30, 40, 50];
-  @Input() nzVirtualItemSize = 0;
-  @Input() nzVirtualMaxBufferPx = 200;
-  @Input() nzVirtualMinBufferPx = 100;
-  @Input() nzVirtualForTrackBy: TrackByFunction<T> = index => index;
-  @Input() nzLoadingDelay = 0;
-  @Input() nzPageIndex = 1;
-  @Input() nzPageSize = 10;
-  @Input() nzTotal = 0;
-  @Input() nzWidthConfig: ReadonlyArray<string | null> = [];
-  @Input() nzData: readonly T[] = [];
-  @Input() nzCustomColumn: NzCustomColumn[] = [];
+  @Input() tableLayout: TriTableLayout = 'auto';
+  @Input() showTotal: TemplateRef<{ $implicit: number; range: [number, number] }> | null = null;
+  @Input() itemRender: TemplateRef<PaginationItemRenderContext> | null = null;
+  @Input() title: string | TemplateRef<TriSafeAny> | null = null;
+  @Input() footer: string | TemplateRef<TriSafeAny> | null = null;
+  @Input() noResult: string | TemplateRef<TriSafeAny> | undefined = undefined;
+  @Input() pageSizeOptions = [10, 20, 30, 40, 50];
+  @Input() virtualItemSize = 0;
+  @Input() virtualMaxBufferPx = 200;
+  @Input() virtualMinBufferPx = 100;
+  @Input() virtualForTrackBy: TrackByFunction<T> = index => index;
+  @Input() loadingDelay = 0;
+  @Input() pageIndex = 1;
+  @Input() pageSize = 10;
+  @Input() total = 0;
+  @Input() widthConfig: ReadonlyArray<string | null> = [];
+  @Input() data: readonly T[] = [];
+  @Input() customColumn: TriCustomColumn[] = [];
 
-  @Input() nzPaginationPosition: NzTablePaginationPosition = 'bottom';
-  @Input() nzScroll: { x?: string | null; y?: string | null } = { x: null, y: null };
+  @Input() paginationPosition: TriTablePaginationPosition = 'bottom';
+  @Input() scroll: { x?: string | null; y?: string | null } = { x: null, y: null };
   @Input() noDataVirtualHeight = '182px';
-  @Input() nzPaginationType: NzTablePaginationType = 'default';
-  @Input({ transform: booleanAttribute }) nzFrontPagination = true;
-  @Input({ transform: booleanAttribute }) nzTemplateMode = false;
-  @Input({ transform: booleanAttribute }) nzShowPagination = true;
-  @Input({ transform: booleanAttribute }) nzLoading = false;
-  @Input({ transform: booleanAttribute }) nzOuterBordered = false;
-  @Input() @WithConfig() nzLoadingIndicator: TemplateRef<NzSafeAny> | null = null;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzBordered: boolean = false;
-  @Input() @WithConfig() nzSize: NzTableSize = 'default';
-  @Input({ transform: booleanAttribute }) @WithConfig() nzShowSizeChanger: boolean = false;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzHideOnSinglePage: boolean = false;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzShowQuickJumper: boolean = false;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzSimple: boolean = false;
-  @Output() readonly nzPageSizeChange = new EventEmitter<number>();
-  @Output() readonly nzPageIndexChange = new EventEmitter<number>();
-  @Output() readonly nzQueryParams = new EventEmitter<NzTableQueryParams>();
-  @Output() readonly nzCurrentPageDataChange = new EventEmitter<readonly T[]>();
-  @Output() readonly nzCustomColumnChange = new EventEmitter<readonly NzCustomColumn[]>();
+  @Input() paginationType: TriTablePaginationType = 'default';
+  @Input({ transform: booleanAttribute }) frontPagination = true;
+  @Input({ transform: booleanAttribute }) templateMode = false;
+  @Input({ transform: booleanAttribute }) showPagination = true;
+  @Input({ transform: booleanAttribute }) loading = false;
+  @Input({ transform: booleanAttribute }) outerBordered = false;
+  @Input() @WithConfig() loadingIndicator: TemplateRef<TriSafeAny> | null = null;
+  @Input({ transform: booleanAttribute }) @WithConfig() bordered: boolean = false;
+  @Input() @WithConfig() size: TriTableSize = 'default';
+  @Input({ transform: booleanAttribute }) @WithConfig() showSizeChanger: boolean = false;
+  @Input({ transform: booleanAttribute }) @WithConfig() hideOnSinglePage: boolean = false;
+  @Input({ transform: booleanAttribute }) @WithConfig() showQuickJumper: boolean = false;
+  @Input({ transform: booleanAttribute }) @WithConfig() simple: boolean = false;
+  @Output() readonly pageSizeChange = new EventEmitter<number>();
+  @Output() readonly pageIndexChange = new EventEmitter<number>();
+  @Output() readonly queryParams = new EventEmitter<TriTableQueryParams>();
+  @Output() readonly currentPageDataChange = new EventEmitter<readonly T[]>();
+  @Output() readonly customColumnChange = new EventEmitter<readonly TriCustomColumn[]>();
 
   /** public data for ngFor tr */
-  public data: readonly T[] = [];
+  public _data: readonly T[] = [];
   public cdkVirtualScrollViewport?: CdkVirtualScrollViewport;
   scrollX: string | null = null;
   scrollY: string | null = null;
-  theadTemplate: TemplateRef<NzSafeAny> | null = null;
-  tfootTemplate: TemplateRef<NzSafeAny> | null = null;
-  tfootFixed: NzTableSummaryFixedType | null = null;
+  theadTemplate: TemplateRef<TriSafeAny> | null = null;
+  tfootTemplate: TemplateRef<TriSafeAny> | null = null;
+  tfootFixed: TriTableSummaryFixedType | null = null;
   listOfAutoColWidth: ReadonlyArray<string | null> = [];
   listOfManualColWidth: ReadonlyArray<string | null> = [];
   hasFixLeft = false;
   hasFixRight = false;
-  showPagination = true;
+  _showPagination = true;
   private templateMode$ = new BehaviorSubject<boolean>(false);
   dir: Direction = 'ltr';
-  @ContentChild(NzTableVirtualScrollDirective, { static: false })
-  nzVirtualScrollDirective!: NzTableVirtualScrollDirective<T>;
-  @ViewChild(NzTableInnerScrollComponent) nzTableInnerScrollComponent!: NzTableInnerScrollComponent<T>;
+  @ContentChild(TriTableVirtualScrollDirective, { static: false })
+  virtualScrollDirective!: TriTableVirtualScrollDirective<T>;
+  @ViewChild(TriTableInnerScrollComponent) tableInnerScrollComponent!: TriTableInnerScrollComponent<T>;
   verticalScrollBarWidth = 0;
   onPageSizeChange(size: number): void {
-    this.nzTableDataService.updatePageSize(size);
+    this.tableDataService.updatePageSize(size);
   }
 
   onPageIndexChange(index: number): void {
-    this.nzTableDataService.updatePageIndex(index);
+    this.tableDataService.updatePageIndex(index);
   }
 
   constructor() {
@@ -243,8 +243,8 @@ export class NzTableComponent<T> implements OnInit, OnChanges, AfterViewInit {
 
   ngOnInit(): void {
     const { pageIndexDistinct$, pageSizeDistinct$, listOfCurrentPageData$, total$, queryParams$, listOfCustomColumn$ } =
-      this.nzTableDataService;
-    const { theadTemplate$, tfootTemplate$, tfootFixed$, hasFixLeft$, hasFixRight$ } = this.nzTableStyleService;
+      this.tableDataService;
+    const { theadTemplate$, tfootTemplate$, tfootFixed$, hasFixLeft$, hasFixRight$ } = this.tableStyleService;
 
     this.dir = this.directionality.value;
     this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
@@ -252,37 +252,37 @@ export class NzTableComponent<T> implements OnInit, OnChanges, AfterViewInit {
       this.cdr.detectChanges();
     });
 
-    queryParams$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(this.nzQueryParams);
+    queryParams$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(this.queryParams);
     pageIndexDistinct$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(pageIndex => {
-      if (pageIndex !== this.nzPageIndex) {
-        this.nzPageIndex = pageIndex;
-        this.nzPageIndexChange.next(pageIndex);
+      if (pageIndex !== this.pageIndex) {
+        this.pageIndex = pageIndex;
+        this.pageIndexChange.next(pageIndex);
       }
     });
     pageSizeDistinct$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(pageSize => {
-      if (pageSize !== this.nzPageSize) {
-        this.nzPageSize = pageSize;
-        this.nzPageSizeChange.next(pageSize);
+      if (pageSize !== this.pageSize) {
+        this.pageSize = pageSize;
+        this.pageSizeChange.next(pageSize);
       }
     });
     total$
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        filter(total => this.nzFrontPagination && total !== this.nzTotal)
+        filter(total => this.frontPagination && total !== this.total)
       )
       .subscribe(total => {
-        this.nzTotal = total;
+        this.total = total;
         this.cdr.markForCheck();
       });
     listOfCurrentPageData$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => {
-      this.data = data;
-      this.nzCurrentPageDataChange.next(data);
+      this._data = data;
+      this.currentPageDataChange.next(data);
       this.cdr.markForCheck();
     });
 
     listOfCustomColumn$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => {
-      this.nzCustomColumn = data;
-      this.nzCustomColumnChange.next(data);
+      this.customColumn = data;
+      this.customColumnChange.next(data);
       this.cdr.markForCheck();
     });
 
@@ -315,15 +315,15 @@ export class NzTableComponent<T> implements OnInit, OnChanges, AfterViewInit {
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(empty => {
-        this.nzTableStyleService.setShowEmpty(empty);
+        this.tableStyleService.setShowEmpty(empty);
       });
 
     this.verticalScrollBarWidth = measureScrollbar('vertical');
-    this.nzTableStyleService.listOfListOfThWidthPx$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(listOfWidth => {
+    this.tableStyleService.listOfListOfThWidthPx$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(listOfWidth => {
       this.listOfAutoColWidth = listOfWidth;
       this.cdr.markForCheck();
     });
-    this.nzTableStyleService.manualWidthConfigPx$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(listOfWidth => {
+    this.tableStyleService.manualWidthConfigPx$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(listOfWidth => {
       this.listOfManualColWidth = listOfWidth;
       this.cdr.markForCheck();
     });
@@ -342,40 +342,40 @@ export class NzTableComponent<T> implements OnInit, OnChanges, AfterViewInit {
       nzTemplateMode
     } = changes;
     if (nzPageIndex) {
-      this.nzTableDataService.updatePageIndex(this.nzPageIndex);
+      this.tableDataService.updatePageIndex(this.pageIndex);
     }
     if (nzPageSize) {
-      this.nzTableDataService.updatePageSize(this.nzPageSize);
+      this.tableDataService.updatePageSize(this.pageSize);
     }
     if (nzData) {
-      this.nzData = this.nzData || [];
-      this.nzTableDataService.updateListOfData(this.nzData);
+      this.data = this.data || [];
+      this.tableDataService.updateListOfData(this.data);
     }
     if (nzCustomColumn) {
-      this.nzCustomColumn = this.nzCustomColumn || [];
-      this.nzTableDataService.updateListOfCustomColumn(this.nzCustomColumn);
+      this.customColumn = this.customColumn || [];
+      this.tableDataService.updateListOfCustomColumn(this.customColumn);
     }
     if (nzFrontPagination) {
-      this.nzTableDataService.updateFrontPagination(this.nzFrontPagination);
+      this.tableDataService.updateFrontPagination(this.frontPagination);
     }
     if (nzScroll) {
       this.setScrollOnChanges();
     }
     if (nzWidthConfig) {
-      this.nzTableStyleService.setTableWidthConfig(this.nzWidthConfig);
+      this.tableStyleService.setTableWidthConfig(this.widthConfig);
     }
     if (nzTemplateMode) {
-      this.templateMode$.next(this.nzTemplateMode);
+      this.templateMode$.next(this.templateMode);
     }
     if (nzNoResult) {
-      this.nzTableStyleService.setNoResult(this.nzNoResult);
+      this.tableStyleService.setNoResult(this.noResult);
     }
 
     this.updateShowPagination();
   }
 
   ngAfterViewInit(): void {
-    this.nzResizeObserver
+    this.resizeObserver
       .observe(this.elementRef)
       .pipe(
         map(([entry]) => {
@@ -385,22 +385,22 @@ export class NzTableComponent<T> implements OnInit, OnChanges, AfterViewInit {
         }),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe(this.nzTableStyleService.hostWidth$);
-    if (this.nzTableInnerScrollComponent && this.nzTableInnerScrollComponent.cdkVirtualScrollViewport) {
-      this.cdkVirtualScrollViewport = this.nzTableInnerScrollComponent.cdkVirtualScrollViewport;
+      .subscribe(this.tableStyleService.hostWidth$);
+    if (this.tableInnerScrollComponent && this.tableInnerScrollComponent.cdkVirtualScrollViewport) {
+      this.cdkVirtualScrollViewport = this.tableInnerScrollComponent.cdkVirtualScrollViewport;
     }
   }
 
   private setScrollOnChanges(): void {
-    this.scrollX = (this.nzScroll && this.nzScroll.x) || null;
-    this.scrollY = (this.nzScroll && this.nzScroll.y) || null;
-    this.nzTableStyleService.setScroll(this.scrollX, this.scrollY);
+    this.scrollX = (this.scroll && this.scroll.x) || null;
+    this.scrollY = (this.scroll && this.scroll.y) || null;
+    this.tableStyleService.setScroll(this.scrollX, this.scrollY);
   }
 
   private updateShowPagination(): void {
-    this.showPagination =
-      (this.nzHideOnSinglePage && this.nzData.length > this.nzPageSize) ||
-      (this.nzData.length > 0 && !this.nzHideOnSinglePage) ||
-      (!this.nzFrontPagination && this.nzTotal > this.nzPageSize);
+    this._showPagination =
+      (this.hideOnSinglePage && this.data.length > this.pageSize) ||
+      (this.data.length > 0 && !this.hideOnSinglePage) ||
+      (!this.frontPagination && this.total > this.pageSize);
   }
 }

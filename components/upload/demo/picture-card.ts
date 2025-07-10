@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzModalModule } from 'ng-zorro-antd/modal';
-import { NzUploadFile, NzUploadModule } from 'ng-zorro-antd/upload';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriModalModule } from 'ng-zorro-antd/modal';
+import { TriUploadFile, TriUploadModule } from 'ng-zorro-antd/upload';
 
 const getBase64 = (file: File): Promise<string | ArrayBuffer | null> =>
   new Promise((resolve, reject) => {
@@ -13,35 +13,35 @@ const getBase64 = (file: File): Promise<string | ArrayBuffer | null> =>
   });
 
 @Component({
-  selector: 'nz-demo-upload-picture-card',
-  imports: [NzIconModule, NzModalModule, NzUploadModule],
+  selector: '',
+  imports: [TriIconModule, TriModalModule, TriUploadModule],
   template: `
-    <nz-upload
-      nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-      nzListType="picture-card"
-      [(nzFileList)]="fileList"
-      [nzShowButton]="fileList.length < 8"
-      [nzPreview]="handlePreview"
+    <tri-upload
+      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+      listType="picture-card"
+      [(fileListChange)]="fileList"
+      [showButton]="fileList.length < 8"
+      [preview]="handlePreview"
     >
       <div>
-        <nz-icon nzType="plus" />
+        <tri-icon type="plus" />
         <div style="margin-top: 8px">Upload</div>
       </div>
-    </nz-upload>
-    <nz-modal
-      [nzVisible]="previewVisible"
-      [nzContent]="modalContent"
-      [nzFooter]="null"
-      (nzOnCancel)="previewVisible = false"
+    </tri-upload>
+    <tri-modal
+      [visible]="previewVisible"
+      [content]="modalContent"
+      [footer]="null"
+      (onCancel)="previewVisible = false"
     >
       <ng-template #modalContent>
         <img [src]="previewImage" style="width: 100%" />
       </ng-template>
-    </nz-modal>
+    </tri-modal>
   `
 })
-export class NzDemoUploadPictureCardComponent {
-  fileList: NzUploadFile[] = [
+export class TriDemoUploadPictureCardComponent {
+  fileList: TriUploadFile[] = [
     {
       uid: '-1',
       name: 'image.png',
@@ -82,7 +82,7 @@ export class NzDemoUploadPictureCardComponent {
   previewImage: string | undefined = '';
   previewVisible = false;
 
-  handlePreview = async (file: NzUploadFile): Promise<void> => {
+  handlePreview = async (file: TriUploadFile): Promise<void> => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj!);
     }

@@ -18,14 +18,14 @@ import {
   MockNgZone,
   typeInElement
 } from 'ng-zorro-antd/core/testing';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
-import { NzTextEditComponent } from '.';
-import { NzTypographyComponent } from './typography.component';
-import { NzTypographyModule } from './typography.module';
+import { TriTextEditComponent } from '.';
+import { TriTypographyComponent } from './typography.component';
+import { TriTypographyModule } from './typography.module';
 
-declare const viewport: NzSafeAny;
+declare const viewport: TriSafeAny;
 
 describe('typography', () => {
   let componentElement: HTMLElement;
@@ -52,7 +52,7 @@ describe('typography', () => {
   });
 
   function testCopyButton(
-    fixture: ComponentFixture<NzSafeAny>,
+    fixture: ComponentFixture<TriSafeAny>,
     copyButton: HTMLButtonElement,
     onHover: () => void,
     onClick: () => void
@@ -78,10 +78,10 @@ describe('typography', () => {
   }
 
   describe('base', () => {
-    let fixture: ComponentFixture<NzTestTypographyComponent>;
+    let fixture: ComponentFixture<TriTestTypographyComponent>;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTypographyComponent);
+      fixture = TestBed.createComponent(TriTestTypographyComponent);
       componentElement = fixture.debugElement.nativeElement;
       fixture.detectChanges();
     });
@@ -106,11 +106,11 @@ describe('typography', () => {
   });
 
   describe('copyable', () => {
-    let fixture: ComponentFixture<NzTestTypographyCopyComponent>;
-    let testComponent: NzTestTypographyCopyComponent;
+    let fixture: ComponentFixture<TriTestTypographyCopyComponent>;
+    let testComponent: TriTestTypographyCopyComponent;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTypographyCopyComponent);
+      fixture = TestBed.createComponent(TriTestTypographyCopyComponent);
       testComponent = fixture.componentInstance;
       componentElement = fixture.debugElement.nativeElement;
       fixture.detectChanges();
@@ -202,11 +202,11 @@ describe('typography', () => {
   });
 
   describe('editable', () => {
-    let fixture: ComponentFixture<NzTestTypographyEditComponent>;
-    let testComponent: NzTestTypographyEditComponent;
+    let fixture: ComponentFixture<TriTestTypographyEditComponent>;
+    let testComponent: TriTestTypographyEditComponent;
 
     beforeEach(fakeAsync(() => {
-      fixture = TestBed.createComponent(NzTestTypographyEditComponent);
+      fixture = TestBed.createComponent(TriTestTypographyEditComponent);
       testComponent = fixture.componentInstance;
       componentElement = fixture.debugElement.nativeElement;
       fixture.detectChanges();
@@ -225,7 +225,7 @@ describe('typography', () => {
       const textarea = componentElement.querySelector<HTMLTextAreaElement>('textarea')!;
       typeInElement('test', textarea);
       fixture.detectChanges();
-      testComponent.nzTypographyComponent.textEditRef!.onCancel();
+      testComponent.typographyComponent.textEditRef!.onCancel();
       fixture.detectChanges();
       expect(testComponent.str).toBe('This is an editable text.');
     });
@@ -300,7 +300,7 @@ describe('typography', () => {
       typeInElement('test', textarea);
       fixture.detectChanges();
       const event = createKeyboardEvent('keydown', ENTER, textarea);
-      testComponent.nzTypographyComponent.textEditRef!.onEnter(event);
+      testComponent.typographyComponent.textEditRef!.onEnter(event);
 
       flush();
       fixture.detectChanges();
@@ -310,12 +310,12 @@ describe('typography', () => {
   });
 
   describe('ellipsis', () => {
-    let fixture: ComponentFixture<NzTestTypographyEllipsisComponent>;
-    let testComponent: NzTestTypographyEllipsisComponent;
+    let fixture: ComponentFixture<TriTestTypographyEllipsisComponent>;
+    let testComponent: TriTestTypographyEllipsisComponent;
 
     beforeEach(fakeAsync(() => {
       viewport.set(1200, 1000);
-      fixture = TestBed.createComponent(NzTestTypographyEllipsisComponent);
+      fixture = TestBed.createComponent(TriTestTypographyEllipsisComponent);
       testComponent = fixture.componentInstance;
       componentElement = fixture.debugElement.nativeElement;
       fixture.detectChanges();
@@ -484,7 +484,7 @@ describe('typography', () => {
 // mocks the `NgZone` with `MockNgZone`.
 describe('change detection behavior', () => {
   let componentElement: HTMLElement;
-  let fixture: ComponentFixture<NzTestTypographyEditComponent>;
+  let fixture: ComponentFixture<TriTestTypographyEditComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -493,7 +493,7 @@ describe('change detection behavior', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NzTestTypographyEditComponent);
+    fixture = TestBed.createComponent(TriTestTypographyEditComponent);
     componentElement = fixture.debugElement.nativeElement;
     fixture.detectChanges();
   });
@@ -505,7 +505,7 @@ describe('change detection behavior', () => {
     const appRef = TestBed.inject(ApplicationRef);
     spyOn(appRef, 'tick');
 
-    const nzTextEdit = fixture.debugElement.query(By.directive(NzTextEditComponent));
+    const nzTextEdit = fixture.debugElement.query(By.directive(TriTextEditComponent));
     const textarea: HTMLTextAreaElement = nzTextEdit.nativeElement.querySelector('textarea');
 
     textarea.value = 'some-value';
@@ -518,7 +518,7 @@ describe('change detection behavior', () => {
   it('should not run change detection on non-handled keydown events', () => {
     componentElement.querySelector<HTMLButtonElement>('.ant-typography-edit')!.click();
     fixture.detectChanges();
-    const nzTextEdit = fixture.debugElement.query(By.directive(NzTextEditComponent));
+    const nzTextEdit = fixture.debugElement.query(By.directive(TriTextEditComponent));
     const textarea: HTMLTextAreaElement = nzTextEdit.nativeElement.querySelector('textarea');
     const spyCancel = spyOn(nzTextEdit.componentInstance, 'onCancel');
     const spyEnter = spyOn(nzTextEdit.componentInstance, 'onEnter');
@@ -542,68 +542,68 @@ describe('change detection behavior', () => {
 });
 
 @Component({
-  imports: [NzTypographyModule],
+  imports: [TriTypographyModule],
   template: `
-    <h1 nz-typography>h1. Ant Design</h1>
-    <h2 nz-typography>h2. Ant Design</h2>
-    <h3 nz-typography>h3. Ant Design</h3>
-    <h4 nz-typography>h4. Ant Design</h4>
-    <h5 nz-typography>h5. Ant Design</h5>
-    <p nz-typography>Ant Design, a design language for background applications, is refined by Ant UED Team</p>
-    <span nz-typography>Ant Design</span>
-    <span class="test-secondary" nz-typography nzType="secondary">Ant Design</span>
-    <span class="test-success" nz-typography nzType="success">Ant Design</span>
-    <span class="test-warning" nz-typography nzType="warning">Ant Design</span>
-    <span class="test-danger" nz-typography nzType="danger">Ant Design</span>
-    <span class="test-disabled" nz-typography nzDisabled>Ant Design</span>
-    <span nz-typography><mark>Ant Design</mark></span>
-    <span nz-typography><code>Ant Design</code></span>
-    <span nz-typography><u>Ant Design</u></span>
-    <span nz-typography><del>Ant Design</del></span>
-    <span nz-typography><strong>Ant Design</strong></span>
+    <h1 tri-typography>h1. Ant Design</h1>
+    <h2 tri-typography>h2. Ant Design</h2>
+    <h3 tri-typography>h3. Ant Design</h3>
+    <h4 tri-typography>h4. Ant Design</h4>
+    <h5 tri-typography>h5. Ant Design</h5>
+    <p tri-typography>Ant Design, a design language for background applications, is refined by Ant UED Team</p>
+    <span tri-typography>Ant Design</span>
+    <span class="test-secondary" tri-typography type="secondary">Ant Design</span>
+    <span class="test-success" tri-typography type="success">Ant Design</span>
+    <span class="test-warning" tri-typography type="warning">Ant Design</span>
+    <span class="test-danger" tri-typography type="danger">Ant Design</span>
+    <span class="test-disabled" tri-typography disabled>Ant Design</span>
+    <span tri-typography><mark>Ant Design</mark></span>
+    <span tri-typography><code>Ant Design</code></span>
+    <span tri-typography><u>Ant Design</u></span>
+    <span tri-typography><del>Ant Design</del></span>
+    <span tri-typography><strong>Ant Design</strong></span>
   `
 })
-export class NzTestTypographyComponent {}
+export class TriTestTypographyComponent {}
 
 @Component({
-  imports: [NzTypographyModule],
+  imports: [TriTypographyModule],
   template: `
-    <h4 nz-title nzCopyable class="test-copy-h4" nzContent="Ant Design-0" (nzCopy)="onCopy($event)"></h4>
-    <p nz-paragraph nzCopyable class="test-copy-p" nzContent="Ant Design-1" (nzCopy)="onCopy($event)"></p>
-    <span nz-text nzCopyable class="test-copy-text" nzContent="Ant Design-2" (nzCopy)="onCopy($event)"></span>
-    <span nz-text nzCopyable nzCopyText="Ant Design-3" class="test-copy-replace" (nzCopy)="onCopy($event)">Test</span>
+    <h4 tri-title copyable class="test-copy-h4" content="Ant Design-0" (copy)="onCopy($event)"></h4>
+    <p tri-paragraph copyable class="test-copy-p" content="Ant Design-1" (copy)="onCopy($event)"></p>
+    <span tri-text copyable class="test-copy-text" content="Ant Design-2" (copy)="onCopy($event)"></span>
+    <span tri-text copyable copyText="Ant Design-3" class="test-copy-replace" (copy)="onCopy($event)">Test</span>
     <p
-      nz-typography
+      tri-typography
       class="custom-icons custom-tooltips"
-      nzCopyable
-      nzContent="Ant Design-4"
-      (nzCopy)="onCopy($event)"
-      [nzCopyTooltips]="tooltips"
-      [nzCopyIcons]="icons"
+      copyable
+      content="Ant Design-4"
+      (copy)="onCopy($event)"
+      [copyTooltips]="tooltips"
+      [copyIcons]="icons"
     ></p>
   `
 })
-export class NzTestTypographyCopyComponent {
+export class TriTestTypographyCopyComponent {
   tooltips: [string, string] | null = ['click here', 'coped'];
   icons: [string, string] = ['meh', 'smile'];
   onCopy(_text: string): void {}
 }
 
 @Component({
-  imports: [NzTypographyModule],
+  imports: [TriTypographyModule],
   template: `
     <p
-      nz-paragraph
-      nzEditable
-      [nzEditIcon]="icon"
-      [nzEditTooltip]="tooltip"
-      (nzContentChange)="onChange($event)"
-      [nzContent]="str"
+      tri-paragraph
+      editable
+      [editIcon]="icon"
+      [editTooltip]="tooltip"
+      (contentChange)="onChange($event)"
+      [content]="str"
     ></p>
   `
 })
-export class NzTestTypographyEditComponent {
-  @ViewChild(NzTypographyComponent, { static: false }) nzTypographyComponent!: NzTypographyComponent;
+export class TriTestTypographyEditComponent {
+  @ViewChild(TriTypographyComponent, { static: false }) typographyComponent!: TriTypographyComponent;
   str = 'This is an editable text.';
   icon = 'edit';
   tooltip?: string | null;
@@ -614,9 +614,9 @@ export class NzTestTypographyEditComponent {
 }
 
 @Component({
-  imports: [NzTypographyModule],
+  imports: [TriTypographyModule],
   template: `
-    <p nz-paragraph nzEllipsis [nzExpandable]="expandable" (nzExpandChange)="onExpand()" class="single">
+    <p tri-paragraph ellipsis [expandable]="expandable" (expandChange)="onExpand()" class="single">
       Ant Design, a design language for background applications, is refined by Ant UED Team. Ant Design, a design
       language for background applications, is refined by Ant UED Team. Ant Design, a design language for background
       applications, is refined by Ant UED Team. Ant Design, a design language for background applications, is refined by
@@ -625,11 +625,11 @@ export class NzTestTypographyEditComponent {
     </p>
     <br />
     <p
-      nz-paragraph
-      nzEllipsis
-      [nzExpandable]="expandable"
-      [nzEllipsisRows]="3"
-      (nzExpandChange)="onExpand()"
+      tri-paragraph
+      ellipsis
+      [expandable]="expandable"
+      [ellipsisRows]="3"
+      (expandChange)="onExpand()"
       class="multiple"
     >
       Ant Design, a design language for background applications, is refined by Ant UED Team. Ant Design, a design
@@ -639,24 +639,24 @@ export class NzTestTypographyEditComponent {
       design language for background applications, is refined by Ant UED Team.
     </p>
     <p
-      nz-paragraph
-      nzEllipsis
-      [nzExpandable]="expandable"
-      [nzEllipsisRows]="2"
-      (nzExpandChange)="onExpand()"
-      (nzOnEllipsis)="onEllipsis($event)"
-      [nzContent]="str"
-      [nzSuffix]="suffix"
+      tri-paragraph
+      ellipsis
+      [expandable]="expandable"
+      [ellipsisRows]="2"
+      (expandChange)="onExpand()"
+      (onEllipsis)="onEllipsis($event)"
+      [content]="str"
+      [suffix]="suffix"
       class="dynamic"
     ></p>
   `
 })
-export class NzTestTypographyEllipsisComponent {
+export class TriTestTypographyEllipsisComponent {
   expandable = false;
   onExpand = jasmine.createSpy('expand callback');
   suffix?: string;
   onEllipsis = jasmine.createSpy('ellipsis callback');
-  @ViewChild(NzTypographyComponent, { static: false }) nzTypographyComponent!: NzTypographyComponent;
+  @ViewChild(TriTypographyComponent, { static: false }) typographyComponent!: TriTypographyComponent;
   str = new Array(5)
     .fill('Ant Design, a design language for background applications, is refined by Ant UED Team.')
     .join('');

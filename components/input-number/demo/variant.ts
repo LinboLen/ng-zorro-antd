@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: 'nz-demo-input-number-variant',
-  imports: [FormsModule, NzInputNumberModule, NzSpaceModule],
-  template: ` <nz-space nzDirection="vertical" style="width: 100%">
-    <nz-input-number *nzSpaceItem [ngModel]="3"></nz-input-number>
-    <nz-input-number *nzSpaceItem nzVariant="filled" [ngModel]="3"></nz-input-number>
-    <nz-input-number *nzSpaceItem nzVariant="borderless" [ngModel]="3"></nz-input-number>
-    <nz-input-number *nzSpaceItem nzVariant="underlined" [ngModel]="3"></nz-input-number>
-  </nz-space>`
+  selector: '',
+  imports: [FormsModule, TriInputNumberModule, TriSpaceModule],
+  template: ` <tri-space direction="vertical" style="width: 100%">
+    <tri-input-number *spaceItem [ngModel]="3"></tri-input-number>
+    <tri-input-number *spaceItem variant="filled" [ngModel]="3"></tri-input-number>
+    <tri-input-number *spaceItem variant="borderless" [ngModel]="3"></tri-input-number>
+    <tri-input-number *spaceItem variant="underlined" [ngModel]="3"></tri-input-number>
+  </tri-space>`
 })
-export class NzDemoInputNumberVariantComponent {}
+export class TriDemoInputNumberVariantComponent {}

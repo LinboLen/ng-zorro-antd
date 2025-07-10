@@ -6,17 +6,17 @@
 import { Directive, EventEmitter, Input, Output } from '@angular/core';
 
 @Directive({
-  selector: 'button[nz-row-expand-button]',
+  selector: '',
   host: {
-    class: 'ant-table-row-expand-icon',
+    class: 'tri-table-row-expand-icon',
     '[type]': `'button'`,
-    '[class.ant-table-row-expand-icon-expanded]': `!spaceMode && expand === true`,
-    '[class.ant-table-row-expand-icon-collapsed]': `!spaceMode && expand === false`,
-    '[class.ant-table-row-expand-icon-spaced]': 'spaceMode',
+    '[class.tri-table-row-expand-icon-expanded]': `!spaceMode && expand === true`,
+    '[class.tri-table-row-expand-icon-collapsed]': `!spaceMode && expand === false`,
+    '[class.tri-table-row-expand-icon-spaced]': 'spaceMode',
     '(click)': 'onHostClick()'
   }
 })
-export class NzRowExpandButtonDirective {
+export class TriRowExpandButtonDirective {
   @Input() expand = false;
   @Input() spaceMode = false;
   @Output() readonly expandChange = new EventEmitter();

@@ -5,38 +5,38 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzGraphDefsComponent } from './graph-defs.component';
-import { NzGraphEdgeComponent } from './graph-edge.component';
-import { NzGraphEdgeDirective } from './graph-edge.directive';
-import { NzGraphGroupNodeDirective } from './graph-group-node.directive';
-import { NzGraphMinimapComponent } from './graph-minimap.component';
-import { NzGraphNodeComponent } from './graph-node.component';
-import { NzGraphNodeDirective } from './graph-node.directive';
-import { NzGraphZoomDirective } from './graph-zoom.directive';
-import { NzGraphComponent } from './graph.component';
+import { TriGraphDefsComponent } from './graph-defs.component';
+import { TriGraphEdgeComponent } from './graph-edge.component';
+import { TriGraphEdgeDirective } from './graph-edge.directive';
+import { TriGraphGroupNodeDirective } from './graph-group-node.directive';
+import { TriGraphMinimapComponent } from './graph-minimap.component';
+import { TriGraphNodeComponent } from './graph-node.component';
+import { TriGraphNodeDirective } from './graph-node.directive';
+import { TriGraphZoomDirective } from './graph-zoom.directive';
+import { TriGraphComponent } from './graph.component';
 
 @NgModule({
   imports: [
-    NzGraphComponent,
-    NzGraphMinimapComponent,
-    NzGraphDefsComponent,
-    NzGraphNodeDirective,
-    NzGraphGroupNodeDirective,
-    NzGraphZoomDirective,
-    NzGraphNodeComponent,
-    NzGraphEdgeComponent,
-    NzGraphEdgeDirective
+    TriGraphComponent,
+    TriGraphMinimapComponent,
+    TriGraphDefsComponent,
+    TriGraphNodeDirective,
+    TriGraphGroupNodeDirective,
+    TriGraphZoomDirective,
+    TriGraphNodeComponent,
+    TriGraphEdgeComponent,
+    TriGraphEdgeDirective
   ],
   exports: [
-    NzGraphComponent,
-    NzGraphMinimapComponent,
-    NzGraphDefsComponent,
-    NzGraphNodeDirective,
-    NzGraphGroupNodeDirective,
-    NzGraphZoomDirective,
-    NzGraphNodeComponent,
-    NzGraphEdgeComponent,
-    NzGraphEdgeDirective
+    TriGraphComponent,
+    TriGraphMinimapComponent,
+    TriGraphDefsComponent,
+    TriGraphNodeDirective,
+    TriGraphGroupNodeDirective,
+    TriGraphZoomDirective,
+    TriGraphNodeComponent,
+    TriGraphEdgeComponent,
+    TriGraphEdgeDirective
   ]
 })
-export class NzGraphModule {}
+export class TriGraphModule {}

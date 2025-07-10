@@ -17,34 +17,34 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: '[nz-transfer-search]',
-  exportAs: 'nzTransferSearch',
+  selector: '',
+  exportAs: 'triTransferSearch',
   template: `
-    <span class="ant-input-prefix">
-      <nz-icon nzType="search" />
+    <span class="tri-input-prefix">
+      <tri-icon type="search" />
     </span>
     <input
       [(ngModel)]="value"
       (ngModelChange)="_handle()"
       [disabled]="disabled"
       [placeholder]="placeholder"
-      class="ant-input"
-      [class.ant-input-disabled]="disabled"
+      class="tri-input"
+      [class.tri-input-disabled]="disabled"
     />
     @if (value && value.length > 0) {
-      <span class="ant-input-suffix" (click)="_clear()">
-        <nz-icon nzType="close-circle" nzTheme="fill" class="ant-input-clear-icon" />
+      <span class="tri-input-suffix" (click)="_clear()">
+        <tri-icon type="close-circle" theme="fill" class="tri-input-clear-icon" />
       </span>
     }
   `,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule, NzIconModule]
+  imports: [FormsModule, TriIconModule]
 })
-export class NzTransferSearchComponent implements OnChanges {
+export class TriTransferSearchComponent implements OnChanges {
   // region: fields
   private cdr = inject(ChangeDetectorRef);
 

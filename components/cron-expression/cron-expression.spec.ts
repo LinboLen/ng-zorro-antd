@@ -8,22 +8,22 @@ import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testi
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzCronExpressionComponent } from 'ng-zorro-antd/cron-expression/cron-expression.component';
-import { NzCronExpressionModule } from 'ng-zorro-antd/cron-expression/cron-expression.module';
-import { NzCronExpressionSize } from 'ng-zorro-antd/cron-expression/typings';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriCronExpressionComponent } from 'ng-zorro-antd/cron-expression/cron-expression.component';
+import { TriCronExpressionModule } from 'ng-zorro-antd/cron-expression/cron-expression.module';
+import { TriCronExpressionSize } from 'ng-zorro-antd/cron-expression/typings';
 
 describe('cron-expression', () => {
   describe('basic', () => {
-    let fixture: ComponentFixture<NzTestCronExpressionComponent>;
-    let testComponent: NzTestCronExpressionComponent;
+    let fixture: ComponentFixture<TriTestCronExpressionComponent>;
+    let testComponent: TriTestCronExpressionComponent;
     let resultEl: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestCronExpressionComponent);
+      fixture = TestBed.createComponent(TriTestCronExpressionComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      resultEl = fixture.debugElement.query(By.directive(NzCronExpressionComponent));
+      resultEl = fixture.debugElement.query(By.directive(TriCronExpressionComponent));
     });
 
     it('cron-expression basic', () => {
@@ -32,12 +32,12 @@ describe('cron-expression', () => {
     });
 
     it('cron-expression nzSize', () => {
-      testComponent.nzSize = 'small';
+      testComponent.size = 'small';
       fixture.detectChanges();
       expect(resultEl.nativeElement.querySelector('.ant-cron-expression-input-group').classList).toContain(
         'ant-input-sm'
       );
-      testComponent.nzSize = 'large';
+      testComponent.size = 'large';
       fixture.detectChanges();
       expect(resultEl.nativeElement.querySelector('.ant-cron-expression-input-group').classList).toContain(
         'ant-input-lg'
@@ -45,7 +45,7 @@ describe('cron-expression', () => {
     });
 
     it('cron-expression nzDisabled', () => {
-      testComponent.nzDisabled = true;
+      testComponent.disabled = true;
       fixture.detectChanges();
       expect(resultEl.nativeElement.querySelector('.ant-cron-expression-input-group').classList).toContain(
         'ant-input-disabled'
@@ -53,7 +53,7 @@ describe('cron-expression', () => {
     });
 
     it('cron-expression nzBorderless', () => {
-      testComponent.nzBorderless = true;
+      testComponent.borderless = true;
       fixture.detectChanges();
       expect(resultEl.nativeElement.querySelector('.ant-cron-expression-input-group').classList).toContain(
         'ant-input-borderless'
@@ -62,7 +62,7 @@ describe('cron-expression', () => {
 
     it('cron-expression nzCollapseDisable', () => {
       expect(resultEl.nativeElement.querySelector('nz-cron-expression-preview')).not.toBe(null);
-      testComponent.nzCollapseDisable = true;
+      testComponent.collapseDisable = true;
       fixture.detectChanges();
       expect(resultEl.nativeElement.querySelector('nz-cron-expression-preview')).toBe(null);
     });
@@ -79,13 +79,13 @@ describe('cron-expression', () => {
   });
 
   describe('type', () => {
-    let fixture: ComponentFixture<NzTestCronExpressionTypeComponent>;
+    let fixture: ComponentFixture<TriTestCronExpressionTypeComponent>;
     let resultEl: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestCronExpressionTypeComponent);
+      fixture = TestBed.createComponent(TriTestCronExpressionTypeComponent);
       fixture.detectChanges();
-      resultEl = fixture.debugElement.query(By.directive(NzCronExpressionComponent));
+      resultEl = fixture.debugElement.query(By.directive(TriCronExpressionComponent));
     });
 
     it('cron-expression type', () => {
@@ -93,7 +93,7 @@ describe('cron-expression', () => {
       expect(resultEl.nativeElement.querySelectorAll('nz-cron-expression-input').length).toBe(6);
       expect(resultEl.nativeElement.querySelectorAll('nz-cron-expression-label').length).toBe(6);
 
-      fixture.componentRef.instance.nzType = 'linux';
+      fixture.componentRef.instance.type = 'linux';
       fixture.detectChanges();
       expect(resultEl.nativeElement.querySelectorAll('nz-cron-expression-input').length).toBe(5);
       expect(resultEl.nativeElement.querySelectorAll('nz-cron-expression-label').length).toBe(5);
@@ -101,15 +101,15 @@ describe('cron-expression', () => {
   });
 
   describe('form', () => {
-    let fixture: ComponentFixture<NzTestCronExpressionFormComponent>;
-    let testComponent: NzTestCronExpressionFormComponent;
+    let fixture: ComponentFixture<TriTestCronExpressionFormComponent>;
+    let testComponent: TriTestCronExpressionFormComponent;
     let resultEl: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestCronExpressionFormComponent);
+      fixture = TestBed.createComponent(TriTestCronExpressionFormComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      resultEl = fixture.debugElement.query(By.directive(NzCronExpressionComponent));
+      resultEl = fixture.debugElement.query(By.directive(TriCronExpressionComponent));
     });
 
     it('cron-expression form', fakeAsync(() => {
@@ -128,42 +128,42 @@ describe('cron-expression', () => {
 });
 
 @Component({
-  imports: [NzButtonModule, NzCronExpressionModule],
+  imports: [TriButtonModule, TriCronExpressionModule],
   template: `
-    <nz-cron-expression
-      [nzSize]="nzSize"
-      [nzCollapseDisable]="nzCollapseDisable"
-      [nzDisabled]="nzDisabled"
-      [nzBorderless]="nzBorderless"
-      [nzExtra]="shortcuts"
-      [nzSemantic]="semanticTemplate"
-    ></nz-cron-expression>
+    <tri-cron-expression
+      [size]="size"
+      [collapseDisable]="collapseDisable"
+      [disabled]="disabled"
+      [borderless]="borderless"
+      [extra]="shortcuts"
+      [semantic]="semanticTemplate"
+    ></tri-cron-expression>
     <ng-template #shortcuts>
-      <button nz-button nzType="primary">Test</button>
+      <button tri-button type="primary">Test</button>
     </ng-template>
     <ng-template #semanticTemplate>Test</ng-template>
   `
 })
-export class NzTestCronExpressionComponent {
-  nzSize: NzCronExpressionSize = 'default';
-  nzDisabled = false;
-  nzBorderless = false;
-  nzCollapseDisable = false;
+export class TriTestCronExpressionComponent {
+  size: TriCronExpressionSize = 'default';
+  disabled = false;
+  borderless = false;
+  collapseDisable = false;
 }
 
 @Component({
-  imports: [NzCronExpressionModule],
-  template: `<nz-cron-expression [nzType]="nzType"></nz-cron-expression>`
+  imports: [TriCronExpressionModule],
+  template: `<tri-cron-expression [type]="type"></tri-cron-expression>`
 })
-export class NzTestCronExpressionTypeComponent {
-  nzType: 'linux' | 'spring' = 'spring';
+export class TriTestCronExpressionTypeComponent {
+  type: 'linux' | 'spring' = 'spring';
 }
 
 @Component({
-  imports: [ReactiveFormsModule, NzCronExpressionModule],
-  template: `<nz-cron-expression [formControl]="formControl"></nz-cron-expression>`
+  imports: [ReactiveFormsModule, TriCronExpressionModule],
+  template: `<tri-cron-expression [formControl]="formControl"></tri-cron-expression>`
 })
-export class NzTestCronExpressionFormComponent {
+export class TriTestCronExpressionFormComponent {
   formControl = new FormControl('1 1 1 * *');
 
   disable(): void {

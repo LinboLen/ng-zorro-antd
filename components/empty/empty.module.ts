@@ -5,13 +5,13 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzEmbedEmptyComponent } from './embed-empty.component';
-import { NzEmptyComponent } from './empty.component';
-import { NzEmptyDefaultComponent } from './partial/default';
-import { NzEmptySimpleComponent } from './partial/simple';
+import { TriEmbedEmptyComponent } from './embed-empty.component';
+import { TriEmptyComponent } from './empty.component';
+import { TriEmptyDefaultComponent } from './partial/default';
+import { TriEmptySimpleComponent } from './partial/simple';
 
 @NgModule({
-  imports: [NzEmptyComponent, NzEmbedEmptyComponent, NzEmptyDefaultComponent, NzEmptySimpleComponent],
-  exports: [NzEmptyComponent, NzEmbedEmptyComponent]
+  imports: [TriEmptyComponent, TriEmbedEmptyComponent, TriEmptyDefaultComponent, TriEmptySimpleComponent],
+  exports: [TriEmptyComponent, TriEmbedEmptyComponent]
 })
-export class NzEmptyModule {}
+export class TriEmptyModule {}

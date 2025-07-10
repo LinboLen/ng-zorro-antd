@@ -9,15 +9,15 @@ import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulati
 import { tabSwitchMotion } from 'ng-zorro-antd/core/animation';
 
 @Component({
-  selector: '[nz-tab-body]',
-  exportAs: 'nzTabBody',
+  selector: '',
+  exportAs: 'triTabBody',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<ng-template [ngTemplateOutlet]="content"></ng-template>`,
   host: {
-    class: 'ant-tabs-tabpane',
-    '[class.ant-tabs-tabpane-active]': 'active',
-    '[class.ant-tabs-tabpane-hidden]': 'animated ? null : !active',
+    class: 'tri-tabs-tabpane',
+    '[class.tri-tabs-tabpane-active]': 'active',
+    '[class.tri-tabs-tabpane-hidden]': 'animated ? null : !active',
     '[attr.tabindex]': 'active ? 0 : -1',
     '[attr.aria-hidden]': '!active',
     '[style.overflow-y]': 'animated ? active ? null : "none" : null',
@@ -27,7 +27,7 @@ import { tabSwitchMotion } from 'ng-zorro-antd/core/animation';
   imports: [NgTemplateOutlet],
   animations: [tabSwitchMotion]
 })
-export class NzTabBodyComponent {
+export class TriTabBodyComponent {
   @Input() content: TemplateRef<void> | null = null;
   @Input() active = false;
   @Input() animated = true;

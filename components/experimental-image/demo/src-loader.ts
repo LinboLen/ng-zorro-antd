@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 
-import { createAliObjectsLoader, NzImageModule as NzExperimentalImageModule } from 'ng-zorro-antd/experimental/image';
-import { NzImageModule } from 'ng-zorro-antd/image';
+import { createAliObjectsLoader, TriImageModule as NzExperimentalImageModule } from 'ng-zorro-antd/experimental/image';
+import { TriImageModule } from 'ng-zorro-antd/image';
 
 @Component({
-  selector: 'nz-demo-experimental-image-src-loader',
-  imports: [NzImageModule, NzExperimentalImageModule],
-  template: `<nz-image [nzSrc]="src" nzWidth="200" nzHeight="200" [nzSrcLoader]="loader"></nz-image>`
+  selector: '',
+  imports: [TriImageModule, NzExperimentalImageModule],
+  template: `<tri-image [src]="src" width="200" height="200" [srcLoader]="loader"></tri-image>`
 })
-export class NzDemoExperimentalImageSrcLoaderComponent {
+export class TriDemoExperimentalImageSrcLoaderComponent {
   src = 'jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png';
   loader = createAliObjectsLoader('https://zos.alipayobjects.com/rmsportal');
 }

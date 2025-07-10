@@ -1,40 +1,40 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { NzTreeSelectModule, NzPlacementType } from 'ng-zorro-antd/tree-select';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
+import { TriTreeSelectModule, TriPlacementType } from 'ng-zorro-antd/tree-select';
 
 @Component({
-  selector: 'nz-demo-tree-select-placement',
-  imports: [FormsModule, NzRadioModule, NzTreeSelectModule],
+  selector: '',
+  imports: [FormsModule, TriRadioModule, TriTreeSelectModule],
   template: `
-    <nz-radio-group [(ngModel)]="placement">
+    <tri-radio-group [(ngModel)]="placement">
       @for (item of list; track item) {
-        <label nz-radio-button [nzValue]="item">{{ item }}</label>
+        <label tri-radio-button [value]="item">{{ item }}</label>
       }
-    </nz-radio-group>
+    </tri-radio-group>
     <br />
     <br />
-    <nz-tree-select
+    <tri-tree-select
       style="width: 120px"
-      nzPlaceHolder="Please select"
-      [nzPlacement]="placement"
+      placeHolder="Please select"
+      [placement]="placement"
       [(ngModel)]="value"
-      [nzMaxTagCount]="3"
-      [nzMaxTagPlaceholder]="omittedPlaceHolder"
-      [nzNodes]="nodes"
-      [nzDropdownStyle]="{ width: '300px' }"
-      [nzDefaultExpandAll]="true"
-      [nzAllowClear]="false"
-      [nzMultiple]="true"
+      [maxTagCount]="3"
+      [maxTagPlaceholder]="omittedPlaceHolder"
+      [nodes]="nodes"
+      [dropdownStyle]="{ width: '300px' }"
+      [defaultExpandAll]="true"
+      [allowClear]="false"
+      [multiple]="true"
       (ngModelChange)="onChange($event)"
-    ></nz-tree-select>
+    ></tri-tree-select>
     <ng-template #omittedPlaceHolder let-omittedValues>and {{ omittedValues.length }} more...</ng-template>
   `
 })
-export class NzDemoTreeSelectPlacementComponent {
-  list: NzPlacementType[] = ['topLeft', 'topRight', 'bottomLeft', 'bottomRight'];
-  placement: NzPlacementType = 'topLeft';
+export class TriDemoTreeSelectPlacementComponent {
+  list: TriPlacementType[] = ['topLeft', 'topRight', 'bottomLeft', 'bottomRight'];
+  placement: TriPlacementType = 'topLeft';
   value: string[] = [];
   readonly nodes = [
     {

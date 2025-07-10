@@ -18,24 +18,24 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { NzResizeObserver, NzResizeObserverFactory } from './resize-observer.service';
+import { TriResizeObserver, TriResizeObserverFactory } from './resize-observer.service';
 
 @Directive({
-  selector: '[nzResizeObserver]',
-  providers: [NzResizeObserverFactory]
+  selector: '',
+  providers: [TriResizeObserverFactory]
 })
-export class NzResizeObserverDirective implements AfterContentInit, OnChanges {
-  private nzResizeObserver = inject(NzResizeObserver);
+export class TriResizeObserverDirective implements AfterContentInit, OnChanges {
+  private resizeObserver = inject(TriResizeObserver);
   private elementRef = inject(ElementRef<HTMLElement>);
   private destroyRef = inject(DestroyRef);
 
-  @Output() readonly nzResizeObserve = new EventEmitter<ResizeObserverEntry[]>();
-  @Input({ transform: booleanAttribute }) nzResizeObserverDisabled = false;
+  @Output() readonly resizeObserve = new EventEmitter<ResizeObserverEntry[]>();
+  @Input({ transform: booleanAttribute }) resizeObserverDisabled = false;
   private currentSubscription: Subscription | null = null;
 
   private subscribe(): void {
     this.unsubscribe();
-    this.currentSubscription = this.nzResizeObserver.observe(this.elementRef).subscribe(this.nzResizeObserve);
+    this.currentSubscription = this.resizeObserver.observe(this.elementRef).subscribe(this.resizeObserve);
   }
 
   private unsubscribe(): void {
@@ -47,14 +47,14 @@ export class NzResizeObserverDirective implements AfterContentInit, OnChanges {
   }
 
   ngAfterContentInit(): void {
-    if (!this.currentSubscription && !this.nzResizeObserverDisabled) {
+    if (!this.currentSubscription && !this.resizeObserverDisabled) {
       this.subscribe();
     }
   }
   ngOnChanges(changes: SimpleChanges): void {
     const { nzResizeObserve } = changes;
     if (nzResizeObserve) {
-      if (this.nzResizeObserverDisabled) {
+      if (this.resizeObserverDisabled) {
         this.unsubscribe();
       } else {
         this.subscribe();

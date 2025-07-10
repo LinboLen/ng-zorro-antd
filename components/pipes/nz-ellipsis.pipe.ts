@@ -5,13 +5,13 @@
 
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 @Pipe({
   name: 'nzEllipsis'
 })
-export class NzEllipsisPipe implements PipeTransform {
-  transform(value: NzSafeAny, length?: number, suffix: string = ''): NzSafeAny {
+export class TriEllipsisPipe implements PipeTransform {
+  transform(value: TriSafeAny, length?: number, suffix: string = ''): TriSafeAny {
     if (typeof value !== 'string') {
       return value;
     }

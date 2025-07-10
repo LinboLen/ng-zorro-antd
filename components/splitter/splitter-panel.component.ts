@@ -13,11 +13,11 @@ import {
   ChangeDetectionStrategy
 } from '@angular/core';
 
-import { NzSplitterCollapsible } from './typings';
+import { TriSplitterCollapsible } from './typings';
 
 @Component({
-  selector: 'nz-splitter-panel',
-  exportAs: 'nzSplitterPanel',
+  selector: '',
+  exportAs: 'triSplitterPanel',
   template: `
     <ng-template #contentTemplate>
       <ng-content></ng-content>
@@ -26,12 +26,12 @@ import { NzSplitterCollapsible } from './typings';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NzSplitterPanelComponent {
-  readonly nzDefaultSize = input<number | string>();
-  readonly nzMin = input<number | string>();
-  readonly nzMax = input<number | string>();
-  readonly nzSize = input<number | string>();
-  readonly nzCollapsible = input<NzSplitterCollapsible>(false);
-  readonly nzResizable = input(true, { transform: booleanAttribute });
+export class TriSplitterPanelComponent {
+  readonly defaultSize = input<number | string>();
+  readonly min = input<number | string>();
+  readonly max = input<number | string>();
+  readonly size = input<number | string>();
+  readonly collapsible = input<TriSplitterCollapsible>(false);
+  readonly resizable = input(true, { transform: booleanAttribute });
   readonly contentTemplate = viewChild.required<TemplateRef<void>>('contentTemplate');
 }

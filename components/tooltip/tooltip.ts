@@ -17,33 +17,33 @@ import {
 } from '@angular/core';
 
 import { zoomBigMotion } from 'ng-zorro-antd/core/animation';
-import { isPresetColor, NzPresetColor } from 'ng-zorro-antd/core/color';
-import { NzNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzOverlayModule } from 'ng-zorro-antd/core/overlay';
-import { NgStyleInterface, NzTSType } from 'ng-zorro-antd/core/types';
+import { isPresetColor, TriPresetColor } from 'ng-zorro-antd/core/color';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriOverlayModule } from 'ng-zorro-antd/core/overlay';
+import { NgStyleInterface, TriTSType } from 'ng-zorro-antd/core/types';
 
 import {
   isTooltipEmpty,
-  NzTooltipBaseComponent,
-  NzTooltipBaseDirective,
-  NzTooltipTrigger,
+  TriTooltipBaseComponent,
+  TriTooltipBaseDirective,
+  TriTooltipTrigger,
   PropertyMapping
 } from './base';
 
 @Directive({
-  selector: '[nz-tooltip]',
-  exportAs: 'nzTooltip',
+  selector: '',
+  exportAs: 'triTooltip',
   host: {
-    '[class.ant-tooltip-open]': 'visible'
+    '[class.tri-tooltip-open]': 'visible'
   }
 })
-export class NzTooltipDirective extends NzTooltipBaseDirective {
+export class TriTooltipDirective extends TriTooltipBaseDirective {
   /* eslint-disable @angular-eslint/no-input-rename, @angular-eslint/no-output-rename */
-  @Input('nzTooltipTitle') override title?: NzTSType | null;
+  @Input('nzTooltipTitle') override title?: TriTSType | null;
   @Input('nzTooltipTitleContext') titleContext?: object | null = null;
-  @Input('nz-tooltip') override directiveTitle?: NzTSType | null;
-  @Input('nzTooltipTrigger') override trigger?: NzTooltipTrigger = 'hover';
+  @Input('nz-tooltip') override directiveTitle?: TriTSType | null;
+  @Input('nzTooltipTrigger') override trigger?: TriTooltipTrigger = 'hover';
   @Input('nzTooltipPlacement') override placement?: string | string[] = 'top';
   @Input('nzTooltipOrigin') override origin?: ElementRef<HTMLElement>;
   @Input('nzTooltipVisible') override visible?: boolean;
@@ -53,30 +53,30 @@ export class NzTooltipDirective extends NzTooltipBaseDirective {
   @Input('nzTooltipOverlayStyle') override overlayStyle?: NgStyleInterface;
   @Input({ alias: 'nzTooltipArrowPointAtCenter', transform: booleanAttribute }) override arrowPointAtCenter?: boolean;
   @Input({ transform: booleanAttribute }) override cdkConnectedOverlayPush?: boolean = true;
-  @Input() nzTooltipColor?: string;
+  @Input() tooltipColor?: string;
 
-  override directiveContent?: NzTSType | null = null;
-  override content?: NzTSType | null = null;
+  override directiveContent?: TriTSType | null = null;
+  override content?: TriTSType | null = null;
   override overlayClickable?: boolean;
 
   @Output('nzTooltipVisibleChange') override readonly visibleChange = new EventEmitter<boolean>();
 
   constructor() {
-    super(NzToolTipComponent);
+    super(TriToolTipComponent);
   }
 
   protected override getProxyPropertyMap(): PropertyMapping {
     return {
       ...super.getProxyPropertyMap(),
-      nzTooltipColor: ['nzColor', () => this.nzTooltipColor],
+      nzTooltipColor: ['nzColor', () => this.tooltipColor],
       titleContext: ['nzTitleContext', () => this.titleContext]
     };
   }
 }
 
 @Component({
-  selector: 'nz-tooltip',
-  exportAs: 'nzTooltipComponent',
+  selector: '',
+  exportAs: 'triTooltipComponent',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   animations: [zoomBigMotion],
@@ -84,62 +84,62 @@ export class NzTooltipDirective extends NzTooltipBaseDirective {
     <ng-template
       #overlay="cdkConnectedOverlay"
       cdkConnectedOverlay
-      nzConnectedOverlay
+      connectedOverlay
       [cdkConnectedOverlayOrigin]="origin"
       [cdkConnectedOverlayOpen]="_visible"
       [cdkConnectedOverlayPositions]="_positions"
       [cdkConnectedOverlayPush]="cdkConnectedOverlayPush"
-      [nzArrowPointAtCenter]="nzArrowPointAtCenter"
+      [arrowPointAtCenter]="arrowPointAtCenter"
       (overlayOutsideClick)="onClickOutside($event)"
       (detach)="hide()"
       (positionChange)="onPositionChange($event)"
     >
       <div
-        class="ant-tooltip"
-        [class.ant-tooltip-rtl]="dir === 'rtl'"
+        class="tri-tooltip"
+        [class.tri-tooltip-rtl]="dir === 'rtl'"
         [class]="_classMap"
-        [style]="nzOverlayStyle"
+        [style]="overlayStyle"
         [@.disabled]="!!noAnimation?.nzNoAnimation"
-        [nzNoAnimation]="noAnimation?.nzNoAnimation"
+        [noAnimation]="noAnimation?.nzNoAnimation"
         [@zoomBigMotion]="'active'"
       >
-        <div class="ant-tooltip-content">
-          <div class="ant-tooltip-arrow">
-            <span class="ant-tooltip-arrow-content" [style]="_contentStyleMap"></span>
+        <div class="tri-tooltip-content">
+          <div class="tri-tooltip-arrow">
+            <span class="tri-tooltip-arrow-content" [style]="_contentStyleMap"></span>
           </div>
-          <div class="ant-tooltip-inner" [style]="_contentStyleMap">
-            <ng-container *nzStringTemplateOutlet="nzTitle; context: nzTitleContext">{{ nzTitle }}</ng-container>
+          <div class="tri-tooltip-inner" [style]="_contentStyleMap">
+            <ng-container *stringTemplateOutlet="title; stringTemplateOutletContext: titleContext">{{ title }}</ng-container>
           </div>
         </div>
       </div>
     </ng-template>
   `,
-  imports: [OverlayModule, NzNoAnimationDirective, NzOutletModule, NzOverlayModule]
+  imports: [OverlayModule, TriNoAnimationDirective, TriOutletModule, TriOverlayModule]
 })
-export class NzToolTipComponent extends NzTooltipBaseComponent {
-  override nzTitle: NzTSType | null = null;
-  nzTitleContext: object | null = null;
+export class TriToolTipComponent extends TriTooltipBaseComponent {
+  override title: TriTSType | null = null;
+  titleContext: object | null = null;
 
-  nzColor?: string | NzPresetColor;
+  color?: string | TriPresetColor;
 
   _contentStyleMap: NgStyleInterface = {};
 
   protected isEmpty(): boolean {
-    return isTooltipEmpty(this.nzTitle);
+    return isTooltipEmpty(this.title);
   }
 
   protected override updateStyles(): void {
-    const isColorPreset = this.nzColor && isPresetColor(this.nzColor);
+    const isColorPreset = this.color && isPresetColor(this.color);
 
     this._classMap = {
-      ...this.transformClassListToMap(this.nzOverlayClassName),
+      ...this.transformClassListToMap(this.overlayClassName),
       [`${this._prefix}-placement-${this.preferredPlacement}`]: true,
-      [`${this._prefix}-${this.nzColor}`]: isColorPreset
+      [`${this._prefix}-${this.color}`]: isColorPreset
     };
 
     this._contentStyleMap = {
-      backgroundColor: !!this.nzColor && !isColorPreset ? this.nzColor : null,
-      '--antd-arrow-background-color': this.nzColor
+      backgroundColor: !!this.color && !isColorPreset ? this.color : null,
+      '--antd-arrow-background-color': this.color
     };
   }
 }

@@ -21,27 +21,27 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 
-import { NzHighlightPipe } from 'ng-zorro-antd/core/highlight';
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzTreeNode } from 'ng-zorro-antd/core/tree';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriHighlightPipe } from 'ng-zorro-antd/core/highlight';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriTreeNode } from 'ng-zorro-antd/core/tree';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
-import { NzCascaderOption } from './typings';
+import { TriCascaderOption } from './typings';
 
 @Component({
-  selector: '[nz-cascader-option]',
-  exportAs: 'nzCascaderOption',
-  imports: [NgTemplateOutlet, NzHighlightPipe, NzIconModule, NzOutletModule],
+  selector: '',
+  exportAs: 'triCascaderOption',
+  imports: [NgTemplateOutlet, TriHighlightPipe, TriIconModule, TriOutletModule],
   template: `
     @if (checkable) {
       <span
-        class="ant-cascader-checkbox"
-        [class.ant-cascader-checkbox-checked]="checked"
-        [class.ant-cascader-checkbox-indeterminate]="halfChecked"
-        [class.ant-cascader-checkbox-disabled]="disabled"
+        class="tri-cascader-checkbox"
+        [class.tri-cascader-checkbox-checked]="checked"
+        [class.tri-cascader-checkbox-indeterminate]="halfChecked"
+        [class.tri-cascader-checkbox-disabled]="disabled"
         (click)="onCheckboxClick($event)"
       >
-        <span class="ant-cascader-checkbox-inner"></span>
+        <span class="tri-cascader-checkbox-inner"></span>
       </span>
     }
 
@@ -52,41 +52,41 @@ import { NzCascaderOption } from './typings';
       />
     } @else {
       <div
-        class="ant-cascader-menu-item-content"
+        class="tri-cascader-menu-item-content"
         [innerHTML]="node.title | nzHighlight: highlightText : 'g' : 'ant-cascader-menu-item-keyword'"
       ></div>
     }
 
     @if (!node.isLeaf || node.children?.length || node.isLoading) {
-      <div class="ant-cascader-menu-item-expand-icon">
+      <div class="tri-cascader-menu-item-expand-icon">
         @if (node.isLoading) {
-          <nz-icon nzType="loading" />
+          <tri-icon type="loading" />
         } @else {
-          <ng-container *nzStringTemplateOutlet="expandIcon">
-            <nz-icon [nzType]="$any(expandIcon)" />
+          <ng-container *stringTemplateOutlet="expandIcon">
+            <tri-icon [type]="$any(expandIcon)" />
           </ng-container>
         }
       </div>
     }
   `,
   host: {
-    class: 'ant-cascader-menu-item ant-cascader-menu-item-expanded',
+    class: 'tri-cascader-menu-item ant-cascader-menu-item-expanded',
     '[attr.title]': 'node.title',
-    '[class.ant-cascader-menu-item-active]': 'activated',
-    '[class.ant-cascader-menu-item-expand]': '!node.isLeaf',
-    '[class.ant-cascader-menu-item-disabled]': 'node.isDisabled'
+    '[class.tri-cascader-menu-item-active]': 'activated',
+    '[class.tri-cascader-menu-item-expand]': '!node.isLeaf',
+    '[class.tri-cascader-menu-item-disabled]': 'node.isDisabled'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class NzCascaderOptionComponent implements OnInit {
+export class TriCascaderOptionComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
 
-  @Input() optionTemplate: TemplateRef<NzCascaderOption> | null = null;
-  @Input() node!: NzTreeNode;
+  @Input() optionTemplate: TemplateRef<TriCascaderOption> | null = null;
+  @Input() node!: TriTreeNode;
   @Input() activated = false;
   @Input() highlightText!: string;
-  @Input() nzLabelProperty = 'label';
+  @Input() labelProperty = 'label';
   @Input({ transform: numberAttribute }) columnIndex!: number;
   @Input() expandIcon: string | TemplateRef<void> = '';
   @Input() dir: Direction = 'ltr';

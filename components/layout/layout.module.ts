@@ -5,22 +5,22 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzContentComponent } from './content.component';
-import { NzFooterComponent } from './footer.component';
-import { NzHeaderComponent } from './header.component';
-import { NzLayoutComponent } from './layout.component';
-import { NzSiderTriggerComponent } from './sider-trigger.component';
-import { NzSiderComponent } from './sider.component';
+import { TriContentComponent } from './content.component';
+import { TriFooterComponent } from './footer.component';
+import { TriHeaderComponent } from './header.component';
+import { TriLayoutComponent } from './layout.component';
+import { TriSiderTriggerComponent } from './sider-trigger.component';
+import { TriSiderComponent } from './sider.component';
 
 @NgModule({
   imports: [
-    NzLayoutComponent,
-    NzHeaderComponent,
-    NzContentComponent,
-    NzFooterComponent,
-    NzSiderComponent,
-    NzSiderTriggerComponent
+    TriLayoutComponent,
+    TriHeaderComponent,
+    TriContentComponent,
+    TriFooterComponent,
+    TriSiderComponent,
+    TriSiderTriggerComponent
   ],
-  exports: [NzLayoutComponent, NzHeaderComponent, NzContentComponent, NzFooterComponent, NzSiderComponent]
+  exports: [TriLayoutComponent, TriHeaderComponent, TriContentComponent, TriFooterComponent, TriSiderComponent]
 })
-export class NzLayoutModule {}
+export class TriLayoutModule {}

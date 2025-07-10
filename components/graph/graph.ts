@@ -5,12 +5,12 @@
 
 import { EventEmitter } from '@angular/core';
 
-import { NzGraphGroupNode, NzGraphNode } from './interface';
+import { TriGraphGroupNode, TriGraphNode } from './interface';
 
 /**
  * https://angular.io/errors/NG3003
  * An intermediate interface for {@link NzGraphComponent} & {@link NzGraphNodeComponent}
  */
-export abstract class NzGraph {
-  abstract nzNodeClick: EventEmitter<NzGraphNode | NzGraphGroupNode>;
+export abstract class TriGraph {
+  abstract nodeClick: EventEmitter<TriGraphNode | TriGraphGroupNode>;
 }

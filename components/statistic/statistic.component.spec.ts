@@ -8,18 +8,18 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzStatisticComponent } from './statistic.component';
-import { NzStatisticModule } from './statistic.module';
+import { TriStatisticComponent } from './statistic.component';
+import { TriStatisticModule } from './statistic.module';
 
 describe('nz-statistic', () => {
   describe('basic', () => {
-    let fixture: ComponentFixture<NzTestStatisticComponent>;
-    let testComponent: NzTestStatisticComponent;
+    let fixture: ComponentFixture<TriTestStatisticComponent>;
+    let testComponent: TriTestStatisticComponent;
     let statisticEl: DebugElement;
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestStatisticComponent);
+      fixture = TestBed.createComponent(TriTestStatisticComponent);
       testComponent = fixture.componentInstance;
-      statisticEl = fixture.debugElement.query(By.directive(NzStatisticComponent));
+      statisticEl = fixture.debugElement.query(By.directive(TriStatisticComponent));
     });
 
     it('should render title, prefix and suffix', () => {
@@ -44,11 +44,11 @@ describe('nz-statistic', () => {
   });
 
   describe('RTL', () => {
-    let fixture: ComponentFixture<NzTestStatisticRtlComponent>;
+    let fixture: ComponentFixture<TriTestStatisticRtlComponent>;
     let statisticEl: DebugElement;
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestStatisticRtlComponent);
-      statisticEl = fixture.debugElement.query(By.directive(NzStatisticComponent));
+      fixture = TestBed.createComponent(TriTestStatisticRtlComponent);
+      statisticEl = fixture.debugElement.query(By.directive(TriStatisticComponent));
     });
 
     it('should className correct on dir change', () => {
@@ -63,18 +63,18 @@ describe('nz-statistic', () => {
 });
 
 @Component({
-  imports: [NzStatisticModule],
+  imports: [TriStatisticModule],
   template: `
-    <nz-statistic
-      [nzValue]="123.45"
-      [nzTitle]="title"
-      [nzSuffix]="suffix"
-      [nzPrefix]="prefix"
-      [nzLoading]="loading"
-    ></nz-statistic>
+    <tri-statistic
+      [value]="123.45"
+      [title]="title"
+      [suffix]="suffix"
+      [prefix]="prefix"
+      [loading]="loading"
+    ></tri-statistic>
   `
 })
-export class NzTestStatisticComponent {
+export class TriTestStatisticComponent {
   title = 'title';
   prefix = '';
   suffix = '';
@@ -82,14 +82,14 @@ export class NzTestStatisticComponent {
 }
 
 @Component({
-  imports: [BidiModule, NzStatisticModule],
+  imports: [BidiModule, TriStatisticModule],
   template: `
     <div [dir]="direction">
-      <nz-statistic [nzValue]="123.45" nzTitle="test title"></nz-statistic>
+      <tri-statistic [value]="123.45" title="test title"></tri-statistic>
     </div>
   `
 })
-export class NzTestStatisticRtlComponent {
+export class TriTestStatisticRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 }

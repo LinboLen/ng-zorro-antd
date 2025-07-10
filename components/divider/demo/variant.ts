@@ -1,27 +1,27 @@
 import { Component } from '@angular/core';
 
-import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { TriDividerModule } from 'ng-zorro-antd/divider';
 
 @Component({
-  selector: 'nz-demo-divider-variant',
-  imports: [NzDividerModule],
+  selector: '',
+  imports: [TriDividerModule],
   template: `
     <div>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae
         sunt a te dicta? Refert tamen, quo modo.
       </p>
-      <nz-divider nzPlain nzText="Solid" nzVariant="solid"></nz-divider>
+      <tri-divider plain text="Solid" variant="solid"></tri-divider>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae
         sunt a te dicta? Refert tamen, quo modo.
       </p>
-      <nz-divider nzPlain nzText="Dotted" nzVariant="dotted"></nz-divider>
+      <tri-divider plain text="Dotted" variant="dotted"></tri-divider>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae
         sunt a te dicta? Refert tamen, quo modo.
       </p>
-      <nz-divider nzPlain nzText="Dashed" nzVariant="dashed"></nz-divider>
+      <tri-divider plain text="Dashed" variant="dashed"></tri-divider>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae
         sunt a te dicta? Refert tamen, quo modo.
@@ -37,4 +37,4 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
     `
   ]
 })
-export class NzDemoDividerVariantComponent {}
+export class TriDemoDividerVariantComponent {}

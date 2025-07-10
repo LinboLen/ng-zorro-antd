@@ -1,38 +1,38 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
+import { TriButtonModule } from 'ng-zorro-antd/button';
 import {
-  NzGraphComponent,
-  NzGraphData,
-  NzGraphDataDef,
-  NzGraphModule,
-  NzGraphZoomDirective,
-  NzRankDirection
+  TriGraphComponent,
+  TriGraphData,
+  TriGraphDataDef,
+  TriGraphModule,
+  TriGraphZoomDirective,
+  TriRankDirection
 } from 'ng-zorro-antd/graph';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: 'nz-demo-graph-customized',
-  imports: [FormsModule, NzButtonModule, NzGraphModule, NzRadioModule],
+  selector: '',
+  imports: [FormsModule, TriButtonModule, TriGraphModule, TriRadioModule],
   template: `
-    <button nz-button nzType="default" (click)="expandAll()">ExpandAll</button>
-    <button nz-button nzType="default" (click)="collapseAll()">CollapseAll</button>
-    <button nz-button nzType="primary" (click)="fit()">Fit</button>
-    <nz-radio-group [(ngModel)]="rankDirection">
-      <label nz-radio-button nzValue="LR">LR</label>
-      <label nz-radio-button nzValue="RL">RL</label>
-      <label nz-radio-button nzValue="TB">TB</label>
-      <label nz-radio-button nzValue="BT">BT</label>
-    </nz-radio-group>
-    <nz-graph
-      nz-graph-zoom
-      [nzGraphData]="graphData"
-      [nzAutoSize]="true"
-      [nzRankDirection]="rankDirection"
-      (nzGraphInitialized)="graphInitialized($event)"
+    <button tri-button type="default" (click)="expandAll()">ExpandAll</button>
+    <button tri-button type="default" (click)="collapseAll()">CollapseAll</button>
+    <button tri-button type="primary" (click)="fit()">Fit</button>
+    <tri-radio-group [(ngModel)]="rankDirection">
+      <label tri-radio-button value="LR">LR</label>
+      <label tri-radio-button value="RL">RL</label>
+      <label tri-radio-button value="TB">TB</label>
+      <label tri-radio-button value="BT">BT</label>
+    </tri-radio-group>
+    <tri-graph
+      tri-graph-zoom
+      [graphData]="graphData"
+      [autoSize]="true"
+      [rankDirection]="rankDirection"
+      (graphInitialized)="graphInitialized($event)"
     >
-      <ng-container *nzGraphNode="let node">
+      <ng-container *graphNode="let node">
         <foreignObject x="0" y="0" [attr.width]="node.width" [attr.height]="node.height">
           <xhtml:div class="graph-node leaf-node" (click)="focusNode(node.id || node.name)">
             <div class="title">
@@ -42,7 +42,7 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
         </foreignObject>
       </ng-container>
 
-      <ng-container *nzGraphGroupNode="let node">
+      <ng-container *graphGroupNode="let node">
         <foreignObject x="0" y="0" [attr.width]="node.width" [attr.height]="node.height">
           <xhtml:div class="graph-node group-node" (click)="focusNode(node.id || node.name)">
             <div class="title">
@@ -51,7 +51,7 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
           </xhtml:div>
         </foreignObject>
       </ng-container>
-    </nz-graph>
+    </tri-graph>
   `,
   styles: [
     `
@@ -97,11 +97,11 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
     `
   ]
 })
-export class NzDemoGraphCustomizedComponent {
-  @ViewChild(NzGraphComponent, { static: true }) nzGraphComponent!: NzGraphComponent;
-  @ViewChild(NzGraphZoomDirective, { static: true }) zoomController!: NzGraphZoomDirective;
+export class TriDemoGraphCustomizedComponent {
+  @ViewChild(TriGraphComponent, { static: true }) graphComponent!: TriGraphComponent;
+  @ViewChild(TriGraphZoomDirective, { static: true }) zoomController!: TriGraphZoomDirective;
   zoom = 0.5;
-  testDef: NzGraphDataDef = {
+  testDef: TriGraphDataDef = {
     nodes: [
       {
         id: '0',
@@ -270,8 +270,8 @@ export class NzDemoGraphCustomizedComponent {
       G0: ['4', '5', '15']
     }
   };
-  rankDirection: NzRankDirection = 'TB';
-  graphData = new NzGraphData(this.testDef);
+  rankDirection: TriRankDirection = 'TB';
+  graphData = new TriGraphData(this.testDef);
 
   expand(name: string): void {
     this.graphData.expand(name);
@@ -297,7 +297,7 @@ export class NzDemoGraphCustomizedComponent {
     this.zoomController?.focus(e);
   }
 
-  graphInitialized(_ele: NzGraphComponent): void {
+  graphInitialized(_ele: TriGraphComponent): void {
     // Only nz-graph-zoom enabled, you should run `fitCenter` manually
     this.zoomController?.fitCenter();
   }

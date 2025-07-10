@@ -12,20 +12,20 @@ import { By } from '@angular/platform-browser';
 
 import { dispatchFakeEvent, dispatchKeyboardEvent } from 'ng-zorro-antd/core/testing';
 
-import { NzRateComponent } from './rate.component';
-import { NzRateModule } from './rate.module';
+import { TriRateComponent } from './rate.component';
+import { TriRateModule } from './rate.module';
 
 describe('rate', () => {
   describe('basic rate', () => {
-    let fixture: ComponentFixture<NzTestRateBasicComponent>;
-    let testComponent: NzTestRateBasicComponent;
+    let fixture: ComponentFixture<TriTestRateBasicComponent>;
+    let testComponent: TriTestRateBasicComponent;
     let rate: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestRateBasicComponent);
+      fixture = TestBed.createComponent(TriTestRateBasicComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      rate = fixture.debugElement.query(By.directive(NzRateComponent));
+      rate = fixture.debugElement.query(By.directive(TriRateComponent));
     });
     it('should className correct', () => {
       fixture.detectChanges();
@@ -142,10 +142,10 @@ describe('rate', () => {
     it('should focus and blur function work', () => {
       fixture.detectChanges();
       expect(rate.nativeElement.querySelector('ul') === document.activeElement).toBe(false);
-      testComponent.nzRateComponent.focus();
+      testComponent.rateComponent.focus();
       fixture.detectChanges();
       expect(rate.nativeElement.querySelector('ul') === document.activeElement).toBe(true);
-      testComponent.nzRateComponent.blur();
+      testComponent.rateComponent.blur();
       fixture.detectChanges();
       expect(rate.nativeElement.querySelector('ul') === document.activeElement).toBe(false);
     });
@@ -209,17 +209,17 @@ describe('rate', () => {
     }));
   });
   describe('rate form', () => {
-    let fixture: ComponentFixture<NzTestRateFormComponent>;
-    let testComponent: NzTestRateFormComponent;
+    let fixture: ComponentFixture<TriTestRateFormComponent>;
+    let testComponent: TriTestRateFormComponent;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestRateFormComponent);
+      fixture = TestBed.createComponent(TriTestRateFormComponent);
       testComponent = fixture.componentInstance;
     });
     it('should be in pristine, untouched, and valid states and enable initially', fakeAsync(() => {
       fixture.detectChanges();
       flush();
-      const rate = fixture.debugElement.query(By.directive(NzRateComponent));
+      const rate = fixture.debugElement.query(By.directive(TriRateComponent));
       expect(testComponent.formControl.valid).toBe(true);
       expect(testComponent.formControl.pristine).toBe(true);
       expect(testComponent.formControl.touched).toBe(false);
@@ -229,14 +229,14 @@ describe('rate', () => {
       testComponent.disabled = true;
       fixture.detectChanges();
       flush();
-      const rate = fixture.debugElement.query(By.directive(NzRateComponent));
+      const rate = fixture.debugElement.query(By.directive(TriRateComponent));
       expect(rate.nativeElement.firstElementChild!.classList).toContain('ant-rate-disabled');
     }));
     it('should be disable if form is disable and nzDisable set to false initially', fakeAsync(() => {
       testComponent.disable();
       fixture.detectChanges();
       flush();
-      const rate = fixture.debugElement.query(By.directive(NzRateComponent));
+      const rate = fixture.debugElement.query(By.directive(TriRateComponent));
       expect(rate.nativeElement.firstElementChild!.classList).toContain('ant-rate-disabled');
     }));
     it('should set disabled work', fakeAsync(() => {
@@ -244,7 +244,7 @@ describe('rate', () => {
       fixture.detectChanges();
       flush();
 
-      const rate = fixture.debugElement.query(By.directive(NzRateComponent));
+      const rate = fixture.debugElement.query(By.directive(TriRateComponent));
       expect(rate.nativeElement.firstElementChild!.classList).toContain('ant-rate-disabled');
       expect(testComponent.formControl.value).toBe(1);
       rate.nativeElement.firstElementChild.children[3].firstElementChild.firstElementChild.click();
@@ -269,13 +269,13 @@ describe('rate', () => {
     }));
   });
   describe('RTL', () => {
-    let fixture: ComponentFixture<NzTestRateRtlComponent>;
+    let fixture: ComponentFixture<TriTestRateRtlComponent>;
     let rate: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestRateRtlComponent);
+      fixture = TestBed.createComponent(TriTestRateRtlComponent);
       fixture.detectChanges();
-      rate = fixture.debugElement.query(By.directive(NzRateComponent));
+      rate = fixture.debugElement.query(By.directive(TriRateComponent));
     });
 
     it('should className correct on dir change', fakeAsync(() => {
@@ -288,13 +288,13 @@ describe('rate', () => {
     }));
   });
   describe('rate character', () => {
-    let fixture: ComponentFixture<NzTestRateCharacterComponent>;
+    let fixture: ComponentFixture<TriTestRateCharacterComponent>;
     let rate: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestRateCharacterComponent);
+      fixture = TestBed.createComponent(TriTestRateCharacterComponent);
       fixture.detectChanges();
-      rate = fixture.debugElement.query(By.directive(NzRateComponent));
+      rate = fixture.debugElement.query(By.directive(TriRateComponent));
     });
 
     it('should nzCharacter work', () => {
@@ -309,26 +309,26 @@ describe('rate', () => {
 });
 
 @Component({
-  selector: 'nz-test-rate',
-  imports: [FormsModule, NzRateModule],
+  selector: '',
+  imports: [FormsModule, TriRateModule],
   template: `
-    <nz-rate
+    <tri-rate
       [(ngModel)]="value"
       (ngModelChange)="modelChange($event)"
-      (nzOnBlur)="onBlur($event)"
-      (nzOnFocus)="onFocus($event)"
-      (nzOnHoverChange)="onHoverChange($event)"
-      (nzOnKeyDown)="onKeyDown($event)"
-      [nzCount]="count"
-      [nzAllowHalf]="allowHalf"
-      [nzAllowClear]="allowClear"
-      [nzDisabled]="disabled"
-      [nzAutoFocus]="autoFocus"
-    ></nz-rate>
+      (onBlur)="onBlur($event)"
+      (onFocus)="onFocus($event)"
+      (onHoverChange)="onHoverChange($event)"
+      (onKeyDown)="onKeyDown($event)"
+      [count]="count"
+      [allowHalf]="allowHalf"
+      [allowClear]="allowClear"
+      [disabled]="disabled"
+      [autoFocus]="autoFocus"
+    ></tri-rate>
   `
 })
-export class NzTestRateBasicComponent {
-  @ViewChild(NzRateComponent, { static: false }) nzRateComponent!: NzRateComponent;
+export class TriTestRateBasicComponent {
+  @ViewChild(TriRateComponent, { static: false }) rateComponent!: TriRateComponent;
   count = 5;
   autoFocus = false;
   allowHalf = false;
@@ -343,14 +343,14 @@ export class NzTestRateBasicComponent {
 }
 
 @Component({
-  imports: [ReactiveFormsModule, NzRateModule],
+  imports: [ReactiveFormsModule, TriRateModule],
   template: `
     <form>
-      <nz-rate [formControl]="formControl" [nzDisabled]="disabled"></nz-rate>
+      <tri-rate [formControl]="formControl" [disabled]="disabled"></tri-rate>
     </form>
   `
 })
-export class NzTestRateFormComponent {
+export class TriTestRateFormComponent {
   formControl = new FormControl(1);
 
   disabled = false;
@@ -365,29 +365,29 @@ export class NzTestRateFormComponent {
 }
 
 @Component({
-  imports: [BidiModule, NzTestRateBasicComponent],
+  imports: [BidiModule, TriTestRateBasicComponent],
   template: `
     <div [dir]="direction">
-      <nz-test-rate></nz-test-rate>
+      <tri-test-rate></tri-test-rate>
     </div>
   `
 })
-export class NzTestRateRtlComponent {
+export class TriTestRateRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 }
 
 @Component({
-  selector: 'nz-test-rate-character',
-  imports: [FormsModule, NzRateModule],
+  selector: '',
+  imports: [FormsModule, TriRateModule],
   template: `
-    <nz-rate [(ngModel)]="value" [nzCharacter]="characterTpl"></nz-rate>
+    <tri-rate [(ngModel)]="value" [character]="characterTpl"></tri-rate>
     <ng-template #characterTpl let-index>
       {{ index + 1 }}
     </ng-template>
   `
 })
-export class NzTestRateCharacterComponent {
-  @ViewChild(NzRateComponent, { static: false }) nzRateComponent!: NzRateComponent;
+export class TriTestRateCharacterComponent {
+  @ViewChild(TriRateComponent, { static: false }) rateComponent!: TriRateComponent;
   value = 5;
 }

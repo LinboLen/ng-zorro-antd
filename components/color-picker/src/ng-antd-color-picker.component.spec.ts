@@ -159,14 +159,14 @@ describe('NgxColorPickerComponent', () => {
       [disabledAlpha]="disabledAlpha"
       [panelRenderHeader]="title"
       [panelRenderFooter]="footer"
-      (nzOnChange)="onChange($event)"
-      (nzOnChangeComplete)="onChangeComplete($event)"
+      (onChange)="onChange($event)"
+      (onChangeComplete)="onChangeComplete($event)"
     ></ng-antd-color-picker>
     <ng-template #title>
-      <div class="ant-color-picker-header">Color Picker Header</div>
+      <div class="tri-color-picker-header">Color Picker Header</div>
     </ng-template>
     <ng-template #footer>
-      <div class="ant-color-picker-footer">Color Picker Footer</div>
+      <div class="tri-color-picker-footer">Color Picker Footer</div>
     </ng-template>
   `
 })

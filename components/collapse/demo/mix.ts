@@ -1,35 +1,35 @@
 import { Component } from '@angular/core';
 
-import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { TriCollapseModule } from 'ng-zorro-antd/collapse';
 
 @Component({
-  selector: 'nz-demo-collapse-mix',
-  imports: [NzCollapseModule],
+  selector: '',
+  imports: [TriCollapseModule],
   template: `
-    <nz-collapse>
+    <tri-collapse>
       @for (panel of panels; track panel) {
-        <nz-collapse-panel [nzHeader]="panel.name" [nzActive]="panel.active">
+        <tri-collapse-panel [header]="panel.name" [active]="panel.active">
           <p>{{ panel.name }}</p>
           @if (panel.childPanel && panel.childPanel.length > 0) {
             <div>
-              <nz-collapse>
+              <tri-collapse>
                 @for (childPanel of panel.childPanel; track childPanel) {
-                  <nz-collapse-panel [nzHeader]="childPanel.name" [nzActive]="childPanel.active">
+                  <tri-collapse-panel [header]="childPanel.name" [active]="childPanel.active">
                     <p>
                       A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as
                       a welcome guest in many households across the world.
                     </p>
-                  </nz-collapse-panel>
+                  </tri-collapse-panel>
                 }
-              </nz-collapse>
+              </tri-collapse>
             </div>
           }
-        </nz-collapse-panel>
+        </tri-collapse-panel>
       }
-    </nz-collapse>
+    </tri-collapse>
   `
 })
-export class NzDemoCollapseMixComponent {
+export class TriDemoCollapseMixComponent {
   panels = [
     {
       active: true,

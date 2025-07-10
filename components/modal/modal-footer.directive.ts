@@ -5,19 +5,19 @@
 
 import { Directive, TemplateRef, inject } from '@angular/core';
 
-import { NzModalRef } from './modal-ref';
+import { TriModalRef } from './modal-ref';
 
 @Directive({
-  selector: '[nzModalFooter]',
-  exportAs: 'nzModalFooter'
+  selector: '',
+  exportAs: 'triModalFooter'
 })
-export class NzModalFooterDirective {
+export class TriModalFooterDirective {
   public readonly templateRef: TemplateRef<{}> = inject(TemplateRef);
-  private nzModalRef = inject(NzModalRef, { optional: true });
+  private modalRef = inject(TriModalRef, { optional: true });
 
   constructor() {
-    this.nzModalRef?.updateConfig({
-      nzFooter: this.templateRef
+    this.modalRef?.updateConfig({
+      footer: this.templateRef
     });
   }
 }

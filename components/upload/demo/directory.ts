@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriUploadModule } from 'ng-zorro-antd/upload';
 
 @Component({
-  selector: 'nz-demo-upload-directory',
-  imports: [NzButtonModule, NzIconModule, NzUploadModule],
+  selector: '',
+  imports: [TriButtonModule, TriIconModule, TriUploadModule],
   template: `
-    <nz-upload nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76" nzDirectory>
-      <button nz-button>
-        <nz-icon nzType="upload" />
+    <tri-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76" directory>
+      <button tri-button>
+        <tri-icon type="upload" />
         Upload Directory
       </button>
-    </nz-upload>
+    </tri-upload>
   `
 })
-export class NzDemoUploadDirectoryComponent {}
+export class TriDemoUploadDirectoryComponent {}

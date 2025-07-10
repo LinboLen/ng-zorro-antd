@@ -1,8 +1,8 @@
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzTreeFlatDataSource, NzTreeFlattener, NzTreeViewModule } from 'ng-zorro-antd/tree-view';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriTreeFlatDataSource, TriTreeFlattener, TriTreeViewModule } from 'ng-zorro-antd/tree-view';
 
 interface FoodNode {
   name: string;
@@ -36,22 +36,22 @@ interface ExampleFlatNode {
 }
 
 @Component({
-  selector: 'nz-demo-tree-view-virtual-scroll',
-  imports: [NzIconModule, NzTreeViewModule],
+  selector: '',
+  imports: [TriIconModule, TriTreeViewModule],
   template: `
-    <nz-tree-virtual-scroll-view class="virtual-scroll-tree" [nzTreeControl]="treeControl" [nzDataSource]="dataSource">
-      <nz-tree-node *nzTreeNodeDef="let node" nzTreeNodePadding>
-        <nz-tree-node-toggle nzTreeNodeNoopToggle></nz-tree-node-toggle>
+    <tri-tree-virtual-scroll-view class="virtual-scroll-tree" [treeControl]="treeControl" [dataSource]="dataSource">
+      <tri-tree-node *treeNodeDef="let node" treeNodePadding>
+        <tri-tree-node-toggle treeNodeNoopToggle></tri-tree-node-toggle>
         {{ node.name }}
-      </nz-tree-node>
+      </tri-tree-node>
 
-      <nz-tree-node *nzTreeNodeDef="let node; when: hasChild" nzTreeNodePadding>
-        <nz-tree-node-toggle>
-          <nz-icon nzType="caret-down" nzTreeNodeToggleRotateIcon />
-        </nz-tree-node-toggle>
+      <tri-tree-node *treeNodeDef="let node; treeNodeDefWhen: hasChild" treeNodePadding>
+        <tri-tree-node-toggle>
+          <tri-icon type="caret-down" treeNodeToggleRotateIcon />
+        </tri-tree-node-toggle>
         {{ node.name }}
-      </nz-tree-node>
-    </nz-tree-virtual-scroll-view>
+      </tri-tree-node>
+    </tri-tree-virtual-scroll-view>
   `,
   styles: [
     `
@@ -61,7 +61,7 @@ interface ExampleFlatNode {
     `
   ]
 })
-export class NzDemoTreeViewVirtualScrollComponent {
+export class TriDemoTreeViewVirtualScrollComponent {
   private transformer = (node: FoodNode, level: number): ExampleFlatNode => ({
     expandable: !!node.children && node.children.length > 0,
     name: node.name,
@@ -73,14 +73,14 @@ export class NzDemoTreeViewVirtualScrollComponent {
     node => node.expandable
   );
 
-  treeFlattener = new NzTreeFlattener(
+  treeFlattener = new TriTreeFlattener(
     this.transformer,
     node => node.level,
     node => node.expandable,
     node => node.children
   );
 
-  dataSource = new NzTreeFlatDataSource(this.treeControl, this.treeFlattener);
+  dataSource = new TriTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   constructor() {
     this.dataSource.setData(TREE_DATA);

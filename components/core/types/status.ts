@@ -3,5 +3,5 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export type NzStatus = '' | 'error' | 'warning';
-export type NzValidateStatus = '' | 'success' | 'warning' | 'error' | 'validating';
+export type TriStatus = '' | 'error' | 'warning';
+export type TriValidateStatus = '' | 'success' | 'warning' | 'error' | 'validating';

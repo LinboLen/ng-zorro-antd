@@ -1,28 +1,28 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzInputNumberLegacyModule } from 'ng-zorro-antd/input-number-legacy';
+import { TriInputNumberLegacyModule } from 'ng-zorro-antd/input-number-legacy';
 
 @Component({
-  selector: 'nz-demo-input-number-legacy-formatter',
-  imports: [FormsModule, NzInputNumberLegacyModule],
+  selector: '',
+  imports: [FormsModule, TriInputNumberLegacyModule],
   template: `
-    <nz-input-number
+    <tri-input-number
       [(ngModel)]="demoValue"
-      [nzMin]="1"
-      [nzMax]="100"
-      [nzStep]="1"
-      [nzFormatter]="formatterDollar"
-      [nzParser]="parserDollar"
-    ></nz-input-number>
-    <nz-input-number
+      [min]="1"
+      [max]="100"
+      [step]="1"
+      [formatter]="formatterDollar"
+      [parser]="parserDollar"
+    ></tri-input-number>
+    <tri-input-number
       [(ngModel)]="demoValue"
-      [nzMin]="1"
-      [nzMax]="100"
-      [nzStep]="1"
-      [nzFormatter]="formatterPercent"
-      [nzParser]="parserPercent"
-    ></nz-input-number>
+      [min]="1"
+      [max]="100"
+      [step]="1"
+      [formatter]="formatterPercent"
+      [parser]="parserPercent"
+    ></tri-input-number>
   `,
   styles: [
     `
@@ -32,7 +32,7 @@ import { NzInputNumberLegacyModule } from 'ng-zorro-antd/input-number-legacy';
     `
   ]
 })
-export class NzDemoInputNumberLegacyFormatterComponent {
+export class TriDemoInputNumberLegacyFormatterComponent {
   demoValue = 100;
   formatterPercent = (value: number): string => `${value} %`;
   parserPercent = (value: string): string => value.replace(' %', '');

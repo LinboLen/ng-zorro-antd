@@ -36,7 +36,7 @@ function getPagePosition(event: MouseEvent | TouchEvent): Point {
 @Injectable({
   providedIn: 'root'
 })
-export class NzDragService {
+export class TriDragService {
   private draggingThreshold = 5;
   private currentDraggingSequence: Subject<MouseEvent | Touch> | null = null;
   private currentStartingPoint: Point | null = null;

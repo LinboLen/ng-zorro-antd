@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { MentionOnSearchTypes, NzMentionModule } from 'ng-zorro-antd/mention';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { MentionOnSearchTypes, TriMentionModule } from 'ng-zorro-antd/mention';
 
 @Component({
-  selector: 'nz-demo-mention-async',
-  imports: [FormsModule, NzInputModule, NzMentionModule],
+  selector: '',
+  imports: [FormsModule, TriInputModule, TriMentionModule],
   template: `
-    <nz-mention [nzSuggestions]="suggestions" [nzLoading]="loading" (nzOnSearchChange)="onSearchChange($event)">
-      <textarea rows="1" nzMentionTrigger nz-input [(ngModel)]="inputValue"></textarea>
-    </nz-mention>
+    <tri-mention [suggestions]="suggestions" [loading]="loading" (onSearchChange)="onSearchChange($event)">
+      <textarea rows="1" mentionTrigger tri-input [(ngModel)]="inputValue"></textarea>
+    </tri-mention>
   `
 })
-export class NzDemoMentionAsyncComponent {
+export class TriDemoMentionAsyncComponent {
   inputValue?: string;
   loading = false;
   suggestions: string[] = [];

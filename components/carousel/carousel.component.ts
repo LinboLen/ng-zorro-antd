@@ -35,35 +35,35 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
-import { NzResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
-import { NzConfigKey, NzConfigService, WithConfig } from 'ng-zorro-antd/core/config';
-import { NzDragService, NzResizeService } from 'ng-zorro-antd/core/services';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
+import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriDragService, TriResizeService } from 'ng-zorro-antd/core/services';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 
-import { NzCarouselContentDirective } from './carousel-content.directive';
-import { NzCarouselBaseStrategy } from './strategies/base-strategy';
-import { NzCarouselOpacityStrategy } from './strategies/opacity-strategy';
-import { NzCarouselTransformStrategy } from './strategies/transform-strategy';
+import { TriCarouselContentDirective } from './carousel-content.directive';
+import { TriCarouselBaseStrategy } from './strategies/base-strategy';
+import { TriCarouselOpacityStrategy } from './strategies/opacity-strategy';
+import { TriCarouselTransformStrategy } from './strategies/transform-strategy';
 import {
   FromToInterface,
   NZ_CAROUSEL_CUSTOM_STRATEGIES,
-  NzCarouselDotPosition,
-  NzCarouselEffects,
+  TriCarouselDotPosition,
+  TriCarouselEffects,
   PointerVector
 } from './typings';
 
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'carousel';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'carousel';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-carousel',
-  exportAs: 'nzCarousel',
+  selector: '',
+  exportAs: 'triCarousel',
   template: `
     <div
       class="slick-initialized slick-slider"
-      [class.slick-vertical]="nzDotPosition === 'left' || nzDotPosition === 'right'"
+      [class.slick-vertical]="dotPosition === 'left' || dotPosition === 'right'"
       [dir]="'ltr'"
     >
       <div
@@ -79,18 +79,18 @@ const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'carousel';
         </div>
       </div>
       <!-- Render dots. -->
-      @if (nzDots) {
+      @if (dots) {
         <ul
           class="slick-dots"
-          [class.slick-dots-top]="nzDotPosition === 'top'"
-          [class.slick-dots-bottom]="nzDotPosition === 'bottom'"
-          [class.slick-dots-left]="nzDotPosition === 'left'"
-          [class.slick-dots-right]="nzDotPosition === 'right'"
+          [class.slick-dots-top]="dotPosition === 'top'"
+          [class.slick-dots-bottom]="dotPosition === 'bottom'"
+          [class.slick-dots-left]="dotPosition === 'left'"
+          [class.slick-dots-right]="dotPosition === 'right'"
         >
           @for (content of carouselContents; track content) {
             <li [class.slick-active]="$index === activeIndex" (click)="goTo($index)">
               <ng-template
-                [ngTemplateOutlet]="nzDotRender || renderDotTemplate"
+                [ngTemplateOutlet]="dotRender || renderDotTemplate"
                 [ngTemplateOutletContext]="{ $implicit: $index }"
               ></ng-template>
             </li>
@@ -104,66 +104,66 @@ const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'carousel';
     </ng-template>
   `,
   host: {
-    class: 'ant-carousel',
-    '[class.ant-carousel-vertical]': 'vertical',
-    '[class.ant-carousel-rtl]': `dir === 'rtl'`
+    class: 'tri-carousel',
+    '[class.tri-carousel-vertical]': 'vertical',
+    '[class.tri-carousel-rtl]': `dir === 'rtl'`
   },
   imports: [NgTemplateOutlet]
 })
-export class NzCarouselComponent implements AfterContentInit, AfterViewInit, OnChanges, OnInit {
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+export class TriCarouselComponent implements AfterContentInit, AfterViewInit, OnChanges, OnInit {
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
 
-  public readonly nzConfigService = inject(NzConfigService);
+  public readonly configService = inject(TriConfigService);
   public readonly ngZone = inject(NgZone);
   private readonly renderer = inject(Renderer2);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly platform = inject(Platform);
-  private readonly resizeService = inject(NzResizeService);
-  private readonly nzDragService = inject(NzDragService);
-  private nzResizeObserver = inject(NzResizeObserver);
+  private readonly resizeService = inject(TriResizeService);
+  private readonly dragService = inject(TriDragService);
+  private resizeObserver = inject(TriResizeObserver);
   private destroyRef = inject(DestroyRef);
 
-  @ContentChildren(NzCarouselContentDirective) carouselContents!: QueryList<NzCarouselContentDirective>;
+  @ContentChildren(TriCarouselContentDirective) carouselContents!: QueryList<TriCarouselContentDirective>;
 
   @ViewChild('slickList', { static: true }) slickList!: ElementRef<HTMLElement>;
   @ViewChild('slickTrack', { static: true }) slickTrack!: ElementRef<HTMLElement>;
 
-  @Input() nzDotRender?: TemplateRef<{ $implicit: number }>;
-  @Input() @WithConfig() nzEffect: NzCarouselEffects = 'scrollx';
-  @Input({ transform: booleanAttribute }) @WithConfig() nzEnableSwipe: boolean = true;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzDots: boolean = true;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzAutoPlay: boolean = false;
-  @Input({ transform: numberAttribute }) @WithConfig() nzAutoPlaySpeed: number = 3000;
-  @Input({ transform: numberAttribute }) nzTransitionSpeed = 500;
-  @Input() @WithConfig() nzLoop: boolean = true;
+  @Input() dotRender?: TemplateRef<{ $implicit: number }>;
+  @Input() @WithConfig() effect: TriCarouselEffects = 'scrollx';
+  @Input({ transform: booleanAttribute }) @WithConfig() enableSwipe: boolean = true;
+  @Input({ transform: booleanAttribute }) @WithConfig() dots: boolean = true;
+  @Input({ transform: booleanAttribute }) @WithConfig() autoPlay: boolean = false;
+  @Input({ transform: numberAttribute }) @WithConfig() autoPlaySpeed: number = 3000;
+  @Input({ transform: numberAttribute }) transitionSpeed = 500;
+  @Input() @WithConfig() loop: boolean = true;
 
   /**
    * this property is passed directly to an NzCarouselBaseStrategy
    */
-  @Input() nzStrategyOptions: NzSafeAny = undefined;
+  @Input() strategyOptions: TriSafeAny = undefined;
 
   @Input()
   // @ts-ignore
   @WithConfig()
-  set nzDotPosition(value: NzCarouselDotPosition) {
+  set dotPosition(value: TriCarouselDotPosition) {
     this._dotPosition = value;
     this.vertical = value === 'left' || value === 'right';
   }
 
-  get nzDotPosition(): NzCarouselDotPosition {
+  get dotPosition(): TriCarouselDotPosition {
     return this._dotPosition;
   }
 
-  private _dotPosition: NzCarouselDotPosition = 'bottom';
+  private _dotPosition: TriCarouselDotPosition = 'bottom';
 
-  @Output() readonly nzBeforeChange = new EventEmitter<FromToInterface>();
-  @Output() readonly nzAfterChange = new EventEmitter<number>();
+  @Output() readonly beforeChange = new EventEmitter<FromToInterface>();
+  @Output() readonly afterChange = new EventEmitter<number>();
 
   activeIndex = 0;
   el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
   slickListEl!: HTMLElement;
   slickTrackEl!: HTMLElement;
-  strategy?: NzCarouselBaseStrategy;
+  strategy?: TriCarouselBaseStrategy;
   vertical = false;
   transitionInProgress?: ReturnType<typeof setTimeout>;
   dir: Direction = 'ltr';
@@ -176,7 +176,7 @@ export class NzCarouselComponent implements AfterContentInit, AfterViewInit, OnC
   private customStrategies = inject(NZ_CAROUSEL_CUSTOM_STRATEGIES, { optional: true });
 
   constructor() {
-    this.nzDotPosition = 'bottom';
+    this.dotPosition = 'bottom';
     this.destroyRef.onDestroy(() => {
       this.clearScheduledTransition();
       this.strategy?.dispose();
@@ -216,7 +216,7 @@ export class NzCarouselComponent implements AfterContentInit, AfterViewInit, OnC
         });
       });
 
-    this.nzResizeObserver
+    this.resizeObserver
       .observe(this.el)
       .pipe(debounceTime(100), distinctUntilChanged(), takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.layout());
@@ -262,7 +262,7 @@ export class NzCarouselComponent implements AfterContentInit, AfterViewInit, OnC
       this.layout();
     }
 
-    if (!this.nzAutoPlay || !this.nzAutoPlaySpeed) {
+    if (!this.autoPlay || !this.autoPlaySpeed) {
       this.clearScheduledTransition();
     } else {
       this.scheduleNextTransition();
@@ -282,16 +282,16 @@ export class NzCarouselComponent implements AfterContentInit, AfterViewInit, OnC
       this.carouselContents &&
       this.carouselContents.length &&
       !this.isTransiting &&
-      (this.nzLoop || (index >= 0 && index < this.carouselContents.length))
+      (this.loop || (index >= 0 && index < this.carouselContents.length))
     ) {
       const length = this.carouselContents.length;
       const from = this.activeIndex;
       const to = (index + length) % length;
       this.isTransiting = true;
-      this.nzBeforeChange.emit({ from, to });
+      this.beforeChange.emit({ from, to });
       this.strategy!.switch(this.activeIndex, index).subscribe(() => {
         this.scheduleNextTransition();
-        this.nzAfterChange.emit(to);
+        this.afterChange.emit(to);
         this.isTransiting = false;
       });
       this.markContentActive(to);
@@ -305,24 +305,24 @@ export class NzCarouselComponent implements AfterContentInit, AfterViewInit, OnC
     }
 
     // Load custom strategies first.
-    const customStrategy = this.customStrategies ? this.customStrategies.find(s => s.name === this.nzEffect) : null;
+    const customStrategy = this.customStrategies ? this.customStrategies.find(s => s.name === this.effect) : null;
     if (customStrategy) {
-      this.strategy = new (customStrategy.strategy as NzSafeAny)(this, this.cdr, this.renderer, this.platform);
+      this.strategy = new (customStrategy.strategy as TriSafeAny)(this, this.cdr, this.renderer, this.platform);
       return;
     }
 
     this.strategy =
-      this.nzEffect === 'scrollx'
-        ? new NzCarouselTransformStrategy(this, this.cdr, this.renderer, this.platform)
-        : new NzCarouselOpacityStrategy(this, this.cdr, this.renderer, this.platform);
+      this.effect === 'scrollx'
+        ? new TriCarouselTransformStrategy(this, this.cdr, this.renderer, this.platform)
+        : new TriCarouselOpacityStrategy(this, this.cdr, this.renderer, this.platform);
   }
 
   private scheduleNextTransition(): void {
     this.clearScheduledTransition();
-    if (this.nzAutoPlay && this.nzAutoPlaySpeed > 0 && this.platform.isBrowser) {
+    if (this.autoPlay && this.autoPlaySpeed > 0 && this.platform.isBrowser) {
       this.transitionInProgress = setTimeout(() => {
         this.goTo(this.activeIndex + 1);
-      }, this.nzAutoPlaySpeed);
+      }, this.autoPlaySpeed);
     }
   }
 
@@ -343,24 +343,24 @@ export class NzCarouselComponent implements AfterContentInit, AfterViewInit, OnC
    * Drag carousel.
    */
   pointerDown = (event: TouchEvent | MouseEvent): void => {
-    if (!this.isDragging && !this.isTransiting && this.nzEnableSwipe) {
+    if (!this.isDragging && !this.isTransiting && this.enableSwipe) {
       this.clearScheduledTransition();
       this.gestureRect = this.slickListEl.getBoundingClientRect();
 
-      this.nzDragService.requestDraggingSequence(event).subscribe({
+      this.dragService.requestDraggingSequence(event).subscribe({
         next: delta => {
           this.pointerDelta = delta;
           this.isDragging = true;
           this.strategy?.dragging(this.pointerDelta);
         },
         complete: () => {
-          if (this.nzEnableSwipe && this.isDragging) {
+          if (this.enableSwipe && this.isDragging) {
             const xDelta = this.pointerDelta ? this.pointerDelta.x : 0;
 
             // Switch to another slide if delta is bigger than third of the width.
             if (
               Math.abs(xDelta) > this.gestureRect!.width / 3 &&
-              (this.nzLoop ||
+              (this.loop ||
                 (xDelta <= 0 && this.activeIndex + 1 < this.carouselContents.length) ||
                 (xDelta > 0 && this.activeIndex > 0))
             ) {

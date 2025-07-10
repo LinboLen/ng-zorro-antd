@@ -8,5 +8,5 @@ export * from './footer.component';
 export * from './header.component';
 export * from './layout.component';
 export * from './sider.component';
-export { NzSiderTriggerComponent as ɵNzSiderTriggerComponent } from './sider-trigger.component';
+export { TriSiderTriggerComponent as ɵNzSiderTriggerComponent } from './sider-trigger.component';
 export * from './layout.module';

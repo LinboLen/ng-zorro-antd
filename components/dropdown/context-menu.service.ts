@@ -9,11 +9,11 @@ import { EmbeddedViewRef, inject, Injectable, NgZone } from '@angular/core';
 import { merge, Subscription } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 
-import { NzContextMenuServiceModule } from './context-menu.service.module';
-import { NzDropdownMenuComponent } from './dropdown-menu.component';
+import { TriContextMenuServiceModule } from './context-menu.service.module';
+import { TriDropdownMenuComponent } from './dropdown-menu.component';
 
 const LIST_OF_POSITIONS = [
   new ConnectionPositionPair({ originX: 'start', originY: 'top' }, { overlayX: 'start', overlayY: 'top' }),
@@ -23,9 +23,9 @@ const LIST_OF_POSITIONS = [
 ];
 
 @Injectable({
-  providedIn: NzContextMenuServiceModule
+  providedIn: TriContextMenuServiceModule
 })
-export class NzContextMenuService {
+export class TriContextMenuService {
   private ngZone = inject(NgZone);
   private overlay = inject(Overlay);
   private overlayRef: OverlayRef | null = null;
@@ -33,8 +33,8 @@ export class NzContextMenuService {
 
   create(
     $event: MouseEvent | { x: number; y: number },
-    nzDropdownMenuComponent: NzDropdownMenuComponent
-  ): EmbeddedViewRef<NzSafeAny> {
+    nzDropdownMenuComponent: TriDropdownMenuComponent
+  ): EmbeddedViewRef<TriSafeAny> {
     this.close(true);
     const { x, y } = $event;
     if ($event instanceof MouseEvent) {

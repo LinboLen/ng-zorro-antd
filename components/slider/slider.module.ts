@@ -5,26 +5,26 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzSliderHandleComponent } from './handle.component';
-import { NzSliderMarksComponent } from './marks.component';
-import { NzSliderComponent } from './slider.component';
-import { NzSliderStepComponent } from './step.component';
-import { NzSliderTrackComponent } from './track.component';
+import { TriSliderHandleComponent } from './handle.component';
+import { TriSliderMarksComponent } from './marks.component';
+import { TriSliderComponent } from './slider.component';
+import { TriSliderStepComponent } from './step.component';
+import { TriSliderTrackComponent } from './track.component';
 
 @NgModule({
   imports: [
-    NzSliderComponent,
-    NzSliderTrackComponent,
-    NzSliderHandleComponent,
-    NzSliderStepComponent,
-    NzSliderMarksComponent
+    TriSliderComponent,
+    TriSliderTrackComponent,
+    TriSliderHandleComponent,
+    TriSliderStepComponent,
+    TriSliderMarksComponent
   ],
   exports: [
-    NzSliderComponent,
-    NzSliderTrackComponent,
-    NzSliderHandleComponent,
-    NzSliderStepComponent,
-    NzSliderMarksComponent
+    TriSliderComponent,
+    TriSliderTrackComponent,
+    TriSliderHandleComponent,
+    TriSliderStepComponent,
+    TriSliderMarksComponent
   ]
 })
-export class NzSliderModule {}
+export class TriSliderModule {}

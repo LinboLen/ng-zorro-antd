@@ -5,10 +5,10 @@
 
 import { ChangeDetectionStrategy, Component, inject, Input, OnChanges, OnInit, ViewEncapsulation } from '@angular/core';
 
-import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
+import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import { CandyDate } from 'ng-zorro-antd/core/time';
 import { valueFunctionProp } from 'ng-zorro-antd/core/util';
-import { DateHelperService, NzI18nService } from 'ng-zorro-antd/i18n';
+import { DateHelperService, TriI18nService } from 'ng-zorro-antd/i18n';
 
 import { AbstractTable } from './abstract-table';
 import { DateBodyRow, DateCell } from './interface';
@@ -18,14 +18,14 @@ import { transCompatFormat } from './util';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'date-table',
+  selector: '',
   templateUrl: './abstract-table.html',
-  imports: [NzStringTemplateOutletDirective]
+  imports: [TriStringTemplateOutletDirective]
 })
 export class DateTableComponent extends AbstractTable implements OnChanges, OnInit {
   @Input() format?: string;
 
-  private i18n = inject(NzI18nService);
+  private i18n = inject(TriI18nService);
   private dateHelper = inject(DateHelperService);
 
   private changeValueFromInside(value: CandyDate): void {

@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 
-import { NzCronExpressionModule } from 'ng-zorro-antd/cron-expression';
+import { TriCronExpressionModule } from 'ng-zorro-antd/cron-expression';
 
 @Component({
-  selector: 'nz-demo-cron-expression-basic',
-  imports: [NzCronExpressionModule],
+  selector: '',
+  imports: [TriCronExpressionModule],
   template: `
-    <nz-cron-expression></nz-cron-expression>
+    <tri-cron-expression></tri-cron-expression>
     <br />
     <br />
-    <nz-cron-expression nzDisabled></nz-cron-expression>
+    <tri-cron-expression disabled></tri-cron-expression>
   `
 })
-export class NzDemoCronExpressionBasicComponent {}
+export class TriDemoCronExpressionBasicComponent {}

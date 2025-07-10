@@ -5,14 +5,14 @@
 
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
-import { NzDateMode } from '../standard-types';
+import { TriDateMode } from '../standard-types';
 import { AbstractPanelHeader } from './abstract-panel-header';
 import { PanelSelector } from './interface';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'decade-header', // eslint-disable-line @angular-eslint/component-selector
+  selector: '', // eslint-disable-line @angular-eslint/component-selector
   templateUrl: './abstract-panel-header.html'
 })
 export class DecadeHeaderComponent extends AbstractPanelHeader {
@@ -20,7 +20,7 @@ export class DecadeHeaderComponent extends AbstractPanelHeader {
 
   override next(): void {}
 
-  override mode: NzDateMode = 'decade';
+  override mode: TriDateMode = 'decade';
 
   get startYear(): number {
     return parseInt(`${this.value.getYear() / 100}`, 10) * 100;

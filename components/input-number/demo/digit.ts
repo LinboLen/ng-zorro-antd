@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
 
 @Component({
-  selector: 'nz-demo-input-number-digit',
-  imports: [FormsModule, NzInputNumberModule],
-  template: `<nz-input-number [(ngModel)]="value" nzMin="0" nzMax="10" nzStep="0.1" nzPlaceHolder="Digital" />`
+  selector: '',
+  imports: [FormsModule, TriInputNumberModule],
+  template: `<tri-input-number [(ngModel)]="value" min="0" max="10" step="0.1" placeHolder="Digital" />`
 })
-export class NzDemoInputNumberDigitComponent {
+export class TriDemoInputNumberDigitComponent {
   value = 0.1;
 }

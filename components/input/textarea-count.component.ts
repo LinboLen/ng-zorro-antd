@@ -22,38 +22,38 @@ import { map, startWith } from 'rxjs/operators';
 
 import { isNotNil } from 'ng-zorro-antd/core/util';
 
-import { NzInputDirective } from './input.directive';
+import { TriInputDirective } from './input.directive';
 
 @Component({
-  selector: 'nz-textarea-count',
+  selector: '',
   template: `<ng-content select="textarea[nz-input]"></ng-content>`,
   host: {
-    class: 'ant-input-textarea-show-count'
+    class: 'tri-input-textarea-show-count'
   },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NzTextareaCountComponent implements AfterContentInit {
+export class TriTextareaCountComponent implements AfterContentInit {
   private renderer = inject(Renderer2);
   private destroyRef = inject(DestroyRef);
   private elementRef: ElementRef<HTMLElement> = inject(ElementRef);
 
-  @ContentChild(NzInputDirective, { static: true }) nzInputDirective!: NzInputDirective;
-  @Input({ transform: numberAttribute }) nzMaxCharacterCount: number = 0;
-  @Input() nzComputeCharacterCount: (v: string) => number = v => v.length;
-  @Input() nzFormatter: (cur: number, max: number) => string = (c, m) => `${c}${m > 0 ? `/${m}` : ``}`;
+  @ContentChild(TriInputDirective, { static: true }) inputDirective!: TriInputDirective;
+  @Input({ transform: numberAttribute }) maxCharacterCount: number = 0;
+  @Input() computeCharacterCount: (v: string) => number = v => v.length;
+  @Input() formatter: (cur: number, max: number) => string = (c, m) => `${c}${m > 0 ? `/${m}` : ``}`;
 
   ngAfterContentInit(): void {
-    if (!this.nzInputDirective && isDevMode()) {
+    if (!this.inputDirective && isDevMode()) {
       throw new Error('[nz-textarea-count]: Could not find matching textarea[nz-input] child.');
     }
 
-    if (this.nzInputDirective.ngControl) {
-      const valueChanges = this.nzInputDirective.ngControl.valueChanges || EMPTY;
+    if (this.inputDirective.ngControl) {
+      const valueChanges = this.inputDirective.ngControl.valueChanges || EMPTY;
       valueChanges
         .pipe(
           takeUntilDestroyed(this.destroyRef),
-          map(() => this.nzInputDirective.ngControl!.value),
-          startWith(this.nzInputDirective.ngControl.value as string)
+          map(() => this.inputDirective.ngControl!.value),
+          startWith(this.inputDirective.ngControl.value as string)
         )
         .subscribe(value => {
           this.setDataCount(value);
@@ -63,8 +63,8 @@ export class NzTextareaCountComponent implements AfterContentInit {
 
   setDataCount(value: string): void {
     const inputValue = isNotNil(value) ? String(value) : '';
-    const currentCount = this.nzComputeCharacterCount(inputValue);
-    const dataCount = this.nzFormatter(currentCount, this.nzMaxCharacterCount);
+    const currentCount = this.computeCharacterCount(inputValue);
+    const dataCount = this.formatter(currentCount, this.maxCharacterCount);
     this.renderer.setAttribute(this.elementRef.nativeElement, 'data-count', dataCount);
   }
 }

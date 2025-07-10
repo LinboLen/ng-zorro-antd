@@ -24,26 +24,26 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { NzNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 
-import { NzSelectItemComponent } from './select-item.component';
-import { NzSelectPlaceholderComponent } from './select-placeholder.component';
-import { NzSelectSearchComponent } from './select-search.component';
-import { NzSelectItemInterface, NzSelectModeType, NzSelectTopControlItemType } from './select.types';
+import { TriSelectItemComponent } from './select-item.component';
+import { TriSelectPlaceholderComponent } from './select-placeholder.component';
+import { TriSelectSearchComponent } from './select-search.component';
+import { TriSelectItemInterface, TriSelectModeType, TriSelectTopControlItemType } from './select.types';
 
 @Component({
-  selector: 'nz-select-top-control',
-  exportAs: 'nzSelectTopControl',
+  selector: '',
+  exportAs: 'triSelectTopControl',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
     <!--single mode-->
     @switch (mode) {
       @case ('default') {
-        <nz-select-search
-          [nzId]="nzId"
+        <tri-select-search
+          [id]="id"
           [disabled]="disabled"
           [value]="inputValue!"
           [showInput]="showSearch"
@@ -52,31 +52,31 @@ import { NzSelectItemInterface, NzSelectModeType, NzSelectTopControlItemType } f
           [focusTrigger]="open"
           (isComposingChange)="isComposingChange($event)"
           (valueChange)="onInputValueChange($event)"
-        ></nz-select-search>
+        ></tri-select-search>
         @if (isShowSingleLabel) {
-          <nz-select-item
+          <tri-select-item
             [removeIcon]="removeIcon"
-            [label]="listOfTopItem[0].nzLabel"
+            [label]="label"
             [contentTemplateOutlet]="customTemplate"
             [contentTemplateOutletContext]="listOfTopItem[0]"
-          ></nz-select-item>
+          ></tri-select-item>
         }
       }
       @default {
         <!--multiple or tags mode-->
-        @for (item of listOfSlicedItem; track item.nzValue) {
-          <nz-select-item
+        @for (item of listOfSlicedItem; track value) {
+          <tri-select-item
             [removeIcon]="removeIcon"
-            [label]="item.nzLabel"
-            [disabled]="item.nzDisabled || disabled"
+            [label]="label"
+            [disabled]="disabled || disabled"
             [contentTemplateOutlet]="item.contentTemplateOutlet"
             deletable
             [contentTemplateOutletContext]="item.contentTemplateOutletContext"
             (delete)="onDeleteItem(item.contentTemplateOutletContext)"
-          ></nz-select-item>
+          ></tri-select-item>
         }
-        <nz-select-search
-          [nzId]="nzId"
+        <tri-select-search
+          [id]="id"
           [disabled]="disabled"
           [value]="inputValue!"
           [autofocus]="autofocus"
@@ -85,40 +85,40 @@ import { NzSelectItemInterface, NzSelectModeType, NzSelectTopControlItemType } f
           [focusTrigger]="open"
           (isComposingChange)="isComposingChange($event)"
           (valueChange)="onInputValueChange($event)"
-        ></nz-select-search>
+        ></tri-select-search>
       }
     }
     @if (isShowPlaceholder) {
-      <nz-select-placeholder [placeholder]="placeHolder"></nz-select-placeholder>
+      <tri-select-placeholder [placeholder]="placeHolder"></tri-select-placeholder>
     }
   `,
-  host: { class: 'ant-select-selector' },
-  imports: [NzSelectSearchComponent, NzSelectItemComponent, NzSelectPlaceholderComponent]
+  host: { class: 'tri-select-selector' },
+  imports: [TriSelectSearchComponent, TriSelectItemComponent, TriSelectPlaceholderComponent]
 })
-export class NzSelectTopControlComponent implements OnChanges, OnInit {
+export class TriSelectTopControlComponent implements OnChanges, OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly elementRef = inject(ElementRef<HTMLElement>);
   private readonly ngZone = inject(NgZone);
-  readonly noAnimation = inject(NzNoAnimationDirective, { host: true, optional: true });
+  readonly noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
 
-  @Input() nzId: string | null = null;
+  @Input() id: string | null = null;
   @Input() showSearch = false;
-  @Input() placeHolder: string | TemplateRef<NzSafeAny> | null = null;
+  @Input() placeHolder: string | TemplateRef<TriSafeAny> | null = null;
   @Input() open = false;
   @Input({ transform: numberAttribute }) maxTagCount: number = Infinity;
   @Input() autofocus = false;
   @Input() disabled = false;
-  @Input() mode: NzSelectModeType = 'default';
-  @Input() customTemplate: TemplateRef<{ $implicit: NzSelectItemInterface }> | null = null;
-  @Input() maxTagPlaceholder: TemplateRef<{ $implicit: NzSafeAny[] }> | null = null;
-  @Input() removeIcon: TemplateRef<NzSafeAny> | null = null;
-  @Input() listOfTopItem: NzSelectItemInterface[] = [];
+  @Input() mode: TriSelectModeType = 'default';
+  @Input() customTemplate: TemplateRef<{ $implicit: TriSelectItemInterface }> | null = null;
+  @Input() maxTagPlaceholder: TemplateRef<{ $implicit: TriSafeAny[] }> | null = null;
+  @Input() removeIcon: TemplateRef<TriSafeAny> | null = null;
+  @Input() listOfTopItem: TriSelectItemInterface[] = [];
   @Input() tokenSeparators: string[] = [];
   @Output() readonly tokenize = new EventEmitter<string[]>();
   @Output() readonly inputValueChange = new EventEmitter<string>();
-  @Output() readonly deleteItem = new EventEmitter<NzSelectItemInterface>();
-  @ViewChild(NzSelectSearchComponent) nzSelectSearchComponent!: NzSelectSearchComponent;
-  listOfSlicedItem: NzSelectTopControlItemType[] = [];
+  @Output() readonly deleteItem = new EventEmitter<TriSelectItemInterface>();
+  @ViewChild(TriSelectSearchComponent) selectSearchComponent!: TriSelectSearchComponent;
+  listOfSlicedItem: TriSelectTopControlItemType[] = [];
   isShowPlaceholder = true;
   isShowSingleLabel = false;
   isComposing = false;
@@ -172,24 +172,24 @@ export class NzSelectTopControlComponent implements OnChanges, OnInit {
   }
 
   clearInputValue(): void {
-    if (this.nzSelectSearchComponent) {
-      this.nzSelectSearchComponent.clearInputValue();
+    if (this.selectSearchComponent) {
+      this.selectSearchComponent.clearInputValue();
     }
   }
 
   focus(): void {
-    if (this.nzSelectSearchComponent) {
-      this.nzSelectSearchComponent.focus();
+    if (this.selectSearchComponent) {
+      this.selectSearchComponent.focus();
     }
   }
 
   blur(): void {
-    if (this.nzSelectSearchComponent) {
-      this.nzSelectSearchComponent.blur();
+    if (this.selectSearchComponent) {
+      this.selectSearchComponent.blur();
     }
   }
 
-  onDeleteItem(item: NzSelectItemInterface): void {
+  onDeleteItem(item: TriSelectItemInterface): void {
     if (!this.disabled && !item.nzDisabled) {
       this.deleteItem.next(item);
     }
@@ -201,7 +201,7 @@ export class NzSelectTopControlComponent implements OnChanges, OnInit {
       this.updateTemplateVariable();
     }
     if (listOfTopItem || maxTagCount || customTemplate || maxTagPlaceholder) {
-      const listOfSlicedItem: NzSelectTopControlItemType[] = this.listOfTopItem.slice(0, this.maxTagCount).map(o => ({
+      const listOfSlicedItem: TriSelectTopControlItemType[] = this.listOfTopItem.slice(0, this.maxTagCount).map(o => ({
         nzLabel: o.nzLabel,
         nzValue: o.nzValue,
         nzDisabled: o.nzDisabled,
@@ -229,8 +229,8 @@ export class NzSelectTopControlComponent implements OnChanges, OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(event => {
         // `HTMLElement.focus()` is a native DOM API that doesn't require Angular to run change detection.
-        if (event.target !== this.nzSelectSearchComponent.inputElement.nativeElement) {
-          this.nzSelectSearchComponent.focus();
+        if (event.target !== this.selectSearchComponent.inputElement.nativeElement) {
+          this.selectSearchComponent.focus();
         }
       });
 

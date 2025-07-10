@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 
-import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { TriAlertModule } from 'ng-zorro-antd/alert';
 
 @Component({
-  selector: 'nz-demo-alert-banner',
-  imports: [NzAlertModule],
+  selector: '',
+  imports: [TriAlertModule],
   template: `
-    <nz-alert nzBanner nzMessage="Warning text"></nz-alert>
-    <nz-alert
-      nzBanner
-      nzMessage="Very long warning text warning text text text text text text text"
-      nzCloseable
-    ></nz-alert>
-    <nz-alert nzBanner nzMessage="Warning text without icon" [nzShowIcon]="false"></nz-alert>
-    <nz-alert nzBanner nzType="error" nzMessage="Error text"></nz-alert>
+    <tri-alert banner message="Warning text"></tri-alert>
+    <tri-alert
+      banner
+      message="Very long warning text warning text text text text text text text"
+      closeable
+    ></tri-alert>
+    <tri-alert banner message="Warning text without icon" [showIcon]="false"></tri-alert>
+    <tri-alert banner type="error" message="Error text"></tri-alert>
   `,
   styles: [
     `
@@ -23,4 +23,4 @@ import { NzAlertModule } from 'ng-zorro-antd/alert';
     `
   ]
 })
-export class NzDemoAlertBannerComponent {}
+export class TriDemoAlertBannerComponent {}

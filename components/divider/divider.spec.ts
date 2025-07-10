@@ -7,11 +7,11 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
-import { NzDividerComponent } from './divider.component';
-import { NzDividerModule } from './divider.module';
+import { TriDividerComponent } from './divider.component';
+import { TriDividerModule } from './divider.module';
 
 describe('divider', () => {
   let fixture: ComponentFixture<TestDividerComponent>;
@@ -31,7 +31,7 @@ describe('divider', () => {
   describe('#nzDashed', () => {
     for (const value of [true, false]) {
       it(`[${value}]`, () => {
-        context.nzDashed = value;
+        context.dashed = value;
         fixture.detectChanges();
         expect(dl.query(By.css('.ant-divider-dashed')) != null).toBe(value);
       });
@@ -41,7 +41,7 @@ describe('divider', () => {
   describe('#nzType', () => {
     for (const value of ['horizontal', 'vertical'] as const) {
       it(`[${value}]`, () => {
-        context.nzType = value;
+        context.type = value;
         fixture.detectChanges();
         expect(dl.query(By.css(`.ant-divider-${value}`)) != null).toBe(true);
       });
@@ -54,7 +54,7 @@ describe('divider', () => {
       { text: undefined, ret: false }
     ]) {
       it(`[${item.text}]`, () => {
-        context.nzText = item.text;
+        context.text = item.text;
         fixture.detectChanges();
         expect(dl.query(By.css('.ant-divider-inner-text')) != null).toBe(item.ret);
       });
@@ -70,7 +70,7 @@ describe('divider', () => {
   describe('#nzOrientation', () => {
     (['center', 'left', 'right'] as const).forEach(type => {
       it(`with ${type}`, () => {
-        context.nzOrientation = type;
+        context.orientation = type;
         fixture.detectChanges();
         expect(dl.query(By.css(`.ant-divider-with-text-${type}`)) != null).toBe(true);
       });
@@ -80,47 +80,47 @@ describe('divider', () => {
   describe('#nzVariant', () => {
     (['dashed', 'dotted'] as const).forEach(type => {
       it(`with ${type}`, () => {
-        context.comp.nzVariant = type;
+        context.comp.variant = type;
         fixture.detectChanges();
         expect(dl.query(By.css(`.ant-divider-${type}`)) != null).toBe(true);
       });
     });
 
     it('should have solid as default value for nzVariant', () => {
-      expect(context.comp.nzVariant).toEqual('solid');
+      expect(context.comp.variant).toEqual('solid');
     });
   });
 });
 
 @Component({
-  imports: [NzDividerModule],
+  imports: [TriDividerModule],
   template: `
-    <nz-divider
+    <tri-divider
       #comp
-      [nzDashed]="nzDashed"
-      [nzType]="nzType"
-      [nzText]="nzText"
-      [nzOrientation]="nzOrientation"
-    ></nz-divider>
+      [dashed]="dashed"
+      [type]="type"
+      [text]="text"
+      [orientation]="orientation"
+    ></tri-divider>
   `
 })
 class TestDividerComponent {
-  @ViewChild('comp', { static: false }) comp!: NzDividerComponent;
-  nzDashed = false;
-  nzType: 'vertical' | 'horizontal' = 'horizontal';
-  nzText?: string = 'with text';
-  nzOrientation!: 'left' | 'right' | 'center';
+  @ViewChild('comp', { static: false }) comp!: TriDividerComponent;
+  dashed = false;
+  type: 'vertical' | 'horizontal' = 'horizontal';
+  text?: string = 'with text';
+  orientation!: 'left' | 'right' | 'center';
 }
 
 @Component({
-  imports: [NzDividerModule, NzIconModule],
+  imports: [TriDividerModule, TriIconModule],
   template: `
-    <nz-divider nzDashed [nzText]="text">
+    <tri-divider dashed [text]="text">
       <ng-template #text>
-        <nz-icon nzType="plus" />
+        <tri-icon type="plus" />
         Add
       </ng-template>
-    </nz-divider>
+    </tri-divider>
   `
 })
 class TestDividerTextTemplateComponent {}

@@ -6,25 +6,25 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NzPipesModule } from 'ng-zorro-antd/core/pipe';
+import { TriPipesModule } from 'ng-zorro-antd/core/pipe';
 
 @Component({
-  imports: [NzPipesModule],
+  imports: [TriPipesModule],
   template: ` {{ diff | nzTimeRange: format }} `
 })
-export class NzTestTimeRangeComponent {
+export class TriTestTimeRangeComponent {
   diff = 1000 * 60 * 60 * 24 * 2 + 1000 * 30;
   format = 'HH:mm:ss';
 }
 
 describe('nz time range pipeline', () => {
-  let fixture: ComponentFixture<NzTestTimeRangeComponent>;
-  let testComponent: NzTestTimeRangeComponent;
+  let fixture: ComponentFixture<TriTestTimeRangeComponent>;
+  let testComponent: TriTestTimeRangeComponent;
   let element: HTMLElement;
 
   describe('basic', () => {
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTimeRangeComponent);
+      fixture = TestBed.createComponent(TriTestTimeRangeComponent);
       testComponent = fixture.debugElement.componentInstance;
       element = fixture.debugElement.nativeElement;
     });

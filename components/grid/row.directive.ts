@@ -22,41 +22,41 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ReplaySubject, Subject } from 'rxjs';
 
-import { gridResponsiveMap, NzBreakpointKey, NzBreakpointService } from 'ng-zorro-antd/core/services';
+import { gridResponsiveMap, TriBreakpointKey, TriBreakpointService } from 'ng-zorro-antd/core/services';
 import { IndexableObject } from 'ng-zorro-antd/core/types';
 
-export type NzJustify = 'start' | 'end' | 'center' | 'space-around' | 'space-between' | 'space-evenly';
-export type NzAlign = 'top' | 'middle' | 'bottom';
+export type TriJustify = 'start' | 'end' | 'center' | 'space-around' | 'space-between' | 'space-evenly';
+export type TriAlign = 'top' | 'middle' | 'bottom';
 
 @Directive({
-  selector: '[nz-row],nz-row,nz-form-item',
-  exportAs: 'nzRow',
+  selector: '',
+  exportAs: 'triRow',
   host: {
-    class: 'ant-row',
-    '[class.ant-row-top]': `nzAlign === 'top'`,
-    '[class.ant-row-middle]': `nzAlign === 'middle'`,
-    '[class.ant-row-bottom]': `nzAlign === 'bottom'`,
-    '[class.ant-row-start]': `nzJustify === 'start'`,
-    '[class.ant-row-end]': `nzJustify === 'end'`,
-    '[class.ant-row-center]': `nzJustify === 'center'`,
-    '[class.ant-row-space-around]': `nzJustify === 'space-around'`,
-    '[class.ant-row-space-between]': `nzJustify === 'space-between'`,
-    '[class.ant-row-space-evenly]': `nzJustify === 'space-evenly'`,
-    '[class.ant-row-rtl]': `dir === "rtl"`
+    class: 'tri-row',
+    '[class.tri-row-top]': `align === 'top'`,
+    '[class.tri-row-middle]': `align === 'middle'`,
+    '[class.tri-row-bottom]': `align === 'bottom'`,
+    '[class.tri-row-start]': `justify === 'start'`,
+    '[class.tri-row-end]': `justify === 'end'`,
+    '[class.tri-row-center]': `justify === 'center'`,
+    '[class.tri-row-space-around]': `justify === 'space-around'`,
+    '[class.tri-row-space-between]': `justify === 'space-between'`,
+    '[class.tri-row-space-evenly]': `justify === 'space-evenly'`,
+    '[class.tri-row-rtl]': `dir === "rtl"`
   }
 })
-export class NzRowDirective implements OnInit, OnChanges, AfterViewInit {
+export class TriRowDirective implements OnInit, OnChanges, AfterViewInit {
   private elementRef = inject(ElementRef);
   private renderer = inject(Renderer2);
   private mediaMatcher = inject(MediaMatcher);
   private ngZone = inject(NgZone);
   private platform = inject(Platform);
-  private breakpointService = inject(NzBreakpointService);
+  private breakpointService = inject(TriBreakpointService);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
-  @Input() nzAlign: NzAlign | null = null;
-  @Input() nzJustify: NzJustify | null = null;
-  @Input() nzGutter: string | number | IndexableObject | [number, number] | [IndexableObject, IndexableObject] | null =
+  @Input() align: TriAlign | null = null;
+  @Input() justify: TriJustify | null = null;
+  @Input() gutter: string | number | IndexableObject | [number, number] | [IndexableObject, IndexableObject] | null =
     null;
 
   readonly actualGutter$ = new ReplaySubject<[number | null, number | null]>(1);
@@ -66,13 +66,13 @@ export class NzRowDirective implements OnInit, OnChanges, AfterViewInit {
 
   getGutter(): [number | null, number | null] {
     const results: [number | null, number | null] = [null, null];
-    const gutter = this.nzGutter || 0;
+    const gutter = this.gutter || 0;
     const normalizedGutter = Array.isArray(gutter) ? gutter : [gutter, null];
     normalizedGutter.forEach((g, index) => {
       if (typeof g === 'object' && g !== null) {
         results[index] = null;
         Object.keys(gridResponsiveMap).map((screen: string) => {
-          const bp = screen as NzBreakpointKey;
+          const bp = screen as TriBreakpointKey;
           if (this.mediaMatcher.matchMedia(gridResponsiveMap[bp]).matches && g[bp]) {
             results[index] = g![bp] as number;
           }

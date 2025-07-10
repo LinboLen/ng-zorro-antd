@@ -6,67 +6,67 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-  selector: 'nz-page-header-title, [nz-page-header-title]',
-  exportAs: 'nzPageHeaderTitle',
+  selector: '',
+  exportAs: 'triPageHeaderTitle',
   host: {
-    class: 'ant-page-header-heading-title'
+    class: 'tri-page-header-heading-title'
   }
 })
-export class NzPageHeaderTitleDirective {}
+export class TriPageHeaderTitleDirective {}
 
 @Directive({
-  selector: 'nz-page-header-subtitle, [nz-page-header-subtitle]',
-  exportAs: 'nzPageHeaderSubtitle',
+  selector: '',
+  exportAs: 'triPageHeaderSubtitle',
   host: {
-    class: 'ant-page-header-heading-sub-title'
+    class: 'tri-page-header-heading-sub-title'
   }
 })
-export class NzPageHeaderSubtitleDirective {}
+export class TriPageHeaderSubtitleDirective {}
 
 @Directive({
-  selector: 'nz-page-header-content, [nz-page-header-content]',
-  exportAs: 'nzPageHeaderContent',
+  selector: '',
+  exportAs: 'triPageHeaderContent',
   host: {
-    class: 'ant-page-header-content'
+    class: 'tri-page-header-content'
   }
 })
-export class NzPageHeaderContentDirective {}
+export class TriPageHeaderContentDirective {}
 
 @Directive({
-  selector: 'nz-page-header-tags, [nz-page-header-tags]',
-  exportAs: 'nzPageHeaderTags',
+  selector: '',
+  exportAs: 'triPageHeaderTags',
   host: {
-    class: 'ant-page-header-heading-tags'
+    class: 'tri-page-header-heading-tags'
   }
 })
-export class NzPageHeaderTagDirective {}
+export class TriPageHeaderTagDirective {}
 
 @Directive({
-  selector: 'nz-page-header-extra, [nz-page-header-extra]',
-  exportAs: 'nzPageHeaderExtra',
+  selector: '',
+  exportAs: 'triPageHeaderExtra',
   host: {
-    class: 'ant-page-header-heading-extra'
+    class: 'tri-page-header-heading-extra'
   }
 })
-export class NzPageHeaderExtraDirective {}
+export class TriPageHeaderExtraDirective {}
 
 @Directive({
-  selector: 'nz-page-header-footer, [nz-page-header-footer]',
-  exportAs: 'nzPageHeaderFooter',
+  selector: '',
+  exportAs: 'triPageHeaderFooter',
   host: {
-    class: 'ant-page-header-footer'
+    class: 'tri-page-header-footer'
   }
 })
-export class NzPageHeaderFooterDirective {}
+export class TriPageHeaderFooterDirective {}
 
 @Directive({
-  selector: 'nz-breadcrumb[nz-page-header-breadcrumb]',
-  exportAs: 'nzPageHeaderBreadcrumb'
+  selector: '',
+  exportAs: 'triPageHeaderBreadcrumb'
 })
-export class NzPageHeaderBreadcrumbDirective {}
+export class TriPageHeaderBreadcrumbDirective {}
 
 @Directive({
-  selector: 'nz-avatar[nz-page-header-avatar]',
-  exportAs: 'nzPageHeaderAvatar'
+  selector: '',
+  exportAs: 'triPageHeaderAvatar'
 })
-export class NzPageHeaderAvatarDirective {}
+export class TriPageHeaderAvatarDirective {}

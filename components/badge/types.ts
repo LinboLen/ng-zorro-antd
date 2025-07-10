@@ -3,4 +3,4 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export type NzBadgeStatusType = 'success' | 'processing' | 'default' | 'error' | 'warning';
+export type TriBadgeStatusType = 'success' | 'processing' | 'default' | 'error' | 'warning';

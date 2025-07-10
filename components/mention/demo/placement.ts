@@ -1,25 +1,25 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzMentionModule } from 'ng-zorro-antd/mention';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriMentionModule } from 'ng-zorro-antd/mention';
 
 @Component({
-  selector: 'nz-demo-mention-placement',
-  imports: [FormsModule, NzInputModule, NzMentionModule],
+  selector: '',
+  imports: [FormsModule, TriInputModule, TriMentionModule],
   template: `
-    <nz-mention nzPlacement="top" [nzSuggestions]="suggestions" (nzOnSelect)="onSelect($event)">
+    <tri-mention placement="top" [suggestions]="suggestions" (onSelect)="onSelect($event)">
       <textarea
         rows="1"
-        nzMentionTrigger
-        nz-input
+        mentionTrigger
+        tri-input
         [(ngModel)]="inputValue"
         (ngModelChange)="onChange($event)"
       ></textarea>
-    </nz-mention>
+    </tri-mention>
   `
 })
-export class NzDemoMentionPlacementComponent {
+export class TriDemoMentionPlacementComponent {
   inputValue?: string;
   suggestions = ['afc163', 'benjycui', 'yiminghe', 'RaoHai', '中文', 'にほんご'];
 

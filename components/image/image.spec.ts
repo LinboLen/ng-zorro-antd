@@ -9,18 +9,18 @@ import { Component, DebugElement, NgZone, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, inject, TestBed, tick } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { NzConfigService } from 'ng-zorro-antd/core/config';
+import { TriConfigService } from 'ng-zorro-antd/core/config';
 import { dispatchFakeEvent, dispatchKeyboardEvent, MockNgZone } from 'ng-zorro-antd/core/testing';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 import {
   getFitContentPosition,
-  NzImage,
-  NzImageDirective,
-  NzImageGroupComponent,
-  NzImageModule,
-  NzImagePreviewRef,
-  NzImageService
+  TriImage,
+  TriImageDirective,
+  TriImageGroupComponent,
+  TriImageModule,
+  TriImagePreviewRef,
+  TriImageService
 } from 'ng-zorro-antd/image';
 
 const SRC = 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png';
@@ -65,18 +65,18 @@ describe('Basics', () => {
     context.placeholder = null;
     const image = debugElement.nativeElement.querySelector('img');
     fixture.detectChanges();
-    const oldBackLoadImage = context.nzImage.backLoadImage;
+    const oldBackLoadImage = context.image.backLoadImage;
     context.src = SRC;
     fixture.detectChanges();
     tick(1000);
-    context.nzImage.backLoadImage.dispatchEvent(new Event('load'));
+    context.image.backLoadImage.dispatchEvent(new Event('load'));
     fixture.detectChanges();
     expect(image.src).toBe(SRC);
     tick(1000);
     oldBackLoadImage.dispatchEvent(new ErrorEvent('error'));
     fixture.detectChanges();
     expect(image.src).toBe(SRC);
-    expect(context.nzImage.status).toBe('normal');
+    expect(context.image.status).toBe('normal');
   }));
 
   it('should keep placeholder when latest src is loading', fakeAsync(() => {
@@ -84,7 +84,7 @@ describe('Basics', () => {
     context.placeholder = PLACEHOLDER;
     const image = debugElement.nativeElement.querySelector('img');
     fixture.detectChanges();
-    const oldBackLoadImage = context.nzImage.backLoadImage;
+    const oldBackLoadImage = context.image.backLoadImage;
     const SECOND_SRC = 'https://test.com/SECOND_SRC.png';
     context.src = SECOND_SRC;
     fixture.detectChanges();
@@ -93,7 +93,7 @@ describe('Basics', () => {
     fixture.detectChanges();
     expect(image.src).toBe(PLACEHOLDER);
     tick(1000);
-    context.nzImage.backLoadImage.dispatchEvent(new Event('load'));
+    context.image.backLoadImage.dispatchEvent(new Event('load'));
     fixture.detectChanges();
     expect(image.src).toBe(SECOND_SRC);
   }));
@@ -130,7 +130,7 @@ describe('Placeholder', () => {
   it('should hide placeholder when image loaded', fakeAsync(() => {
     context.src = QUICK_SRC;
     context.placeholder = PLACEHOLDER;
-    const imageComponent = context.nzImage;
+    const imageComponent = context.image;
     const imageElement = imageComponent.getElement().nativeElement;
     fixture.detectChanges();
     tick(300);
@@ -178,7 +178,7 @@ describe('Preview', () => {
   let overlayContainer: OverlayContainer;
   let overlayContainerElement: HTMLElement;
   let previewElement: HTMLElement | null;
-  let configService: NzConfigService;
+  let configService: TriConfigService;
 
   beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
@@ -186,7 +186,7 @@ describe('Preview', () => {
     });
   }));
 
-  beforeEach(inject([OverlayContainer, NzConfigService], (oc: OverlayContainer, cs: NzConfigService) => {
+  beforeEach(inject([OverlayContainer, TriConfigService], (oc: OverlayContainer, cs: TriConfigService) => {
     overlayContainer = oc;
     configService = cs;
     overlayContainerElement = oc.getContainerElement();
@@ -226,13 +226,13 @@ describe('Preview', () => {
       context.firstSrc = QUICK_SRC;
       context.disablePreview = true;
       fixture.detectChanges();
-      context.nzImage.getElement().nativeElement.click();
+      context.image.getElement().nativeElement.click();
       tickChanges();
       previewElement = getPreviewRootElement();
       expect(previewElement).not.toBeTruthy();
       context.disablePreview = false;
       fixture.detectChanges();
-      context.nzImage.getElement().nativeElement.click();
+      context.image.getElement().nativeElement.click();
       tickChanges();
       previewElement = getPreviewRootElement();
       expect(previewElement).toBeTruthy();
@@ -416,14 +416,14 @@ describe('Preview', () => {
       previewInstance.imagePreviewWrapper.nativeElement.dispatchEvent(new MouseEvent('mousedown'));
       previewInstance['zoom'] = 5;
       spyOn(previewInstance, 'onZoomOut');
-      spyOn<NzSafeAny>(previewInstance, 'reCenterImage');
+      spyOn<TriSafeAny>(previewInstance, 'reCenterImage');
       previewInstance['handleImageScaleWhileZoomingWithMouse'](10);
       expect(previewInstance.onZoomOut).toHaveBeenCalled();
       expect(previewInstance['reCenterImage']).not.toHaveBeenCalled();
 
       previewInstance['zoom'] = 0.5;
       spyOn(previewInstance, 'onZoomIn');
-      spyOn<NzSafeAny>(previewInstance, 'reCenterImage');
+      spyOn<TriSafeAny>(previewInstance, 'reCenterImage');
       previewInstance['handleImageScaleWhileZoomingWithMouse'](-10);
       expect(previewInstance.onZoomOut).toHaveBeenCalled();
       expect(previewInstance['reCenterImage']).toHaveBeenCalled();
@@ -566,7 +566,7 @@ describe('Preview', () => {
       spyOn(previewInstance, 'onDragEnd').and.callFake(function () {
         return true;
       });
-      const e: NzSafeAny = {};
+      const e: TriSafeAny = {};
       previewInstance.onDragEnd(e);
       expect(previewInstance['onDragEnd']).toHaveBeenCalled();
     }));
@@ -575,10 +575,10 @@ describe('Preview', () => {
       context.images = [{ src: QUICK_SRC }];
       context.createUsingService();
       const previewInstance = context.previewRef!.previewInstance;
-      spyOn<NzSafeAny>(previewInstance, 'reCenterImage');
+      spyOn<TriSafeAny>(previewInstance, 'reCenterImage');
       tickChanges();
       context.zoomStep = 0.25;
-      (previewInstance as NzSafeAny).zoom = 1.1;
+      (previewInstance as TriSafeAny).zoom = 1.1;
       previewInstance.onZoomOut();
       tickChanges();
       expect(previewInstance['reCenterImage']).toHaveBeenCalled();
@@ -680,11 +680,11 @@ describe('Preview', () => {
       const previewInstance = context.previewRef!.previewInstance;
       tickChanges();
       const e = jasmine.createSpyObj('e', ['preventDefault', 'stopPropagation']);
-      spyOn<NzSafeAny>(previewInstance, 'handlerImageTransformationWhileZoomingWithMouse');
-      spyOn<NzSafeAny>(previewInstance, 'handleImageScaleWhileZoomingWithMouse');
-      spyOn<NzSafeAny>(previewInstance, 'updatePreviewImageWrapperTransform');
-      spyOn<NzSafeAny>(previewInstance, 'updatePreviewImageTransform');
-      spyOn<NzSafeAny>(previewInstance, 'markForCheck');
+      spyOn<TriSafeAny>(previewInstance, 'handlerImageTransformationWhileZoomingWithMouse');
+      spyOn<TriSafeAny>(previewInstance, 'handleImageScaleWhileZoomingWithMouse');
+      spyOn<TriSafeAny>(previewInstance, 'updatePreviewImageWrapperTransform');
+      spyOn<TriSafeAny>(previewInstance, 'updatePreviewImageTransform');
+      spyOn<TriSafeAny>(previewInstance, 'markForCheck');
       previewInstance.wheelZoomEventHandler(e);
       expect(e.preventDefault).toHaveBeenCalled();
       expect(e.stopPropagation).toHaveBeenCalled();
@@ -698,62 +698,62 @@ describe('Preview', () => {
 });
 
 @Component({
-  imports: [NzImageModule],
-  template: `<img nz-image [nzSrc]="src" [nzPlaceholder]="placeholder" />`
+  imports: [TriImageModule],
+  template: `<img tri-image [src]="src" [placeholder]="placeholder" />`
 })
 export class TestImageBasicsComponent {
-  @ViewChild(NzImageDirective) nzImage!: NzImageDirective;
+  @ViewChild(TriImageDirective) image!: TriImageDirective;
   src = '';
   placeholder: string | null = '';
 }
 
 @Component({
-  imports: [NzImageModule],
-  template: `<img nz-image [nzSrc]="src" [nzPlaceholder]="placeholder" [nzDisablePreview]="disablePreview" />`
+  imports: [TriImageModule],
+  template: `<img tri-image [src]="src" [placeholder]="placeholder" [disablePreview]="disablePreview" />`
 })
 export class TestImagePlaceholderComponent {
-  @ViewChild(NzImageDirective) nzImage!: NzImageDirective;
+  @ViewChild(TriImageDirective) image!: TriImageDirective;
   src = '';
   placeholder = '';
   disablePreview = true;
 }
 
 @Component({
-  imports: [NzImageModule],
-  template: `<img nz-image [nzSrc]="src" [nzFallback]="fallback" />`
+  imports: [TriImageModule],
+  template: `<img tri-image [src]="src" [fallback]="fallback" />`
 })
 export class TestImageFallbackComponent {
-  @ViewChild(NzImageDirective) image!: NzImageDirective;
+  @ViewChild(TriImageDirective) image!: TriImageDirective;
   src = '';
   fallback = '';
 }
 
 @Component({
-  imports: [NzImageModule],
+  imports: [TriImageModule],
   template: `
-    <nz-image-group [nzScaleStep]="groupZoomStep">
-      <img nz-image [nzSrc]="firstSrc" [nzDisablePreview]="disablePreview" />
-      <img nz-image [nzSrc]="secondSrc" [nzDisablePreview]="disablePreview" [nzScaleStep]="zoomStep" />
-    </nz-image-group>
-    <img nz-image [nzSrc]="firstSrc" [nzDisablePreview]="disablePreview" [nzScaleStep]="zoomStep" />
-    <img nz-image [nzSrc]="firstSrc" [nzDisablePreview]="disablePreview" />
+    <tri-image-group [scaleStep]="groupZoomStep">
+      <img tri-image [src]="firstSrc" [disablePreview]="disablePreview" />
+      <img tri-image [src]="secondSrc" [disablePreview]="disablePreview" [scaleStep]="zoomStep" />
+    </tri-image-group>
+    <img tri-image [src]="firstSrc" [disablePreview]="disablePreview" [scaleStep]="zoomStep" />
+    <img tri-image [src]="firstSrc" [disablePreview]="disablePreview" />
   `
 })
 export class TestImagePreviewGroupComponent {
   disablePreview = false;
   firstSrc = '';
   secondSrc = '';
-  previewRef: NzImagePreviewRef | null = null;
-  images: NzImage[] = [];
+  previewRef: TriImagePreviewRef | null = null;
+  images: TriImage[] = [];
   zoomStep: number | null = null;
   groupZoomStep: number | null = null;
 
-  @ViewChild(NzImageGroupComponent) nzImageGroup!: NzImageGroupComponent;
-  @ViewChild(NzImageDirective) nzImage!: NzImageDirective;
+  @ViewChild(TriImageGroupComponent) imageGroup!: TriImageGroupComponent;
+  @ViewChild(TriImageDirective) image!: TriImageDirective;
 
-  constructor(private nzImageService: NzImageService) {}
+  constructor(private nzImageService: TriImageService) {}
 
   createUsingService(): void {
-    this.previewRef = this.nzImageService.preview(this.images, { nzZoom: 1.5, nzRotate: 0 });
+    this.previewRef = this.nzImageService.preview(this.images, { zoom: 1.5, rotate: 0 });
   }
 }

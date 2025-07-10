@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
-  selector: 'nz-demo-tooltip-template',
-  imports: [NzIconModule, NzToolTipModule],
+  selector: '',
+  imports: [TriIconModule, TriToolTipModule],
   template: `
-    <a nz-tooltip [nzTooltipTitle]="titleTemplate" [nzTooltipTitleContext]="{ $implicit: 'Icon' }"
+    <a tri-tooltip [tooltipTitle]="titleTemplate" [tooltipTitleContext]="{ $implicit: 'Icon' }"
       >This Tooltip has an Icon</a
     >
     <ng-template #titleTemplate let-thing>
-      <nz-icon nzType="file" />
+      <tri-icon type="file" />
       <span>Tooltip With {{ thing }}</span>
     </ng-template>
   `,
@@ -24,4 +24,4 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     `
   ]
 })
-export class NzDemoTooltipTemplateComponent {}
+export class TriDemoTooltipTemplateComponent {}

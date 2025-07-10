@@ -1,53 +1,53 @@
 import { Component } from '@angular/core';
 
-import { NzGridModule } from 'ng-zorro-antd/grid';
+import { TriGridModule } from 'ng-zorro-antd/grid';
 
 @Component({
-  selector: 'nz-demo-grid-flex',
-  imports: [NzGridModule],
+  selector: '',
+  imports: [TriGridModule],
   template: `
     <div>
       <p>sub-element align left</p>
-      <div nz-row nzJustify="start">
-        <div nz-col nzSpan="4">col-4</div>
-        <div nz-col nzSpan="4">col-4</div>
-        <div nz-col nzSpan="4">col-4</div>
-        <div nz-col nzSpan="4">col-4</div>
+      <div tri-row justify="start">
+        <div tri-col span="4">col-4</div>
+        <div tri-col span="4">col-4</div>
+        <div tri-col span="4">col-4</div>
+        <div tri-col span="4">col-4</div>
       </div>
       <p>sub-element align center</p>
-      <div nz-row nzJustify="center">
-        <div nz-col nzSpan="4">col-4</div>
-        <div nz-col nzSpan="4">col-4</div>
-        <div nz-col nzSpan="4">col-4</div>
-        <div nz-col nzSpan="4">col-4</div>
+      <div tri-row justify="center">
+        <div tri-col span="4">col-4</div>
+        <div tri-col span="4">col-4</div>
+        <div tri-col span="4">col-4</div>
+        <div tri-col span="4">col-4</div>
       </div>
       <p>sub-element align right</p>
-      <div nz-row nzJustify="end">
-        <div nz-col nzSpan="4">col-4</div>
-        <div nz-col nzSpan="4">col-4</div>
-        <div nz-col nzSpan="4">col-4</div>
-        <div nz-col nzSpan="4">col-4</div>
+      <div tri-row justify="end">
+        <div tri-col span="4">col-4</div>
+        <div tri-col span="4">col-4</div>
+        <div tri-col span="4">col-4</div>
+        <div tri-col span="4">col-4</div>
       </div>
       <p>sub-element monospaced arrangement</p>
-      <div nz-row nzJustify="space-between">
-        <div nz-col nzSpan="4">col-4</div>
-        <div nz-col nzSpan="4">col-4</div>
-        <div nz-col nzSpan="4">col-4</div>
-        <div nz-col nzSpan="4">col-4</div>
+      <div tri-row justify="space-between">
+        <div tri-col span="4">col-4</div>
+        <div tri-col span="4">col-4</div>
+        <div tri-col span="4">col-4</div>
+        <div tri-col span="4">col-4</div>
       </div>
       <p>sub-element align full</p>
-      <div nz-row nzJustify="space-around">
-        <div nz-col nzSpan="4">col-4</div>
-        <div nz-col nzSpan="4">col-4</div>
-        <div nz-col nzSpan="4">col-4</div>
-        <div nz-col nzSpan="4">col-4</div>
+      <div tri-row justify="space-around">
+        <div tri-col span="4">col-4</div>
+        <div tri-col span="4">col-4</div>
+        <div tri-col span="4">col-4</div>
+        <div tri-col span="4">col-4</div>
       </div>
       <p>sub-element align evenly</p>
-      <div nz-row nzJustify="space-evenly">
-        <div nz-col nzSpan="4">col-4</div>
-        <div nz-col nzSpan="4">col-4</div>
-        <div nz-col nzSpan="4">col-4</div>
-        <div nz-col nzSpan="4">col-4</div>
+      <div tri-row justify="space-evenly">
+        <div tri-col span="4">col-4</div>
+        <div tri-col span="4">col-4</div>
+        <div tri-col span="4">col-4</div>
+        <div tri-col span="4">col-4</div>
       </div>
     </div>
   `,
@@ -59,4 +59,4 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
     `
   ]
 })
-export class NzDemoGridFlexComponent {}
+export class TriDemoGridFlexComponent {}

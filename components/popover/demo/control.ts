@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriPopoverModule } from 'ng-zorro-antd/popover';
 
 @Component({
-  selector: 'nz-demo-popover-control',
-  imports: [NzButtonModule, NzPopoverModule],
+  selector: '',
+  imports: [TriButtonModule, TriPopoverModule],
   template: `
     <button
-      nz-button
-      nzType="primary"
-      nz-popover
-      nzPopoverTitle="Title"
-      [(nzPopoverVisible)]="visible"
-      (nzPopoverVisibleChange)="change($event)"
-      nzPopoverTrigger="click"
-      [nzPopoverContent]="contentTemplate"
+      tri-button
+      type="primary"
+      tri-popover
+      popoverTitle="Title"
+      [(popoverVisibleChange)]="visible"
+      (popoverVisibleChange)="change($event)"
+      popoverTrigger="click"
+      [popoverContent]="contentTemplate"
     >
       Click me
     </button>
@@ -24,7 +24,7 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
     </ng-template>
   `
 })
-export class NzDemoPopoverControlComponent {
+export class TriDemoPopoverControlComponent {
   visible: boolean = false;
 
   clickMe(): void {

@@ -5,14 +5,14 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzImageGroupComponent } from './image-group.component';
-import { NzImagePreviewComponent } from './image-preview.component';
-import { NzImageDirective } from './image.directive';
-import { NzImageService } from './image.service';
+import { TriImageGroupComponent } from './image-group.component';
+import { TriImagePreviewComponent } from './image-preview.component';
+import { TriImageDirective } from './image.directive';
+import { TriImageService } from './image.service';
 
 @NgModule({
-  imports: [NzImageDirective, NzImagePreviewComponent, NzImageGroupComponent],
-  exports: [NzImageDirective, NzImagePreviewComponent, NzImageGroupComponent],
-  providers: [NzImageService]
+  imports: [TriImageDirective, TriImagePreviewComponent, TriImageGroupComponent],
+  exports: [TriImageDirective, TriImagePreviewComponent, TriImageGroupComponent],
+  providers: [TriImageService]
 })
-export class NzImageModule {}
+export class TriImageModule {}

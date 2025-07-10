@@ -17,62 +17,62 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzTreeVirtualNodeData, NzTreeVirtualScrollNodeOutletDirective } from './node';
-import { NzTreeNodeOutletDirective } from './outlet';
-import { NzTreeView } from './tree';
+import { TriTreeVirtualNodeData, TriTreeVirtualScrollNodeOutletDirective } from './node';
+import { TriTreeNodeOutletDirective } from './outlet';
+import { TriTreeView } from './tree';
 
 const DEFAULT_SIZE = 28;
 
 @Component({
-  selector: 'nz-tree-virtual-scroll-view',
-  exportAs: 'nzTreeVirtualScrollView',
+  selector: '',
+  exportAs: 'triTreeVirtualScrollView',
   template: `
-    <div class="ant-tree-list">
+    <div class="tri-tree-list">
       <cdk-virtual-scroll-viewport
-        class="ant-tree-list-holder"
-        [itemSize]="nzItemSize"
-        [minBufferPx]="nzMinBufferPx"
-        [maxBufferPx]="nzMaxBufferPx"
+        class="tri-tree-list-holder"
+        [itemSize]="itemSize"
+        [minBufferPx]="minBufferPx"
+        [maxBufferPx]="maxBufferPx"
       >
         <ng-container *cdkVirtualFor="let item of nodes; let i = index; trackBy: innerTrackBy">
-          <ng-template nzTreeVirtualScrollNodeOutlet [data]="item" [compareBy]="compareBy"></ng-template>
+          <ng-template treeVirtualScrollNodeOutlet [data]="item" [compareBy]="compareBy"></ng-template>
         </ng-container>
       </cdk-virtual-scroll-viewport>
     </div>
-    <ng-container nzTreeNodeOutlet></ng-container>
+    <ng-container treeNodeOutlet></ng-container>
   `,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
-    { provide: NzTreeView, useExisting: forwardRef(() => NzTreeVirtualScrollViewComponent) },
-    { provide: CdkTree, useExisting: forwardRef(() => NzTreeVirtualScrollViewComponent) }
+    { provide: TriTreeView, useExisting: forwardRef(() => TriTreeVirtualScrollViewComponent) },
+    { provide: CdkTree, useExisting: forwardRef(() => TriTreeVirtualScrollViewComponent) }
   ],
   host: {
-    class: 'ant-tree',
-    '[class.ant-tree-block-node]': 'nzDirectoryTree || nzBlockNode',
-    '[class.ant-tree-directory]': 'nzDirectoryTree',
-    '[class.ant-tree-rtl]': `dir === 'rtl'`
+    class: 'tri-tree',
+    '[class.tri-tree-block-node]': 'directoryTree || blockNode',
+    '[class.tri-tree-directory]': 'directoryTree',
+    '[class.tri-tree-rtl]': `dir === 'rtl'`
   },
   imports: [
-    NzTreeVirtualScrollNodeOutletDirective,
+    TriTreeVirtualScrollNodeOutletDirective,
     CdkVirtualForOf,
-    NzTreeNodeOutletDirective,
+    TriTreeNodeOutletDirective,
     CdkVirtualScrollViewport,
     CdkFixedSizeVirtualScroll
   ]
 })
-export class NzTreeVirtualScrollViewComponent<T> extends NzTreeView<T> implements OnChanges {
-  @ViewChild(NzTreeNodeOutletDirective, { static: true }) readonly nodeOutlet!: NzTreeNodeOutletDirective;
+export class TriTreeVirtualScrollViewComponent<T> extends TriTreeView<T> implements OnChanges {
+  @ViewChild(TriTreeNodeOutletDirective, { static: true }) readonly nodeOutlet!: TriTreeNodeOutletDirective;
   @ViewChild(CdkVirtualScrollViewport, { static: true }) readonly virtualScrollViewport!: CdkVirtualScrollViewport;
 
-  @Input() nzItemSize = DEFAULT_SIZE;
-  @Input() nzMinBufferPx = DEFAULT_SIZE * 5;
-  @Input() nzMaxBufferPx = DEFAULT_SIZE * 10;
+  @Input() itemSize = DEFAULT_SIZE;
+  @Input() minBufferPx = DEFAULT_SIZE * 5;
+  @Input() maxBufferPx = DEFAULT_SIZE * 10;
   @Input() override trackBy: TrackByFunction<T> = null!;
-  nodes: Array<NzTreeVirtualNodeData<T>> = [];
-  innerTrackBy: TrackByFunction<NzTreeVirtualNodeData<T>> = i => i;
+  nodes: Array<TriTreeVirtualNodeData<T>> = [];
+  innerTrackBy: TrackByFunction<TriTreeVirtualNodeData<T>> = i => i;
 
   ngOnChanges({ trackBy }: SimpleChanges): void {
     if (trackBy) {
@@ -84,8 +84,8 @@ export class NzTreeVirtualScrollViewComponent<T> extends NzTreeView<T> implement
     }
   }
 
-  get compareBy(): ((value: T) => NzSafeAny) | null {
-    const baseTreeControl = this.treeControl as BaseTreeControl<T, NzSafeAny>;
+  get compareBy(): ((value: T) => TriSafeAny) | null {
+    const baseTreeControl = this.treeControl as BaseTreeControl<T, TriSafeAny>;
     if (baseTreeControl.trackBy) {
       return baseTreeControl.trackBy;
     }
@@ -112,7 +112,7 @@ export class NzTreeVirtualScrollViewComponent<T> extends NzTreeView<T> implement
     return;
   }
 
-  private createNode(nodeData: T, index: number): NzTreeVirtualNodeData<T> {
+  private createNode(nodeData: T, index: number): TriTreeVirtualNodeData<T> {
     const node = this._getNodeDef(nodeData, index);
     const context = new CdkTreeNodeOutletContext<T>(nodeData);
     if (this.treeControl?.getLevel) {

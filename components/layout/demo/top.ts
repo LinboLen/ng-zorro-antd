@@ -1,33 +1,33 @@
 import { Component } from '@angular/core';
 
-import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzLayoutModule } from 'ng-zorro-antd/layout';
-import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { TriBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriLayoutModule } from 'ng-zorro-antd/layout';
+import { TriMenuModule } from 'ng-zorro-antd/menu';
 
 @Component({
-  selector: 'nz-demo-layout-top',
-  imports: [NzBreadCrumbModule, NzIconModule, NzMenuModule, NzLayoutModule],
+  selector: '',
+  imports: [TriBreadCrumbModule, TriIconModule, TriMenuModule, TriLayoutModule],
   template: `
-    <nz-layout>
-      <nz-header>
+    <tri-layout>
+      <tri-header>
         <div class="logo"></div>
-        <ul nz-menu nzTheme="dark" nzMode="horizontal">
-          <li nz-menu-item>nav 1</li>
-          <li nz-menu-item>nav 2</li>
-          <li nz-menu-item>nav 3</li>
+        <ul tri-menu theme="dark" mode="horizontal">
+          <li tri-menu-item>nav 1</li>
+          <li tri-menu-item>nav 2</li>
+          <li tri-menu-item>nav 3</li>
         </ul>
-      </nz-header>
-      <nz-content>
-        <nz-breadcrumb>
-          <nz-breadcrumb-item>Home</nz-breadcrumb-item>
-          <nz-breadcrumb-item>List</nz-breadcrumb-item>
-          <nz-breadcrumb-item>App</nz-breadcrumb-item>
-        </nz-breadcrumb>
+      </tri-header>
+      <tri-content>
+        <tri-breadcrumb>
+          <tri-breadcrumb-item>Home</tri-breadcrumb-item>
+          <tri-breadcrumb-item>List</tri-breadcrumb-item>
+          <tri-breadcrumb-item>App</tri-breadcrumb-item>
+        </tri-breadcrumb>
         <div class="inner-content">Content</div>
-      </nz-content>
-      <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
-    </nz-layout>
+      </tri-content>
+      <tri-footer>Ant Design ©2020 Implement By Angular</tri-footer>
+    </tri-layout>
   `,
   styles: [
     `
@@ -63,4 +63,4 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
     `
   ]
 })
-export class NzDemoLayoutTopComponent {}
+export class TriDemoLayoutTopComponent {}

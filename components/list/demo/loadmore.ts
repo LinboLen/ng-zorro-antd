@@ -4,48 +4,48 @@ import { Component, OnInit } from '@angular/core';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzListModule } from 'ng-zorro-antd/list';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriListModule } from 'ng-zorro-antd/list';
+import { TriMessageService } from 'ng-zorro-antd/message';
+import { TriSkeletonModule } from 'ng-zorro-antd/skeleton';
 
 const count = 5;
 const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
 
 @Component({
-  selector: 'nz-demo-list-loadmore',
-  imports: [NzButtonModule, NzListModule, NzSkeletonModule],
+  selector: '',
+  imports: [TriButtonModule, TriListModule, TriSkeletonModule],
   template: `
-    <nz-list class="demo-loadmore-list" [nzLoading]="initLoading">
+    <tri-list class="demo-loadmore-list" [loading]="initLoading">
       @for (item of list; track item) {
-        <nz-list-item>
+        <tri-list-item>
           @if (item.loading) {
-            <nz-skeleton [nzAvatar]="true" [nzActive]="true" [nzTitle]="false" [nzLoading]="true" />
+            <tri-skeleton [avatar]="true" [active]="true" [title]="false" [loading]="true" />
           } @else {
             <ng-container>
-              <nz-list-item-meta
-                nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                nzDescription="Ant Design, a design language for background applications, is refined by Ant UED Team"
+              <tri-list-item-meta
+                avatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
               >
-                <nz-list-item-meta-title>
+                <tri-list-item-meta-title>
                   <a href="https://ng.ant.design">{{ item.name.last }}</a>
-                </nz-list-item-meta-title>
-              </nz-list-item-meta>
+                </tri-list-item-meta-title>
+              </tri-list-item-meta>
               content
-              <ul nz-list-item-actions>
-                <nz-list-item-action><a (click)="edit(item)">edit</a></nz-list-item-action>
-                <nz-list-item-action><a (click)="edit(item)">more</a></nz-list-item-action>
+              <ul tri-list-item-actions>
+                <tri-list-item-action><a (click)="edit(item)">edit</a></tri-list-item-action>
+                <tri-list-item-action><a (click)="edit(item)">more</a></tri-list-item-action>
               </ul>
             </ng-container>
           }
-        </nz-list-item>
+        </tri-list-item>
       }
-      <div class="loadmore" nz-list-load-more>
+      <div class="loadmore" tri-list-load-more>
         @if (!loadingMore) {
-          <button nz-button (click)="onLoadMore()">loading more</button>
+          <button tri-button (click)="onLoadMore()">loading more</button>
         }
       </div>
-    </nz-list>
+    </tri-list>
   `,
   styles: [
     `
@@ -61,7 +61,7 @@ const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,
     `
   ]
 })
-export class NzDemoListLoadmoreComponent implements OnInit {
+export class TriDemoListLoadmoreComponent implements OnInit {
   initLoading = true; // bug
   loadingMore = false;
   data: any[] = [];
@@ -69,7 +69,7 @@ export class NzDemoListLoadmoreComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private msg: NzMessageService
+    private msg: TriMessageService
   ) {}
 
   ngOnInit(): void {

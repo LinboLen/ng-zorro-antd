@@ -6,7 +6,7 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-  selector: '[nzGraphEdge]',
-  exportAs: 'nzGraphEdge'
+  selector: '',
+  exportAs: 'triGraphEdge'
 })
-export class NzGraphEdgeDirective {}
+export class TriGraphEdgeDirective {}

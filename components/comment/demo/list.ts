@@ -2,28 +2,28 @@ import { Component } from '@angular/core';
 
 import { addDays, formatDistance } from 'date-fns';
 
-import { NzAvatarModule } from 'ng-zorro-antd/avatar';
-import { NzCommentModule } from 'ng-zorro-antd/comment';
-import { NzListModule } from 'ng-zorro-antd/list';
+import { TriAvatarModule } from 'ng-zorro-antd/avatar';
+import { TriCommentModule } from 'ng-zorro-antd/comment';
+import { TriListModule } from 'ng-zorro-antd/list';
 
 @Component({
-  selector: 'nz-demo-comment-list',
-  imports: [NzAvatarModule, NzCommentModule, NzListModule],
+  selector: '',
+  imports: [TriAvatarModule, TriCommentModule, TriListModule],
   template: `
-    <nz-list [nzDataSource]="data" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
+    <tri-list [dataSource]="data" [renderItem]="item" [itemLayout]="'horizontal'">
       <ng-template #item let-item>
-        <nz-comment [nzAuthor]="item.author" [nzDatetime]="item.datetime">
-          <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="item.avatar"></nz-avatar>
-          <nz-comment-content>
+        <tri-comment [author]="item.author" [datetime]="item.datetime">
+          <tri-avatar tri-comment-avatar icon="user" [src]="item.avatar"></tri-avatar>
+          <tri-comment-content>
             <p>{{ item.content }}</p>
-          </nz-comment-content>
-          <nz-comment-action>Reply to</nz-comment-action>
-        </nz-comment>
+          </tri-comment-content>
+          <tri-comment-action>Reply to</tri-comment-action>
+        </tri-comment>
       </ng-template>
-    </nz-list>
+    </tri-list>
   `
 })
-export class NzDemoCommentListComponent {
+export class TriDemoCommentListComponent {
   data = [
     {
       author: 'Han Solo',

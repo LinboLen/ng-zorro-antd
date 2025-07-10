@@ -5,21 +5,21 @@
 
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 
 @Component({
-  selector: 'nz-auto-optgroup',
-  exportAs: 'nzAutoOptgroup',
+  selector: '',
+  exportAs: 'triAutoOptgroup',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  imports: [NzOutletModule],
+  imports: [TriOutletModule],
   template: `
-    <div class="ant-select-item ant-select-item-group">
-      <ng-container *nzStringTemplateOutlet="nzLabel">{{ nzLabel }}</ng-container>
+    <div class="tri-select-item tri-select-item-group">
+      <ng-container *stringTemplateOutlet="label">{{ label }}</ng-container>
     </div>
     <ng-content select="nz-auto-option"></ng-content>
   `
 })
-export class NzAutocompleteOptgroupComponent {
-  @Input() nzLabel?: string | TemplateRef<void>;
+export class TriAutocompleteOptgroupComponent {
+  @Input() label?: string | TemplateRef<void>;
 }

@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzTagComponent } from './tag.component';
+import { TriTagComponent } from './tag.component';
 
 @NgModule({
-  imports: [NzTagComponent],
-  exports: [NzTagComponent]
+  imports: [TriTagComponent],
+  exports: [TriTagComponent]
 })
-export class NzTagModule {}
+export class TriTagModule {}

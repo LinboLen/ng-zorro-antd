@@ -5,9 +5,9 @@
 
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
-import { NzCursorType, NzResizeDirection, NzResizeHandleComponent } from './resize-handle.component';
+import { TriCursorType, TriResizeDirection, TriResizeHandleComponent } from './resize-handle.component';
 
-export const DEFAULT_RESIZE_DIRECTION: NzResizeDirection[] = [
+export const DEFAULT_RESIZE_DIRECTION: TriResizeDirection[] = [
   'bottomRight',
   'topRight',
   'bottomLeft',
@@ -18,12 +18,12 @@ export const DEFAULT_RESIZE_DIRECTION: NzResizeDirection[] = [
   'left'
 ];
 
-export interface NzResizeHandleOption {
-  direction: NzResizeDirection;
-  cursorType: NzCursorType;
+export interface TriResizeHandleOption {
+  direction: TriResizeDirection;
+  cursorType: TriCursorType;
 }
 
-function normalizeResizeHandleOptions(value: Array<NzResizeDirection | NzResizeHandleOption>): NzResizeHandleOption[] {
+function normalizeResizeHandleOptions(value: Array<TriResizeDirection | TriResizeHandleOption>): TriResizeHandleOption[] {
   return value.map(val => {
     if (typeof val === 'string') {
       return {
@@ -37,20 +37,20 @@ function normalizeResizeHandleOptions(value: Array<NzResizeDirection | NzResizeH
 }
 
 @Component({
-  selector: 'nz-resize-handles',
-  exportAs: 'nzResizeHandles',
+  selector: '',
+  exportAs: 'triResizeHandles',
   template: `
     @for (option of resizeHandleOptions; track option) {
-      <nz-resize-handle [nzDirection]="option.direction" [nzCursorType]="option.cursorType" />
+      <tri-resize-handle [direction]="option.direction" [cursorType]="option.cursorType" />
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NzResizeHandleComponent]
+  imports: [TriResizeHandleComponent]
 })
-export class NzResizeHandlesComponent implements OnChanges {
-  @Input() nzDirections: Array<NzResizeDirection | NzResizeHandleOption> = DEFAULT_RESIZE_DIRECTION;
+export class TriResizeHandlesComponent implements OnChanges {
+  @Input() directions: Array<TriResizeDirection | TriResizeHandleOption> = DEFAULT_RESIZE_DIRECTION;
 
-  resizeHandleOptions = normalizeResizeHandleOptions(this.nzDirections);
+  resizeHandleOptions = normalizeResizeHandleOptions(this.directions);
 
   ngOnChanges(changes: SimpleChanges): void {
     const { nzDirections } = changes;

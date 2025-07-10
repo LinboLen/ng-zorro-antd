@@ -1,0 +1,25 @@
+@media screen and (max-width: $screen-md) {
+  @at-root #{&} {
+    .#{$backtop-prefix-cls} {
+      right: 60px;
+
+      &-rtl {
+        right: auto;
+        left: 60px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $screen-xs) {
+  @at-root #{&} {
+    .#{$backtop-prefix-cls} {
+      right: 20px;
+
+      &-rtl {
+        right: auto;
+        left: 20px;
+      }
+    }
+  }
+}

@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: 'nz-demo-input-autosize-textarea',
-  imports: [FormsModule, NzInputModule],
+  selector: '',
+  imports: [FormsModule, TriInputModule],
   template: `
-    <textarea nz-input placeholder="Autosize height based on content lines" nzAutosize></textarea>
+    <textarea tri-input placeholder="Autosize height based on content lines" autosize></textarea>
     <textarea
-      nz-input
+      tri-input
       placeholder="Autosize height with minimum and maximum number of lines"
-      [nzAutosize]="{ minRows: 2, maxRows: 6 }"
+      [autosize]="{ minRows: 2, maxRows: 6 }"
     ></textarea>
-    <textarea nz-input placeholder="Controlled autosize" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
+    <textarea tri-input placeholder="Controlled autosize" [autosize]="{ minRows: 3, maxRows: 5 }"></textarea>
   `,
   styles: [
     `
@@ -23,4 +23,4 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     `
   ]
 })
-export class NzDemoInputAutosizeTextareaComponent {}
+export class TriDemoInputAutosizeTextareaComponent {}

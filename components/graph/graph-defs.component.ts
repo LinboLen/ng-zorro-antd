@@ -6,7 +6,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'svg:defs[nz-graph-defs]',
+  selector: '',
   template: `
     <svg:marker
       class="nz-graph-edge-marker"
@@ -22,4 +22,4 @@ import { Component } from '@angular/core';
     </svg:marker>
   `
 })
-export class NzGraphDefsComponent {}
+export class TriGraphDefsComponent {}

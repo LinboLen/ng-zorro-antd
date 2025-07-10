@@ -1,38 +1,38 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzNotificationPlacement, NzNotificationService } from 'ng-zorro-antd/notification';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriDividerModule } from 'ng-zorro-antd/divider';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriNotificationPlacement, TriNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
-  selector: 'nz-demo-notification-placement',
-  imports: [NzButtonModule, NzDividerModule, NzIconModule],
+  selector: '',
+  imports: [TriButtonModule, TriDividerModule, TriIconModule],
   template: `
-    <button nz-button (click)="createNotification('top')" nzType="primary">
-      <nz-icon nzType="border-top" nzTheme="outline" />
+    <button tri-button (click)="createNotification('top')" type="primary">
+      <tri-icon type="border-top" theme="outline" />
       top
     </button>
-    <button nz-button (click)="createNotification('bottom')" nzType="primary">
-      <nz-icon nzType="border-bottom" nzTheme="outline" />
+    <button tri-button (click)="createNotification('bottom')" type="primary">
+      <tri-icon type="border-bottom" theme="outline" />
       bottom
     </button>
-    <nz-divider></nz-divider>
-    <button nz-button (click)="createNotification('topLeft')" nzType="primary">
-      <nz-icon nzType="radius-upleft" />
+    <tri-divider></tri-divider>
+    <button tri-button (click)="createNotification('topLeft')" type="primary">
+      <tri-icon type="radius-upleft" />
       topLeft
     </button>
-    <button nz-button (click)="createNotification('topRight')" nzType="primary">
-      <nz-icon nzType="radius-upright" />
+    <button tri-button (click)="createNotification('topRight')" type="primary">
+      <tri-icon type="radius-upright" />
       topRight
     </button>
-    <nz-divider></nz-divider>
-    <button nz-button (click)="createNotification('bottomLeft')" nzType="primary">
-      <nz-icon nzType="radius-bottomleft" />
+    <tri-divider></tri-divider>
+    <button tri-button (click)="createNotification('bottomLeft')" type="primary">
+      <tri-icon type="radius-bottomleft" />
       bottomLeft
     </button>
-    <button nz-button (click)="createNotification('bottomRight')" nzType="primary">
-      <nz-icon nzType="radius-bottomright" />
+    <button tri-button (click)="createNotification('bottomRight')" type="primary">
+      <tri-icon type="radius-bottomright" />
       bottomRight
     </button>
   `,
@@ -44,12 +44,12 @@ import { NzNotificationPlacement, NzNotificationService } from 'ng-zorro-antd/no
     `
   ]
 })
-export class NzDemoNotificationPlacementComponent {
+export class TriDemoNotificationPlacementComponent {
   placement = 'topRight';
 
-  constructor(private notification: NzNotificationService) {}
+  constructor(private notification: TriNotificationService) {}
 
-  createNotification(position: NzNotificationPlacement): void {
+  createNotification(position: TriNotificationPlacement): void {
     this.notification.blank(
       'Notification Title',
       'This is the content of the notification. This is the content of the notification. This is the content of the notification.',

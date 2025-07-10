@@ -2,21 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
-import { NzTransferModule, TransferCanMove, TransferItem } from 'ng-zorro-antd/transfer';
+import { TriTransferModule, TransferCanMove, TransferItem } from 'ng-zorro-antd/transfer';
 
 @Component({
-  selector: 'nz-demo-transfer-can-move',
-  imports: [NzTransferModule],
+  selector: '',
+  imports: [TriTransferModule],
   template: `
-    <nz-transfer
-      [nzDataSource]="list"
-      [nzCanMove]="canMove"
-      (nzSelectChange)="select($event)"
-      (nzChange)="change($event)"
-    ></nz-transfer>
+    <tri-transfer
+      [dataSource]="list"
+      [canMove]="canMove"
+      (selectChange)="select($event)"
+      (change)="change($event)"
+    ></tri-transfer>
   `
 })
-export class NzDemoTransferCanMoveComponent implements OnInit {
+export class TriDemoTransferCanMoveComponent implements OnInit {
   list: TransferItem[] = [];
 
   ngOnInit(): void {

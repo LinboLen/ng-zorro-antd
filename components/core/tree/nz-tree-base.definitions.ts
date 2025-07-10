@@ -3,26 +3,26 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { NzTreeNode } from './nz-tree-base-node';
+import { TriTreeNode } from './nz-tree-base-node';
 
-export interface NzFormatEmitEvent {
+export interface TriFormatEmitEvent {
   eventName: string;
-  node?: NzTreeNode | null;
+  node?: TriTreeNode | null;
   event?: MouseEvent | DragEvent | null;
-  dragNode?: NzTreeNode;
-  selectedKeys?: NzTreeNode[];
-  checkedKeys?: NzTreeNode[];
-  matchedKeys?: NzTreeNode[];
-  nodes?: NzTreeNode[];
+  dragNode?: TriTreeNode;
+  selectedKeys?: TriTreeNode[];
+  checkedKeys?: TriTreeNode[];
+  matchedKeys?: TriTreeNode[];
+  nodes?: TriTreeNode[];
   keys?: string[];
 }
 
-export interface NzFormatBeforeDropEvent {
-  dragNode: NzTreeNode;
-  node: NzTreeNode;
+export interface TriFormatBeforeDropEvent {
+  dragNode: TriTreeNode;
+  node: TriTreeNode;
   pos: number;
 }
 
-export interface NzTreeNodeBaseComponent {
+export interface TriTreeNodeBaseComponent {
   markForCheck(): void;
 }

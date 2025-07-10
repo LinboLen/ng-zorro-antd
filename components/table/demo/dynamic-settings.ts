@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { TriDividerModule } from 'ng-zorro-antd/divider';
+import { TriFormModule } from 'ng-zorro-antd/form';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
+import { TriSwitchModule } from 'ng-zorro-antd/switch';
 import {
-  NzTableLayout,
-  NzTableModule,
-  NzTablePaginationPosition,
-  NzTablePaginationType,
-  NzTableSize
+  TriTableLayout,
+  TriTableModule,
+  TriTablePaginationPosition,
+  TriTablePaginationType,
+  TriTableSize
 } from 'ng-zorro-antd/table';
 
 interface ItemData {
@@ -39,78 +39,78 @@ interface Setting {
   noResult: boolean;
   ellipsis: boolean;
   simple: boolean;
-  size: NzTableSize;
+  size: TriTableSize;
   tableScroll: TableScroll;
-  tableLayout: NzTableLayout;
-  position: NzTablePaginationPosition;
-  paginationType: NzTablePaginationType;
+  tableLayout: TriTableLayout;
+  position: TriTablePaginationPosition;
+  paginationType: TriTablePaginationType;
 }
 
 @Component({
-  selector: 'nz-demo-table-dynamic-settings',
-  imports: [ReactiveFormsModule, NzDividerModule, NzFormModule, NzRadioModule, NzSwitchModule, NzTableModule],
+  selector: '',
+  imports: [ReactiveFormsModule, TriDividerModule, TriFormModule, TriRadioModule, TriSwitchModule, TriTableModule],
   template: `
     <div class="components-table-demo-control-bar">
-      <form nz-form nzLayout="inline" [formGroup]="settingForm">
+      <form tri-form layout="inline" [formGroup]="settingForm">
         @for (item of listOfSwitch; track item) {
-          <nz-form-item>
-            <nz-form-label>{{ item.name }}</nz-form-label>
-            <nz-form-control>
-              <nz-switch [formControlName]="item.formControlName"></nz-switch>
-            </nz-form-control>
-          </nz-form-item>
+          <tri-form-item>
+            <tri-form-label>{{ item.name }}</tri-form-label>
+            <tri-form-control>
+              <tri-switch [formControlName]="item.formControlName"></tri-switch>
+            </tri-form-control>
+          </tri-form-item>
         }
         @for (radio of listOfRadio; track radio) {
-          <nz-form-item>
-            <nz-form-label>{{ radio.name }}</nz-form-label>
-            <nz-form-control>
-              <nz-radio-group [formControlName]="radio.formControlName">
+          <tri-form-item>
+            <tri-form-label>{{ radio.name }}</tri-form-label>
+            <tri-form-control>
+              <tri-radio-group [formControlName]="radio.formControlName">
                 @for (o of radio.listOfOption; track o) {
-                  <label nz-radio-button [nzValue]="o.value">{{ o.label }}</label>
+                  <label tri-radio-button [value]="o.value">{{ o.label }}</label>
                 }
-              </nz-radio-group>
-            </nz-form-control>
-          </nz-form-item>
+              </tri-radio-group>
+            </tri-form-control>
+          </tri-form-item>
         }
       </form>
     </div>
-    <nz-table
+    <tri-table
       #dynamicTable
-      [nzScroll]="{ x: scrollX, y: scrollY }"
-      [nzData]="listOfData"
-      [nzTableLayout]="settingValue.tableLayout"
-      [nzBordered]="settingValue.bordered"
-      [nzSimple]="settingValue.simple"
-      [nzLoading]="settingValue.loading"
-      [nzPaginationType]="settingValue.paginationType"
-      [nzPaginationPosition]="settingValue.position"
-      [nzShowSizeChanger]="settingValue.sizeChanger"
-      [nzFrontPagination]="settingValue.pagination"
-      [nzShowPagination]="settingValue.pagination"
-      [nzFooter]="settingValue.footer ? 'Here is Footer' : null"
-      [nzTitle]="settingValue.title ? 'Here is Title' : null"
-      [nzSize]="settingValue.size"
-      (nzCurrentPageDataChange)="currentPageDataChange($event)"
+      [scroll]="{ x: scrollX, y: scrollY }"
+      [data]="listOfData"
+      [tableLayout]="settingValue.tableLayout"
+      [bordered]="settingValue.bordered"
+      [simple]="settingValue.simple"
+      [loading]="settingValue.loading"
+      [paginationType]="settingValue.paginationType"
+      [paginationPosition]="settingValue.position"
+      [showSizeChanger]="settingValue.sizeChanger"
+      [frontPagination]="settingValue.pagination"
+      [showPagination]="settingValue.pagination"
+      [footer]="settingValue.footer ? 'Here is Footer' : null"
+      [title]="settingValue.title ? 'Here is Title' : null"
+      [size]="settingValue.size"
+      (currentPageDataChange)="currentPageDataChange($event)"
     >
       <thead>
         @if (settingValue.header) {
           <tr>
             @if (settingValue.expandable) {
-              <th nzWidth="40px" [nzLeft]="fixedColumn"></th>
+              <th width="40px" [left]="fixedColumn"></th>
             }
             @if (settingValue.checkbox) {
               <th
-                nzWidth="60px"
-                [(nzChecked)]="allChecked"
-                [nzLeft]="fixedColumn"
-                [nzIndeterminate]="indeterminate"
-                (nzCheckedChange)="checkAll($event)"
+                width="60px"
+                [(checkedChange)]="allChecked"
+                [left]="fixedColumn"
+                [indeterminate]="indeterminate"
+                (checkedChange)="checkAll($event)"
               ></th>
             }
-            <th [nzLeft]="fixedColumn">Name</th>
+            <th [left]="fixedColumn">Name</th>
             <th>Age</th>
             <th>Address</th>
-            <th [nzRight]="fixedColumn">Action</th>
+            <th [right]="fixedColumn">Action</th>
           </tr>
         }
       </thead>
@@ -118,28 +118,28 @@ interface Setting {
         @for (data of dynamicTable.data; track data) {
           <tr>
             @if (settingValue.expandable) {
-              <td [nzLeft]="fixedColumn" [(nzExpand)]="data.expand"></td>
+              <td [left]="fixedColumn" [(expandChange)]="data.expand"></td>
             }
             @if (settingValue.checkbox) {
-              <td [nzLeft]="fixedColumn" [(nzChecked)]="data.checked" (nzCheckedChange)="refreshStatus()"></td>
+              <td [left]="fixedColumn" [(checkedChange)]="data.checked" (checkedChange)="refreshStatus()"></td>
             }
-            <td [nzLeft]="fixedColumn">{{ data.name }}</td>
+            <td [left]="fixedColumn">{{ data.name }}</td>
             <td>{{ data.age }}</td>
-            <td [nzEllipsis]="settingValue.ellipsis">{{ data.address }}</td>
-            <td [nzRight]="fixedColumn" [nzEllipsis]="settingValue.ellipsis">
+            <td [ellipsis]="settingValue.ellipsis">{{ data.address }}</td>
+            <td [right]="fixedColumn" [ellipsis]="settingValue.ellipsis">
               <a href="#">Delete</a>
-              <nz-divider nzType="vertical"></nz-divider>
+              <tri-divider type="vertical"></tri-divider>
               <a href="#">More action</a>
             </td>
           </tr>
           @if (settingValue.expandable) {
-            <tr [nzExpand]="data.expand">
+            <tr [expand]="data.expand">
               <span>{{ data.description }}</span>
             </tr>
           }
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `,
   styles: [
     `
@@ -150,7 +150,7 @@ interface Setting {
     `
   ]
 })
-export class NzDemoTableDynamicSettingsComponent implements OnInit {
+export class TriDemoTableDynamicSettingsComponent implements OnInit {
   settingForm: FormGroup<{ [K in keyof Setting]: FormControl<Setting[K]> }>;
   listOfData: readonly ItemData[] = [];
   displayData: readonly ItemData[] = [];
@@ -273,11 +273,11 @@ export class NzDemoTableDynamicSettingsComponent implements OnInit {
       noResult: [false],
       ellipsis: [false],
       simple: [false],
-      size: 'small' as NzTableSize,
-      paginationType: 'default' as NzTablePaginationType,
+      size: 'small' as TriTableSize,
+      paginationType: 'default' as TriTablePaginationType,
       tableScroll: 'unset' as TableScroll,
-      tableLayout: 'auto' as NzTableLayout,
-      position: 'bottom' as NzTablePaginationPosition
+      tableLayout: 'auto' as TriTableLayout,
+      position: 'bottom' as TriTablePaginationPosition
     });
 
     this.settingValue = this.settingForm.value as Setting;

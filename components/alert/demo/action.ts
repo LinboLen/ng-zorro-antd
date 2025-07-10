@@ -1,58 +1,58 @@
 import { Component } from '@angular/core';
 
-import { NzAlertModule } from 'ng-zorro-antd/alert';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { TriAlertModule } from 'ng-zorro-antd/alert';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: 'nz-demo-alert-action',
-  imports: [NzAlertModule, NzButtonModule, NzSpaceModule],
+  selector: '',
+  imports: [TriAlertModule, TriButtonModule, TriSpaceModule],
   template: `
-    <nz-alert nzShowIcon nzType="success" nzMessage="Success Text" [nzAction]="actionTemplate1"></nz-alert>
+    <tri-alert showIcon type="success" message="Success Text" [action]="actionTemplate1"></tri-alert>
     <ng-template #actionTemplate1>
-      <button nz-button nzSize="small" nzType="text" (click)="doAction('undo')">Undo</button></ng-template
+      <button tri-button size="small" type="text" (click)="doAction('undo')">Undo</button></ng-template
     >
     <br />
-    <nz-alert
-      nzShowIcon
-      nzType="error"
-      nzMessage="Error Text"
-      [nzDescription]="descriptionTemplate1"
-      [nzAction]="actionTemplate2"
-    ></nz-alert>
+    <tri-alert
+      showIcon
+      type="error"
+      message="Error Text"
+      [description]="descriptionTemplate1"
+      [action]="actionTemplate2"
+    ></tri-alert>
     <ng-template #descriptionTemplate1>
       <p>Error Description Error Description Error Description Error Description</p>
     </ng-template>
     <ng-template #actionTemplate2>
-      <button nz-button nzSize="small" nzType="default" nzDanger (click)="doAction('detail')">Detail</button>
+      <button tri-button size="small" type="default" danger (click)="doAction('detail')">Detail</button>
     </ng-template>
     <br />
-    <nz-alert nzCloseable nzType="warning" nzMessage="Warning Text" [nzAction]="actionTemplate3"></nz-alert>
+    <tri-alert closeable type="warning" message="Warning Text" [action]="actionTemplate3"></tri-alert>
     <ng-template #actionTemplate3>
-      <button nz-button nzSize="small" nzType="primary" nzGhost (click)="doAction('ignore')">Ignore</button>
+      <button tri-button size="small" type="primary" ghost (click)="doAction('ignore')">Ignore</button>
     </ng-template>
     <br />
-    <nz-alert
-      nzShowIcon
-      nzType="info"
-      nzMessage="Info Text"
-      [nzDescription]="descriptionTemplate2"
-      [nzAction]="actionTemplate4"
-    ></nz-alert>
+    <tri-alert
+      showIcon
+      type="info"
+      message="Info Text"
+      [description]="descriptionTemplate2"
+      [action]="actionTemplate4"
+    ></tri-alert>
     <ng-template #descriptionTemplate2>
       <p>Info Description Info Description Info Description Info Description</p>
     </ng-template>
     <ng-template #actionTemplate4>
-      <nz-space nzDirection="vertical">
-        <button *nzSpaceItem nz-button nzSize="small" nzType="primary" (click)="doAction('accept')">Accept</button>
-        <button *nzSpaceItem nz-button nzSize="small" nzType="default" nzDanger (click)="doAction('decline')"
+      <tri-space direction="vertical">
+        <button *spaceItem tri-button size="small" type="primary" (click)="doAction('accept')">Accept</button>
+        <button *spaceItem tri-button size="small" type="default" danger (click)="doAction('decline')"
           >Decline</button
         >
-      </nz-space>
+      </tri-space>
     </ng-template>
   `
 })
-export class NzDemoAlertActionComponent {
+export class TriDemoAlertActionComponent {
   doAction(action: string): void {
     console.log(`Do alert's action: ${action}`);
   }

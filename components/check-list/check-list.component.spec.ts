@@ -12,13 +12,13 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { dispatchMouseEvent } from 'ng-zorro-antd/core/testing';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
-import { NzCheckListComponent } from './check-list.component';
-import { NzCheckListModule } from './check-list.module';
-import { NzItemProps } from './typings';
+import { TriCheckListComponent } from './check-list.component';
+import { TriCheckListModule } from './check-list.module';
+import { TriItemProps } from './typings';
 
 describe('check-list', () => {
-  let fixture: ComponentFixture<NzTestCheckListBasicComponent>;
-  let testComponent: NzTestCheckListBasicComponent;
+  let fixture: ComponentFixture<TriTestCheckListBasicComponent>;
+  let testComponent: TriTestCheckListBasicComponent;
   let resultEl: DebugElement;
   let overlayContainer: OverlayContainer;
   let overlayContainerElement: HTMLElement;
@@ -33,10 +33,10 @@ describe('check-list', () => {
     TestBed.configureTestingModule({
       providers: [provideNoopAnimations(), provideNzIconsTesting()]
     });
-    fixture = TestBed.createComponent(NzTestCheckListBasicComponent);
+    fixture = TestBed.createComponent(TriTestCheckListBasicComponent);
     fixture.detectChanges();
     testComponent = fixture.debugElement.componentInstance;
-    resultEl = fixture.debugElement.query(By.directive(NzCheckListComponent));
+    resultEl = fixture.debugElement.query(By.directive(TriCheckListComponent));
   }));
 
   beforeEach(inject([OverlayContainer], (oc: OverlayContainer) => {
@@ -250,24 +250,24 @@ describe('check-list', () => {
 });
 
 @Component({
-  selector: 'nz-test-check-list-basic',
-  imports: [NzCheckListModule],
+  selector: '',
+  imports: [TriCheckListModule],
   template: `
-    <nz-check-list
-      [nzVisible]="visible"
-      [nzItems]="items"
-      [nzIndex]="index"
-      [nzProgress]="progress"
-      [nzTriggerRender]="triggerRender"
-      [nzTitle]="title"
-      [nzFooter]="footer"
+    <tri-check-list
+      [visible]="visible"
+      [items]="items"
+      [index]="index"
+      [progress]="progress"
+      [triggerRender]="triggerRender"
+      [title]="title"
+      [footer]="footer"
     >
-    </nz-check-list>
+    </tri-check-list>
   `
 })
-export class NzTestCheckListBasicComponent {
+export class TriTestCheckListBasicComponent {
   visible: boolean = false;
-  items: NzItemProps[] = [];
+  items: TriItemProps[] = [];
   index: number = 1;
   progress: boolean = true;
   triggerRender: TemplateRef<void> | string | null = null;

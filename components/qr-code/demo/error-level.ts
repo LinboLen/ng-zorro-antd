@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzQRCodeModule } from 'ng-zorro-antd/qr-code';
-import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
+import { TriQRCodeModule } from 'ng-zorro-antd/qr-code';
+import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
 
 @Component({
-  selector: 'nz-demo-qr-code-error-level',
-  imports: [NzQRCodeModule, NzSegmentedModule, FormsModule],
+  selector: '',
+  imports: [TriQRCodeModule, TriSegmentedModule, FormsModule],
   template: `
-    <nz-qrcode nzValue="https://github.com/NG-ZORRO/ng-zorro-antd/issues" [nzLevel]="errorLevel"></nz-qrcode>
-    <nz-segmented [nzOptions]="options" [(ngModel)]="errorLevel"></nz-segmented>
+    <tri-qrcode value="https://github.com/NG-ZORRO/ng-zorro-antd/issues" [level]="errorLevel"></tri-qrcode>
+    <tri-segmented [options]="options" [(ngModel)]="errorLevel"></tri-segmented>
   `,
   styles: [
     `
@@ -25,7 +25,7 @@ import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
     `
   ]
 })
-export class NzDemoQrCodeErrorLevelComponent {
+export class TriDemoQrCodeErrorLevelComponent {
   options: Array<'L' | 'M' | 'Q' | 'H'> = ['L', 'M', 'Q', 'H'];
   errorLevel: 'L' | 'M' | 'Q' | 'H' = 'L';
 }

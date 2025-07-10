@@ -1,38 +1,38 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzUploadFile, NzUploadModule } from 'ng-zorro-antd/upload';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriUploadFile, TriUploadModule } from 'ng-zorro-antd/upload';
 
 @Component({
-  selector: 'nz-demo-upload-picture-style',
-  imports: [NzButtonModule, NzIconModule, NzUploadModule],
+  selector: '',
+  imports: [TriButtonModule, TriIconModule, TriUploadModule],
   template: `
-    <nz-upload
-      nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-      nzListType="picture"
-      [(nzFileList)]="fileList1"
+    <tri-upload
+      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+      listType="picture"
+      [(fileListChange)]="fileList1"
     >
-      <button nz-button>
-        <nz-icon nzType="upload" />
+      <button tri-button>
+        <tri-icon type="upload" />
         Upload
       </button>
-    </nz-upload>
+    </tri-upload>
     <br />
     <br />
-    <nz-upload
+    <tri-upload
       class="upload-list-inline"
-      nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-      nzListType="picture"
-      [(nzFileList)]="fileList2"
+      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+      listType="picture"
+      [(fileListChange)]="fileList2"
     >
-      <button nz-button>
+      <button tri-button>
         <span>
-          <nz-icon nzType="upload" />
+          <tri-icon type="upload" />
           Upload
         </span>
       </button>
-    </nz-upload>
+    </tri-upload>
   `,
   styles: [
     `
@@ -53,8 +53,8 @@ import { NzUploadFile, NzUploadModule } from 'ng-zorro-antd/upload';
     `
   ]
 })
-export class NzDemoUploadPictureStyleComponent {
-  defaultFileList: NzUploadFile[] = [
+export class TriDemoUploadPictureStyleComponent {
+  defaultFileList: TriUploadFile[] = [
     {
       uid: '-1',
       name: 'xxx.png',

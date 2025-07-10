@@ -6,43 +6,43 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-  selector: 'div[nz-result-title]',
-  exportAs: 'nzResultTitle',
+  selector: '',
+  exportAs: 'triResultTitle',
   host: {
-    class: 'ant-result-title'
+    class: 'tri-result-title'
   }
 })
-export class NzResultTitleDirective {}
+export class TriResultTitleDirective {}
 
 @Directive({
-  selector: 'div[nz-result-subtitle]',
-  exportAs: 'nzResultSubtitle',
+  selector: '',
+  exportAs: 'triResultSubtitle',
   host: {
-    class: 'ant-result-subtitle'
+    class: 'tri-result-subtitle'
   }
 })
-export class NzResultSubtitleDirective {}
+export class TriResultSubtitleDirective {}
 
 @Directive({
-  selector: 'i[nz-result-icon], div[nz-result-icon]',
-  exportAs: 'nzResultIcon'
+  selector: '',
+  exportAs: 'triResultIcon'
 })
-export class NzResultIconDirective {}
+export class TriResultIconDirective {}
 
 @Directive({
-  selector: 'div[nz-result-content]',
-  exportAs: 'nzResultContent',
+  selector: '',
+  exportAs: 'triResultContent',
   host: {
-    class: 'ant-result-content'
+    class: 'tri-result-content'
   }
 })
-export class NzResultContentDirective {}
+export class TriResultContentDirective {}
 
 @Directive({
-  selector: 'div[nz-result-extra]',
-  exportAs: 'nzResultExtra',
+  selector: '',
+  exportAs: 'triResultExtra',
   host: {
-    class: 'ant-result-extra'
+    class: 'tri-result-extra'
   }
 })
-export class NzResultExtraDirective {}
+export class TriResultExtraDirective {}

@@ -6,10 +6,10 @@
 import { TestBed } from '@angular/core/testing';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { NzSanitizerPipe } from './nz-sanitizer.pipe';
+import { TriSanitizerPipe } from './nz-sanitizer.pipe';
 
 describe('NzSanitizerPipe', () => {
-  let pipe: NzSanitizerPipe;
+  let pipe: TriSanitizerPipe;
   const htmlSnippet = '<div><p>hello world</p><div>';
   const styleSnippet = 'height:50px;background-color: red';
   const urlSnippet = 'https://img.alicdn.com/tfs/TB1Ly5oS3HqK1RjSZFPXXcwapXa-238-54.png';
@@ -19,7 +19,7 @@ describe('NzSanitizerPipe', () => {
     TestBed.configureTestingModule({
       imports: [BrowserModule]
     });
-    pipe = TestBed.inject(NzSanitizerPipe);
+    pipe = TestBed.inject(TriSanitizerPipe);
   });
 
   it('Should sanitizer', () => {

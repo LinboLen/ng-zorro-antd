@@ -5,11 +5,11 @@
 
 import { TemplateRef } from '@angular/core';
 
-export type NzDescriptionsSize = 'default' | 'middle' | 'small';
+export type TriDescriptionsSize = 'default' | 'middle' | 'small';
 
-export type NzDescriptionsLayout = 'horizontal' | 'vertical';
+export type TriDescriptionsLayout = 'horizontal' | 'vertical';
 
-export interface NzDescriptionsItemRenderProps {
+export interface TriDescriptionsItemRenderProps {
   title: string | TemplateRef<void>;
   span: number;
   content: TemplateRef<void>;

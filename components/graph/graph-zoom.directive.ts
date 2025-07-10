@@ -19,30 +19,30 @@ import { Selection } from 'd3-selection';
 import { transition } from 'd3-transition';
 import { zoom, ZoomBehavior, zoomIdentity, zoomTransform } from 'd3-zoom';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { numberAttributeWithOneFallback } from 'ng-zorro-antd/core/util';
 
 import { calculateTransform } from './core/utils';
-import { NzZoomTransform, RelativePositionInfo } from './interface';
+import { TriZoomTransform, RelativePositionInfo } from './interface';
 
 @Directive({
-  selector: '[nz-graph-zoom]',
-  exportAs: 'nzGraphZoom'
+  selector: '',
+  exportAs: 'triGraphZoom'
 })
-export class NzGraphZoomDirective implements AfterViewInit {
+export class TriGraphZoomDirective implements AfterViewInit {
   private destroyRef = inject(DestroyRef);
   private cdr = inject(ChangeDetectorRef);
   private element = inject(ElementRef);
 
-  @Input({ transform: numberAttributeWithOneFallback }) nzZoom?: number;
-  @Input() nzMinZoom = 0.1;
-  @Input() nzMaxZoom = 10;
+  @Input({ transform: numberAttributeWithOneFallback }) zoom?: number;
+  @Input() minZoom = 0.1;
+  @Input() maxZoom = 10;
 
-  @Output() readonly nzTransformEvent = new EventEmitter<NzZoomTransform>();
-  @Output() readonly nzZoomChange = new EventEmitter<number>();
+  @Output() readonly transformEvent = new EventEmitter<TriZoomTransform>();
+  @Output() readonly zoomChange = new EventEmitter<number>();
 
-  svgSelection!: Selection<NzSafeAny, NzSafeAny, NzSafeAny, NzSafeAny>;
-  zoomBehavior!: ZoomBehavior<NzSafeAny, NzSafeAny>;
+  svgSelection!: Selection<TriSafeAny, TriSafeAny, TriSafeAny, TriSafeAny>;
+  zoomBehavior!: ZoomBehavior<TriSafeAny, TriSafeAny>;
 
   // TODO
   // Support svg element only now
@@ -71,13 +71,13 @@ export class NzGraphZoomDirective implements AfterViewInit {
         [0, 0],
         [width, height]
       ])
-      .scaleExtent([this.nzMinZoom, this.nzMaxZoom])
+      .scaleExtent([this.minZoom, this.maxZoom])
       .on('zoom', e => {
         this.zoomed(e);
       });
-    this.svgSelection.call(this.zoomBehavior, zoomIdentity.translate(0, 0).scale(this.nzZoom || 1));
+    this.svgSelection.call(this.zoomBehavior, zoomIdentity.translate(0, 0).scale(this.zoom || 1));
     // Init with nzZoom
-    this.reScale(0, this.nzZoom);
+    this.reScale(0, this.zoom);
   }
 
   unbind(): void {
@@ -93,7 +93,7 @@ export class NzGraphZoomDirective implements AfterViewInit {
     this.reScale(duration);
   }
 
-  focus(id: NzSafeAny, duration: number = 0): void {
+  focus(id: TriSafeAny, duration: number = 0): void {
     // Make sure this node is under SVG container
     if (!this.svgElement.getElementById(`${id}`)) {
       return;
@@ -120,13 +120,13 @@ export class NzGraphZoomDirective implements AfterViewInit {
    *
    * @param transform
    */
-  private zoomed({ transform }: NzSafeAny): void {
+  private zoomed({ transform }: TriSafeAny): void {
     const { x, y, k } = transform;
     // Update g element transform
     (this.gZoomElement as SVGGElement).setAttribute('transform', `translate(${x}, ${y})scale(${k})`);
-    this.nzZoom = k;
-    this.nzZoomChange.emit(this.nzZoom);
-    this.nzTransformEvent.emit(transform);
+    this.zoom = k;
+    this.zoomChange.emit(this.zoom);
+    this.transformEvent.emit(transform);
     this.cdr.markForCheck();
   }
 
@@ -143,7 +143,7 @@ export class NzGraphZoomDirective implements AfterViewInit {
       return;
     }
     const { x, y, k } = transform;
-    const zTransform = zoomIdentity.translate(x, y).scale(Math.max(k, this.nzMinZoom));
+    const zTransform = zoomIdentity.translate(x, y).scale(Math.max(k, this.minZoom));
     this.svgSelection
       .transition()
       .duration(duration)

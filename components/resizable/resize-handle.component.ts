@@ -21,11 +21,11 @@ import { merge } from 'rxjs';
 
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 
-import { NzResizableService } from './resizable.service';
+import { TriResizableService } from './resizable.service';
 
-export type NzCursorType = 'window' | 'grid';
+export type TriCursorType = 'window' | 'grid';
 
-export type NzResizeDirection =
+export type TriResizeDirection =
   | 'top'
   | 'right'
   | 'bottom'
@@ -35,9 +35,9 @@ export type NzResizeDirection =
   | 'bottomLeft'
   | 'topLeft';
 
-export class NzResizeHandleMouseDownEvent {
+export class TriResizeHandleMouseDownEvent {
   constructor(
-    public direction: NzResizeDirection,
+    public direction: TriResizeDirection,
     public mouseEvent: MouseEvent | TouchEvent
   ) {}
 }
@@ -45,8 +45,8 @@ export class NzResizeHandleMouseDownEvent {
 const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: true }) as AddEventListenerOptions;
 
 @Component({
-  selector: 'nz-resize-handle, [nz-resize-handle]',
-  exportAs: 'nzResizeHandle',
+  selector: '',
+  exportAs: 'triResizeHandle',
   template: `<ng-content></ng-content>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
@@ -65,18 +65,18 @@ const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: t
     '(pointerup)': 'onPointerUp($event)'
   }
 })
-export class NzResizeHandleComponent implements OnInit {
-  private readonly nzResizableService = inject(NzResizableService);
+export class TriResizeHandleComponent implements OnInit {
+  private readonly resizableService = inject(TriResizableService);
   private readonly renderer = inject(Renderer2);
   private readonly el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
   private readonly destroyRef = inject(DestroyRef);
 
-  @Input() nzDirection: NzResizeDirection = 'bottomRight';
-  @Input() nzCursorType: NzCursorType = 'window';
-  @Output() readonly nzMouseDown = new EventEmitter<NzResizeHandleMouseDownEvent>();
+  @Input() direction: TriResizeDirection = 'bottomRight';
+  @Input() cursorType: TriCursorType = 'window';
+  @Output() readonly mouseDown = new EventEmitter<TriResizeHandleMouseDownEvent>();
 
   ngOnInit(): void {
-    this.nzResizableService.mouseEnteredOutsideAngular$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(entered => {
+    this.resizableService.mouseEnteredOutsideAngular$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(entered => {
       if (entered) {
         this.renderer.addClass(this.el, 'nz-resizable-handle-box-hover');
       } else {
@@ -93,8 +93,8 @@ export class NzResizeHandleComponent implements OnInit {
     )
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(event => {
-        this.nzResizableService.handleMouseDownOutsideAngular$.next(
-          new NzResizeHandleMouseDownEvent(this.nzDirection, event)
+        this.resizableService.handleMouseDownOutsideAngular$.next(
+          new TriResizeHandleMouseDownEvent(this.direction, event)
         );
       });
   }

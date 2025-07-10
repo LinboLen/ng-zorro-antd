@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
-import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
+import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
 
 @Component({
-  selector: 'nz-demo-segmented-block',
-  imports: [NzSegmentedModule],
-  template: `<nz-segmented [nzOptions]="options" [nzBlock]="true"></nz-segmented>`
+  selector: '',
+  imports: [TriSegmentedModule],
+  template: `<tri-segmented [options]="options" [block]="true"></tri-segmented>`
 })
-export class NzDemoSegmentedBlockComponent {
+export class TriDemoSegmentedBlockComponent {
   options = ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly'];
 }

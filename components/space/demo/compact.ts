@@ -1,146 +1,146 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzCascaderModule, NzCascaderOption } from 'ng-zorro-antd/cascader';
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
-import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
-import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
+import { TriAutocompleteModule } from 'ng-zorro-antd/auto-complete';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriCascaderModule, TriCascaderOption } from 'ng-zorro-antd/cascader';
+import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
+import { TriSelectModule } from 'ng-zorro-antd/select';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
+import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
+import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
 @Component({
-  selector: 'nz-demo-space-compact',
+  selector: '',
   imports: [
-    NzSpaceModule,
-    NzButtonModule,
-    NzIconModule,
-    NzInputModule,
-    NzInputNumberModule,
-    NzSelectModule,
-    NzCascaderModule,
-    NzTreeSelectModule,
-    NzDatePickerModule,
-    NzTimePickerModule,
-    NzAutocompleteModule,
-    NzToolTipModule,
+    TriSpaceModule,
+    TriButtonModule,
+    TriIconModule,
+    TriInputModule,
+    TriInputNumberModule,
+    TriSelectModule,
+    TriCascaderModule,
+    TriTreeSelectModule,
+    TriDatePickerModule,
+    TriTimePickerModule,
+    TriAutocompleteModule,
+    TriToolTipModule,
     FormsModule
   ],
   template: `
-    <nz-space-compact nzBlock>
-      <input nz-input value="0571" [style.width.%]="20" />
-      <input nz-input value="26888888" [style.width.%]="30" />
-    </nz-space-compact>
+    <tri-space-compact block>
+      <input tri-input value="0571" [style.width.%]="20" />
+      <input tri-input value="26888888" [style.width.%]="30" />
+    </tri-space-compact>
     <br />
-    <nz-space-compact nzBlock nzSize="small">
-      <input nz-input value="https://ng.ant.design" [style.width]="'calc(100% - 200px)'" />
-      <button nz-button nzType="primary">Submit</button>
-    </nz-space-compact>
+    <tri-space-compact block size="small">
+      <input tri-input value="https://ng.ant.design" [style.width]="'calc(100% - 200px)'" />
+      <button tri-button type="primary">Submit</button>
+    </tri-space-compact>
     <br />
-    <nz-space-compact nzBlock>
-      <input nz-input value="https://ng.ant.design" [style.width]="'calc(100% - 200px)'" />
-      <button nz-button nzType="primary">Submit</button>
-    </nz-space-compact>
+    <tri-space-compact block>
+      <input tri-input value="https://ng.ant.design" [style.width]="'calc(100% - 200px)'" />
+      <button tri-button type="primary">Submit</button>
+    </tri-space-compact>
     <br />
-    <nz-space-compact nzBlock>
-      <input nz-input value="git@github.com:NG-ZORRO/ng-zorro-antd.git" [style.width]="'calc(100% - 200px)'" />
-      <button nz-button nz-tooltip nzTooltipTitle="copy git url">
-        <nz-icon nzType="copy" />
+    <tri-space-compact block>
+      <input tri-input value="git@github.com:NG-ZORRO/ng-zorro-antd.git" [style.width]="'calc(100% - 200px)'" />
+      <button tri-button tri-tooltip tooltipTitle="copy git url">
+        <tri-icon type="copy" />
       </button>
-    </nz-space-compact>
+    </tri-space-compact>
     <br />
-    <nz-space-compact nzBlock>
-      <nz-select ngModel="Zhejianggggg">
-        <nz-option nzLabel="Zhejianggggg" nzValue="Zhejianggggg"></nz-option>
-        <nz-option nzLabel="Jiangsu" nzValue="Jiangsu"></nz-option>
-      </nz-select>
-      <input nz-input value="Xihu District, Hangzhou" [style.width.%]="50" />
-    </nz-space-compact>
+    <tri-space-compact block>
+      <tri-select ngModel="Zhejianggggg">
+        <tri-option label="Zhejianggggg" value="Zhejianggggg"></tri-option>
+        <tri-option label="Jiangsu" value="Jiangsu"></tri-option>
+      </tri-select>
+      <input tri-input value="Xihu District, Hangzhou" [style.width.%]="50" />
+    </tri-space-compact>
     <br />
-    <nz-space-compact nzBlock>
-      <nz-input-group nzSearch [nzAddOnAfter]="addonTmpl" [style.width.%]="30">
-        <input nz-input value="0571" />
+    <tri-space-compact block>
+      <tri-input-group search [addOnAfter]="addonTmpl" [style.width.%]="30">
+        <input tri-input value="0571" />
         <ng-template #addonTmpl>
-          <button nz-button class="ant-input-search-button">
-            <nz-icon nzType="search" />
+          <button tri-button class="tri-input-search-button">
+            <tri-icon type="search" />
           </button>
         </ng-template>
-      </nz-input-group>
-      <nz-input-group nzSearch [nzAddOnAfter]="addonTmpl" [style.width.%]="50">
-        <input nz-input value="26888888" />
+      </tri-input-group>
+      <tri-input-group search [addOnAfter]="addonTmpl" [style.width.%]="50">
+        <input tri-input value="26888888" />
         <ng-template #addonTmpl>
-          <button nz-button class="ant-input-search-button">
-            <nz-icon nzType="search" />
+          <button tri-button class="tri-input-search-button">
+            <tri-icon type="search" />
           </button>
         </ng-template>
-      </nz-input-group>
-      <nz-input-group nzSearch [nzAddOnAfter]="addonTmpl" [style.width.%]="20">
-        <input nz-input value="+1" />
+      </tri-input-group>
+      <tri-input-group search [addOnAfter]="addonTmpl" [style.width.%]="20">
+        <input tri-input value="+1" />
         <ng-template #addonTmpl>
-          <button nz-button class="ant-input-search-button">
-            <nz-icon nzType="search" />
+          <button tri-button class="tri-input-search-button">
+            <tri-icon type="search" />
           </button>
         </ng-template>
-      </nz-input-group>
-    </nz-space-compact>
+      </tri-input-group>
+    </tri-space-compact>
     <br />
-    <nz-space-compact nzBlock>
-      <nz-select nzMode="multiple" [ngModel]="['Zhejianggggg']" [style.width.%]="50">
-        <nz-option nzLabel="Zhejianggggg" nzValue="Zhejianggggg"></nz-option>
-        <nz-option nzLabel="Jiangsu" nzValue="Jiangsu"></nz-option>
-      </nz-select>
-      <input nz-input value="Xihu District, Hangzhou" [style.width.%]="50" />
-    </nz-space-compact>
+    <tri-space-compact block>
+      <tri-select mode="multiple" [ngModel]="['Zhejianggggg']" [style.width.%]="50">
+        <tri-option label="Zhejianggggg" value="Zhejianggggg"></tri-option>
+        <tri-option label="Jiangsu" value="Jiangsu"></tri-option>
+      </tri-select>
+      <input tri-input value="Xihu District, Hangzhou" [style.width.%]="50" />
+    </tri-space-compact>
     <br />
-    <nz-space-compact nzBlock>
-      <nz-select ngModel="Option1">
-        <nz-option nzLabel="Option1" nzValue="Option1"></nz-option>
-        <nz-option nzLabel="Option2" nzValue="Option2"></nz-option>
-      </nz-select>
-      <input nz-input value="input content" [style.width.%]="50" />
-      <nz-input-number [ngModel]="12" />
-    </nz-space-compact>
+    <tri-space-compact block>
+      <tri-select ngModel="Option1">
+        <tri-option label="Option1" value="Option1"></tri-option>
+        <tri-option label="Option2" value="Option2"></tri-option>
+      </tri-select>
+      <input tri-input value="input content" [style.width.%]="50" />
+      <tri-input-number [ngModel]="12" />
+    </tri-space-compact>
     <br />
-    <nz-space-compact nzBlock>
-      <input nz-input value="input content" [style.width.%]="50" />
-      <nz-date-picker [style.width.%]="50" />
-    </nz-space-compact>
+    <tri-space-compact block>
+      <input tri-input value="input content" [style.width.%]="50" />
+      <tri-date-picker [style.width.%]="50" />
+    </tri-space-compact>
     <br />
-    <nz-space-compact nzBlock>
-      <nz-range-picker [style.width.%]="70" />
-      <input nz-input value="input content" [style.width.%]="30" />
-      <button nz-button nzType="primary">查询</button>
-    </nz-space-compact>
+    <tri-space-compact block>
+      <tri-range-picker [style.width.%]="70" />
+      <input tri-input value="input content" [style.width.%]="30" />
+      <button tri-button type="primary">查询</button>
+    </tri-space-compact>
     <br />
-    <nz-space-compact nzBlock>
-      <input nz-input value="input content" [style.width.%]="30" />
-      <nz-range-picker [style.width.%]="70" />
-    </nz-space-compact>
+    <tri-space-compact block>
+      <input tri-input value="input content" [style.width.%]="30" />
+      <tri-range-picker [style.width.%]="70" />
+    </tri-space-compact>
     <br />
-    <nz-space-compact nzBlock>
-      <nz-select ngModel="Option1-1">
-        <nz-option nzLabel="Option1-1" nzValue="Option1-1"></nz-option>
-        <nz-option nzLabel="Option2-1" nzValue="Option2-1"></nz-option>
-      </nz-select>
-      <nz-select ngModel="Option1-2">
-        <nz-option nzLabel="Option1-2" nzValue="Option1-2"></nz-option>
-        <nz-option nzLabel="Option2-2" nzValue="Option2-2"></nz-option>
-      </nz-select>
-    </nz-space-compact>
+    <tri-space-compact block>
+      <tri-select ngModel="Option1-1">
+        <tri-option label="Option1-1" value="Option1-1"></tri-option>
+        <tri-option label="Option2-1" value="Option2-1"></tri-option>
+      </tri-select>
+      <tri-select ngModel="Option1-2">
+        <tri-option label="Option1-2" value="Option1-2"></tri-option>
+        <tri-option label="Option2-2" value="Option2-2"></tri-option>
+      </tri-select>
+    </tri-space-compact>
     <br />
-    <nz-space-compact nzBlock>
-      <nz-select ngModel="1">
-        <nz-option nzLabel="Between" nzValue="1"></nz-option>
-        <nz-option nzLabel="Except" nzValue="2"></nz-option>
-      </nz-select>
-      <input nz-input placeholder="Minimum" style="width: 100px; text-align: center" />
+    <tri-space-compact block>
+      <tri-select ngModel="1">
+        <tri-option label="Between" value="1"></tri-option>
+        <tri-option label="Except" value="2"></tri-option>
+      </tri-select>
+      <input tri-input placeholder="Minimum" style="width: 100px; text-align: center" />
       <input
-        nz-input
+        tri-input
         class="site-input-split"
         style="
           width: 30px;
@@ -151,46 +151,46 @@ import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
         placeholder="~"
         disabled
       />
-      <input nz-input class="site-input-right" style="width: 100px; text-align: center" placeholder="Maximum" />
-    </nz-space-compact>
+      <input tri-input class="site-input-right" style="width: 100px; text-align: center" placeholder="Maximum" />
+    </tri-space-compact>
     <br />
-    <nz-space-compact nzBlock>
-      <nz-select ngModel="Sign Up" [style.width.%]="30">
-        <nz-option nzLabel="Sign Up" nzValue="Sign Up"></nz-option>
-        <nz-option nzLabel="Sign In" nzValue="Sign In"></nz-option>
-      </nz-select>
-      <nz-autocomplete #auto [nzDataSource]="['text 1', 'text 2']" />
-      <input nz-input placeholder="Email" [nzAutocomplete]="auto" [style.width.%]="70" />
-    </nz-space-compact>
+    <tri-space-compact block>
+      <tri-select ngModel="Sign Up" [style.width.%]="30">
+        <tri-option label="Sign Up" value="Sign Up"></tri-option>
+        <tri-option label="Sign In" value="Sign In"></tri-option>
+      </tri-select>
+      <tri-autocomplete #auto [dataSource]="['text 1', 'text 2']" />
+      <input tri-input placeholder="Email" [autocomplete]="auto" [style.width.%]="70" />
+    </tri-space-compact>
     <br />
-    <nz-space-compact nzBlock>
-      <nz-time-picker [style.width.%]="70" />
-      <nz-cascader [nzOptions]="cascaderOptions" nzPlaceholder="Select Address" [style.width.%]="70" />
-    </nz-space-compact>
+    <tri-space-compact block>
+      <tri-time-picker [style.width.%]="70" />
+      <tri-cascader [options]="cascaderOptions" placeholder="Select Address" [style.width.%]="70" />
+    </tri-space-compact>
     <br />
-    <nz-space-compact nzBlock>
-      <nz-tree-select
-        [nzNodes]="nodes"
-        nzShowSearch
-        nzPlaceHolder="Please select"
+    <tri-space-compact block>
+      <tri-tree-select
+        [nodes]="nodes"
+        showSearch
+        placeHolder="Please select"
         ngModel="10010"
-        nzDefaultExpandAll
+        defaultExpandAll
         [style.width.%]="60"
-      ></nz-tree-select>
-      <button nz-button nzType="primary">Submit</button>
-    </nz-space-compact>
+      ></tri-tree-select>
+      <button tri-button type="primary">Submit</button>
+    </tri-space-compact>
     <br />
-    <nz-space-compact nzBlock>
-      <nz-input-group nzAddOnBefore="Http://" nzAddOnAfter=".com" [style.width.%]="50">
-        <input nz-input placeholder="input here" />
-      </nz-input-group>
-      <nz-input-number>
-        <span nzInputPrefix>$</span>
-      </nz-input-number>
-      <nz-input-number>
-        <span nzInputAddonBefore>$</span>
-      </nz-input-number>
-    </nz-space-compact>
+    <tri-space-compact block>
+      <tri-input-group addOnBefore="Http://" addOnAfter=".com" [style.width.%]="50">
+        <input tri-input placeholder="input here" />
+      </tri-input-group>
+      <tri-input-number>
+        <span inputPrefix>$</span>
+      </tri-input-number>
+      <tri-input-number>
+        <span inputAddonBefore>$</span>
+      </tri-input-number>
+    </tri-space-compact>
   `,
   styles: [
     `
@@ -218,8 +218,8 @@ import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
     `
   ]
 })
-export class NzDemoSpaceCompactComponent {
-  cascaderOptions: NzCascaderOption[] = [
+export class TriDemoSpaceCompactComponent {
+  cascaderOptions: TriCascaderOption[] = [
     {
       value: 'zhejiang',
       label: 'Zhejiang',

@@ -18,24 +18,24 @@ import {
   inject
 } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import { CandyDate } from 'ng-zorro-antd/core/time';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { DateHelperService, NzCalendarI18nInterface } from 'ng-zorro-antd/i18n';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { DateHelperService, TriCalendarI18nInterface } from 'ng-zorro-antd/i18n';
 
 import { transCompatFormat } from './lib/util';
 import { PREFIX_CLASS } from './util';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'calendar-footer',
-  imports: [NgTemplateOutlet, NzButtonModule, NzStringTemplateOutletDirective],
+  selector: '',
+  imports: [NgTemplateOutlet, TriButtonModule, TriStringTemplateOutletDirective],
   template: `
     <div class="{{ prefixCls }}-footer">
       @if (extraFooter) {
         <div class="{{ prefixCls }}-footer-extra">
-          <ng-template [nzStringTemplateOutlet]="extraFooter">{{ extraFooter }}</ng-template>
+          <ng-template [stringTemplateOutlet]="extraFooter">{{ extraFooter }}</ng-template>
         </div>
       }
 
@@ -64,10 +64,10 @@ import { PREFIX_CLASS } from './util';
           @if (hasTimePicker) {
             <li class="{{ prefixCls }}-ok">
               <button
-                nz-button
+                tri-button
                 type="button"
-                nzType="primary"
-                nzSize="small"
+                type="primary"
+                size="small"
                 [disabled]="okDisabled"
                 (click)="okDisabled ? null : clickOk.emit()"
               >
@@ -84,7 +84,7 @@ import { PREFIX_CLASS } from './util';
 })
 export class CalendarFooterComponent implements OnChanges {
   private dateHelper = inject(DateHelperService);
-  @Input() locale!: NzCalendarI18nInterface;
+  @Input() locale!: TriCalendarI18nInterface;
   @Input({ transform: booleanAttribute }) showToday: boolean = false;
   @Input({ transform: booleanAttribute }) showNow: boolean = false;
   @Input({ transform: booleanAttribute }) hasTimePicker: boolean = false;
@@ -93,7 +93,7 @@ export class CalendarFooterComponent implements OnChanges {
   @Input({ transform: booleanAttribute }) okDisabled: boolean = false;
   @Input() disabledDate?: (d: Date) => boolean;
   @Input() extraFooter?: TemplateRef<void> | string;
-  @Input() rangeQuickSelector: TemplateRef<NzSafeAny> | null = null;
+  @Input() rangeQuickSelector: TemplateRef<TriSafeAny> | null = null;
 
   @Output() readonly clickOk = new EventEmitter<void>();
   @Output() readonly clickToday = new EventEmitter<CandyDate>();

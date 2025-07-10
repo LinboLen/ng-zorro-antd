@@ -1,22 +1,22 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzMentionModule } from 'ng-zorro-antd/mention';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriMentionModule } from 'ng-zorro-antd/mention';
 
 @Component({
-  selector: 'nz-demo-mention-custom-tag',
-  imports: [FormsModule, NzInputModule, NzMentionModule],
+  selector: '',
+  imports: [FormsModule, TriInputModule, TriMentionModule],
   template: `
-    <nz-mention [nzSuggestions]="webFrameworks" [nzValueWith]="valueWith" (nzOnSelect)="onSelect($event)">
-      <textarea rows="1" placeholder="@someone" nz-input nzMentionTrigger [(ngModel)]="inputValue"></textarea>
-      <ng-container *nzMentionSuggestion="let framework">
+    <tri-mention [suggestions]="webFrameworks" [valueWith]="valueWith" (onSelect)="onSelect($event)">
+      <textarea rows="1" placeholder="@someone" tri-input mentionTrigger [(ngModel)]="inputValue"></textarea>
+      <ng-container *mentionSuggestion="let framework">
         <span>{{ framework.name }} - {{ framework.type }}</span>
       </ng-container>
-    </nz-mention>
+    </tri-mention>
   `
 })
-export class NzDemoMentionCustomTagComponent {
+export class TriDemoMentionCustomTagComponent {
   inputValue?: string;
   webFrameworks = [
     { name: 'React', type: 'JavaScript' },

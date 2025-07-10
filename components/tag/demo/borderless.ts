@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 
 import { presetColors } from 'ng-zorro-antd/core/color';
-import { NzTagModule } from 'ng-zorro-antd/tag';
+import { TriTagModule } from 'ng-zorro-antd/tag';
 
 @Component({
-  selector: 'nz-demo-tag-borderless',
-  imports: [NzTagModule],
+  selector: '',
+  imports: [TriTagModule],
   template: `
     @for (color of tagColors; track color) {
-      <nz-tag [nzColor]="color" [nzBordered]="false">{{ color }}</nz-tag>
+      <tri-tag [color]="color" [bordered]="false">{{ color }}</tri-tag>
     }
   `
 })
-export class NzDemoTagBorderlessComponent {
+export class TriDemoTagBorderlessComponent {
   readonly tagColors = presetColors;
 }

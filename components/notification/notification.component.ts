@@ -7,20 +7,20 @@ import { NgTemplateOutlet } from '@angular/common';
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 
 import { notificationMotion } from 'ng-zorro-antd/core/animation';
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzMNComponent } from 'ng-zorro-antd/message';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriMNComponent } from 'ng-zorro-antd/message';
 
-import { NzNotificationData } from './typings';
+import { TriNotificationData } from './typings';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-notification',
-  exportAs: 'nzNotification',
+  selector: '',
+  exportAs: 'triNotification',
   animations: [notificationMotion],
   template: `
     <div
-      class="ant-notification-notice ant-notification-notice-closable"
+      class="tri-notification-notice tri-notification-notice-closable"
       [style]="instance.options?.nzStyle || null"
       [class]="instance.options?.nzClass || ''"
       [@notificationMotion]="state"
@@ -35,52 +35,52 @@ import { NzNotificationData } from './typings';
           [ngTemplateOutletContext]="{ $implicit: this, data: instance.options?.nzData }"
         />
       } @else {
-        <div class="ant-notification-notice-content">
-          <div class="ant-notification-notice-content">
-            <div [class.ant-notification-notice-with-icon]="instance.type !== 'blank'">
+        <div class="tri-notification-notice-content">
+          <div class="tri-notification-notice-content">
+            <div [class.tri-notification-notice-with-icon]="instance.type !== 'blank'">
               @switch (instance.type) {
                 @case ('success') {
-                  <nz-icon
-                    nzType="check-circle"
-                    class="ant-notification-notice-icon ant-notification-notice-icon-success"
+                  <tri-icon
+                    type="check-circle"
+                    class="tri-notification-notice-icon tri-notification-notice-icon-success"
                   />
                 }
                 @case ('info') {
-                  <nz-icon
-                    nzType="info-circle"
-                    class="ant-notification-notice-icon ant-notification-notice-icon-info"
+                  <tri-icon
+                    type="info-circle"
+                    class="tri-notification-notice-icon tri-notification-notice-icon-info"
                   />
                 }
                 @case ('warning') {
-                  <nz-icon
-                    nzType="exclamation-circle"
-                    class="ant-notification-notice-icon ant-notification-notice-icon-warning"
+                  <tri-icon
+                    type="exclamation-circle"
+                    class="tri-notification-notice-icon tri-notification-notice-icon-warning"
                   />
                 }
                 @case ('error') {
-                  <nz-icon
-                    nzType="close-circle"
-                    class="ant-notification-notice-icon ant-notification-notice-icon-error"
+                  <tri-icon
+                    type="close-circle"
+                    class="tri-notification-notice-icon tri-notification-notice-icon-error"
                   />
                 }
               }
-              <div class="ant-notification-notice-message">
-                <ng-container *nzStringTemplateOutlet="instance.title">
+              <div class="tri-notification-notice-message">
+                <ng-container *stringTemplateOutlet="instance.title">
                   <div [innerHTML]="instance.title"></div>
                 </ng-container>
               </div>
-              <div class="ant-notification-notice-description">
+              <div class="tri-notification-notice-description">
                 <ng-container
-                  *nzStringTemplateOutlet="
+                  *stringTemplateOutlet="
                     instance.content;
-                    context: { $implicit: this, data: instance.options?.nzData }
+                    context: { $implicit:stringTemplateOutletContextdata: instance.options?.nzData }
                   "
                 >
                   <div [innerHTML]="instance.content"></div>
                 </ng-container>
               </div>
               @if (instance.options?.nzButton; as btn) {
-                <span class="ant-notification-notice-btn">
+                <span class="tri-notification-notice-btn">
                   <ng-template [ngTemplateOutlet]="btn" [ngTemplateOutletContext]="{ $implicit: this }" />
                 </span>
               }
@@ -88,23 +88,23 @@ import { NzNotificationData } from './typings';
           </div>
         </div>
       }
-      <a tabindex="0" class="ant-notification-notice-close" (click)="close()">
-        <span class="ant-notification-notice-close-x">
+      <a tabindex="0" class="tri-notification-notice-close" (click)="close()">
+        <span class="tri-notification-notice-close-x">
           @if (instance.options?.nzCloseIcon) {
-            <ng-container *nzStringTemplateOutlet="instance.options?.nzCloseIcon; let closeIcon">
-              <nz-icon [nzType]="closeIcon" />
+            <ng-container *stringTemplateOutlet="instance.options?.nzCloseIcon; let closeIcon">
+              <tri-icon [type]="closeIcon" />
             </ng-container>
           } @else {
-            <nz-icon nzType="close" class="ant-notification-close-icon" />
+            <tri-icon type="close" class="tri-notification-close-icon" />
           }
         </span>
       </a>
     </div>
   `,
-  imports: [NzIconModule, NzOutletModule, NgTemplateOutlet]
+  imports: [TriIconModule, TriOutletModule, NgTemplateOutlet]
 })
-export class NzNotificationComponent extends NzMNComponent {
-  @Input() instance!: Required<NzNotificationData>;
+export class TriNotificationComponent extends TriMNComponent {
+  @Input() instance!: Required<TriNotificationData>;
   @Input() index!: number;
   @Input() placement?: string;
   @Output() readonly destroyed = new EventEmitter<{ id: string; userAction: boolean }>();

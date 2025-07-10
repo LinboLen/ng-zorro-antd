@@ -1,32 +1,32 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 
-import { NzFormatEmitEvent, NzTreeComponent, NzTreeModule, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
+import { TriFormatEmitEvent, TriTreeComponent, TriTreeModule, TriTreeNodeOptions } from 'ng-zorro-antd/tree';
 
 @Component({
-  selector: 'nz-demo-tree-basic',
-  imports: [NzTreeModule],
+  selector: '',
+  imports: [TriTreeModule],
   template: `
-    <nz-tree
+    <tri-tree
       #nzTreeComponent
-      [nzData]="nodes"
-      nzCheckable
-      [nzCheckedKeys]="defaultCheckedKeys"
-      [nzExpandedKeys]="defaultExpandedKeys"
-      [nzSelectedKeys]="defaultSelectedKeys"
-      (nzClick)="nzClick($event)"
-      (nzContextMenu)="nzClick($event)"
-      (nzCheckboxChange)="nzCheck($event)"
-      (nzExpandChange)="nzCheck($event)"
-    ></nz-tree>
+      [data]="nodes"
+      checkable
+      [checkedKeys]="defaultCheckedKeys"
+      [expandedKeys]="defaultExpandedKeys"
+      [selectedKeys]="defaultSelectedKeys"
+      (click)="click($event)"
+      (contextMenu)="click($event)"
+      (checkboxChange)="check($event)"
+      (expandChange)="check($event)"
+    ></tri-tree>
   `
 })
-export class NzDemoTreeBasicComponent implements AfterViewInit {
-  @ViewChild('nzTreeComponent', { static: false }) nzTreeComponent!: NzTreeComponent;
+export class TriDemoTreeBasicComponent implements AfterViewInit {
+  @ViewChild('nzTreeComponent', { static: false }) treeComponent!: TriTreeComponent;
   defaultCheckedKeys = ['10020'];
   defaultSelectedKeys = ['10010'];
   defaultExpandedKeys = ['100', '1001'];
 
-  readonly nodes: NzTreeNodeOptions[] = [
+  readonly nodes: TriTreeNodeOptions[] = [
     {
       title: 'parent 1',
       key: '100',
@@ -52,28 +52,28 @@ export class NzDemoTreeBasicComponent implements AfterViewInit {
     }
   ];
 
-  nzClick(event: NzFormatEmitEvent): void {
+  click(event: TriFormatEmitEvent): void {
     console.log(event);
   }
 
-  nzCheck(event: NzFormatEmitEvent): void {
+  check(event: TriFormatEmitEvent): void {
     console.log(event);
   }
 
   // nzSelectedKeys change
-  nzSelect(keys: string[]): void {
-    console.log(keys, this.nzTreeComponent.getSelectedNodeList());
+  select(keys: string[]): void {
+    console.log(keys, this.treeComponent.getSelectedNodeList());
   }
 
   ngAfterViewInit(): void {
     // get node by key: '10011'
-    console.log(this.nzTreeComponent.getTreeNodeByKey('10011'));
+    console.log(this.treeComponent.getTreeNodeByKey('10011'));
     // use tree methods
     console.log(
-      this.nzTreeComponent.getTreeNodes(),
-      this.nzTreeComponent.getCheckedNodeList(),
-      this.nzTreeComponent.getSelectedNodeList(),
-      this.nzTreeComponent.getExpandedNodeList()
+      this.treeComponent.getTreeNodes(),
+      this.treeComponent.getCheckedNodeList(),
+      this.treeComponent.getSelectedNodeList(),
+      this.treeComponent.getExpandedNodeList()
     );
   }
 }

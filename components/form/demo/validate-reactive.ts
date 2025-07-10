@@ -9,19 +9,19 @@ import {
 import { Observable, Observer, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriFormModule } from 'ng-zorro-antd/form';
+import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: 'nz-demo-form-validate-reactive',
-  imports: [ReactiveFormsModule, NzButtonModule, NzFormModule, NzInputModule],
+  selector: '',
+  imports: [ReactiveFormsModule, TriButtonModule, TriFormModule, TriInputModule],
   template: `
-    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired>Username</nz-form-label>
-        <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="userErrorTpl">
-          <input nz-input formControlName="userName" placeholder="async validate try to write JasonWood" />
+    <form tri-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+      <tri-form-item>
+        <tri-form-label [span]="7" required>Username</tri-form-label>
+        <tri-form-control [span]="12" hasFeedback validatingTip="Validating..." [errorTip]="userErrorTpl">
+          <input tri-input formControlName="userName" placeholder="async validate try to write JasonWood" />
           <ng-template #userErrorTpl let-control>
             @if (control.errors?.['required']) {
               Please input your username!
@@ -30,12 +30,12 @@ import { NzInputModule } from 'ng-zorro-antd/input';
               The username is redundant!
             }
           </ng-template>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired>E-mail</nz-form-label>
-        <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="emailErrorTpl">
-          <input nz-input formControlName="email" placeholder="email" type="email" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [span]="7" required>E-mail</tri-form-label>
+        <tri-form-control [span]="12" hasFeedback [errorTip]="emailErrorTpl">
+          <input tri-input formControlName="email" placeholder="email" type="email" />
           <ng-template #emailErrorTpl let-control>
             @if (control.errors?.['email']) {
               The input is not valid E-mail!
@@ -44,18 +44,18 @@ import { NzInputModule } from 'ng-zorro-antd/input';
               Please input your E-mail!
             }
           </ng-template>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired>Password</nz-form-label>
-        <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="Please input your password!">
-          <input nz-input type="password" formControlName="password" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired>Confirm Password</nz-form-label>
-        <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="passwordErrorTpl">
-          <input nz-input type="password" formControlName="confirm" placeholder="confirm your password" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [span]="7" required>Password</tri-form-label>
+        <tri-form-control [span]="12" hasFeedback errorTip="Please input your password!">
+          <input tri-input type="password" formControlName="password" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [span]="7" required>Confirm Password</tri-form-label>
+        <tri-form-control [span]="12" hasFeedback [errorTip]="passwordErrorTpl">
+          <input tri-input type="password" formControlName="confirm" placeholder="confirm your password" />
           <ng-template #passwordErrorTpl let-control>
             @if (control.errors?.['required']) {
               Please confirm your password!
@@ -64,22 +64,22 @@ import { NzInputModule } from 'ng-zorro-antd/input';
               Password is inconsistent!
             }
           </ng-template>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired>Comment</nz-form-label>
-        <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="Please write something here!">
-          <nz-textarea-count [nzMaxCharacterCount]="2000">
-            <textarea formControlName="comment" nz-input rows="2" placeholder="write any thing"></textarea>
-          </nz-textarea-count>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-control [nzOffset]="7" [nzSpan]="12">
-          <button nz-button nzType="primary" [disabled]="!validateForm.valid">Submit</button>
-          <button nz-button (click)="resetForm($event)">Reset</button>
-        </nz-form-control>
-      </nz-form-item>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [span]="7" required>Comment</tri-form-label>
+        <tri-form-control [span]="12" hasFeedback errorTip="Please write something here!">
+          <tri-textarea-count [maxCharacterCount]="2000">
+            <textarea formControlName="comment" tri-input rows="2" placeholder="write any thing"></textarea>
+          </tri-textarea-count>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-control [offset]="7" [span]="12">
+          <button tri-button type="primary" [disabled]="!validateForm.valid">Submit</button>
+          <button tri-button (click)="resetForm($event)">Reset</button>
+        </tri-form-control>
+      </tri-form-item>
     </form>
   `,
   styles: [
@@ -94,7 +94,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     `
   ]
 })
-export class NzDemoFormValidateReactiveComponent implements OnInit, OnDestroy {
+export class TriDemoFormValidateReactiveComponent implements OnInit, OnDestroy {
   private fb = inject(NonNullableFormBuilder);
   private destroy$ = new Subject<void>();
   validateForm = this.fb.group({

@@ -1,55 +1,55 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzMenuModule } from 'ng-zorro-antd/menu';
-import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { TriDividerModule } from 'ng-zorro-antd/divider';
+import { TriMenuModule } from 'ng-zorro-antd/menu';
+import { TriSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
-  selector: 'nz-demo-menu-switch-mode',
-  imports: [FormsModule, NzDividerModule, NzMenuModule, NzSwitchModule],
+  selector: '',
+  imports: [FormsModule, TriDividerModule, TriMenuModule, TriSwitchModule],
   template: `
-    <nz-switch [(ngModel)]="mode"></nz-switch>
+    <tri-switch [(ngModel)]="mode"></tri-switch>
     Change Mode
-    <nz-divider nzType="vertical"></nz-divider>
-    <nz-switch [(ngModel)]="dark"></nz-switch>
+    <tri-divider type="vertical"></tri-divider>
+    <tri-switch [(ngModel)]="dark"></tri-switch>
     Change Theme
     <br />
     <br />
-    <ul nz-menu [nzMode]="mode ? 'vertical' : 'inline'" [nzTheme]="dark ? 'dark' : 'light'">
-      <li nz-submenu nzTitle="Navigation One" nzIcon="mail">
+    <ul tri-menu [mode]="mode ? 'vertical' : 'inline'" [theme]="dark ? 'dark' : 'light'">
+      <li tri-submenu title="Navigation One" icon="mail">
         <ul>
-          <li nz-menu-group nzTitle="Item 1">
+          <li tri-menu-group title="Item 1">
             <ul>
-              <li nz-menu-item>Option 1</li>
-              <li nz-menu-item>Option 2</li>
+              <li tri-menu-item>Option 1</li>
+              <li tri-menu-item>Option 2</li>
             </ul>
           </li>
-          <li nz-menu-group nzTitle="Item 2">
+          <li tri-menu-group title="Item 2">
             <ul>
-              <li nz-menu-item>Option 3</li>
-              <li nz-menu-item>Option 4</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li nz-submenu nzTitle="Navigation Two" nzIcon="appstore">
-        <ul>
-          <li nz-menu-item>Option 5</li>
-          <li nz-menu-item>Option 6</li>
-          <li nz-submenu nzTitle="Submenu">
-            <ul>
-              <li nz-menu-item>Option 7</li>
-              <li nz-menu-item>Option 8</li>
+              <li tri-menu-item>Option 3</li>
+              <li tri-menu-item>Option 4</li>
             </ul>
           </li>
         </ul>
       </li>
-      <li nz-submenu nzTitle="Navigation Three" nzIcon="setting">
+      <li tri-submenu title="Navigation Two" icon="appstore">
         <ul>
-          <li nz-menu-item>Option 9</li>
-          <li nz-menu-item>Option 10</li>
-          <li nz-menu-item>Option 11</li>
+          <li tri-menu-item>Option 5</li>
+          <li tri-menu-item>Option 6</li>
+          <li tri-submenu title="Submenu">
+            <ul>
+              <li tri-menu-item>Option 7</li>
+              <li tri-menu-item>Option 8</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li tri-submenu title="Navigation Three" icon="setting">
+        <ul>
+          <li tri-menu-item>Option 9</li>
+          <li tri-menu-item>Option 10</li>
+          <li tri-menu-item>Option 11</li>
         </ul>
       </li>
     </ul>
@@ -62,7 +62,7 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
     `
   ]
 })
-export class NzDemoMenuSwitchModeComponent {
+export class TriDemoMenuSwitchModeComponent {
   mode = false;
   dark = false;
 }

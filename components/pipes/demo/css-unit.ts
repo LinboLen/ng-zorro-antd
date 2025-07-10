@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzToCssUnitPipe } from 'ng-zorro-antd/pipes';
-import { NzSliderModule } from 'ng-zorro-antd/slider';
+import { TriToCssUnitPipe } from 'ng-zorro-antd/pipes';
+import { TriSliderModule } from 'ng-zorro-antd/slider';
 
 @Component({
-  selector: 'nz-demo-pipes-css-unit',
-  imports: [FormsModule, NzSliderModule, NzToCssUnitPipe],
+  selector: '',
+  imports: [FormsModule, TriSliderModule, TriToCssUnitPipe],
   template: `
-    <nz-slider [(ngModel)]="radiusValue" [nzMax]="100" [nzMin]="0"></nz-slider>
+    <tri-slider [(ngModel)]="radiusValue" [max]="100" [min]="0"></tri-slider>
 
     <div class="wrap">
       <div class="box" [style.border-radius]="radiusValue | nzToCssUnit">Default</div>
@@ -34,6 +34,6 @@ import { NzSliderModule } from 'ng-zorro-antd/slider';
     `
   ]
 })
-export class NzDemoPipesCssUnitComponent {
+export class TriDemoPipesCssUnitComponent {
   radiusValue = 0;
 }

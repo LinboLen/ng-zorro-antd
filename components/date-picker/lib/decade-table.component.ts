@@ -5,7 +5,7 @@
 
 import { ChangeDetectionStrategy, Component, OnChanges, ViewEncapsulation } from '@angular/core';
 
-import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
+import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 
 import { AbstractTable } from './abstract-table';
 import { DateBodyRow, DateCell, DecadeCell } from './interface';
@@ -17,9 +17,9 @@ const MAX_COL = 3;
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'decade-table',
+  selector: '',
   templateUrl: 'abstract-table.html',
-  imports: [NzStringTemplateOutletDirective]
+  imports: [TriStringTemplateOutletDirective]
 })
 export class DecadeTableComponent extends AbstractTable implements OnChanges {
   get startYear(): number {

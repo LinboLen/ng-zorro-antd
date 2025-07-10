@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzFlexModule } from 'ng-zorro-antd/flex';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { TriFlexModule } from 'ng-zorro-antd/flex';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: 'nz-demo-flex-basic',
-  imports: [FormsModule, NzFlexModule, NzRadioModule],
+  selector: '',
+  imports: [FormsModule, TriFlexModule, TriRadioModule],
   template: `
-    <nz-radio-group [(ngModel)]="isVertical">
-      <label nz-radio [nzValue]="false">horizontal</label>
-      <label nz-radio [nzValue]="true">vertical</label>
-    </nz-radio-group>
+    <tri-radio-group [(ngModel)]="isVertical">
+      <label tri-radio [value]="false">horizontal</label>
+      <label tri-radio [value]="true">vertical</label>
+    </tri-radio-group>
 
-    <div nz-flex [nzVertical]="isVertical">
+    <div tri-flex [vertical]="isVertical">
       <div class="flex-item"></div>
       <div class="flex-item even"></div>
       <div class="flex-item"></div>
@@ -38,6 +38,6 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
     `
   ]
 })
-export class NzDemoFlexBasicComponent {
+export class TriDemoFlexBasicComponent {
   isVertical = false;
 }

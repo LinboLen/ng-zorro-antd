@@ -6,7 +6,7 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-  selector: 'button[nz-trans-button]',
+  selector: '',
   host: {
     '[style.border]': '"0"',
     '[style.background]': '"transparent"',
@@ -14,4 +14,4 @@ import { Directive } from '@angular/core';
     '[style.line-height]': '"inherit"'
   }
 })
-export class NzTransButtonDirective {}
+export class TriTransButtonDirective {}

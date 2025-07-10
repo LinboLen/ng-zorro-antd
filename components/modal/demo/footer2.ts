@@ -1,42 +1,42 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzModalModule, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriModalModule, TriModalRef, TriModalService } from 'ng-zorro-antd/modal';
 
 @Component({
-  selector: 'nz-demo-modal-footer2',
-  imports: [NzButtonModule, NzModalModule],
+  selector: '',
+  imports: [TriButtonModule, TriModalModule],
   template: `
-    <button nz-button nzType="primary" (click)="showModal1()">
+    <button tri-button type="primary" (click)="showModal1()">
       <span>In Template</span>
     </button>
     <br />
     <br />
-    <button nz-button nzType="primary" (click)="showModal2()">
+    <button tri-button type="primary" (click)="showModal2()">
       <span>In Component</span>
     </button>
-    <nz-modal [(nzVisible)]="isVisible" nzTitle="Custom Modal Title" (nzOnCancel)="handleCancel()">
-      <div *nzModalContent>
+    <tri-modal [(visibleChange)]="isVisible" title="Custom Modal Title" (onCancel)="handleCancel()">
+      <div *modalContent>
         <p>Modal Content</p>
         <p>Modal Content</p>
         <p>Modal Content</p>
         <p>Modal Content</p>
         <p>Modal Content</p>
       </div>
-      <div *nzModalFooter>
+      <div *modalFooter>
         <span>Modal Footer:</span>
-        <button nz-button nzType="default" (click)="handleCancel()">Custom Callback</button>
-        <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">Custom Submit</button>
+        <button tri-button type="default" (click)="handleCancel()">Custom Callback</button>
+        <button tri-button type="primary" (click)="handleOk()" [loading]="isConfirmLoading">Custom Submit</button>
       </div>
-    </nz-modal>
+    </tri-modal>
   `,
   styles: []
 })
-export class NzDemoModalFooter2Component {
+export class TriDemoModalFooter2Component {
   isVisible = false;
   isConfirmLoading = false;
 
-  constructor(private modalService: NzModalService) {}
+  constructor(private modalService: TriModalService) {}
 
   showModal1(): void {
     this.isVisible = true;
@@ -44,8 +44,8 @@ export class NzDemoModalFooter2Component {
 
   showModal2(): void {
     this.modalService.create({
-      nzTitle: 'Modal Title',
-      nzContent: NzModalCustomFooterComponent
+      title: 'Modal Title',
+      content: TriModalCustomFooterComponent
     });
   }
 
@@ -63,8 +63,8 @@ export class NzDemoModalFooter2Component {
 }
 
 @Component({
-  selector: 'nz-modal-custom-footer-component',
-  imports: [NzButtonModule, NzModalModule],
+  selector: '',
+  imports: [TriButtonModule, TriModalModule],
   template: `
     <div>
       <p>Modal Content</p>
@@ -73,14 +73,14 @@ export class NzDemoModalFooter2Component {
       <p>Modal Content</p>
       <p>Modal Content</p>
     </div>
-    <div *nzModalFooter>
-      <button nz-button nzType="default" (click)="destroyModal()">Custom Callback</button>
-      <button nz-button nzType="primary" (click)="destroyModal()">Custom Submit</button>
+    <div *modalFooter>
+      <button tri-button type="default" (click)="destroyModal()">Custom Callback</button>
+      <button tri-button type="primary" (click)="destroyModal()">Custom Submit</button>
     </div>
   `
 })
-export class NzModalCustomFooterComponent {
-  constructor(private modal: NzModalRef) {}
+export class TriModalCustomFooterComponent {
+  constructor(private modal: TriModalRef) {}
 
   destroyModal(): void {
     this.modal.destroy();

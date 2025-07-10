@@ -9,7 +9,7 @@ export type DisabledDateFn = (d: Date) => boolean;
 
 export type DisabledTimePartial = 'start' | 'end';
 
-export type NzDateMode = 'decade' | 'year' | 'quarter' | 'month' | 'week' | 'date' | 'time';
+export type TriDateMode = 'decade' | 'year' | 'quarter' | 'month' | 'week' | 'date' | 'time';
 
 export type RangePartType = 'left' | 'right';
 
@@ -17,10 +17,10 @@ export type CompatibleDate = Date | Date[];
 
 export type DisabledTimeFn = (current: Date | Date[], partial?: DisabledTimePartial) => DisabledTimeConfig | undefined;
 
-export type NzPanelChangeType =
-  | { mode: NzDateMode; date: Date }
+export type TriPanelChangeType =
+  | { mode: TriDateMode; date: Date }
   | {
-      mode: [startMode: NzDateMode, endMode: NzDateMode];
+      mode: [startMode: TriDateMode, endMode: TriDateMode];
       date: [startDate: Date, endDate: Date];
     };
 

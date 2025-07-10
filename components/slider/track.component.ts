@@ -14,7 +14,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-export interface NzSliderTrackStyle {
+export interface TriSliderTrackStyle {
   bottom?: string | null;
   height?: string | null;
   left?: string | null;
@@ -24,13 +24,13 @@ export interface NzSliderTrackStyle {
 }
 
 @Component({
-  selector: 'nz-slider-track',
-  exportAs: 'nzSliderTrack',
-  template: `<div class="ant-slider-track" [style]="style"></div>`,
+  selector: '',
+  exportAs: 'triSliderTrack',
+  template: `<div class="tri-slider-track" [style]="style"></div>`,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NzSliderTrackComponent implements OnChanges {
+export class TriSliderTrackComponent implements OnChanges {
   @Input({ transform: numberAttribute }) offset: number = 0;
   @Input({ transform: booleanAttribute }) reverse: boolean = false;
   @Input() dir: Direction = 'ltr';
@@ -38,7 +38,7 @@ export class NzSliderTrackComponent implements OnChanges {
   @Input({ transform: booleanAttribute }) vertical = false;
   @Input({ transform: booleanAttribute }) included = false;
 
-  style: NzSliderTrackStyle = {};
+  style: TriSliderTrackStyle = {};
 
   ngOnChanges(): void {
     const visibility = this.included ? 'visible' : 'hidden';

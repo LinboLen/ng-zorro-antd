@@ -9,7 +9,7 @@ export * from './carousel-content.directive';
 export * from './typings';
 
 export * from './strategies/base-strategy';
-export { NzCarouselOpacityStrategy } from './strategies/opacity-strategy';
-export { NzCarouselTransformStrategy } from './strategies/transform-strategy';
-export { NzCarouselTransformNoLoopStrategy } from './strategies/experimental/transform-no-loop-strategy';
-export { NzCarouselFlipStrategy } from './strategies/experimental/flip-strategy';
+export { TriCarouselOpacityStrategy } from './strategies/opacity-strategy';
+export { TriCarouselTransformStrategy } from './strategies/transform-strategy';
+export { TriCarouselTransformNoLoopStrategy } from './strategies/experimental/transform-no-loop-strategy';
+export { TriCarouselFlipStrategy } from './strategies/experimental/flip-strategy';

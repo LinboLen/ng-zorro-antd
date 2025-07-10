@@ -1,23 +1,23 @@
 import { Component } from '@angular/core';
 
-import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { TriDescriptionsModule } from 'ng-zorro-antd/descriptions';
 
 @Component({
-  selector: 'nz-demo-descriptions-responsive',
-  imports: [NzDescriptionsModule],
+  selector: '',
+  imports: [TriDescriptionsModule],
   template: `
-    <nz-descriptions
-      nzTitle="Responsive Descriptions"
-      nzBordered
-      [nzColumn]="{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }"
+    <tri-descriptions
+      title="Responsive Descriptions"
+      bordered
+      [column]="{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }"
     >
-      <nz-descriptions-item nzTitle="Product">Cloud Database</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Billing">Prepaid</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="time">18:00:00</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Amount">$80.00</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Discount">$20.00</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Official">$60.00</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Config Info">
+      <tri-descriptions-item title="Product">Cloud Database</tri-descriptions-item>
+      <tri-descriptions-item title="Billing">Prepaid</tri-descriptions-item>
+      <tri-descriptions-item title="time">18:00:00</tri-descriptions-item>
+      <tri-descriptions-item title="Amount">$80.00</tri-descriptions-item>
+      <tri-descriptions-item title="Discount">$20.00</tri-descriptions-item>
+      <tri-descriptions-item title="Official">$60.00</tri-descriptions-item>
+      <tri-descriptions-item title="Config Info">
         Data disk type: MongoDB
         <br />
         Database version: 3.4
@@ -30,8 +30,8 @@ import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
         <br />
         Region: East China 1
         <br />
-      </nz-descriptions-item>
-    </nz-descriptions>
+      </tri-descriptions-item>
+    </tri-descriptions>
   `
 })
-export class NzDemoDescriptionsResponsiveComponent {}
+export class TriDemoDescriptionsResponsiveComponent {}

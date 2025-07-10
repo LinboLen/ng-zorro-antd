@@ -4,21 +4,21 @@ import { FormsModule } from '@angular/forms';
 
 import { parseExpression } from 'cron-parser';
 
-import { NzCronExpressionModule } from 'ng-zorro-antd/cron-expression';
+import { TriCronExpressionModule } from 'ng-zorro-antd/cron-expression';
 
 @Component({
-  selector: 'nz-demo-cron-expression-semantic',
-  imports: [FormsModule, NzCronExpressionModule, DatePipe],
+  selector: '',
+  imports: [FormsModule, TriCronExpressionModule, DatePipe],
   template: `
-    <nz-cron-expression
-      [nzSemantic]="semanticTemplate"
+    <tri-cron-expression
+      [semantic]="semanticTemplate"
       [ngModel]="value"
       (ngModelChange)="getValue($event)"
-    ></nz-cron-expression>
+    ></tri-cron-expression>
     <ng-template #semanticTemplate>Next Time: {{ semantic | date: 'yyyy-MM-dd HH:mm:ss' }}</ng-template>
   `
 })
-export class NzDemoCronExpressionSemanticComponent {
+export class TriDemoCronExpressionSemanticComponent {
   value: string = '10 * * * *';
   semantic?: Date;
 

@@ -21,10 +21,10 @@ import {
 
 import { curveBasis, curveLinear, line } from 'd3-shape';
 
-import { NzGraphEdge, NzGraphEdgeType } from './interface';
+import { TriGraphEdge, NzGraphEdgeType } from './interface';
 
 @Component({
-  selector: '[nz-graph-edge]',
+  selector: '',
   template: `
     @if (customTemplate) {
       <ng-container [ngTemplateOutlet]="customTemplate" [ngTemplateOutletContext]="{ $implicit: edge }" />
@@ -42,14 +42,14 @@ import { NzGraphEdge, NzGraphEdgeType } from './interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgTemplateOutlet]
 })
-export class NzGraphEdgeComponent implements OnInit, OnChanges {
+export class TriGraphEdgeComponent implements OnInit, OnChanges {
   private injector = inject(Injector);
   private cdr = inject(ChangeDetectorRef);
-  @Input() edge!: NzGraphEdge;
+  @Input() edge!: TriGraphEdge;
   @Input() edgeType?: NzGraphEdgeType | string;
 
   @Input() customTemplate?: TemplateRef<{
-    $implicit: NzGraphEdge;
+    $implicit: TriGraphEdge;
   }>;
 
   public get id(): string {

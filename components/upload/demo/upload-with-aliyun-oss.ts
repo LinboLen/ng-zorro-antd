@@ -1,31 +1,31 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzUploadChangeParam, NzUploadFile, NzUploadModule } from 'ng-zorro-antd/upload';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriUploadChangeParam, TriUploadFile, TriUploadModule } from 'ng-zorro-antd/upload';
 
 @Component({
-  selector: 'nz-demo-upload-upload-with-aliyun-oss',
-  imports: [NzButtonModule, NzIconModule, NzUploadModule],
+  selector: '',
+  imports: [TriButtonModule, TriIconModule, TriUploadModule],
   template: `
-    <nz-upload
-      nzName="file"
-      [(nzFileList)]="files"
-      [nzTransformFile]="transformFile"
-      [nzData]="getExtraData"
-      [nzAction]="mockOSSData.host"
-      (nzChange)="onChange($event)"
+    <tri-upload
+      name="file"
+      [(fileListChange)]="files"
+      [transformFile]="transformFile"
+      [data]="getExtraData"
+      [action]="mockOSSData.host"
+      (change)="onChange($event)"
     >
       Photos:
-      <button nz-button>
-        <nz-icon nzType="upload" />
+      <button tri-button>
+        <tri-icon type="upload" />
         Click to Upload
       </button>
-    </nz-upload>
+    </tri-upload>
   `
 })
-export class NzDemoUploadUploadWithAliyunOssComponent {
-  files: NzUploadFile[] = [];
+export class TriDemoUploadUploadWithAliyunOssComponent {
+  files: TriUploadFile[] = [];
   mockOSSData = {
     dir: 'user-dir/',
     expire: '1577811661',
@@ -35,14 +35,14 @@ export class NzDemoUploadUploadWithAliyunOssComponent {
     signature: 'ZGFob25nc2hhbw=='
   };
 
-  transformFile = (file: NzUploadFile): NzUploadFile => {
+  transformFile = (file: TriUploadFile): TriUploadFile => {
     const suffix = file.name.slice(file.name.lastIndexOf('.'));
     const filename = Date.now() + suffix;
     file.url = this.mockOSSData.dir + filename;
     return file;
   };
 
-  getExtraData = (file: NzUploadFile): {} => {
+  getExtraData = (file: TriUploadFile): {} => {
     const { accessId, policy, signature } = this.mockOSSData;
 
     return {
@@ -53,7 +53,7 @@ export class NzDemoUploadUploadWithAliyunOssComponent {
     };
   };
 
-  onChange(e: NzUploadChangeParam): void {
+  onChange(e: TriUploadChangeParam): void {
     console.log('Aliyun OSS:', e.fileList);
   }
 }

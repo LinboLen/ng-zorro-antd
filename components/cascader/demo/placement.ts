@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 
-import { NzCascaderModule, NzCascaderOption, NzCascaderPlacement } from 'ng-zorro-antd/cascader';
-import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
+import { TriCascaderModule, TriCascaderOption, TriCascaderPlacement } from 'ng-zorro-antd/cascader';
+import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
 
-const options: NzCascaderOption[] = [
+const options: TriCascaderOption[] = [
   {
     value: 'zhejiang',
     label: 'Zhejiang',
@@ -46,21 +46,21 @@ const options: NzCascaderOption[] = [
 ];
 
 @Component({
-  selector: 'nz-demo-cascader-placement',
-  imports: [NzCascaderModule, NzSegmentedModule],
+  selector: '',
+  imports: [TriCascaderModule, TriSegmentedModule],
   template: `
-    <nz-segmented [nzOptions]="placements" (nzValueChange)="setPlacement($event)"></nz-segmented>
+    <tri-segmented [options]="placements" (valueChange)="setPlacement($event)"></tri-segmented>
     <br />
     <br />
-    <nz-cascader [nzOptions]="nzOptions" [nzPlacement]="placement"></nz-cascader>
+    <tri-cascader [options]="options" [placement]="placement"></tri-cascader>
   `
 })
-export class NzDemoCascaderPlacementComponent {
-  nzOptions: NzCascaderOption[] = options;
-  placement: NzCascaderPlacement = 'topLeft';
-  readonly placements: NzCascaderPlacement[] = ['topLeft', 'topRight', 'bottomLeft', 'bottomRight'];
+export class TriDemoCascaderPlacementComponent {
+  options: TriCascaderOption[] = options;
+  placement: TriCascaderPlacement = 'topLeft';
+  readonly placements: TriCascaderPlacement[] = ['topLeft', 'topRight', 'bottomLeft', 'bottomRight'];
 
   setPlacement(placement: string | number): void {
-    this.placement = placement as NzCascaderPlacement;
+    this.placement = placement as TriCascaderPlacement;
   }
 }

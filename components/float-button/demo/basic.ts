@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 
-import { NzFloatButtonModule } from 'ng-zorro-antd/float-button';
+import { TriFloatButtonModule } from 'ng-zorro-antd/float-button';
 
 @Component({
-  selector: 'nz-demo-float-button-basic',
-  imports: [NzFloatButtonModule],
+  selector: '',
+  imports: [TriFloatButtonModule],
   template: `
     <div class="basic">
-      <nz-float-button></nz-float-button>
+      <tri-float-button></tri-float-button>
     </div>
   `,
   styles: [
@@ -22,4 +22,4 @@ import { NzFloatButtonModule } from 'ng-zorro-antd/float-button';
     `
   ]
 })
-export class NzDemoFloatButtonBasicComponent {}
+export class TriDemoFloatButtonBasicComponent {}

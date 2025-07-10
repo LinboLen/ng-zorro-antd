@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 
-import { NzCarouselModule } from 'ng-zorro-antd/carousel';
+import { TriCarouselModule } from 'ng-zorro-antd/carousel';
 
 @Component({
-  selector: 'nz-demo-carousel-fade',
-  imports: [NzCarouselModule],
+  selector: '',
+  imports: [TriCarouselModule],
   template: `
-    <nz-carousel [nzEffect]="'fade'">
+    <tri-carousel [effect]="'fade'">
       @for (index of array; track index) {
-        <div nz-carousel-content>
+        <div tri-carousel-content>
           <h3>{{ index }}</h3>
         </div>
       }
-    </nz-carousel>
+    </tri-carousel>
   `,
   styles: [
     `
@@ -33,6 +33,6 @@ import { NzCarouselModule } from 'ng-zorro-antd/carousel';
     `
   ]
 })
-export class NzDemoCarouselFadeComponent {
+export class TriDemoCarouselFadeComponent {
   array = [1, 2, 3, 4];
 }

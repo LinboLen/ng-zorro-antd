@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 
-import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
+import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
 
 @Component({
-  selector: 'nz-demo-segmented-size',
-  imports: [NzSegmentedModule],
+  selector: '',
+  imports: [TriSegmentedModule],
   template: `
-    <nz-segmented [nzOptions]="options" nzSize="small"></nz-segmented>
+    <tri-segmented [options]="options" size="small"></tri-segmented>
     <br />
-    <nz-segmented [nzOptions]="options"></nz-segmented>
+    <tri-segmented [options]="options"></tri-segmented>
     <br />
-    <nz-segmented [nzOptions]="options" nzSize="large"></nz-segmented>
+    <tri-segmented [options]="options" size="large"></tri-segmented>
   `,
   styles: [
     `
@@ -20,6 +20,6 @@ import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
     `
   ]
 })
-export class NzDemoSegmentedSizeComponent {
+export class TriDemoSegmentedSizeComponent {
   options = ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly'];
 }

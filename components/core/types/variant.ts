@@ -3,4 +3,4 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export type NzVariant = 'outlined' | 'filled' | 'borderless' | 'underlined';
+export type TriVariant = 'outlined' | 'filled' | 'borderless' | 'underlined';

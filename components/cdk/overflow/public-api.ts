@@ -3,8 +3,8 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export { NzOverflowModule } from './overflow.module';
-export { NzOverflowContainerComponent } from './overflow-container.component';
-export { NzOverflowItemDirective } from './overflow-item.directive';
-export { NzOverflowRestDirective } from './overflow-rest.directive';
-export { NzOverflowSuffixDirective } from './overflow-suffix.directive';
+export { TriOverflowModule } from './overflow.module';
+export { TriOverflowContainerComponent } from './overflow-container.component';
+export { TriOverflowItemDirective } from './overflow-item.directive';
+export { TriOverflowRestDirective } from './overflow-rest.directive';
+export { TriOverflowSuffixDirective } from './overflow-suffix.directive';

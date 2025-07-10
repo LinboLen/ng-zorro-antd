@@ -1,37 +1,37 @@
 import { Component } from '@angular/core';
 
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-demo-dropdown-sub-menu',
-  imports: [NzDropDownModule, NzIconModule],
+  selector: '',
+  imports: [TriDropDownModule, TriIconModule],
   template: `
-    <a nz-dropdown [nzDropdownMenu]="menu" (nzVisibleChange)="change($event)">
+    <a tri-dropdown [dropdownMenu]="menu" (visibleChange)="change($event)">
       Cascading menu
-      <nz-icon nzType="down" />
+      <tri-icon type="down" />
     </a>
-    <nz-dropdown-menu #menu="nzDropdownMenu">
-      <ul nz-menu>
-        <li nz-menu-item>1st menu item</li>
-        <li nz-menu-item>2nd menu item</li>
-        <li nz-submenu nzTitle="sub menu">
+    <tri-dropdown-menu #menu="nzDropdownMenu">
+      <ul tri-menu>
+        <li tri-menu-item>1st menu item</li>
+        <li tri-menu-item>2nd menu item</li>
+        <li tri-submenu title="sub menu">
           <ul>
-            <li nz-menu-item>3rd menu item</li>
-            <li nz-menu-item>4th menu item</li>
+            <li tri-menu-item>3rd menu item</li>
+            <li tri-menu-item>4th menu item</li>
           </ul>
         </li>
-        <li nz-submenu nzDisabled nzTitle="disabled sub menu">
+        <li tri-submenu disabled title="disabled sub menu">
           <ul>
-            <li nz-menu-item>3rd menu item</li>
-            <li nz-menu-item>4th menu item</li>
+            <li tri-menu-item>3rd menu item</li>
+            <li tri-menu-item>4th menu item</li>
           </ul>
         </li>
       </ul>
-    </nz-dropdown-menu>
+    </tri-dropdown-menu>
   `
 })
-export class NzDemoDropdownSubMenuComponent {
+export class TriDemoDropdownSubMenuComponent {
   change(value: boolean): void {
     console.log(value);
   }

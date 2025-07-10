@@ -9,10 +9,10 @@ import { Subject } from 'rxjs';
 
 import { NotificationConfig, onConfigChangeEventForComponent } from 'ng-zorro-antd/core/config';
 import { toCssPixel } from 'ng-zorro-antd/core/util';
-import { NzMNContainerComponent } from 'ng-zorro-antd/message';
+import { TriMNContainerComponent } from 'ng-zorro-antd/message';
 
-import { NzNotificationComponent } from './notification.component';
-import { NzNotificationData, NzNotificationDataOptions, NzNotificationPlacement } from './typings';
+import { TriNotificationComponent } from './notification.component';
+import { TriNotificationData, TriNotificationDataOptions, TriNotificationPlacement } from './typings';
 
 const NZ_CONFIG_MODULE_NAME = 'notification';
 
@@ -30,17 +30,17 @@ const NZ_NOTIFICATION_DEFAULT_CONFIG: Required<NotificationConfig> = {
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-notification-container',
-  exportAs: 'nzNotificationContainer',
+  selector: '',
+  exportAs: 'triNotificationContainer',
   template: `
     <div
-      class="ant-notification ant-notification-topLeft"
-      [class.ant-notification-rtl]="dir === 'rtl'"
+      class="tri-notification tri-notification-topLeft"
+      [class.tri-notification-rtl]="dir === 'rtl'"
       [style.top]="top"
       [style.left]="'0px'"
     >
       @for (instance of topLeftInstances; track instance) {
-        <nz-notification
+        <tri-notification
           [instance]="instance"
           [placement]="'topLeft'"
           (destroyed)="remove($event.id, $event.userAction)"
@@ -48,13 +48,13 @@ const NZ_NOTIFICATION_DEFAULT_CONFIG: Required<NotificationConfig> = {
       }
     </div>
     <div
-      class="ant-notification ant-notification-topRight"
-      [class.ant-notification-rtl]="dir === 'rtl'"
+      class="tri-notification tri-notification-topRight"
+      [class.tri-notification-rtl]="dir === 'rtl'"
       [style.top]="top"
       [style.right]="'0px'"
     >
       @for (instance of topRightInstances; track instance) {
-        <nz-notification
+        <tri-notification
           [instance]="instance"
           [placement]="'topRight'"
           (destroyed)="remove($event.id, $event.userAction)"
@@ -62,13 +62,13 @@ const NZ_NOTIFICATION_DEFAULT_CONFIG: Required<NotificationConfig> = {
       }
     </div>
     <div
-      class="ant-notification ant-notification-bottomLeft"
-      [class.ant-notification-rtl]="dir === 'rtl'"
+      class="tri-notification tri-notification-bottomLeft"
+      [class.tri-notification-rtl]="dir === 'rtl'"
       [style.bottom]="bottom"
       [style.left]="'0px'"
     >
       @for (instance of bottomLeftInstances; track instance) {
-        <nz-notification
+        <tri-notification
           [instance]="instance"
           [placement]="'bottomLeft'"
           (destroyed)="remove($event.id, $event.userAction)"
@@ -76,13 +76,13 @@ const NZ_NOTIFICATION_DEFAULT_CONFIG: Required<NotificationConfig> = {
       }
     </div>
     <div
-      class="ant-notification ant-notification-bottomRight"
-      [class.ant-notification-rtl]="dir === 'rtl'"
+      class="tri-notification tri-notification-bottomRight"
+      [class.tri-notification-rtl]="dir === 'rtl'"
       [style.bottom]="bottom"
       [style.right]="'0px'"
     >
       @for (instance of bottomRightInstances; track instance) {
-        <nz-notification
+        <tri-notification
           [instance]="instance"
           [placement]="'bottomRight'"
           (destroyed)="remove($event.id, $event.userAction)"
@@ -90,25 +90,25 @@ const NZ_NOTIFICATION_DEFAULT_CONFIG: Required<NotificationConfig> = {
       }
     </div>
     <div
-      class="ant-notification ant-notification-top"
-      [class.ant-notification-rtl]="dir === 'rtl'"
+      class="tri-notification tri-notification-top"
+      [class.tri-notification-rtl]="dir === 'rtl'"
       [style.top]="top"
       [style.left]="'50%'"
       [style.transform]="'translateX(-50%)'"
     >
       @for (instance of topInstances; track instance) {
-        <nz-notification [instance]="instance" [placement]="'top'" (destroyed)="remove($event.id, $event.userAction)" />
+        <tri-notification [instance]="instance" [placement]="'top'" (destroyed)="remove($event.id, $event.userAction)" />
       }
     </div>
     <div
-      class="ant-notification ant-notification-bottom"
-      [class.ant-notification-rtl]="dir === 'rtl'"
+      class="tri-notification tri-notification-bottom"
+      [class.tri-notification-rtl]="dir === 'rtl'"
       [style.bottom]="bottom"
       [style.left]="'50%'"
       [style.transform]="'translateX(-50%)'"
     >
       @for (instance of bottomInstances; track instance) {
-        <nz-notification
+        <tri-notification
           [instance]="instance"
           [placement]="'bottom'"
           (destroyed)="remove($event.id, $event.userAction)"
@@ -116,29 +116,29 @@ const NZ_NOTIFICATION_DEFAULT_CONFIG: Required<NotificationConfig> = {
       }
     </div>
   `,
-  imports: [NzNotificationComponent]
+  imports: [TriNotificationComponent]
 })
-export class NzNotificationContainerComponent extends NzMNContainerComponent<NotificationConfig, NzNotificationData> {
-  dir: Direction = this.nzConfigService.getConfigForComponent(NZ_CONFIG_MODULE_NAME)?.nzDirection || 'ltr';
+export class TriNotificationContainerComponent extends TriMNContainerComponent<NotificationConfig, TriNotificationData> {
+  dir: Direction = this.configService.getConfigForComponent(NZ_CONFIG_MODULE_NAME)?.nzDirection || 'ltr';
   bottom?: string | null;
   top?: string | null;
-  topLeftInstances: Array<Required<NzNotificationData>> = [];
-  topRightInstances: Array<Required<NzNotificationData>> = [];
-  bottomLeftInstances: Array<Required<NzNotificationData>> = [];
-  bottomRightInstances: Array<Required<NzNotificationData>> = [];
-  topInstances: Array<Required<NzNotificationData>> = [];
-  bottomInstances: Array<Required<NzNotificationData>> = [];
+  topLeftInstances: Array<Required<TriNotificationData>> = [];
+  topRightInstances: Array<Required<TriNotificationData>> = [];
+  bottomLeftInstances: Array<Required<TriNotificationData>> = [];
+  bottomRightInstances: Array<Required<TriNotificationData>> = [];
+  topInstances: Array<Required<TriNotificationData>> = [];
+  bottomInstances: Array<Required<TriNotificationData>> = [];
 
   constructor() {
     super();
     this.updateConfig();
   }
 
-  override create(notification: NzNotificationData): Required<NzNotificationData> {
+  override create(notification: TriNotificationData): Required<TriNotificationData> {
     const instance = this.onCreate(notification);
     const key = instance.options.nzKey;
     const notificationWithSameKey = this.instances.find(
-      msg => msg.options.nzKey === (notification.options as Required<NzNotificationDataOptions>).nzKey
+      msg => msg.options.nzKey === (notification.options as Required<TriNotificationDataOptions>).nzKey
     );
     if (key && notificationWithSameKey) {
       this.replaceNotification(notificationWithSameKey, instance);
@@ -154,17 +154,17 @@ export class NzNotificationContainerComponent extends NzMNContainerComponent<Not
     return instance;
   }
 
-  protected override onCreate(instance: NzNotificationData): Required<NzNotificationData> {
+  protected override onCreate(instance: TriNotificationData): Required<TriNotificationData> {
     instance.options = this.mergeOptions(instance.options);
     instance.onClose = new Subject<boolean>();
     instance.onClick = new Subject<MouseEvent>();
-    return instance as Required<NzNotificationData>;
+    return instance as Required<TriNotificationData>;
   }
 
   protected subscribeConfigChange(): void {
     onConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME, () => {
       this.updateConfig();
-      this.dir = this.nzConfigService.getConfigForComponent(NZ_CONFIG_MODULE_NAME)?.nzDirection || this.dir;
+      this.dir = this.configService.getConfigForComponent(NZ_CONFIG_MODULE_NAME)?.nzDirection || this.dir;
     });
   }
 
@@ -172,7 +172,7 @@ export class NzNotificationContainerComponent extends NzMNContainerComponent<Not
     this.config = {
       ...NZ_NOTIFICATION_DEFAULT_CONFIG,
       ...this.config,
-      ...this.nzConfigService.getConfigForComponent(NZ_CONFIG_MODULE_NAME)
+      ...this.configService.getConfigForComponent(NZ_CONFIG_MODULE_NAME)
     };
 
     this.top = toCssPixel(this.config.nzTop!);
@@ -181,7 +181,7 @@ export class NzNotificationContainerComponent extends NzMNContainerComponent<Not
     this.cdr.markForCheck();
   }
 
-  private replaceNotification(old: NzNotificationData, _new: NzNotificationData): void {
+  private replaceNotification(old: TriNotificationData, _new: TriNotificationData): void {
     old.title = _new.title;
     old.content = _new.content;
     old.template = _new.template;
@@ -190,7 +190,7 @@ export class NzNotificationContainerComponent extends NzMNContainerComponent<Not
   }
 
   protected override readyInstances(): void {
-    const instancesMap: Record<NzNotificationPlacement, Array<Required<NzNotificationData>>> = {
+    const instancesMap: Record<TriNotificationPlacement, Array<Required<TriNotificationData>>> = {
       topLeft: [],
       topRight: [],
       bottomLeft: [],
@@ -233,7 +233,7 @@ export class NzNotificationContainerComponent extends NzMNContainerComponent<Not
     this.cdr.detectChanges();
   }
 
-  protected override mergeOptions(options?: NzNotificationDataOptions): NzNotificationDataOptions {
+  protected override mergeOptions(options?: TriNotificationDataOptions): TriNotificationDataOptions {
     const { nzDuration, nzAnimate, nzPauseOnHover, nzPlacement } = this.config!;
     return { nzDuration, nzAnimate, nzPauseOnHover, nzPlacement, ...options };
   }

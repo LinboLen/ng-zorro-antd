@@ -6,28 +6,28 @@
 import { NgModule } from '@angular/core';
 
 import {
-  NzInputAddonAfterDirective,
-  NzInputAddonBeforeDirective,
-  NzInputPrefixDirective,
-  NzInputSuffixDirective
+  TriInputAddonAfterDirective,
+  TriInputAddonBeforeDirective,
+  TriInputPrefixDirective,
+  TriInputSuffixDirective
 } from 'ng-zorro-antd/input';
 
-import { NzInputNumberComponent } from './input-number.component';
+import { TriInputNumberComponent } from './input-number.component';
 
 @NgModule({
   imports: [
-    NzInputNumberComponent,
-    NzInputAddonBeforeDirective,
-    NzInputAddonAfterDirective,
-    NzInputPrefixDirective,
-    NzInputSuffixDirective
+    TriInputNumberComponent,
+    TriInputAddonBeforeDirective,
+    TriInputAddonAfterDirective,
+    TriInputPrefixDirective,
+    TriInputSuffixDirective
   ],
   exports: [
-    NzInputNumberComponent,
-    NzInputAddonBeforeDirective,
-    NzInputAddonAfterDirective,
-    NzInputPrefixDirective,
-    NzInputSuffixDirective
+    TriInputNumberComponent,
+    TriInputAddonBeforeDirective,
+    TriInputAddonAfterDirective,
+    TriInputPrefixDirective,
+    TriInputSuffixDirective
   ]
 })
-export class NzInputNumberModule {}
+export class TriInputNumberModule {}

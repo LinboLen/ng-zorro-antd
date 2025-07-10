@@ -18,67 +18,67 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
+import { TriButtonModule } from 'ng-zorro-antd/button';
 
-import { NzFloatButtonContentComponent } from './float-button-content.component';
+import { TriFloatButtonContentComponent } from './float-button-content.component';
 
 @Component({
-  selector: 'nz-float-button',
-  exportAs: 'nzFloatButton',
-  imports: [NzButtonModule, NzFloatButtonContentComponent],
+  selector: '',
+  exportAs: 'triFloatButton',
+  imports: [TriButtonModule, TriFloatButtonContentComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    @if (!!nzHref) {
+    @if (!!href) {
       <a
-        [target]="nzTarget"
-        [href]="nzHref"
-        nz-button
-        [nzType]="nzType"
-        [class.ant-float-btn-default]="nzType === 'default'"
-        class="ant-float-btn-inner"
-        (click)="nzOnClick.emit(true)"
+        [target]="target"
+        [href]="href"
+        tri-button
+        [type]="type"
+        [class.tri-float-btn-default]="type === 'default'"
+        class="tri-float-btn-inner"
+        (click)="onClick.emit(true)"
       >
-        <nz-float-button-content
-          [nzIcon]="nzIcon"
-          [nzDescription]="nzDescription"
-          [nzShape]="nzShape"
-        ></nz-float-button-content>
+        <tri-float-button-content
+          [icon]="icon"
+          [description]="description"
+          [shape]="shape"
+        ></tri-float-button-content>
       </a>
     } @else {
       <button
-        nz-button
-        [nzType]="nzType"
-        [class.ant-float-btn-default]="nzType === 'default'"
-        class="ant-float-btn-inner"
-        (click)="nzOnClick.emit(true)"
+        tri-button
+        [type]="type"
+        [class.tri-float-btn-default]="type === 'default'"
+        class="tri-float-btn-inner"
+        (click)="onClick.emit(true)"
       >
-        <nz-float-button-content
-          [nzIcon]="nzIcon"
-          [nzDescription]="nzDescription"
-          [nzShape]="nzShape"
-        ></nz-float-button-content>
+        <tri-float-button-content
+          [icon]="icon"
+          [description]="description"
+          [shape]="shape"
+        ></tri-float-button-content>
       </button>
     }
   `,
   host: {
-    class: 'ant-float-btn',
-    '[class.ant-float-btn-circle]': `nzShape === 'circle'`,
-    '[class.ant-float-btn-square]': `nzShape === 'square'`,
-    '[class.ant-float-btn-rtl]': `dir === 'rtl'`
+    class: 'tri-float-btn',
+    '[class.tri-float-btn-circle]': `shape === 'circle'`,
+    '[class.tri-float-btn-square]': `shape === 'square'`,
+    '[class.tri-float-btn-rtl]': `dir === 'rtl'`
   }
 })
-export class NzFloatButtonComponent implements OnInit {
+export class TriFloatButtonComponent implements OnInit {
   private directionality = inject(Directionality);
   private cdr = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
 
-  @Input() nzHref: string | null = null;
-  @Input() nzTarget: string | null = null;
-  @Input() nzType: 'default' | 'primary' = 'default';
-  @Input() nzShape: 'circle' | 'square' = 'circle';
-  @Input() nzIcon: TemplateRef<void> | null = null;
-  @Input() nzDescription: TemplateRef<void> | string | null = null;
-  @Output() readonly nzOnClick = new EventEmitter<boolean>();
+  @Input() href: string | null = null;
+  @Input() target: string | null = null;
+  @Input() type: 'default' | 'primary' = 'default';
+  @Input() shape: 'circle' | 'square' = 'circle';
+  @Input() icon: TemplateRef<void> | null = null;
+  @Input() description: TemplateRef<void> | string | null = null;
+  @Output() readonly onClick = new EventEmitter<boolean>();
   dir: Direction = 'ltr';
 
   constructor() {

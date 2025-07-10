@@ -2,33 +2,33 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzMentionModule } from 'ng-zorro-antd/mention';
-import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriMentionModule } from 'ng-zorro-antd/mention';
+import { TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: 'nz-demo-mention-preview',
-  imports: [FormsModule, NzInputModule, NzMentionModule, NzTabsModule],
+  selector: '',
+  imports: [FormsModule, TriInputModule, TriMentionModule, TriTabsModule],
   template: `
-    <nz-tabs>
-      <nz-tab nzTitle="Write">
-        <nz-mention [nzSuggestions]="suggestions">
+    <tri-tabs>
+      <tri-tab title="Write">
+        <tri-mention [suggestions]="suggestions">
           <textarea
-            nz-input
-            [nzAutosize]="{ minRows: 4, maxRows: 4 }"
+            tri-input
+            [autosize]="{ minRows: 4, maxRows: 4 }"
             [(ngModel)]="inputValue"
             (ngModelChange)="renderPreView()"
-            nzMentionTrigger
+            mentionTrigger
           ></textarea>
-        </nz-mention>
-      </nz-tab>
-      <nz-tab nzTitle="Preview">
+        </tri-mention>
+      </tri-tab>
+      <tri-tab title="Preview">
         <pre [innerHTML]="preview"></pre>
-      </nz-tab>
-    </nz-tabs>
+      </tri-tab>
+    </tri-tabs>
   `
 })
-export class NzDemoMentionPreviewComponent {
+export class TriDemoMentionPreviewComponent {
   inputValue: string = 'Switch tab view preview @NG-ZORRO ';
   preview?: SafeHtml;
   suggestions = ['NG-ZORRO', 'angular', 'Reactive-Extensions'];

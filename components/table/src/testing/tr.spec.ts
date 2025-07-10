@@ -7,16 +7,16 @@ import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzTableModule, NzTrDirective } from 'ng-zorro-antd/table';
+import { TriTableModule, TriTrDirective } from 'ng-zorro-antd/table';
 
 describe('nz-tr', () => {
-  let fixture: ComponentFixture<NzTrTestTableComponent>;
+  let fixture: ComponentFixture<TriTrTestTableComponent>;
   let tr: DebugElement;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NzTrTestTableComponent);
+    fixture = TestBed.createComponent(TriTrTestTableComponent);
     fixture.detectChanges();
-    tr = fixture.debugElement.query(By.directive(NzTrDirective));
+    tr = fixture.debugElement.query(By.directive(TriTrDirective));
   });
 
   it('should not add class', () => {
@@ -26,11 +26,11 @@ describe('nz-tr', () => {
 });
 
 @Component({
-  imports: [NzTableModule],
+  imports: [TriTableModule],
   template: `
     <table>
       <tr></tr>
     </table>
   `
 })
-export class NzTrTestTableComponent {}
+export class TriTrTestTableComponent {}

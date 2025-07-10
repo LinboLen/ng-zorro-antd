@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 
-import { NzSplitterModule } from 'ng-zorro-antd/splitter';
+import { TriSplitterModule } from 'ng-zorro-antd/splitter';
 
 @Component({
-  selector: 'nz-demo-splitter-vertical',
-  imports: [NzSplitterModule],
+  selector: '',
+  imports: [TriSplitterModule],
   template: `
-    <nz-splitter nzLayout="vertical">
-      <nz-splitter-panel>
+    <tri-splitter layout="vertical">
+      <tri-splitter-panel>
         <div class="box">First</div>
-      </nz-splitter-panel>
-      <nz-splitter-panel>
+      </tri-splitter-panel>
+      <tri-splitter-panel>
         <div class="box">Second</div>
-      </nz-splitter-panel>
-    </nz-splitter>
+      </tri-splitter-panel>
+    </tri-splitter>
   `,
   styles: `
     nz-splitter {
@@ -29,4 +29,4 @@ import { NzSplitterModule } from 'ng-zorro-antd/splitter';
     }
   `
 })
-export class NzDemoSplitterVerticalComponent {}
+export class TriDemoSplitterVerticalComponent {}

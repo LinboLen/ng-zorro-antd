@@ -32,29 +32,29 @@ import {
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { NzFormItemFeedbackIconComponent, NzFormStatusService } from 'ng-zorro-antd/core/form';
+import { TriFormItemFeedbackIconComponent, TriFormStatusService } from 'ng-zorro-antd/core/form';
 import {
-  NzSizeLDSType,
-  NzStatus,
-  NzValidateStatus,
-  NzVariant,
+  TriSizeLDSType,
+  TriStatus,
+  TriValidateStatus,
+  TriVariant,
   OnChangeType,
   OnTouchedType
 } from 'ng-zorro-antd/core/types';
 import { getStatusClassNames, getVariantClassNames, isNil, isNotNil } from 'ng-zorro-antd/core/util';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 import {
-  NzInputAddonAfterDirective,
-  NzInputAddonBeforeDirective,
-  NzInputPrefixDirective,
-  NzInputSuffixDirective
+  TriInputAddonAfterDirective,
+  TriInputAddonBeforeDirective,
+  TriInputPrefixDirective,
+  TriInputSuffixDirective
 } from 'ng-zorro-antd/input';
-import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, NzSpaceCompactItemDirective } from 'ng-zorro-antd/space';
+import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: 'nz-input-number',
-  exportAs: 'nzInputNumber',
-  imports: [NzIconModule, NzFormItemFeedbackIconComponent, NgTemplateOutlet],
+  selector: '',
+  exportAs: 'triInputNumber',
+  imports: [TriIconModule, TriFormItemFeedbackIconComponent, NgTemplateOutlet],
   template: `
     @if (hasAddon()) {
       <ng-template [ngTemplateOutlet]="inputNumberWithAddonInner" />
@@ -65,9 +65,9 @@ import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, NzSpaceCompactItemDi
     }
 
     <ng-template #inputNumberWithAddonInner>
-      <div class="ant-input-number-wrapper ant-input-number-group">
+      <div class="tri-input-number-wrapper tri-input-number-group">
         @if (addonBefore()) {
-          <div class="ant-input-number-group-addon">
+          <div class="tri-input-number-group-addon">
             <ng-content select="[nzInputAddonBefore]"></ng-content>
           </div>
         }
@@ -79,7 +79,7 @@ import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, NzSpaceCompactItemDi
         }
 
         @if (addonAfter()) {
-          <div class="ant-input-number-group-addon">
+          <div class="tri-input-number-group-addon">
             <ng-content select="[nzInputAddonAfter]"></ng-content>
           </div>
         }
@@ -94,16 +94,16 @@ import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, NzSpaceCompactItemDi
 
     <ng-template #inputNumberWithAffixInner>
       @if (prefix()) {
-        <span class="ant-input-number-prefix">
+        <span class="tri-input-number-prefix">
           <ng-content select="[nzInputPrefix]"></ng-content>
         </span>
       }
       <ng-template [ngTemplateOutlet]="inputNumber" />
       @if (suffix() || hasFeedback()) {
-        <span class="ant-input-number-suffix">
+        <span class="tri-input-number-suffix">
           <ng-content select="[nzInputSuffix]"></ng-content>
           @if (hasFeedback() && finalStatus()) {
-            <nz-form-item-feedback-icon [status]="finalStatus()" />
+            <tri-form-item-feedback-icon [status]="finalStatus()" />
           }
         </span>
       }
@@ -116,50 +116,50 @@ import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, NzSpaceCompactItemDi
     </ng-template>
 
     <ng-template #inputNumberInner>
-      @if (nzControls()) {
-        <div #handlers class="ant-input-number-handler-wrap" (mouseup)="stopAutoStep()" (mouseleave)="stopAutoStep()">
+      @if (controls()) {
+        <div #handlers class="tri-input-number-handler-wrap" (mouseup)="stopAutoStep()" (mouseleave)="stopAutoStep()">
           <span
             role="button"
             unselectable="on"
-            class="ant-input-number-handler ant-input-number-handler-up"
-            [class.ant-input-number-handler-up-disabled]="upDisabled()"
+            class="tri-input-number-handler tri-input-number-handler-up"
+            [class.tri-input-number-handler-up-disabled]="upDisabled()"
             [attr.aria-disabled]="upDisabled()"
             (mousedown)="onStepMouseDown($event, true)"
           >
             <ng-content select="[nzInputNumberUpIcon]">
-              <nz-icon nzType="up" class="ant-input-number-handler-up-inner" />
+              <tri-icon type="up" class="tri-input-number-handler-up-inner" />
             </ng-content>
           </span>
           <span
             role="button"
             unselectable="on"
-            class="ant-input-number-handler ant-input-number-handler-down"
-            [class.ant-input-number-handler-down-disabled]="downDisabled()"
+            class="tri-input-number-handler tri-input-number-handler-down"
+            [class.tri-input-number-handler-down-disabled]="downDisabled()"
             [attr.aria-disabled]="downDisabled()"
             (mousedown)="onStepMouseDown($event, false)"
           >
             <ng-content select="[nzInputNumberDownIcon]">
-              <nz-icon nzType="down" class="ant-input-number-handler-down-inner" />
+              <tri-icon type="down" class="tri-input-number-handler-down-inner" />
             </ng-content>
           </span>
         </div>
       }
 
-      <div class="ant-input-number-input-wrap">
+      <div class="tri-input-number-input-wrap">
         <input
           #input
           autocomplete="off"
           role="spinbutton"
-          class="ant-input-number-input"
-          [attr.aria-valuemin]="nzMin()"
-          [attr.aria-valuemax]="nzMax()"
-          [attr.id]="nzId()"
-          [attr.step]="nzStep()"
+          class="tri-input-number-input"
+          [attr.aria-valuemin]="min()"
+          [attr.aria-valuemax]="max()"
+          [attr.id]="id()"
+          [attr.step]="step()"
           [attr.value]="displayValue()"
           [value]="displayValue()"
-          [placeholder]="nzPlaceHolder() ?? ''"
+          [placeholder]="placeHolder() ?? ''"
           [disabled]="finalDisabled()"
-          [readOnly]="nzReadOnly()"
+          [readOnly]="readOnly()"
           (input)="onInput(input.value)"
         />
       </div>
@@ -168,7 +168,7 @@ import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, NzSpaceCompactItemDi
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NzInputNumberComponent),
+      useExisting: forwardRef(() => TriInputNumberComponent),
       multi: true
     },
     { provide: NZ_SPACE_COMPACT_ITEM_TYPE, useValue: 'input-number' }
@@ -179,34 +179,34 @@ import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, NzSpaceCompactItemDi
     '[class]': 'class()',
     '(keydown)': 'onKeyDown($event)'
   },
-  hostDirectives: [NzSpaceCompactItemDirective]
+  hostDirectives: [TriSpaceCompactItemDirective]
 })
-export class NzInputNumberComponent implements OnInit, ControlValueAccessor {
-  readonly nzId = input<string | null>(null);
-  readonly nzSize = input<NzSizeLDSType>('default');
-  readonly nzPlaceHolder = input<string | null>(null);
-  readonly nzStatus = input<NzStatus>('');
-  readonly nzVariant = input<NzVariant>('outlined');
-  readonly nzStep = input(1, { transform: numberAttribute });
-  readonly nzMin = input(Number.MIN_SAFE_INTEGER, { transform: numberAttribute });
-  readonly nzMax = input(Number.MAX_SAFE_INTEGER, { transform: numberAttribute });
-  readonly nzPrecision = input<number | null>(null);
-  readonly nzParser = input<((value: string) => number) | null>();
-  readonly nzFormatter = input<((value: number) => string) | null>();
-  readonly nzDisabled = input(false, { transform: booleanAttribute });
-  readonly nzReadOnly = input(false, { transform: booleanAttribute });
-  readonly nzAutoFocus = input(false, { transform: booleanAttribute });
+export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
+  readonly id = input<string | null>(null);
+  readonly size = input<TriSizeLDSType>('default');
+  readonly placeHolder = input<string | null>(null);
+  readonly status = input<TriStatus>('');
+  readonly variant = input<TriVariant>('outlined');
+  readonly step = input(1, { transform: numberAttribute });
+  readonly min = input(Number.MIN_SAFE_INTEGER, { transform: numberAttribute });
+  readonly max = input(Number.MAX_SAFE_INTEGER, { transform: numberAttribute });
+  readonly precision = input<number | null>(null);
+  readonly parser = input<((value: string) => number) | null>();
+  readonly formatter = input<((value: number) => string) | null>();
+  readonly disabled = input(false, { transform: booleanAttribute });
+  readonly readOnly = input(false, { transform: booleanAttribute });
+  readonly autoFocus = input(false, { transform: booleanAttribute });
   /**
    * @deprecated Will be removed in v21. It is recommended to use `nzVariant` instead.
    */
-  readonly nzBordered = input(true, { transform: booleanAttribute });
-  readonly nzKeyboard = input(true, { transform: booleanAttribute });
-  readonly nzControls = input(true, { transform: booleanAttribute });
+  readonly bordered = input(true, { transform: booleanAttribute });
+  readonly keyboard = input(true, { transform: booleanAttribute });
+  readonly controls = input(true, { transform: booleanAttribute });
 
-  readonly nzBlur = output<void>();
-  readonly nzFocus = output<void>();
+  readonly blur = output<void>();
+  readonly focus = output<void>();
 
-  readonly nzOnStep = output<{ value: number; offset: number; type: 'up' | 'down' }>();
+  readonly onStep = output<{ value: number; offset: number; type: 'up' | 'down' }>();
 
   private onChange: OnChangeType = () => {};
   private onTouched: OnTouchedType = () => {};
@@ -218,10 +218,10 @@ export class NzInputNumberComponent implements OnInit, ControlValueAccessor {
   private injector = inject(Injector);
   private focusMonitor = inject(FocusMonitor);
   private directionality = inject(Directionality);
-  private nzFormStatusService = inject(NzFormStatusService, { optional: true });
+  private formStatusService = inject(TriFormStatusService, { optional: true });
   private autoStepTimer: ReturnType<typeof setTimeout> | null = null;
   private defaultFormater = (value: number): string => {
-    const precision = this.nzPrecision();
+    const precision = this.precision();
     if (isNotNil(precision)) {
       return value.toFixed(precision);
     }
@@ -234,13 +234,13 @@ export class NzInputNumberComponent implements OnInit, ControlValueAccessor {
   protected dir = toSignal(this.directionality.change, { initialValue: this.directionality.value });
   protected focused = signal(false);
   protected hasFeedback = signal(false);
-  protected finalStatus = linkedSignal<NzValidateStatus>(() => this.nzStatus());
-  protected finalDisabled = linkedSignal(() => this.nzDisabled());
+  protected finalStatus = linkedSignal<TriValidateStatus>(() => this.status());
+  protected finalDisabled = linkedSignal(() => this.disabled());
 
-  protected prefix = contentChild(NzInputPrefixDirective);
-  protected suffix = contentChild(NzInputSuffixDirective);
-  protected addonBefore = contentChild(NzInputAddonBeforeDirective);
-  protected addonAfter = contentChild(NzInputAddonAfterDirective);
+  protected prefix = contentChild(TriInputPrefixDirective);
+  protected suffix = contentChild(TriInputSuffixDirective);
+  protected addonBefore = contentChild(TriInputAddonBeforeDirective);
+  protected addonAfter = contentChild(TriInputAddonAfterDirective);
   protected hasAffix = computed(() => !!this.prefix() || !!this.suffix() || this.hasFeedback());
   protected hasAddon = computed(() => !!this.addonBefore() || !!this.addonAfter());
 
@@ -259,12 +259,12 @@ export class NzInputNumberComponent implements OnInit, ControlValueAccessor {
       'ant-input-number-lg': this.finalSize() === 'large',
       'ant-input-number-sm': this.finalSize() === 'small',
       'ant-input-number-disabled': this.finalDisabled(),
-      'ant-input-number-readonly': this.nzReadOnly(),
+      'ant-input-number-readonly': this.readOnly(),
       'ant-input-number-focused': this.focused(),
       'ant-input-number-rtl': this.dir() === 'rtl',
-      'ant-input-number-in-form-item': !!this.nzFormStatusService,
-      'ant-input-number-out-of-range': this.value() !== null && !isInRange(this.value()!, this.nzMin(), this.nzMax()),
-      ...getVariantClassNames('ant-input-number', this.nzVariant(), !this.nzBordered()),
+      'ant-input-number-in-form-item': !!this.formStatusService,
+      'ant-input-number-out-of-range': this.value() !== null && !isInRange(this.value()!, this.min(), this.max()),
+      ...getVariantClassNames('ant-input-number', this.variant(), !this.bordered()),
       ...getStatusClassNames('ant-input-number', this.finalStatus(), this.hasFeedback())
     };
   });
@@ -272,11 +272,11 @@ export class NzInputNumberComponent implements OnInit, ControlValueAccessor {
     return {
       'ant-input-number-affix-wrapper': true,
       'ant-input-number-affix-wrapper-disabled': this.finalDisabled(),
-      'ant-input-number-affix-wrapper-readonly': this.nzReadOnly(),
+      'ant-input-number-affix-wrapper-readonly': this.readOnly(),
       'ant-input-number-affix-wrapper-focused': this.focused(),
       'ant-input-number-affix-wrapper-rtl': this.dir() === 'rtl',
       ...getStatusClassNames('ant-input-number-affix-wrapper', this.finalStatus(), this.hasFeedback()),
-      ...getVariantClassNames('ant-input-number-affix-wrapper', this.nzVariant(), !this.nzBordered())
+      ...getVariantClassNames('ant-input-number-affix-wrapper', this.variant(), !this.bordered())
     };
   });
   protected groupWrapperClass = computed(() => {
@@ -291,14 +291,14 @@ export class NzInputNumberComponent implements OnInit, ControlValueAccessor {
     if (this.compactSize) {
       return this.compactSize();
     }
-    return this.nzSize();
+    return this.size();
   });
 
   protected upDisabled = computed(() => {
-    return !isNil(this.value()) && this.value()! >= this.nzMax();
+    return !isNil(this.value()) && this.value()! >= this.max();
   });
   protected downDisabled = computed(() => {
-    return !isNil(this.value()) && this.value()! <= this.nzMin();
+    return !isNil(this.value()) && this.value()! <= this.min();
   });
 
   constructor() {
@@ -315,11 +315,11 @@ export class NzInputNumberComponent implements OnInit, ControlValueAccessor {
           this.focused.set(!!origin);
 
           if (origin) {
-            this.nzFocus.emit();
+            this.focus.emit();
           } else {
             this.fixValue();
             this.onTouched();
-            this.nzBlur.emit();
+            this.blur.emit();
           }
         });
 
@@ -328,15 +328,15 @@ export class NzInputNumberComponent implements OnInit, ControlValueAccessor {
       });
     });
 
-    this.nzFormStatusService?.formStatusChanges.pipe(takeUntilDestroyed()).subscribe(({ status, hasFeedback }) => {
+    this.formStatusService?.formStatusChanges.pipe(takeUntilDestroyed()).subscribe(({ status, hasFeedback }) => {
       this.finalStatus.set(status);
       this.hasFeedback.set(hasFeedback);
     });
   }
 
   ngOnInit(): void {
-    if (this.nzAutoFocus()) {
-      afterNextRender(() => this.focus(), { injector: this.injector });
+    if (this.autoFocus()) {
+      afterNextRender(() => this._focus(), { injector: this.injector });
     }
   }
 
@@ -358,27 +358,27 @@ export class NzInputNumberComponent implements OnInit, ControlValueAccessor {
 
   setDisabledState(disabled: boolean): void {
     untracked(() => {
-      this.finalDisabled.set((this.isDisabledFirstChange && this.nzDisabled()) || disabled);
+      this.finalDisabled.set((this.isDisabledFirstChange && this.disabled()) || disabled);
     });
     this.isDisabledFirstChange = false;
   }
 
-  focus(): void {
+  _focus(): void {
     this.inputRef().nativeElement.focus();
   }
 
-  blur(): void {
+  _blur(): void {
     this.inputRef().nativeElement.blur();
   }
 
-  private step(event: MouseEvent | KeyboardEvent, up: boolean): void {
+  #step(event: MouseEvent | KeyboardEvent, up: boolean): void {
     // Ignore step since out of range
     if ((up && this.upDisabled()) || (!up && this.downDisabled())) {
       return;
     }
 
     // When hold the shift key, the step is 10 times
-    let step = event.shiftKey ? this.nzStep() * 10 : this.nzStep();
+    let step = event.shiftKey ? this.step() * 10 : this.step();
     if (!up) {
       step = -step;
     }
@@ -388,24 +388,24 @@ export class NzInputNumberComponent implements OnInit, ControlValueAccessor {
     const nextValue = getRangeValue(
       // Convert floating point numbers to integers to avoid floating point math errors
       (Math.round((this.value() || 0) * multiple) + Math.round(step * multiple)) / multiple,
-      this.nzMin(),
-      this.nzMax(),
-      this.nzPrecision()
+      this.min(),
+      this.max(),
+      this.precision()
     );
     this.setValue(nextValue);
 
-    this.nzOnStep.emit({
+    this.onStep.emit({
       type: up ? 'up' : 'down',
       value: this.value()!,
-      offset: this.nzStep()
+      offset: this.step()
     });
 
-    this.focus();
+    this._focus();
   }
 
   private setValue(value: number | null): void {
-    const formatter = this.nzFormatter() ?? this.defaultFormater;
-    const precision = this.nzPrecision();
+    const formatter = this.formatter() ?? this.defaultFormater;
+    const precision = this.precision();
 
     if (isNotNil(precision)) {
       value &&= +value.toFixed(precision);
@@ -423,7 +423,7 @@ export class NzInputNumberComponent implements OnInit, ControlValueAccessor {
       return;
     }
 
-    const parser = this.nzParser() ?? defaultParser;
+    const parser = this.parser() ?? defaultParser;
     const parsedValue = parser(value);
 
     if (isNotCompleteNumber(value) || Number.isNaN(parsedValue)) {
@@ -431,10 +431,10 @@ export class NzInputNumberComponent implements OnInit, ControlValueAccessor {
       return;
     }
 
-    const formattedValue = this.nzFormatter()?.(parsedValue) ?? parsedValue.toString();
+    const formattedValue = this.formatter()?.(parsedValue) ?? parsedValue.toString();
     this.displayValue.set(formattedValue);
 
-    if (!isInRange(parsedValue, this.nzMin(), this.nzMax())) {
+    if (!isInRange(parsedValue, this.min(), this.max())) {
       return;
     }
 
@@ -455,22 +455,22 @@ export class NzInputNumberComponent implements OnInit, ControlValueAccessor {
       return;
     }
 
-    const parser = this.nzParser() ?? defaultParser;
+    const parser = this.parser() ?? defaultParser;
     let fixedValue: number | null = parser(displayValue);
 
     // If parsing fails, revert to the previous value
     if (Number.isNaN(fixedValue)) {
       fixedValue = this.value();
     } else {
-      const precision = this.nzPrecision();
+      const precision = this.precision();
       // fix precision
       if (isNotNil(precision) && getDecimalPlaces(fixedValue) !== precision) {
         fixedValue = +fixedValue.toFixed(precision);
       }
 
       // fix range
-      if (!isInRange(fixedValue, this.nzMin(), this.nzMax())) {
-        fixedValue = getRangeValue(fixedValue, this.nzMin(), this.nzMax(), precision);
+      if (!isInRange(fixedValue, this.min(), this.max())) {
+        fixedValue = getRangeValue(fixedValue, this.min(), this.max(), precision);
       }
     }
 
@@ -488,11 +488,11 @@ export class NzInputNumberComponent implements OnInit, ControlValueAccessor {
     event.preventDefault();
     this.stopAutoStep();
 
-    this.step(event, up);
+    this.#step(event, up);
 
     // Loop step for interval
     const loopStep: () => void = () => {
-      this.step(event, up);
+      this.#step(event, up);
       this.autoStepTimer = setTimeout(loopStep, STEP_INTERVAL);
     };
 
@@ -504,11 +504,11 @@ export class NzInputNumberComponent implements OnInit, ControlValueAccessor {
     switch (event.keyCode) {
       case UP_ARROW:
         event.preventDefault();
-        this.nzKeyboard() && this.step(event, true);
+        this.keyboard() && this.#step(event, true);
         break;
       case DOWN_ARROW:
         event.preventDefault();
-        this.nzKeyboard() && this.step(event, false);
+        this.keyboard() && this.#step(event, false);
         break;
       case ENTER:
         this.fixValue();

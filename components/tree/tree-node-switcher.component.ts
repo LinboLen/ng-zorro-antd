@@ -5,69 +5,69 @@
 
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, booleanAttribute } from '@angular/core';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/core/tree';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriTreeNode, TriTreeNodeOptions } from 'ng-zorro-antd/core/tree';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-tree-node-switcher',
+  selector: '',
   template: `
     @if (isShowSwitchIcon) {
       @if (!isLoading) {
-        <ng-container *nzStringTemplateOutlet="nzExpandedIcon; context: { $implicit: context, origin: context.origin }">
-          <nz-icon
-            nzType="caret-down"
-            [class.ant-select-tree-switcher-icon]="nzSelectMode"
-            [class.ant-tree-switcher-icon]="!nzSelectMode"
+        <ng-container *stringTemplateOutlet="expandedIcon; stringTemplateOutletContext: { $implicit: context, origin: context.origin }">
+          <tri-icon
+            type="caret-down"
+            [class.tri-select-tree-switcher-icon]="selectMode"
+            [class.tri-tree-switcher-icon]="!selectMode"
           />
         </ng-container>
       } @else {
-        <nz-icon nzType="loading" [nzSpin]="true" class="ant-tree-switcher-loading-icon" />
+        <tri-icon type="loading" [spin]="true" class="tri-tree-switcher-loading-icon" />
       }
     }
-    @if (nzShowLine) {
+    @if (showLine) {
       @if (!isLoading) {
-        <ng-container *nzStringTemplateOutlet="nzExpandedIcon; context: { $implicit: context, origin: context.origin }">
+        <ng-container *stringTemplateOutlet="expandedIcon; stringTemplateOutletContext: { $implicit: context, origin: context.origin }">
           @if (isShowLineIcon) {
-            <nz-icon [nzType]="isSwitcherOpen ? 'minus-square' : 'plus-square'" class="ant-tree-switcher-line-icon" />
+            <tri-icon [type]="isSwitcherOpen ? 'minus-square' : 'plus-square'" class="tri-tree-switcher-line-icon" />
           } @else {
-            <nz-icon nzType="file" class="ant-tree-switcher-line-icon" />
+            <tri-icon type="file" class="tri-tree-switcher-line-icon" />
           }
         </ng-container>
       } @else {
-        <nz-icon nzType="loading" [nzSpin]="true" class="ant-tree-switcher-loading-icon" />
+        <tri-icon type="loading" [spin]="true" class="tri-tree-switcher-loading-icon" />
       }
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[class.ant-select-tree-switcher]': 'nzSelectMode',
-    '[class.ant-select-tree-switcher-noop]': 'nzSelectMode && isLeaf',
-    '[class.ant-select-tree-switcher_open]': 'nzSelectMode && isSwitcherOpen',
-    '[class.ant-select-tree-switcher_close]': 'nzSelectMode && isSwitcherClose',
-    '[class.ant-tree-switcher]': '!nzSelectMode',
-    '[class.ant-tree-switcher-noop]': '!nzSelectMode && isLeaf',
-    '[class.ant-tree-switcher_open]': '!nzSelectMode && isSwitcherOpen',
-    '[class.ant-tree-switcher_close]': '!nzSelectMode && isSwitcherClose'
+    '[class.tri-select-tree-switcher]': 'selectMode',
+    '[class.tri-select-tree-switcher-noop]': 'selectMode && isLeaf',
+    '[class.tri-select-tree-switcher_open]': 'selectMode && isSwitcherOpen',
+    '[class.tri-select-tree-switcher_close]': 'selectMode && isSwitcherClose',
+    '[class.tri-tree-switcher]': '!selectMode',
+    '[class.tri-tree-switcher-noop]': '!selectMode && isLeaf',
+    '[class.tri-tree-switcher_open]': '!selectMode && isSwitcherOpen',
+    '[class.tri-tree-switcher_close]': '!selectMode && isSwitcherClose'
   },
-  imports: [NzIconModule, NzOutletModule]
+  imports: [TriIconModule, TriOutletModule]
 })
-export class NzTreeNodeSwitcherComponent {
-  @Input({ transform: booleanAttribute }) nzShowExpand?: boolean;
-  @Input({ transform: booleanAttribute }) nzShowLine?: boolean;
-  @Input() nzExpandedIcon?: TemplateRef<{ $implicit: NzTreeNode; origin: NzTreeNodeOptions }>;
-  @Input() nzSelectMode = false;
-  @Input() context!: NzTreeNode;
+export class TriTreeNodeSwitcherComponent {
+  @Input({ transform: booleanAttribute }) showExpand?: boolean;
+  @Input({ transform: booleanAttribute }) showLine?: boolean;
+  @Input() expandedIcon?: TemplateRef<{ $implicit: TriTreeNode; origin: TriTreeNodeOptions }>;
+  @Input() selectMode = false;
+  @Input() context!: TriTreeNode;
   @Input({ transform: booleanAttribute }) isLeaf?: boolean;
   @Input({ transform: booleanAttribute }) isLoading?: boolean;
   @Input({ transform: booleanAttribute }) isExpanded?: boolean;
 
   get isShowLineIcon(): boolean {
-    return !this.isLeaf && !!this.nzShowLine;
+    return !this.isLeaf && !!this.showLine;
   }
 
   get isShowSwitchIcon(): boolean {
-    return !this.isLeaf && !this.nzShowLine;
+    return !this.isLeaf && !this.showLine;
   }
 
   get isSwitcherOpen(): boolean {

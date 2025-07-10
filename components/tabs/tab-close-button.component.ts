@@ -5,24 +5,24 @@
 
 import { Component, Input, TemplateRef } from '@angular/core';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-tab-close-button, button[nz-tab-close-button]',
+  selector: '',
   template: `
-    <ng-container *nzStringTemplateOutlet="closeIcon; let icon">
-      <nz-icon [nzType]="icon" nzTheme="outline" />
+    <ng-container *stringTemplateOutlet="closeIcon; let icon">
+      <tri-icon [type]="icon" theme="outline" />
     </ng-container>
   `,
   host: {
-    class: 'ant-tabs-tab-remove',
+    class: 'tri-tabs-tab-remove',
     'aria-label': 'Close tab',
     type: 'button'
   },
-  imports: [NzOutletModule, NzIconModule]
+  imports: [TriOutletModule, TriIconModule]
 })
-export class NzTabCloseButtonComponent {
-  @Input() closeIcon: string | TemplateRef<NzSafeAny> = 'close';
+export class TriTabCloseButtonComponent {
+  @Input() closeIcon: string | TemplateRef<TriSafeAny> = 'close';
 }

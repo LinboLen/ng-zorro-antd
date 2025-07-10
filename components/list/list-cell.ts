@@ -5,65 +5,65 @@
 
 import { ChangeDetectionStrategy, Component, Directive, Input, TemplateRef } from '@angular/core';
 
-import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { TriEmptyModule } from 'ng-zorro-antd/empty';
 
 @Component({
-  selector: 'nz-list-empty',
-  exportAs: 'nzListHeader',
+  selector: '',
+  exportAs: 'triListHeader',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<nz-embed-empty [nzComponentName]="'list'" [specificContent]="nzNoResult"></nz-embed-empty>`,
+  template: `<tri-embed-empty [componentName]="'list'" [specificContent]="noResult"></tri-embed-empty>`,
   host: {
-    class: 'ant-list-empty-text'
+    class: 'tri-list-empty-text'
   },
-  imports: [NzEmptyModule]
+  imports: [TriEmptyModule]
 })
-export class NzListEmptyComponent {
-  @Input() nzNoResult?: string | TemplateRef<void>;
+export class TriListEmptyComponent {
+  @Input() noResult?: string | TemplateRef<void>;
 }
 
 @Component({
-  selector: 'nz-list-header',
-  exportAs: 'nzListHeader',
+  selector: '',
+  exportAs: 'triListHeader',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<ng-content></ng-content>`,
   host: {
-    class: 'ant-list-header'
+    class: 'tri-list-header'
   }
 })
-export class NzListHeaderComponent {}
+export class TriListHeaderComponent {}
 
 @Component({
-  selector: 'nz-list-footer',
-  exportAs: 'nzListFooter',
+  selector: '',
+  exportAs: 'triListFooter',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<ng-content></ng-content>`,
   host: {
-    class: 'ant-list-footer'
+    class: 'tri-list-footer'
   }
 })
-export class NzListFooterComponent {}
+export class TriListFooterComponent {}
 
 @Component({
-  selector: 'nz-list-pagination',
-  exportAs: 'nzListPagination',
+  selector: '',
+  exportAs: 'triListPagination',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<ng-content></ng-content>`,
   host: {
-    class: 'ant-list-pagination'
+    class: 'tri-list-pagination'
   }
 })
-export class NzListPaginationComponent {}
+export class TriListPaginationComponent {}
 
 @Directive({
-  selector: 'nz-list-load-more',
-  exportAs: 'nzListLoadMoreDirective'
+  selector: '',
+  exportAs: 'triListLoadMoreDirective'
 })
-export class NzListLoadMoreDirective {}
+export class TriListLoadMoreDirective {}
 
 @Directive({
-  selector: 'nz-list[nzGrid]',
+  selector: '',
   host: {
-    class: 'ant-list-grid'
+    class: 'tri-list-grid'
   }
 })
-export class NzListGridDirective {}
+export class TriListGridDirective {}

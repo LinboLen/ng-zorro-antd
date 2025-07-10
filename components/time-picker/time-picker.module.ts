@@ -5,11 +5,11 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzTimePickerPanelComponent } from './time-picker-panel.component';
-import { NzTimePickerComponent } from './time-picker.component';
+import { TriTimePickerPanelComponent } from './time-picker-panel.component';
+import { TriTimePickerComponent } from './time-picker.component';
 
 @NgModule({
-  imports: [NzTimePickerComponent, NzTimePickerPanelComponent],
-  exports: [NzTimePickerPanelComponent, NzTimePickerComponent]
+  imports: [TriTimePickerComponent, TriTimePickerPanelComponent],
+  exports: [TriTimePickerPanelComponent, TriTimePickerComponent]
 })
-export class NzTimePickerModule {}
+export class TriTimePickerModule {}

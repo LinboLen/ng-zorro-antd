@@ -30,74 +30,74 @@ import { Subject, Subscription } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 
 import { fadeMotion } from 'ng-zorro-antd/core/animation';
-import { NzConfigKey, NzConfigService, WithConfig } from 'ng-zorro-antd/core/config';
-import { NzScrollService } from 'ng-zorro-antd/core/services';
+import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriScrollService } from 'ng-zorro-antd/core/services';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
-import { NzFloatButtonComponent } from './float-button.component';
+import { TriFloatButtonComponent } from './float-button.component';
 
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'backTop';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'backTop';
 
 const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: true });
 
 @Component({
-  selector: 'nz-float-button-top',
-  exportAs: 'nzFloatButtonTop',
-  imports: [NzFloatButtonComponent, NzIconModule],
+  selector: '',
+  exportAs: 'triFloatButtonTop',
+  imports: [TriFloatButtonComponent, TriIconModule],
   animations: [fadeMotion],
   template: `
     <div #backTop @fadeMotion>
-      <nz-float-button
-        [nzIcon]="nzIcon || top"
-        [nzDescription]="nzDescription"
-        [nzHref]="nzHref"
-        [nzType]="nzType"
-        [nzShape]="nzShape"
-      ></nz-float-button>
+      <tri-float-button
+        [icon]="icon || top"
+        [description]="description"
+        [href]="href"
+        [type]="type"
+        [shape]="shape"
+      ></tri-float-button>
       <ng-template #top>
-        <nz-icon nzType="vertical-align-top" nzTheme="outline" />
+        <tri-icon type="vertical-align-top" theme="outline" />
       </ng-template>
     </div>
   `,
   host: {
-    class: 'ant-float-btn ant-float-btn-top',
-    '[class.ant-float-btn-circle]': `nzShape === 'circle'`,
-    '[class.ant-float-btn-hidden]': `!visible`,
-    '[class.ant-float-btn-square]': `nzShape === 'square'`,
-    '[class.ant-float-btn-rtl]': `dir === 'rtl'`
+    class: 'tri-float-btn ant-float-btn-top',
+    '[class.tri-float-btn-circle]': `shape === 'circle'`,
+    '[class.tri-float-btn-hidden]': `!visible`,
+    '[class.tri-float-btn-square]': `shape === 'square'`,
+    '[class.tri-float-btn-rtl]': `dir === 'rtl'`
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class NzFloatButtonTopComponent implements OnInit, OnChanges {
-  public nzConfigService = inject(NzConfigService);
-  private scrollSrv = inject(NzScrollService);
+export class TriFloatButtonTopComponent implements OnInit, OnChanges {
+  public configService = inject(TriConfigService);
+  private scrollSrv = inject(TriScrollService);
   private platform = inject(Platform);
   private ngZone = inject(NgZone);
   private cdr = inject(ChangeDetectorRef);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
 
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
 
   private scrollListenerDestroy$ = new Subject<void>();
-  private target?: HTMLElement | null = null;
+  #target?: HTMLElement | null = null;
 
   visible: boolean = false;
   dir: Direction = 'ltr';
 
-  @Input() nzHref: string | null = null;
-  @Input() nzType: 'default' | 'primary' = 'default';
-  @Input() nzShape: 'circle' | 'square' = 'circle';
-  @Input() nzIcon: TemplateRef<void> | null = null;
-  @Input() nzDescription: TemplateRef<void> | null = null;
+  @Input() href: string | null = null;
+  @Input() type: 'default' | 'primary' = 'default';
+  @Input() shape: 'circle' | 'square' = 'circle';
+  @Input() icon: TemplateRef<void> | null = null;
+  @Input() description: TemplateRef<void> | null = null;
 
-  @Input() nzTemplate?: TemplateRef<void>;
-  @Input({ transform: numberAttribute }) @WithConfig() nzVisibilityHeight: number = 400;
-  @Input() nzTarget?: string | HTMLElement;
-  @Input({ transform: numberAttribute }) nzDuration: number = 450;
-  @Output() readonly nzOnClick = new EventEmitter<boolean>();
+  @Input() template?: TemplateRef<void>;
+  @Input({ transform: numberAttribute }) @WithConfig() visibilityHeight: number = 400;
+  @Input() target?: string | HTMLElement;
+  @Input({ transform: numberAttribute }) duration: number = 450;
+  @Output() readonly onClick = new EventEmitter<boolean>();
 
   @ViewChild('backTop', { static: false })
   set backTop(backTop: ElementRef<HTMLElement> | undefined) {
@@ -107,9 +107,9 @@ export class NzFloatButtonTopComponent implements OnInit, OnChanges {
       this.backTopClickSubscription = fromEventOutsideAngular(backTop.nativeElement, 'click')
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(() => {
-          this.scrollSrv.scrollTo(this.getTarget(), 0, { duration: this.nzDuration });
-          if (this.nzOnClick.observers.length) {
-            this.ngZone.run(() => this.nzOnClick.emit(true));
+          this.scrollSrv.scrollTo(this.getTarget(), 0, { duration: this.duration });
+          if (this.onClick.observers.length) {
+            this.ngZone.run(() => this.onClick.emit(true));
           }
         });
     }
@@ -136,11 +136,11 @@ export class NzFloatButtonTopComponent implements OnInit, OnChanges {
   }
 
   private getTarget(): HTMLElement | Window {
-    return this.target || window;
+    return this.#target || window;
   }
 
   private handleScroll(): void {
-    if (this.visible === this.scrollSrv.getScroll(this.getTarget()) > this.nzVisibilityHeight) {
+    if (this.visible === this.scrollSrv.getScroll(this.getTarget()) > this.visibilityHeight) {
       return;
     }
     this.visible = !this.visible;
@@ -165,7 +165,7 @@ export class NzFloatButtonTopComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     const { nzTarget } = changes;
     if (nzTarget) {
-      this.target = typeof this.nzTarget === 'string' ? this.doc.querySelector(this.nzTarget) : this.nzTarget;
+      this.#target = typeof this.target === 'string' ? this.doc.querySelector(this.target) : this.target;
       this.registerScrollEvent();
     }
   }

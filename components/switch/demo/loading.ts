@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { TriSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
-  selector: 'nz-demo-switch-loading',
-  imports: [FormsModule, NzSwitchModule],
+  selector: '',
+  imports: [FormsModule, TriSwitchModule],
   template: `
-    <nz-switch [ngModel]="true" nzLoading></nz-switch>
+    <tri-switch [ngModel]="true" loading></tri-switch>
     <br />
     <br />
-    <nz-switch nzSize="small" [ngModel]="false" nzLoading></nz-switch>
+    <tri-switch size="small" [ngModel]="false" loading></tri-switch>
   `
 })
-export class NzDemoSwitchLoadingComponent {}
+export class TriDemoSwitchLoadingComponent {}

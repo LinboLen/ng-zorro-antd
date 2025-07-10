@@ -1,27 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzSwitchModule } from 'ng-zorro-antd/switch';
-import { NzTransferModule, TransferItem } from 'ng-zorro-antd/transfer';
+import { TriSwitchModule } from 'ng-zorro-antd/switch';
+import { TriTransferModule, TransferItem } from 'ng-zorro-antd/transfer';
 
 @Component({
-  selector: 'nz-demo-transfer-search',
-  imports: [FormsModule, NzSwitchModule, NzTransferModule],
+  selector: '',
+  imports: [FormsModule, TriSwitchModule, TriTransferModule],
   template: `
-    <nz-transfer
-      [nzDataSource]="list"
-      [nzDisabled]="disabled"
-      nzShowSearch
-      [nzFilterOption]="filterOption"
-      (nzSearchChange)="search($event)"
-      (nzSelectChange)="select($event)"
-      (nzChange)="change($event)"
-    ></nz-transfer>
+    <tri-transfer
+      [dataSource]="list"
+      [disabled]="disabled"
+      showSearch
+      [filterOption]="filterOption"
+      (searchChange)="search($event)"
+      (selectChange)="select($event)"
+      (change)="change($event)"
+    ></tri-transfer>
     <br />
-    <nz-switch [(ngModel)]="disabled" nzCheckedChildren="disabled" nzUnCheckedChildren="disabled"></nz-switch>
+    <tri-switch [(ngModel)]="disabled" checkedChildren="disabled" unCheckedChildren="disabled"></tri-switch>
   `
 })
-export class NzDemoTransferSearchComponent implements OnInit {
+export class TriDemoTransferSearchComponent implements OnInit {
   list: TransferItem[] = [];
   disabled = false;
 

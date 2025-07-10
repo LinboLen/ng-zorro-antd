@@ -1,42 +1,42 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzCollapseModule } from 'ng-zorro-antd/collapse';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzSelectModule } from 'ng-zorro-antd/select';
+import { TriCollapseModule } from 'ng-zorro-antd/collapse';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: 'nz-demo-collapse-extra',
-  imports: [FormsModule, NzCollapseModule, NzIconModule, NzSelectModule],
+  selector: '',
+  imports: [FormsModule, TriCollapseModule, TriIconModule, TriSelectModule],
   template: `
-    <nz-collapse [nzExpandIconPosition]="expandIconPosition">
+    <tri-collapse [expandIconPosition]="expandIconPosition">
       @for (panel of panels; track panel) {
-        <nz-collapse-panel
-          [nzHeader]="panel.name"
-          [nzActive]="panel.active"
-          [nzExtra]="extraTpl"
-          [nzDisabled]="panel.disabled"
+        <tri-collapse-panel
+          [header]="panel.name"
+          [active]="panel.active"
+          [extra]="extraTpl"
+          [disabled]="panel.disabled"
         >
           <p style="margin:0;">
             A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a welcome
             guest in many households across the world.
           </p>
-        </nz-collapse-panel>
+        </tri-collapse-panel>
       }
-    </nz-collapse>
+    </tri-collapse>
     <ng-template #extraTpl>
       <!-- You can use stopPropagation if you don't want the panel to toggle -->
-      <nz-icon nzType="setting" (click)="$event.stopPropagation()" />
+      <tri-icon type="setting" (click)="$event.stopPropagation()" />
     </ng-template>
     <br />
     <span>Expand Icon Position: </span>
-    <nz-select [(ngModel)]="expandIconPosition">
-      <nz-option nzValue="start" nzLabel="start"></nz-option>
-      <nz-option nzValue="end" nzLabel="end"></nz-option>
-    </nz-select>
+    <tri-select [(ngModel)]="expandIconPosition">
+      <tri-option value="start" label="start"></tri-option>
+      <tri-option value="end" label="end"></tri-option>
+    </tri-select>
   `
 })
-export class NzDemoCollapseExtraComponent {
+export class TriDemoCollapseExtraComponent {
   expandIconPosition: 'start' | 'end' = 'start';
 
   panels = [

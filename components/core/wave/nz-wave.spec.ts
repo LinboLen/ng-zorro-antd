@@ -9,8 +9,8 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { dispatchMouseEvent } from 'ng-zorro-antd/core/testing';
 
-import { NzWaveDirective } from './nz-wave.directive';
-import { NzWaveModule } from './nz-wave.module';
+import { TriWaveDirective } from './nz-wave.directive';
+import { TriWaveModule } from './nz-wave.module';
 
 const WAVE_ATTRIBUTE_NAME = 'ant-click-animating-without-extra-node';
 const WAVE_ATTRIBUTE_NAME_EXTRA_NODE = 'ant-click-animating';
@@ -181,7 +181,7 @@ describe('nz-wave extra', () => {
 
 describe('nz-wave NoopAnimationsModule', () => {
   let fixture: ComponentFixture<WaveContainerWithButtonComponent>;
-  let waveRef: NzWaveDirective;
+  let waveRef: TriWaveDirective;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -212,7 +212,7 @@ describe('nz-wave NoopAnimationsModule', () => {
 describe('nz-wave disable/enable', () => {
   let fixture: ComponentFixture<WaveContainerWithButtonComponent>;
   let waveTarget: HTMLElement;
-  let waveRef: NzWaveDirective;
+  let waveRef: TriWaveDirective;
 
   describe('disable/enable', () => {
     beforeEach(() => {
@@ -242,12 +242,12 @@ describe('nz-wave disable/enable', () => {
 });
 
 @Component({
-  imports: [NzWaveModule],
+  imports: [TriWaveModule],
   template: `
     @if (!isDestroyed) {
       <button
         #trigger
-        nz-wave
+        tri-wave
         [attr.disabled]="disabled || null"
         [class.disabled]="disabledClass"
         [style.border-color]="borderColor"
@@ -265,17 +265,17 @@ class WaveContainerWithButtonComponent {
   borderColor = 'rgb(0,255,0)';
   backgroundColor = 'rgb(255,255,255)';
   @ViewChild('trigger', { static: false }) trigger!: ElementRef<HTMLElement>;
-  @ViewChild(NzWaveDirective, { static: false }) wave!: NzWaveDirective;
+  @ViewChild(TriWaveDirective, { static: false }) wave!: TriWaveDirective;
 }
 
 @Component({
-  imports: [NzWaveModule],
+  imports: [TriWaveModule],
   template: `
     @if (!isDestroyed) {
       <div
         #trigger
-        nz-wave
-        [nzWaveExtraNode]="true"
+        tri-wave
+        [waveExtraNode]="true"
         [class.disabled]="disabledClass"
         [style.border-color]="borderColor"
         [style.background-color]="backgroundColor"
@@ -291,5 +291,5 @@ class WaveContainerWithExtraNodeComponent {
   borderColor = 'rgb(0,255,0)';
   backgroundColor = 'rgb(255,255,255)';
   @ViewChild('trigger', { static: false }) trigger!: ElementRef<HTMLElement>;
-  @ViewChild(NzWaveDirective, { static: false }) wave!: NzWaveDirective;
+  @ViewChild(TriWaveDirective, { static: false }) wave!: TriWaveDirective;
 }

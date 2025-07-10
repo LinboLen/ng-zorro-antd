@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzProgressComponent } from './progress.component';
+import { TriProgressComponent } from './progress.component';
 
 @NgModule({
-  imports: [NzProgressComponent],
-  exports: [NzProgressComponent]
+  imports: [TriProgressComponent],
+  exports: [TriProgressComponent]
 })
-export class NzProgressModule {}
+export class TriProgressModule {}

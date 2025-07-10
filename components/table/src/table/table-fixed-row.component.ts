@@ -19,17 +19,17 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject } from 'rxjs';
 
-import { NzTableStyleService } from '../table-style.service';
+import { TriTableStyleService } from '../table-style.service';
 
 @Component({
-  selector: 'tr[nz-table-fixed-row], tr[nzExpand]',
+  selector: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
-    <td class="nz-disable-td ant-table-cell" #tdElement>
+    <td class="nz-disable-td tri-table-cell" #tdElement>
       @if (enableAutoMeasure$ | async) {
         <div
-          class="ant-table-expanded-row-fixed"
+          class="tri-table-expanded-row-fixed"
           style="position: sticky; left: 0; overflow: hidden;"
           [style.width.px]="hostWidth$ | async"
         >
@@ -45,8 +45,8 @@ import { NzTableStyleService } from '../table-style.service';
   `,
   imports: [AsyncPipe, NgTemplateOutlet]
 })
-export class NzTableFixedRowComponent implements OnInit, AfterViewInit {
-  private nzTableStyleService = inject(NzTableStyleService);
+export class TriTableFixedRowComponent implements OnInit, AfterViewInit {
+  private tableStyleService = inject(TriTableStyleService);
   private renderer = inject(Renderer2);
   private destroyRef = inject(DestroyRef);
 
@@ -55,15 +55,15 @@ export class NzTableFixedRowComponent implements OnInit, AfterViewInit {
   enableAutoMeasure$ = new BehaviorSubject<boolean>(false);
 
   ngOnInit(): void {
-    if (this.nzTableStyleService) {
-      const { enableAutoMeasure$, hostWidth$ } = this.nzTableStyleService;
+    if (this.tableStyleService) {
+      const { enableAutoMeasure$, hostWidth$ } = this.tableStyleService;
       enableAutoMeasure$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(this.enableAutoMeasure$);
       hostWidth$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(this.hostWidth$);
     }
   }
 
   ngAfterViewInit(): void {
-    this.nzTableStyleService.columnCount$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(count => {
+    this.tableStyleService.columnCount$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(count => {
       this.renderer.setAttribute(this.tdElement.nativeElement, 'colspan', `${count}`);
     });
   }

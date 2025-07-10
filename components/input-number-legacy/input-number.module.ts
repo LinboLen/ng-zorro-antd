@@ -5,23 +5,23 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzInputNumberGroupSlotComponent } from './input-number-group-slot.component';
+import { TriInputNumberGroupSlotComponent } from './input-number-group-slot.component';
 import {
-  NzInputNumberGroupComponent,
-  NzInputNumberGroupWhitSuffixOrPrefixDirective
+  TriInputNumberGroupComponent,
+  TriInputNumberGroupWhitSuffixOrPrefixDirective
 } from './input-number-group.component';
-import { NzInputNumberLegacyComponent } from './input-number.component';
+import { TriInputNumberLegacyComponent } from './input-number.component';
 
 /**
  * @deprecated Will be removed in v21. It is recommended to use the new version `<nz-input-number>`.
  */
 @NgModule({
   imports: [
-    NzInputNumberLegacyComponent,
-    NzInputNumberGroupComponent,
-    NzInputNumberGroupWhitSuffixOrPrefixDirective,
-    NzInputNumberGroupSlotComponent
+    TriInputNumberLegacyComponent,
+    TriInputNumberGroupComponent,
+    TriInputNumberGroupWhitSuffixOrPrefixDirective,
+    TriInputNumberGroupSlotComponent
   ],
-  exports: [NzInputNumberLegacyComponent, NzInputNumberGroupComponent, NzInputNumberGroupWhitSuffixOrPrefixDirective]
+  exports: [TriInputNumberLegacyComponent, TriInputNumberGroupComponent, TriInputNumberGroupWhitSuffixOrPrefixDirective]
 })
-export class NzInputNumberLegacyModule {}
+export class TriInputNumberLegacyModule {}

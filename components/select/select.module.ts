@@ -5,43 +5,43 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzOptionContainerComponent } from './option-container.component';
-import { NzOptionGroupComponent } from './option-group.component';
-import { NzOptionItemGroupComponent } from './option-item-group.component';
-import { NzOptionItemComponent } from './option-item.component';
-import { NzOptionComponent } from './option.component';
-import { NzSelectArrowComponent } from './select-arrow.component';
-import { NzSelectClearComponent } from './select-clear.component';
-import { NzSelectItemComponent } from './select-item.component';
-import { NzSelectPlaceholderComponent } from './select-placeholder.component';
-import { NzSelectSearchComponent } from './select-search.component';
-import { NzSelectTopControlComponent } from './select-top-control.component';
-import { NzSelectComponent } from './select.component';
+import { TriOptionContainerComponent } from './option-container.component';
+import { TriOptionGroupComponent } from './option-group.component';
+import { TriOptionItemGroupComponent } from './option-item-group.component';
+import { TriOptionItemComponent } from './option-item.component';
+import { TriOptionComponent } from './option.component';
+import { TriSelectArrowComponent } from './select-arrow.component';
+import { TriSelectClearComponent } from './select-clear.component';
+import { TriSelectItemComponent } from './select-item.component';
+import { TriSelectPlaceholderComponent } from './select-placeholder.component';
+import { TriSelectSearchComponent } from './select-search.component';
+import { TriSelectTopControlComponent } from './select-top-control.component';
+import { TriSelectComponent } from './select.component';
 
 @NgModule({
   imports: [
-    NzOptionComponent,
-    NzSelectComponent,
-    NzOptionContainerComponent,
-    NzOptionGroupComponent,
-    NzOptionItemComponent,
-    NzSelectTopControlComponent,
-    NzSelectSearchComponent,
-    NzSelectItemComponent,
-    NzSelectClearComponent,
-    NzSelectArrowComponent,
-    NzSelectPlaceholderComponent,
-    NzOptionItemGroupComponent
+    TriOptionComponent,
+    TriSelectComponent,
+    TriOptionContainerComponent,
+    TriOptionGroupComponent,
+    TriOptionItemComponent,
+    TriSelectTopControlComponent,
+    TriSelectSearchComponent,
+    TriSelectItemComponent,
+    TriSelectClearComponent,
+    TriSelectArrowComponent,
+    TriSelectPlaceholderComponent,
+    TriOptionItemGroupComponent
   ],
   exports: [
-    NzOptionComponent,
-    NzSelectComponent,
-    NzOptionGroupComponent,
-    NzSelectArrowComponent,
-    NzSelectClearComponent,
-    NzSelectItemComponent,
-    NzSelectPlaceholderComponent,
-    NzSelectSearchComponent
+    TriOptionComponent,
+    TriSelectComponent,
+    TriOptionGroupComponent,
+    TriSelectArrowComponent,
+    TriSelectClearComponent,
+    TriSelectItemComponent,
+    TriSelectPlaceholderComponent,
+    TriSelectSearchComponent
   ]
 })
-export class NzSelectModule {}
+export class TriSelectModule {}

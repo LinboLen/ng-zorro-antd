@@ -1,24 +1,24 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
+import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
 @Component({
-  selector: 'nz-demo-tree-select-checkable',
-  imports: [FormsModule, NzTreeSelectModule],
+  selector: '',
+  imports: [FormsModule, TriTreeSelectModule],
   template: `
-    <nz-tree-select
+    <tri-tree-select
       style="width: 250px"
       [(ngModel)]="value"
-      [nzNodes]="nodes"
+      [nodes]="nodes"
       (ngModelChange)="onChange($event)"
-      nzShowSearch
-      nzCheckable
-      nzPlaceHolder="Please select"
-    ></nz-tree-select>
+      showSearch
+      checkable
+      placeHolder="Please select"
+    ></tri-tree-select>
   `
 })
-export class NzDemoTreeSelectCheckableComponent {
+export class TriDemoTreeSelectCheckableComponent {
   value: string[] = ['0-0-0'];
   readonly nodes = [
     {

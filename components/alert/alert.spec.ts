@@ -10,11 +10,11 @@ import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Subject } from 'rxjs';
 
-import { NzConfigService } from 'ng-zorro-antd/core/config';
+import { TriConfigService } from 'ng-zorro-antd/core/config';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
-import { NzAlertComponent, NzAlertType } from './alert.component';
-import { NzAlertModule } from './alert.module';
+import { TriAlertComponent, TriAlertType } from './alert.component';
+import { TriAlertModule } from './alert.module';
 
 describe('alert', () => {
   beforeEach(waitForAsync(() => {
@@ -24,14 +24,14 @@ describe('alert', () => {
   }));
 
   describe('basic alert', () => {
-    let fixture: ComponentFixture<NzDemoTestBasicComponent>;
-    let testComponent: NzDemoTestBasicComponent;
+    let fixture: ComponentFixture<TriDemoTestBasicComponent>;
+    let testComponent: TriDemoTestBasicComponent;
     let alert: DebugElement;
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzDemoTestBasicComponent);
+      fixture = TestBed.createComponent(TriDemoTestBasicComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      alert = fixture.debugElement.query(By.directive(NzAlertComponent));
+      alert = fixture.debugElement.query(By.directive(TriAlertComponent));
     });
     it('should className correct', () => {
       fixture.detectChanges();
@@ -57,7 +57,7 @@ describe('alert', () => {
       fixture.detectChanges();
       tick();
       fixture.detectChanges();
-      alert = fixture.debugElement.query(By.directive(NzAlertComponent));
+      alert = fixture.debugElement.query(By.directive(TriAlertComponent));
       expect(alert.nativeElement.innerText).toBe('');
       expect(testComponent.onClose).toHaveBeenCalledTimes(1);
     }));
@@ -102,7 +102,7 @@ describe('alert', () => {
       );
     });
     it('should type work', () => {
-      const listOfType: NzAlertType[] = ['success', 'info', 'warning', 'error'];
+      const listOfType: TriAlertType[] = ['success', 'info', 'warning', 'error'];
       listOfType.forEach(type => {
         testComponent.type = type;
         fixture.detectChanges();
@@ -117,13 +117,13 @@ describe('alert', () => {
     });
   });
   describe('banner alert', () => {
-    let fixture: ComponentFixture<NzDemoTestBannerComponent>;
+    let fixture: ComponentFixture<TriDemoTestBannerComponent>;
     let alert: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzDemoTestBannerComponent);
+      fixture = TestBed.createComponent(TriDemoTestBannerComponent);
       fixture.detectChanges();
-      alert = fixture.debugElement.query(By.directive(NzAlertComponent));
+      alert = fixture.debugElement.query(By.directive(TriAlertComponent));
     });
 
     it('should banner work', () => {
@@ -134,8 +134,8 @@ describe('alert', () => {
   });
   describe('RTL', () => {
     it('should className correct on dir change', () => {
-      const fixture = TestBed.createComponent(NzTestAlertRtlComponent);
-      const alert = fixture.debugElement.query(By.directive(NzAlertComponent));
+      const fixture = TestBed.createComponent(TriTestAlertRtlComponent);
+      const alert = fixture.debugElement.query(By.directive(TriAlertComponent));
       fixture.detectChanges();
       expect(alert.nativeElement.firstElementChild!.classList).toContain('ant-alert-rtl');
 
@@ -146,8 +146,8 @@ describe('alert', () => {
   });
   describe('custom icon', () => {
     it('should custom icon work', () => {
-      const fixture = TestBed.createComponent(NzTestAlertCustomIconComponent);
-      const alert = fixture.debugElement.query(By.directive(NzAlertComponent));
+      const fixture = TestBed.createComponent(TriTestAlertCustomIconComponent);
+      const alert = fixture.debugElement.query(By.directive(TriAlertComponent));
       fixture.detectChanges();
       expect(alert.nativeElement.querySelector('.ant-alert-icon')).toBeDefined();
       expect(alert.nativeElement.querySelector('.ant-alert-icon').firstElementChild).not.toContain('anticon');
@@ -156,25 +156,25 @@ describe('alert', () => {
 });
 
 @Component({
-  imports: [NzAlertModule],
-  selector: 'nz-test-basic-alert',
+  imports: [TriAlertModule],
+  selector: '',
   template: `
     <ng-template #template>template</ng-template>
-    <nz-alert
-      [nzBanner]="banner"
-      [nzCloseable]="closeable"
-      [nzCloseText]="closeText"
-      [nzDescription]="description"
-      [nzMessage]="message"
-      [nzShowIcon]="showIcon"
-      [nzIconType]="iconType"
-      [nzType]="type"
-      [nzAction]="action"
-      (nzOnClose)="onClose($event)"
-    ></nz-alert>
+    <tri-alert
+      [banner]="banner"
+      [closeable]="closeable"
+      [closeText]="closeText"
+      [description]="description"
+      [message]="message"
+      [showIcon]="showIcon"
+      [iconType]="iconType"
+      [type]="type"
+      [action]="action"
+      (onClose)="onClose($event)"
+    ></tri-alert>
   `
 })
-export class NzDemoTestBasicComponent {
+export class TriDemoTestBasicComponent {
   @ViewChild('template', { static: false }) template!: TemplateRef<void>;
   action: string | TemplateRef<void> | null = null;
   banner = false;
@@ -184,50 +184,50 @@ export class NzDemoTestBasicComponent {
   message: string | TemplateRef<void> = 'message';
   showIcon = false;
   iconType: string | null = null;
-  type: NzAlertType = 'info';
+  type: TriAlertType = 'info';
   onClose = jasmine.createSpy('close callback');
 }
 
 @Component({
-  imports: [NzAlertModule],
-  template: `<nz-alert nzBanner></nz-alert>`
+  imports: [TriAlertModule],
+  template: `<tri-alert banner></tri-alert>`
 })
-export class NzDemoTestBannerComponent {}
+export class TriDemoTestBannerComponent {}
 
 @Component({
-  imports: [NzDemoTestBasicComponent, BidiModule],
+  imports: [TriDemoTestBasicComponent, BidiModule],
   template: `
     <div [dir]="direction">
-      <nz-test-basic-alert></nz-test-basic-alert>
+      <tri-test-basic-alert></tri-test-basic-alert>
     </div>
   `
 })
-export class NzTestAlertRtlComponent {
+export class TriTestAlertRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 }
 
 @Component({
-  imports: [NzAlertModule],
+  imports: [TriAlertModule],
   template: `
-    <nz-alert
-      nzType="success"
-      nzMessage="Success Tips"
-      nzDescription="Detailed description and advices about successful copywriting."
-      [nzIcon]="customIconTemplate"
-      nzShowIcon
-    ></nz-alert>
+    <tri-alert
+      type="success"
+      message="Success Tips"
+      description="Detailed description and advices about successful copywriting."
+      [icon]="customIconTemplate"
+      showIcon
+    ></tri-alert>
 
     <ng-template #customIconTemplate>
       <div> S </div>
     </ng-template>
   `
 })
-export class NzTestAlertCustomIconComponent {}
+export class TriTestAlertCustomIconComponent {}
 
 describe('NzAlertComponent', () => {
-  let component: NzAlertComponent;
-  let fixture: ComponentFixture<NzAlertComponent>;
+  let component: TriAlertComponent;
+  let fixture: ComponentFixture<TriAlertComponent>;
   let cdr: ChangeDetectorRef;
   let configChangeEvent$: Subject<string>;
 
@@ -241,7 +241,7 @@ describe('NzAlertComponent', () => {
     TestBed.configureTestingModule({
       providers: [
         provideNoopAnimations(),
-        { provide: NzConfigService, useValue: nzConfigServiceSpy },
+        { provide: TriConfigService, useValue: nzConfigServiceSpy },
         {
           provide: ChangeDetectorRef,
           useValue: jasmine.createSpyObj('ChangeDetectorRef', ['markForCheck', 'detectChanges'])
@@ -249,7 +249,7 @@ describe('NzAlertComponent', () => {
       ]
     });
 
-    fixture = TestBed.createComponent(NzAlertComponent);
+    fixture = TestBed.createComponent(TriAlertComponent);
     component = fixture.componentInstance;
     cdr = TestBed.inject(ChangeDetectorRef);
     fixture.detectChanges();
@@ -257,7 +257,7 @@ describe('NzAlertComponent', () => {
   });
 
   it('should set iconTheme based on nzDescription', () => {
-    component.nzDescription = 'Test Description';
+    component.description = 'Test Description';
 
     component.ngOnChanges({
       nzDescription: {
@@ -270,7 +270,7 @@ describe('NzAlertComponent', () => {
 
     expect(component.iconTheme).toBe('outline');
 
-    component.nzDescription = null;
+    component.description = null;
     component.ngOnChanges({
       nzDescription: {
         currentValue: null,

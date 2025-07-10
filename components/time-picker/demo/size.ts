@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
+import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
 
 @Component({
-  selector: 'nz-demo-time-picker-size',
-  imports: [FormsModule, NzTimePickerModule],
+  selector: '',
+  imports: [FormsModule, TriTimePickerModule],
   template: `
-    <nz-time-picker [(ngModel)]="time" nzSize="large"></nz-time-picker>
-    <nz-time-picker [(ngModel)]="time"></nz-time-picker>
-    <nz-time-picker [(ngModel)]="time" nzSize="small"></nz-time-picker>
+    <tri-time-picker [(ngModel)]="time" size="large"></tri-time-picker>
+    <tri-time-picker [(ngModel)]="time"></tri-time-picker>
+    <tri-time-picker [(ngModel)]="time" size="small"></tri-time-picker>
   `,
   styles: [
     `
@@ -19,6 +19,6 @@ import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
     `
   ]
 })
-export class NzDemoTimePickerSizeComponent {
+export class TriDemoTimePickerSizeComponent {
   time = new Date();
 }

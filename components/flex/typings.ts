@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export type NzJustify =
+export type TriJustify =
   | 'flex-start'
   | 'center'
   | 'flex-end'
@@ -17,7 +17,7 @@ export type NzJustify =
   | 'stretch'
   | 'normal';
 
-export type NzAlign =
+export type TriAlign =
   | 'flex-start'
   | 'center'
   | 'flex-end'
@@ -31,12 +31,12 @@ export type NzAlign =
   | 'stretch'
   | 'normal';
 
-export type NzGap = 'small' | 'middle' | 'large' | NzCustomGap;
-export type NzCustomGap = number | string;
+export type TriGap = 'small' | 'middle' | 'large' | TriCustomGap;
+export type TriCustomGap = number | string;
 
-export type NzWrap = 'wrap' | 'nowrap' | 'wrap-reverse';
+export type TriWrap = 'wrap' | 'nowrap' | 'wrap-reverse';
 
-export type NzFlex = `${NzFlexShrink} ${NzFlexGrow} ${NzFlexBasis}` | 'unset';
-export type NzFlexShrink = number;
-export type NzFlexGrow = number;
-export type NzFlexBasis = string;
+export type TriFlex = `${TriFlexShrink} ${TriFlexGrow} ${TriFlexBasis}` | 'unset';
+export type TriFlexShrink = number;
+export type TriFlexGrow = number;
+export type TriFlexBasis = string;

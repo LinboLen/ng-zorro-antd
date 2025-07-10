@@ -8,47 +8,47 @@ import { CdkScrollable } from '@angular/cdk/overlay';
 import { CdkPortalOutlet, PortalModule } from '@angular/cdk/portal';
 import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
-import { NzPipesModule } from 'ng-zorro-antd/pipes';
+import { TriPipesModule } from 'ng-zorro-antd/pipes';
 
 import { nzModalAnimations } from './modal-animations';
-import { NzModalCloseComponent } from './modal-close.component';
+import { TriModalCloseComponent } from './modal-close.component';
 import { BaseModalContainerComponent } from './modal-container.directive';
-import { NzModalFooterComponent } from './modal-footer.component';
-import { NzModalTitleComponent } from './modal-title.component';
+import { TriModalFooterComponent } from './modal-footer.component';
+import { TriModalTitleComponent } from './modal-title.component';
 
 @Component({
-  selector: 'nz-modal-container',
-  exportAs: 'nzModalContainer',
+  selector: '',
+  exportAs: 'triModalContainer',
   hostDirectives: [CdkScrollable],
   template: `
     <div
       #modalElement
       cdkDrag
       cdkDragBoundary=".cdk-overlay-container"
-      [cdkDragDisabled]="!config.nzDraggable"
+      [cdkDragDisabled]="!draggable"
       role="document"
-      class="ant-modal"
-      [class]="config.nzClassName!"
-      [style]="config.nzStyle!"
+      class="tri-modal"
+      [class]="className!"
+      [style]="style!"
       [style.width]="config?.nzWidth! | nzToCssUnit"
     >
-      <div class="ant-modal-content">
-        @if (config.nzClosable) {
-          <button nz-modal-close (click)="onCloseClick()"></button>
+      <div class="tri-modal-content">
+        @if (closable) {
+          <button tri-modal-close (click)="onCloseClick()"></button>
         }
-        @if (config.nzTitle) {
-          <div nz-modal-title cdkDragHandle [style.cursor]="config.nzDraggable ? 'move' : 'auto'"></div>
+        @if (title) {
+          <div tri-modal-title cdkDragHandle [style.cursor]="draggable ? 'move' : 'auto'"></div>
         }
 
-        <div class="ant-modal-body" [style]="config.nzBodyStyle!">
+        <div class="tri-modal-body" [style]="bodyStyle!">
           <ng-template cdkPortalOutlet />
           @if (isStringContent) {
-            <div [innerHTML]="config.nzContent"></div>
+            <div [innerHTML]="content"></div>
           }
         </div>
-        @if (config.nzFooter !== null) {
+        @if (footer !== null) {
           <div
-            nz-modal-footer
+            tri-modal-footer
             [modalRef]="modalRef"
             (cancelTriggered)="onCloseClick()"
             (okTriggered)="onOkClick()"
@@ -64,8 +64,8 @@ import { NzModalTitleComponent } from './modal-title.component';
     tabindex: '-1',
     role: 'dialog',
     '[class]': 'config.nzWrapClassName ? "ant-modal-wrap " + config.nzWrapClassName : "ant-modal-wrap"',
-    '[class.ant-modal-wrap-rtl]': `dir === 'rtl'`,
-    '[class.ant-modal-centered]': 'config.nzCentered',
+    '[class.tri-modal-wrap-rtl]': `dir === 'rtl'`,
+    '[class.tri-modal-centered]': 'centered',
     '[style.zIndex]': 'config.nzZIndex',
     '[@.disabled]': 'config.nzNoAnimation',
     '[@modalContainer]': 'state',
@@ -74,16 +74,16 @@ import { NzModalTitleComponent } from './modal-title.component';
     '(click)': 'onContainerClick($event)'
   },
   imports: [
-    NzModalCloseComponent,
-    NzModalTitleComponent,
+    TriModalCloseComponent,
+    TriModalTitleComponent,
     PortalModule,
-    NzModalFooterComponent,
-    NzPipesModule,
+    TriModalFooterComponent,
+    TriPipesModule,
     CdkDrag,
     CdkDragHandle
   ]
 })
-export class NzModalContainerComponent extends BaseModalContainerComponent implements OnInit {
+export class TriModalContainerComponent extends BaseModalContainerComponent implements OnInit {
   @ViewChild(CdkPortalOutlet, { static: true }) set _portalOutlet(portalOutlet: CdkPortalOutlet) {
     this.portalOutlet = portalOutlet;
   }

@@ -14,37 +14,37 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
-import { NzTableSortOrder } from '../table.types';
+import { TriTableSortOrder } from '../table.types';
 
 @Component({
-  selector: 'nz-table-sorters',
+  selector: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
-    <span class="ant-table-column-title"><ng-template [ngTemplateOutlet]="contentTemplate"></ng-template></span>
-    <span class="ant-table-column-sorter" [class.ant-table-column-sorter-full]="isDown && isUp">
-      <span class="ant-table-column-sorter-inner">
+    <span class="tri-table-column-title"><ng-template [ngTemplateOutlet]="contentTemplate"></ng-template></span>
+    <span class="tri-table-column-sorter" [class.tri-table-column-sorter-full]="isDown && isUp">
+      <span class="tri-table-column-sorter-inner">
         @if (isUp) {
-          <nz-icon nzType="caret-up" class="ant-table-column-sorter-up" [class.active]="sortOrder === 'ascend'" />
+          <tri-icon type="caret-up" class="tri-table-column-sorter-up" [class.active]="sortOrder === 'ascend'" />
         }
         @if (isDown) {
-          <nz-icon nzType="caret-down" class="ant-table-column-sorter-down" [class.active]="sortOrder === 'descend'" />
+          <tri-icon type="caret-down" class="tri-table-column-sorter-down" [class.active]="sortOrder === 'descend'" />
         }
       </span>
     </span>
   `,
   host: {
-    class: 'ant-table-column-sorters'
+    class: 'tri-table-column-sorters'
   },
-  imports: [NzIconModule, NgTemplateOutlet]
+  imports: [TriIconModule, NgTemplateOutlet]
 })
-export class NzTableSortersComponent implements OnChanges {
-  @Input() sortDirections: NzTableSortOrder[] = ['ascend', 'descend', null];
-  @Input() sortOrder: NzTableSortOrder = null;
-  @Input() contentTemplate: TemplateRef<NzSafeAny> | null = null;
+export class TriTableSortersComponent implements OnChanges {
+  @Input() sortDirections: TriTableSortOrder[] = ['ascend', 'descend', null];
+  @Input() sortOrder: TriTableSortOrder = null;
+  @Input() contentTemplate: TemplateRef<TriSafeAny> | null = null;
   isUp = false;
   isDown = false;
 

@@ -10,44 +10,44 @@ import {
 import { Observable, Observer, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { TriFormModule } from 'ng-zorro-antd/form';
+import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: 'nz-demo-form-auto-tips',
-  imports: [ReactiveFormsModule, NzButtonModule, NzFormModule, NzInputModule],
+  selector: '',
+  imports: [ReactiveFormsModule, TriButtonModule, TriFormModule, TriInputModule],
   template: `
-    <form nz-form [nzAutoTips]="autoTips" [formGroup]="validateForm" (ngSubmit)="submitForm()">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired>Username</nz-form-label>
-        <nz-form-control [nzSpan]="12" nzValidatingTip="Validating...">
-          <input nz-input formControlName="username" placeholder="async validate try to write JasonWood" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired>Mobile</nz-form-label>
-        <nz-form-control [nzSpan]="12">
-          <input nz-input formControlName="mobile" placeholder="mobile" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired>E-mail</nz-form-label>
-        <nz-form-control [nzSpan]="12">
-          <input nz-input formControlName="email" placeholder="email" type="email" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired>Password</nz-form-label>
-        <nz-form-control [nzSpan]="12" nzDisableAutoTips nzErrorTip="Please input your password!">
-          <input nz-input type="password" formControlName="password" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired>Confirm Password</nz-form-label>
-        <nz-form-control [nzSpan]="12" nzDisableAutoTips [nzErrorTip]="passwordErrorTpl">
-          <input nz-input type="password" formControlName="confirm" placeholder="confirm your password" />
+    <form tri-form [autoTips]="autoTips" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+      <tri-form-item>
+        <tri-form-label [span]="7" required>Username</tri-form-label>
+        <tri-form-control [span]="12" validatingTip="Validating...">
+          <input tri-input formControlName="username" placeholder="async validate try to write JasonWood" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [span]="7" required>Mobile</tri-form-label>
+        <tri-form-control [span]="12">
+          <input tri-input formControlName="mobile" placeholder="mobile" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [span]="7" required>E-mail</tri-form-label>
+        <tri-form-control [span]="12">
+          <input tri-input formControlName="email" placeholder="email" type="email" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [span]="7" required>Password</tri-form-label>
+        <tri-form-control [span]="12" disableAutoTips errorTip="Please input your password!">
+          <input tri-input type="password" formControlName="password" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [span]="7" required>Confirm Password</tri-form-label>
+        <tri-form-control [span]="12" disableAutoTips [errorTip]="passwordErrorTpl">
+          <input tri-input type="password" formControlName="confirm" placeholder="confirm your password" />
           <ng-template #passwordErrorTpl let-control>
             @if (control.errors?.['required']) {
               Please confirm your password!
@@ -56,13 +56,13 @@ import { NzInputModule } from 'ng-zorro-antd/input';
               Password is inconsistent!
             }
           </ng-template>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-control [nzOffset]="7" [nzSpan]="12">
-          <button nz-button nzType="primary">Submit</button>
-        </nz-form-control>
-      </nz-form-item>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-control [offset]="7" [span]="12">
+          <button tri-button type="primary">Submit</button>
+        </tri-form-control>
+      </tri-form-item>
     </form>
   `,
   styles: [
@@ -73,7 +73,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     `
   ]
 })
-export class NzDemoFormAutoTipsComponent implements OnInit, OnDestroy {
+export class TriDemoFormAutoTipsComponent implements OnInit, OnDestroy {
   private fb = inject(NonNullableFormBuilder);
   private destroy$ = new Subject<void>();
   validateForm = this.fb.group({
@@ -152,7 +152,7 @@ export class NzDemoFormAutoTipsComponent implements OnInit, OnDestroy {
 }
 
 // current locale is key of the MyErrorsOptions
-export type MyErrorsOptions = { 'zh-cn': string; en: string } & Record<string, NzSafeAny>;
+export type MyErrorsOptions = { 'zh-cn': string; en: string } & Record<string, TriSafeAny>;
 export type MyValidationErrors = Record<string, MyErrorsOptions>;
 
 export class MyValidators extends Validators {
@@ -187,7 +187,7 @@ export class MyValidators extends Validators {
   }
 }
 
-function isEmptyInputValue(value: NzSafeAny): boolean {
+function isEmptyInputValue(value: TriSafeAny): boolean {
   return value == null || value.length === 0;
 }
 

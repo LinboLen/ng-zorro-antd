@@ -20,71 +20,71 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { TriCheckboxModule } from 'ng-zorro-antd/checkbox';
 
-import { NzRowExpandButtonDirective } from '../addon/row-expand-button.directive';
-import { NzRowIndentDirective } from '../addon/row-indent.directive';
+import { TriRowExpandButtonDirective } from '../addon/row-expand-button.directive';
+import { TriRowIndentDirective } from '../addon/row-indent.directive';
 
 @Component({
   selector:
-    'td[nzChecked], td[nzDisabled], td[nzIndeterminate], td[nzIndentSize], td[nzExpand], td[nzShowExpand], td[nzShowCheckbox]',
+    '',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
-    @if (nzShowExpand || nzIndentSize > 0) {
-      <nz-row-indent [indentSize]="nzIndentSize"></nz-row-indent>
-      @if (nzExpandIcon) {
-        <ng-template [ngTemplateOutlet]="nzExpandIcon"></ng-template>
+    @if (showExpand || indentSize > 0) {
+      <tri-row-indent [indentSize]="indentSize"></tri-row-indent>
+      @if (expandIcon) {
+        <ng-template [ngTemplateOutlet]="expandIcon"></ng-template>
       } @else {
         <button
-          nz-row-expand-button
-          [expand]="nzExpand"
+          tri-row-expand-button
+          [expand]="expand"
           (expandChange)="onExpandChange($event)"
-          [spaceMode]="!nzShowExpand"
+          [spaceMode]="!showExpand"
         ></button>
       }
     }
-    @if (nzShowCheckbox) {
+    @if (showCheckbox) {
       <label
-        nz-checkbox
-        [nzDisabled]="nzDisabled"
-        [ngModel]="nzChecked"
-        [nzIndeterminate]="nzIndeterminate"
-        [attr.aria-label]="nzLabel"
+        tri-checkbox
+        [disabled]="disabled"
+        [ngModel]="checked"
+        [indeterminate]="indeterminate"
+        [attr.aria-label]="label"
         (ngModelChange)="onCheckedChange($event)"
       ></label>
     }
     <ng-content></ng-content>
   `,
   host: {
-    '[class.ant-table-cell-with-append]': `nzShowExpand || nzIndentSize > 0`,
-    '[class.ant-table-selection-column]': `nzShowCheckbox`
+    '[class.tri-table-cell-with-append]': `showExpand || indentSize > 0`,
+    '[class.tri-table-selection-column]': `showCheckbox`
   },
-  imports: [NzRowIndentDirective, NzRowExpandButtonDirective, NgTemplateOutlet, NzCheckboxModule, FormsModule]
+  imports: [TriRowIndentDirective, TriRowExpandButtonDirective, NgTemplateOutlet, TriCheckboxModule, FormsModule]
 })
-export class NzTdAddOnComponent implements OnChanges {
-  @Input() nzChecked = false;
-  @Input() nzDisabled = false;
-  @Input() nzIndeterminate = false;
-  @Input() nzLabel: string | null = null;
-  @Input() nzIndentSize = 0;
-  @Input({ transform: booleanAttribute }) nzShowExpand = false;
-  @Input({ transform: booleanAttribute }) nzShowCheckbox = false;
-  @Input({ transform: booleanAttribute }) nzExpand = false;
-  @Input() nzExpandIcon: TemplateRef<void> | null = null;
-  @Output() readonly nzCheckedChange = new EventEmitter<boolean>();
-  @Output() readonly nzExpandChange = new EventEmitter<boolean>();
+export class TriTdAddOnComponent implements OnChanges {
+  @Input() checked = false;
+  @Input() disabled = false;
+  @Input() indeterminate = false;
+  @Input() label: string | null = null;
+  @Input() indentSize = 0;
+  @Input({ transform: booleanAttribute }) showExpand = false;
+  @Input({ transform: booleanAttribute }) showCheckbox = false;
+  @Input({ transform: booleanAttribute }) expand = false;
+  @Input() expandIcon: TemplateRef<void> | null = null;
+  @Output() readonly checkedChange = new EventEmitter<boolean>();
+  @Output() readonly expandChange = new EventEmitter<boolean>();
   private isNzShowExpandChanged = false;
   private isNzShowCheckboxChanged = false;
 
   onCheckedChange(checked: boolean): void {
-    this.nzChecked = checked;
-    this.nzCheckedChange.emit(checked);
+    this.checked = checked;
+    this.checkedChange.emit(checked);
   }
 
   onExpandChange(expand: boolean): void {
-    this.nzExpand = expand;
-    this.nzExpandChange.emit(expand);
+    this.expand = expand;
+    this.expandChange.emit(expand);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -98,10 +98,10 @@ export class NzTdAddOnComponent implements OnChanges {
       this.isNzShowCheckboxChanged = true;
     }
     if (isFirstChange(nzExpand) && !this.isNzShowExpandChanged) {
-      this.nzShowExpand = true;
+      this.showExpand = true;
     }
     if (isFirstChange(nzChecked) && !this.isNzShowCheckboxChanged) {
-      this.nzShowCheckbox = true;
+      this.showCheckbox = true;
     }
   }
 }

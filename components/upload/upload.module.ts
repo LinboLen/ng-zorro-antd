@@ -5,12 +5,12 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzUploadBtnComponent } from './upload-btn.component';
-import { NzUploadListComponent } from './upload-list.component';
-import { NzUploadComponent } from './upload.component';
+import { TriUploadBtnComponent } from './upload-btn.component';
+import { TriUploadListComponent } from './upload-list.component';
+import { TriUploadComponent } from './upload.component';
 
 @NgModule({
-  imports: [NzUploadComponent, NzUploadBtnComponent, NzUploadListComponent],
-  exports: [NzUploadComponent]
+  imports: [TriUploadComponent, TriUploadBtnComponent, TriUploadListComponent],
+  exports: [TriUploadComponent]
 })
-export class NzUploadModule {}
+export class TriUploadModule {}

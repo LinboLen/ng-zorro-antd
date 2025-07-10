@@ -10,11 +10,11 @@ import { By } from '@angular/platform-browser';
 
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
-import { NzCommentComponent } from './comment.component';
-import { NzDemoCommentBasicComponent } from './demo/basic';
-import { NzDemoCommentEditorComponent } from './demo/editor';
-import { NzDemoCommentListComponent } from './demo/list';
-import { NzDemoCommentNestedComponent } from './demo/nested';
+import { TriCommentComponent } from './comment.component';
+import { TriDemoCommentBasicComponent } from './demo/basic';
+import { TriDemoCommentEditorComponent } from './demo/editor';
+import { TriDemoCommentListComponent } from './demo/list';
+import { TriDemoCommentNestedComponent } from './demo/nested';
 
 describe('NzCommentComponent', () => {
   beforeEach(waitForAsync(() => {
@@ -26,9 +26,9 @@ describe('NzCommentComponent', () => {
 
   describe('default', () => {
     it('should basic work', () => {
-      const fixture = TestBed.createComponent(NzDemoCommentBasicComponent);
+      const fixture = TestBed.createComponent(TriDemoCommentBasicComponent);
       const component = fixture.componentInstance;
-      const comment = fixture.debugElement.query(By.directive(NzCommentComponent));
+      const comment = fixture.debugElement.query(By.directive(TriCommentComponent));
       fixture.detectChanges();
 
       expect(comment.nativeElement.classList).toContain('ant-comment');
@@ -41,9 +41,9 @@ describe('NzCommentComponent', () => {
     });
 
     it('should actions work', () => {
-      const fixture = TestBed.createComponent(NzDemoCommentBasicComponent);
+      const fixture = TestBed.createComponent(TriDemoCommentBasicComponent);
       const component = fixture.componentInstance;
-      const comment = fixture.debugElement.query(By.directive(NzCommentComponent));
+      const comment = fixture.debugElement.query(By.directive(TriCommentComponent));
       fixture.detectChanges();
 
       expect(component.likes).toBe(0);
@@ -83,10 +83,10 @@ describe('NzCommentComponent', () => {
     });
 
     it('should list work', () => {
-      const fixture = TestBed.createComponent(NzDemoCommentListComponent);
+      const fixture = TestBed.createComponent(TriDemoCommentListComponent);
       const component = fixture.componentInstance;
       fixture.detectChanges();
-      let comments = fixture.debugElement.queryAll(By.directive(NzCommentComponent));
+      let comments = fixture.debugElement.queryAll(By.directive(TriCommentComponent));
       fixture.detectChanges();
       expect(component.data.length === comments.length).toBeTruthy();
 
@@ -100,12 +100,12 @@ describe('NzCommentComponent', () => {
 
       component.data = [{ ...component.data[0] }];
       fixture.detectChanges();
-      comments = fixture.debugElement.queryAll(By.directive(NzCommentComponent));
+      comments = fixture.debugElement.queryAll(By.directive(TriCommentComponent));
       expect(component.data.length === comments.length).toBeTruthy();
     });
 
     it('should editor work', fakeAsync(() => {
-      const fixture = TestBed.createComponent(NzDemoCommentEditorComponent);
+      const fixture = TestBed.createComponent(TriDemoCommentEditorComponent);
       const component = fixture.componentInstance;
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('nz-comment .ant-comment-content-detail textarea'))).toBeTruthy();
@@ -135,24 +135,24 @@ describe('NzCommentComponent', () => {
     }));
 
     it('should nested work', () => {
-      const fixture = TestBed.createComponent(NzDemoCommentNestedComponent);
+      const fixture = TestBed.createComponent(TriDemoCommentNestedComponent);
       fixture.detectChanges();
 
-      const rootComment = fixture.debugElement.query(By.directive(NzCommentComponent));
+      const rootComment = fixture.debugElement.query(By.directive(TriCommentComponent));
       expect(rootComment.nativeElement).toBeTruthy();
 
-      const levelTwoComment = rootComment.query(By.directive(NzCommentComponent));
+      const levelTwoComment = rootComment.query(By.directive(TriCommentComponent));
       expect(levelTwoComment.nativeElement).toBeTruthy();
 
-      const levelThreeComments = levelTwoComment.queryAll(By.directive(NzCommentComponent));
+      const levelThreeComments = levelTwoComment.queryAll(By.directive(TriCommentComponent));
       expect(levelThreeComments.length).toBe(2);
     });
   });
 
   describe('RTL', () => {
     it('should className correct on dir change', () => {
-      const fixture = TestBed.createComponent(NzTestCommentRtlComponent);
-      const comment = fixture.debugElement.query(By.directive(NzCommentComponent));
+      const fixture = TestBed.createComponent(TriTestCommentRtlComponent);
+      const comment = fixture.debugElement.query(By.directive(TriCommentComponent));
       fixture.detectChanges();
       expect(comment.nativeElement.classList).toContain('ant-comment-rtl');
 
@@ -164,14 +164,14 @@ describe('NzCommentComponent', () => {
 });
 
 @Component({
-  imports: [BidiModule, NzDemoCommentBasicComponent],
+  imports: [BidiModule, TriDemoCommentBasicComponent],
   template: `
     <div [dir]="direction">
-      <nz-demo-comment-basic></nz-demo-comment-basic>
+      <tri-demo-comment-basic></tri-demo-comment-basic>
     </div>
   `
 })
-export class NzTestCommentRtlComponent {
+export class TriTestCommentRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 }

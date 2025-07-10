@@ -5,9 +5,9 @@
 
 import { Observable } from 'rxjs';
 
-export abstract class NzModalLegacyAPI<T, R> {
-  abstract afterOpen: Observable<void>;
-  abstract afterClose: Observable<R | undefined>;
+export abstract class TriModalLegacyAPI<T, R> {
+  abstract _afterOpen: Observable<void>;
+  abstract _afterClose: Observable<R | undefined>;
 
   abstract close(result?: R): void;
   abstract destroy(result?: R): void;

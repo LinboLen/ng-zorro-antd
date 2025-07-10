@@ -1,28 +1,28 @@
 import { Component } from '@angular/core';
 
-import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzGridModule } from 'ng-zorro-antd/grid';
+import { TriCardModule } from 'ng-zorro-antd/card';
+import { TriGridModule } from 'ng-zorro-antd/grid';
 
 @Component({
-  selector: 'nz-demo-card-in-column',
-  imports: [NzCardModule, NzGridModule],
+  selector: '',
+  imports: [TriCardModule, TriGridModule],
   template: `
     <div style="background: #ECECEC; padding:30px;">
-      <div nz-row [nzGutter]="8">
-        <div nz-col [nzSpan]="8">
-          <nz-card nzTitle="Card title">
+      <div tri-row [gutter]="8">
+        <div tri-col [span]="8">
+          <tri-card title="Card title">
             <p>Card content</p>
-          </nz-card>
+          </tri-card>
         </div>
-        <div nz-col [nzSpan]="8">
-          <nz-card nzTitle="Card title">
+        <div tri-col [span]="8">
+          <tri-card title="Card title">
             <p>Card content</p>
-          </nz-card>
+          </tri-card>
         </div>
-        <div nz-col [nzSpan]="8">
-          <nz-card nzTitle="Card title">
+        <div tri-col [span]="8">
+          <tri-card title="Card title">
             <p>Card content</p>
-          </nz-card>
+          </tri-card>
         </div>
       </div>
     </div>
@@ -35,4 +35,4 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
     `
   ]
 })
-export class NzDemoCardInColumnComponent {}
+export class TriDemoCardInColumnComponent {}

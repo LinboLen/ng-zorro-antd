@@ -7,9 +7,9 @@ import { Component } from '@angular/core';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'color-palette',
+  selector: '',
   template: `
-    <div class="ant-color-picker-palette">
+    <div class="tri-color-picker-palette">
       <ng-content></ng-content>
     </div>
   `

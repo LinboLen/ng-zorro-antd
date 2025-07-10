@@ -9,12 +9,12 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Observable, of } from 'rxjs';
 
 import { dispatchMouseEvent, dispatchTouchEvent } from 'ng-zorro-antd/core/testing';
-import { NzFormatEmitEvent, NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/core/tree';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriFormatEmitEvent, TriTreeNode, TriTreeNodeOptions } from 'ng-zorro-antd/core/tree';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
-import { NzTreeComponent } from './tree.component';
-import { NzTreeModule } from './tree.module';
+import { TriTreeComponent } from './tree.component';
+import { TriTreeModule } from './tree.module';
 
 describe('tree', () => {
   beforeEach(() => {
@@ -24,12 +24,12 @@ describe('tree', () => {
   });
 
   describe('controlled', () => {
-    let fixture: ComponentFixture<NzTestTreeBasicControlledComponent>;
-    let component: NzTestTreeBasicControlledComponent;
+    let fixture: ComponentFixture<TriTestTreeBasicControlledComponent>;
+    let component: TriTestTreeBasicControlledComponent;
     let nativeElement: Element;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTreeBasicControlledComponent);
+      fixture = TestBed.createComponent(TriTestTreeBasicControlledComponent);
       component = fixture.componentInstance;
       nativeElement = fixture.debugElement.nativeElement;
       fixture.detectChanges();
@@ -190,7 +190,7 @@ describe('tree', () => {
             expect(component.treeComponent.getMatchedNodeList().length)
               .withContext('treeComponent.getMatchedNodeList().length')
               .toBe(then.matchedNodeList);
-            expect(component.treeComponent.nzFlattenNodes.length)
+            expect(component.treeComponent.flattenNodes.length)
               .withContext('treeComponent.nzFlattenNodes.length')
               .toBe(then.nzFlattenNodes);
             expect(nativeElement.querySelectorAll('nz-tree-node').length)
@@ -201,7 +201,7 @@ describe('tree', () => {
       });
 
       it('should match nodes based on nzSearchFunc', fakeAsync(() => {
-        component.searchFunc = (data: NzTreeNodeOptions): boolean => data.title === component.searchValue;
+        component.searchFunc = (data: TriTreeNodeOptions): boolean => data.title === component.searchValue;
         component.searchValue = '0-0';
         fixture.detectChanges();
         let expandedNodes = nativeElement.querySelectorAll('.ant-tree-switcher_open');
@@ -395,8 +395,8 @@ describe('tree', () => {
   });
 
   describe('dnd', () => {
-    let fixture: ComponentFixture<NzTestTreeDraggableComponent>;
-    let component: NzTestTreeDraggableComponent;
+    let fixture: ComponentFixture<TriTestTreeDraggableComponent>;
+    let component: TriTestTreeDraggableComponent;
     let nativeElement: Element;
 
     let dragStartSpy: jasmine.Spy;
@@ -407,7 +407,7 @@ describe('tree', () => {
     let dragEndSpy: jasmine.Spy;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTreeDraggableComponent);
+      fixture = TestBed.createComponent(TriTestTreeDraggableComponent);
       component = fixture.componentInstance;
       nativeElement = fixture.debugElement.nativeElement;
 
@@ -555,8 +555,8 @@ describe('tree', () => {
   });
 
   describe('search', () => {
-    let fixture: ComponentFixture<NzTestTreeBasicSearchComponent>;
-    let component: NzTestTreeBasicSearchComponent;
+    let fixture: ComponentFixture<TriTestTreeBasicSearchComponent>;
+    let component: TriTestTreeBasicSearchComponent;
     let nativeElement: Element;
 
     const getVisibleNodes = (title?: string): Element[] => {
@@ -567,7 +567,7 @@ describe('tree', () => {
     };
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTreeBasicSearchComponent);
+      fixture = TestBed.createComponent(TriTestTreeBasicSearchComponent);
       component = fixture.componentInstance;
       nativeElement = fixture.debugElement.nativeElement;
     });
@@ -615,42 +615,42 @@ describe('tree', () => {
 });
 
 @Component({
-  imports: [NzIconModule, NzTreeModule],
+  imports: [TriIconModule, TriTreeModule],
   template: `
     <button (click)="changeIcon(expandedIconTpl)">Custom expand icon</button>
-    <nz-tree
+    <tri-tree
       #treeComponent
-      [nzData]="nodes"
-      nzShowIcon
-      [nzCheckable]="true"
-      [nzShowLine]="showLine"
-      [nzCheckStrictly]="checkStrictly"
-      [nzCheckedKeys]="defaultCheckedKeys"
-      [nzExpandedKeys]="defaultExpandedKeys"
-      [nzSelectedKeys]="defaultSelectedKeys"
-      [nzMultiple]="multiple"
-      [nzSearchValue]="searchValue"
-      [nzSearchFunc]="searchFunc"
-      [nzVirtualHeight]="virtualHeight"
-      [nzHideUnMatched]="hideUnMatched"
-      [nzExpandAll]="expandAll"
-      [nzExpandedIcon]="expandedIcon"
-      [nzAsyncData]="asyncData"
-      [nzSelectMode]="selectMode"
-      (nzSearchValueChange)="nzEvent($event)"
-      (nzClick)="nzEvent($event)"
-      (nzDblClick)="nzEvent($event)"
-      (nzContextMenu)="nzEvent($event)"
-      (nzExpandChange)="nzEvent($event)"
-      (nzCheckboxChange)="nzEvent($event)"
-    ></nz-tree>
+      [data]="nodes"
+      showIcon
+      [checkable]="true"
+      [showLine]="showLine"
+      [checkStrictly]="checkStrictly"
+      [checkedKeys]="defaultCheckedKeys"
+      [expandedKeys]="defaultExpandedKeys"
+      [selectedKeys]="defaultSelectedKeys"
+      [multiple]="multiple"
+      [searchValue]="searchValue"
+      [searchFunc]="searchFunc"
+      [virtualHeight]="virtualHeight"
+      [hideUnMatched]="hideUnMatched"
+      [expandAll]="expandAll"
+      [expandedIcon]="expandedIcon"
+      [asyncData]="asyncData"
+      [selectMode]="selectMode"
+      (searchValueChange)="event($event)"
+      (click)="event($event)"
+      (dblClick)="event($event)"
+      (contextMenu)="event($event)"
+      (expandChange)="event($event)"
+      (checkboxChange)="event($event)"
+    ></tri-tree>
     <ng-template #expandedIconTpl let-node>
-      <nz-icon nzType="smile" class="ant-tree-switcher-icon" />
+      <tri-icon type="smile" class="tri-tree-switcher-icon" />
     </ng-template>
   `
 })
-export class NzTestTreeBasicControlledComponent {
-  @ViewChild('treeComponent', { static: true }) treeComponent!: NzTreeComponent;
+export class TriTestTreeBasicControlledComponent {
+  @ViewChild('treeComponent', { static: true }) treeComponent!: TriTreeComponent;
   searchValue: string = '';
   multiple = true;
   expandAll = false;
@@ -661,11 +661,11 @@ export class NzTestTreeBasicControlledComponent {
   defaultCheckedKeys: string[] = [];
   defaultSelectedKeys: string[] = [];
   defaultExpandedKeys: string[] = [];
-  expandedIcon?: TemplateRef<{ $implicit: NzTreeNode; origin: NzTreeNodeOptions }>;
-  searchFunc?: (node: NzTreeNodeOptions) => boolean;
+  expandedIcon?: TemplateRef<{ $implicit: TriTreeNode; origin: TriTreeNodeOptions }>;
+  searchFunc?: (node: TriTreeNodeOptions) => boolean;
   virtualHeight: string | null = null;
   hideUnMatched = false;
-  nodes: NzTreeNodeOptions[] | NzTreeNode[] = [
+  nodes: TriTreeNodeOptions[] | TriTreeNode[] = [
     {
       title: '0-0',
       key: '0-0',
@@ -698,36 +698,36 @@ export class NzTestTreeBasicControlledComponent {
     }
   ];
 
-  nzEvent(_data: NzFormatEmitEvent): void {}
+  event(_data: TriFormatEmitEvent): void {}
 
   // Just for testing
-  changeIcon(template: TemplateRef<{ $implicit: NzTreeNode; origin: NzTreeNodeOptions }>): void {
+  changeIcon(template: TemplateRef<{ $implicit: TriTreeNode; origin: TriTreeNodeOptions }>): void {
     this.expandedIcon = template;
   }
 }
 
 @Component({
-  imports: [NzTreeModule],
+  imports: [TriTreeModule],
   template: `
-    <nz-tree
-      nzBlockNode
-      [nzData]="nodes"
-      nzDraggable
-      [nzExpandedKeys]="defaultExpandedKeys"
-      [nzBeforeDrop]="beforeDrop"
-      (nzOnDragStart)="onDragStart()"
-      (nzOnDragEnter)="onDragEnter()"
-      (nzOnDragLeave)="onDragLeave()"
-      (nzOnDragOver)="onDragOver()"
-      (nzOnDrop)="onDrop()"
-      (nzOnDragEnd)="onDragEnd()"
-    ></nz-tree>
+    <tri-tree
+      blockNode
+      [data]="nodes"
+      draggable
+      [expandedKeys]="defaultExpandedKeys"
+      [beforeDrop]="beforeDrop"
+      (onDragStart)="onDragStart()"
+      (onDragEnter)="onDragEnter()"
+      (onDragLeave)="onDragLeave()"
+      (onDragOver)="onDragOver()"
+      (onDrop)="onDrop()"
+      (onDragEnd)="onDragEnd()"
+    ></tri-tree>
   `
 })
-export class NzTestTreeDraggableComponent {
-  @ViewChild(NzTreeComponent, { static: true }) treeComponent!: NzTreeComponent;
+export class TriTestTreeDraggableComponent {
+  @ViewChild(TriTreeComponent, { static: true }) treeComponent!: TriTreeComponent;
   defaultExpandedKeys: string[] = [];
-  nodes: NzTreeNodeOptions[] | NzTreeNode[] = [
+  nodes: TriTreeNodeOptions[] | TriTreeNode[] = [
     {
       title: '0-0',
       key: '0-0',
@@ -775,24 +775,24 @@ export class NzTestTreeDraggableComponent {
 }
 
 @Component({
-  imports: [NzTreeModule],
+  imports: [TriTreeModule],
   template: `
-    <nz-tree
-      [nzData]="nodes"
-      [nzSearchValue]="searchValue"
-      [nzExpandAll]="expandAll"
-      [nzAsyncData]="asyncData"
-      [nzHideUnMatched]="hideUnMatched"
-    ></nz-tree>
+    <tri-tree
+      [data]="nodes"
+      [searchValue]="searchValue"
+      [expandAll]="expandAll"
+      [asyncData]="asyncData"
+      [hideUnMatched]="hideUnMatched"
+    ></tri-tree>
   `
 })
-export class NzTestTreeBasicSearchComponent {
-  @ViewChild(NzTreeComponent, { static: true }) treeComponent!: NzTreeComponent;
+export class TriTestTreeBasicSearchComponent {
+  @ViewChild(TriTreeComponent, { static: true }) treeComponent!: TriTreeComponent;
   searchValue!: string;
   expandAll = true;
   asyncData = false;
   hideUnMatched = true;
-  nodes: NzTreeNodeOptions[] | NzTreeNode[] = [
+  nodes: TriTreeNodeOptions[] | TriTreeNode[] = [
     {
       title: 'Foo',
       key: '0-1',

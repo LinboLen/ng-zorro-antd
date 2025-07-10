@@ -1,38 +1,38 @@
 import { Component, inject } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriFormModule } from 'ng-zorro-antd/form';
+import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: 'nz-demo-form-label-wrap',
-  imports: [ReactiveFormsModule, NzButtonModule, NzFormModule, NzInputModule],
+  selector: '',
+  imports: [ReactiveFormsModule, TriButtonModule, TriFormModule, TriInputModule],
   template: `
-    <form nz-form [formGroup]="validateForm" nzNoColon nzLabelAlign="left" (ngSubmit)="submitForm()">
-      <nz-form-item>
-        <nz-form-label nzRequired nzFor="user" nzSpan="3"> Normal text label </nz-form-label>
-        <nz-form-control nzErrorTip="Please input your username!" nzSpan="8">
-          <input formControlName="username" nz-input id="user" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label nzRequired nzFor="label-wrap-password" nzSpan="3" nzLabelWrap>
+    <form tri-form [formGroup]="validateForm" noColon labelAlign="left" (ngSubmit)="submitForm()">
+      <tri-form-item>
+        <tri-form-label required for="user" span="3"> Normal text label </tri-form-label>
+        <tri-form-control errorTip="Please input your username!" span="8">
+          <input formControlName="username" tri-input id="user" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label required for="label-wrap-password" span="3" labelWrap>
           Long text label Long text label
-        </nz-form-label>
-        <nz-form-control nzErrorTip="Please input your Password!" nzSpan="8">
-          <input formControlName="password" nz-input type="password" id="label-wrap-password" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-control nzSpan="12" style="text-align: center">
-          <button nz-button nzType="primary">Log in</button>
-        </nz-form-control>
-      </nz-form-item>
+        </tri-form-label>
+        <tri-form-control errorTip="Please input your Password!" span="8">
+          <input formControlName="password" tri-input type="password" id="label-wrap-password" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-control span="12" style="text-align: center">
+          <button tri-button type="primary">Log in</button>
+        </tri-form-control>
+      </tri-form-item>
     </form>
   `
 })
-export class NzDemoFormLabelWrapComponent {
+export class TriDemoFormLabelWrapComponent {
   private fb = inject(NonNullableFormBuilder);
   validateForm = this.fb.group({
     username: this.fb.control('', [Validators.required]),

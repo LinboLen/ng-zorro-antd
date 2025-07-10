@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzTrimPipe } from 'ng-zorro-antd/pipes';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriTrimPipe } from 'ng-zorro-antd/pipes';
 
 @Component({
-  selector: 'nz-demo-pipes-trim',
-  imports: [FormsModule, NzInputModule, NzTrimPipe],
+  selector: '',
+  imports: [FormsModule, TriInputModule, TriTrimPipe],
   template: `
-    <input type="text" nz-input [(ngModel)]="str" />
+    <input type="text" tri-input [(ngModel)]="str" />
     <br />
     <div>
       <pre>{{ str }}</pre>
@@ -29,6 +29,6 @@ import { NzTrimPipe } from 'ng-zorro-antd/pipes';
     `
   ]
 })
-export class NzDemoPipesTrimComponent {
+export class TriDemoPipesTrimComponent {
   str = ' Ant Design ';
 }

@@ -17,70 +17,70 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzI18nService, NzModalI18nInterface } from 'ng-zorro-antd/i18n';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzPipesModule } from 'ng-zorro-antd/pipes';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriI18nService, TriModalI18nInterface } from 'ng-zorro-antd/i18n';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriPipesModule } from 'ng-zorro-antd/pipes';
 
 import { nzModalAnimations } from './modal-animations';
-import { NzModalCloseComponent } from './modal-close.component';
+import { TriModalCloseComponent } from './modal-close.component';
 import { BaseModalContainerComponent } from './modal-container.directive';
 
 @Component({
-  selector: 'nz-modal-confirm-container',
-  exportAs: 'nzModalConfirmContainer',
+  selector: '',
+  exportAs: 'triModalConfirmContainer',
   template: `
     <div
       #modalElement
       role="document"
-      class="ant-modal"
-      [class]="config.nzClassName!"
-      [style]="config.nzStyle!"
+      class="tri-modal"
+      [class]="className!"
+      [style]="style!"
       [style.width]="config?.nzWidth! | nzToCssUnit"
     >
-      <div class="ant-modal-content">
-        @if (config.nzClosable) {
-          <button nz-modal-close (click)="onCloseClick()"></button>
+      <div class="tri-modal-content">
+        @if (closable) {
+          <button tri-modal-close (click)="onCloseClick()"></button>
         }
 
-        <div class="ant-modal-body" [style]="config.nzBodyStyle!">
-          <div class="ant-modal-confirm-body-wrapper">
-            <div class="ant-modal-confirm-body">
-              <nz-icon [nzType]="config.nzIconType!" />
-              <span class="ant-modal-confirm-title">
-                <ng-container *nzStringTemplateOutlet="config.nzTitle">
-                  <span [innerHTML]="config.nzTitle"></span>
+        <div class="tri-modal-body" [style]="bodyStyle!">
+          <div class="tri-modal-confirm-body-wrapper">
+            <div class="tri-modal-confirm-body">
+              <tri-icon [type]="iconType!" />
+              <span class="tri-modal-confirm-title">
+                <ng-container *stringTemplateOutlet="title">
+                  <span [innerHTML]="title"></span>
                 </ng-container>
               </span>
-              <div class="ant-modal-confirm-content">
+              <div class="tri-modal-confirm-content">
                 <ng-template cdkPortalOutlet></ng-template>
                 @if (isStringContent) {
-                  <div [innerHTML]="config.nzContent"></div>
+                  <div [innerHTML]="content"></div>
                 }
               </div>
             </div>
-            <div class="ant-modal-confirm-btns">
-              @if (config.nzCancelText !== null) {
+            <div class="tri-modal-confirm-btns">
+              @if (cancelText !== null) {
                 <button
-                  [attr.cdkFocusInitial]="config.nzAutofocus === 'cancel' || null"
-                  nz-button
+                  [attr.cdkFocusInitial]="autofocus === 'cancel' || null"
+                  tri-button
                   (click)="onCancel()"
-                  [nzLoading]="config.nzCancelLoading"
-                  [disabled]="config.nzCancelDisabled"
+                  [loading]="cancelLoading"
+                  [disabled]="cancelDisabled"
                 >
                   {{ config.nzCancelText || locale.cancelText }}
                 </button>
               }
-              @if (config.nzOkText !== null) {
+              @if (okText !== null) {
                 <button
-                  [attr.cdkFocusInitial]="config.nzAutofocus === 'ok' || null"
-                  nz-button
-                  [nzType]="config.nzOkType!"
+                  [attr.cdkFocusInitial]="autofocus === 'ok' || null"
+                  tri-button
+                  [type]="okType!"
                   (click)="onOk()"
-                  [nzLoading]="config.nzOkLoading"
-                  [disabled]="config.nzOkDisabled"
-                  [nzDanger]="config.nzOkDanger"
+                  [loading]="okLoading"
+                  [disabled]="okDisabled"
+                  [danger]="okDanger"
                 >
                   {{ config.nzOkText || locale.okText }}
                 </button>
@@ -99,8 +99,8 @@ import { BaseModalContainerComponent } from './modal-container.directive';
     tabindex: '-1',
     role: 'dialog',
     '[class]': 'config.nzWrapClassName ? "ant-modal-wrap " + config.nzWrapClassName : "ant-modal-wrap"',
-    '[class.ant-modal-wrap-rtl]': `dir === 'rtl'`,
-    '[class.ant-modal-centered]': 'config.nzCentered',
+    '[class.tri-modal-wrap-rtl]': `dir === 'rtl'`,
+    '[class.tri-modal-centered]': 'centered',
     '[style.zIndex]': 'config.nzZIndex',
     '[@.disabled]': 'config.nzNoAnimation',
     '[@modalContainer]': 'state',
@@ -108,10 +108,10 @@ import { BaseModalContainerComponent } from './modal-container.directive';
     '(@modalContainer.done)': 'onAnimationDone($event)',
     '(click)': 'onContainerClick($event)'
   },
-  imports: [NzPipesModule, NzIconModule, NzModalCloseComponent, NzOutletModule, PortalModule, NzButtonModule]
+  imports: [TriPipesModule, TriIconModule, TriModalCloseComponent, TriOutletModule, PortalModule, TriButtonModule]
 })
-export class NzModalConfirmContainerComponent extends BaseModalContainerComponent implements OnInit {
-  private i18n = inject(NzI18nService);
+export class TriModalConfirmContainerComponent extends BaseModalContainerComponent implements OnInit {
+  private i18n = inject(TriI18nService);
 
   @ViewChild(CdkPortalOutlet, { static: true }) set _portalOutlet(portalOutlet: CdkPortalOutlet) {
     this.portalOutlet = portalOutlet;
@@ -121,7 +121,7 @@ export class NzModalConfirmContainerComponent extends BaseModalContainerComponen
   }
   @Output() override readonly cancelTriggered = new EventEmitter<void>();
   @Output() override readonly okTriggered = new EventEmitter<void>();
-  locale!: NzModalI18nInterface;
+  locale!: TriModalI18nInterface;
 
   constructor() {
     super();

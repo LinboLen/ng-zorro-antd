@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzResizeObserverDirective } from './resize-observer.directive';
+import { TriResizeObserverDirective } from './resize-observer.directive';
 
 @NgModule({
-  imports: [NzResizeObserverDirective],
-  exports: [NzResizeObserverDirective]
+  imports: [TriResizeObserverDirective],
+  exports: [TriResizeObserverDirective]
 })
-export class NzResizeObserverModule {}
+export class TriResizeObserverModule {}

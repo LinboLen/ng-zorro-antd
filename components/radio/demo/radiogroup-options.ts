@@ -1,30 +1,30 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: 'nz-demo-radio-radiogroup-options',
-  imports: [FormsModule, NzRadioModule],
+  selector: '',
+  imports: [FormsModule, TriRadioModule],
   template: `
-    <nz-radio-group [(ngModel)]="radioValue">
+    <tri-radio-group [(ngModel)]="radioValue">
       @for (o of options; track o.value) {
-        <label nz-radio [nzValue]="o.value">{{ o.label }}</label>
+        <label tri-radio [value]="o.value">{{ o.label }}</label>
       }
-    </nz-radio-group>
-    <nz-radio-group [(ngModel)]="radioValue">
+    </tri-radio-group>
+    <tri-radio-group [(ngModel)]="radioValue">
       @for (o of options; track o.value) {
-        <label nz-radio [nzValue]="o.value">{{ o.label }}</label>
+        <label tri-radio [value]="o.value">{{ o.label }}</label>
       }
-    </nz-radio-group>
-    <nz-radio-group [(ngModel)]="radioValue">
+    </tri-radio-group>
+    <tri-radio-group [(ngModel)]="radioValue">
       @for (o of options; track o.value) {
-        <label nz-radio [nzValue]="o.value">{{ o.label }}</label>
+        <label tri-radio [value]="o.value">{{ o.label }}</label>
       }
-    </nz-radio-group>
+    </tri-radio-group>
   `
 })
-export class NzDemoRadioRadiogroupOptionsComponent {
+export class TriDemoRadioRadiogroupOptionsComponent {
   radioValue = 'Apple';
   options = [
     { label: 'Apple', value: 'Apple' },

@@ -3,4 +3,4 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export type NzImageSrcLoader = (params: { src: string; width?: number }) => string;
+export type TriImageSrcLoader = (params: { src: string; width?: number }) => string;

@@ -21,14 +21,14 @@ import {
   MockNgZone,
   typeInElement
 } from 'ng-zorro-antd/core/testing';
-import { NzStatus } from 'ng-zorro-antd/core/types';
+import { TriStatus } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
-import { NzFormControlStatusType, NzFormModule } from '../form';
-import { NzInputModule } from '../input';
-import { NzMentionTriggerDirective } from './mention-trigger';
-import { NzMentionComponent } from './mention.component';
-import { NzMentionModule } from './mention.module';
+import { TriFormControlStatusType, TriFormModule } from '../form';
+import { TriInputModule } from '../input';
+import { TriMentionTriggerDirective } from './mention-trigger';
+import { TriMentionComponent } from './mention.component';
+import { TriMentionModule } from './mention.module';
 
 describe('mention', () => {
   let overlayContainer: OverlayContainer;
@@ -64,10 +64,10 @@ describe('mention', () => {
   }));
 
   describe('RTL', () => {
-    let fixture: ComponentFixture<NzTestDirMentionComponent>;
+    let fixture: ComponentFixture<TriTestDirMentionComponent>;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestDirMentionComponent);
+      fixture = TestBed.createComponent(TriTestDirMentionComponent);
       fixture.detectChanges();
     });
 
@@ -82,11 +82,11 @@ describe('mention', () => {
   });
 
   describe('toggling', () => {
-    let fixture: ComponentFixture<NzTestSimpleMentionComponent>;
+    let fixture: ComponentFixture<TriTestSimpleMentionComponent>;
     let textarea: HTMLTextAreaElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestSimpleMentionComponent);
+      fixture = TestBed.createComponent(TriTestSimpleMentionComponent);
       fixture.detectChanges();
       textarea = fixture.debugElement.query(By.css('textarea')).nativeElement;
       textarea.value = '@angular';
@@ -216,7 +216,7 @@ describe('mention', () => {
   });
 
   describe('keyboard events', () => {
-    let fixture: ComponentFixture<NzTestSimpleMentionComponent>;
+    let fixture: ComponentFixture<TriTestSimpleMentionComponent>;
     let textarea: HTMLTextAreaElement;
     let DOWN_ARROW_EVENT: KeyboardEvent;
     let UP_ARROW_EVENT: KeyboardEvent;
@@ -225,7 +225,7 @@ describe('mention', () => {
     let RIGHT_EVENT: KeyboardEvent;
 
     beforeEach(fakeAsync(() => {
-      fixture = TestBed.createComponent(NzTestSimpleMentionComponent);
+      fixture = TestBed.createComponent(TriTestSimpleMentionComponent);
       fixture.detectChanges();
       textarea = fixture.debugElement.query(By.css('textarea')).nativeElement;
 
@@ -424,11 +424,11 @@ describe('mention', () => {
   });
 
   describe('property', () => {
-    let fixture: ComponentFixture<NzTestPropertyMentionComponent>;
+    let fixture: ComponentFixture<TriTestPropertyMentionComponent>;
     let textarea: HTMLTextAreaElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestPropertyMentionComponent);
+      fixture = TestBed.createComponent(TriTestPropertyMentionComponent);
       fixture.detectChanges();
       textarea = fixture.debugElement.query(By.css('textarea')).nativeElement;
     });
@@ -515,12 +515,12 @@ describe('mention', () => {
   });
 
   describe('status', () => {
-    let fixture: ComponentFixture<NzTestStatusMentionComponent>;
+    let fixture: ComponentFixture<TriTestStatusMentionComponent>;
     let mention: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestStatusMentionComponent);
-      mention = fixture.debugElement.query(By.directive(NzMentionComponent));
+      fixture = TestBed.createComponent(TriTestStatusMentionComponent);
+      mention = fixture.debugElement.query(By.directive(TriMentionComponent));
       fixture.detectChanges();
     });
 
@@ -539,12 +539,12 @@ describe('mention', () => {
   });
 
   describe('in form', () => {
-    let fixture: ComponentFixture<NzTestMentionInFormComponent>;
+    let fixture: ComponentFixture<TriTestMentionInFormComponent>;
     let mention: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestMentionInFormComponent);
-      mention = fixture.debugElement.query(By.directive(NzMentionComponent));
+      fixture = TestBed.createComponent(TriTestMentionInFormComponent);
+      mention = fixture.debugElement.query(By.directive(TriMentionComponent));
       fixture.detectChanges();
     });
 
@@ -569,49 +569,49 @@ describe('mention', () => {
 });
 
 @Component({
-  imports: [FormsModule, NzInputModule, NzMentionModule],
+  imports: [FormsModule, TriInputModule, TriMentionModule],
   template: `
-    <nz-mention [nzSuggestions]="suggestions">
+    <tri-mention [suggestions]="suggestions">
       @if (!inputTrigger) {
         <textarea
-          nz-input
-          [nzAutosize]="{ minRows: 4, maxRows: 4 }"
+          tri-input
+          [autosize]="{ minRows: 4, maxRows: 4 }"
           [(ngModel)]="inputValue"
-          nzMentionTrigger
+          mentionTrigger
         ></textarea>
       } @else {
-        <textarea rows="1" nz-input [(ngModel)]="inputValue" nzMentionTrigger></textarea>
+        <textarea rows="1" tri-input [(ngModel)]="inputValue" mentionTrigger></textarea>
       }
-    </nz-mention>
+    </tri-mention>
   `
 })
-class NzTestSimpleMentionComponent {
+class TriTestSimpleMentionComponent {
   inputValue: string = '@angular';
   inputTrigger = false;
   suggestions = ['angular', 'ant-design', 'mention', '中文', 'にほんご'];
-  @ViewChild(NzMentionComponent, { static: false }) mention!: NzMentionComponent;
-  @ViewChild(NzMentionTriggerDirective, { static: false }) trigger!: NzMentionTriggerDirective;
+  @ViewChild(TriMentionComponent, { static: false }) mention!: TriMentionComponent;
+  @ViewChild(TriMentionTriggerDirective, { static: false }) trigger!: TriMentionTriggerDirective;
 }
 
 @Component({
-  imports: [FormsModule, NzInputModule, NzMentionModule],
+  imports: [FormsModule, TriInputModule, TriMentionModule],
   template: `
-    <nz-mention
-      [nzSuggestions]="webFrameworks"
-      [nzValueWith]="valueWith"
-      [nzPrefix]="prefix"
-      [nzPlacement]="'top'"
-      [nzLoading]="loading"
-      (nzOnSearchChange)="onSearchChange()"
+    <tri-mention
+      [suggestions]="webFrameworks"
+      [valueWith]="valueWith"
+      [prefix]="prefix"
+      [placement]="'top'"
+      [loading]="loading"
+      (onSearchChange)="onSearchChange()"
     >
-      <textarea nz-input [nzAutosize]="{ minRows: 4, maxRows: 4 }" [(ngModel)]="inputValue" nzMentionTrigger></textarea>
-      <ng-container *nzMentionSuggestion="let framework">
+      <textarea tri-input [autosize]="{ minRows: 4, maxRows: 4 }" [(ngModel)]="inputValue" mentionTrigger></textarea>
+      <ng-container *mentionSuggestion="let framework">
         <span class="custom">{{ framework.name }} - {{ framework.type }}</span>
       </ng-container>
-    </nz-mention>
+    </tri-mention>
   `
 })
-class NzTestPropertyMentionComponent {
+class TriTestPropertyMentionComponent {
   inputValue: string = '@angular';
   webFrameworks = [
     { name: 'React', type: 'JavaScript' },
@@ -623,8 +623,8 @@ class NzTestPropertyMentionComponent {
   loading = false;
   prefix: string | string[] = '@';
   valueWith = (data: { name: string; type: string }): string => data.name;
-  @ViewChild(NzMentionComponent, { static: false }) mention!: NzMentionComponent;
-  @ViewChild(NzMentionTriggerDirective, { static: false }) trigger!: NzMentionTriggerDirective;
+  @ViewChild(TriMentionComponent, { static: false }) mention!: TriMentionComponent;
+  @ViewChild(TriMentionTriggerDirective, { static: false }) trigger!: TriMentionTriggerDirective;
 
   setArrayPrefix(): void {
     this.prefix = ['@', '#'];
@@ -649,47 +649,47 @@ class NzTestPropertyMentionComponent {
 }
 
 @Component({
-  imports: [BidiModule, NzInputModule, NzMentionModule],
+  imports: [BidiModule, TriInputModule, TriMentionModule],
   template: `
     <div [dir]="direction">
-      <nz-mention [nzSuggestions]="[]">
-        <textarea rows="1" nz-input nzMentionTrigger></textarea>
-      </nz-mention>
+      <tri-mention [suggestions]="[]">
+        <textarea rows="1" tri-input mentionTrigger></textarea>
+      </tri-mention>
     </div>
   `
 })
-class NzTestDirMentionComponent {
+class TriTestDirMentionComponent {
   direction: Direction = 'ltr';
 }
 
 @Component({
-  imports: [NzInputModule, NzMentionModule],
+  imports: [TriInputModule, TriMentionModule],
   template: `
-    <nz-mention [nzSuggestions]="[]" [nzStatus]="status">
-      <textarea rows="1" nz-input nzMentionTrigger></textarea>
-    </nz-mention>
+    <tri-mention [suggestions]="[]" [status]="status">
+      <textarea rows="1" tri-input mentionTrigger></textarea>
+    </tri-mention>
   `
 })
-class NzTestStatusMentionComponent {
-  status: NzStatus = 'error';
+class TriTestStatusMentionComponent {
+  status: TriStatus = 'error';
 }
 
 @Component({
-  imports: [NzFormModule, NzMentionModule],
+  imports: [TriFormModule, TriMentionModule],
   template: `
-    <form nz-form>
-      <nz-form-item>
-        <nz-form-control [nzHasFeedback]="feedback" [nzValidateStatus]="status">
-          <nz-mention [nzSuggestions]="[]">
-            <textarea rows="1" nzMentionTrigger></textarea>
-          </nz-mention>
-        </nz-form-control>
-      </nz-form-item>
+    <form tri-form>
+      <tri-form-item>
+        <tri-form-control [hasFeedback]="feedback" [validateStatus]="status">
+          <tri-mention [suggestions]="[]">
+            <textarea rows="1" mentionTrigger></textarea>
+          </tri-mention>
+        </tri-form-control>
+      </tri-form-item>
     </form>
   `
 })
-class NzTestMentionInFormComponent {
-  status: NzFormControlStatusType = 'error';
+class TriTestMentionInFormComponent {
+  status: TriFormControlStatusType = 'error';
   feedback = true;
 }
 

@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 
-import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { TriStepsModule } from 'ng-zorro-antd/steps';
 
 @Component({
-  selector: 'nz-demo-steps-start-index',
-  imports: [NzStepsModule],
+  selector: '',
+  imports: [TriStepsModule],
   template: `
-    <nz-steps [nzCurrent]="current" [nzStartIndex]="3" nzSize="small">
-      <nz-step nzTitle="Finished"></nz-step>
-      <nz-step nzTitle="In Progress"></nz-step>
-      <nz-step nzTitle="Waiting"></nz-step>
-    </nz-steps>
+    <tri-steps [current]="current" [startIndex]="3" size="small">
+      <tri-step title="Finished"></tri-step>
+      <tri-step title="In Progress"></tri-step>
+      <tri-step title="Waiting"></tri-step>
+    </tri-steps>
   `
 })
-export class NzDemoStepsStartIndexComponent {
+export class TriDemoStepsStartIndexComponent {
   current = 3;
 }

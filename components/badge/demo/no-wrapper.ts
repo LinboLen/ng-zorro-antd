@@ -1,28 +1,28 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { TriBadgeModule } from 'ng-zorro-antd/badge';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
-  selector: 'nz-demo-badge-no-wrapper',
-  imports: [FormsModule, NzBadgeModule, NzIconModule, NzSwitchModule],
+  selector: '',
+  imports: [FormsModule, TriBadgeModule, TriIconModule, TriSwitchModule],
   template: `
-    <nz-switch [(ngModel)]="show"></nz-switch>
-    <nz-badge nzStandalone [nzCount]="show ? 25 : 0"></nz-badge>
-    <nz-badge
-      nzStandalone
-      [nzCount]="show ? 4 : 0"
-      [nzStyle]="{ backgroundColor: '#fff', color: '#999', boxShadow: '0 0 0 1px #d9d9d9 inset' }"
-    ></nz-badge>
-    <nz-badge [nzCount]="show ? iconTemplate : 0" nzStandalone>
+    <tri-switch [(ngModel)]="show"></tri-switch>
+    <tri-badge standalone [count]="show ? 25 : 0"></tri-badge>
+    <tri-badge
+      standalone
+      [count]="show ? 4 : 0"
+      [style]="{ backgroundColor: '#fff', color: '#999', boxShadow: '0 0 0 1px #d9d9d9 inset' }"
+    ></tri-badge>
+    <tri-badge [count]="show ? iconTemplate : 0" standalone>
       <a class="head-example"></a>
-    </nz-badge>
+    </tri-badge>
     <ng-template #iconTemplate>
-      <nz-icon nzType="clock-circle" class="ant-scroll-number-custom-component" style="color: #f5222d" />
+      <tri-icon type="clock-circle" class="tri-scroll-number-custom-component" style="color: #f5222d" />
     </ng-template>
-    <nz-badge nzStandalone [nzCount]="show ? 109 : 0" [nzStyle]="{ backgroundColor: '#52c41a' }"></nz-badge>
+    <tri-badge standalone [count]="show ? 109 : 0" [style]="{ backgroundColor: '#52c41a' }"></tri-badge>
   `,
   styles: [
     `
@@ -32,6 +32,6 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
     `
   ]
 })
-export class NzDemoBadgeNoWrapperComponent {
+export class TriDemoBadgeNoWrapperComponent {
   show = true;
 }

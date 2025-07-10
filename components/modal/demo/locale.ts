@@ -1,37 +1,37 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriModalModule, TriModalService } from 'ng-zorro-antd/modal';
 
 @Component({
-  selector: 'nz-demo-modal-locale',
-  imports: [NzButtonModule, NzModalModule],
+  selector: '',
+  imports: [TriButtonModule, TriModalModule],
   template: `
     <div>
-      <button nz-button nzType="primary" (click)="showModal()">Modal</button>
-      <nz-modal
-        [(nzVisible)]="isVisible"
-        nzTitle="Modal"
-        nzOkText="Ok"
-        nzCancelText="Cancel"
-        (nzOnOk)="handleOk()"
-        (nzOnCancel)="handleCancel()"
+      <button tri-button type="primary" (click)="showModal()">Modal</button>
+      <tri-modal
+        [(visibleChange)]="isVisible"
+        title="Modal"
+        okText="Ok"
+        cancelText="Cancel"
+        (onOk)="handleOk()"
+        (onCancel)="handleCancel()"
       >
-        <ng-container *nzModalContent>
+        <ng-container *modalContent>
           <p>Bla bla ...</p>
           <p>Bla bla ...</p>
           <p>Bla bla ...</p>
         </ng-container>
-      </nz-modal>
+      </tri-modal>
     </div>
     <br />
-    <button nz-button nzType="primary" (click)="showConfirm()">Confirm</button>
+    <button tri-button type="primary" (click)="showConfirm()">Confirm</button>
   `
 })
-export class NzDemoModalLocaleComponent {
+export class TriDemoModalLocaleComponent {
   isVisible = false;
 
-  constructor(private modalService: NzModalService) {}
+  constructor(private modalService: TriModalService) {}
 
   showModal(): void {
     this.isVisible = true;
@@ -47,10 +47,10 @@ export class NzDemoModalLocaleComponent {
 
   showConfirm(): void {
     this.modalService.confirm({
-      nzTitle: 'Confirm',
-      nzContent: 'Bla bla ...',
-      nzOkText: 'OK',
-      nzCancelText: 'Cancel'
+      title: 'Confirm',
+      content: 'Bla bla ...',
+      okText: 'OK',
+      cancelText: 'Cancel'
     });
   }
 }

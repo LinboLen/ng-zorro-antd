@@ -1,39 +1,39 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
 @Component({
-  selector: 'nz-demo-tree-select-customized-icon',
-  imports: [FormsModule, NzIconModule, NzTreeSelectModule],
+  selector: '',
+  imports: [FormsModule, TriIconModule, TriTreeSelectModule],
   template: `
-    <nz-tree-select
+    <tri-tree-select
       style="width: 250px"
       [(ngModel)]="value"
-      [nzNodes]="nodes"
-      nzPlaceHolder="Please select"
-      nzShowIcon
-    ></nz-tree-select>
+      [nodes]="nodes"
+      placeHolder="Please select"
+      showIcon
+    ></tri-tree-select>
     <br />
-    <nz-tree-select
+    <tri-tree-select
       style="width: 250px; margin-top: 20px;"
       [(ngModel)]="value"
-      [nzNodes]="nodes"
-      nzPlaceHolder="Please select"
+      [nodes]="nodes"
+      placeHolder="Please select"
     >
       <ng-template #nzTreeTemplate let-node>
-        <span class="ant-tree-node-content-wrapper" [class.ant-tree-node-selected]="node.isSelected">
+        <span class="tri-tree-node-content-wrapper" [class.tri-tree-node-selected]="node.isSelected">
           <span>
-            <nz-icon [nzType]="node.isExpanded ? 'folder-open' : 'folder'" />
+            <tri-icon [type]="node.isExpanded ? 'folder-open' : 'folder'" />
             {{ node.title }}
           </span>
         </span>
       </ng-template>
-    </nz-tree-select>
+    </tri-tree-select>
   `
 })
-export class NzDemoTreeSelectCustomizedIconComponent {
+export class TriDemoTreeSelectCustomizedIconComponent {
   value?: string;
   readonly nodes = [
     {

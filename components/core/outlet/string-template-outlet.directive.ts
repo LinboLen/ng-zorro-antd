@@ -15,35 +15,35 @@ import {
   ViewContainerRef
 } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { isTemplateRef } from 'ng-zorro-antd/core/util';
 
 @Directive({
-  selector: '[nzStringTemplateOutlet]',
-  exportAs: 'nzStringTemplateOutlet'
+  selector: '',
+  exportAs: 'triStringTemplateOutlet'
 })
-export class NzStringTemplateOutletDirective<_T = unknown> implements OnChanges {
+export class TriStringTemplateOutletDirective<_T = unknown> implements OnChanges {
   private viewContainer = inject(ViewContainerRef);
-  private templateRef = inject(TemplateRef<NzSafeAny>);
+  private templateRef = inject(TemplateRef<TriSafeAny>);
 
-  private embeddedViewRef: EmbeddedViewRef<NzSafeAny> | null = null;
-  private context = new NzStringTemplateOutletContext();
-  @Input() nzStringTemplateOutletContext: NzSafeAny | null = null;
-  @Input() nzStringTemplateOutlet: NzSafeAny | TemplateRef<NzSafeAny> = null;
+  private embeddedViewRef: EmbeddedViewRef<TriSafeAny> | null = null;
+  private context = new TriStringTemplateOutletContext();
+  @Input() stringTemplateOutletContext: TriSafeAny | null = null;
+  @Input() stringTemplateOutlet: TriSafeAny | TemplateRef<TriSafeAny> = null;
 
   static ngTemplateContextGuard<T>(
-    _dir: NzStringTemplateOutletDirective<T>,
-    _ctx: NzSafeAny
-  ): _ctx is NzStringTemplateOutletContext {
+    _dir: TriStringTemplateOutletDirective<T>,
+    _ctx: TriSafeAny
+  ): _ctx is TriStringTemplateOutletContext {
     return true;
   }
 
   private recreateView(): void {
     this.viewContainer.clear();
-    if (isTemplateRef(this.nzStringTemplateOutlet)) {
+    if (isTemplateRef(this.stringTemplateOutlet)) {
       this.embeddedViewRef = this.viewContainer.createEmbeddedView(
-        this.nzStringTemplateOutlet,
-        this.nzStringTemplateOutletContext
+        this.stringTemplateOutlet,
+        this.stringTemplateOutletContext
       );
     } else {
       this.embeddedViewRef = this.viewContainer.createEmbeddedView(this.templateRef, this.context);
@@ -51,8 +51,8 @@ export class NzStringTemplateOutletDirective<_T = unknown> implements OnChanges 
   }
 
   private updateContext(): void {
-    const newCtx = isTemplateRef(this.nzStringTemplateOutlet) ? this.nzStringTemplateOutletContext : this.context;
-    const oldCtx = this.embeddedViewRef!.context as NzSafeAny;
+    const newCtx = isTemplateRef(this.stringTemplateOutlet) ? this.stringTemplateOutletContext : this.context;
+    const oldCtx = this.embeddedViewRef!.context as TriSafeAny;
     if (newCtx) {
       for (const propName of Object.keys(newCtx)) {
         oldCtx[propName] = newCtx[propName];
@@ -104,6 +104,6 @@ export class NzStringTemplateOutletDirective<_T = unknown> implements OnChanges 
   }
 }
 
-export class NzStringTemplateOutletContext {
-  public $implicit: NzSafeAny;
+export class TriStringTemplateOutletContext {
+  public $implicit: TriSafeAny;
 }

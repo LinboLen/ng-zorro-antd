@@ -20,27 +20,27 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzDirectionVHType } from 'ng-zorro-antd/core/types';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriDirectionVHType } from 'ng-zorro-antd/core/types';
 
-import { NzListItemActionsComponent, NzListItemExtraComponent } from './list-item-cell';
-import { NzListComponent } from './list.component';
+import { TriListItemActionsComponent, TriListItemExtraComponent } from './list-item-cell';
+import { TriListComponent } from './list.component';
 
 @Component({
-  selector: 'nz-list-item, [nz-list-item]',
-  exportAs: 'nzListItem',
+  selector: '',
+  exportAs: 'triListItem',
   template: `
     <ng-template #actionsTpl>
-      @if (nzActions && nzActions.length > 0) {
-        <ul nz-list-item-actions [nzActions]="nzActions"></ul>
+      @if (actions && actions.length > 0) {
+        <ul tri-list-item-actions [actions]="actions"></ul>
       }
       <ng-content select="nz-list-item-actions, [nz-list-item-actions]" />
     </ng-template>
     <ng-template #contentTpl>
       <ng-content select="nz-list-item-meta, [nz-list-item-meta]" />
       <ng-content />
-      @if (nzContent) {
-        <ng-container *nzStringTemplateOutlet="nzContent">{{ nzContent }}</ng-container>
+      @if (content) {
+        <ng-container *stringTemplateOutlet="content">{{ content }}</ng-container>
       }
     </ng-template>
     <ng-template #extraTpl>
@@ -48,19 +48,19 @@ import { NzListComponent } from './list.component';
     </ng-template>
 
     @if (isVerticalAndExtra) {
-      <div class="ant-list-item-main">
+      <div class="tri-list-item-main">
         <ng-template [ngTemplateOutlet]="contentTpl" />
         <ng-template [ngTemplateOutlet]="actionsTpl" />
       </div>
-      @if (nzExtra) {
-        <nz-list-item-extra>
-          <ng-template [ngTemplateOutlet]="nzExtra" />
-        </nz-list-item-extra>
+      @if (extra) {
+        <tri-list-item-extra>
+          <ng-template [ngTemplateOutlet]="extra" />
+        </tri-list-item-extra>
       }
       <ng-template [ngTemplateOutlet]="extraTpl" />
     } @else {
       <ng-template [ngTemplateOutlet]="contentTpl" />
-      <ng-template [ngTemplateOutlet]="nzExtra" />
+      <ng-template [ngTemplateOutlet]="extra" />
       <ng-template [ngTemplateOutlet]="extraTpl" />
       <ng-template [ngTemplateOutlet]="actionsTpl" />
     }
@@ -68,26 +68,26 @@ import { NzListComponent } from './list.component';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'ant-list-item'
+    class: 'tri-list-item'
   },
-  imports: [NzListItemActionsComponent, NzOutletModule, NgTemplateOutlet, NzListItemExtraComponent]
+  imports: [TriListItemActionsComponent, TriOutletModule, NgTemplateOutlet, TriListItemExtraComponent]
 })
-export class NzListItemComponent implements AfterViewInit {
+export class TriListItemComponent implements AfterViewInit {
   private cdr = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
-  private parentComp = inject(NzListComponent);
+  private parentComp = inject(TriListComponent);
 
-  @Input() nzActions: Array<TemplateRef<void>> = [];
-  @Input() nzContent?: string | TemplateRef<void>;
-  @Input() nzExtra: TemplateRef<void> | null = null;
-  @Input({ transform: booleanAttribute }) @HostBinding('class.ant-list-item-no-flex') nzNoFlex: boolean = false;
+  @Input() actions: Array<TemplateRef<void>> = [];
+  @Input() content?: string | TemplateRef<void>;
+  @Input() extra: TemplateRef<void> | null = null;
+  @Input({ transform: booleanAttribute }) @HostBinding('class.ant-list-item-no-flex') noFlex: boolean = false;
 
-  @ContentChild(NzListItemExtraComponent) listItemExtraDirective?: NzListItemExtraComponent;
+  @ContentChild(TriListItemExtraComponent) listItemExtraDirective?: TriListItemExtraComponent;
 
-  private itemLayout?: NzDirectionVHType;
+  private itemLayout?: TriDirectionVHType;
 
   get isVerticalAndExtra(): boolean {
-    return this.itemLayout === 'vertical' && (!!this.listItemExtraDirective || !!this.nzExtra);
+    return this.itemLayout === 'vertical' && (!!this.listItemExtraDirective || !!this.extra);
   }
 
   ngAfterViewInit(): void {

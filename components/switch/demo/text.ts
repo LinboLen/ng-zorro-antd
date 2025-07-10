@@ -1,26 +1,26 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
-  selector: 'nz-demo-switch-text',
-  imports: [FormsModule, NzIconModule, NzSwitchModule],
+  selector: '',
+  imports: [FormsModule, TriIconModule, TriSwitchModule],
   template: `
-    <nz-switch [ngModel]="true" nzCheckedChildren="开" nzUnCheckedChildren="关"></nz-switch>
+    <tri-switch [ngModel]="true" checkedChildren="开" unCheckedChildren="关"></tri-switch>
     <br />
     <br />
-    <nz-switch [ngModel]="false" nzCheckedChildren="1" nzUnCheckedChildren="0"></nz-switch>
+    <tri-switch [ngModel]="false" checkedChildren="1" unCheckedChildren="0"></tri-switch>
     <br />
     <br />
-    <nz-switch
+    <tri-switch
       [ngModel]="true"
-      [nzCheckedChildren]="checkedTemplate"
-      [nzUnCheckedChildren]="unCheckedTemplate"
-    ></nz-switch>
-    <ng-template #checkedTemplate><nz-icon nzType="check" /></ng-template>
-    <ng-template #unCheckedTemplate><nz-icon nzType="close" /></ng-template>
+      [checkedChildren]="checkedTemplate"
+      [unCheckedChildren]="unCheckedTemplate"
+    ></tri-switch>
+    <ng-template #checkedTemplate><tri-icon type="check" /></ng-template>
+    <ng-template #unCheckedTemplate><tri-icon type="close" /></ng-template>
   `
 })
-export class NzDemoSwitchTextComponent {}
+export class TriDemoSwitchTextComponent {}

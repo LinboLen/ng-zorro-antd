@@ -17,13 +17,13 @@ import {
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { en_US, NzI18nService } from 'ng-zorro-antd/i18n';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { en_US, TriI18nService } from 'ng-zorro-antd/i18n';
+import { TriInputModule } from 'ng-zorro-antd/input';
 
-import { NzFormControlComponent } from './form-control.component';
-import { NzFormItemComponent } from './form-item.component';
-import { NzFormModule } from './form.module';
+import { TriFormControlComponent } from './form-control.component';
+import { TriFormItemComponent } from './form-item.component';
+import { TriFormModule } from './form.module';
 
 const testBedOptions = { imports: [NoopAnimationsModule] };
 const statusMap = {
@@ -36,16 +36,16 @@ const statusMap = {
 
 describe('nz-form-control', () => {
   describe('static status', () => {
-    let fixture: ComponentFixture<NzTestStaticFormControlComponent>;
-    let testComponent: NzTestStaticFormControlComponent;
+    let fixture: ComponentFixture<TriTestStaticFormControlComponent>;
+    let testComponent: TriTestStaticFormControlComponent;
     let formItem: DebugElement;
     let formControl: DebugElement;
     beforeEach(() => {
       TestBed.configureTestingModule(testBedOptions);
-      fixture = TestBed.createComponent(NzTestStaticFormControlComponent);
+      fixture = TestBed.createComponent(TriTestStaticFormControlComponent);
       testComponent = fixture.componentInstance;
-      formItem = fixture.debugElement.query(By.directive(NzFormItemComponent));
-      formControl = fixture.debugElement.query(By.directive(NzFormControlComponent));
+      formItem = fixture.debugElement.query(By.directive(TriFormItemComponent));
+      formControl = fixture.debugElement.query(By.directive(TriFormControlComponent));
     });
     it('should className correct', () => {
       expect(formControl.nativeElement.classList).toContain('ant-form-item-control');
@@ -60,7 +60,7 @@ describe('nz-form-control', () => {
     });
   });
   describe('reactive status', () => {
-    let fixture: ComponentFixture<NzTestReactiveFormControlComponent>;
+    let fixture: ComponentFixture<TriTestReactiveFormControlComponent>;
     let formGroup: FormGroup<{
       input: FormControl<string | null>;
       input2: FormControl<string | null>;
@@ -70,10 +70,10 @@ describe('nz-form-control', () => {
     let formControls: DebugElement[];
     beforeEach(() => {
       TestBed.configureTestingModule(testBedOptions);
-      fixture = TestBed.createComponent(NzTestReactiveFormControlComponent);
+      fixture = TestBed.createComponent(TriTestReactiveFormControlComponent);
       formGroup = fixture.componentInstance.formGroup;
-      formItems = fixture.debugElement.queryAll(By.directive(NzFormItemComponent));
-      formControls = fixture.debugElement.queryAll(By.directive(NzFormControlComponent));
+      formItems = fixture.debugElement.queryAll(By.directive(TriFormItemComponent));
+      formControls = fixture.debugElement.queryAll(By.directive(TriFormControlComponent));
     });
     it('should init status correct', () => {
       expect(formItems[0].nativeElement.classList).toContain('ant-form-item');
@@ -141,16 +141,16 @@ describe('nz-form-control', () => {
     });
   });
   describe('reactive init status', () => {
-    let fixture: ComponentFixture<NzTestReactiveFormControlInitStatusComponent>;
-    let testComponent: NzTestReactiveFormControlInitStatusComponent;
+    let fixture: ComponentFixture<TriTestReactiveFormControlInitStatusComponent>;
+    let testComponent: TriTestReactiveFormControlInitStatusComponent;
     let formItem: DebugElement;
     beforeEach(() => {
       TestBed.configureTestingModule(testBedOptions);
-      fixture = TestBed.createComponent(NzTestReactiveFormControlInitStatusComponent);
+      fixture = TestBed.createComponent(TriTestReactiveFormControlInitStatusComponent);
 
       fixture.detectChanges();
       testComponent = fixture.componentInstance;
-      formItem = fixture.debugElement.query(By.directive(NzFormItemComponent));
+      formItem = fixture.debugElement.query(By.directive(TriFormItemComponent));
     });
     it('should init status correct', () => {
       expect(formItem.nativeElement.classList).toContain(statusMap.error);
@@ -164,8 +164,8 @@ describe('nz-form-control', () => {
     });
   });
   describe('auto tips', () => {
-    let fixture: ComponentFixture<NzTestReactiveFormAutoTipsComponent>;
-    let testComponent: NzTestReactiveFormAutoTipsComponent;
+    let fixture: ComponentFixture<TriTestReactiveFormAutoTipsComponent>;
+    let testComponent: TriTestReactiveFormAutoTipsComponent;
     let formGroup: FormGroup<{
       username: FormControl<string | null>;
       mobile: FormControl<string | null>;
@@ -177,10 +177,10 @@ describe('nz-form-control', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule(testBedOptions);
-      fixture = TestBed.createComponent(NzTestReactiveFormAutoTipsComponent);
+      fixture = TestBed.createComponent(TriTestReactiveFormAutoTipsComponent);
       testComponent = fixture.componentInstance;
       formGroup = testComponent.formGroup;
-      formControls = fixture.debugElement.queryAll(By.directive(NzFormControlComponent));
+      formControls = fixture.debugElement.queryAll(By.directive(TriFormControlComponent));
     });
     it('should default work ', () => {
       formGroup.get('username')!.markAsDirty();
@@ -256,7 +256,7 @@ describe('nz-form-control', () => {
       formGroup.get('email')!.setValue('');
       fixture.detectChanges();
 
-      formControls = fixture.debugElement.queryAll(By.directive(NzFormControlComponent));
+      formControls = fixture.debugElement.queryAll(By.directive(TriFormControlComponent));
 
       expect(formControls[0].nativeElement.querySelector('.ant-form-item-explain').textContent).toEqual('请输入');
       expect(formControls[1].nativeElement.querySelector('.ant-form-item-explain').textContent).toEqual('请输入');
@@ -372,39 +372,39 @@ describe('nz-form-control', () => {
 });
 
 @Component({
-  imports: [NzFormModule],
+  imports: [TriFormModule],
   template: `
-    <nz-form-item>
-      <nz-form-control [nzHasFeedback]="hasFeedback" [nzValidateStatus]="status"></nz-form-control>
-    </nz-form-item>
+    <tri-form-item>
+      <tri-form-control [hasFeedback]="hasFeedback" [validateStatus]="status"></tri-form-control>
+    </tri-form-item>
   `
 })
-export class NzTestStaticFormControlComponent {
+export class TriTestStaticFormControlComponent {
   hasFeedback = false;
   status = 'success';
 }
 
 @Component({
-  imports: [ReactiveFormsModule, NzFormModule],
+  imports: [ReactiveFormsModule, TriFormModule],
   template: `
     <form [formGroup]="formGroup">
-      <nz-form-item>
-        <nz-form-control>
+      <tri-form-item>
+        <tri-form-control>
           <input formControlName="input" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-control [nzValidateStatus]="validateStatus">
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-control [validateStatus]="validateStatus">
           <input formControlName="input3" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-control>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-control>
         <input formControlName="input2" />
-      </nz-form-control>
+      </tri-form-control>
     </form>
   `
 })
-export class NzTestReactiveFormControlComponent {
+export class TriTestReactiveFormControlComponent {
   formGroup: FormGroup<{
     input: FormControl<string | null>;
     input2: FormControl<string | null>;
@@ -424,18 +424,18 @@ export class NzTestReactiveFormControlComponent {
 
 /** https://github.com/NG-ZORRO/ng-zorro-antd/issues/1170 **/
 @Component({
-  imports: [ReactiveFormsModule, NzFormModule],
+  imports: [ReactiveFormsModule, TriFormModule],
   template: `
     <form [formGroup]="formGroup">
-      <nz-form-item>
-        <nz-form-control>
+      <tri-form-item>
+        <tri-form-control>
           <input formControlName="input" />
-        </nz-form-control>
-      </nz-form-item>
+        </tri-form-control>
+      </tri-form-item>
     </form>
   `
 })
-export class NzTestReactiveFormControlInitStatusComponent {
+export class TriTestReactiveFormControlInitStatusComponent {
   formGroup: FormGroup;
 
   constructor(private formBuilder: FormBuilder) {
@@ -447,40 +447,40 @@ export class NzTestReactiveFormControlInitStatusComponent {
 }
 
 @Component({
-  imports: [ReactiveFormsModule, NzFormModule, NzInputModule],
+  imports: [ReactiveFormsModule, TriFormModule, TriInputModule],
   template: `
-    <form [formGroup]="formGroup" nz-form [nzAutoTips]="formAutoTips" [nzDisableAutoTips]="formDisableAutoTips">
-      <nz-form-item>
-        <nz-form-control #control>
-          <input nz-input formControlName="username" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-control>
-          <input nz-input formControlName="mobile" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-control [nzAutoTips]="emailAutoTips">
-          <input nz-input formControlName="email" type="email" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-control [nzDisableAutoTips]="passwordDisableAutoTips" [nzErrorTip]="passwordErrorTip">
-          <input nz-input type="password" formControlName="password" />
-        </nz-form-control>
-      </nz-form-item>
+    <form [formGroup]="formGroup" tri-form [autoTips]="formAutoTips" [disableAutoTips]="formDisableAutoTips">
+      <tri-form-item>
+        <tri-form-control #control>
+          <input tri-input formControlName="username" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-control>
+          <input tri-input formControlName="mobile" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-control [autoTips]="emailAutoTips">
+          <input tri-input formControlName="email" type="email" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-control [disableAutoTips]="passwordDisableAutoTips" [errorTip]="passwordErrorTip">
+          <input tri-input type="password" formControlName="password" />
+        </tri-form-control>
+      </tri-form-item>
       @if (showConfirmPassword) {
-        <nz-form-item>
-          <nz-form-control>
-            <input nz-input type="password" formControlName="confirmPassword" />
-          </nz-form-control>
-        </nz-form-item>
+        <tri-form-item>
+          <tri-form-control>
+            <input tri-input type="password" formControlName="confirmPassword" />
+          </tri-form-control>
+        </tri-form-item>
       }
     </form>
   `
 })
-export class NzTestReactiveFormAutoTipsComponent {
+export class TriTestReactiveFormAutoTipsComponent {
   formGroup: FormGroup<{
     username: FormControl<string | null>;
     mobile: FormControl<string | null>;
@@ -519,7 +519,7 @@ export class NzTestReactiveFormAutoTipsComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    public i18n: NzI18nService
+    public i18n: TriI18nService
   ) {
     const { required, minLength, email, mobile } = MyValidators;
     this.formGroup = this.formBuilder.group({
@@ -532,7 +532,7 @@ export class NzTestReactiveFormAutoTipsComponent {
   }
 }
 
-export type MyErrorsOptions = { 'zh-cn': string; en: string } & Record<string, NzSafeAny>;
+export type MyErrorsOptions = { 'zh-cn': string; en: string } & Record<string, TriSafeAny>;
 export type MyValidationErrors = Record<string, MyErrorsOptions>;
 
 export class MyValidators extends Validators {
@@ -558,7 +558,7 @@ export class MyValidators extends Validators {
   }
 }
 
-function isEmptyInputValue(value: NzSafeAny): boolean {
+function isEmptyInputValue(value: TriSafeAny): boolean {
   return value == null || value.length === 0;
 }
 

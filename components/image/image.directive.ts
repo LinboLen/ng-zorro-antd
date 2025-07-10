@@ -21,51 +21,51 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { fromEvent, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { NzConfigKey, NzConfigService, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
 
-import { NzImageGroupComponent } from './image-group.component';
+import { TriImageGroupComponent } from './image-group.component';
 import { NZ_DEFAULT_SCALE_STEP } from './image-preview.component';
-import { NzImageService } from './image.service';
+import { TriImageService } from './image.service';
 
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'image';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'image';
 
 export type ImageStatusType = 'error' | 'loading' | 'normal';
-export type NzImageUrl = string;
-export type NzImageScaleStep = number;
+export type TriImageUrl = string;
+export type TriImageScaleStep = number;
 
 @Directive({
-  selector: 'img[nz-image]',
-  exportAs: 'nzImage',
+  selector: '',
+  exportAs: 'triImage',
   host: {
     '(click)': 'onPreview()'
   }
 })
-export class NzImageDirective implements OnInit, OnChanges {
+export class TriImageDirective implements OnInit, OnChanges {
   private document: Document = inject(DOCUMENT);
-  public nzConfigService = inject(NzConfigService);
+  public configService = inject(TriConfigService);
   private elementRef = inject(ElementRef);
-  private nzImageService = inject(NzImageService);
+  private imageService = inject(TriImageService);
   protected cdr = inject(ChangeDetectorRef);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
 
-  @Input() nzSrc = '';
-  @Input() nzSrcset = '';
-  @Input({ transform: booleanAttribute }) @WithConfig() nzDisablePreview: boolean = false;
-  @Input() @WithConfig() nzFallback: string | null = null;
-  @Input() @WithConfig() nzPlaceholder: string | null = null;
-  @Input() @WithConfig() nzScaleStep: number | null = null;
+  @Input() src = '';
+  @Input() srcset = '';
+  @Input({ transform: booleanAttribute }) @WithConfig() disablePreview: boolean = false;
+  @Input() @WithConfig() fallback: string | null = null;
+  @Input() @WithConfig() placeholder: string | null = null;
+  @Input() @WithConfig() scaleStep: number | null = null;
 
   dir?: Direction;
   backLoadImage!: HTMLImageElement;
   status: ImageStatusType = 'normal';
   private backLoadDestroy$ = new Subject<void>();
 
-  private parentGroup = inject(NzImageGroupComponent, { optional: true });
+  private parentGroup = inject(TriImageGroupComponent, { optional: true });
 
   get previewable(): boolean {
-    return !this.nzDisablePreview && this.status !== 'error';
+    return !this.disablePreview && this.status !== 'error';
   }
   ngOnInit(): void {
     this.backLoad();
@@ -89,29 +89,29 @@ export class NzImageDirective implements OnInit, OnChanges {
     if (this.parentGroup) {
       // preview inside image group
       const previewAbleImages = this.parentGroup.images.filter(e => e.previewable);
-      const previewImages = previewAbleImages.map(e => ({ src: e.nzSrc, srcset: e.nzSrcset }));
+      const previewImages = previewAbleImages.map(e => ({ src: e.src, srcset: e.srcset }));
       const previewIndex = previewAbleImages.findIndex(el => this === el);
-      const scaleStepMap = new Map<NzImageUrl, NzImageScaleStep>();
+      const scaleStepMap = new Map<TriImageUrl, TriImageScaleStep>();
       previewAbleImages.forEach(imageDirective => {
         scaleStepMap.set(
-          imageDirective.nzSrc ?? imageDirective.nzSrcset,
-          imageDirective.nzScaleStep ?? this.parentGroup!.nzScaleStep ?? this.nzScaleStep ?? NZ_DEFAULT_SCALE_STEP
+          imageDirective.src ?? imageDirective.srcset,
+          imageDirective.scaleStep ?? this.parentGroup!.scaleStep ?? this.scaleStep ?? NZ_DEFAULT_SCALE_STEP
         );
       });
-      const previewRef = this.nzImageService.preview(
+      const previewRef = this.imageService.preview(
         previewImages,
         {
-          nzDirection: this.dir
+          direction: this.dir
         },
         scaleStepMap
       );
       previewRef.switchTo(previewIndex);
     } else {
       // preview not inside image group
-      const previewImages = [{ src: this.nzSrc, srcset: this.nzSrcset }];
-      this.nzImageService.preview(previewImages, {
-        nzDirection: this.dir,
-        nzScaleStep: this.nzScaleStep ?? NZ_DEFAULT_SCALE_STEP
+      const previewImages = [{ src: this.src, srcset: this.srcset }];
+      this.imageService.preview(previewImages, {
+        direction: this.dir,
+        scaleStep: this.scaleStep ?? NZ_DEFAULT_SCALE_STEP
       });
     }
   }
@@ -135,8 +135,8 @@ export class NzImageDirective implements OnInit, OnChanges {
    */
   private backLoad(): void {
     this.backLoadImage = this.document.createElement('img');
-    this.backLoadImage.src = this.nzSrc;
-    this.backLoadImage.srcset = this.nzSrcset;
+    this.backLoadImage.src = this.src;
+    this.backLoadImage.srcset = this.srcset;
     this.status = 'loading';
 
     // unsubscribe last backLoad
@@ -145,15 +145,15 @@ export class NzImageDirective implements OnInit, OnChanges {
     this.backLoadDestroy$ = new Subject();
     if (this.backLoadImage.complete) {
       this.status = 'normal';
-      this.getElement().nativeElement.src = this.nzSrc;
-      this.getElement().nativeElement.srcset = this.nzSrcset;
+      this.getElement().nativeElement.src = this.src;
+      this.getElement().nativeElement.srcset = this.srcset;
     } else {
-      if (this.nzPlaceholder) {
-        this.getElement().nativeElement.src = this.nzPlaceholder;
+      if (this.placeholder) {
+        this.getElement().nativeElement.src = this.placeholder;
         this.getElement().nativeElement.srcset = '';
       } else {
-        this.getElement().nativeElement.src = this.nzSrc;
-        this.getElement().nativeElement.srcset = this.nzSrcset;
+        this.getElement().nativeElement.src = this.src;
+        this.getElement().nativeElement.srcset = this.srcset;
       }
 
       // The `nz-image` directive can be destroyed before the `load` or `error` event is dispatched,
@@ -162,16 +162,16 @@ export class NzImageDirective implements OnInit, OnChanges {
         .pipe(takeUntil(this.backLoadDestroy$), takeUntilDestroyed(this.destroyRef))
         .subscribe(() => {
           this.status = 'normal';
-          this.getElement().nativeElement.src = this.nzSrc;
-          this.getElement().nativeElement.srcset = this.nzSrcset;
+          this.getElement().nativeElement.src = this.src;
+          this.getElement().nativeElement.srcset = this.srcset;
         });
 
       fromEvent(this.backLoadImage, 'error')
         .pipe(takeUntil(this.backLoadDestroy$), takeUntilDestroyed(this.destroyRef))
         .subscribe(() => {
           this.status = 'error';
-          if (this.nzFallback) {
-            this.getElement().nativeElement.src = this.nzFallback;
+          if (this.fallback) {
+            this.getElement().nativeElement.src = this.fallback;
             this.getElement().nativeElement.srcset = '';
           }
         });

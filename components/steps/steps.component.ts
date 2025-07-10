@@ -27,54 +27,54 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Subscription, merge } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 
-import { BooleanInput, NzSizeDSType } from 'ng-zorro-antd/core/types';
+import { BooleanInput, TriSizeDSType } from 'ng-zorro-antd/core/types';
 import { toBoolean } from 'ng-zorro-antd/core/util';
 
-import { NzStepComponent } from './step.component';
+import { TriStepComponent } from './step.component';
 
-export type NzDirectionType = 'horizontal' | 'vertical';
-export type NzStatusType = 'wait' | 'process' | 'finish' | 'error';
-export type NzProgressDotTemplate = TemplateRef<{ $implicit: TemplateRef<void>; status: string; index: number }>;
+export type TriDirectionType = 'horizontal' | 'vertical';
+export type TriStatusType = 'wait' | 'process' | 'finish' | 'error';
+export type TriProgressDotTemplate = TemplateRef<{ $implicit: TemplateRef<void>; status: string; index: number }>;
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-steps',
-  exportAs: 'nzSteps',
+  selector: '',
+  exportAs: 'triSteps',
   template: `<ng-content></ng-content>`,
   host: {
-    class: 'ant-steps',
-    '[class.ant-steps-horizontal]': `nzDirection === 'horizontal'`,
-    '[class.ant-steps-vertical]': `nzDirection === 'vertical'`,
-    '[class.ant-steps-label-horizontal]': `nzDirection === 'horizontal'`,
-    '[class.ant-steps-label-vertical]': `(showProcessDot || nzLabelPlacement === 'vertical') && nzDirection === 'horizontal'`,
-    '[class.ant-steps-dot]': 'showProcessDot',
-    '[class.ant-steps-small]': `nzSize === 'small'`,
-    '[class.ant-steps-navigation]': `nzType === 'navigation'`,
-    '[class.ant-steps-rtl]': `dir === 'rtl'`,
-    '[class.ant-steps-with-progress]': 'showProgress'
+    class: 'tri-steps',
+    '[class.tri-steps-horizontal]': `direction === 'horizontal'`,
+    '[class.tri-steps-vertical]': `direction === 'vertical'`,
+    '[class.tri-steps-label-horizontal]': `direction === 'horizontal'`,
+    '[class.tri-steps-label-vertical]': `(showProcessDot || labelPlacement === 'vertical') && direction === 'horizontal'`,
+    '[class.tri-steps-dot]': 'showProcessDot',
+    '[class.tri-steps-small]': `size === 'small'`,
+    '[class.tri-steps-navigation]': `type === 'navigation'`,
+    '[class.tri-steps-rtl]': `dir === 'rtl'`,
+    '[class.tri-steps-with-progress]': 'showProgress'
   }
 })
-export class NzStepsComponent implements OnChanges, OnInit, AfterContentInit {
-  static ngAcceptInputType_nzProgressDot: BooleanInput | NzProgressDotTemplate | undefined | null;
+export class TriStepsComponent implements OnChanges, OnInit, AfterContentInit {
+  static ngAcceptInputType_nzProgressDot: BooleanInput | TriProgressDotTemplate | undefined | null;
 
   private cdr = inject(ChangeDetectorRef);
   private ngZone = inject(NgZone);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
 
-  @ContentChildren(NzStepComponent) steps!: QueryList<NzStepComponent>;
+  @ContentChildren(TriStepComponent) steps!: QueryList<TriStepComponent>;
 
-  @Input() nzCurrent = 0;
-  @Input() nzDirection: NzDirectionType = 'horizontal';
-  @Input() nzLabelPlacement: 'horizontal' | 'vertical' = 'horizontal';
-  @Input() nzType: 'default' | 'navigation' = 'default';
-  @Input() nzSize: NzSizeDSType = 'default';
-  @Input() nzStartIndex = 0;
-  @Input() nzStatus: NzStatusType = 'process';
+  @Input() current = 0;
+  @Input() direction: TriDirectionType = 'horizontal';
+  @Input() labelPlacement: 'horizontal' | 'vertical' = 'horizontal';
+  @Input() type: 'default' | 'navigation' = 'default';
+  @Input() size: TriSizeDSType = 'default';
+  @Input() startIndex = 0;
+  @Input() status: TriStatusType = 'process';
 
   @Input()
-  set nzProgressDot(value: boolean | NzProgressDotTemplate | undefined | null) {
+  set progressDot(value: boolean | TriProgressDotTemplate | undefined | null) {
     if (value instanceof TemplateRef) {
       this.showProcessDot = true;
       this.customProcessDotTemplate = value;
@@ -84,7 +84,7 @@ export class NzStepsComponent implements OnChanges, OnInit, AfterContentInit {
     this.updateChildrenSteps();
   }
 
-  @Output() readonly nzIndexChange = new EventEmitter<number>();
+  @Output() readonly indexChange = new EventEmitter<number>();
 
   private indexChangeSubscription = Subscription.EMPTY;
 
@@ -121,7 +121,7 @@ export class NzStepsComponent implements OnChanges, OnInit, AfterContentInit {
 
   private updateHostProgressClass(): void {
     if (this.steps && !this.showProcessDot) {
-      this.showProgress = !!this.steps.toArray().find(step => step.nzPercentage !== null);
+      this.showProgress = !!this.steps.toArray().find(step => step.percentage !== null);
     }
   }
 
@@ -130,16 +130,16 @@ export class NzStepsComponent implements OnChanges, OnInit, AfterContentInit {
       const length = this.steps.length;
       this.steps.toArray().forEach((step, index) => {
         Promise.resolve().then(() => {
-          step.nzSize = this.nzSize;
-          step.outStatus = this.nzStatus;
+          step.size = this.size;
+          step.outStatus = this.status;
           step.showProcessDot = this.showProcessDot;
           if (this.customProcessDotTemplate) {
             step.customProcessTemplate = this.customProcessDotTemplate;
           }
-          step.clickable = this.nzIndexChange.observers.length > 0;
-          step.direction = this.nzDirection;
-          step.index = index + this.nzStartIndex;
-          step.currentIndex = this.nzCurrent;
+          step.clickable = this.indexChange.observers.length > 0;
+          step.direction = this.direction;
+          step.index = index + this.startIndex;
+          step.currentIndex = this.current;
           step.last = length === index + 1;
           step.markForCheck();
         });
@@ -148,8 +148,8 @@ export class NzStepsComponent implements OnChanges, OnInit, AfterContentInit {
       this.indexChangeSubscription = merge(...this.steps.map(step => step.clickOutsideAngular$))
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(index => {
-          if (this.nzIndexChange.observers.length) {
-            this.ngZone.run(() => this.nzIndexChange.emit(index));
+          if (this.indexChange.observers.length) {
+            this.ngZone.run(() => this.indexChange.emit(index));
           }
         });
     }

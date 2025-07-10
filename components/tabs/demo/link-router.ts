@@ -1,46 +1,46 @@
 import { Component } from '@angular/core';
 import { Params, RouterLink } from '@angular/router';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: 'nz-demo-tabs-link-router',
-  imports: [RouterLink, NzTabsModule, NzButtonModule],
+  selector: '',
+  imports: [RouterLink, TriTabsModule, TriButtonModule],
   template: `
     <div style="margin-bottom: 16px;">
-      <button nz-button (click)="newTab()">ADD</button>
+      <button tri-button (click)="newTab()">ADD</button>
     </div>
-    <nz-tabs nzLinkRouter>
-      <nz-tab>
-        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'one' }" queryParamsHandling="merge">
+    <tri-tabs linkRouter>
+      <tri-tab>
+        <a *tabLink tri-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'one' }" queryParamsHandling="merge">
           Default
         </a>
         Default.
-      </nz-tab>
-      <nz-tab>
-        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'two' }" queryParamsHandling="merge">
+      </tri-tab>
+      <tri-tab>
+        <a *tabLink tri-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'two' }" queryParamsHandling="merge">
           Two
         </a>
         Two.
-      </nz-tab>
-      <nz-tab>
-        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'three' }" queryParamsHandling="merge">
+      </tri-tab>
+      <tri-tab>
+        <a *tabLink tri-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'three' }" queryParamsHandling="merge">
           Three
         </a>
         Three.
-      </nz-tab>
-      <nz-tab>
-        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'four' }" queryParamsHandling="merge">
+      </tri-tab>
+      <tri-tab>
+        <a *tabLink tri-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'four' }" queryParamsHandling="merge">
           Four
         </a>
         Four.
-      </nz-tab>
+      </tri-tab>
       @for (tab of dynamicTabs; track tab.title) {
-        <nz-tab>
+        <tri-tab>
           <a
-            *nzTabLink
-            nz-tab-link
+            *tabLink
+            tri-tab-link
             [routerLink]="tab.routerLink"
             [queryParams]="tab.queryParams ?? {}"
             queryParamsHandling="merge"
@@ -48,12 +48,12 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
             {{ tab.title }}
           </a>
           {{ tab.content }}
-        </nz-tab>
+        </tri-tab>
       }
-    </nz-tabs>
+    </tri-tabs>
   `
 })
-export class NzDemoTabsLinkRouterComponent {
+export class TriDemoTabsLinkRouterComponent {
   dynamicTabs: Array<{ title: string; content: string; queryParams?: Params; routerLink: string[] }> = [];
 
   newTab(): void {

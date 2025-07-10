@@ -11,12 +11,12 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { dispatchKeyboardEvent } from 'ng-zorro-antd/core/testing';
-import { NzSizeDSType } from 'ng-zorro-antd/core/types';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriSizeDSType } from 'ng-zorro-antd/core/types';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
-import { NzSwitchComponent } from './switch.component';
-import { NzSwitchModule } from './switch.module';
+import { TriSwitchComponent } from './switch.component';
+import { TriSwitchModule } from './switch.module';
 
 describe('switch', () => {
   beforeEach(waitForAsync(() => {
@@ -26,14 +26,14 @@ describe('switch', () => {
   }));
 
   describe('basic switch', () => {
-    let fixture: ComponentFixture<NzTestSwitchBasicComponent>;
-    let testComponent: NzTestSwitchBasicComponent;
+    let fixture: ComponentFixture<TriTestSwitchBasicComponent>;
+    let testComponent: TriTestSwitchBasicComponent;
     let switchElement: DebugElement;
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestSwitchBasicComponent);
+      fixture = TestBed.createComponent(TriTestSwitchBasicComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      switchElement = fixture.debugElement.query(By.directive(NzSwitchComponent));
+      switchElement = fixture.debugElement.query(By.directive(TriSwitchComponent));
     });
     it('should className correct', () => {
       fixture.detectChanges();
@@ -164,10 +164,10 @@ describe('switch', () => {
     it('should focus and blur function work', () => {
       fixture.detectChanges();
       expect(switchElement.nativeElement.firstElementChild === document.activeElement).toBe(false);
-      testComponent.nzSwitchComponent.focus();
+      testComponent.switchComponent.focus();
       fixture.detectChanges();
       expect(switchElement.nativeElement.firstElementChild === document.activeElement).toBe(true);
-      testComponent.nzSwitchComponent.blur();
+      testComponent.switchComponent.blur();
       fixture.detectChanges();
       expect(switchElement.nativeElement.firstElementChild === document.activeElement).toBe(false);
     });
@@ -215,12 +215,12 @@ describe('switch', () => {
     });
   });
   describe('template switch', () => {
-    let fixture: ComponentFixture<NzTestSwitchTemplateComponent>;
+    let fixture: ComponentFixture<TriTestSwitchTemplateComponent>;
     let switchElement: DebugElement;
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestSwitchTemplateComponent);
+      fixture = TestBed.createComponent(TriTestSwitchTemplateComponent);
       fixture.detectChanges();
-      switchElement = fixture.debugElement.query(By.directive(NzSwitchComponent));
+      switchElement = fixture.debugElement.query(By.directive(TriSwitchComponent));
     });
     it('should children template work', fakeAsync(() => {
       fixture.detectChanges();
@@ -239,17 +239,17 @@ describe('switch', () => {
     }));
   });
   describe('switch form', () => {
-    let fixture: ComponentFixture<NzTestSwitchFormComponent>;
-    let testComponent: NzTestSwitchFormComponent;
+    let fixture: ComponentFixture<TriTestSwitchFormComponent>;
+    let testComponent: TriTestSwitchFormComponent;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestSwitchFormComponent);
+      fixture = TestBed.createComponent(TriTestSwitchFormComponent);
       testComponent = fixture.debugElement.componentInstance;
     });
     it('should be in pristine, untouched, and valid states and enable initially', fakeAsync(() => {
       fixture.detectChanges();
       flush();
-      const switchElement = fixture.debugElement.query(By.directive(NzSwitchComponent));
+      const switchElement = fixture.debugElement.query(By.directive(TriSwitchComponent));
       const buttonElement = switchElement.nativeElement.firstElementChild! as HTMLButtonElement;
       expect(testComponent.formControl.valid).toBe(true);
       expect(testComponent.formControl.pristine).toBe(true);
@@ -261,7 +261,7 @@ describe('switch', () => {
       testComponent.disable();
       fixture.detectChanges();
       flush();
-      const switchElement = fixture.debugElement.query(By.directive(NzSwitchComponent));
+      const switchElement = fixture.debugElement.query(By.directive(TriSwitchComponent));
       const buttonElement = switchElement.nativeElement.firstElementChild! as HTMLButtonElement;
       expect(buttonElement.disabled).toBeTruthy();
       expect(buttonElement.classList).toContain('ant-switch-disabled');
@@ -270,7 +270,7 @@ describe('switch', () => {
       testComponent.disabled = true;
       fixture.detectChanges();
       flush();
-      const switchElement = fixture.debugElement.query(By.directive(NzSwitchComponent));
+      const switchElement = fixture.debugElement.query(By.directive(TriSwitchComponent));
       const buttonElement = switchElement.nativeElement.firstElementChild! as HTMLButtonElement;
 
       expect(buttonElement.disabled).toBeTruthy();
@@ -302,8 +302,8 @@ describe('switch', () => {
   });
   describe('RTL', () => {
     it('should className correct on dir change', () => {
-      const fixture = TestBed.createComponent(NzTestSwitchRtlComponent);
-      const switchElement = fixture.debugElement.query(By.directive(NzSwitchComponent));
+      const fixture = TestBed.createComponent(TriTestSwitchRtlComponent);
+      const switchElement = fixture.debugElement.query(By.directive(TriSwitchComponent));
       fixture.detectChanges();
       expect(switchElement.nativeElement.firstElementChild!.classList).toContain('ant-switch-rtl');
 
@@ -315,24 +315,24 @@ describe('switch', () => {
 });
 
 @Component({
-  imports: [FormsModule, NzIconModule, NzSwitchModule],
+  imports: [FormsModule, TriIconModule, TriSwitchModule],
   template: `
-    <ng-template #checkedChildrenTemplate><nz-icon nzType="check" /></ng-template>
-    <ng-template #unCheckedChildrenTemplate><nz-icon nzType="closs" /></ng-template>
-    <nz-switch
+    <ng-template #checkedChildrenTemplate><tri-icon type="check" /></ng-template>
+    <ng-template #unCheckedChildrenTemplate><tri-icon type="closs" /></ng-template>
+    <tri-switch
       [(ngModel)]="value"
       (ngModelChange)="modelChange($event)"
-      [nzDisabled]="disabled"
-      [nzLoading]="loading"
-      [nzSize]="size"
-      [nzControl]="control"
-      [nzCheckedChildren]="checkedChildren"
-      [nzUnCheckedChildren]="unCheckedChildren"
-    ></nz-switch>
+      [disabled]="disabled"
+      [loading]="loading"
+      [size]="size"
+      [control]="control"
+      [checkedChildren]="checkedChildren"
+      [unCheckedChildren]="unCheckedChildren"
+    ></tri-switch>
   `
 })
-export class NzTestSwitchBasicComponent {
-  @ViewChild(NzSwitchComponent, { static: false }) nzSwitchComponent!: NzSwitchComponent;
+export class TriTestSwitchBasicComponent {
+  @ViewChild(TriSwitchComponent, { static: false }) switchComponent!: TriSwitchComponent;
   @ViewChild('checkedChildrenTemplate', { static: false }) checkedChildrenTemplate!: TemplateRef<void>;
   @ViewChild('unCheckedChildrenTemplate', { static: false }) unCheckedChildrenTemplate!: TemplateRef<void>;
   checkedChildren = 'on';
@@ -340,33 +340,33 @@ export class NzTestSwitchBasicComponent {
   value = false;
   control = false;
   disabled = false;
-  size: NzSizeDSType = 'default';
+  size: TriSizeDSType = 'default';
   loading = false;
   modelChange = jasmine.createSpy('model change callback');
 }
 
 @Component({
-  imports: [NzIconModule, NzSwitchModule],
+  imports: [TriIconModule, TriSwitchModule],
   template: `
-    <ng-template #checkedChildrenTemplate><nz-icon nzType="check" /></ng-template>
-    <ng-template #unCheckedChildrenTemplate><nz-icon nzType="close" /></ng-template>
-    <nz-switch
-      [nzCheckedChildren]="checkedChildrenTemplate"
-      [nzUnCheckedChildren]="unCheckedChildrenTemplate"
-    ></nz-switch>
+    <ng-template #checkedChildrenTemplate><tri-icon type="check" /></ng-template>
+    <ng-template #unCheckedChildrenTemplate><tri-icon type="close" /></ng-template>
+    <tri-switch
+      [checkedChildren]="checkedChildrenTemplate"
+      [unCheckedChildren]="unCheckedChildrenTemplate"
+    ></tri-switch>
   `
 })
-export class NzTestSwitchTemplateComponent {}
+export class TriTestSwitchTemplateComponent {}
 
 @Component({
-  imports: [ReactiveFormsModule, NzSwitchModule],
+  imports: [ReactiveFormsModule, TriSwitchModule],
   template: `
     <form>
-      <nz-switch [formControl]="formControl" [nzDisabled]="disabled"></nz-switch>
+      <tri-switch [formControl]="formControl" [disabled]="disabled"></tri-switch>
     </form>
   `
 })
-export class NzTestSwitchFormComponent {
+export class TriTestSwitchFormComponent {
   formControl = new FormControl(true);
 
   disabled = false;
@@ -381,14 +381,14 @@ export class NzTestSwitchFormComponent {
 }
 
 @Component({
-  imports: [BidiModule, FormsModule, NzSwitchModule],
+  imports: [BidiModule, FormsModule, TriSwitchModule],
   template: `
     <div [dir]="direction">
-      <nz-switch [(ngModel)]="switchValue"></nz-switch>
+      <tri-switch [(ngModel)]="switchValue"></tri-switch>
     </div>
   `
 })
-export class NzTestSwitchRtlComponent {
+export class TriTestSwitchRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
   switchValue = false;

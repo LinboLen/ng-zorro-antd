@@ -1,18 +1,18 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { type NzNotificationComponent, NzNotificationService } from 'ng-zorro-antd/notification';
-import { NzTagModule } from 'ng-zorro-antd/tag';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { type TriNotificationComponent, TriNotificationService } from 'ng-zorro-antd/notification';
+import { TriTagModule } from 'ng-zorro-antd/tag';
 
 @Component({
-  selector: 'nz-demo-notification-template',
-  imports: [NzButtonModule, NzTagModule],
+  selector: '',
+  imports: [TriButtonModule, TriTagModule],
   template: `
-    <button nz-button nzType="primary" (click)="createNotification()">Open the notification box</button>
+    <button tri-button type="primary" (click)="createNotification()">Open the notification box</button>
     <ng-template let-fruit="data">
       It's a
-      <nz-tag [nzColor]="fruit.color">{{ fruit.name }}</nz-tag>
-      <button nz-button nzSize="small">Cut It!</button>
+      <tri-tag [color]="fruit.color">{{ fruit.name }}</tri-tag>
+      <button tri-button size="small">Cut It!</button>
     </ng-template>
   `,
   styles: [
@@ -23,13 +23,13 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
     `
   ]
 })
-export class NzDemoNotificationTemplateComponent {
+export class TriDemoNotificationTemplateComponent {
   @ViewChild(TemplateRef, { static: false }) template?: TemplateRef<{
-    $implicit: NzNotificationComponent;
+    $implicit: TriNotificationComponent;
     data: Array<{ name: string; color: string }>;
   }>;
 
-  constructor(private notificationService: NzNotificationService) {}
+  constructor(private notificationService: TriNotificationService) {}
 
   createNotification(): void {
     const fruits = [

@@ -3,13 +3,13 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { NzToCssUnitPipe } from './nz-css-unit.pipe';
+import { TriToCssUnitPipe } from './nz-css-unit.pipe';
 
 describe('NzToCssUnitPipe', () => {
-  let pipe: NzToCssUnitPipe;
+  let pipe: TriToCssUnitPipe;
 
   beforeEach(() => {
-    pipe = new NzToCssUnitPipe();
+    pipe = new TriToCssUnitPipe();
   });
 
   describe('number', () => {

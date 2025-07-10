@@ -1,43 +1,43 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzCronExpressionModule } from 'ng-zorro-antd/cron-expression';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriCronExpressionModule } from 'ng-zorro-antd/cron-expression';
+import { TriFormModule } from 'ng-zorro-antd/form';
+import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: 'nz-demo-cron-expression-use',
-  imports: [ReactiveFormsModule, NzButtonModule, NzCronExpressionModule, NzFormModule, NzInputModule],
+  selector: '',
+  imports: [ReactiveFormsModule, TriButtonModule, TriCronExpressionModule, TriFormModule, TriInputModule],
   template: `
-    <form nz-form [nzLayout]="'vertical'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6">name</nz-form-label>
-        <nz-form-control [nzSpan]="14">
-          <input nz-input formControlName="username" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6">nz-cron-linux</nz-form-label>
-        <nz-form-control [nzSpan]="14">
-          <nz-cron-expression formControlName="cronLinux"></nz-cron-expression>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6">nz-cron-spring</nz-form-label>
-        <nz-form-control [nzSpan]="14">
-          <nz-cron-expression formControlName="cronSpring" nzType="spring"></nz-cron-expression>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-control>
-          <button nz-button nzType="primary" [disabled]="!validateForm.valid">submit</button>
-        </nz-form-control>
-      </nz-form-item>
+    <form tri-form [layout]="'vertical'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+      <tri-form-item>
+        <tri-form-label [span]="6">name</tri-form-label>
+        <tri-form-control [span]="14">
+          <input tri-input formControlName="username" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [span]="6">nz-cron-linux</tri-form-label>
+        <tri-form-control [span]="14">
+          <tri-cron-expression formControlName="cronLinux"></tri-cron-expression>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [span]="6">nz-cron-spring</tri-form-label>
+        <tri-form-control [span]="14">
+          <tri-cron-expression formControlName="cronSpring" type="spring"></tri-cron-expression>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-control>
+          <button tri-button type="primary" [disabled]="!validateForm.valid">submit</button>
+        </tri-form-control>
+      </tri-form-item>
     </form>
   `
 })
-export class NzDemoCronExpressionUseComponent {
+export class TriDemoCronExpressionUseComponent {
   private fb = inject(FormBuilder);
   validateForm: FormGroup<{
     username: FormControl<string | null>;

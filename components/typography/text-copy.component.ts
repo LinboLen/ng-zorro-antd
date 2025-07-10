@@ -21,53 +21,53 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzTransButtonModule } from 'ng-zorro-antd/core/trans-button';
-import { NzTSType } from 'ng-zorro-antd/core/types';
-import { NzI18nService, NzTextI18nInterface } from 'ng-zorro-antd/i18n';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriTransButtonModule } from 'ng-zorro-antd/core/trans-button';
+import { TriTSType } from 'ng-zorro-antd/core/types';
+import { TriI18nService, TriTextI18nInterface } from 'ng-zorro-antd/i18n';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
-  selector: 'nz-text-copy',
-  exportAs: 'nzTextCopy',
+  selector: '',
+  exportAs: 'triTextCopy',
   template: `
     <button
       type="button"
-      nz-tooltip
-      nz-trans-button
-      [nzTooltipTitle]="copied ? copedTooltip : copyTooltip"
-      class="ant-typography-copy"
-      [class.ant-typography-copy-success]="copied"
+      tri-tooltip
+      tri-trans-button
+      [tooltipTitle]="copied ? copedTooltip : copyTooltip"
+      class="tri-typography-copy"
+      [class.tri-typography-copy-success]="copied"
       (click)="onClick()"
     >
-      <ng-container *nzStringTemplateOutlet="copied ? copedIcon : copyIcon; let icon">
-        <nz-icon [nzType]="icon" />
+      <ng-container *stringTemplateOutlet="copied ? copedIcon : copyIcon; let icon">
+        <tri-icon [type]="icon" />
       </ng-container>
     </button>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  imports: [NzToolTipModule, NzTransButtonModule, NzIconModule, NzOutletModule]
+  imports: [TriToolTipModule, TriTransButtonModule, TriIconModule, TriOutletModule]
 })
-export class NzTextCopyComponent implements OnInit, OnChanges {
+export class TriTextCopyComponent implements OnInit, OnChanges {
   private cdr = inject(ChangeDetectorRef);
   private clipboard = inject(Clipboard);
-  private i18n = inject(NzI18nService);
+  private i18n = inject(TriI18nService);
   private destroyRef = inject(DestroyRef);
 
   copied = false;
   copyId?: ReturnType<typeof setTimeout>;
-  locale!: NzTextI18nInterface;
+  locale!: TriTextI18nInterface;
   nativeElement = inject(ElementRef).nativeElement;
-  copyTooltip: NzTSType | null = null;
-  copedTooltip: NzTSType | null = null;
-  copyIcon: NzTSType = 'copy';
-  copedIcon: NzTSType = 'check';
+  copyTooltip: TriTSType | null = null;
+  copedTooltip: TriTSType | null = null;
+  copyIcon: TriTSType = 'copy';
+  copedIcon: TriTSType = 'check';
 
   @Input() text!: string;
-  @Input() tooltips?: [NzTSType, NzTSType] | null;
-  @Input() icons: [NzTSType, NzTSType] = ['copy', 'check'];
+  @Input() tooltips?: [TriTSType, TriTSType] | null;
+  @Input() icons: [TriTSType, TriTSType] = ['copy', 'check'];
 
   @Output() readonly textCopy = new EventEmitter<string>();
 

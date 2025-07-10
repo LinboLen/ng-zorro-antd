@@ -25,11 +25,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject } from 'rxjs';
 
 import { slideMotion } from 'ng-zorro-antd/core/animation';
-import { NzNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
-import { IndexableObject, NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { IndexableObject, TriSafeAny } from 'ng-zorro-antd/core/types';
 import { MenuService, NzIsMenuInsideDropDownToken } from 'ng-zorro-antd/menu';
 
-export type NzPlacementType = 'bottomLeft' | 'bottomCenter' | 'bottomRight' | 'topLeft' | 'topCenter' | 'topRight';
+export type TriPlacementType = 'bottomLeft' | 'bottomCenter' | 'bottomRight' | 'topLeft' | 'topCenter' | 'topRight';
 
 @Component({
   selector: `nz-dropdown-menu`,
@@ -46,14 +46,14 @@ export type NzPlacementType = 'bottomLeft' | 'bottomCenter' | 'bottomRight' | 't
   template: `
     <ng-template>
       <div
-        class="ant-dropdown"
-        [class.ant-dropdown-rtl]="dir === 'rtl'"
-        [class]="nzOverlayClassName"
-        [style]="nzOverlayStyle"
+        class="tri-dropdown"
+        [class.tri-dropdown-rtl]="dir === 'rtl'"
+        [class]="overlayClassName"
+        [style]="overlayStyle"
         @slideMotion
         (@slideMotion.done)="onAnimationEvent($event)"
         [@.disabled]="!!noAnimation?.nzNoAnimation"
-        [nzNoAnimation]="noAnimation?.nzNoAnimation"
+        [noAnimation]="noAnimation?.nzNoAnimation"
         (mouseenter)="setMouseState(true)"
         (mouseleave)="setMouseState(false)"
       >
@@ -63,9 +63,9 @@ export type NzPlacementType = 'bottomLeft' | 'bottomCenter' | 'bottomRight' | 't
   `,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NzNoAnimationDirective]
+  imports: [TriNoAnimationDirective]
 })
-export class NzDropdownMenuComponent implements AfterContentInit, OnInit {
+export class TriDropdownMenuComponent implements AfterContentInit, OnInit {
   private cdr = inject(ChangeDetectorRef);
   private elementRef = inject(ElementRef);
   private renderer = inject(Renderer2);
@@ -73,13 +73,13 @@ export class NzDropdownMenuComponent implements AfterContentInit, OnInit {
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
   mouseState$ = new BehaviorSubject<boolean>(false);
-  public nzMenuService = inject(MenuService);
-  isChildSubMenuOpen$ = this.nzMenuService.isChildSubMenuOpen$;
-  descendantMenuItemClick$ = this.nzMenuService.descendantMenuItemClick$;
+  public menuService = inject(MenuService);
+  isChildSubMenuOpen$ = this.menuService.isChildSubMenuOpen$;
+  descendantMenuItemClick$ = this.menuService.descendantMenuItemClick$;
   animationStateChange$ = new EventEmitter<AnimationEvent>();
-  nzOverlayClassName: string = '';
-  nzOverlayStyle: IndexableObject = {};
-  @ViewChild(TemplateRef, { static: true }) templateRef!: TemplateRef<NzSafeAny>;
+  overlayClassName: string = '';
+  overlayStyle: IndexableObject = {};
+  @ViewChild(TemplateRef, { static: true }) templateRef!: TemplateRef<TriSafeAny>;
 
   dir: Direction = 'ltr';
 
@@ -91,12 +91,12 @@ export class NzDropdownMenuComponent implements AfterContentInit, OnInit {
     this.mouseState$.next(visible);
   }
 
-  setValue<T extends keyof NzDropdownMenuComponent>(key: T, value: this[T]): void {
+  setValue<T extends keyof TriDropdownMenuComponent>(key: T, value: this[T]): void {
     this[key] = value;
     this.cdr.markForCheck();
   }
 
-  noAnimation = inject(NzNoAnimationDirective, { host: true, optional: true });
+  noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
 
   ngOnInit(): void {
     this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {

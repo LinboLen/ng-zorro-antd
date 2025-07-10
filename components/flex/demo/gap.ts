@@ -1,27 +1,27 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzFlexModule } from 'ng-zorro-antd/flex';
-import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
-import { NzSliderModule } from 'ng-zorro-antd/slider';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriFlexModule } from 'ng-zorro-antd/flex';
+import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
+import { TriSliderModule } from 'ng-zorro-antd/slider';
 
 @Component({
-  selector: 'nz-demo-flex-gap',
-  imports: [FormsModule, NzButtonModule, NzFlexModule, NzSegmentedModule, NzSliderModule],
+  selector: '',
+  imports: [FormsModule, TriButtonModule, TriFlexModule, TriSegmentedModule, TriSliderModule],
   template: `
     <div class="segment-wrapper">
       <span>Select gap:</span>
-      <nz-segmented [nzOptions]="gapSegment" [(ngModel)]="selectedGap"></nz-segmented>
+      <tri-segmented [options]="gapSegment" [(ngModel)]="selectedGap"></tri-segmented>
     </div>
     @if (selectedGap === 'custom') {
-      <nz-slider [nzMin]="0" [nzMax]="100" [(ngModel)]="customGapValue" />
+      <tri-slider [min]="0" [max]="100" [(ngModel)]="customGapValue" />
     }
-    <div nz-flex [nzGap]="selectedGap === 'custom' ? customGapValue : selectedGap">
-      <button nz-button nzType="primary">Primary</button>
-      <button nz-button nzType="dashed">Dashed</button>
-      <button nz-button nzType="default">Default</button>
-      <button nz-button nzType="link">Link</button>
+    <div tri-flex [gap]="selectedGap === 'custom' ? customGapValue : selectedGap">
+      <button tri-button type="primary">Primary</button>
+      <button tri-button type="dashed">Dashed</button>
+      <button tri-button type="default">Default</button>
+      <button tri-button type="link">Link</button>
     </div>
   `,
   styles: [
@@ -36,7 +36,7 @@ import { NzSliderModule } from 'ng-zorro-antd/slider';
     `
   ]
 })
-export class NzDemoFlexGapComponent {
+export class TriDemoFlexGapComponent {
   public gapSegment: string[] = ['small', 'middle', 'large', 'custom'];
   public selectedGap = 'small';
   public customGapValue = 0;

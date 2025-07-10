@@ -6,21 +6,21 @@
 import { ChangeDetectorRef, Directive, ElementRef, inject } from '@angular/core';
 import { map, startWith, tap } from 'rxjs/operators';
 
-import { NzResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
+import { TriResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
 
 @Directive({
-  selector: '[nzOverflowRest]',
+  selector: '',
   host: {
     '[style]': 'restStyle'
   }
 })
-export class NzOverflowRestDirective {
-  private nzResizeObserver = inject(NzResizeObserver);
+export class TriOverflowRestDirective {
+  private resizeObserver = inject(TriResizeObserver);
   private elementRef = inject(ElementRef);
   private cdr = inject(ChangeDetectorRef);
 
   restStyle: Record<string, string | number | undefined> | undefined = undefined;
-  restWidth$ = this.nzResizeObserver.observe(this.elementRef.nativeElement).pipe(
+  restWidth$ = this.resizeObserver.observe(this.elementRef.nativeElement).pipe(
     map(([item]) => (item.target as HTMLElement).offsetWidth),
     startWith(0),
     tap(width => (this.restWidth = width))

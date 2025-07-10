@@ -32,37 +32,37 @@ import { finalize, take } from 'rxjs/operators';
 
 import { buildGraph } from 'dagre-compound';
 
-import { NzNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
 import { cancelAnimationFrame } from 'ng-zorro-antd/core/polyfill';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 import { calculateTransform } from './core/utils';
-import { NzGraphData } from './data-source/graph-data-source';
-import { NzGraph } from './graph';
-import { NzGraphDefsComponent } from './graph-defs.component';
-import { NzGraphEdgeComponent } from './graph-edge.component';
-import { NzGraphEdgeDirective } from './graph-edge.directive';
-import { NzGraphGroupNodeDirective } from './graph-group-node.directive';
-import { NzGraphNodeComponent } from './graph-node.component';
-import { NzGraphNodeDirective } from './graph-node.directive';
-import { NzGraphZoomDirective } from './graph-zoom.directive';
+import { TriGraphData } from './data-source/graph-data-source';
+import { TriGraph } from './graph';
+import { TriGraphDefsComponent } from './graph-defs.component';
+import { TriGraphEdgeComponent } from './graph-edge.component';
+import { TriGraphEdgeDirective } from './graph-edge.directive';
+import { TriGraphGroupNodeDirective } from './graph-group-node.directive';
+import { TriGraphNodeComponent } from './graph-node.component';
+import { TriGraphNodeDirective } from './graph-node.directive';
+import { TriGraphZoomDirective } from './graph-zoom.directive';
 import {
   NZ_GRAPH_LAYOUT_SETTING,
-  NzGraphDataDef,
-  NzGraphEdge,
-  NzGraphEdgeDef,
-  NzGraphGroupNode,
-  NzGraphLayoutConfig,
-  NzGraphNode,
-  NzGraphNodeDef,
-  NzGraphOption,
-  NzLayoutSetting,
-  NzRankDirection,
+  TriGraphDataDef,
+  TriGraphEdge,
+  TriGraphEdgeDef,
+  TriGraphGroupNode,
+  TriGraphLayoutConfig,
+  TriGraphNode,
+  TriGraphNodeDef,
+  TriGraphOption,
+  TriLayoutSetting,
+  TriRankDirection,
   nzTypeDefinition
 } from './interface';
 
 /** Checks whether an object is a data source. */
-export function isDataSource(value: NzSafeAny): value is NzGraphData {
+export function isDataSource(value: TriSafeAny): value is TriGraphData {
   // Check if the value is a DataSource by observing if it has a connect function. Cannot
   // be checked as an `instanceof DataSource` since people could create their own sources
   // that match the interface, but don't extend DataSource.
@@ -72,13 +72,13 @@ export function isDataSource(value: NzSafeAny): value is NzGraphData {
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-graph',
-  exportAs: 'nzGraph',
-  providers: [{ provide: NzGraph, useExisting: forwardRef(() => NzGraphComponent) }],
+  selector: '',
+  exportAs: 'triGraph',
+  providers: [{ provide: TriGraph, useExisting: forwardRef(() => TriGraphComponent) }],
   template: `
     <ng-content></ng-content>
     <svg width="100%" height="100%">
-      <svg:defs nz-graph-defs></svg:defs>
+      <svg:defs tri-graph-defs></svg:defs>
       <svg:g [attr.transform]="transformStyle">
         <ng-container
           [ngTemplateOutlet]="groupTemplate"
@@ -94,9 +94,9 @@ export function isDataSource(value: NzSafeAny): value is NzGraphData {
             @for (edge of $asNzGraphEdges(renderNode.edges); track edgeTrackByFun(edge)) {
               <g
                 class="nz-graph-edge"
-                nz-graph-edge
+                tri-graph-edge
                 [edge]="edge"
-                [edgeType]="nzGraphLayoutConfig?.defaultEdge?.type"
+                [edgeType]="graphLayoutConfig?.defaultEdge?.type"
                 [customTemplate]="customGraphEdgeTemplate"
               ></g>
             }
@@ -105,11 +105,11 @@ export function isDataSource(value: NzSafeAny): value is NzGraphData {
           <svg:g class="nz-graph-nodes">
             @for (node of typedNodes(renderNode.nodes); track node.name) {
               @if (node.type === 1) {
-                <g class="nz-graph-node" nz-graph-node [node]="node" [customTemplate]="nodeTemplate"></g>
+                <g class="nz-graph-node" tri-graph-node [node]="node" [customTemplate]="nodeTemplate"></g>
               }
 
               @if (node.type === 0) {
-                <g class="nz-graph-node" nz-graph-node [node]="node" [customTemplate]="groupNodeTemplate"></g>
+                <g class="nz-graph-node" tri-graph-node [node]="node" [customTemplate]="groupNodeTemplate"></g>
               }
 
               @if (node.expanded) {
@@ -128,66 +128,66 @@ export function isDataSource(value: NzSafeAny): value is NzGraphData {
     '[class.nz-graph]': 'true',
     '[class.nz-graph-auto-size]': 'nzAutoSize'
   },
-  imports: [NgTemplateOutlet, NzGraphEdgeComponent, NzGraphNodeComponent, NzGraphDefsComponent]
+  imports: [NgTemplateOutlet, TriGraphEdgeComponent, TriGraphNodeComponent, TriGraphDefsComponent]
 })
-export class NzGraphComponent implements OnInit, OnChanges, AfterContentChecked, NzGraph {
+export class TriGraphComponent implements OnInit, OnChanges, AfterContentChecked, TriGraph {
   private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
   private elementRef: ElementRef = inject(ElementRef);
   private destroyRef = inject(DestroyRef);
 
-  @ViewChildren(NzGraphNodeComponent, { read: ElementRef }) listOfNodeElement!: QueryList<ElementRef>;
-  @ViewChildren(NzGraphNodeComponent) listOfNodeComponent!: QueryList<NzGraphNodeComponent>;
+  @ViewChildren(TriGraphNodeComponent, { read: ElementRef }) listOfNodeElement!: QueryList<ElementRef>;
+  @ViewChildren(TriGraphNodeComponent) listOfNodeComponent!: QueryList<TriGraphNodeComponent>;
 
-  @ContentChild(NzGraphNodeDirective, { static: true, read: TemplateRef }) nodeTemplate?: TemplateRef<{
-    $implicit: NzGraphNode;
+  @ContentChild(TriGraphNodeDirective, { static: true, read: TemplateRef }) nodeTemplate?: TemplateRef<{
+    $implicit: TriGraphNode;
   }>;
-  @ContentChild(NzGraphGroupNodeDirective, { static: true, read: TemplateRef }) groupNodeTemplate?: TemplateRef<{
-    $implicit: NzGraphGroupNode;
+  @ContentChild(TriGraphGroupNodeDirective, { static: true, read: TemplateRef }) groupNodeTemplate?: TemplateRef<{
+    $implicit: TriGraphGroupNode;
   }>;
-  @ContentChild(NzGraphEdgeDirective, { static: true, read: TemplateRef }) customGraphEdgeTemplate?: TemplateRef<{
-    $implicit: NzGraphEdge;
+  @ContentChild(TriGraphEdgeDirective, { static: true, read: TemplateRef }) customGraphEdgeTemplate?: TemplateRef<{
+    $implicit: TriGraphEdge;
   }>;
   /**
    * Provides a stream containing the latest data array to render.
    * Data source can be an observable of NzGraphData, or a NzGraphData to render.
    */
-  @Input() nzGraphData!: NzGraphData;
-  @Input() nzRankDirection: NzRankDirection = 'LR';
-  @Input() nzGraphLayoutConfig?: NzGraphLayoutConfig;
-  @Input({ transform: booleanAttribute }) nzAutoSize = false;
+  @Input() graphData!: TriGraphData;
+  @Input() rankDirection: TriRankDirection = 'LR';
+  @Input() graphLayoutConfig?: TriGraphLayoutConfig;
+  @Input({ transform: booleanAttribute }) autoSize = false;
 
-  @Output() readonly nzGraphInitialized = new EventEmitter<NzGraphComponent>();
-  @Output() readonly nzGraphRendered = new EventEmitter<NzGraphComponent>();
-  @Output() readonly nzNodeClick = new EventEmitter<NzGraphNode | NzGraphGroupNode>();
+  @Output() readonly graphInitialized = new EventEmitter<TriGraphComponent>();
+  @Output() readonly graphRendered = new EventEmitter<TriGraphComponent>();
+  @Output() readonly nodeClick = new EventEmitter<TriGraphNode | TriGraphGroupNode>();
 
   requestId: number = -1;
   transformStyle = '';
   graphRenderedSubject$ = new ReplaySubject<void>(1);
-  renderInfo: NzGraphGroupNode = { labelHeight: 0 } as NzGraphGroupNode;
-  mapOfNodeAttr: Record<string, NzGraphNodeDef> = {};
-  mapOfEdgeAttr: Record<string, NzGraphEdgeDef> = {};
+  renderInfo: TriGraphGroupNode = { labelHeight: 0 } as TriGraphGroupNode;
+  mapOfNodeAttr: Record<string, TriGraphNodeDef> = {};
+  mapOfEdgeAttr: Record<string, TriGraphEdgeDef> = {};
   zoom = 1;
 
-  public readonly typedNodes = nzTypeDefinition<Array<NzGraphNode | NzGraphGroupNode>>();
-  private dataSource?: NzGraphData;
-  private layoutSetting: NzLayoutSetting = NZ_GRAPH_LAYOUT_SETTING;
+  public readonly typedNodes = nzTypeDefinition<Array<TriGraphNode | TriGraphGroupNode>>();
+  private dataSource?: TriGraphData;
+  private layoutSetting: TriLayoutSetting = NZ_GRAPH_LAYOUT_SETTING;
   /** Data subscription */
   private _dataSubscription?: Subscription | null;
 
-  edgeTrackByFun = (edge: NzGraphEdge): string => `${edge.v}-${edge.w}`;
+  edgeTrackByFun = (edge: TriGraphEdge): string => `${edge.v}-${edge.w}`;
 
-  subGraphTransform = (node: NzGraphGroupNode): string => {
+  subGraphTransform = (node: TriGraphGroupNode): string => {
     const x = node.x - node.coreBox.width / 2.0;
     const y = node.y - node.height / 2.0 + node.paddingTop;
     return `translate(${x}, ${y})`;
   };
 
-  $asNzGraphEdges = (data: unknown): NzGraphEdge[] => data as NzGraphEdge[];
+  $asNzGraphEdges = (data: unknown): TriGraphEdge[] => data as TriGraphEdge[];
 
-  coreTransform = (node: NzGraphGroupNode): string => `translate(0, ${node.parentNodeName ? node.labelHeight : 0})`;
+  coreTransform = (node: TriGraphGroupNode): string => `translate(0, ${node.parentNodeName ? node.labelHeight : 0})`;
 
-  noAnimation = inject(NzNoAnimationDirective, { host: true, optional: true });
-  nzGraphZoom = inject(NzGraphZoomDirective, { optional: true });
+  noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
+  graphZoom = inject(TriGraphZoomDirective, { optional: true });
 
   constructor() {
     this.destroyRef.onDestroy(() => {
@@ -206,10 +206,10 @@ export class NzGraphComponent implements OnInit, OnChanges, AfterContentChecked,
   ngOnInit(): void {
     this.graphRenderedSubject$.pipe(take(1), takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       // Only zooming is not set, move graph to center
-      if (!this.nzGraphZoom) {
+      if (!this.graphZoom) {
         this.fitCenter();
       }
-      this.nzGraphInitialized.emit(this);
+      this.graphInitialized.emit(this);
     });
   }
 
@@ -220,8 +220,8 @@ export class NzGraphComponent implements OnInit, OnChanges, AfterContentChecked,
     }
 
     if (nzGraphData) {
-      if (this.dataSource !== this.nzGraphData) {
-        this._switchDataSource(this.nzGraphData);
+      if (this.dataSource !== this.graphData) {
+        this._switchDataSource(this.graphData);
       }
     }
 
@@ -229,7 +229,7 @@ export class NzGraphComponent implements OnInit, OnChanges, AfterContentChecked,
       // Render graph
       if (this.dataSource!.dataSource) {
         this.drawGraph(this.dataSource!.dataSource, {
-          rankDirection: this.nzRankDirection,
+          rankDirection: this.rankDirection,
           expanded: this.dataSource!.expansionModel.selected || []
         }).then(() => {
           this.cdr.markForCheck();
@@ -268,7 +268,7 @@ export class NzGraphComponent implements OnInit, OnChanges, AfterContentChecked,
    * @param options
    * @param needResize
    */
-  drawGraph(data: NzGraphDataDef, options: NzGraphOption, needResize: boolean = false): Promise<void> {
+  drawGraph(data: TriGraphDataDef, options: TriGraphOption, needResize: boolean = false): Promise<void> {
     return new Promise(resolve => {
       this.requestId = requestAnimationFrame(() => {
         const renderInfo = this.buildGraphInfo(data, options);
@@ -277,17 +277,17 @@ export class NzGraphComponent implements OnInit, OnChanges, AfterContentChecked,
         this.renderInfo = renderInfo;
         this.cdr.markForCheck();
         this.requestId = requestAnimationFrame(() => {
-          this.drawNodes(!this.noAnimation?.nzNoAnimation).then(() => {
+          this.drawNodes(!this.noAnimation?.noAnimation).then(() => {
             // Update element
             this.cdr.markForCheck();
             if (needResize) {
               this.resizeNodeSize().then(() => {
-                const dataSource: NzGraphDataDef = this.dataSource!.dataSource!;
+                const dataSource: TriGraphDataDef = this.dataSource!.dataSource!;
                 this.drawGraph(dataSource, options, false).then(() => resolve());
               });
             } else {
               this.graphRenderedSubject$.next();
-              this.nzGraphRendered.emit(this);
+              this.graphRendered.emit(this);
               resolve();
             }
           });
@@ -319,8 +319,8 @@ export class NzGraphComponent implements OnInit, OnChanges, AfterContentChecked,
 
   private resizeNodeSize(): Promise<void> {
     return new Promise(resolve => {
-      const dataSource: NzGraphDataDef = this.dataSource!.dataSource!;
-      let scale = this.nzGraphZoom?.nzZoom || this.zoom || 1;
+      const dataSource: TriGraphDataDef = this.dataSource!.dataSource!;
+      let scale = this.graphZoom?.zoom || this.zoom || 1;
       this.listOfNodeElement.forEach(nodeEle => {
         const contentEle = nodeEle.nativeElement;
         if (contentEle) {
@@ -355,9 +355,9 @@ export class NzGraphComponent implements OnInit, OnChanges, AfterContentChecked,
    * render change subscription if one exists. If the data source is null, interpret this by
    * clearing the node outlet. Otherwise start listening for new data.
    */
-  private _switchDataSource(dataSource: NzGraphData): void {
+  private _switchDataSource(dataSource: TriGraphData): void {
     if (this.dataSource && typeof this.dataSource.disconnect === 'function') {
-      this.nzGraphData.disconnect();
+      this.graphData.disconnect();
     }
 
     if (this._dataSubscription) {
@@ -371,9 +371,9 @@ export class NzGraphComponent implements OnInit, OnChanges, AfterContentChecked,
 
   /** Set up a subscription for the data provided by the data source. */
   private observeRenderChanges(): void {
-    let dataStream: Observable<NzGraphDataDef> | undefined;
-    let graphOptions: NzGraphOption = {
-      rankDirection: this.nzRankDirection
+    let dataStream: Observable<TriGraphDataDef> | undefined;
+    let graphOptions: TriGraphOption = {
+      rankDirection: this.rankDirection
     };
     if (isDataSource(this.dataSource)) {
       dataStream = this.dataSource.connect();
@@ -382,10 +382,10 @@ export class NzGraphComponent implements OnInit, OnChanges, AfterContentChecked,
     if (dataStream) {
       this._dataSubscription = dataStream.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => {
         graphOptions = {
-          rankDirection: this.nzRankDirection,
-          expanded: this.nzGraphData.expansionModel.selected
+          rankDirection: this.rankDirection,
+          expanded: this.graphData.expansionModel.selected
         };
-        this.drawGraph(data, graphOptions, this.nzAutoSize).then(() => {
+        this.drawGraph(data, graphOptions, this.autoSize).then(() => {
           this.cdr.detectChanges();
         });
       });
@@ -401,10 +401,10 @@ export class NzGraphComponent implements OnInit, OnChanges, AfterContentChecked,
    * @param options
    * @private
    */
-  private buildGraphInfo(data: NzGraphDataDef, options: NzGraphOption): NzGraphGroupNode {
+  private buildGraphInfo(data: TriGraphDataDef, options: TriGraphOption): TriGraphGroupNode {
     this.parseInfo(data);
-    const renderInfo = buildGraph(data, options, this.layoutSetting) as NzGraphGroupNode;
-    const dig = (nodes: Array<NzGraphNode | NzGraphGroupNode>): void => {
+    const renderInfo = buildGraph(data, options, this.layoutSetting) as TriGraphGroupNode;
+    const dig = (nodes: Array<TriGraphNode | TriGraphGroupNode>): void => {
       nodes.forEach(node => {
         const { x, y } = node;
         node.xOffset = x;
@@ -412,7 +412,7 @@ export class NzGraphComponent implements OnInit, OnChanges, AfterContentChecked,
         if (node.type === 1 && this.mapOfNodeAttr.hasOwnProperty(node.name)) {
           Object.assign(node, this.mapOfNodeAttr[node.name]);
         } else if (node.type === 0) {
-          (node as NzGraphGroupNode).edges.forEach(edge => {
+          (node as TriGraphGroupNode).edges.forEach(edge => {
             if (this.mapOfEdgeAttr.hasOwnProperty(`${edge.v}-${edge.w}`)) {
               Object.assign(edge, this.mapOfEdgeAttr[`${edge.v}-${edge.w}`]);
             }
@@ -444,7 +444,7 @@ export class NzGraphComponent implements OnInit, OnChanges, AfterContentChecked,
     );
   }
 
-  private parseInfo(data: NzGraphDataDef): void {
+  private parseInfo(data: TriGraphDataDef): void {
     data.nodes.forEach(n => {
       this.mapOfNodeAttr[n.id] = n;
     });
@@ -459,18 +459,18 @@ export class NzGraphComponent implements OnInit, OnChanges, AfterContentChecked,
    * @param config
    * @private
    */
-  private mergeConfig(config: NzGraphLayoutConfig): NzLayoutSetting {
+  private mergeConfig(config: TriGraphLayoutConfig): TriLayoutSetting {
     const graphMeta = config?.layout || {};
     const subSceneMeta = config?.subScene || {};
     const defaultNodeMeta = config?.defaultNode || {};
     const defaultCompoundNodeMeta = config?.defaultCompoundNode || {};
     const bridge = NZ_GRAPH_LAYOUT_SETTING.nodeSize.bridge;
 
-    const graph: NzLayoutSetting['graph'] = { meta: { ...NZ_GRAPH_LAYOUT_SETTING.graph.meta, ...graphMeta } };
-    const subScene: NzLayoutSetting['subScene'] = {
+    const graph: TriLayoutSetting['graph'] = { meta: { ...NZ_GRAPH_LAYOUT_SETTING.graph.meta, ...graphMeta } };
+    const subScene: TriLayoutSetting['subScene'] = {
       meta: { ...NZ_GRAPH_LAYOUT_SETTING.subScene.meta, ...subSceneMeta }
     };
-    const nodeSize: NzLayoutSetting['nodeSize'] = {
+    const nodeSize: TriLayoutSetting['nodeSize'] = {
       meta: { ...NZ_GRAPH_LAYOUT_SETTING.nodeSize.meta, ...defaultCompoundNodeMeta },
       node: { ...NZ_GRAPH_LAYOUT_SETTING.nodeSize.node, ...defaultNodeMeta },
       bridge

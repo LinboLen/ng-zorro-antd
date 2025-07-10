@@ -1,13 +1,13 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component } from '@angular/core';
 
-import { NzTableModule } from 'ng-zorro-antd/table';
+import { TriTableModule } from 'ng-zorro-antd/table';
 
 @Component({
-  selector: 'nz-demo-table-drag-sorting',
-  imports: [CdkDropList, CdkDrag, NzTableModule],
+  selector: '',
+  imports: [CdkDropList, CdkDrag, TriTableModule],
   template: `
-    <nz-table [nzData]="listOfData" [nzFrontPagination]="false" [nzShowPagination]="false">
+    <tri-table [data]="listOfData" [frontPagination]="false" [showPagination]="false">
       <thead>
         <tr>
           <th>Name</th>
@@ -24,7 +24,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `,
   styles: [
     `
@@ -38,7 +38,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
     `
   ]
 })
-export class NzDemoTableDragSortingComponent {
+export class TriDemoTableDragSortingComponent {
   listOfData = [
     {
       key: '1',

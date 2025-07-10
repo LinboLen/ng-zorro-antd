@@ -6,7 +6,7 @@
 import { Platform } from '@angular/cdk/platform';
 import { NgZone } from '@angular/core';
 
-export class NzWaveRenderer {
+export class TriWaveRenderer {
   private waveTransitionDuration = 400;
   private styleForPseudo: HTMLStyleElement | null = null;
   private extraNode: HTMLDivElement | null = null;

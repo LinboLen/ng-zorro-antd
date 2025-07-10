@@ -5,7 +5,7 @@
 
 import { AfterViewInit, Directive, ElementRef, inject, Input, OnChanges, Renderer2 } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 /**
  * hack the bug
@@ -14,12 +14,12 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
  */
 @Directive({
   selector:
-    '[nz-button], [nz-icon], nz-icon, [nz-menu-item], [nz-submenu], nz-select-top-control, nz-select-placeholder, nz-input-group'
+    ''
 })
-export class NzTransitionPatchDirective implements AfterViewInit, OnChanges {
+export class TriTransitionPatchDirective implements AfterViewInit, OnChanges {
   private elementRef = inject(ElementRef<HTMLElement>);
   private renderer = inject(Renderer2);
-  @Input() hidden: NzSafeAny = null;
+  @Input() hidden: TriSafeAny = null;
   setHiddenAttribute(): void {
     if (this.hidden) {
       if (typeof this.hidden === 'string') {

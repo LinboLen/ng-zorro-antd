@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
+import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
 
 @Component({
-  selector: 'nz-demo-segmented-value',
-  imports: [FormsModule, NzSegmentedModule],
+  selector: '',
+  imports: [FormsModule, TriSegmentedModule],
   template: `
-    <nz-segmented [nzOptions]="options" [(ngModel)]="selectedValue" (ngModelChange)="handleModelChange($event)" />
+    <tri-segmented [options]="options" [(ngModel)]="selectedValue" (ngModelChange)="handleModelChange($event)" />
     <br />
     Selected value: {{ selectedValue }}
   `,
@@ -19,7 +19,7 @@ import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
     `
   ]
 })
-export class NzDemoSegmentedValueComponent {
+export class TriDemoSegmentedValueComponent {
   selectedValue = 'Weekly';
   options = ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly'];
 

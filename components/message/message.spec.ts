@@ -8,32 +8,32 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { NzConfigService, provideNzConfig } from 'ng-zorro-antd/core/config';
+import { TriConfigService, provideNzConfig } from 'ng-zorro-antd/core/config';
 import { dispatchMouseEvent } from 'ng-zorro-antd/core/testing';
 
-import { NzMessageComponent } from './message.component';
-import { NzMessageService } from './message.service';
+import { TriMessageComponent } from './message.component';
+import { TriMessageService } from './message.service';
 
 describe('message', () => {
-  let messageService: NzMessageService;
+  let messageService: TriMessageService;
   let overlayContainer: OverlayContainer;
   let overlayContainerElement: HTMLElement;
-  let fixture: ComponentFixture<NzTestMessageComponent>;
-  let testComponent: NzTestMessageComponent;
-  let configService: NzConfigService;
+  let fixture: ComponentFixture<TriTestMessageComponent>;
+  let testComponent: TriTestMessageComponent;
+  let configService: TriConfigService;
 
   beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
-      providers: [provideNoopAnimations(), provideNzConfig({ message: { nzMaxStack: 2, nzTop: 24 } }), NzMessageService]
+      providers: [provideNoopAnimations(), provideNzConfig({ message: { nzMaxStack: 2, nzTop: 24 } }), TriMessageService]
     });
 
-    fixture = TestBed.createComponent(NzTestMessageComponent);
+    fixture = TestBed.createComponent(TriTestMessageComponent);
     testComponent = fixture.componentInstance;
   }));
 
   beforeEach(inject(
-    [NzMessageService, OverlayContainer, NzConfigService],
-    (m: NzMessageService, oc: OverlayContainer, c: NzConfigService) => {
+    [TriMessageService, OverlayContainer, TriConfigService],
+    (m: TriMessageService, oc: OverlayContainer, c: TriConfigService) => {
       messageService = m;
       overlayContainer = oc;
       configService = c;
@@ -213,9 +213,9 @@ describe('message', () => {
 @Component({
   template: `<ng-template #contentTemplate let-data="data">Content in template{{ data }}</ng-template>`
 })
-export class NzTestMessageComponent {
+export class TriTestMessageComponent {
   @ViewChild('contentTemplate', { static: true }) template!: TemplateRef<{
-    $implicit: NzMessageComponent;
+    $implicit: TriMessageComponent;
     data: string;
   }>;
 }

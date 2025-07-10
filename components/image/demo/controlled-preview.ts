@@ -1,21 +1,21 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzImageModule, NzImageService } from 'ng-zorro-antd/image';
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriImageModule, TriImageService } from 'ng-zorro-antd/image';
+import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
 
 @Component({
-  selector: 'nz-demo-image-controlled-preview',
-  imports: [FormsModule, NzButtonModule, NzImageModule, NzInputNumberModule],
+  selector: '',
+  imports: [FormsModule, TriButtonModule, TriImageModule, TriInputNumberModule],
   template: `
     <div>
       <label>
         <span>scale step:</span>
-        <nz-input-number [(ngModel)]="scaleStep" [nzMin]="0.1" [nzStep]="1"></nz-input-number>
+        <tri-input-number [(ngModel)]="scaleStep" [min]="0.1" [step]="1"></tri-input-number>
       </label>
 
-      <button nz-button nzType="primary" (click)="onClick()">Preview</button>
+      <button tri-button type="primary" (click)="onClick()">Preview</button>
     </div>
   `,
   styles: [
@@ -35,8 +35,8 @@ import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
     `
   ]
 })
-export class NzDemoImageControlledPreviewComponent {
-  private nzImageService = inject(NzImageService);
+export class TriDemoImageControlledPreviewComponent {
+  private imageService = inject(TriImageService);
   scaleStep = 0.5;
   readonly images = [
     {
@@ -46,6 +46,6 @@ export class NzDemoImageControlledPreviewComponent {
   ];
 
   onClick(): void {
-    this.nzImageService.preview(this.images, { nzZoom: 1, nzRotate: 0, nzScaleStep: this.scaleStep });
+    this.imageService.preview(this.images, { zoom: 1, rotate: 0, scaleStep: this.scaleStep });
   }
 }

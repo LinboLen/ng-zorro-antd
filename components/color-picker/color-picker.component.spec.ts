@@ -10,16 +10,16 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzColorPickerComponent, NzColorPickerModule } from 'ng-zorro-antd/color-picker';
-import { NzColor, NzColorPickerFormatType, NzColorPickerTriggerType } from 'ng-zorro-antd/color-picker/typings';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriColorPickerComponent, TriColorPickerModule } from 'ng-zorro-antd/color-picker';
+import { TriColor, TriColorPickerFormatType, TriColorPickerTriggerType } from 'ng-zorro-antd/color-picker/typings';
 import { dispatchMouseEvent } from 'ng-zorro-antd/core/testing';
-import { NzSizeLDSType } from 'ng-zorro-antd/core/types';
-import { NzFormModule } from 'ng-zorro-antd/form';
+import { TriSizeLDSType } from 'ng-zorro-antd/core/types';
+import { TriFormModule } from 'ng-zorro-antd/form';
 
 describe('nz-color-picker', () => {
-  let fixture: ComponentFixture<NzTestColorPickerComponent>;
-  let testComponent: NzTestColorPickerComponent;
+  let fixture: ComponentFixture<TriTestColorPickerComponent>;
+  let testComponent: TriTestColorPickerComponent;
   let resultEl: DebugElement;
   let overlayContainer: OverlayContainer;
   let overlayContainerElement: HTMLElement;
@@ -34,10 +34,10 @@ describe('nz-color-picker', () => {
     TestBed.configureTestingModule({
       providers: [provideNoopAnimations()]
     });
-    fixture = TestBed.createComponent(NzTestColorPickerComponent);
+    fixture = TestBed.createComponent(TriTestColorPickerComponent);
     fixture.detectChanges();
     testComponent = fixture.componentInstance;
-    resultEl = fixture.debugElement.query(By.directive(NzColorPickerComponent));
+    resultEl = fixture.debugElement.query(By.directive(TriColorPickerComponent));
   }));
 
   beforeEach(inject([OverlayContainer], (oc: OverlayContainer) => {
@@ -56,26 +56,26 @@ describe('nz-color-picker', () => {
   });
 
   it('color-picker nzValue', () => {
-    testComponent.nzValue = '#ff6600';
+    testComponent.value = '#ff6600';
     fixture.detectChanges();
     const colorDom = resultEl.nativeElement.querySelector('.ant-color-picker-color-block-inner');
     expect(colorDom.style.backgroundColor).toBe('rgb(255, 102, 0)');
   });
 
   it('color-picker nzDefaultValue', () => {
-    testComponent.nzDefaultValue = '#ff6600';
+    testComponent.defaultValue = '#ff6600';
     fixture.detectChanges();
     const colorDom = resultEl.nativeElement.querySelector('.ant-color-picker-color-block-inner');
     expect(colorDom.style.backgroundColor).toBe('rgb(255, 102, 0)');
   });
 
   it('color-picker nzSize', () => {
-    testComponent.nzSize = 'small';
+    testComponent.size = 'small';
     fixture.detectChanges();
     expect(resultEl.nativeElement.querySelector('.ant-color-picker-trigger').classList).toContain(
       'ant-color-picker-sm'
     );
-    testComponent.nzSize = 'large';
+    testComponent.size = 'large';
     fixture.detectChanges();
     expect(resultEl.nativeElement.querySelector('.ant-color-picker-trigger').classList).toContain(
       'ant-color-picker-lg'
@@ -83,13 +83,13 @@ describe('nz-color-picker', () => {
   });
 
   it('color-picker nzDisabled', () => {
-    testComponent.nzDisabled = true;
+    testComponent.disabled = true;
     fixture.detectChanges();
     expect(resultEl.nativeElement.classList).toContain('ant-color-picker-disabled');
   });
 
   it('color-picker nzShowText', () => {
-    testComponent.nzShowText = true;
+    testComponent.showText = true;
     fixture.detectChanges();
     expect(resultEl.nativeElement.querySelector('.ant-color-picker-trigger-text').innerText).toBe('#1677ff');
   });
@@ -103,7 +103,7 @@ describe('nz-color-picker', () => {
   }));
 
   it('color-picker nzTrigger hover', fakeAsync(() => {
-    testComponent.nzTrigger = 'hover';
+    testComponent.trigger = 'hover';
     fixture.detectChanges();
     const dom = resultEl.nativeElement.querySelector('.ant-color-picker-trigger');
     dispatchMouseEvent(dom, 'mouseenter');
@@ -112,13 +112,13 @@ describe('nz-color-picker', () => {
   }));
 
   it('color-picker nzOpen', () => {
-    testComponent.nzOpen = true;
+    testComponent.open = true;
     fixture.detectChanges();
     expect(!!overlayContainerElement.querySelector('.ant-popover-inner-content')).toBeTrue();
   });
 
   it('color-picker nzAllowClear', fakeAsync(() => {
-    testComponent.nzAllowClear = true;
+    testComponent.allowClear = true;
     fixture.detectChanges();
     const dom = resultEl.nativeElement.querySelector('.ant-color-picker-trigger');
     dispatchMouseEvent(dom, 'click');
@@ -148,11 +148,11 @@ describe('nz-color-picker', () => {
     dispatchMouseEvent(dom, 'click');
     waitingForTooltipToggling();
     expect(!!overlayContainerElement.querySelector('.ant-color-picker-hex-input')).toBeTrue();
-    testComponent.nzFormat = 'hsb';
+    testComponent.format = 'hsb';
     fixture.detectChanges();
     waitingForTooltipToggling();
     expect(!!overlayContainerElement.querySelector('.ant-color-picker-hsb-input')).toBeTrue();
-    testComponent.nzFormat = 'rgb';
+    testComponent.format = 'rgb';
     fixture.detectChanges();
     waitingForTooltipToggling();
     expect(!!overlayContainerElement.querySelector('.ant-color-picker-rgb-input')).toBeTrue();
@@ -167,7 +167,7 @@ describe('nz-color-picker', () => {
   }));
 
   it('color-picker nzOnClear', fakeAsync(() => {
-    testComponent.nzAllowClear = true;
+    testComponent.allowClear = true;
     fixture.detectChanges();
     const dom = resultEl.nativeElement.querySelector('.ant-color-picker-trigger');
     dispatchMouseEvent(dom, 'click');
@@ -200,7 +200,7 @@ describe('nz-color-picker', () => {
   }));
 
   it('color-picker disableAlpha', fakeAsync(() => {
-    testComponent.nzAlphaDisabled = true;
+    testComponent.alphaDisabled = true;
     fixture.detectChanges();
     const dom = resultEl.nativeElement.querySelector('.ant-color-picker-trigger');
     dispatchMouseEvent(dom, 'click');
@@ -211,7 +211,7 @@ describe('nz-color-picker', () => {
   }));
 
   it('nz-color-format disableAlpha', fakeAsync(() => {
-    testComponent.nzAlphaDisabled = true;
+    testComponent.alphaDisabled = true;
     fixture.detectChanges();
     const dom = resultEl.nativeElement.querySelector('.ant-color-picker-trigger');
     dispatchMouseEvent(dom, 'click');
@@ -231,76 +231,76 @@ describe('nz-color-picker', () => {
 });
 
 @Component({
-  imports: [NzButtonModule, NzColorPickerModule],
+  imports: [TriButtonModule, TriColorPickerModule],
   template: `
-    <nz-color-picker
-      [nzValue]="nzValue"
-      [nzSize]="nzSize"
-      [nzDefaultValue]="nzDefaultValue"
-      [nzShowText]="nzShowText"
-      [nzDisabled]="nzDisabled"
-      [nzTrigger]="nzTrigger"
-      [nzFormat]="nzFormat"
-      [nzAllowClear]="nzAllowClear"
-      [nzOpen]="nzOpen"
-      [nzDisabledAlpha]="nzAlphaDisabled"
-      (nzOnChange)="nzOnChange($event)"
-      (nzOnFormatChange)="nzOnFormatChange($event)"
-      (nzOnClear)="nzOnClear($event)"
-      (nzOnOpenChange)="nzOnOpenChange($event)"
-      nzTitle="Color Picker"
-      [nzFlipFlop]="isFlipFlop ? flipFlop : null"
-    ></nz-color-picker>
+    <tri-color-picker
+      [value]="value"
+      [size]="size"
+      [defaultValue]="defaultValue"
+      [showText]="showText"
+      [disabled]="disabled"
+      [trigger]="trigger"
+      [format]="format"
+      [allowClear]="allowClear"
+      [open]="open"
+      [disabledAlpha]="alphaDisabled"
+      (onChange)="onChange($event)"
+      (onFormatChange)="onFormatChange($event)"
+      (onClear)="onClear($event)"
+      (onOpenChange)="onOpenChange($event)"
+      title="Color Picker"
+      [flipFlop]="isFlipFlop ? flipFlop : null"
+    ></tri-color-picker>
     <ng-template #flipFlop>
-      <button nz-button nzType="primary">Color</button>
+      <button tri-button type="primary">Color</button>
     </ng-template>
   `
 })
-export class NzTestColorPickerComponent {
-  nzFormat: NzColorPickerFormatType | null = null;
-  nzValue = '';
-  nzSize: NzSizeLDSType = 'default';
-  nzDefaultValue = '';
-  nzTrigger: NzColorPickerTriggerType = 'click';
-  nzShowText: boolean = false;
-  nzAllowClear: boolean = false;
-  nzDisabled: boolean = false;
-  nzAlphaDisabled: boolean = false;
-  nzOpen: boolean = false;
+export class TriTestColorPickerComponent {
+  format: TriColorPickerFormatType | null = null;
+  value = '';
+  size: TriSizeLDSType = 'default';
+  defaultValue = '';
+  trigger: TriColorPickerTriggerType = 'click';
+  showText: boolean = false;
+  allowClear: boolean = false;
+  disabled: boolean = false;
+  alphaDisabled: boolean = false;
+  open: boolean = false;
 
   isFlipFlop = false;
 
   isClear = false;
   openChange = false;
-  colorChange: { color: NzColor; format: string } | null = null;
-  formatChange: NzColorPickerFormatType | null = null;
-  nzOnChange(value: { color: NzColor; format: string }): void {
+  colorChange: { color: TriColor; format: string } | null = null;
+  formatChange: TriColorPickerFormatType | null = null;
+  onChange(value: { color: TriColor; format: string }): void {
     this.colorChange = value;
   }
-  nzOnFormatChange(value: NzColorPickerFormatType): void {
+  onFormatChange(value: TriColorPickerFormatType): void {
     this.formatChange = value;
   }
-  nzOnClear(value: boolean): void {
+  onClear(value: boolean): void {
     this.isClear = value;
   }
-  nzOnOpenChange(value: boolean): void {
+  onOpenChange(value: boolean): void {
     this.openChange = value;
   }
 }
 
 describe('nz-color-picker form', () => {
-  let fixture: ComponentFixture<NzTestColorPickerFormComponent>;
-  let component: NzTestColorPickerFormComponent;
+  let fixture: ComponentFixture<TriTestColorPickerFormComponent>;
+  let component: TriTestColorPickerFormComponent;
   let resultEl: DebugElement;
 
   beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
       providers: [provideNoopAnimations()]
     });
-    fixture = TestBed.createComponent(NzTestColorPickerFormComponent);
+    fixture = TestBed.createComponent(TriTestColorPickerFormComponent);
     fixture.detectChanges();
     component = fixture.componentInstance;
-    resultEl = fixture.debugElement.query(By.directive(NzColorPickerComponent));
+    resultEl = fixture.debugElement.query(By.directive(TriColorPickerComponent));
   }));
 
   it('color-picker form base', fakeAsync(() => {
@@ -321,19 +321,19 @@ describe('nz-color-picker form', () => {
 });
 
 @Component({
-  imports: [NzColorPickerModule, NzFormModule, ReactiveFormsModule],
+  imports: [TriColorPickerModule, TriFormModule, ReactiveFormsModule],
   template: `
-    <form nz-form [formGroup]="validateForm">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="4">color</nz-form-label>
-        <nz-form-control [nzSpan]="16">
-          <nz-color-picker formControlName="colorPicker" nzShowText></nz-color-picker>
-        </nz-form-control>
-      </nz-form-item>
+    <form tri-form [formGroup]="validateForm">
+      <tri-form-item>
+        <tri-form-label [span]="4">color</tri-form-label>
+        <tri-form-control [span]="16">
+          <tri-color-picker formControlName="colorPicker" showText></tri-color-picker>
+        </tri-form-control>
+      </tri-form-item>
     </form>
   `
 })
-export class NzTestColorPickerFormComponent {
+export class TriTestColorPickerFormComponent {
   validateForm = new FormGroup({
     colorPicker: new FormControl('#ff6600')
   });

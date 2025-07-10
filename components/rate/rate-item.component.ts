@@ -15,16 +15,16 @@ import {
   booleanAttribute
 } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '[nz-rate-item]',
-  exportAs: 'nzRateItem',
+  selector: '',
+  exportAs: 'triRateItem',
   template: `
     <div
-      class="ant-rate-star-second"
+      class="tri-rate-star-second"
       (mouseover)="hoverRate(false); $event.stopPropagation()"
       (click)="clickRate(false)"
     >
@@ -33,7 +33,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
         [ngTemplateOutletContext]="{ $implicit: index }"
       ></ng-template>
     </div>
-    <div class="ant-rate-star-first" (mouseover)="hoverRate(true); $event.stopPropagation()" (click)="clickRate(true)">
+    <div class="tri-rate-star-first" (mouseover)="hoverRate(true); $event.stopPropagation()" (click)="clickRate(true)">
       <ng-template
         [ngTemplateOutlet]="character || defaultCharacter"
         [ngTemplateOutletContext]="{ $implicit: index }"
@@ -41,12 +41,12 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     </div>
 
     <ng-template #defaultCharacter>
-      <nz-icon nzType="star" nzTheme="fill" />
+      <tri-icon type="star" theme="fill" />
     </ng-template>
   `,
-  imports: [NgTemplateOutlet, NzIconModule]
+  imports: [NgTemplateOutlet, TriIconModule]
 })
-export class NzRateItemComponent {
+export class TriRateItemComponent {
   @Input() character!: TemplateRef<{ $implicit: number }>;
   @Input() index = 0;
   @Input({ transform: booleanAttribute }) allowHalf: boolean = false;

@@ -5,14 +5,14 @@
 
 import { Directive, inject } from '@angular/core';
 
-import { NzDatePickerComponent } from './date-picker.component';
+import { TriDatePickerComponent } from './date-picker.component';
 
 @Directive({
-  selector: 'nz-range-picker',
-  exportAs: 'nzRangePicker'
+  selector: '',
+  exportAs: 'triRangePicker'
 })
-export class NzRangePickerComponent {
-  datePicker = inject(NzDatePickerComponent, { host: true });
+export class TriRangePickerComponent {
+  datePicker = inject(TriDatePickerComponent, { host: true });
 
   constructor() {
     this.datePicker.isRange = true;

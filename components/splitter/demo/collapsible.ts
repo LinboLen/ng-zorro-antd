@@ -1,28 +1,28 @@
 import { Component } from '@angular/core';
 
-import { NzSplitterModule } from 'ng-zorro-antd/splitter';
+import { TriSplitterModule } from 'ng-zorro-antd/splitter';
 
 @Component({
-  selector: 'nz-demo-splitter-collapsible',
-  imports: [NzSplitterModule],
+  selector: '',
+  imports: [TriSplitterModule],
   template: `
-    <nz-splitter>
-      <nz-splitter-panel nzMin="20%" [nzCollapsible]="true">
+    <tri-splitter>
+      <tri-splitter-panel min="20%" [collapsible]="true">
         <div class="box">First</div>
-      </nz-splitter-panel>
-      <nz-splitter-panel [nzCollapsible]="true">
+      </tri-splitter-panel>
+      <tri-splitter-panel [collapsible]="true">
         <div class="box">Second</div>
-      </nz-splitter-panel>
-    </nz-splitter>
+      </tri-splitter-panel>
+    </tri-splitter>
     <br />
-    <nz-splitter nzLayout="vertical">
-      <nz-splitter-panel nzMin="20%" [nzCollapsible]="true">
+    <tri-splitter layout="vertical">
+      <tri-splitter-panel min="20%" [collapsible]="true">
         <div class="box">First</div>
-      </nz-splitter-panel>
-      <nz-splitter-panel [nzCollapsible]="true">
+      </tri-splitter-panel>
+      <tri-splitter-panel [collapsible]="true">
         <div class="box">Second</div>
-      </nz-splitter-panel>
-    </nz-splitter>
+      </tri-splitter-panel>
+    </tri-splitter>
   `,
   styles: `
     nz-splitter {
@@ -38,4 +38,4 @@ import { NzSplitterModule } from 'ng-zorro-antd/splitter';
     }
   `
 })
-export class NzDemoSplitterCollapsibleComponent {}
+export class TriDemoSplitterCollapsibleComponent {}

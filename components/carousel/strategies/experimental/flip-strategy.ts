@@ -6,18 +6,18 @@
 import { QueryList } from '@angular/core';
 import { type Observable, Subject } from 'rxjs';
 
-import { NzCarouselContentDirective } from '../../carousel-content.directive';
-import { NzCarouselBaseStrategy } from '../base-strategy';
+import { TriCarouselContentDirective } from '../../carousel-content.directive';
+import { TriCarouselBaseStrategy } from '../base-strategy';
 
-export class NzCarouselFlipStrategy extends NzCarouselBaseStrategy {
-  override withCarouselContents(contents: QueryList<NzCarouselContentDirective> | null): void {
+export class TriCarouselFlipStrategy extends TriCarouselBaseStrategy {
+  override withCarouselContents(contents: QueryList<TriCarouselContentDirective> | null): void {
     super.withCarouselContents(contents);
 
     if (this.contents) {
       this.renderer.setStyle(this.slickListEl, 'width', `${this.unitWidth}px`);
       this.renderer.setStyle(this.slickTrackEl, 'width', `${this.length * this.unitWidth}px`);
 
-      this.contents.forEach((content: NzCarouselContentDirective, i: number) => {
+      this.contents.forEach((content: TriCarouselContentDirective, i: number) => {
         const cur = this.carouselComponent!.activeIndex === i;
 
         this.renderer.setStyle(content.el, 'transform', cur ? 'rotateY(0deg)' : 'rotateY(180deg)');
@@ -51,7 +51,7 @@ export class NzCarouselFlipStrategy extends NzCarouselBaseStrategy {
       return complete$;
     }
 
-    this.contents.forEach((content: NzCarouselContentDirective, i: number) => {
+    this.contents.forEach((content: TriCarouselContentDirective, i: number) => {
       if (i === from) {
         this.renderer.setStyle(content.el, 'transform', 'rotateY(180deg)');
       } else if (i === to) {
@@ -63,7 +63,7 @@ export class NzCarouselFlipStrategy extends NzCarouselBaseStrategy {
   }
 
   override dispose(): void {
-    this.contents.forEach((content: NzCarouselContentDirective) => {
+    this.contents.forEach((content: TriCarouselContentDirective) => {
       this.renderer.setStyle(content.el, 'transition', null);
       this.renderer.setStyle(content.el, 'transform', null);
       this.renderer.setStyle(content.el, 'width', null);

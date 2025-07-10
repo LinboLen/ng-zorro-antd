@@ -9,11 +9,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
 import { dispatchKeyboardEvent } from 'ng-zorro-antd/core/testing';
-import { NzSizeLDSType, NzStatus, NzVariant } from 'ng-zorro-antd/core/types';
+import { TriSizeLDSType, TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
-import { NzInputNumberComponent } from './input-number.component';
-import { NzInputNumberModule } from './input-number.module';
+import { TriInputNumberComponent } from './input-number.component';
+import { TriInputNumberModule } from './input-number.module';
 
 describe('Input number', () => {
   let component: InputNumberTestComponent;
@@ -358,9 +358,9 @@ describe('Input number', () => {
 
   it('should be focus / blur', async () => {
     await fixture.whenStable();
-    component.inputNumber().focus();
+    component.inputNumber()._focus();
     expect(document.activeElement).toBe(hostElement.querySelector('input'));
-    component.inputNumber().blur();
+    component.inputNumber()._blur();
     expect(document.activeElement).not.toBe(hostElement.querySelector('input'));
   });
 
@@ -537,25 +537,25 @@ describe('Input number with affixes or addons', () => {
 });
 
 @Component({
-  imports: [NzInputNumberModule, FormsModule],
+  imports: [TriInputNumberModule, FormsModule],
   template: `
-    <nz-input-number
-      [nzId]="id"
-      [nzSize]="size"
-      [nzPlaceHolder]="placeholder"
-      [nzStatus]="status"
-      [nzStep]="step"
-      [nzMin]="min"
-      [nzMax]="max"
-      [nzPrecision]="precision"
-      [nzDisabled]="disabled"
-      [nzReadOnly]="readonly"
-      [nzBordered]="bordered"
-      [nzVariant]="variant"
-      [nzKeyboard]="keyboard"
-      [nzControls]="controls"
-      [nzParser]="parser"
-      [nzFormatter]="formatter"
+    <tri-input-number
+      [id]="id"
+      [size]="size"
+      [placeHolder]="placeholder"
+      [status]="status"
+      [step]="step"
+      [min]="min"
+      [max]="max"
+      [precision]="precision"
+      [disabled]="disabled"
+      [readOnly]="readonly"
+      [bordered]="bordered"
+      [variant]="variant"
+      [keyboard]="keyboard"
+      [controls]="controls"
+      [parser]="parser"
+      [formatter]="formatter"
       [(ngModel)]="value"
       [disabled]="controlDisabled"
     />
@@ -563,9 +563,9 @@ describe('Input number with affixes or addons', () => {
 })
 class InputNumberTestComponent {
   id: string | null = null;
-  size: NzSizeLDSType = 'default';
+  size: TriSizeLDSType = 'default';
   placeholder: string | null = null;
-  status: NzStatus = '';
+  status: TriStatus = '';
   step = 1;
   min = Number.MIN_SAFE_INTEGER;
   max = Number.MAX_SAFE_INTEGER;
@@ -573,7 +573,7 @@ class InputNumberTestComponent {
   disabled = false;
   readonly = false;
   bordered = true;
-  variant: NzVariant = 'outlined';
+  variant: TriVariant = 'outlined';
   keyboard = true;
   controls = true;
   parser: ((value: string) => number) | undefined = undefined;
@@ -581,7 +581,7 @@ class InputNumberTestComponent {
 
   value: number | null = null;
   controlDisabled = false;
-  inputNumber = viewChild.required(NzInputNumberComponent);
+  inputNumber = viewChild.required(TriInputNumberComponent);
 
   get displayValue(): string {
     return this.inputNumber()['displayValue']();
@@ -589,49 +589,49 @@ class InputNumberTestComponent {
 }
 
 @Component({
-  imports: [NzInputNumberModule],
+  imports: [TriInputNumberModule],
   template: `
-    <nz-input-number
+    <tri-input-number
       #withAffixes
-      [nzDisabled]="disabled"
-      [nzReadOnly]="readonly"
-      [nzBordered]="bordered"
-      [nzVariant]="variant"
+      [disabled]="disabled"
+      [readOnly]="readonly"
+      [bordered]="bordered"
+      [variant]="variant"
     >
-      <span nzInputPrefix>Prefix</span>
-      <span nzInputSuffix>Suffix</span>
-    </nz-input-number>
+      <span inputPrefix>Prefix</span>
+      <span inputSuffix>Suffix</span>
+    </tri-input-number>
 
-    <nz-input-number
+    <tri-input-number
       #withAddons
-      [nzDisabled]="disabled"
-      [nzReadOnly]="readonly"
-      [nzBordered]="bordered"
-      [nzVariant]="variant"
+      [disabled]="disabled"
+      [readOnly]="readonly"
+      [bordered]="bordered"
+      [variant]="variant"
     >
-      <span nzInputAddonBefore>Before</span>
-      <span nzInputAddonAfter>After</span>
-    </nz-input-number>
+      <span inputAddonBefore>Before</span>
+      <span inputAddonAfter>After</span>
+    </tri-input-number>
 
-    <nz-input-number
+    <tri-input-number
       #withMix
-      [nzDisabled]="disabled"
-      [nzReadOnly]="readonly"
-      [nzBordered]="bordered"
-      [nzVariant]="variant"
+      [disabled]="disabled"
+      [readOnly]="readonly"
+      [bordered]="bordered"
+      [variant]="variant"
     >
-      <span nzInputPrefix>Prefix</span>
-      <span nzInputSuffix>Suffix</span>
-      <span nzInputAddonBefore>Before</span>
-      <span nzInputAddonAfter>After</span>
-    </nz-input-number>
+      <span inputPrefix>Prefix</span>
+      <span inputSuffix>Suffix</span>
+      <span inputAddonBefore>Before</span>
+      <span inputAddonAfter>After</span>
+    </tri-input-number>
   `
 })
 class InputNumberWithAffixesAndAddonsTestComponent {
   disabled = false;
   readonly = false;
   bordered = true;
-  variant: NzVariant = 'outlined';
+  variant: TriVariant = 'outlined';
 
   withAffixes = viewChild.required('withAffixes', { read: ElementRef });
   withAddons = viewChild.required('withAddons', { read: ElementRef });

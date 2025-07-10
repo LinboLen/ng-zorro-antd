@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: 'nz-demo-radio-solid',
-  imports: [FormsModule, NzRadioModule],
+  selector: '',
+  imports: [FormsModule, TriRadioModule],
   template: `
-    <nz-radio-group [(ngModel)]="radioValue" nzButtonStyle="solid">
-      <label nz-radio-button nzValue="A">Hangzhou</label>
-      <label nz-radio-button nzValue="B">Shanghai</label>
-      <label nz-radio-button nzValue="C">Beijing</label>
-      <label nz-radio-button nzValue="D">Chengdu</label>
-    </nz-radio-group>
+    <tri-radio-group [(ngModel)]="radioValue" buttonStyle="solid">
+      <label tri-radio-button value="A">Hangzhou</label>
+      <label tri-radio-button value="B">Shanghai</label>
+      <label tri-radio-button value="C">Beijing</label>
+      <label tri-radio-button value="D">Chengdu</label>
+    </tri-radio-group>
   `
 })
-export class NzDemoRadioSolidComponent {
+export class TriDemoRadioSolidComponent {
   radioValue = 'A';
 }

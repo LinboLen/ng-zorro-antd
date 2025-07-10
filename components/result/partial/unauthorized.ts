@@ -8,8 +8,8 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-result-unauthorized',
-  exportAs: 'nzResultUnauthorized',
+  selector: '',
+  exportAs: 'triResultUnauthorized',
   template: `
     <svg width="251" height="294">
       <g fill="none" fillRule="evenodd">
@@ -273,4 +273,4 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
     </svg>
   `
 })
-export class NzResultUnauthorizedComponent {}
+export class TriResultUnauthorizedComponent {}

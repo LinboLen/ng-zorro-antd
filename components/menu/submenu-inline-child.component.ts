@@ -22,40 +22,40 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { collapseMotion } from 'ng-zorro-antd/core/animation';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzMenuModeType } from './menu.types';
+import { TriMenuModeType } from './menu.types';
 
 @Component({
-  selector: '[nz-submenu-inline-child]',
+  selector: '',
   animations: [collapseMotion],
-  exportAs: 'nzSubmenuInlineChild',
+  exportAs: 'triSubmenuInlineChild',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<ng-template [ngTemplateOutlet]="templateOutlet"></ng-template>`,
   host: {
-    class: 'ant-menu ant-menu-inline ant-menu-sub',
-    '[class.ant-menu-rtl]': `dir === 'rtl'`,
+    class: 'tri-menu ant-menu-inline ant-menu-sub',
+    '[class.tri-menu-rtl]': `dir === 'rtl'`,
     '[@collapseMotion]': 'expandState'
   },
   imports: [NgTemplateOutlet]
 })
-export class NzSubmenuInlineChildComponent implements OnInit, OnChanges {
+export class TriSubmenuInlineChildComponent implements OnInit, OnChanges {
   private readonly elementRef = inject(ElementRef);
   private readonly renderer = inject(Renderer2);
   private readonly directionality = inject(Directionality);
   private readonly destroyRef = inject(DestroyRef);
 
-  @Input() templateOutlet: TemplateRef<NzSafeAny> | null = null;
+  @Input() templateOutlet: TemplateRef<TriSafeAny> | null = null;
   @Input() menuClass: string = '';
-  @Input() mode: NzMenuModeType = 'vertical';
-  @Input() nzOpen = false;
+  @Input() mode: TriMenuModeType = 'vertical';
+  @Input() open = false;
   listOfCacheClassName: string[] = [];
   expandState = 'collapsed';
   dir: Direction = 'ltr';
 
   calcMotionState(): void {
-    this.expandState = this.nzOpen ? 'expanded' : 'collapsed';
+    this.expandState = this.open ? 'expanded' : 'collapsed';
   }
 
   ngOnInit(): void {

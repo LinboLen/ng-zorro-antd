@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 
-import { NzTableModule } from 'ng-zorro-antd/table';
+import { TriTableModule } from 'ng-zorro-antd/table';
 
 @Component({
-  selector: 'nz-demo-table-size',
-  imports: [NzTableModule],
+  selector: '',
+  imports: [TriTableModule],
   template: `
     <h4>Middle size table</h4>
-    <nz-table #middleTable nzSize="middle" [nzData]="data">
+    <tri-table #middleTable size="middle" [data]="data">
       <thead>
         <tr>
           <th>Name</th>
@@ -24,9 +24,9 @@ import { NzTableModule } from 'ng-zorro-antd/table';
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
     <h4>Small size table</h4>
-    <nz-table #smallTable nzSize="small" [nzData]="data">
+    <tri-table #smallTable size="small" [data]="data">
       <thead>
         <tr>
           <th>Name</th>
@@ -43,7 +43,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `,
   styles: [
     `
@@ -53,7 +53,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
     `
   ]
 })
-export class NzDemoTableSizeComponent {
+export class TriDemoTableSizeComponent {
   data = [
     {
       name: 'John Brown',

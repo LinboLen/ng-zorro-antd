@@ -8,13 +8,13 @@ import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzConfigService } from 'ng-zorro-antd/core/config';
-import { NzSafeAny, NzSizeLDSType } from 'ng-zorro-antd/core/types';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriConfigService } from 'ng-zorro-antd/core/config';
+import { TriSafeAny, TriSizeLDSType } from 'ng-zorro-antd/core/types';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
-import { NzSpinComponent } from './spin.component';
-import { NzSpinModule } from './spin.module';
+import { TriSpinComponent } from './spin.component';
+import { TriSpinModule } from './spin.module';
 
 describe('spin', () => {
   beforeEach(waitForAsync(() => {
@@ -24,15 +24,15 @@ describe('spin', () => {
   }));
 
   describe('spin basic', () => {
-    let fixture: ComponentFixture<NzTestSpinBasicComponent>;
-    let testComponent: NzTestSpinBasicComponent;
+    let fixture: ComponentFixture<TriTestSpinBasicComponent>;
+    let testComponent: TriTestSpinBasicComponent;
     let spin: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestSpinBasicComponent);
+      fixture = TestBed.createComponent(TriTestSpinBasicComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      spin = fixture.debugElement.query(By.directive(NzSpinComponent));
+      spin = fixture.debugElement.query(By.directive(TriSpinComponent));
     });
 
     it('should className correct', fakeAsync(() => {
@@ -142,8 +142,8 @@ describe('spin', () => {
 
   describe('RTL', () => {
     it('should className correct on dir change', () => {
-      const fixture = TestBed.createComponent(NzTestSpinRtlComponent);
-      const spin = fixture.debugElement.query(By.directive(NzSpinComponent));
+      const fixture = TestBed.createComponent(TriTestSpinRtlComponent);
+      const spin = fixture.debugElement.query(By.directive(TriSpinComponent));
       fixture.detectChanges();
       expect(spin.nativeElement.querySelector('.ant-spin').classList).toContain('ant-spin-rtl');
 
@@ -155,44 +155,44 @@ describe('spin', () => {
 });
 
 @Component({
-  selector: 'nz-test-basic-spin',
-  imports: [NzIconModule, NzSpinModule],
+  selector: '',
+  imports: [TriIconModule, TriSpinModule],
   template: `
-    <ng-template #indicatorTemplate><nz-icon nzType="loading" style="font-size: 24px;" /></ng-template>
-    <nz-spin
-      [nzTip]="tip"
-      [nzSize]="size"
-      [nzDelay]="delay"
-      [nzSpinning]="spinning"
-      [nzSimple]="simple"
-      [nzIndicator]="indicator"
+    <ng-template #indicatorTemplate><tri-icon type="loading" style="font-size: 24px;" /></ng-template>
+    <tri-spin
+      [tip]="tip"
+      [size]="size"
+      [delay]="delay"
+      [spinning]="spinning"
+      [simple]="simple"
+      [indicator]="indicator"
     >
       <div>test</div>
-    </nz-spin>
+    </tri-spin>
   `
 })
-export class NzTestSpinBasicComponent {
+export class TriTestSpinBasicComponent {
   @ViewChild('indicatorTemplate', { static: false }) indicatorTemplate!: TemplateRef<void>;
 
-  size: NzSizeLDSType = 'default';
+  size: TriSizeLDSType = 'default';
   delay = 0;
   spinning = true;
-  indicator!: TemplateRef<NzSafeAny>;
+  indicator!: TemplateRef<TriSafeAny>;
   tip!: string;
   simple = false;
 
-  constructor(public nzConfigService: NzConfigService) {}
+  constructor(public nzConfigService: TriConfigService) {}
 }
 
 @Component({
-  imports: [BidiModule, NzTestSpinBasicComponent],
+  imports: [BidiModule, TriTestSpinBasicComponent],
   template: `
     <div [dir]="direction">
-      <nz-test-basic-spin></nz-test-basic-spin>
+      <tri-test-basic-spin></tri-test-basic-spin>
     </div>
   `
 })
-export class NzTestSpinRtlComponent {
+export class TriTestSpinRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 }

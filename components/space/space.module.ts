@@ -5,12 +5,12 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzSpaceCompactComponent } from './space-compact.component';
-import { NzSpaceItemDirective } from './space-item.directive';
-import { NzSpaceComponent } from './space.component';
+import { TriSpaceCompactComponent } from './space-compact.component';
+import { TriSpaceItemDirective } from './space-item.directive';
+import { TriSpaceComponent } from './space.component';
 
 @NgModule({
-  imports: [NzSpaceComponent, NzSpaceItemDirective, NzSpaceCompactComponent],
-  exports: [NzSpaceComponent, NzSpaceItemDirective, NzSpaceCompactComponent]
+  imports: [TriSpaceComponent, TriSpaceItemDirective, TriSpaceCompactComponent],
+  exports: [TriSpaceComponent, TriSpaceItemDirective, TriSpaceCompactComponent]
 })
-export class NzSpaceModule {}
+export class TriSpaceModule {}

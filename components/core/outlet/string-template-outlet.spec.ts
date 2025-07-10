@@ -6,10 +6,10 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzOutletModule } from './outlet.module';
-import { NzStringTemplateOutletDirective } from './string-template-outlet.directive';
+import { TriOutletModule } from './outlet.module';
+import { TriStringTemplateOutletDirective } from './string-template-outlet.directive';
 
 describe('string template outlet', () => {
   let fixture: ComponentFixture<StringTemplateOutletTestComponent>;
@@ -81,11 +81,11 @@ describe('string template outlet', () => {
     it('should work when context shape change', () => {
       component.stringTemplateOutlet = component.dataTimeTpl;
       const spyOnUpdateContext = spyOn(
-        component.nzStringTemplateOutletDirective as NzSafeAny,
+        component.stringTemplateOutletDirective as TriSafeAny,
         'updateContext'
       ).and.callThrough();
       const spyOnRecreateView = spyOn(
-        component.nzStringTemplateOutletDirective as NzSafeAny,
+        component.stringTemplateOutletDirective as TriSafeAny,
         'recreateView'
       ).and.callThrough();
       fixture.detectChanges();
@@ -102,11 +102,11 @@ describe('string template outlet', () => {
     it('should work when context implicit change', () => {
       component.stringTemplateOutlet = component.stringTpl;
       const spyOnUpdateContext = spyOn(
-        component.nzStringTemplateOutletDirective as NzSafeAny,
+        component.stringTemplateOutletDirective as TriSafeAny,
         'updateContext'
       ).and.callThrough();
       const spyOnRecreateView = spyOn(
-        component.nzStringTemplateOutletDirective as NzSafeAny,
+        component.stringTemplateOutletDirective as TriSafeAny,
         'recreateView'
       ).and.callThrough();
       fixture.detectChanges();
@@ -121,10 +121,10 @@ describe('string template outlet', () => {
 });
 
 @Component({
-  imports: [NzOutletModule],
+  imports: [TriOutletModule],
   template: `
     TargetText
-    <ng-container *nzStringTemplateOutlet="stringTemplateOutlet; context: context; let stringTemplateOutlet">
+    <ng-container *stringTemplateOutlet="stringTemplateOutlet; stringTemplateOutletContext: context; let stringTemplateOutlet">
       {{ stringTemplateOutlet }}
     </ng-container>
     <ng-template #stringTpl let-data>The data is {{ data }}</ng-template>
@@ -133,10 +133,10 @@ describe('string template outlet', () => {
   `
 })
 export class StringTemplateOutletTestComponent {
-  @ViewChild('stringTpl') stringTpl!: TemplateRef<NzSafeAny>;
-  @ViewChild('emptyTpl') emptyTpl!: TemplateRef<NzSafeAny>;
-  @ViewChild('dataTimeTpl') dataTimeTpl!: TemplateRef<NzSafeAny>;
-  @ViewChild(NzStringTemplateOutletDirective) nzStringTemplateOutletDirective!: NzStringTemplateOutletDirective;
-  stringTemplateOutlet: TemplateRef<NzSafeAny> | string | null = null;
-  context: NzSafeAny = { $implicit: '' };
+  @ViewChild('stringTpl') stringTpl!: TemplateRef<TriSafeAny>;
+  @ViewChild('emptyTpl') emptyTpl!: TemplateRef<TriSafeAny>;
+  @ViewChild('dataTimeTpl') dataTimeTpl!: TemplateRef<TriSafeAny>;
+  @ViewChild(TriStringTemplateOutletDirective) stringTemplateOutletDirective!: TriStringTemplateOutletDirective;
+  stringTemplateOutlet: TemplateRef<TriSafeAny> | string | null = null;
+  context: TriSafeAny = { $implicit: '' };
 }

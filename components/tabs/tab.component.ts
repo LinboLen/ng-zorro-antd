@@ -22,20 +22,20 @@ import {
 } from '@angular/core';
 import { Subject } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 import { TabTemplateContext } from './interfaces';
-import { NzTabLinkDirective, NzTabLinkTemplateDirective } from './tab-link.directive';
-import { NzTabDirective } from './tab.directive';
+import { TriTabLinkDirective, TriTabLinkTemplateDirective } from './tab-link.directive';
+import { TriTabDirective } from './tab.directive';
 
 /**
  * Used to provide a tab set to a tab without causing a circular dependency.
  */
-export const NZ_TAB_SET = new InjectionToken<NzSafeAny>('NZ_TAB_SET');
+export const NZ_TAB_SET = new InjectionToken<TriSafeAny>('NZ_TAB_SET');
 
 @Component({
-  selector: 'nz-tab',
-  exportAs: 'nzTab',
+  selector: '',
+  exportAs: 'triTab',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
@@ -47,21 +47,21 @@ export const NZ_TAB_SET = new InjectionToken<NzSafeAny>('NZ_TAB_SET');
     </ng-template>
   `
 })
-export class NzTabComponent implements OnChanges, OnDestroy {
-  @Input() nzTitle: string | TemplateRef<TabTemplateContext> = '';
-  @Input({ transform: booleanAttribute }) nzClosable = false;
-  @Input() nzCloseIcon: string | TemplateRef<NzSafeAny> = 'close';
-  @Input({ transform: booleanAttribute }) nzDisabled = false;
-  @Input({ transform: booleanAttribute }) nzForceRender = false;
-  @Output() readonly nzSelect = new EventEmitter<void>();
-  @Output() readonly nzDeselect = new EventEmitter<void>();
-  @Output() readonly nzClick = new EventEmitter<void>();
-  @Output() readonly nzContextmenu = new EventEmitter<MouseEvent>();
+export class TriTabComponent implements OnChanges, OnDestroy {
+  @Input() title: string | TemplateRef<TabTemplateContext> = '';
+  @Input({ transform: booleanAttribute }) closable = false;
+  @Input() closeIcon: string | TemplateRef<TriSafeAny> = 'close';
+  @Input({ transform: booleanAttribute }) disabled = false;
+  @Input({ transform: booleanAttribute }) forceRender = false;
+  @Output() readonly select = new EventEmitter<void>();
+  @Output() readonly deselect = new EventEmitter<void>();
+  @Output() readonly click = new EventEmitter<void>();
+  @Output() readonly contextmenu = new EventEmitter<MouseEvent>();
 
-  @ContentChild(NzTabLinkTemplateDirective, { static: false }) nzTabLinkTemplateDirective!: NzTabLinkTemplateDirective;
-  @ContentChild(NzTabDirective, { static: false, read: TemplateRef }) template: TemplateRef<void> | null = null;
-  @ContentChild(NzTabLinkDirective, { static: false }) linkDirective!: NzTabLinkDirective;
-  @ViewChild('contentTemplate', { static: true }) contentTemplate!: TemplateRef<NzSafeAny>;
+  @ContentChild(TriTabLinkTemplateDirective, { static: false }) tabLinkTemplateDirective!: TriTabLinkTemplateDirective;
+  @ContentChild(TriTabDirective, { static: false, read: TemplateRef }) template: TemplateRef<void> | null = null;
+  @ContentChild(TriTabLinkDirective, { static: false }) linkDirective!: TriTabLinkDirective;
+  @ViewChild('contentTemplate', { static: true }) contentTemplate!: TemplateRef<TriSafeAny>;
 
   isActive: boolean = false;
   hasBeenActive = false;
@@ -71,12 +71,12 @@ export class NzTabComponent implements OnChanges, OnDestroy {
 
   readonly stateChanges = new Subject<void>();
 
-  get content(): TemplateRef<NzSafeAny> {
+  get content(): TemplateRef<TriSafeAny> {
     return this.template || this.contentTemplate;
   }
 
-  get label(): string | TemplateRef<NzSafeAny> {
-    return this.nzTitle || this.nzTabLinkTemplateDirective?.templateRef;
+  get label(): string | TemplateRef<TriSafeAny> {
+    return this.title || this.tabLinkTemplateDirective?.templateRef;
   }
 
   ngOnChanges(changes: SimpleChanges): void {

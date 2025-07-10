@@ -6,12 +6,12 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzTableLayout } from '../table.types';
+import { TriTableLayout } from '../table.types';
 
 @Component({
-  selector: 'table[nz-table-content]',
+  selector: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
@@ -23,31 +23,31 @@ import { NzTableLayout } from '../table.types';
       </colgroup>
     }
     @if (theadTemplate) {
-      <thead class="ant-table-thead">
+      <thead class="tri-table-thead">
         <ng-template [ngTemplateOutlet]="theadTemplate"></ng-template>
       </thead>
     }
     <ng-template [ngTemplateOutlet]="contentTemplate"></ng-template>
     <ng-content></ng-content>
     @if (tfootTemplate) {
-      <tfoot class="ant-table-summary">
+      <tfoot class="tri-table-summary">
         <ng-template [ngTemplateOutlet]="tfootTemplate"></ng-template>
       </tfoot>
     }
   `,
   host: {
     '[style.table-layout]': 'tableLayout',
-    '[class.ant-table-fixed]': 'scrollX',
+    '[class.tri-table-fixed]': 'scrollX',
     '[style.width]': 'scrollX',
     '[style.min-width]': `scrollX ? '100%' : null`
   },
   imports: [NgTemplateOutlet]
 })
-export class NzTableContentComponent {
-  @Input() tableLayout: NzTableLayout = 'auto';
-  @Input() theadTemplate: TemplateRef<NzSafeAny> | null = null;
-  @Input() contentTemplate: TemplateRef<NzSafeAny> | null = null;
-  @Input() tfootTemplate: TemplateRef<NzSafeAny> | null = null;
+export class TriTableContentComponent {
+  @Input() tableLayout: TriTableLayout = 'auto';
+  @Input() theadTemplate: TemplateRef<TriSafeAny> | null = null;
+  @Input() contentTemplate: TemplateRef<TriSafeAny> | null = null;
+  @Input() tfootTemplate: TemplateRef<TriSafeAny> | null = null;
   @Input() listOfColWidth: ReadonlyArray<string | null> = [];
   @Input() scrollX: string | null = null;
 }

@@ -5,13 +5,13 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzDrawerContentDirective } from './drawer-content.directive';
-import { NzDrawerComponent } from './drawer.component';
-import { NzDrawerService } from './drawer.service';
+import { TriDrawerContentDirective } from './drawer-content.directive';
+import { TriDrawerComponent } from './drawer.component';
+import { TriDrawerService } from './drawer.service';
 
 @NgModule({
-  imports: [NzDrawerComponent, NzDrawerContentDirective],
-  providers: [NzDrawerService],
-  exports: [NzDrawerComponent, NzDrawerContentDirective]
+  imports: [TriDrawerComponent, TriDrawerContentDirective],
+  providers: [TriDrawerService],
+  exports: [TriDrawerComponent, TriDrawerContentDirective]
 })
-export class NzDrawerModule {}
+export class TriDrawerModule {}

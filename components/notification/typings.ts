@@ -6,38 +6,38 @@
 import { TemplateRef } from '@angular/core';
 import { Subject } from 'rxjs';
 
-import { NgClassInterface, NgStyleInterface, NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NgClassInterface, NgStyleInterface, TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import type { NzNotificationComponent } from './notification.component';
+import type { TriNotificationComponent } from './notification.component';
 
-export type NzNotificationPlacement = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' | 'top' | 'bottom';
+export type TriNotificationPlacement = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' | 'top' | 'bottom';
 
-export type NzNotificationContentType =
+export type TriNotificationContentType =
   | string
   | TemplateRef<void | {
-      $implicit: NzNotificationComponent;
-      data: NzSafeAny;
+      $implicit: TriNotificationComponent;
+      data: TriSafeAny;
     }>;
 
-export interface NzNotificationDataOptions<T = {}> {
+export interface TriNotificationDataOptions<T = {}> {
   nzKey?: string;
   nzStyle?: NgStyleInterface;
   nzClass?: NgClassInterface | string;
   nzCloseIcon?: TemplateRef<void> | string;
-  nzButton?: TemplateRef<{ $implicit: NzNotificationComponent }>;
-  nzPlacement?: NzNotificationPlacement;
+  nzButton?: TemplateRef<{ $implicit: TriNotificationComponent }>;
+  nzPlacement?: TriNotificationPlacement;
   nzData?: T;
   nzDuration?: number;
   nzAnimate?: boolean;
   nzPauseOnHover?: boolean;
 }
 
-export interface NzNotificationData {
+export interface TriNotificationData {
   title?: string | TemplateRef<void>;
-  content?: NzNotificationContentType;
+  content?: TriNotificationContentType;
   createdAt?: Date;
   messageId?: string;
-  options?: NzNotificationDataOptions;
+  options?: TriNotificationDataOptions;
   state?: 'enter' | 'leave';
   template?: TemplateRef<{}>;
   type?: 'success' | 'info' | 'warning' | 'error' | 'blank' | string;
@@ -47,4 +47,4 @@ export interface NzNotificationData {
   onClick?: Subject<MouseEvent>;
 }
 
-export type NzNotificationRef = Pick<Required<NzNotificationData>, 'onClose' | 'onClick' | 'messageId'>;
+export type TriNotificationRef = Pick<Required<TriNotificationData>, 'onClose' | 'onClick' | 'messageId'>;

@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { TriSelectModule } from 'ng-zorro-antd/select';
+import { TriSpinModule } from 'ng-zorro-antd/spin';
 
 interface MockUser {
   name: {
@@ -14,23 +14,23 @@ interface MockUser {
 }
 
 @Component({
-  selector: 'nz-demo-select-scroll-load',
-  imports: [FormsModule, NzSelectModule, NzSpinModule],
+  selector: '',
+  imports: [FormsModule, TriSelectModule, TriSpinModule],
   template: `
-    <nz-select
+    <tri-select
       [(ngModel)]="selectedUser"
-      (nzScrollToBottom)="loadMore()"
-      nzPlaceHolder="Select users"
-      nzAllowClear
-      [nzDropdownRender]="renderTemplate"
+      (scrollToBottom)="loadMore()"
+      placeHolder="Select users"
+      allowClear
+      [dropdownRender]="renderTemplate"
     >
       @for (item of optionList; track item) {
-        <nz-option [nzValue]="item" [nzLabel]="item"></nz-option>
+        <tri-option [value]="item" [label]="item"></tri-option>
       }
-    </nz-select>
+    </tri-select>
     <ng-template #renderTemplate>
       @if (isLoading) {
-        <nz-spin></nz-spin>
+        <tri-spin></tri-spin>
       }
     </ng-template>
   `,
@@ -42,7 +42,7 @@ interface MockUser {
     `
   ]
 })
-export class NzDemoSelectScrollLoadComponent implements OnInit {
+export class TriDemoSelectScrollLoadComponent implements OnInit {
   readonly randomUserUrl: string = 'https://api.randomuser.me/?results=10';
   optionList: string[] = [];
   selectedUser: string | null = null;

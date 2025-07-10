@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { merge, Observable, timer } from 'rxjs';
 import { delay, finalize, map, scan } from 'rxjs/operators';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriStepsModule } from 'ng-zorro-antd/steps';
 
 interface SyncStep {
   id: number;
@@ -32,31 +32,31 @@ function mockAsyncStep(): Observable<number> {
 }
 
 @Component({
-  selector: 'nz-demo-steps-progress',
-  imports: [NzButtonModule, NzStepsModule],
+  selector: '',
+  imports: [TriButtonModule, TriStepsModule],
   template: `
-    <nz-steps [nzCurrent]="current">
+    <tri-steps [current]="current">
       @for (step of this.steps; track step.id) {
-        <nz-step
-          [nzTitle]="step.title"
-          [nzDescription]="step.description"
-          [nzPercentage]="step.async ? step.percentage : null"
-        ></nz-step>
+        <tri-step
+          [title]="step.title"
+          [description]="step.description"
+          [percentage]="step.async ? step.percentage : null"
+        ></tri-step>
       }
-    </nz-steps>
+    </tri-steps>
     <div class="steps-action">
       @if (current > 0) {
-        <button nz-button nzType="default" (click)="pre()">
+        <button tri-button type="default" (click)="pre()">
           <span>Previous</span>
         </button>
       }
       @if (current < 2) {
-        <button nz-button nzType="default" (click)="next()" [nzLoading]="processing">
+        <button tri-button type="default" (click)="next()" [loading]="processing">
           <span>Next</span>
         </button>
       }
       @if (current === 2) {
-        <button nz-button nzType="primary" (click)="done()" [nzLoading]="processing">
+        <button tri-button type="primary" (click)="done()" [loading]="processing">
           <span>Done</span>
         </button>
       }
@@ -74,7 +74,7 @@ function mockAsyncStep(): Observable<number> {
     `
   ]
 })
-export class NzDemoStepsProgressComponent {
+export class TriDemoStepsProgressComponent {
   steps: Step[] = [
     {
       id: 1,

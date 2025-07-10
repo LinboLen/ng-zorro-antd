@@ -3,78 +3,78 @@ import { FormsModule } from '@angular/forms';
 
 import { getISOWeek } from 'date-fns';
 
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: 'nz-demo-date-picker-inline',
-  imports: [FormsModule, NzDatePickerModule, NzTabsModule],
+  selector: '',
+  imports: [FormsModule, TriDatePickerModule, TriTabsModule],
   template: `
-    <nz-tabs>
-      <nz-tab nzTitle="Default">
-        <nz-date-picker nzInline [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-date-picker>
-      </nz-tab>
-      <nz-tab nzTitle="Week">
-        <nz-date-picker nzInline nzMode="week" [(ngModel)]="date" (ngModelChange)="getWeek($event)"></nz-date-picker>
-      </nz-tab>
-      <nz-tab nzTitle="Month">
-        <nz-date-picker nzInline nzMode="month" [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-date-picker>
-      </nz-tab>
-      <nz-tab nzTitle="Quarter">
-        <nz-date-picker
-          nzInline
-          nzMode="quarter"
+    <tri-tabs>
+      <tri-tab title="Default">
+        <tri-date-picker inline [(ngModel)]="date" (ngModelChange)="onChange($event)"></tri-date-picker>
+      </tri-tab>
+      <tri-tab title="Week">
+        <tri-date-picker inline mode="week" [(ngModel)]="date" (ngModelChange)="getWeek($event)"></tri-date-picker>
+      </tri-tab>
+      <tri-tab title="Month">
+        <tri-date-picker inline mode="month" [(ngModel)]="date" (ngModelChange)="onChange($event)"></tri-date-picker>
+      </tri-tab>
+      <tri-tab title="Quarter">
+        <tri-date-picker
+          inline
+          mode="quarter"
           [(ngModel)]="date"
           (ngModelChange)="onChange($event)"
-        ></nz-date-picker>
-      </nz-tab>
-      <nz-tab nzTitle="Year">
-        <nz-date-picker nzInline nzMode="year" [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-date-picker>
-      </nz-tab>
-      <nz-tab nzTitle="Range">
-        <nz-range-picker nzInline [(ngModel)]="rangeDate" (ngModelChange)="onChange($event)"></nz-range-picker>
-      </nz-tab>
-      <nz-tab nzTitle="Range Time">
-        <nz-range-picker
-          nzInline
-          nzShowTime
+        ></tri-date-picker>
+      </tri-tab>
+      <tri-tab title="Year">
+        <tri-date-picker inline mode="year" [(ngModel)]="date" (ngModelChange)="onChange($event)"></tri-date-picker>
+      </tri-tab>
+      <tri-tab title="Range">
+        <tri-range-picker inline [(ngModel)]="rangeDate" (ngModelChange)="onChange($event)"></tri-range-picker>
+      </tri-tab>
+      <tri-tab title="Range Time">
+        <tri-range-picker
+          inline
+          showTime
           [(ngModel)]="rangeDate"
           (ngModelChange)="onChange($event)"
-        ></nz-range-picker>
-      </nz-tab>
-      <nz-tab nzTitle="Range Week">
-        <nz-range-picker
-          nzInline
-          nzMode="week"
+        ></tri-range-picker>
+      </tri-tab>
+      <tri-tab title="Range Week">
+        <tri-range-picker
+          inline
+          mode="week"
           [(ngModel)]="rangeDate"
           (ngModelChange)="onChange($event)"
-        ></nz-range-picker>
-      </nz-tab>
-      <nz-tab nzTitle="Range Month">
-        <nz-range-picker
-          nzInline
-          nzMode="month"
+        ></tri-range-picker>
+      </tri-tab>
+      <tri-tab title="Range Month">
+        <tri-range-picker
+          inline
+          mode="month"
           [(ngModel)]="rangeDate"
           (ngModelChange)="onChange($event)"
-        ></nz-range-picker>
-      </nz-tab>
-      <nz-tab nzTitle="Range Quarter">
-        <nz-range-picker
-          nzInline
-          nzMode="quarter"
+        ></tri-range-picker>
+      </tri-tab>
+      <tri-tab title="Range Quarter">
+        <tri-range-picker
+          inline
+          mode="quarter"
           [(ngModel)]="rangeDate"
           (ngModelChange)="onChange($event)"
-        ></nz-range-picker>
-      </nz-tab>
-      <nz-tab nzTitle="Range Year">
-        <nz-range-picker
-          nzInline
-          nzMode="year"
+        ></tri-range-picker>
+      </tri-tab>
+      <tri-tab title="Range Year">
+        <tri-range-picker
+          inline
+          mode="year"
           [(ngModel)]="rangeDate"
           (ngModelChange)="onChange($event)"
-        ></nz-range-picker>
-      </nz-tab>
-    </nz-tabs>
+        ></tri-range-picker>
+      </tri-tab>
+    </tri-tabs>
   `,
   styles: [
     `
@@ -85,7 +85,7 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
     `
   ]
 })
-export class NzDemoDatePickerInlineComponent {
+export class TriDemoDatePickerInlineComponent {
   date = null;
   rangeDate = null;
 

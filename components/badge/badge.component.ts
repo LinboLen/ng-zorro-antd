@@ -23,87 +23,87 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { zoomBadgeMotion } from 'ng-zorro-antd/core/animation';
-import { NzConfigKey, NzConfigService, WithConfig } from 'ng-zorro-antd/core/config';
-import { NzNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzSafeAny, NzSizeDSType } from 'ng-zorro-antd/core/types';
+import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriSafeAny, TriSizeDSType } from 'ng-zorro-antd/core/types';
 
-import { NzBadgeSupComponent } from './badge-sup.component';
+import { TriBadgeSupComponent } from './badge-sup.component';
 import { badgePresetColors } from './preset-colors';
-import { NzBadgeStatusType } from './types';
+import { TriBadgeStatusType } from './types';
 
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'badge';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'badge';
 
 @Component({
-  selector: 'nz-badge',
-  exportAs: 'nzBadge',
+  selector: '',
+  exportAs: 'triBadge',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [zoomBadgeMotion],
-  imports: [NzBadgeSupComponent, NzOutletModule],
+  imports: [TriBadgeSupComponent, TriOutletModule],
   template: `
-    @if (nzStatus || nzColor) {
+    @if (status || color) {
       <span
-        class="ant-badge-status-dot ant-badge-status-{{ nzStatus || presetColor }}"
-        [style.background]="!presetColor && nzColor"
-        [style]="nzStyle"
+        class="ant-badge-status-dot ant-badge-status-{{ status || presetColor }}"
+        [style.background]="!presetColor && color"
+        [style]="style"
       ></span>
-      <span class="ant-badge-status-text">
-        <ng-container *nzStringTemplateOutlet="nzText">{{ nzText }}</ng-container>
+      <span class="tri-badge-status-text">
+        <ng-container *stringTemplateOutlet="text">{{ text }}</ng-container>
       </span>
     }
     <ng-content />
-    <ng-container *nzStringTemplateOutlet="nzCount">
+    <ng-container *stringTemplateOutlet="count">
       @if (showSup) {
-        <nz-badge-sup
-          [nzOffset]="nzOffset"
-          [nzSize]="nzSize"
-          [nzTitle]="nzTitle"
-          [nzStyle]="nzStyle"
-          [nzDot]="nzDot"
-          [nzOverflowCount]="nzOverflowCount"
-          [disableAnimation]="!!(nzStandalone || nzStatus || nzColor || noAnimation?.nzNoAnimation)"
-          [nzCount]="nzCount"
+        <tri-badge-sup
+          [offset]="offset"
+          [size]="size"
+          [title]="title"
+          [style]="style"
+          [dot]="dot"
+          [overflowCount]="overflowCount"
+          [disableAnimation]="!!(standalone || status || color || noAnimation?.nzNoAnimation)"
+          [count]="count"
           [noAnimation]="!!noAnimation?.nzNoAnimation"
         />
       }
     </ng-container>
   `,
   host: {
-    class: 'ant-badge',
-    '[class.ant-badge-status]': 'nzStatus',
-    '[class.ant-badge-not-a-wrapper]': '!!(nzStandalone || nzStatus || nzColor)'
+    class: 'tri-badge',
+    '[class.tri-badge-status]': 'status',
+    '[class.tri-badge-not-a-wrapper]': '!!(standalone || status || color)'
   }
 })
-export class NzBadgeComponent implements OnChanges, OnInit {
-  public nzConfigService = inject(NzConfigService);
+export class TriBadgeComponent implements OnChanges, OnInit {
+  public configService = inject(TriConfigService);
   private renderer = inject(Renderer2);
   private cdr = inject(ChangeDetectorRef);
   private elementRef = inject(ElementRef<HTMLElement>);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
 
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
 
   showSup = false;
   presetColor: string | null = null;
   dir: Direction = 'ltr';
 
-  @Input({ transform: booleanAttribute }) nzShowZero: boolean = false;
-  @Input({ transform: booleanAttribute }) nzShowDot = true;
-  @Input({ transform: booleanAttribute }) nzStandalone = false;
-  @Input({ transform: booleanAttribute }) nzDot = false;
-  @Input() @WithConfig() nzOverflowCount: number = 99;
-  @Input() @WithConfig() nzColor?: string = undefined;
-  @Input() nzStyle: Record<string, string> | null = null;
-  @Input() nzText?: string | TemplateRef<void> | null = null;
-  @Input() nzTitle?: string | null | undefined;
-  @Input() nzStatus?: NzBadgeStatusType | string;
-  @Input() nzCount?: number | TemplateRef<NzSafeAny>;
-  @Input() nzOffset?: [number, number];
-  @Input() nzSize: NzSizeDSType = 'default';
+  @Input({ transform: booleanAttribute }) showZero: boolean = false;
+  @Input({ transform: booleanAttribute }) showDot = true;
+  @Input({ transform: booleanAttribute }) standalone = false;
+  @Input({ transform: booleanAttribute }) dot = false;
+  @Input() @WithConfig() overflowCount: number = 99;
+  @Input() @WithConfig() color?: string = undefined;
+  @Input() style: Record<string, string> | null = null;
+  @Input() text?: string | TemplateRef<void> | null = null;
+  @Input() title?: string | null | undefined;
+  @Input() status?: TriBadgeStatusType | string;
+  @Input() count?: number | TemplateRef<TriSafeAny>;
+  @Input() offset?: [number, number];
+  @Input() size: TriSizeDSType = 'default';
 
-  noAnimation = inject(NzNoAnimationDirective, { host: true, optional: true });
+  noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
 
   ngOnInit(): void {
     this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((direction: Direction) => {
@@ -118,13 +118,13 @@ export class NzBadgeComponent implements OnChanges, OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     const { nzColor, nzShowDot, nzDot, nzCount, nzShowZero } = changes;
     if (nzColor) {
-      this.presetColor = this.nzColor && badgePresetColors.indexOf(this.nzColor) !== -1 ? this.nzColor : null;
+      this.presetColor = this.color && badgePresetColors.indexOf(this.color) !== -1 ? this.color : null;
     }
     if (nzShowDot || nzDot || nzCount || nzShowZero) {
       this.showSup =
-        (this.nzShowDot && this.nzDot) ||
-        (typeof this.nzCount === 'number' && this.nzCount! > 0) ||
-        (typeof this.nzCount === 'number' && this.nzCount! <= 0 && this.nzShowZero);
+        (this.showDot && this.dot) ||
+        (typeof this.count === 'number' && this.count! > 0) ||
+        (typeof this.count === 'number' && this.count! <= 0 && this.showZero);
     }
   }
 

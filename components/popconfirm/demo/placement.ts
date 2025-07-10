@@ -1,137 +1,137 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriMessageService } from 'ng-zorro-antd/message';
+import { TriPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 @Component({
-  selector: 'nz-demo-popconfirm-placement',
-  imports: [NzButtonModule, NzPopconfirmModule],
+  selector: '',
+  imports: [TriButtonModule, TriPopconfirmModule],
   template: `
     <div style="margin-left: 60px">
       <button
-        nz-popconfirm
-        nzPopconfirmTitle="Are you sure delete this task?"
-        (nzOnConfirm)="confirm()"
-        (nzOnCancel)="cancel()"
-        nzPopconfirmPlacement="topLeft"
-        nz-button
+        tri-popconfirm
+        popconfirmTitle="Are you sure delete this task?"
+        (onConfirm)="confirm()"
+        (onCancel)="cancel()"
+        popconfirmPlacement="topLeft"
+        tri-button
       >
         TL
       </button>
       <button
-        nz-popconfirm
-        nzPopconfirmTitle="Are you sure delete this task?"
-        (nzOnConfirm)="confirm()"
-        (nzOnCancel)="cancel()"
-        nzPopconfirmPlacement="top"
-        nz-button
+        tri-popconfirm
+        popconfirmTitle="Are you sure delete this task?"
+        (onConfirm)="confirm()"
+        (onCancel)="cancel()"
+        popconfirmPlacement="top"
+        tri-button
       >
         Top
       </button>
       <button
-        nz-popconfirm
-        nzPopconfirmTitle="Are you sure delete this task?"
-        (nzOnConfirm)="confirm()"
-        (nzOnCancel)="cancel()"
-        nzPopconfirmPlacement="topRight"
-        nz-button
+        tri-popconfirm
+        popconfirmTitle="Are you sure delete this task?"
+        (onConfirm)="confirm()"
+        (onCancel)="cancel()"
+        popconfirmPlacement="topRight"
+        tri-button
       >
         TR
       </button>
     </div>
     <div style="width: 60px; float: left;">
       <button
-        nz-popconfirm
-        nzPopconfirmTitle="Are you sure delete this task?"
-        (nzOnConfirm)="confirm()"
-        (nzOnCancel)="cancel()"
-        nzPopconfirmPlacement="leftTop"
-        nz-button
+        tri-popconfirm
+        popconfirmTitle="Are you sure delete this task?"
+        (onConfirm)="confirm()"
+        (onCancel)="cancel()"
+        popconfirmPlacement="leftTop"
+        tri-button
       >
         LT
       </button>
       <button
-        nz-popconfirm
-        nzPopconfirmTitle="Are you sure delete this task?"
-        (nzOnConfirm)="confirm()"
-        (nzOnCancel)="cancel()"
-        nzPopconfirmPlacement="left"
-        nz-button
+        tri-popconfirm
+        popconfirmTitle="Are you sure delete this task?"
+        (onConfirm)="confirm()"
+        (onCancel)="cancel()"
+        popconfirmPlacement="left"
+        tri-button
       >
         Left
       </button>
       <button
-        nz-popconfirm
-        nzPopconfirmTitle="Are you sure delete this task?"
-        (nzOnConfirm)="confirm()"
-        (nzOnCancel)="cancel()"
-        nzPopconfirmPlacement="leftBottom"
-        nz-button
+        tri-popconfirm
+        popconfirmTitle="Are you sure delete this task?"
+        (onConfirm)="confirm()"
+        (onCancel)="cancel()"
+        popconfirmPlacement="leftBottom"
+        tri-button
       >
         LB
       </button>
     </div>
     <div style="width: 60px; margin-left: 252px;">
       <button
-        nz-popconfirm
-        nzPopconfirmTitle="Are you sure delete this task?"
-        (nzOnConfirm)="confirm()"
-        (nzOnCancel)="cancel()"
-        nzPopconfirmPlacement="rightTop"
-        nz-button
+        tri-popconfirm
+        popconfirmTitle="Are you sure delete this task?"
+        (onConfirm)="confirm()"
+        (onCancel)="cancel()"
+        popconfirmPlacement="rightTop"
+        tri-button
       >
         RT
       </button>
       <button
-        nz-popconfirm
-        nzPopconfirmTitle="Are you sure delete this task?"
-        (nzOnConfirm)="confirm()"
-        (nzOnCancel)="cancel()"
-        nzPopconfirmPlacement="right"
-        nz-button
+        tri-popconfirm
+        popconfirmTitle="Are you sure delete this task?"
+        (onConfirm)="confirm()"
+        (onCancel)="cancel()"
+        popconfirmPlacement="right"
+        tri-button
       >
         Right
       </button>
       <button
-        nz-popconfirm
-        nzPopconfirmTitle="Are you sure delete this task?"
-        (nzOnConfirm)="confirm()"
-        (nzOnCancel)="cancel()"
-        nzPopconfirmPlacement="rightBottom"
-        nz-button
+        tri-popconfirm
+        popconfirmTitle="Are you sure delete this task?"
+        (onConfirm)="confirm()"
+        (onCancel)="cancel()"
+        popconfirmPlacement="rightBottom"
+        tri-button
       >
         RB
       </button>
     </div>
     <div style="margin-left: 60px; clear: both;">
       <button
-        nz-popconfirm
-        nzPopconfirmTitle="Are you sure delete this task?"
-        (nzOnConfirm)="confirm()"
-        (nzOnCancel)="cancel()"
-        nzPopconfirmPlacement="bottomLeft"
-        nz-button
+        tri-popconfirm
+        popconfirmTitle="Are you sure delete this task?"
+        (onConfirm)="confirm()"
+        (onCancel)="cancel()"
+        popconfirmPlacement="bottomLeft"
+        tri-button
       >
         BL
       </button>
       <button
-        nz-popconfirm
-        nzPopconfirmTitle="Are you sure delete this task?"
-        (nzOnConfirm)="confirm()"
-        (nzOnCancel)="cancel()"
-        nzPopconfirmPlacement="bottom"
-        nz-button
+        tri-popconfirm
+        popconfirmTitle="Are you sure delete this task?"
+        (onConfirm)="confirm()"
+        (onCancel)="cancel()"
+        popconfirmPlacement="bottom"
+        tri-button
       >
         Bottom
       </button>
       <button
-        nz-popconfirm
-        nzPopconfirmTitle="Are you sure delete this task?"
-        (nzOnConfirm)="confirm()"
-        (nzOnCancel)="cancel()"
-        nzPopconfirmPlacement="bottomRight"
-        nz-button
+        tri-popconfirm
+        popconfirmTitle="Are you sure delete this task?"
+        (onConfirm)="confirm()"
+        (onCancel)="cancel()"
+        popconfirmPlacement="bottomRight"
+        tri-button
       >
         BR
       </button>
@@ -149,8 +149,8 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
     `
   ]
 })
-export class NzDemoPopconfirmPlacementComponent {
-  constructor(private nzMessageService: NzMessageService) {}
+export class TriDemoPopconfirmPlacementComponent {
+  constructor(private nzMessageService: TriMessageService) {}
 
   cancel(): void {
     this.nzMessageService.info('click cancel');

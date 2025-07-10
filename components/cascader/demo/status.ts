@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzCascaderModule, NzCascaderOption } from 'ng-zorro-antd/cascader';
+import { TriCascaderModule, TriCascaderOption } from 'ng-zorro-antd/cascader';
 
 @Component({
-  selector: 'nz-demo-cascader-status',
-  imports: [FormsModule, NzCascaderModule],
+  selector: '',
+  imports: [FormsModule, TriCascaderModule],
   template: `
-    <nz-cascader [nzOptions]="nzOptions" nzStatus="error"></nz-cascader>
+    <tri-cascader [options]="options" status="error"></tri-cascader>
     <br />
     <br />
-    <nz-cascader [nzOptions]="nzOptions" nzStatus="warning"></nz-cascader>
+    <tri-cascader [options]="options" status="warning"></tri-cascader>
   `
 })
-export class NzDemoCascaderStatusComponent {
-  nzOptions: NzCascaderOption[] = [];
+export class TriDemoCascaderStatusComponent {
+  options: TriCascaderOption[] = [];
 }

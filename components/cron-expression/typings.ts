@@ -21,5 +21,5 @@ export interface CronChangeType {
   value: CronValue;
 }
 
-export type NzCronExpressionSize = 'large' | 'default' | 'small';
-export type NzCronExpressionType = 'linux' | 'spring';
+export type TriCronExpressionSize = 'large' | 'default' | 'small';
+export type TriCronExpressionType = 'linux' | 'spring';

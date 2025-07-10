@@ -5,26 +5,26 @@
 
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 
 import { ModalOptions } from './modal-types';
 
 @Component({
-  selector: 'div[nz-modal-title]',
-  exportAs: 'nzModalTitleBuiltin',
+  selector: '',
+  exportAs: 'triModalTitleBuiltin',
   template: `
-    <div class="ant-modal-title">
-      <ng-container *nzStringTemplateOutlet="config.nzTitle">
-        <div [innerHTML]="config.nzTitle"></div>
+    <div class="tri-modal-title">
+      <ng-container *stringTemplateOutlet="title">
+        <div [innerHTML]="title"></div>
       </ng-container>
     </div>
   `,
   host: {
-    class: 'ant-modal-header'
+    class: 'tri-modal-header'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NzOutletModule]
+  imports: [TriOutletModule]
 })
-export class NzModalTitleComponent {
+export class TriModalTitleComponent {
   public config = inject(ModalOptions);
 }

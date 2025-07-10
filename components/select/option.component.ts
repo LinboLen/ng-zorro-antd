@@ -20,13 +20,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Subject } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzOptionGroupComponent } from './option-group.component';
+import { TriOptionGroupComponent } from './option-group.component';
 
 @Component({
-  selector: 'nz-option',
-  exportAs: 'nzOption',
+  selector: '',
+  exportAs: 'triOption',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
@@ -35,24 +35,24 @@ import { NzOptionGroupComponent } from './option-group.component';
     </ng-template>
   `
 })
-export class NzOptionComponent implements OnChanges, OnInit {
+export class TriOptionComponent implements OnChanges, OnInit {
   private readonly destroyRef = inject(DestroyRef);
-  private readonly nzOptionGroupComponent = inject(NzOptionGroupComponent, { optional: true });
+  private readonly optionGroupComponent = inject(TriOptionGroupComponent, { optional: true });
 
   changes = new Subject<void>();
-  groupLabel?: string | number | TemplateRef<NzSafeAny> | null = null;
-  @ViewChild(TemplateRef, { static: true }) template!: TemplateRef<NzSafeAny>;
-  @Input() nzTitle?: string | number | null;
-  @Input() nzLabel: string | number | null = null;
-  @Input() nzValue: NzSafeAny | null = null;
-  @Input() nzKey?: string | number;
-  @Input({ transform: booleanAttribute }) nzDisabled = false;
-  @Input({ transform: booleanAttribute }) nzHide = false;
-  @Input({ transform: booleanAttribute }) nzCustomContent = false;
+  groupLabel?: string | number | TemplateRef<TriSafeAny> | null = null;
+  @ViewChild(TemplateRef, { static: true }) template!: TemplateRef<TriSafeAny>;
+  @Input() title?: string | number | null;
+  @Input() label: string | number | null = null;
+  @Input() value: TriSafeAny | null = null;
+  @Input() key?: string | number;
+  @Input({ transform: booleanAttribute }) disabled = false;
+  @Input({ transform: booleanAttribute }) hide = false;
+  @Input({ transform: booleanAttribute }) customContent = false;
 
   ngOnInit(): void {
-    this.nzOptionGroupComponent?.changes.pipe(startWith(true), takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-      this.groupLabel = this.nzOptionGroupComponent?.nzLabel;
+    this.optionGroupComponent?.changes.pipe(startWith(true), takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      this.groupLabel = this.optionGroupComponent?.label;
     });
   }
 

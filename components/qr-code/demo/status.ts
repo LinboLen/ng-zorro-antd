@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 
-import { NzQRCodeModule } from 'ng-zorro-antd/qr-code';
+import { TriQRCodeModule } from 'ng-zorro-antd/qr-code';
 
 @Component({
-  selector: 'nz-demo-qr-code-status',
-  imports: [NzQRCodeModule],
+  selector: '',
+  imports: [TriQRCodeModule],
   template: `
-    <nz-qrcode nzValue="https://ng.ant.design/" nzStatus="loading"></nz-qrcode>
-    <nz-qrcode nzValue="https://ng.ant.design/" nzStatus="expired" (nzRefresh)="refresh($event)"></nz-qrcode>
-    <nz-qrcode nzValue="https://ng.ant.design/" nzStatus="scanned"></nz-qrcode>
+    <tri-qrcode value="https://ng.ant.design/" status="loading"></tri-qrcode>
+    <tri-qrcode value="https://ng.ant.design/" status="expired" (refresh)="refresh($event)"></tri-qrcode>
+    <tri-qrcode value="https://ng.ant.design/" status="scanned"></tri-qrcode>
   `,
   styles: [
     `
@@ -18,7 +18,7 @@ import { NzQRCodeModule } from 'ng-zorro-antd/qr-code';
     `
   ]
 })
-export class NzDemoQrCodeStatusComponent {
+export class TriDemoQrCodeStatusComponent {
   refresh(val: string): void {
     console.log(val);
   }

@@ -10,16 +10,16 @@ import { ComponentFixture, fakeAsync, inject, TestBed, tick, waitForAsync } from
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
+import { TriButtonModule } from 'ng-zorro-antd/button';
 import { dispatchFakeEvent } from 'ng-zorro-antd/core/testing';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
-import { NzSubmenuTrigger } from 'ng-zorro-antd/menu/menu.types';
+import { TriSubmenuTrigger } from 'ng-zorro-antd/menu/menu.types';
 
-import { NzMenuItemComponent } from './menu-item.component';
-import { NzMenuDirective } from './menu.directive';
-import { NzMenuModule } from './menu.module';
-import { NzSubMenuComponent } from './submenu.component';
+import { TriMenuItemComponent } from './menu-item.component';
+import { TriMenuDirective } from './menu.directive';
+import { TriMenuModule } from './menu.module';
+import { TriSubMenuComponent } from './submenu.component';
 
 describe('menu', () => {
   let overlayContainer: OverlayContainer;
@@ -41,15 +41,15 @@ describe('menu', () => {
   }));
   describe('demo', () => {
     describe('horizontal', () => {
-      let fixture: ComponentFixture<NzTestBasicMenuHorizontalComponent>;
+      let fixture: ComponentFixture<TriTestBasicMenuHorizontalComponent>;
       let items: DebugElement[];
       let submenu: DebugElement;
       let menu: DebugElement;
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestBasicMenuHorizontalComponent);
-        items = fixture.debugElement.queryAll(By.directive(NzMenuItemComponent));
-        submenu = fixture.debugElement.query(By.directive(NzSubMenuComponent));
-        menu = fixture.debugElement.query(By.directive(NzMenuDirective));
+        fixture = TestBed.createComponent(TriTestBasicMenuHorizontalComponent);
+        items = fixture.debugElement.queryAll(By.directive(TriMenuItemComponent));
+        submenu = fixture.debugElement.query(By.directive(TriSubMenuComponent));
+        menu = fixture.debugElement.query(By.directive(TriMenuDirective));
       });
       it('should className correct', () => {
         fixture.detectChanges();
@@ -77,15 +77,15 @@ describe('menu', () => {
       });
     });
     describe('inline', () => {
-      let fixture: ComponentFixture<NzTestBasicMenuInlineComponent>;
+      let fixture: ComponentFixture<TriTestBasicMenuInlineComponent>;
       let items: DebugElement[];
       let submenus: DebugElement[];
       let menu: DebugElement;
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestBasicMenuInlineComponent);
-        items = fixture.debugElement.queryAll(By.directive(NzMenuItemComponent));
-        menu = fixture.debugElement.query(By.directive(NzMenuDirective));
-        submenus = fixture.debugElement.queryAll(By.directive(NzSubMenuComponent));
+        fixture = TestBed.createComponent(TriTestBasicMenuInlineComponent);
+        items = fixture.debugElement.queryAll(By.directive(TriMenuItemComponent));
+        menu = fixture.debugElement.query(By.directive(TriMenuDirective));
+        submenus = fixture.debugElement.queryAll(By.directive(TriSubMenuComponent));
       });
       it('should className correct', () => {
         fixture.detectChanges();
@@ -120,15 +120,15 @@ describe('menu', () => {
       }));
     });
     describe('inline-collapsed', () => {
-      let fixture: ComponentFixture<NzTestMenuInlineCollapsedComponent>;
-      let testComponent: NzTestMenuInlineCollapsedComponent;
+      let fixture: ComponentFixture<TriTestMenuInlineCollapsedComponent>;
+      let testComponent: TriTestMenuInlineCollapsedComponent;
       let submenus: DebugElement[];
       let menu: DebugElement;
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestMenuInlineCollapsedComponent);
+        fixture = TestBed.createComponent(TriTestMenuInlineCollapsedComponent);
         testComponent = fixture.debugElement.componentInstance;
-        submenus = fixture.debugElement.queryAll(By.directive(NzSubMenuComponent));
-        menu = fixture.debugElement.query(By.directive(NzMenuDirective));
+        submenus = fixture.debugElement.queryAll(By.directive(TriSubMenuComponent));
+        menu = fixture.debugElement.query(By.directive(TriMenuDirective));
       });
       it('should className correct', () => {
         fixture.detectChanges();
@@ -164,11 +164,11 @@ describe('menu', () => {
       });
     });
     describe('slider-current', () => {
-      let fixture: ComponentFixture<NzTestMenuSiderCurrentComponent>;
+      let fixture: ComponentFixture<TriTestMenuSiderCurrentComponent>;
       let submenus: DebugElement[];
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestMenuSiderCurrentComponent);
-        submenus = fixture.debugElement.queryAll(By.directive(NzSubMenuComponent));
+        fixture = TestBed.createComponent(TriTestMenuSiderCurrentComponent);
+        submenus = fixture.debugElement.queryAll(By.directive(TriSubMenuComponent));
       });
       it('should collapsed self work', fakeAsync(() => {
         fixture.detectChanges();
@@ -203,13 +203,13 @@ describe('menu', () => {
       }));
     });
     describe('theme', () => {
-      let fixture: ComponentFixture<NzTestMenuThemeComponent>;
-      let testComponent: NzTestMenuThemeComponent;
+      let fixture: ComponentFixture<TriTestMenuThemeComponent>;
+      let testComponent: TriTestMenuThemeComponent;
       let menu: DebugElement;
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestMenuThemeComponent);
+        fixture = TestBed.createComponent(TriTestMenuThemeComponent);
         testComponent = fixture.debugElement.componentInstance;
-        menu = fixture.debugElement.query(By.directive(NzMenuDirective));
+        menu = fixture.debugElement.query(By.directive(TriMenuDirective));
       });
       it('should className correct', () => {
         fixture.detectChanges();
@@ -220,15 +220,15 @@ describe('menu', () => {
       });
     });
     describe('switch-mode', () => {
-      let fixture: ComponentFixture<NzTestMenuSwitchModeComponent>;
-      let testComponent: NzTestMenuSwitchModeComponent;
+      let fixture: ComponentFixture<TriTestMenuSwitchModeComponent>;
+      let testComponent: TriTestMenuSwitchModeComponent;
       let submenus: DebugElement[];
       let menu: DebugElement;
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestMenuSwitchModeComponent);
+        fixture = TestBed.createComponent(TriTestMenuSwitchModeComponent);
         testComponent = fixture.debugElement.componentInstance;
-        submenus = fixture.debugElement.queryAll(By.directive(NzSubMenuComponent));
-        menu = fixture.debugElement.query(By.directive(NzMenuDirective));
+        submenus = fixture.debugElement.queryAll(By.directive(TriSubMenuComponent));
+        menu = fixture.debugElement.query(By.directive(TriMenuDirective));
       });
       it('should className correct', () => {
         fixture.detectChanges();
@@ -250,13 +250,13 @@ describe('menu', () => {
   });
   describe('coverage', () => {
     describe('horizontal submenu', () => {
-      let fixture: ComponentFixture<NzTestMenuHorizontalComponent>;
-      let testComponent: NzTestMenuHorizontalComponent;
+      let fixture: ComponentFixture<TriTestMenuHorizontalComponent>;
+      let testComponent: TriTestMenuHorizontalComponent;
       let submenu: DebugElement;
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestMenuHorizontalComponent);
+        fixture = TestBed.createComponent(TriTestMenuHorizontalComponent);
         testComponent = fixture.debugElement.componentInstance;
-        submenu = fixture.debugElement.query(By.directive(NzSubMenuComponent));
+        submenu = fixture.debugElement.query(By.directive(TriSubMenuComponent));
       });
       it('should overlay work', fakeAsync(() => {
         fixture.detectChanges();
@@ -271,7 +271,7 @@ describe('menu', () => {
         const subs = testComponent.subs.toArray();
         const title = submenu.nativeElement.querySelector('.ant-menu-submenu-title');
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (subs[0].nzSubmenuService as any).isMouseEnterTitleOrOverlay$.subscribe(mouseenterCallback);
+        (subs[0].submenuService as any).isMouseEnterTitleOrOverlay$.subscribe(mouseenterCallback);
         dispatchFakeEvent(title, 'mouseenter');
         fixture.detectChanges();
         expect(mouseenterCallback).toHaveBeenCalledWith(true);
@@ -283,32 +283,32 @@ describe('menu', () => {
         const subs = testComponent.subs.toArray();
         const title = submenu.nativeElement.querySelector('.ant-menu-submenu-title');
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (subs[0].nzSubmenuService as any).isMouseEnterTitleOrOverlay$.subscribe(mouseenterCallback);
+        (subs[0].submenuService as any).isMouseEnterTitleOrOverlay$.subscribe(mouseenterCallback);
         dispatchFakeEvent(title, 'mouseenter');
         fixture.detectChanges();
         expect(mouseenterCallback).toHaveBeenCalledWith(true);
         expect(mouseenterCallback).toHaveBeenCalledTimes(1);
       });
       it('should have not open with mouse hover if trigger is set to "click"', () => {
-        testComponent.nzTriggerSubMenuAction = 'click';
+        testComponent.triggerSubMenuAction = 'click';
         fixture.detectChanges();
         const mouseenterCallback = jasmine.createSpy('mouseenter callback');
         const subs = testComponent.subs.toArray();
         const title = submenu.nativeElement.querySelector('.ant-menu-submenu-title');
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (subs[0].nzSubmenuService as any).isMouseEnterTitleOrOverlay$.subscribe(mouseenterCallback);
+        (subs[0].submenuService as any).isMouseEnterTitleOrOverlay$.subscribe(mouseenterCallback);
         dispatchFakeEvent(title, 'mouseenter');
         fixture.detectChanges();
         expect(mouseenterCallback).toHaveBeenCalledTimes(0);
       });
       it('should open with mouse click if trigger is set to "click"', () => {
-        testComponent.nzTriggerSubMenuAction = 'click';
+        testComponent.triggerSubMenuAction = 'click';
         fixture.detectChanges();
         const mouseenterCallback = jasmine.createSpy('mouseenter callback');
         const subs = testComponent.subs.toArray();
         const title = submenu.nativeElement.querySelector('.ant-menu-submenu-title');
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (subs[0].nzSubmenuService as any).isMouseEnterTitleOrOverlay$.subscribe(mouseenterCallback);
+        (subs[0].submenuService as any).isMouseEnterTitleOrOverlay$.subscribe(mouseenterCallback);
         title.click();
         fixture.detectChanges();
         expect(mouseenterCallback).toHaveBeenCalledTimes(1);
@@ -319,7 +319,7 @@ describe('menu', () => {
         const subs = testComponent.subs.toArray();
         const title = submenu.nativeElement.querySelector('.ant-menu-submenu-title');
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (subs[0].nzSubmenuService as any).isMouseEnterTitleOrOverlay$.subscribe(mouseleaveCallback);
+        (subs[0].submenuService as any).isMouseEnterTitleOrOverlay$.subscribe(mouseleaveCallback);
         dispatchFakeEvent(title, 'mouseleave');
         fixture.detectChanges();
         expect(mouseleaveCallback).toHaveBeenCalledWith(false);
@@ -331,9 +331,9 @@ describe('menu', () => {
         const nestedCallback = jasmine.createSpy('nested callback');
         const subs = testComponent.subs.toArray();
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (subs[0].nzSubmenuService as any).isChildSubMenuOpen$.subscribe(nestedCallback);
-        subs[1].nzOpen = true;
-        subs[1].nzSubmenuService.isCurrentSubMenuOpen$.next(false);
+        (subs[0].submenuService as any).isChildSubMenuOpen$.subscribe(nestedCallback);
+        subs[1].open = true;
+        subs[1].submenuService.isCurrentSubMenuOpen$.next(false);
         fixture.detectChanges();
         expect(nestedCallback).toHaveBeenCalledWith(false);
         expect(nestedCallback).toHaveBeenCalledTimes(1);
@@ -345,9 +345,9 @@ describe('menu', () => {
         const nestedCallback = jasmine.createSpy('nested callback');
         const subs = testComponent.subs.toArray();
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (subs[0].nzSubmenuService as any).isChildSubMenuOpen$.subscribe(nestedCallback);
-        subs[1].nzOpen = true;
-        subs[1].nzSubmenuService.isCurrentSubMenuOpen$.next(false);
+        (subs[0].submenuService as any).isChildSubMenuOpen$.subscribe(nestedCallback);
+        subs[1].open = true;
+        subs[1].submenuService.isCurrentSubMenuOpen$.next(false);
         fixture.detectChanges();
         expect(nestedCallback).toHaveBeenCalledTimes(1);
       });
@@ -367,10 +367,10 @@ describe('menu', () => {
         fixture.detectChanges();
         const nestedCallback = jasmine.createSpy('nested callback');
         const subs = testComponent.subs.toArray();
-        subs[1].nzOpen = true;
+        subs[1].open = true;
         fixture.detectChanges();
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (subs[1].nzSubmenuService as any).isChildSubMenuOpen$.subscribe(nestedCallback);
+        (subs[1].submenuService as any).isChildSubMenuOpen$.subscribe(nestedCallback);
         testComponent.menuitem.nativeElement.click();
         fixture.detectChanges();
         expect(nestedCallback).toHaveBeenCalledWith(false);
@@ -382,8 +382,8 @@ describe('menu', () => {
         const nestedCallback = jasmine.createSpy('nested callback');
         const subs = testComponent.subs.toArray();
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (subs[1].nzSubmenuService as any).isMouseEnterTitleOrOverlay$.subscribe(nestedCallback);
-        subs[1].nzOpen = true;
+        (subs[1].submenuService as any).isMouseEnterTitleOrOverlay$.subscribe(nestedCallback);
+        subs[1].open = true;
         testComponent.disabledItem.nativeElement.click();
         fixture.detectChanges();
         expect(nestedCallback).toHaveBeenCalledTimes(0);
@@ -422,7 +422,7 @@ describe('menu', () => {
         fixture.detectChanges();
         testComponent.open = true;
         const subs = testComponent.subs.toArray();
-        subs[1].nzOpen = true;
+        subs[1].open = true;
         fixture.detectChanges();
         subs[1].onPositionChange(fakeLeftTopEvent);
         fixture.detectChanges();
@@ -443,8 +443,8 @@ describe('menu', () => {
         testComponent.open = true;
         fixture.detectChanges();
         const subs = testComponent.subs.toArray();
-        subs[0].nzOpen = true;
-        subs[1].nzOpen = true;
+        subs[0].open = true;
+        subs[1].open = true;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (subs[1] as any).cdr.markForCheck();
         fixture.detectChanges();
@@ -454,13 +454,13 @@ describe('menu', () => {
       });
     });
     describe('inline submenu', () => {
-      let fixture: ComponentFixture<NzTestMenuInlineComponent>;
-      let testComponent: NzTestMenuInlineComponent;
+      let fixture: ComponentFixture<TriTestMenuInlineComponent>;
+      let testComponent: TriTestMenuInlineComponent;
       let submenu: DebugElement;
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestMenuInlineComponent);
+        fixture = TestBed.createComponent(TriTestMenuInlineComponent);
         testComponent = fixture.debugElement.componentInstance;
-        submenu = fixture.debugElement.query(By.directive(NzSubMenuComponent));
+        submenu = fixture.debugElement.query(By.directive(TriSubMenuComponent));
       });
       it('should click expand', fakeAsync(() => {
         fixture.detectChanges();
@@ -500,20 +500,20 @@ describe('menu', () => {
     describe('ng-for', () => {
       it('should ng for works fine', () => {
         expect(() => {
-          TestBed.createComponent(NzTestMenuNgForComponent).detectChanges();
+          TestBed.createComponent(TriTestMenuNgForComponent).detectChanges();
         }).not.toThrowError();
       });
     });
     describe('ng-if', () => {
       it('should ng if works fine', () => {
         expect(() => {
-          TestBed.createComponent(NzTestNgIfMenuComponent).detectChanges();
+          TestBed.createComponent(TriTestNgIfMenuComponent).detectChanges();
         }).not.toThrowError();
       });
     });
     describe('submenu default selected', () => {
       it('should default selected active submenu', () => {
-        const fixture = TestBed.createComponent(NzTestSubMenuSelectedComponent);
+        const fixture = TestBed.createComponent(TriTestSubMenuSelectedComponent);
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.querySelector('.ant-menu-submenu').classList).toContain(
           'ant-menu-submenu-selected'
@@ -523,15 +523,15 @@ describe('menu', () => {
   });
 
   describe('RTL', () => {
-    let fixture: ComponentFixture<NzTestMenuRtlComponent>;
-    let testComponent: NzTestMenuHorizontalComponent;
+    let fixture: ComponentFixture<TriTestMenuRtlComponent>;
+    let testComponent: TriTestMenuHorizontalComponent;
     let submenu: DebugElement;
     let menu: DebugElement;
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestMenuRtlComponent);
-      testComponent = fixture.debugElement.query(By.directive(NzTestMenuHorizontalComponent)).componentInstance;
-      submenu = fixture.debugElement.query(By.directive(NzSubMenuComponent));
-      menu = fixture.debugElement.query(By.directive(NzMenuDirective));
+      fixture = TestBed.createComponent(TriTestMenuRtlComponent);
+      testComponent = fixture.debugElement.query(By.directive(TriTestMenuHorizontalComponent)).componentInstance;
+      submenu = fixture.debugElement.query(By.directive(TriSubMenuComponent));
+      menu = fixture.debugElement.query(By.directive(TriMenuDirective));
     });
     it('should className correct on dir change', () => {
       fixture.detectChanges();
@@ -549,7 +549,7 @@ describe('menu', () => {
       testComponent.open = true;
       fixture.detectChanges();
       const subs = testComponent.subs.toArray();
-      subs[0].nzOpen = true;
+      subs[0].open = true;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (subs[1] as any).cdr.markForCheck();
       fixture.detectChanges();
@@ -561,46 +561,46 @@ describe('menu', () => {
 });
 
 @Component({
-  selector: 'nz-test-menu-horizontal',
-  imports: [NzIconModule, NzMenuModule],
+  selector: '',
+  imports: [TriIconModule, TriMenuModule],
   template: `
-    <ul nz-menu [nzMode]="'horizontal'">
+    <ul tri-menu [mode]="'horizontal'">
       <li
-        nz-submenu
-        [nzTriggerSubMenuAction]="nzTriggerSubMenuAction"
-        nzMenuClassName="submenu"
-        [nzOpen]="open"
+        tri-submenu
+        [triggerSubMenuAction]="triggerSubMenuAction"
+        menuClassName="submenu"
+        [open]="open"
         [style.width.px]="width"
       >
         <span title>
-          <nz-icon nzType="setting" />
+          <tri-icon type="setting" />
           Navigation Three - Submenu
         </span>
         <ul>
-          <li nz-menu-group>
+          <li tri-menu-group>
             <span title>Item 1</span>
             <ul>
-              <li nz-menu-item>Option 1</li>
-              <li nz-menu-item>Option 2</li>
+              <li tri-menu-item>Option 1</li>
+              <li tri-menu-item>Option 2</li>
             </ul>
           </li>
-          <li nz-menu-group>
+          <li tri-menu-group>
             <span title>Item 2</span>
             <ul>
-              <li nz-menu-item #menuitem1>Option 3</li>
-              <li nz-menu-item>Option 4</li>
-              <li nz-submenu nzMenuClassName="nested-submenu" [nzDisabled]="disabled">
+              <li tri-menu-item #menuitem1>Option 3</li>
+              <li tri-menu-item>Option 4</li>
+              <li tri-submenu menuClassName="nested-submenu" [disabled]="disabled">
                 <span title>Sub Menu</span>
                 <ul>
-                  <li nz-menu-item #menuitem>Option 5</li>
-                  <li nz-menu-item #disabledItem nzDisabled>Option 6</li>
+                  <li tri-menu-item #menuitem>Option 5</li>
+                  <li tri-menu-item #disabledItem disabled>Option 6</li>
                 </ul>
               </li>
-              <li nz-submenu nzDisabled>
+              <li tri-submenu disabled>
                 <span title>Disabled Sub Menu</span>
                 <ul>
-                  <li nz-menu-item>Option 5</li>
-                  <li nz-menu-item>Option 6</li>
+                  <li tri-menu-item>Option 5</li>
+                  <li tri-menu-item>Option 6</li>
                 </ul>
               </li>
             </ul>
@@ -610,59 +610,59 @@ describe('menu', () => {
     </ul>
   `
 })
-export class NzTestMenuHorizontalComponent {
+export class TriTestMenuHorizontalComponent {
   width = 200;
   open = false;
   disabled = false;
-  nzTriggerSubMenuAction: NzSubmenuTrigger = 'hover';
-  @ViewChildren(NzSubMenuComponent) subs!: QueryList<NzSubMenuComponent>;
+  triggerSubMenuAction: TriSubmenuTrigger = 'hover';
+  @ViewChildren(TriSubMenuComponent) subs!: QueryList<TriSubMenuComponent>;
   @ViewChild('menuitem', { static: false, read: ElementRef }) menuitem!: ElementRef;
   @ViewChild('menuitem1', { static: false, read: ElementRef }) menuitem1!: ElementRef;
   @ViewChild('disabledItem', { static: false, read: ElementRef }) disabledItem!: ElementRef;
 }
 
 @Component({
-  imports: [NzIconModule, NzMenuModule],
+  imports: [TriIconModule, TriMenuModule],
   template: `
-    <ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="collapse">
-      <li nz-submenu [nzMenuClassName]="submenuClassName" [nzDisabled]="disabled">
+    <ul tri-menu [mode]="'inline'" [inlineCollapsed]="collapse">
+      <li tri-submenu [menuClassName]="submenuClassName" [disabled]="disabled">
         <span title>
-          <nz-icon nzType="mail" />
+          <tri-icon type="mail" />
           Navigation One
         </span>
         <ul>
-          <li nz-menu-item style="padding-left:0">Option 1</li>
-          <li nz-menu-item>Option 2</li>
+          <li tri-menu-item style="padding-left:0">Option 1</li>
+          <li tri-menu-item>Option 2</li>
         </ul>
       </li>
     </ul>
   `
 })
-export class NzTestMenuInlineComponent {
+export class TriTestMenuInlineComponent {
   disabled = false;
   collapse = false;
   submenuClassName = 'submenu';
-  @ViewChild(NzSubMenuComponent, { static: true }) submenu!: NzSubMenuComponent;
+  @ViewChild(TriSubMenuComponent, { static: true }) submenu!: TriSubMenuComponent;
   @ViewChild('menuitem', { static: false, read: ElementRef }) menuitem!: ElementRef;
 }
 
 @Component({
-  imports: [NzIconModule, NzMenuModule],
+  imports: [TriIconModule, TriMenuModule],
   template: `
-    <ul nz-menu [nzMode]="'inline'" style="width: 240px;">
+    <ul tri-menu [mode]="'inline'" style="width: 240px;">
       @for (l1 of menus; track l1) {
-        <li nz-submenu>
+        <li tri-submenu>
           <span title>
-            <nz-icon nzType="appstore" />
+            <tri-icon type="appstore" />
             {{ l1.text }}
           </span>
           <ul>
             @for (l2 of l1.children; track l2) {
-              <li nz-submenu>
+              <li tri-submenu>
                 <span title>{{ l2.text }}</span>
                 <ul>
                   @for (l3 of l2.children; track l3) {
-                    <li nz-menu-item>{{ l3.text }}</li>
+                    <li tri-menu-item>{{ l3.text }}</li>
                   }
                 </ul>
               </li>
@@ -673,7 +673,7 @@ export class NzTestMenuInlineComponent {
     </ul>
   `
 })
-export class NzTestMenuNgForComponent {
+export class TriTestMenuNgForComponent {
   menus = [
     {
       text: 'level1',
@@ -688,174 +688,174 @@ export class NzTestMenuNgForComponent {
 }
 
 @Component({
-  imports: [NzIconModule, NzMenuModule],
+  imports: [TriIconModule, TriMenuModule],
   template: `
-    <ul nz-menu nzMode="horizontal">
-      <li nz-menu-item>
-        <nz-icon nzType="mail" />
+    <ul tri-menu mode="horizontal">
+      <li tri-menu-item>
+        <tri-icon type="mail" />
         Navigation One
       </li>
-      <li nz-menu-item nzDisabled>
-        <nz-icon nzType="appstore" />
+      <li tri-menu-item disabled>
+        <tri-icon type="appstore" />
         Navigation Two
       </li>
-      <li nz-submenu nzTitle="Navigation Three - Submenu" nzIcon="setting">
+      <li tri-submenu title="Navigation Three - Submenu" icon="setting">
         <ul>
-          <li nz-menu-group nzTitle="Item 1">
+          <li tri-menu-group title="Item 1">
             <ul>
-              <li nz-menu-item>Option 1</li>
-              <li nz-menu-item>Option 2</li>
+              <li tri-menu-item>Option 1</li>
+              <li tri-menu-item>Option 2</li>
             </ul>
           </li>
-          <li nz-menu-group nzTitle="Item 2">
+          <li tri-menu-group title="Item 2">
             <ul>
-              <li nz-menu-item>Option 3</li>
-              <li nz-menu-item>Option 4</li>
-              <li nz-submenu nzTitle="Sub Menu">
+              <li tri-menu-item>Option 3</li>
+              <li tri-menu-item>Option 4</li>
+              <li tri-submenu title="Sub Menu">
                 <ul>
-                  <li nz-menu-item nzDisabled>Option 5</li>
-                  <li nz-menu-item>Option 6</li>
+                  <li tri-menu-item disabled>Option 5</li>
+                  <li tri-menu-item>Option 6</li>
                 </ul>
               </li>
-              <li nz-submenu nzDisabled nzTitle="Disabled Sub Menu">
+              <li tri-submenu disabled title="Disabled Sub Menu">
                 <ul>
-                  <li nz-menu-item>Option 5</li>
-                  <li nz-menu-item>Option 6</li>
+                  <li tri-menu-item>Option 5</li>
+                  <li tri-menu-item>Option 6</li>
                 </ul>
               </li>
             </ul>
           </li>
         </ul>
       </li>
-      <li nz-menu-item>
+      <li tri-menu-item>
         <a href="https://ng.ant.design" target="_blank" rel="noopener noreferrer">Navigation Four - Link</a>
       </li>
-      <li nz-menu-item nzDanger>Navigation Five</li>
+      <li tri-menu-item danger>Navigation Five</li>
     </ul>
   `
 })
-export class NzTestBasicMenuHorizontalComponent {}
+export class TriTestBasicMenuHorizontalComponent {}
 
 @Component({
-  imports: [NzMenuModule],
+  imports: [TriMenuModule],
   template: `
-    <ul nz-menu nzMode="inline">
-      <li nz-submenu nzTitle="Navigation One" nzIcon="mail">
+    <ul tri-menu mode="inline">
+      <li tri-submenu title="Navigation One" icon="mail">
         <ul>
-          <li nz-menu-group nzTitle="Item 1">
+          <li tri-menu-group title="Item 1">
             <ul>
-              <li nz-menu-item>Option 1</li>
-              <li nz-menu-item>Option 2</li>
+              <li tri-menu-item>Option 1</li>
+              <li tri-menu-item>Option 2</li>
             </ul>
           </li>
-          <li nz-menu-group nzTitle="Item 2">
+          <li tri-menu-group title="Item 2">
             <ul>
-              <li nz-menu-item>Option 3</li>
-              <li nz-menu-item>Option 4</li>
+              <li tri-menu-item>Option 3</li>
+              <li tri-menu-item>Option 4</li>
             </ul>
           </li>
         </ul>
       </li>
-      <li nz-submenu nzTitle="Navigation Two" nzIcon="appstore">
+      <li tri-submenu title="Navigation Two" icon="appstore">
         <ul>
-          <li nz-menu-item>Option 5</li>
-          <li nz-menu-item>Option 6</li>
-          <li nz-submenu nzTitle="Submenu">
+          <li tri-menu-item>Option 5</li>
+          <li tri-menu-item>Option 6</li>
+          <li tri-submenu title="Submenu">
             <ul>
-              <li nz-menu-item>Option 7</li>
-              <li nz-menu-item>Option 8</li>
-              <li nz-submenu nzTitle="Submenu">
+              <li tri-menu-item>Option 7</li>
+              <li tri-menu-item>Option 8</li>
+              <li tri-submenu title="Submenu">
                 <ul>
-                  <li nz-menu-item>Option 9</li>
-                  <li nz-menu-item>Option 10</li>
+                  <li tri-menu-item>Option 9</li>
+                  <li tri-menu-item>Option 10</li>
                 </ul>
               </li>
             </ul>
           </li>
         </ul>
       </li>
-      <li nz-submenu nzTitle="Navigation Three" nzIcon="setting">
+      <li tri-submenu title="Navigation Three" icon="setting">
         <ul>
-          <li nz-menu-item>Option 11</li>
-          <li nz-menu-item>Option 12</li>
-          <li nz-menu-item>Option 13</li>
+          <li tri-menu-item>Option 11</li>
+          <li tri-menu-item>Option 12</li>
+          <li tri-menu-item>Option 13</li>
         </ul>
       </li>
     </ul>
   `
 })
-export class NzTestBasicMenuInlineComponent {}
+export class TriTestBasicMenuInlineComponent {}
 
 // https://github.com/NG-ZORRO/ng-zorro-antd/issues/3023
 @Component({
-  imports: [NzMenuModule],
+  imports: [TriMenuModule],
   template: `
-    <ul nz-menu nzMode="horizontal">
+    <ul tri-menu mode="horizontal">
       @if (display) {
-        <li nz-submenu>
+        <li tri-submenu>
           <span title>{{ text }}</span>
           <ul>
-            <li nz-menu-item>item</li>
+            <li tri-menu-item>item</li>
           </ul>
         </li>
       }
     </ul>
   `
 })
-export class NzTestNgIfMenuComponent {
+export class TriTestNgIfMenuComponent {
   text = 'text';
   display = true;
 }
 
 // https://github.com/NG-ZORRO/ng-zorro-antd/issues/3345
 @Component({
-  imports: [NzIconModule, NzMenuModule],
+  imports: [TriIconModule, TriMenuModule],
   template: `
-    <ul nz-menu nzMode="inline" nzTheme="dark" nzInlineCollapsed>
-      <li nz-menu-item>
-        <nz-icon nzType="mail" />
+    <ul tri-menu mode="inline" theme="dark" inlineCollapsed>
+      <li tri-menu-item>
+        <tri-icon type="mail" />
         <span>Navigation One</span>
       </li>
-      <li nz-submenu nzTitle="Navigation Two" nzIcon="appstore">
+      <li tri-submenu title="Navigation Two" icon="appstore">
         <ul>
-          <li nz-menu-item nzSelected>Option 5</li>
-          <li nz-menu-item>Option 6</li>
+          <li tri-menu-item selected>Option 5</li>
+          <li tri-menu-item>Option 6</li>
         </ul>
       </li>
     </ul>
   `
 })
-export class NzTestSubMenuSelectedComponent {}
+export class TriTestSubMenuSelectedComponent {}
 
 @Component({
-  imports: [NzButtonModule, NzIconModule, NzMenuModule],
+  imports: [TriButtonModule, TriIconModule, TriMenuModule],
   template: `
     <div class="wrapper">
-      <button nz-button nzType="primary" (click)="toggleCollapsed()">
-        <nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" />
+      <button tri-button type="primary" (click)="toggleCollapsed()">
+        <tri-icon [type]="isCollapsed ? 'menu-unfold' : 'menu-fold'" />
       </button>
-      <ul nz-menu nzMode="inline" nzTheme="dark" [nzInlineCollapsed]="isCollapsed">
-        <li nz-menu-item nzSelected>
-          <nz-icon nzType="mail" />
+      <ul tri-menu mode="inline" theme="dark" [inlineCollapsed]="isCollapsed">
+        <li tri-menu-item selected>
+          <tri-icon type="mail" />
           <span>Navigation One</span>
         </li>
-        <li nz-submenu nzTitle="Navigation Two" nzIcon="appstore">
+        <li tri-submenu title="Navigation Two" icon="appstore">
           <ul>
-            <li nz-menu-item>Option 5</li>
-            <li nz-menu-item>Option 6</li>
-            <li nz-submenu nzTitle="Submenu">
+            <li tri-menu-item>Option 5</li>
+            <li tri-menu-item>Option 6</li>
+            <li tri-submenu title="Submenu">
               <ul>
-                <li nz-menu-item>Option 7</li>
-                <li nz-menu-item>Option 8</li>
+                <li tri-menu-item>Option 7</li>
+                <li tri-menu-item>Option 8</li>
               </ul>
             </li>
           </ul>
         </li>
-        <li nz-submenu nzTitle="Navigation Three" nzIcon="setting">
+        <li tri-submenu title="Navigation Three" icon="setting">
           <ul>
-            <li nz-menu-item>Option 9</li>
-            <li nz-menu-item>Option 10</li>
-            <li nz-menu-item>Option 11</li>
+            <li tri-menu-item>Option 9</li>
+            <li tri-menu-item>Option 10</li>
+            <li tri-menu-item>Option 11</li>
           </ul>
         </li>
       </ul>
@@ -873,7 +873,7 @@ export class NzTestSubMenuSelectedComponent {}
     `
   ]
 })
-export class NzTestMenuInlineCollapsedComponent {
+export class TriTestMenuInlineCollapsedComponent {
   isCollapsed = false;
 
   toggleCollapsed(): void {
@@ -882,66 +882,66 @@ export class NzTestMenuInlineCollapsedComponent {
 }
 
 @Component({
-  imports: [NzMenuModule],
+  imports: [TriMenuModule],
   template: `
-    <ul nz-menu nzMode="inline" style="width: 240px;">
+    <ul tri-menu mode="inline" style="width: 240px;">
       <li
-        nz-submenu
-        [(nzOpen)]="openMap.sub1"
-        (nzOpenChange)="openHandler('sub1')"
-        nzTitle="Navigation One"
-        nzIcon="mail"
+        tri-submenu
+        [(openChange)]="openMap.sub1"
+        (openChange)="openHandler('sub1')"
+        title="Navigation One"
+        icon="mail"
       >
         <ul>
-          <li nz-menu-group nzTitle="Item 1">
+          <li tri-menu-group title="Item 1">
             <ul>
-              <li nz-menu-item>Option 1</li>
-              <li nz-menu-item>Option 2</li>
+              <li tri-menu-item>Option 1</li>
+              <li tri-menu-item>Option 2</li>
             </ul>
           </li>
-          <li nz-menu-group nzTitle="Item 2">
+          <li tri-menu-group title="Item 2">
             <ul>
-              <li nz-menu-item>Option 3</li>
-              <li nz-menu-item>Option 4</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li
-        nz-submenu
-        [(nzOpen)]="openMap.sub2"
-        (nzOpenChange)="openHandler('sub2')"
-        nzTitle="Navigation Two"
-        nzIcon="appstore"
-      >
-        <ul>
-          <li nz-menu-item>Option 5</li>
-          <li nz-menu-item>Option 6</li>
-          <li nz-submenu nzTitle="Submenu">
-            <ul>
-              <li nz-menu-item>Option 7</li>
-              <li nz-menu-item>Option 8</li>
+              <li tri-menu-item>Option 3</li>
+              <li tri-menu-item>Option 4</li>
             </ul>
           </li>
         </ul>
       </li>
       <li
-        nz-submenu
-        [(nzOpen)]="openMap.sub3"
-        (nzOpenChange)="openHandler('sub3')"
-        nzTitle="Navigation Three"
-        nzIcon="setting"
+        tri-submenu
+        [(openChange)]="openMap.sub2"
+        (openChange)="openHandler('sub2')"
+        title="Navigation Two"
+        icon="appstore"
       >
         <ul>
-          <li nz-menu-item>Option 9</li>
-          <li nz-menu-item>Option 10</li>
-          <li nz-menu-item>Option 11</li>
+          <li tri-menu-item>Option 5</li>
+          <li tri-menu-item>Option 6</li>
+          <li tri-submenu title="Submenu">
+            <ul>
+              <li tri-menu-item>Option 7</li>
+              <li tri-menu-item>Option 8</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li
+        tri-submenu
+        [(openChange)]="openMap.sub3"
+        (openChange)="openHandler('sub3')"
+        title="Navigation Three"
+        icon="setting"
+      >
+        <ul>
+          <li tri-menu-item>Option 9</li>
+          <li tri-menu-item>Option 10</li>
+          <li tri-menu-item>Option 11</li>
         </ul>
       </li>
     </ul>
   `
 })
-export class NzTestMenuSiderCurrentComponent {
+export class TriTestMenuSiderCurrentComponent {
   openMap: Record<string, boolean> = {
     sub1: true,
     sub2: false,
@@ -958,42 +958,42 @@ export class NzTestMenuSiderCurrentComponent {
 }
 
 @Component({
-  imports: [NzMenuModule],
+  imports: [TriMenuModule],
   template: `
-    <ul nz-menu [nzMode]="mode ? 'vertical' : 'inline'" [nzTheme]="dark ? 'dark' : 'light'">
-      <li nz-submenu nzTitle="Navigation One" nzIcon="mail">
+    <ul tri-menu [mode]="mode ? 'vertical' : 'inline'" [theme]="dark ? 'dark' : 'light'">
+      <li tri-submenu title="Navigation One" icon="mail">
         <ul>
-          <li nz-menu-group nzTitle="Item 1">
+          <li tri-menu-group title="Item 1">
             <ul>
-              <li nz-menu-item>Option 1</li>
-              <li nz-menu-item>Option 2</li>
+              <li tri-menu-item>Option 1</li>
+              <li tri-menu-item>Option 2</li>
             </ul>
           </li>
-          <li nz-menu-group nzTitle="Item 2">
+          <li tri-menu-group title="Item 2">
             <ul>
-              <li nz-menu-item>Option 3</li>
-              <li nz-menu-item>Option 4</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li nz-submenu nzTitle="Navigation Two" nzIcon="appstore">
-        <ul>
-          <li nz-menu-item>Option 5</li>
-          <li nz-menu-item>Option 6</li>
-          <li nz-submenu nzTitle="Submenu">
-            <ul>
-              <li nz-menu-item>Option 7</li>
-              <li nz-menu-item>Option 8</li>
+              <li tri-menu-item>Option 3</li>
+              <li tri-menu-item>Option 4</li>
             </ul>
           </li>
         </ul>
       </li>
-      <li nz-submenu nzTitle="Navigation Three" nzIcon="setting">
+      <li tri-submenu title="Navigation Two" icon="appstore">
         <ul>
-          <li nz-menu-item>Option 9</li>
-          <li nz-menu-item>Option 10</li>
-          <li nz-menu-item>Option 11</li>
+          <li tri-menu-item>Option 5</li>
+          <li tri-menu-item>Option 6</li>
+          <li tri-submenu title="Submenu">
+            <ul>
+              <li tri-menu-item>Option 7</li>
+              <li tri-menu-item>Option 8</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li tri-submenu title="Navigation Three" icon="setting">
+        <ul>
+          <li tri-menu-item>Option 9</li>
+          <li tri-menu-item>Option 10</li>
+          <li tri-menu-item>Option 11</li>
         </ul>
       </li>
     </ul>
@@ -1006,66 +1006,66 @@ export class NzTestMenuSiderCurrentComponent {
     `
   ]
 })
-export class NzTestMenuSwitchModeComponent {
+export class TriTestMenuSwitchModeComponent {
   mode = false;
   dark = false;
 }
 
 @Component({
-  imports: [NzMenuModule],
+  imports: [TriMenuModule],
   template: `
-    <ul nz-menu nzMode="inline" style="width: 240px;" [nzTheme]="theme ? 'dark' : 'light'">
-      <li nz-submenu nzOpen nzTitle="Navigation One" nzIcon="mail">
+    <ul tri-menu mode="inline" style="width: 240px;" [theme]="theme ? 'dark' : 'light'">
+      <li tri-submenu open title="Navigation One" icon="mail">
         <ul>
-          <li nz-menu-group nzTitle="Item 1">
+          <li tri-menu-group title="Item 1">
             <ul>
-              <li nz-menu-item nzSelected>Option 1</li>
-              <li nz-menu-item>Option 2</li>
+              <li tri-menu-item selected>Option 1</li>
+              <li tri-menu-item>Option 2</li>
             </ul>
           </li>
-          <li nz-menu-group nzTitle="Item 2">
+          <li tri-menu-group title="Item 2">
             <ul>
-              <li nz-menu-item>Option 3</li>
-              <li nz-menu-item>Option 4</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li nz-submenu nzTitle="Navigation Two" nzIcon="appstore">
-        <ul>
-          <li nz-menu-item>Option 5</li>
-          <li nz-menu-item>Option 6</li>
-          <li nz-submenu nzTitle="Submenu">
-            <ul>
-              <li nz-menu-item>Option 7</li>
-              <li nz-menu-item>Option 8</li>
+              <li tri-menu-item>Option 3</li>
+              <li tri-menu-item>Option 4</li>
             </ul>
           </li>
         </ul>
       </li>
-      <li nz-submenu nzTitle="Navigation Three" nzIcon="setting">
+      <li tri-submenu title="Navigation Two" icon="appstore">
         <ul>
-          <li nz-menu-item>Option 9</li>
-          <li nz-menu-item>Option 10</li>
-          <li nz-menu-item>Option 11</li>
+          <li tri-menu-item>Option 5</li>
+          <li tri-menu-item>Option 6</li>
+          <li tri-submenu title="Submenu">
+            <ul>
+              <li tri-menu-item>Option 7</li>
+              <li tri-menu-item>Option 8</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li tri-submenu title="Navigation Three" icon="setting">
+        <ul>
+          <li tri-menu-item>Option 9</li>
+          <li tri-menu-item>Option 10</li>
+          <li tri-menu-item>Option 11</li>
         </ul>
       </li>
     </ul>
   `
 })
-export class NzTestMenuThemeComponent {
+export class TriTestMenuThemeComponent {
   theme = true;
 }
 
 @Component({
-  imports: [BidiModule, NzTestMenuHorizontalComponent],
+  imports: [BidiModule, TriTestMenuHorizontalComponent],
   template: `
     <div [dir]="direction">
-      <nz-test-menu-horizontal></nz-test-menu-horizontal>
+      <tri-test-menu-horizontal></tri-test-menu-horizontal>
     </div>
   `
 })
-export class NzTestMenuRtlComponent {
+export class TriTestMenuRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 }

@@ -24,15 +24,15 @@ import { COMPOSITION_BUFFER_MODE, FormsModule } from '@angular/forms';
 import { requestAnimationFrame } from 'ng-zorro-antd/core/polyfill';
 
 @Component({
-  selector: 'nz-select-search',
+  selector: '',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <input
       #inputElement
-      [attr.id]="nzId"
+      [attr.id]="id"
       autocomplete="off"
-      class="ant-select-selection-search-input"
+      class="tri-select-selection-search-input"
       [ngModel]="value"
       [attr.autofocus]="autofocus ? 'autofocus' : null"
       [disabled]="disabled"
@@ -42,19 +42,19 @@ import { requestAnimationFrame } from 'ng-zorro-antd/core/polyfill';
       (compositionend)="setCompositionState(false)"
     />
     @if (mirrorSync) {
-      <span #mirrorElement class="ant-select-selection-search-mirror"></span>
+      <span #mirrorElement class="tri-select-selection-search-mirror"></span>
     }
   `,
-  host: { class: 'ant-select-selection-search' },
+  host: { class: 'tri-select-selection-search' },
   providers: [{ provide: COMPOSITION_BUFFER_MODE, useValue: false }],
   imports: [FormsModule]
 })
-export class NzSelectSearchComponent implements AfterViewInit, OnChanges {
+export class TriSelectSearchComponent implements AfterViewInit, OnChanges {
   private readonly elementRef = inject(ElementRef);
   private readonly renderer = inject(Renderer2);
   private readonly focusMonitor = inject(FocusMonitor);
 
-  @Input() nzId: string | null = null;
+  @Input() id: string | null = null;
   @Input() disabled = false;
   @Input() mirrorSync = false;
   @Input() showInput = true;

@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 
-import { NzTimelineModule } from 'ng-zorro-antd/timeline';
+import { TriTimelineModule } from 'ng-zorro-antd/timeline';
 
 @Component({
-  selector: 'nz-demo-timeline-position',
-  imports: [NzTimelineModule],
+  selector: '',
+  imports: [TriTimelineModule],
   template: `
-    <nz-timeline nzMode="custom">
-      <nz-timeline-item nzPosition="left" [nzDot]="soccerTemplate">Alice 20'</nz-timeline-item>
-      <nz-timeline-item nzPosition="left" [nzDot]="soccerTemplate">Susan 28'</nz-timeline-item>
-      <nz-timeline-item nzPosition="right" nzColor="red" [nzDot]="soccerTemplate">Tim 45'</nz-timeline-item>
-      <nz-timeline-item nzPosition="left" [nzDot]="soccerTemplate">Bob 79'</nz-timeline-item>
-    </nz-timeline>
+    <tri-timeline mode="custom">
+      <tri-timeline-item position="left" [dot]="soccerTemplate">Alice 20'</tri-timeline-item>
+      <tri-timeline-item position="left" [dot]="soccerTemplate">Susan 28'</tri-timeline-item>
+      <tri-timeline-item position="right" color="red" [dot]="soccerTemplate">Tim 45'</tri-timeline-item>
+      <tri-timeline-item position="left" [dot]="soccerTemplate">Bob 79'</tri-timeline-item>
+    </tri-timeline>
     <ng-template #soccerTemplate>⚽</ng-template>
   `
 })
-export class NzDemoTimelinePositionComponent {}
+export class TriDemoTimelinePositionComponent {}

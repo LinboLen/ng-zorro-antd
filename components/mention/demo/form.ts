@@ -9,39 +9,39 @@ import {
   Validators
 } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzMentionComponent, NzMentionModule } from 'ng-zorro-antd/mention';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriFormModule } from 'ng-zorro-antd/form';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriMentionComponent, TriMentionModule } from 'ng-zorro-antd/mention';
 
 @Component({
-  selector: 'nz-demo-mention-form',
-  imports: [ReactiveFormsModule, NzButtonModule, NzFormModule, NzInputModule, NzMentionModule],
+  selector: '',
+  imports: [ReactiveFormsModule, TriButtonModule, TriFormModule, TriInputModule, TriMentionModule],
   template: `
-    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" nzFor="mention">Top coders</nz-form-label>
-        <nz-form-control [nzSm]="16" nzErrorTip="More than one must be selected!">
-          <nz-mention #mentions [nzSuggestions]="suggestions">
+    <form tri-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+      <tri-form-item>
+        <tri-form-label [sm]="6" for="mention">Top coders</tri-form-label>
+        <tri-form-control [sm]="16" errorTip="More than one must be selected!">
+          <tri-mention #mentions [suggestions]="suggestions">
             <textarea
               rows="1"
               id="mention"
               placeholder="input here"
               formControlName="mention"
-              nzMentionTrigger
-              nz-input
+              mentionTrigger
+              tri-input
             ></textarea>
-          </nz-mention>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item nz-row style="margin-bottom:8px;">
-        <nz-form-control [nzSpan]="14" [nzOffset]="6">
+          </tri-mention>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item tri-row style="margin-bottom:8px;">
+        <tri-form-control [span]="14" [offset]="6">
           <div class="cta-wrapper">
-            <button type="button" nz-button nzType="primary" (click)="submitForm()">Submit</button>
-            <button type="button" nz-button (click)="resetForm()">Reset</button>
+            <button type="button" tri-button type="primary" (click)="submitForm()">Submit</button>
+            <button type="button" tri-button (click)="resetForm()">Reset</button>
           </div>
-        </nz-form-control>
-      </nz-form-item>
+        </tri-form-control>
+      </tri-form-item>
     </form>
   `,
   styles: [
@@ -53,9 +53,9 @@ import { NzMentionComponent, NzMentionModule } from 'ng-zorro-antd/mention';
     `
   ]
 })
-export class NzDemoMentionFormComponent {
+export class TriDemoMentionFormComponent {
   readonly suggestions = ['afc163', 'benjycui', 'yiminghe', 'RaoHai', '中文', 'にほんご', 'ParsaArvaneh'];
-  @ViewChild('mentions', { static: true }) mentionChild!: NzMentionComponent;
+  @ViewChild('mentions', { static: true }) mentionChild!: TriMentionComponent;
 
   mentionValidator: ValidatorFn = (control: AbstractControl): ValidationErrors => {
     if (!control.value) {

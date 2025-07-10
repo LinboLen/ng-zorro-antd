@@ -3,28 +3,28 @@ import { FormsModule } from '@angular/forms';
 
 import {
   NZ_CAROUSEL_CUSTOM_STRATEGIES,
-  NzCarouselFlipStrategy,
-  NzCarouselModule,
-  NzCarouselTransformNoLoopStrategy
+  TriCarouselFlipStrategy,
+  TriCarouselModule,
+  TriCarouselTransformNoLoopStrategy
 } from 'ng-zorro-antd/carousel';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: 'nz-demo-carousel-custom',
-  imports: [FormsModule, NzCarouselModule, NzRadioModule],
+  selector: '',
+  imports: [FormsModule, TriCarouselModule, TriRadioModule],
   template: `
-    <nz-radio-group [(ngModel)]="strategy">
-      <label nz-radio-button nzValue="transform-no-loop">Transform No Loop</label>
-      <label nz-radio-button nzValue="flip">Flip</label>
-      <label nz-radio-button nzValue="fade">Fade (built-in)</label>
-    </nz-radio-group>
-    <nz-carousel [nzEffect]="strategy">
+    <tri-radio-group [(ngModel)]="strategy">
+      <label tri-radio-button value="transform-no-loop">Transform No Loop</label>
+      <label tri-radio-button value="flip">Flip</label>
+      <label tri-radio-button value="fade">Fade (built-in)</label>
+    </tri-radio-group>
+    <tri-carousel [effect]="strategy">
       @for (index of array; track index) {
-        <div nz-carousel-content>
+        <div tri-carousel-content>
           <h3>{{ index }}</h3>
         </div>
       }
-    </nz-carousel>
+    </tri-carousel>
   `,
   styles: [
     `
@@ -52,13 +52,13 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
     {
       provide: NZ_CAROUSEL_CUSTOM_STRATEGIES,
       useValue: [
-        { name: 'transform-no-loop', strategy: NzCarouselTransformNoLoopStrategy },
-        { name: 'flip', strategy: NzCarouselFlipStrategy }
+        { name: 'transform-no-loop', strategy: TriCarouselTransformNoLoopStrategy },
+        { name: 'flip', strategy: TriCarouselFlipStrategy }
       ]
     }
   ]
 })
-export class NzDemoCarouselCustomComponent {
+export class TriDemoCarouselCustomComponent {
   strategy = 'transform-no-loop';
   array = [1, 2, 3, 4];
 }

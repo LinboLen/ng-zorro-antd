@@ -5,18 +5,18 @@
 
 import { Directive, ElementRef, inject } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 /**
  * A patch directive to select the element of a component.
  */
 @Directive({
-  selector: '[nzElement], [nz-element]',
-  exportAs: 'nzElement'
+  selector: '',
+  exportAs: 'triElement'
 })
-export class NzElementPatchDirective {
+export class TriElementPatchDirective {
   public elementRef = inject(ElementRef<HTMLElement>);
-  get nativeElement(): NzSafeAny {
+  get nativeElement(): TriSafeAny {
     return this.elementRef.nativeElement;
   }
 }

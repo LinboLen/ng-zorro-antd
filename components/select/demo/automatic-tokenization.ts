@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzSelectModule } from 'ng-zorro-antd/select';
+import { TriSelectModule } from 'ng-zorro-antd/select';
 
 function alphabet(): string[] {
   const children: string[] = [];
@@ -12,19 +12,19 @@ function alphabet(): string[] {
 }
 
 @Component({
-  selector: 'nz-demo-select-automatic-tokenization',
-  imports: [FormsModule, NzSelectModule],
+  selector: '',
+  imports: [FormsModule, TriSelectModule],
   template: `
-    <nz-select
+    <tri-select
       [(ngModel)]="listOfTagOptions"
-      nzMode="tags"
-      [nzTokenSeparators]="[',']"
-      nzPlaceHolder="automatic tokenization"
+      mode="tags"
+      [tokenSeparators]="[',']"
+      placeHolder="automatic tokenization"
     >
       @for (option of listOfOption; track option.value) {
-        <nz-option [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+        <tri-option [label]="option.label" [value]="option.value"></tri-option>
       }
-    </nz-select>
+    </tri-select>
   `,
   styles: [
     `
@@ -34,7 +34,7 @@ function alphabet(): string[] {
     `
   ]
 })
-export class NzDemoSelectAutomaticTokenizationComponent {
+export class TriDemoSelectAutomaticTokenizationComponent {
   readonly listOfOption: Array<{ label: string; value: string }> = alphabet().map(item => ({
     label: item,
     value: item

@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 
-import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { TriPaginationModule } from 'ng-zorro-antd/pagination';
 
 @Component({
-  selector: 'nz-demo-pagination-total',
-  imports: [NzPaginationModule],
+  selector: '',
+  imports: [TriPaginationModule],
   template: `
-    <nz-pagination [nzPageIndex]="1" [nzTotal]="85" [nzPageSize]="20" [nzShowTotal]="totalTemplate"></nz-pagination>
+    <tri-pagination [pageIndex]="1" [total]="85" [pageSize]="20" [showTotal]="totalTemplate"></tri-pagination>
     <br />
-    <nz-pagination [nzPageIndex]="1" [nzTotal]="85" [nzPageSize]="20" [nzShowTotal]="rangeTemplate"></nz-pagination>
+    <tri-pagination [pageIndex]="1" [total]="85" [pageSize]="20" [showTotal]="rangeTemplate"></tri-pagination>
     <ng-template #totalTemplate let-total>Total {{ total }} items</ng-template>
     <ng-template #rangeTemplate let-range="range" let-total>
       {{ range[0] }}-{{ range[1] }} of {{ total }} items
     </ng-template>
   `
 })
-export class NzDemoPaginationTotalComponent {}
+export class TriDemoPaginationTotalComponent {}

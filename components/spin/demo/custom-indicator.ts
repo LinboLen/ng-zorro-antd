@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriSpinModule } from 'ng-zorro-antd/spin';
 
 @Component({
-  selector: 'nz-demo-spin-custom-indicator',
-  imports: [NzIconModule, NzSpinModule],
+  selector: '',
+  imports: [TriIconModule, TriSpinModule],
   template: `
-    <ng-template #indicatorTemplate><nz-icon nzType="loading" /></ng-template>
-    <nz-spin nzSimple [nzIndicator]="indicatorTemplate"></nz-spin>
+    <ng-template #indicatorTemplate><tri-icon type="loading" /></ng-template>
+    <tri-spin simple [indicator]="indicatorTemplate"></tri-spin>
   `,
   styles: [
     `
@@ -18,4 +18,4 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
     `
   ]
 })
-export class NzDemoSpinCustomIndicatorComponent {}
+export class TriDemoSpinCustomIndicatorComponent {}

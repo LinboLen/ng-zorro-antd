@@ -6,8 +6,8 @@
 import { Direction } from '@angular/cdk/bidi';
 import { EventEmitter, TemplateRef, Type, ViewContainerRef } from '@angular/core';
 
-import { NzButtonShape, NzButtonSize, NzButtonType } from 'ng-zorro-antd/button';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriButtonShape, TriButtonSize, TriButtonType } from 'ng-zorro-antd/button';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 export type OnClickCallback<T> = (instance: T) => (false | void | {}) | Promise<false | void | {}>;
 
@@ -21,62 +21,62 @@ export interface StyleObjectLike {
 
 const noopFun = () => void 0;
 
-export class ModalOptions<T = NzSafeAny, D = NzSafeAny, R = NzSafeAny> {
-  nzCentered?: boolean = false;
-  nzClosable?: boolean = true;
-  nzOkLoading?: boolean = false;
-  nzOkDisabled?: boolean = false;
-  nzCancelDisabled?: boolean = false;
-  nzCancelLoading?: boolean = false;
-  nzDraggable?: boolean = false;
-  nzNoAnimation?: boolean = false;
-  nzAutofocus?: 'ok' | 'cancel' | 'auto' | null = 'auto';
-  nzMask?: boolean;
-  nzMaskClosable?: boolean;
-  nzKeyboard?: boolean = true;
-  nzZIndex?: number = 1000;
-  nzWidth?: number | string = 520;
-  nzCloseIcon?: string | TemplateRef<void> = 'close';
-  nzOkType?: NzButtonType = 'primary';
-  nzOkDanger?: boolean = false;
-  nzModalType?: ModalTypes = 'default';
-  nzOnCancel?: EventEmitter<T> | OnClickCallback<T> = noopFun;
-  nzOnOk?: EventEmitter<T> | OnClickCallback<T> = noopFun;
-  nzData?: D;
-  nzMaskStyle?: StyleObjectLike;
-  nzBodyStyle?: StyleObjectLike;
-  nzWrapClassName?: string;
-  nzClassName?: string;
-  nzStyle?: object;
-  nzTitle?: string | TemplateRef<{}>;
-  nzFooter?: string | TemplateRef<{}> | Array<ModalButtonOptions<T>> | null; // Default Modal ONLY
-  nzCancelText?: string | null;
-  nzOkText?: string | null;
-  nzContent?: string | TemplateRef<NzSafeAny> | Type<T>;
-  nzCloseOnNavigation?: boolean;
-  nzViewContainerRef?: ViewContainerRef;
+export class ModalOptions<T = TriSafeAny, D = TriSafeAny, R = TriSafeAny> {
+  centered?: boolean = false;
+  closable?: boolean = true;
+  okLoading?: boolean = false;
+  okDisabled?: boolean = false;
+  cancelDisabled?: boolean = false;
+  cancelLoading?: boolean = false;
+  draggable?: boolean = false;
+  noAnimation?: boolean = false;
+  autofocus?: 'ok' | 'cancel' | 'auto' | null = 'auto';
+  mask?: boolean;
+  maskClosable?: boolean;
+  keyboard?: boolean = true;
+  zIndex?: number = 1000;
+  width?: number | string = 520;
+  closeIcon?: string | TemplateRef<void> = 'close';
+  okType?: TriButtonType = 'primary';
+  okDanger?: boolean = false;
+  modalType?: ModalTypes = 'default';
+  onCancel?: EventEmitter<T> | OnClickCallback<T> = noopFun;
+  onOk?: EventEmitter<T> | OnClickCallback<T> = noopFun;
+  data?: D;
+  maskStyle?: StyleObjectLike;
+  bodyStyle?: StyleObjectLike;
+  wrapClassName?: string;
+  className?: string;
+  style?: object;
+  title?: string | TemplateRef<{}>;
+  footer?: string | TemplateRef<{}> | Array<ModalButtonOptions<T>> | null; // Default Modal ONLY
+  cancelText?: string | null;
+  okText?: string | null;
+  content?: string | TemplateRef<TriSafeAny> | Type<T>;
+  closeOnNavigation?: boolean;
+  viewContainerRef?: ViewContainerRef;
   // Template use only
-  nzAfterOpen?: EventEmitter<void>;
-  nzAfterClose?: EventEmitter<R>;
+  afterOpen?: EventEmitter<void>;
+  afterClose?: EventEmitter<R>;
 
   // Confirm
-  nzIconType?: string = 'question-circle';
-  nzDirection?: Direction;
+  iconType?: string = 'question-circle';
+  direction?: Direction;
 }
 
-export interface ModalButtonOptions<T = NzSafeAny> {
+export interface ModalButtonOptions<T = TriSafeAny> {
   label: string;
-  type?: NzButtonType;
+  type?: TriButtonType;
   danger?: boolean;
-  shape?: NzButtonShape;
+  shape?: TriButtonShape;
   ghost?: boolean;
-  size?: NzButtonSize;
+  size?: TriButtonSize;
   autoLoading?: boolean; // Default: true, indicate whether show loading automatically while onClick returned a Promise
 
   // [NOTE] "componentInstance" will refer to the component's instance when using Component
   show?: boolean | ((this: ModalButtonOptions<T>, contentComponentInstance?: T) => boolean);
   loading?: boolean | ((this: ModalButtonOptions<T>, contentComponentInstance?: T) => boolean); // This prop CAN'T use with autoLoading=true
   disabled?: boolean | ((this: ModalButtonOptions<T>, contentComponentInstance?: T) => boolean);
-  onClick?(this: ModalButtonOptions<T>, contentComponentInstance?: T): NzSafeAny | Promise<NzSafeAny>;
-  [key: string]: NzSafeAny;
+  onClick?(this: ModalButtonOptions<T>, contentComponentInstance?: T): TriSafeAny | Promise<TriSafeAny>;
+  [key: string]: TriSafeAny;
 }

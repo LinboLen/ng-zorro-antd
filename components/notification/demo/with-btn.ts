@@ -1,22 +1,22 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzNotificationComponent, NzNotificationService } from 'ng-zorro-antd/notification';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriNotificationComponent, TriNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
-  selector: 'nz-demo-notification-with-btn',
-  imports: [NzButtonModule],
+  selector: '',
+  imports: [TriButtonModule],
   template: `
     <ng-template #notificationBtnTpl let-notification>
-      <button nz-button nzType="primary" nzSize="small" (click)="notification.close()">Confirm</button>
+      <button tri-button type="primary" size="small" (click)="notification.close()">Confirm</button>
     </ng-template>
 
-    <button nz-button nzType="primary" (click)="createNotification()">Open the notification box</button>
+    <button tri-button type="primary" (click)="createNotification()">Open the notification box</button>
   `
 })
-export class NzDemoNotificationWithBtnComponent {
-  @ViewChild('notificationBtnTpl', { static: true }) btnTemplate!: TemplateRef<{ $implicit: NzNotificationComponent }>;
-  constructor(private notification: NzNotificationService) {}
+export class TriDemoNotificationWithBtnComponent {
+  @ViewChild('notificationBtnTpl', { static: true }) btnTemplate!: TemplateRef<{ $implicit: TriNotificationComponent }>;
+  constructor(private notification: TriNotificationService) {}
 
   createNotification(): void {
     this.notification.blank(

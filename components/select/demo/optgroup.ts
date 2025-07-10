@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzSelectModule } from 'ng-zorro-antd/select';
+import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: 'nz-demo-select-optgroup',
-  imports: [FormsModule, NzSelectModule],
+  selector: '',
+  imports: [FormsModule, TriSelectModule],
   template: `
-    <nz-select [(ngModel)]="selectedValue" nzAllowClear nzPlaceHolder="Choose" nzShowSearch>
-      <nz-option-group nzLabel="Manager">
-        <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-        <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
-      </nz-option-group>
-      <nz-option-group nzLabel="Engineer">
-        <nz-option nzValue="tom" nzLabel="Tom"></nz-option>
-      </nz-option-group>
-    </nz-select>
+    <tri-select [(ngModel)]="selectedValue" allowClear placeHolder="Choose" showSearch>
+      <tri-option-group label="Manager">
+        <tri-option value="jack" label="Jack"></tri-option>
+        <tri-option value="lucy" label="Lucy"></tri-option>
+      </tri-option-group>
+      <tri-option-group label="Engineer">
+        <tri-option value="tom" label="Tom"></tri-option>
+      </tri-option-group>
+    </tri-select>
   `,
   styles: [
     `
@@ -25,6 +25,6 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     `
   ]
 })
-export class NzDemoSelectOptgroupComponent {
+export class TriDemoSelectOptgroupComponent {
   selectedValue = 'lucy';
 }

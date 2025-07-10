@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzSwitchComponent } from './switch.component';
+import { TriSwitchComponent } from './switch.component';
 
 @NgModule({
-  imports: [NzSwitchComponent],
-  exports: [NzSwitchComponent]
+  imports: [TriSwitchComponent],
+  exports: [TriSwitchComponent]
 })
-export class NzSwitchModule {}
+export class TriSwitchModule {}

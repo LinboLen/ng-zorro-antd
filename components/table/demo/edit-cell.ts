@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
-import { NzTableModule } from 'ng-zorro-antd/table';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { TriTableModule } from 'ng-zorro-antd/table';
 
 interface ItemData {
   id: string;
@@ -14,16 +14,16 @@ interface ItemData {
 }
 
 @Component({
-  selector: 'nz-demo-table-edit-cell',
-  imports: [FormsModule, NzButtonModule, NzInputModule, NzPopconfirmModule, NzTableModule],
+  selector: '',
+  imports: [FormsModule, TriButtonModule, TriInputModule, TriPopconfirmModule, TriTableModule],
   template: `
-    <button nz-button (click)="addRow()" nzType="primary">Add</button>
+    <button tri-button (click)="addRow()" type="primary">Add</button>
     <br />
     <br />
-    <nz-table #editRowTable nzBordered [nzData]="listOfData">
+    <tri-table #editRowTable bordered [data]="listOfData">
       <thead>
         <tr>
-          <th nzWidth="30%">Name</th>
+          <th width="30%">Name</th>
           <th>Age</th>
           <th>Address</th>
           <th>Action</th>
@@ -36,17 +36,17 @@ interface ItemData {
               <div class="editable-cell" [hidden]="editId === data.id" (click)="startEdit(data.id)">
                 {{ data.name }}
               </div>
-              <input [hidden]="editId !== data.id" type="text" nz-input [(ngModel)]="data.name" (blur)="stopEdit()" />
+              <input [hidden]="editId !== data.id" type="text" tri-input [(ngModel)]="data.name" (blur)="stopEdit()" />
             </td>
             <td>{{ data.age }}</td>
             <td>{{ data.address }}</td>
             <td>
-              <a nz-popconfirm nzPopconfirmTitle="Sure to delete?" (nzOnConfirm)="deleteRow(data.id)">Delete</a>
+              <a tri-popconfirm popconfirmTitle="Sure to delete?" (onConfirm)="deleteRow(data.id)">Delete</a>
             </td>
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `,
   styles: [
     `
@@ -64,7 +64,7 @@ interface ItemData {
     `
   ]
 })
-export class NzDemoTableEditCellComponent implements OnInit {
+export class TriDemoTableEditCellComponent implements OnInit {
   i = 0;
   editId: string | null = null;
   listOfData: ItemData[] = [];

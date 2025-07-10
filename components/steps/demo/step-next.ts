@@ -1,32 +1,32 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriStepsModule } from 'ng-zorro-antd/steps';
 
 @Component({
-  selector: 'nz-demo-steps-step-next',
-  imports: [NzButtonModule, NzStepsModule],
+  selector: '',
+  imports: [TriButtonModule, TriStepsModule],
   template: `
-    <nz-steps [nzCurrent]="current">
-      <nz-step nzTitle="Finished"></nz-step>
-      <nz-step nzTitle="In Progress"></nz-step>
-      <nz-step nzTitle="Waiting"></nz-step>
-    </nz-steps>
+    <tri-steps [current]="current">
+      <tri-step title="Finished"></tri-step>
+      <tri-step title="In Progress"></tri-step>
+      <tri-step title="Waiting"></tri-step>
+    </tri-steps>
 
     <div class="steps-content">{{ index }}</div>
     <div class="steps-action">
       @if (current > 0) {
-        <button nz-button nzType="default" (click)="pre()">
+        <button tri-button type="default" (click)="pre()">
           <span>Previous</span>
         </button>
       }
       @if (current < 2) {
-        <button nz-button nzType="default" (click)="next()">
+        <button tri-button type="default" (click)="next()">
           <span>Next</span>
         </button>
       }
       @if (current === 2) {
-        <button nz-button nzType="primary" (click)="done()">
+        <button tri-button type="primary" (click)="done()">
           <span>Done</span>
         </button>
       }
@@ -54,7 +54,7 @@ import { NzStepsModule } from 'ng-zorro-antd/steps';
     `
   ]
 })
-export class NzDemoStepsStepNextComponent {
+export class TriDemoStepsStepNextComponent {
   current = 0;
 
   index = 'First-content';

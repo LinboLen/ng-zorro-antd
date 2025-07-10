@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NzAnchorModule } from 'ng-zorro-antd/anchor';
+import { TriAnchorModule } from 'ng-zorro-antd/anchor';
 
 @Component({
-  selector: 'nz-demo-anchor-target-offset',
-  imports: [NzAnchorModule],
+  selector: '',
+  imports: [TriAnchorModule],
   template: `
-    <nz-anchor [nzTargetOffset]="targetOffset">
-      <nz-link nzHref="#components-anchor-demo-basic" nzTitle="Basic demo"></nz-link>
-      <nz-link nzHref="#components-anchor-demo-static" nzTitle="Static demo"></nz-link>
-      <nz-link nzHref="#api" nzTitle="API">
-        <nz-link nzHref="#nz-anchor" nzTitle="nz-anchor"></nz-link>
-        <nz-link nzHref="#nz-link" nzTitle="nz-link"></nz-link>
-      </nz-link>
-    </nz-anchor>
+    <tri-anchor [targetOffset]="targetOffset">
+      <tri-link href="#components-anchor-demo-basic" title="Basic demo"></tri-link>
+      <tri-link href="#components-anchor-demo-static" title="Static demo"></tri-link>
+      <tri-link href="#api" title="API">
+        <tri-link href="#nz-anchor" title="nz-anchor"></tri-link>
+        <tri-link href="#nz-link" title="nz-link"></tri-link>
+      </tri-link>
+    </tri-anchor>
   `
 })
-export class NzDemoAnchorTargetOffsetComponent implements OnInit {
+export class TriDemoAnchorTargetOffsetComponent implements OnInit {
   targetOffset?: number;
 
   ngOnInit(): void {

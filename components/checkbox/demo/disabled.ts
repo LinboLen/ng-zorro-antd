@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { TriCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 @Component({
-  selector: 'nz-demo-checkbox-disabled',
-  imports: [FormsModule, NzCheckboxModule],
+  selector: '',
+  imports: [FormsModule, TriCheckboxModule],
   template: `
-    <label nz-checkbox nzDisabled [ngModel]="false"></label>
+    <label tri-checkbox disabled [ngModel]="false"></label>
     <br />
-    <label nz-checkbox nzDisabled [ngModel]="true"></label>
+    <label tri-checkbox disabled [ngModel]="true"></label>
   `
 })
-export class NzDemoCheckboxDisabledComponent {}
+export class TriDemoCheckboxDisabledComponent {}

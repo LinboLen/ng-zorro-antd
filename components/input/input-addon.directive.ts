@@ -6,11 +6,11 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-  selector: '[nzInputAddonBefore]'
+  selector: ''
 })
-export class NzInputAddonBeforeDirective {}
+export class TriInputAddonBeforeDirective {}
 
 @Directive({
-  selector: '[nzInputAddonAfter]'
+  selector: ''
 })
-export class NzInputAddonAfterDirective {}
+export class TriInputAddonAfterDirective {}

@@ -20,56 +20,56 @@ import {
   ViewContainerRef
 } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzTreeNodeIndentsComponent } from './indent';
-import { NzNodeBase } from './node-base';
-import { NzTreeNodeNoopToggleDirective } from './toggle';
+import { TriTreeNodeIndentsComponent } from './indent';
+import { TriNodeBase } from './node-base';
+import { TriTreeNodeNoopToggleDirective } from './toggle';
 
-export interface NzTreeVirtualNodeData<T> {
+export interface TriTreeVirtualNodeData<T> {
   data: T;
   context: CdkTreeNodeOutletContext<T>;
   nodeDef: CdkTreeNodeDef<T>;
 }
 
 @Component({
-  selector: 'nz-tree-node:not([builtin])',
-  exportAs: 'nzTreeNode',
+  selector: '',
+  exportAs: 'triTreeNode',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: CdkTreeNode,
-      useExisting: forwardRef(() => NzTreeNodeComponent)
+      useExisting: forwardRef(() => TriTreeNodeComponent)
     },
     {
-      provide: NzNodeBase,
-      useExisting: forwardRef(() => NzTreeNodeComponent)
+      provide: TriNodeBase,
+      useExisting: forwardRef(() => TriTreeNodeComponent)
     }
   ],
   template: `
     @if (indents.length) {
-      <nz-tree-node-indents [indents]="indents"></nz-tree-node-indents>
+      <tri-tree-node-indents [indents]="indents"></tri-tree-node-indents>
     }
     <ng-content select="nz-tree-node-toggle, [nz-tree-node-toggle]"></ng-content>
     @if (indents.length && isLeaf) {
-      <nz-tree-node-toggle class="nz-tree-leaf-line-icon" nzTreeNodeNoopToggle>
-        <span class="ant-tree-switcher-leaf-line"></span>
-      </nz-tree-node-toggle>
+      <tri-tree-node-toggle class="nz-tree-leaf-line-icon" treeNodeNoopToggle>
+        <span class="tri-tree-switcher-leaf-line"></span>
+      </tri-tree-node-toggle>
     }
     <ng-content select="nz-tree-node-checkbox"></ng-content>
     <ng-content select="nz-tree-node-option"></ng-content>
     <ng-content></ng-content>
   `,
   host: {
-    class: 'ant-tree-treenode',
-    '[class.ant-tree-treenode-switcher-open]': 'isExpanded',
-    '[class.ant-tree-treenode-switcher-close]': '!isExpanded',
-    '[class.ant-tree-treenode-selected]': 'selected',
-    '[class.ant-tree-treenode-disabled]': 'disabled'
+    class: 'tri-tree-treenode',
+    '[class.tri-tree-treenode-switcher-open]': 'isExpanded',
+    '[class.tri-tree-treenode-switcher-close]': '!isExpanded',
+    '[class.tri-tree-treenode-selected]': 'selected',
+    '[class.tri-tree-treenode-disabled]': 'disabled'
   },
-  imports: [NzTreeNodeIndentsComponent, NzTreeNodeNoopToggleDirective]
+  imports: [TriTreeNodeIndentsComponent, TriTreeNodeNoopToggleDirective]
 })
-export class NzTreeNodeComponent<T> extends NzNodeBase<T> implements OnInit {
+export class TriTreeNodeComponent<T> extends TriNodeBase<T> implements OnInit {
   indents: boolean[] = [];
   disabled = false;
   selected = false;
@@ -105,25 +105,25 @@ export class NzTreeNodeComponent<T> extends NzNodeBase<T> implements OnInit {
 }
 
 @Directive({
-  selector: '[nzTreeNodeDef]',
+  selector: '',
   providers: [
     {
       provide: CdkTreeNodeDef,
-      useExisting: forwardRef(() => NzTreeNodeDefDirective)
+      useExisting: forwardRef(() => TriTreeNodeDefDirective)
     }
   ]
 })
-export class NzTreeNodeDefDirective<T> extends CdkTreeNodeDef<T> {
+export class TriTreeNodeDefDirective<T> extends CdkTreeNodeDef<T> {
   @Input('nzTreeNodeDefWhen') override when: (index: number, nodeData: T) => boolean = null!;
 }
 
 @Directive({
-  selector: '[nzTreeVirtualScrollNodeOutlet]'
+  selector: ''
 })
-export class NzTreeVirtualScrollNodeOutletDirective<T> implements OnChanges {
-  private _viewRef: EmbeddedViewRef<NzSafeAny> | null = null;
+export class TriTreeVirtualScrollNodeOutletDirective<T> implements OnChanges {
+  private _viewRef: EmbeddedViewRef<TriSafeAny> | null = null;
   private _viewContainerRef = inject(ViewContainerRef);
-  @Input() data!: NzTreeVirtualNodeData<T>;
+  @Input() data!: TriTreeVirtualNodeData<T>;
   @Input() compareBy?: ((value: T) => T | string | number) | null;
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -178,9 +178,9 @@ export class NzTreeVirtualScrollNodeOutletDirective<T> implements OnChanges {
     };
   }
 
-  private updateExistingContext(ctx: NzSafeAny): void {
+  private updateExistingContext(ctx: TriSafeAny): void {
     for (const propName of Object.keys(ctx)) {
-      this._viewRef!.context[propName] = (this.data.context as NzSafeAny)[propName];
+      this._viewRef!.context[propName] = (this.data.context as TriSafeAny)[propName];
     }
   }
 }

@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzCodeEditorModule } from 'ng-zorro-antd/code-editor';
+import { TriCodeEditorModule } from 'ng-zorro-antd/code-editor';
 
 @Component({
-  selector: 'nz-demo-code-editor-diff',
-  imports: [FormsModule, NzCodeEditorModule],
+  selector: '',
+  imports: [FormsModule, TriCodeEditorModule],
   template: `
-    <nz-code-editor
+    <tri-code-editor
       class="editor"
-      [nzOriginalText]="originalCode"
-      [nzEditorMode]="'diff'"
+      [originalText]="originalCode"
+      [editorMode]="'diff'"
       [ngModel]="code"
-      [nzEditorOption]="{ language: 'typescript' }"
-    ></nz-code-editor>
+      [editorOption]="{ language: 'typescript' }"
+    ></tri-code-editor>
   `,
   styles: [
     `
@@ -23,7 +23,7 @@ import { NzCodeEditorModule } from 'ng-zorro-antd/code-editor';
     `
   ]
 })
-export class NzDemoCodeEditorDiffComponent {
+export class TriDemoCodeEditorDiffComponent {
   originalCode = `import { NzCodeEditorModule } from 'ng-zorro-antd/code-editor';
 
 @Component({})

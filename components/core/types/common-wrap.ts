@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { NzSafeAny } from './any';
+import { TriSafeAny } from './any';
 
 // Define a property that can also returned by called function
-export type FunctionProp<T> = (...args: NzSafeAny[]) => T;
+export type FunctionProp<T> = (...args: TriSafeAny[]) => T;

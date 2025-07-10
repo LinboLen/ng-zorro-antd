@@ -1,37 +1,37 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDrawerModule } from 'ng-zorro-antd/drawer';
-import { NzResizableModule, NzResizeEvent } from 'ng-zorro-antd/resizable';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriDrawerModule } from 'ng-zorro-antd/drawer';
+import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
 
 @Component({
-  selector: 'nz-demo-resizable-drawer',
-  imports: [NzButtonModule, NzDrawerModule, NzResizableModule],
+  selector: '',
+  imports: [TriButtonModule, TriDrawerModule, TriResizableModule],
   template: `
-    <button nz-button nzType="primary" (click)="open()">Open</button>
-    <nz-drawer
-      [nzClosable]="false"
-      [nzVisible]="visible"
-      [nzBodyStyle]="{
+    <button tri-button type="primary" (click)="open()">Open</button>
+    <tri-drawer
+      [closable]="false"
+      [visible]="visible"
+      [bodyStyle]="{
         padding: 0,
         height: 'calc(100vh - 55px)'
       }"
-      [nzWidth]="width"
-      nzPlacement="left"
-      nzTitle="Resizable Drawer"
-      (nzOnClose)="close()"
+      [width]="width"
+      placement="left"
+      title="Resizable Drawer"
+      (onClose)="close()"
     >
-      <ng-container *nzDrawerContent>
+      <ng-container *drawerContent>
         @if (visible) {
-          <div class="drawer-body" nz-resizable nzBounds="window" [nzMinWidth]="256" (nzResize)="onResize($event)">
-            <nz-resize-handles [nzDirections]="['right']" />
+          <div class="drawer-body" tri-resizable bounds="window" [minWidth]="256" (resize)="onResize($event)">
+            <tri-resize-handles [directions]="['right']" />
             <p>Some contents...</p>
             <p>Some contents...</p>
             <p>Some contents...</p>
           </div>
         }
       </ng-container>
-    </nz-drawer>
+    </tri-drawer>
   `,
   styles: [
     `
@@ -43,12 +43,12 @@ import { NzResizableModule, NzResizeEvent } from 'ng-zorro-antd/resizable';
     `
   ]
 })
-export class NzDemoResizableDrawerComponent {
+export class TriDemoResizableDrawerComponent {
   width = 256;
   visible = false;
   id = -1;
 
-  onResize({ width }: NzResizeEvent): void {
+  onResize({ width }: TriResizeEvent): void {
     cancelAnimationFrame(this.id);
     this.id = requestAnimationFrame(() => {
       this.width = width!;

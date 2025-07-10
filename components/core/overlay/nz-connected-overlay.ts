@@ -18,18 +18,18 @@ import { getPlacementName } from './overlay-position';
 type Dimensions = Omit<DOMRect, 'x' | 'y' | 'toJSON'>;
 
 @Directive({
-  selector: '[cdkConnectedOverlay][nzConnectedOverlay]',
-  exportAs: 'nzConnectedOverlay'
+  selector: '',
+  exportAs: 'triConnectedOverlay'
 })
-export class NzConnectedOverlayDirective {
+export class TriConnectedOverlayDirective {
   private readonly cdkConnectedOverlay = inject(CdkConnectedOverlay);
-  @Input({ transform: booleanAttribute }) nzArrowPointAtCenter: boolean = false;
+  @Input({ transform: booleanAttribute }) arrowPointAtCenter: boolean = false;
 
   constructor() {
     this.cdkConnectedOverlay.backdropClass = 'nz-overlay-transparent-backdrop';
 
     this.cdkConnectedOverlay.positionChange.pipe(takeUntilDestroyed()).subscribe(position => {
-      if (this.nzArrowPointAtCenter) {
+      if (this.arrowPointAtCenter) {
         this.updateArrowPosition(position);
       }
     });

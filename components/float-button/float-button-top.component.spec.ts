@@ -8,16 +8,16 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { NzScrollService } from 'ng-zorro-antd/core/services';
+import { TriScrollService } from 'ng-zorro-antd/core/services';
 
-import { NzFloatButtonTopComponent } from './float-button-top.component';
-import { NzFloatButtonModule } from './float-button.module';
+import { TriFloatButtonTopComponent } from './float-button-top.component';
+import { TriFloatButtonModule } from './float-button.module';
 
 describe('nz-float-button-top', () => {
   let scrollService: MockNzScrollService;
   let fixture: ComponentFixture<TestBackTopComponent>;
   let debugElement: DebugElement;
-  let component: NzFloatButtonTopComponent;
+  let component: TriFloatButtonTopComponent;
   let componentObject: NzBackTopPageObject;
   const defaultVisibilityHeight = 400;
 
@@ -41,18 +41,18 @@ describe('nz-float-button-top', () => {
       providers: [
         provideNoopAnimations(),
         {
-          provide: NzScrollService,
+          provide: TriScrollService,
           useClass: MockNzScrollService
         }
       ]
     });
 
     fixture = TestBed.createComponent(TestBackTopComponent);
-    component = fixture.componentInstance.nzBackTopComponent;
+    component = fixture.componentInstance.backTopComponent;
     componentObject = new NzBackTopPageObject();
     debugElement = fixture.debugElement;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    scrollService = TestBed.inject(NzScrollService) as any;
+    scrollService = TestBed.inject(TriScrollService) as any;
   });
 
   describe('[default]', () => {
@@ -99,7 +99,7 @@ describe('nz-float-button-top', () => {
     const customVisibilityHeight = 100;
 
     beforeEach(() => {
-      component.nzVisibilityHeight = customVisibilityHeight;
+      component.visibilityHeight = customVisibilityHeight;
     });
 
     it(`should not show when scroll is below ${customVisibilityHeight}`, fakeAsync(() => {
@@ -140,7 +140,7 @@ describe('nz-float-button-top', () => {
 
     describe('when clicked', () => {
       it(`emit event on nzClick`, fakeAsync(() => {
-        component.nzOnClick.subscribe((returnValue: boolean) => {
+        component.onClick.subscribe((returnValue: boolean) => {
           expect(returnValue).toBe(true);
         });
 
@@ -150,12 +150,12 @@ describe('nz-float-button-top', () => {
 
     describe('change detection behavior', () => {
       it('should not emit the event nzOnClick if there are no `nzClick` listeners', () => {
-        const emitNzOnClick = spyOn(component.nzOnClick, 'emit');
+        const emitNzOnClick = spyOn(component.onClick, 'emit');
 
         const backTopButton = componentObject.backTopButton().nativeElement.firstElementChild;
         backTopButton.dispatchEvent(new MouseEvent('click'));
         expect(emitNzOnClick).not.toHaveBeenCalled();
-        component.nzOnClick.subscribe();
+        component.onClick.subscribe();
 
         backTopButton.dispatchEvent(new MouseEvent('click'));
         expect(emitNzOnClick).toHaveBeenCalled();
@@ -191,7 +191,7 @@ describe('nz-float-button-top', () => {
     });
 
     it('element (use string id) scroll shows the button', (done: () => void) => {
-      component.nzTarget = '#fakeTarget';
+      component.target = '#fakeTarget';
       componentObject.scrollTo(fakeTarget, defaultVisibilityHeight + 1);
       fixture.detectChanges();
 
@@ -216,15 +216,15 @@ describe('nz-float-button-top', () => {
 });
 
 @Component({
-  imports: [NzFloatButtonModule],
+  imports: [TriFloatButtonModule],
   template: `
-    <nz-float-button-top [nzTarget]="target"></nz-float-button-top>
+    <tri-float-button-top [target]="target"></tri-float-button-top>
     <div id="fakeTarget"></div>
   `
 })
 class TestBackTopComponent {
-  @ViewChild(NzFloatButtonTopComponent, { static: true })
-  nzBackTopComponent!: NzFloatButtonTopComponent;
+  @ViewChild(TriFloatButtonTopComponent, { static: true })
+  backTopComponent!: TriFloatButtonTopComponent;
 
   target!: HTMLElement | string;
 
@@ -234,19 +234,19 @@ class TestBackTopComponent {
 }
 
 @Component({
-  imports: [NzFloatButtonModule],
+  imports: [TriFloatButtonModule],
   template: `
     my comp
-    <nz-float-button-top [nzIcon]="tpl">
+    <tri-float-button-top [icon]="tpl">
       <ng-template #tpl>
         <div class="this-is-my-template"></div>
       </ng-template>
-    </nz-float-button-top>
+    </tri-float-button-top>
   `
 })
 class TestBackTopTemplateComponent {
-  @ViewChild(NzFloatButtonTopComponent, { static: false })
-  nzBackTopComponent!: NzFloatButtonTopComponent;
+  @ViewChild(TriFloatButtonTopComponent, { static: false })
+  backTopComponent!: TriFloatButtonTopComponent;
 }
 
 class MockNzScrollService {

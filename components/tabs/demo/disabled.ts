@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
 
-import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: 'nz-demo-tabs-disabled',
-  imports: [NzTabsModule],
+  selector: '',
+  imports: [TriTabsModule],
   template: `
-    <nz-tabs>
+    <tri-tabs>
       @for (tab of tabs; track tab) {
-        <nz-tab [nzTitle]="tab.name" [nzDisabled]="tab.disabled">
+        <tri-tab [title]="tab.name" [disabled]="tab.disabled">
           {{ tab.name }}
-        </nz-tab>
+        </tri-tab>
       }
-    </nz-tabs>
+    </tri-tabs>
   `
 })
-export class NzDemoTabsDisabledComponent {
+export class TriDemoTabsDisabledComponent {
   tabs = [
     {
       name: 'Tab 1',

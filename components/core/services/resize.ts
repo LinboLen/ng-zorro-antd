@@ -12,7 +12,7 @@ const NOOP = (): void => {};
 @Injectable({
   providedIn: 'root'
 })
-export class NzResizeService {
+export class TriResizeService {
   private ngZone = inject(NgZone);
   private destroyRef = inject(DestroyRef);
   private readonly resizeSource$ = new Subject<void>();

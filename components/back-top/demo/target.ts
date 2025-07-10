@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 
-import { NzBackTopModule } from 'ng-zorro-antd/back-top';
+import { TriBackTopModule } from 'ng-zorro-antd/back-top';
 
 @Component({
-  selector: 'nz-demo-back-top-target',
-  imports: [NzBackTopModule],
+  selector: '',
+  imports: [TriBackTopModule],
   template: `
     Scroll down to see the bottom-right
     <strong>gray</strong>
     button.
     <div class="long-div" #divTarget>
       <div class="long-div-inner"></div>
-      <nz-back-top [nzTarget]="divTarget"></nz-back-top>
+      <tri-back-top [target]="divTarget"></tri-back-top>
     </div>
   `,
   styles: [
@@ -41,4 +41,4 @@ import { NzBackTopModule } from 'ng-zorro-antd/back-top';
     `
   ]
 })
-export class NzDemoBackTopTargetComponent {}
+export class TriDemoBackTopTargetComponent {}

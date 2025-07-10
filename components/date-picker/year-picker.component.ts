@@ -5,16 +5,16 @@
 
 import { Directive, inject } from '@angular/core';
 
-import { NzDatePickerComponent } from './date-picker.component';
+import { TriDatePickerComponent } from './date-picker.component';
 
 @Directive({
-  selector: 'nz-year-picker',
-  exportAs: 'nzYearPicker'
+  selector: '',
+  exportAs: 'triYearPicker'
 })
-export class NzYearPickerComponent {
-  datePicker = inject(NzDatePickerComponent, { host: true });
+export class TriYearPickerComponent {
+  datePicker = inject(TriDatePickerComponent, { host: true });
 
   constructor() {
-    this.datePicker.nzMode = 'year';
+    this.datePicker.mode = 'year';
   }
 }

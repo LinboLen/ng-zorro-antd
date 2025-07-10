@@ -1,33 +1,33 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzFlexModule } from 'ng-zorro-antd/flex';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
-import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { TriBadgeModule } from 'ng-zorro-antd/badge';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriFlexModule } from 'ng-zorro-antd/flex';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
+import { TriSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
-  selector: 'nz-demo-badge-dynamic',
-  imports: [FormsModule, NzBadgeModule, NzButtonModule, NzFlexModule, NzIconModule, NzSwitchModule, NzSpaceModule],
+  selector: '',
+  imports: [FormsModule, TriBadgeModule, TriButtonModule, TriFlexModule, TriIconModule, TriSwitchModule, TriSpaceModule],
   template: `
-    <div nz-flex nzVertical nzGap="middle">
-      <div nz-flex nzGap="large" nzAlign="center">
-        <nz-badge [nzCount]="count">
+    <div tri-flex vertical gap="middle">
+      <div tri-flex gap="large" align="center">
+        <tri-badge [count]="count">
           <a class="head-example"></a>
-        </nz-badge>
-        <nz-space-compact>
-          <button nz-button (click)="minusCount()"><nz-icon nzType="minus" /></button>
-          <button nz-button (click)="addCount()"><nz-icon nzType="plus" /></button>
-          <button nz-button (click)="random()"><nz-icon nzType="question" /></button>
-        </nz-space-compact>
+        </tri-badge>
+        <tri-space-compact>
+          <button tri-button (click)="minusCount()"><tri-icon type="minus" /></button>
+          <button tri-button (click)="addCount()"><tri-icon type="plus" /></button>
+          <button tri-button (click)="random()"><tri-icon type="question" /></button>
+        </tri-space-compact>
       </div>
-      <div nz-flex nzGap="large" nzAlign="center">
-        <nz-badge [nzDot]="dot">
+      <div tri-flex gap="large" align="center">
+        <tri-badge [dot]="dot">
           <a class="head-example"></a>
-        </nz-badge>
-        <nz-switch [(ngModel)]="dot"></nz-switch>
+        </tri-badge>
+        <tri-switch [(ngModel)]="dot"></tri-switch>
       </div>
     </div>
   `,
@@ -44,7 +44,7 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
     `
   ]
 })
-export class NzDemoBadgeDynamicComponent {
+export class TriDemoBadgeDynamicComponent {
   count = 5;
   dot = true;
 

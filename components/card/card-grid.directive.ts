@@ -6,13 +6,13 @@
 import { Directive, Input, booleanAttribute } from '@angular/core';
 
 @Directive({
-  selector: '[nz-card-grid]',
-  exportAs: 'nzCardGrid',
+  selector: '',
+  exportAs: 'triCardGrid',
   host: {
-    class: 'ant-card-grid',
-    '[class.ant-card-hoverable]': 'nzHoverable'
+    class: 'tri-card-grid',
+    '[class.tri-card-hoverable]': 'hoverable'
   }
 })
-export class NzCardGridDirective {
-  @Input({ transform: booleanAttribute }) nzHoverable = true;
+export class TriCardGridDirective {
+  @Input({ transform: booleanAttribute }) hoverable = true;
 }

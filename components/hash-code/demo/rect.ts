@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 
-import { NzHashCodeModule } from 'ng-zorro-antd/hash-code';
+import { TriHashCodeModule } from 'ng-zorro-antd/hash-code';
 
 @Component({
-  selector: 'nz-demo-hash-code-rect',
-  imports: [NzHashCodeModule],
+  selector: '',
+  imports: [TriHashCodeModule],
   template: `
-    <nz-hash-code [nzValue]="value" nzMode="rect"></nz-hash-code>
+    <tri-hash-code [value]="value" mode="rect"></tri-hash-code>
     <br />
-    <nz-hash-code [nzValue]="value" nzMode="rect" nzType="primary"></nz-hash-code>
+    <tri-hash-code [value]="value" mode="rect" type="primary"></tri-hash-code>
   `
 })
-export class NzDemoHashCodeRectComponent {
+export class TriDemoHashCodeRectComponent {
   value = 'dfb5fe9ef7b99b2b1db102114a6d7d445d992f40a5d575f801c148990199a068';
 }

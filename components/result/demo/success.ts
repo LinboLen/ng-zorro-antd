@@ -1,22 +1,22 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzResultModule } from 'ng-zorro-antd/result';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriResultModule } from 'ng-zorro-antd/result';
 
 @Component({
-  selector: 'nz-demo-result-success',
-  imports: [NzButtonModule, NzResultModule],
+  selector: '',
+  imports: [TriButtonModule, TriResultModule],
   template: `
-    <nz-result
-      nzStatus="success"
-      nzTitle="Successfully Purchased Cloud Server ECS!"
-      nzSubTitle="Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait."
+    <tri-result
+      status="success"
+      title="Successfully Purchased Cloud Server ECS!"
+      subTitle="Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait."
     >
-      <div nz-result-extra>
-        <button nz-button nzType="primary">Go Console</button>
-        <button nz-button>Buy Again</button>
+      <div tri-result-extra>
+        <button tri-button type="primary">Go Console</button>
+        <button tri-button>Buy Again</button>
       </div>
-    </nz-result>
+    </tri-result>
   `
 })
-export class NzDemoResultSuccessComponent {}
+export class TriDemoResultSuccessComponent {}

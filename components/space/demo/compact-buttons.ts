@@ -1,93 +1,93 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
+import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
-  selector: 'nz-demo-space-compact-buttons',
-  imports: [NzSpaceModule, NzButtonModule, NzIconModule, NzDropDownModule, NzToolTipModule],
+  selector: '',
+  imports: [TriSpaceModule, TriButtonModule, TriIconModule, TriDropDownModule, TriToolTipModule],
   template: `
-    <nz-space-compact nzBlock>
-      <button nz-button nz-tooltip nzTooltipTitle="Like">
-        <nz-icon nzType="like" />
+    <tri-space-compact block>
+      <button tri-button tri-tooltip tooltipTitle="Like">
+        <tri-icon type="like" />
       </button>
-      <button nz-button nz-tooltip nzTooltipTitle="Comment">
-        <nz-icon nzType="comment" />
+      <button tri-button tri-tooltip tooltipTitle="Comment">
+        <tri-icon type="comment" />
       </button>
-      <button nz-button nz-tooltip nzTooltipTitle="Star">
-        <nz-icon nzType="star" />
+      <button tri-button tri-tooltip tooltipTitle="Star">
+        <tri-icon type="star" />
       </button>
-      <button nz-button nz-tooltip nzTooltipTitle="Heart">
-        <nz-icon nzType="heart" />
+      <button tri-button tri-tooltip tooltipTitle="Heart">
+        <tri-icon type="heart" />
       </button>
-      <button nz-button nz-tooltip nzTooltipTitle="Share">
-        <nz-icon nzType="share-alt" />
+      <button tri-button tri-tooltip tooltipTitle="Share">
+        <tri-icon type="share-alt" />
       </button>
-      <button nz-button nz-tooltip nzTooltipTitle="Download">
-        <nz-icon nzType="download" />
+      <button tri-button tri-tooltip tooltipTitle="Download">
+        <tri-icon type="download" />
       </button>
-      <nz-dropdown-menu #menu>
-        <ul nz-menu>
-          <li nz-menu-item>
+      <tri-dropdown-menu #menu>
+        <ul tri-menu>
+          <li tri-menu-item>
             <a>1st item</a>
           </li>
-          <li nz-menu-item>
+          <li tri-menu-item>
             <a>2nd item</a>
           </li>
-          <li nz-menu-item>
+          <li tri-menu-item>
             <a>3rd item</a>
           </li>
         </ul>
-      </nz-dropdown-menu>
-      <button nz-button nz-dropdown [nzDropdownMenu]="menu">
-        <nz-icon nzType="ellipsis" />
+      </tri-dropdown-menu>
+      <button tri-button tri-dropdown [dropdownMenu]="menu">
+        <tri-icon type="ellipsis" />
       </button>
-    </nz-space-compact>
+    </tri-space-compact>
     <br />
-    <nz-space-compact nzBlock>
-      <button nz-button nzType="primary">Button 1</button>
-      <button nz-button nzType="primary">Button 2</button>
-      <button nz-button nzType="primary">Button 3</button>
-      <button nz-button nzType="primary">Button 4</button>
-      <button nz-button nzType="primary" disabled nz-tooltip nzTooltipTitle="Tooltip">
-        <nz-icon nzType="download" />
+    <tri-space-compact block>
+      <button tri-button type="primary">Button 1</button>
+      <button tri-button type="primary">Button 2</button>
+      <button tri-button type="primary">Button 3</button>
+      <button tri-button type="primary">Button 4</button>
+      <button tri-button type="primary" disabled tri-tooltip tooltipTitle="Tooltip">
+        <tri-icon type="download" />
       </button>
-      <button nz-button nzType="primary" nz-tooltip nzTooltipTitle="Tooltip">
-        <nz-icon nzType="download" />
+      <button tri-button type="primary" tri-tooltip tooltipTitle="Tooltip">
+        <tri-icon type="download" />
       </button>
-    </nz-space-compact>
+    </tri-space-compact>
     <br />
-    <nz-space-compact nzBlock>
-      <button nz-button>Button 1</button>
-      <button nz-button>Button 2</button>
-      <button nz-button>Button 3</button>
-      <button nz-button disabled nz-tooltip nzTooltipTitle="Tooltip">
-        <nz-icon nzType="download" />
+    <tri-space-compact block>
+      <button tri-button>Button 1</button>
+      <button tri-button>Button 2</button>
+      <button tri-button>Button 3</button>
+      <button tri-button disabled tri-tooltip tooltipTitle="Tooltip">
+        <tri-icon type="download" />
       </button>
-      <button nz-button nz-tooltip nzTooltipTitle="Tooltip">
-        <nz-icon nzType="download" />
+      <button tri-button tri-tooltip tooltipTitle="Tooltip">
+        <tri-icon type="download" />
       </button>
-      <button nz-button nzType="primary">Button 4</button>
-      <nz-dropdown-menu #menu>
-        <ul nz-menu>
-          <li nz-menu-item>
+      <button tri-button type="primary">Button 4</button>
+      <tri-dropdown-menu #menu>
+        <ul tri-menu>
+          <li tri-menu-item>
             <a>1st item</a>
           </li>
-          <li nz-menu-item>
+          <li tri-menu-item>
             <a>2nd item</a>
           </li>
-          <li nz-menu-item>
+          <li tri-menu-item>
             <a>3rd item</a>
           </li>
         </ul>
-      </nz-dropdown-menu>
-      <button nz-button nzType="primary" nz-dropdown [nzDropdownMenu]="menu">
-        <nz-icon nzType="ellipsis" />
+      </tri-dropdown-menu>
+      <button tri-button type="primary" tri-dropdown [dropdownMenu]="menu">
+        <tri-icon type="ellipsis" />
       </button>
-    </nz-space-compact>
+    </tri-space-compact>
   `
 })
-export class NzDemoSpaceCompactButtonsComponent {}
+export class TriDemoSpaceCompactButtonsComponent {}

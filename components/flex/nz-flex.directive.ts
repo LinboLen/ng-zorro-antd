@@ -5,55 +5,55 @@
 
 import { Directive, Input, booleanAttribute } from '@angular/core';
 
-import { NzAlign, NzFlex, NzGap, NzJustify, NzWrap } from './typings';
+import { TriAlign, TriFlex, TriGap, TriJustify, TriWrap } from './typings';
 
 @Directive({
-  selector: '[nz-flex],nz-flex',
-  exportAs: 'nzFlex',
+  selector: '',
+  exportAs: 'triFlex',
   host: {
-    class: 'ant-flex',
-    '[class.ant-flex-vertical]': `nzVertical`,
-    '[class.ant-flex-justify-flex-start]': `nzJustify === 'flex-start'`,
-    '[class.ant-flex-justify-center]': `nzJustify === 'center'`,
-    '[class.ant-flex-justify-flex-end]': `nzJustify === 'flex-end'`,
-    '[class.ant-flex-justify-space-between]': `nzJustify === 'space-between'`,
-    '[class.ant-flex-justify-space-around]': `nzJustify === 'space-around'`,
-    '[class.ant-flex-justify-space-evenly]': `nzJustify === 'space-evenly'`,
-    '[class.ant-flex-justify-start]': `nzJustify === 'start'`,
-    '[class.ant-flex-justify-end]': `nzJustify === 'end'`,
-    '[class.ant-flex-justify-right]': `nzJustify === 'right'`,
-    '[class.ant-flex-justify-left]': `nzJustify === 'left'`,
-    '[class.ant-flex-justify-stretch]': `nzJustify === 'stretch'`,
-    '[class.ant-flex-justify-normal]': `nzJustify === 'normal'`,
-    '[class.ant-flex-align-flex-start]': `nzAlign === 'flex-start'`,
-    '[class.ant-flex-align-center]': `nzAlign === 'center'`,
-    '[class.ant-flex-align-flex-end]': `nzAlign === 'flex-end'`,
-    '[class.ant-flex-align-space-between]': `nzAlign === 'space-between'`,
-    '[class.ant-flex-align-space-around]': `nzAlign === 'space-around'`,
-    '[class.ant-flex-align-space-evenly]': `nzAlign === 'space-evenly'`,
-    '[class.ant-flex-align-start]': `nzAlign === 'start'`,
-    '[class.ant-flex-align-end]': `nzAlign === 'end'`,
-    '[class.ant-flex-align-right]': `nzAlign === 'right'`,
-    '[class.ant-flex-align-left]': `nzAlign === 'left'`,
-    '[class.ant-flex-align-stretch]': `nzAlign === 'stretch'`,
-    '[class.ant-flex-align-normal]': `nzAlign === 'normal'`,
-    '[class.ant-flex-wrap-wrap]': `nzWrap === 'wrap'`,
-    '[class.ant-flex-wrap-wrap-reverse]': `nzWrap === 'wrap-reverse'`,
-    '[class.ant-flex-wrap-nowrap]': `nzWrap === 'nowrap'`,
+    class: 'tri-flex',
+    '[class.tri-flex-vertical]': `vertical`,
+    '[class.tri-flex-justify-flex-start]': `justify === 'flex-start'`,
+    '[class.tri-flex-justify-center]': `justify === 'center'`,
+    '[class.tri-flex-justify-flex-end]': `justify === 'flex-end'`,
+    '[class.tri-flex-justify-space-between]': `justify === 'space-between'`,
+    '[class.tri-flex-justify-space-around]': `justify === 'space-around'`,
+    '[class.tri-flex-justify-space-evenly]': `justify === 'space-evenly'`,
+    '[class.tri-flex-justify-start]': `justify === 'start'`,
+    '[class.tri-flex-justify-end]': `justify === 'end'`,
+    '[class.tri-flex-justify-right]': `justify === 'right'`,
+    '[class.tri-flex-justify-left]': `justify === 'left'`,
+    '[class.tri-flex-justify-stretch]': `justify === 'stretch'`,
+    '[class.tri-flex-justify-normal]': `justify === 'normal'`,
+    '[class.tri-flex-align-flex-start]': `align === 'flex-start'`,
+    '[class.tri-flex-align-center]': `align === 'center'`,
+    '[class.tri-flex-align-flex-end]': `align === 'flex-end'`,
+    '[class.tri-flex-align-space-between]': `align === 'space-between'`,
+    '[class.tri-flex-align-space-around]': `align === 'space-around'`,
+    '[class.tri-flex-align-space-evenly]': `align === 'space-evenly'`,
+    '[class.tri-flex-align-start]': `align === 'start'`,
+    '[class.tri-flex-align-end]': `align === 'end'`,
+    '[class.tri-flex-align-right]': `align === 'right'`,
+    '[class.tri-flex-align-left]': `align === 'left'`,
+    '[class.tri-flex-align-stretch]': `align === 'stretch'`,
+    '[class.tri-flex-align-normal]': `align === 'normal'`,
+    '[class.tri-flex-wrap-wrap]': `wrap === 'wrap'`,
+    '[class.tri-flex-wrap-wrap-reverse]': `wrap === 'wrap-reverse'`,
+    '[class.tri-flex-wrap-nowrap]': `wrap === 'nowrap'`,
     '[style.gap]': `gap`,
     '[style.flex]': `nzFlex`
   }
 })
-export class NzFlexDirective {
-  @Input({ transform: booleanAttribute }) nzVertical: boolean = false;
-  @Input() nzJustify: NzJustify = 'normal';
-  @Input() nzAlign: NzAlign = 'normal';
-  @Input() nzGap: NzGap = 0;
-  @Input() nzWrap: NzWrap = 'nowrap';
-  @Input() nzFlex: NzFlex = 'unset';
+export class TriFlexDirective {
+  @Input({ transform: booleanAttribute }) vertical: boolean = false;
+  @Input() justify: TriJustify = 'normal';
+  @Input() align: TriAlign = 'normal';
+  @Input() gap: TriGap = 0;
+  @Input() wrap: TriWrap = 'nowrap';
+  @Input() flex: TriFlex = 'unset';
 
-  protected get gap(): string {
-    switch (this.nzGap) {
+  protected get _gap(): string {
+    switch (this.gap) {
       case 'small':
         return '8px';
       case 'middle':
@@ -61,10 +61,10 @@ export class NzFlexDirective {
       case 'large':
         return '24px';
       default:
-        if (typeof this.nzGap === 'number') {
-          return `${this.nzGap}px`;
+        if (typeof this.gap === 'number') {
+          return `${this.gap}px`;
         }
-        return this.nzGap;
+        return this.gap;
     }
   }
 }

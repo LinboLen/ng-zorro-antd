@@ -1,23 +1,23 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzSliderModule } from 'ng-zorro-antd/slider';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriSliderModule } from 'ng-zorro-antd/slider';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: 'nz-demo-space-customize',
-  imports: [FormsModule, NzButtonModule, NzSpaceModule, NzSliderModule],
+  selector: '',
+  imports: [FormsModule, TriButtonModule, TriSpaceModule, TriSliderModule],
   template: `
-    <nz-slider [(ngModel)]="size"></nz-slider>
-    <nz-space [nzSize]="size">
-      <button *nzSpaceItem nz-button nzType="primary">Button</button>
-      <button *nzSpaceItem nz-button nzType="default">Default</button>
-      <button *nzSpaceItem nz-button nzType="dashed">Dashed</button>
-      <a *nzSpaceItem nz-button nzType="link">Link</a>
-    </nz-space>
+    <tri-slider [(ngModel)]="size"></tri-slider>
+    <tri-space [size]="size">
+      <button *spaceItem tri-button type="primary">Button</button>
+      <button *spaceItem tri-button type="default">Default</button>
+      <button *spaceItem tri-button type="dashed">Dashed</button>
+      <a *spaceItem tri-button type="link">Link</a>
+    </tri-space>
   `
 })
-export class NzDemoSpaceCustomizeComponent {
+export class TriDemoSpaceCustomizeComponent {
   size = 8;
 }

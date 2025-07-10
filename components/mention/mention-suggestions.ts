@@ -6,7 +6,7 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-  selector: '[nzMentionSuggestion]',
-  exportAs: 'nzMentionSuggestion'
+  selector: '',
+  exportAs: 'triMentionSuggestion'
 })
-export class NzMentionSuggestionDirective {}
+export class TriMentionSuggestionDirective {}

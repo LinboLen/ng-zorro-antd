@@ -8,20 +8,20 @@ import { ANIMATION_MODULE_TYPE } from '@angular/platform-browser/animations';
 
 import { requestAnimationFrame } from 'ng-zorro-antd/core/polyfill';
 
-import { NzTabPositionMode } from './interfaces';
+import { TriTabPositionMode } from './interfaces';
 
 @Directive({
-  selector: 'nz-tabs-ink-bar, [nz-tabs-ink-bar]',
+  selector: '',
   host: {
-    class: 'ant-tabs-ink-bar',
-    '[class.ant-tabs-ink-bar-animated]': '_animated'
+    class: 'tri-tabs-ink-bar',
+    '[class.tri-tabs-ink-bar-animated]': '_animated'
   }
 })
-export class NzTabsInkBarDirective {
+export class TriTabsInkBarDirective {
   private ngZone = inject(NgZone);
   private el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
 
-  @Input() position: NzTabPositionMode = 'horizontal';
+  @Input() position: TriTabPositionMode = 'horizontal';
   @Input() animated = true;
 
   animationMode = inject(ANIMATION_MODULE_TYPE, { optional: true });

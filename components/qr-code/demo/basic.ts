@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
-import { NzQRCodeModule } from 'ng-zorro-antd/qr-code';
+import { TriQRCodeModule } from 'ng-zorro-antd/qr-code';
 
 @Component({
-  selector: 'nz-demo-qr-code-basic',
-  imports: [NzQRCodeModule],
-  template: `<nz-qrcode nzValue="https://ng.ant.design/"></nz-qrcode>`
+  selector: '',
+  imports: [TriQRCodeModule],
+  template: `<tri-qrcode value="https://ng.ant.design/"></tri-qrcode>`
 })
-export class NzDemoQrCodeBasicComponent {}
+export class TriDemoQrCodeBasicComponent {}

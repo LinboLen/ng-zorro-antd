@@ -9,33 +9,33 @@ import {
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
-import { NzFormModule, NzFormTooltipIcon } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzSelectModule } from 'ng-zorro-antd/select';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { TriFormModule, TriFormTooltipIcon } from 'ng-zorro-antd/form';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: 'nz-demo-form-register',
-  imports: [ReactiveFormsModule, NzButtonModule, NzCheckboxModule, NzFormModule, NzInputModule, NzSelectModule],
+  selector: '',
+  imports: [ReactiveFormsModule, TriButtonModule, TriCheckboxModule, TriFormModule, TriInputModule, TriSelectModule],
   template: `
-    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">E-mail</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
-          <input nz-input formControlName="email" id="email" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>Password</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your password!">
-          <input nz-input type="password" id="password" formControlName="password" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="checkPassword" nzRequired>Confirm Password</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorTpl">
-          <input nz-input type="password" formControlName="checkPassword" id="checkPassword" />
+    <form tri-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+      <tri-form-item>
+        <tri-form-label [sm]="6" [xs]="24" required for="email">E-mail</tri-form-label>
+        <tri-form-control [sm]="14" [xs]="24" errorTip="The input is not valid E-mail!">
+          <input tri-input formControlName="email" id="email" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [sm]="6" [xs]="24" for="password" required>Password</tri-form-label>
+        <tri-form-control [sm]="14" [xs]="24" errorTip="Please input your password!">
+          <input tri-input type="password" id="password" formControlName="password" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [sm]="6" [xs]="24" for="checkPassword" required>Confirm Password</tri-form-label>
+        <tri-form-control [sm]="14" [xs]="24" [errorTip]="errorTpl">
+          <input tri-input type="password" formControlName="checkPassword" id="checkPassword" />
           <ng-template #errorTpl let-control>
             @if (control.errors?.['required']) {
               Please confirm your password!
@@ -44,89 +44,89 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
               Two passwords that you enter is inconsistent!
             }
           </ng-template>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label
-          [nzSm]="6"
-          [nzXs]="24"
-          nzFor="nickname"
-          nzRequired
-          nzTooltipTitle="What do you want other to call you"
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label
+          [sm]="6"
+          [xs]="24"
+          for="nickname"
+          required
+          tooltipTitle="What do you want other to call you"
         >
           <span>Nickname</span>
-        </nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your nickname!">
-          <input nz-input id="nickname" formControlName="nickname" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="phoneNumber" nzRequired>Phone Number</nz-form-label>
-        <nz-form-control
-          [nzSm]="14"
-          [nzXs]="24"
-          [nzValidateStatus]="validateForm.controls['phoneNumber']"
-          nzErrorTip="Please input your phone number!"
+        </tri-form-label>
+        <tri-form-control [sm]="14" [xs]="24" errorTip="Please input your nickname!">
+          <input tri-input id="nickname" formControlName="nickname" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [sm]="6" [xs]="24" for="phoneNumber" required>Phone Number</tri-form-label>
+        <tri-form-control
+          [sm]="14"
+          [xs]="24"
+          [validateStatus]="validateForm.controls['phoneNumber']"
+          errorTip="Please input your phone number!"
         >
-          <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
+          <tri-input-group [addOnBefore]="addOnBeforeTemplate">
             <ng-template #addOnBeforeTemplate>
-              <nz-select formControlName="phoneNumberPrefix" class="phone-select">
-                <nz-option nzLabel="+86" nzValue="+86"></nz-option>
-                <nz-option nzLabel="+87" nzValue="+87"></nz-option>
-              </nz-select>
+              <tri-select formControlName="phoneNumberPrefix" class="phone-select">
+                <tri-option label="+86" value="+86"></tri-option>
+                <tri-option label="+87" value="+87"></tri-option>
+              </tri-select>
             </ng-template>
-            <input formControlName="phoneNumber" id="'phoneNumber'" nz-input />
-          </nz-input-group>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="website" nzRequired>Website</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input website!">
-          <input nz-input id="website" formControlName="website" placeholder="website" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label
-          [nzSm]="6"
-          [nzXs]="24"
-          nzFor="captcha"
-          nzRequired
-          nzTooltipTitle="Please click 'Get captcha'"
-          [nzTooltipIcon]="captchaTooltipIcon"
+            <input formControlName="phoneNumber" id="'phoneNumber'" tri-input />
+          </tri-input-group>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [sm]="6" [xs]="24" for="website" required>Website</tri-form-label>
+        <tri-form-control [sm]="14" [xs]="24" errorTip="Please input website!">
+          <input tri-input id="website" formControlName="website" placeholder="website" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label
+          [sm]="6"
+          [xs]="24"
+          for="captcha"
+          required
+          tooltipTitle="Please click 'Get captcha'"
+          [tooltipIcon]="captchaTooltipIcon"
         >
           Captcha
-        </nz-form-label>
-        <nz-form-control
-          [nzSm]="14"
-          [nzXs]="24"
-          nzErrorTip="Please input the captcha you got!"
-          nzExtra="We must make sure that your are a human."
+        </tri-form-label>
+        <tri-form-control
+          [sm]="14"
+          [xs]="24"
+          errorTip="Please input the captcha you got!"
+          extra="We must make sure that your are a human."
         >
-          <div nz-row [nzGutter]="8">
-            <div nz-col [nzSpan]="12">
-              <input nz-input formControlName="captcha" id="captcha" />
+          <div tri-row [gutter]="8">
+            <div tri-col [span]="12">
+              <input tri-input formControlName="captcha" id="captcha" />
             </div>
-            <div nz-col [nzSpan]="12">
-              <button nz-button (click)="getCaptcha($event)">Get captcha</button>
+            <div tri-col [span]="12">
+              <button tri-button (click)="getCaptcha($event)">Get captcha</button>
             </div>
           </div>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item nz-row class="register-area">
-        <nz-form-control [nzSpan]="14" [nzOffset]="6">
-          <label nz-checkbox formControlName="agree">
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item tri-row class="register-area">
+        <tri-form-control [span]="14" [offset]="6">
+          <label tri-checkbox formControlName="agree">
             <span>
               I have read the
               <a>agreement</a>
             </span>
           </label>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item nz-row class="register-area">
-        <nz-form-control [nzSpan]="14" [nzOffset]="6">
-          <button nz-button nzType="primary">Register</button>
-        </nz-form-control>
-      </nz-form-item>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item tri-row class="register-area">
+        <tri-form-control [span]="14" [offset]="6">
+          <button tri-button type="primary">Register</button>
+        </tri-form-control>
+      </tri-form-item>
     </form>
   `,
   styles: [
@@ -145,7 +145,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     `
   ]
 })
-export class NzDemoFormRegisterComponent implements OnInit, OnDestroy {
+export class TriDemoFormRegisterComponent implements OnInit, OnDestroy {
   private fb = inject(NonNullableFormBuilder);
   private destroy$ = new Subject<void>();
   validateForm = this.fb.group({
@@ -159,7 +159,7 @@ export class NzDemoFormRegisterComponent implements OnInit, OnDestroy {
     captcha: this.fb.control('', [Validators.required]),
     agree: this.fb.control(false)
   });
-  captchaTooltipIcon: NzFormTooltipIcon = {
+  captchaTooltipIcon: TriFormTooltipIcon = {
     type: 'info-circle',
     theme: 'twotone'
   };

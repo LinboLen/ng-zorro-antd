@@ -6,11 +6,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'nz-breadcrumb-separator',
-  exportAs: 'nzBreadcrumbSeparator',
+  selector: '',
+  exportAs: 'triBreadcrumbSeparator',
   template: `<ng-content></ng-content>`,
   host: {
-    class: 'ant-breadcrumb-separator'
+    class: 'tri-breadcrumb-separator'
   }
 })
-export class NzBreadCrumbSeparatorComponent {}
+export class TriBreadCrumbSeparatorComponent {}

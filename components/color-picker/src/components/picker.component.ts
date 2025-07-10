@@ -39,25 +39,25 @@ function getPosition(e: EventType): { pageX: number; pageY: number } {
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'color-picker',
+  selector: '',
   imports: [HandlerComponent, PaletteComponent],
   template: `
     <div
       #slider
-      class="ant-color-picker-select"
+      class="tri-color-picker-select"
       (mousedown)="dragStartHandle($event)"
       (touchstart)="dragStartHandle($event)"
     >
       <color-palette>
         <div
           #transform
-          class="ant-color-picker-transform"
+          class="tri-color-picker-transform"
           [style.left]="offsetValue.x + 'px'"
           [style.top]="offsetValue.y + 'px'"
         >
           <color-handler [color]="toRgbString()" />
         </div>
-        <div class="ant-color-picker-saturation" [style.background-color]="toHsb()"></div>
+        <div class="tri-color-picker-saturation" [style.background-color]="toHsb()"></div>
       </color-palette>
     </div>
   `
@@ -70,8 +70,8 @@ export class PickerComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild('transform', { static: false }) transformRef!: ElementRef<HTMLDivElement>;
 
   @Input() color: Color | null = null;
-  @Output() readonly nzOnChange = new EventEmitter<Color>();
-  @Output() readonly nzOnChangeComplete = new EventEmitter<HsbaColorType>();
+  @Output() readonly onChange = new EventEmitter<Color>();
+  @Output() readonly onChangeComplete = new EventEmitter<HsbaColorType>();
   @Input({ transform: booleanAttribute }) disabled: boolean = false;
 
   offsetValue: TransformOffset = { x: 0, y: 0 };
@@ -157,7 +157,7 @@ export class PickerComponent implements OnInit, AfterViewInit, OnChanges {
       return;
     }
     this.offsetValue = calcOffset;
-    this.nzOnChange.emit(
+    this.onChange.emit(
       calculateColor(calcOffset, this.containerRef.nativeElement, this.transformRef.nativeElement, this.color)
     );
     this.cdr.detectChanges();
@@ -177,7 +177,7 @@ export class PickerComponent implements OnInit, AfterViewInit, OnChanges {
     this.document.removeEventListener('touchend', this.mouseUpRef);
     this.mouseMoveRef = () => null;
     this.mouseUpRef = () => null;
-    this.nzOnChangeComplete?.emit();
+    this.onChangeComplete?.emit();
   };
 
   onDragStart: EventHandle = (e: EventType) => {

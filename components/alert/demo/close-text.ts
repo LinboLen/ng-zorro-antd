@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
-import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { TriAlertModule } from 'ng-zorro-antd/alert';
 
 @Component({
-  selector: 'nz-demo-alert-close-text',
-  imports: [NzAlertModule],
-  template: `<nz-alert nzType="info" nzMessage="Info Text" nzCloseText="Close Now"></nz-alert>`
+  selector: '',
+  imports: [TriAlertModule],
+  template: `<tri-alert type="info" message="Info Text" closeText="Close Now"></tri-alert>`
 })
-export class NzDemoAlertCloseTextComponent {}
+export class TriDemoAlertCloseTextComponent {}

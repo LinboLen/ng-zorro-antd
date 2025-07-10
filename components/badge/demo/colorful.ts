@@ -1,27 +1,27 @@
 import { Component } from '@angular/core';
 
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { TriBadgeModule } from 'ng-zorro-antd/badge';
 
 @Component({
-  selector: 'nz-demo-badge-colorful',
-  imports: [NzBadgeModule],
+  selector: '',
+  imports: [TriBadgeModule],
   template: `
     <h4>Presets:</h4>
     @for (color of presets; track color) {
       <div>
-        <nz-badge [nzColor]="color" [nzText]="color"></nz-badge>
+        <tri-badge [color]="color" [text]="color"></tri-badge>
       </div>
     }
     <br />
     <h4>Custom:</h4>
     @for (color of customColors; track color) {
       <div>
-        <nz-badge [nzColor]="color" [nzText]="color"></nz-badge>
+        <tri-badge [color]="color" [text]="color"></tri-badge>
       </div>
     }
   `
 })
-export class NzDemoBadgeColorfulComponent {
+export class TriDemoBadgeColorfulComponent {
   readonly presets = [
     'pink',
     'red',

@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 
-import { NzProgressModule } from 'ng-zorro-antd/progress';
+import { TriProgressModule } from 'ng-zorro-antd/progress';
 
 @Component({
-  selector: 'nz-demo-progress-line',
-  imports: [NzProgressModule],
+  selector: '',
+  imports: [TriProgressModule],
   template: `
-    <nz-progress [nzPercent]="30"></nz-progress>
-    <nz-progress [nzPercent]="50" nzStatus="active"></nz-progress>
-    <nz-progress [nzPercent]="70" nzStatus="exception"></nz-progress>
-    <nz-progress [nzPercent]="100"></nz-progress>
-    <nz-progress [nzPercent]="50" [nzShowInfo]="false"></nz-progress>
+    <tri-progress [percent]="30"></tri-progress>
+    <tri-progress [percent]="50" status="active"></tri-progress>
+    <tri-progress [percent]="70" status="exception"></tri-progress>
+    <tri-progress [percent]="100"></tri-progress>
+    <tri-progress [percent]="50" [showInfo]="false"></tri-progress>
   `
 })
-export class NzDemoProgressLineComponent {}
+export class TriDemoProgressLineComponent {}

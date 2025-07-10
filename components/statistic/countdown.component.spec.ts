@@ -7,21 +7,21 @@ import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzStatisticValueType } from 'ng-zorro-antd/statistic/typings';
+import { TriStatisticValueType } from 'ng-zorro-antd/statistic/typings';
 
-import { NzCountdownComponent } from './countdown.component';
-import { NzStatisticModule } from './statistic.module';
+import { TriCountdownComponent } from './countdown.component';
+import { TriStatisticModule } from './statistic.module';
 
 describe('nz-countdown', () => {
-  let fixture: ComponentFixture<NzTestCountdownComponent>;
-  let testComponent: NzTestCountdownComponent;
+  let fixture: ComponentFixture<TriTestCountdownComponent>;
+  let testComponent: TriTestCountdownComponent;
   let countdownEl: DebugElement;
 
   describe('basic', () => {
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestCountdownComponent);
+      fixture = TestBed.createComponent(TriTestCountdownComponent);
       testComponent = fixture.componentInstance;
-      countdownEl = fixture.debugElement.query(By.directive(NzCountdownComponent));
+      countdownEl = fixture.debugElement.query(By.directive(TriCountdownComponent));
     });
 
     it('should render time', fakeAsync(() => {
@@ -66,27 +66,27 @@ describe('nz-countdown', () => {
 });
 
 @Component({
-  imports: [NzStatisticModule],
+  imports: [TriStatisticModule],
   template: `
-    <nz-countdown
-      [nzTitle]="'Countdown'"
-      [nzValue]="value"
-      [nzFormat]="format"
-      [nzValueTemplate]="template"
-      (nzCountdownFinish)="onFinish()"
-    ></nz-countdown>
+    <tri-countdown
+      [title]="'Countdown'"
+      [value]="value"
+      [format]="format"
+      [valueTemplate]="template"
+      (countdownFinish)="onFinish()"
+    ></tri-countdown>
     <ng-template #tpl let-diff>
       {{ diff }}
     </ng-template>
   `
 })
-export class NzTestCountdownComponent {
-  @ViewChild(NzCountdownComponent, { static: true }) countdown!: NzCountdownComponent;
-  @ViewChild('tpl', { static: true }) tpl!: TemplateRef<{ $implicit: NzStatisticValueType }>;
+export class TriTestCountdownComponent {
+  @ViewChild(TriCountdownComponent, { static: true }) countdown!: TriCountdownComponent;
+  @ViewChild('tpl', { static: true }) tpl!: TemplateRef<{ $implicit: TriStatisticValueType }>;
 
   format!: string;
   value?: number;
-  template?: TemplateRef<{ $implicit: NzStatisticValueType }>;
+  template?: TemplateRef<{ $implicit: TriStatisticValueType }>;
   finished = 0;
 
   resetTimerWithFormat(format: string): void {

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
-import { NzBytesPipe } from 'ng-zorro-antd/pipes';
+import { TriBytesPipe } from 'ng-zorro-antd/pipes';
 
 @Component({
-  selector: 'nz-demo-pipes-bytes',
-  imports: [NzBytesPipe],
+  selector: '',
+  imports: [TriBytesPipe],
   template: `
     <ul>
       <li>{{ 200 | nzBytes }}</li>
@@ -17,4 +17,4 @@ import { NzBytesPipe } from 'ng-zorro-antd/pipes';
     </ul>
   `
 })
-export class NzDemoPipesBytesComponent {}
+export class TriDemoPipesBytesComponent {}

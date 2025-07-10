@@ -25,22 +25,22 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzPaginationI18nInterface } from 'ng-zorro-antd/i18n';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { TriPaginationI18nInterface } from 'ng-zorro-antd/i18n';
 
-import { NzPaginationItemComponent } from './pagination-item.component';
-import { NzPaginationOptionsComponent } from './pagination-options.component';
+import { TriPaginationItemComponent } from './pagination-item.component';
+import { TriPaginationOptionsComponent } from './pagination-options.component';
 import { PaginationItemRenderContext } from './pagination.types';
 
 @Component({
-  selector: 'nz-pagination-default',
+  selector: '',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ng-template #containerTemplate>
       <ul>
         @if (showTotal) {
-          <li class="ant-pagination-total-text">
+          <li class="tri-pagination-total-text">
             <ng-template
               [ngTemplateOutlet]="showTotal"
               [ngTemplateOutletContext]="{ $implicit: total, range: ranges }"
@@ -50,7 +50,7 @@ import { PaginationItemRenderContext } from './pagination.types';
 
         @for (page of listOfPageItem; track trackByPageItem($index, page)) {
           <li
-            nz-pagination-item
+            tri-pagination-item
             [locale]="locale"
             [type]="page.type"
             [index]="page.index"
@@ -65,11 +65,11 @@ import { PaginationItemRenderContext } from './pagination.types';
 
         @if (showQuickJumper || showSizeChanger) {
           <li
-            nz-pagination-options
+            tri-pagination-options
             [total]="total"
             [locale]="locale"
             [disabled]="disabled"
-            [nzSize]="nzSize"
+            [size]="size"
             [showSizeChanger]="showSizeChanger"
             [showQuickJumper]="showQuickJumper"
             [pageIndex]="pageIndex"
@@ -82,22 +82,22 @@ import { PaginationItemRenderContext } from './pagination.types';
       </ul>
     </ng-template>
   `,
-  imports: [NgTemplateOutlet, NzPaginationItemComponent, NzPaginationOptionsComponent],
+  imports: [NgTemplateOutlet, TriPaginationItemComponent, TriPaginationOptionsComponent],
   host: {
-    '[class.ant-pagination-rtl]': "dir === 'rtl'"
+    '[class.tri-pagination-rtl]': "dir === 'rtl'"
   }
 })
-export class NzPaginationDefaultComponent implements OnChanges, OnInit {
+export class TriPaginationDefaultComponent implements OnChanges, OnInit {
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly directionality = inject(Directionality);
   private readonly destroyRef = inject(DestroyRef);
 
-  @ViewChild('containerTemplate', { static: true }) template!: TemplateRef<NzSafeAny>;
-  @Input() nzSize: 'default' | 'small' = 'default';
+  @ViewChild('containerTemplate', { static: true }) template!: TemplateRef<TriSafeAny>;
+  @Input() size: 'default' | 'small' = 'default';
   @Input() itemRender: TemplateRef<PaginationItemRenderContext> | null = null;
   @Input() showTotal: TemplateRef<{ $implicit: number; range: [number, number] }> | null = null;
   @Input() disabled = false;
-  @Input() locale!: NzPaginationI18nInterface;
+  @Input() locale!: TriPaginationI18nInterface;
   @Input() showSizeChanger = false;
   @Input() showQuickJumper = false;
   @Input() total = 0;
@@ -107,7 +107,7 @@ export class NzPaginationDefaultComponent implements OnChanges, OnInit {
   @Output() readonly pageIndexChange = new EventEmitter<number>();
   @Output() readonly pageSizeChange = new EventEmitter<number>();
   ranges = [0, 0];
-  listOfPageItem: Array<Partial<NzPaginationItemComponent>> = [];
+  listOfPageItem: Array<Partial<TriPaginationItemComponent>> = [];
 
   dir: Direction = 'ltr';
 
@@ -133,7 +133,7 @@ export class NzPaginationDefaultComponent implements OnChanges, OnInit {
     this.jumpPage(this.pageIndex + diff);
   }
 
-  trackByPageItem(_: number, value: Partial<NzPaginationItemComponent>): string {
+  trackByPageItem(_: number, value: Partial<TriPaginationItemComponent>): string {
     return `${value.type}-${value.index}`;
   }
 
@@ -154,9 +154,9 @@ export class NzPaginationDefaultComponent implements OnChanges, OnInit {
     this.listOfPageItem = this.getListOfPageItem(this.pageIndex, lastIndex);
   }
 
-  getListOfPageItem(pageIndex: number, lastIndex: number): Array<Partial<NzPaginationItemComponent>> {
+  getListOfPageItem(pageIndex: number, lastIndex: number): Array<Partial<TriPaginationItemComponent>> {
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-    const concatWithPrevNext = (listOfPage: Array<Partial<NzPaginationItemComponent>>) => {
+    const concatWithPrevNext = (listOfPage: Array<Partial<TriPaginationItemComponent>>) => {
       const prevItem = {
         type: 'prev',
         disabled: pageIndex === 1
@@ -167,7 +167,7 @@ export class NzPaginationDefaultComponent implements OnChanges, OnInit {
       };
       return [prevItem, ...listOfPage, nextItem];
     };
-    const generatePage = (start: number, end: number): Array<Partial<NzPaginationItemComponent>> => {
+    const generatePage = (start: number, end: number): Array<Partial<TriPaginationItemComponent>> => {
       const list = [];
       for (let i = start; i <= end; i++) {
         list.push({ index: i, type: 'page' });

@@ -1,29 +1,29 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzDatePickerComponent, NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { TriDatePickerComponent, TriDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 @Component({
-  selector: 'nz-demo-date-picker-start-end',
-  imports: [FormsModule, NzDatePickerModule],
+  selector: '',
+  imports: [FormsModule, TriDatePickerModule],
   template: `
-    <nz-date-picker
-      [nzDisabledDate]="disabledStartDate"
-      nzShowTime
-      nzFormat="yyyy-MM-dd HH:mm:ss"
+    <tri-date-picker
+      [disabledDate]="disabledStartDate"
+      showTime
+      format="yyyy-MM-dd HH:mm:ss"
       [(ngModel)]="startValue"
-      nzPlaceHolder="Start"
-      (nzOnOpenChange)="handleStartOpenChange($event)"
-    ></nz-date-picker>
-    <nz-date-picker
+      placeHolder="Start"
+      (onOpenChange)="handleStartOpenChange($event)"
+    ></tri-date-picker>
+    <tri-date-picker
       #endDatePicker
-      [nzDisabledDate]="disabledEndDate"
-      nzShowTime
-      nzFormat="yyyy-MM-dd HH:mm:ss"
+      [disabledDate]="disabledEndDate"
+      showTime
+      format="yyyy-MM-dd HH:mm:ss"
       [(ngModel)]="endValue"
-      nzPlaceHolder="End"
-      (nzOnOpenChange)="handleEndOpenChange($event)"
-    ></nz-date-picker>
+      placeHolder="End"
+      (onOpenChange)="handleEndOpenChange($event)"
+    ></tri-date-picker>
   `,
   styles: [
     `
@@ -33,10 +33,10 @@ import { NzDatePickerComponent, NzDatePickerModule } from 'ng-zorro-antd/date-pi
     `
   ]
 })
-export class NzDemoDatePickerStartEndComponent {
+export class TriDemoDatePickerStartEndComponent {
   startValue: Date | null = null;
   endValue: Date | null = null;
-  @ViewChild('endDatePicker') endDatePicker!: NzDatePickerComponent;
+  @ViewChild('endDatePicker') endDatePicker!: TriDatePickerComponent;
 
   disabledStartDate = (startValue: Date): boolean => {
     if (!startValue || !this.endValue) {
@@ -54,7 +54,7 @@ export class NzDemoDatePickerStartEndComponent {
 
   handleStartOpenChange(open: boolean): void {
     if (!open) {
-      this.endDatePicker.open();
+      this.endDatePicker._open();
     }
     console.log('handleStartOpenChange', open);
   }

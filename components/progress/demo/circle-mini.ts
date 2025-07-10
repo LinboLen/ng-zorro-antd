@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 
-import { NzProgressModule } from 'ng-zorro-antd/progress';
+import { TriProgressModule } from 'ng-zorro-antd/progress';
 
 @Component({
-  selector: 'nz-demo-progress-circle-mini',
-  imports: [NzProgressModule],
+  selector: '',
+  imports: [TriProgressModule],
   template: `
-    <nz-progress [nzPercent]="75" nzType="circle" [nzWidth]="80"></nz-progress>
-    <nz-progress [nzPercent]="70" nzType="circle" [nzWidth]="80" nzStatus="exception"></nz-progress>
-    <nz-progress [nzPercent]="100" nzType="circle" [nzWidth]="80"></nz-progress>
+    <tri-progress [percent]="75" type="circle" [width]="80"></tri-progress>
+    <tri-progress [percent]="70" type="circle" [width]="80" status="exception"></tri-progress>
+    <tri-progress [percent]="100" type="circle" [width]="80"></tri-progress>
   `,
   styles: [
     `
@@ -20,4 +20,4 @@ import { NzProgressModule } from 'ng-zorro-antd/progress';
     `
   ]
 })
-export class NzDemoProgressCircleMiniComponent {}
+export class TriDemoProgressCircleMiniComponent {}

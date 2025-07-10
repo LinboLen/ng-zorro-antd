@@ -19,20 +19,20 @@ import { FormsModule } from '@angular/forms';
 
 import { CandyDate } from 'ng-zorro-antd/core/time';
 import { FunctionProp } from 'ng-zorro-antd/core/types';
-import { NzCalendarI18nInterface } from 'ng-zorro-antd/i18n';
-import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
+import { TriCalendarI18nInterface } from 'ng-zorro-antd/i18n';
+import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
 
 import { LibPackerModule } from './lib';
-import { DisabledDateFn, NzDateMode, NzPanelChangeType, RangePartType, SupportTimeOptions } from './standard-types';
+import { DisabledDateFn, TriDateMode, TriPanelChangeType, RangePartType, SupportTimeOptions } from './standard-types';
 import { PREFIX_CLASS } from './util';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'inner-popup',
+  selector: '',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div [class.ant-picker-datetime-panel]="showTimePicker">
+    <div [class.tri-picker-datetime-panel]="showTimePicker">
       <div class="{{ prefixCls }}-{{ panelMode }}-panel">
         @switch (panelMode) {
           @case ('decade') {
@@ -162,33 +162,33 @@ import { PREFIX_CLASS } from './util';
         }
       </div>
       @if (showTimePicker && timeOptions) {
-        <nz-time-picker-panel
-          [nzInDatePicker]="true"
+        <tri-time-picker-panel
+          [inDatePicker]="true"
           [ngModel]="value?.nativeDate"
           (ngModelChange)="onSelectTime($event)"
-          [format]="$any(timeOptions.nzFormat)"
-          [nzHourStep]="$any(timeOptions.nzHourStep)"
-          [nzMinuteStep]="$any(timeOptions.nzMinuteStep)"
-          [nzSecondStep]="$any(timeOptions.nzSecondStep)"
-          [nzDisabledHours]="$any(timeOptions.nzDisabledHours)"
-          [nzDisabledMinutes]="$any(timeOptions.nzDisabledMinutes)"
-          [nzDisabledSeconds]="$any(timeOptions.nzDisabledSeconds)"
-          [nzHideDisabledOptions]="!!timeOptions.nzHideDisabledOptions"
-          [nzDefaultOpenValue]="$any(timeOptions.nzDefaultOpenValue)"
-          [nzUse12Hours]="!!timeOptions.nzUse12Hours"
-          [nzAddOn]="$any(timeOptions.nzAddOn)"
+          [format]="$any(format)"
+          [hourStep]="$any(hourStep)"
+          [minuteStep]="$any(minuteStep)"
+          [secondStep]="$any(secondStep)"
+          [disabledHours]="$any(disabledHours)"
+          [disabledMinutes]="$any(disabledMinutes)"
+          [disabledSeconds]="$any(disabledSeconds)"
+          [hideDisabledOptions]="!!hideDisabledOptions"
+          [defaultOpenValue]="$any(defaultOpenValue)"
+          [use12Hours]="!!use12Hours"
+          [addOn]="$any(addOn)"
         />
       }
     </div>
   `,
-  imports: [LibPackerModule, NzTimePickerModule, FormsModule]
+  imports: [LibPackerModule, TriTimePickerModule, FormsModule]
 })
 export class InnerPopupComponent implements OnChanges {
   @Input() activeDate!: CandyDate;
-  @Input() endPanelMode!: NzDateMode;
-  @Input() panelMode!: NzDateMode;
+  @Input() endPanelMode!: TriDateMode;
+  @Input() panelMode!: TriDateMode;
   @Input({ transform: booleanAttribute }) showWeek!: boolean;
-  @Input() locale!: NzCalendarI18nInterface;
+  @Input() locale!: TriCalendarI18nInterface;
   @Input({ transform: booleanAttribute }) showTimePicker!: boolean;
   @Input() timeOptions!: SupportTimeOptions | null;
   @Input() disabledDate?: DisabledDateFn;
@@ -199,7 +199,7 @@ export class InnerPopupComponent implements OnChanges {
   @Input() partType!: RangePartType;
   @Input() format?: string;
 
-  @Output() readonly panelChange = new EventEmitter<NzPanelChangeType>();
+  @Output() readonly panelChange = new EventEmitter<TriPanelChangeType>();
   // TODO: name is not proper
   @Output() readonly headerChange = new EventEmitter<CandyDate>(); // Emitted when user changed the header's value
   @Output() readonly selectDate = new EventEmitter<CandyDate>(); // Emitted when the date is selected by click the date panel
@@ -215,7 +215,7 @@ export class InnerPopupComponent implements OnChanges {
    * @param direction
    * @param panelMode
    */
-  enablePrevNext(direction: 'prev' | 'next', panelMode: NzDateMode): boolean {
+  enablePrevNext(direction: 'prev' | 'next', panelMode: TriDateMode): boolean {
     return !(
       !this.showTimePicker &&
       panelMode === this.endPanelMode &&

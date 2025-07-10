@@ -24,32 +24,32 @@ import {
 import { merge } from 'rxjs';
 import { startWith, switchMap } from 'rxjs/operators';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzCheckboxComponent, NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriCheckboxComponent, TriCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
-import { NzEmptyModule } from 'ng-zorro-antd/empty';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriEmptyModule } from 'ng-zorro-antd/empty';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 import { RenderListContext, TransferDirection, TransferItem, TransferStat } from './interface';
-import { NzTransferSearchComponent } from './transfer-search.component';
+import { TriTransferSearchComponent } from './transfer-search.component';
 
 @Component({
-  selector: 'nz-transfer-list',
-  exportAs: 'nzTransferList',
+  selector: '',
+  exportAs: 'triTransferList',
   template: `
-    <div class="ant-transfer-list-header">
+    <div class="tri-transfer-list-header">
       @if (showSelectAll && !oneWay) {
         <label
-          class="ant-transfer-list-checkbox"
-          nz-checkbox
+          class="tri-transfer-list-checkbox"
+          tri-checkbox
           #headerCheckbox
-          [nzChecked]="stat.checkAll"
-          (nzCheckedChange)="onItemSelectAll($event)"
-          [nzIndeterminate]="stat.checkHalf"
-          [nzDisabled]="stat.availableCount === 0 || disabled"
+          [checked]="stat.checkAll"
+          (checkedChange)="onItemSelectAll($event)"
+          [indeterminate]="stat.checkHalf"
+          [disabled]="stat.availableCount === 0 || disabled"
         ></label>
       }
-      <span class="ant-transfer-list-header-selected">
+      <span class="tri-transfer-list-header-selected">
         <span>
           @if (!oneWay) {
             {{ (stat.checkCount > 0 ? stat.checkCount + '/' : '') + stat.shownCount }}
@@ -60,15 +60,15 @@ import { NzTransferSearchComponent } from './transfer-search.component';
         </span>
       </span>
       @if (titleText) {
-        <span class="ant-transfer-list-header-title">{{ titleText }}</span>
+        <span class="tri-transfer-list-header-title">{{ titleText }}</span>
       }
     </div>
-    <div class="ant-transfer-list-body" [class.ant-transfer-list-body-with-search]="showSearch">
+    <div class="tri-transfer-list-body" [class.tri-transfer-list-body-with-search]="showSearch">
       @if (showSearch) {
-        <div class="ant-transfer-list-body-search-wrapper">
+        <div class="tri-transfer-list-body-search-wrapper">
           <span
-            nz-transfer-search
-            class="ant-input-affix-wrapper ant-transfer-list-search"
+            tri-transfer-search
+            class="tri-input-affix-wrapper tri-transfer-list-search"
             (valueChanged)="handleFilter($event)"
             (valueClear)="handleClear()"
             [placeholder]="searchPlaceholder"
@@ -78,7 +78,7 @@ import { NzTransferSearchComponent } from './transfer-search.component';
         </div>
       }
       @if (renderList) {
-        <div class="ant-transfer-list-body-customize-wrapper">
+        <div class="tri-transfer-list-body-customize-wrapper">
           <ng-container
             *ngTemplateOutlet="
               renderList;
@@ -95,20 +95,20 @@ import { NzTransferSearchComponent } from './transfer-search.component';
         </div>
       } @else {
         @if (stat.shownCount > 0) {
-          <ul class="ant-transfer-list-content">
+          <ul class="tri-transfer-list-content">
             @for (item of validData; track item.key) {
               <li
                 (click)="!oneWay ? onItemSelect(item) : null"
-                class="ant-transfer-list-content-item"
+                class="tri-transfer-list-content-item"
                 [class]="{ 'ant-transfer-list-content-item-disabled': disabled || item.disabled }"
               >
                 @if (!oneWay) {
                   <label
                     #checkboxes
-                    nz-checkbox
-                    [nzChecked]="item.checked"
-                    (nzCheckedChange)="onItemSelect(item)"
-                    [nzDisabled]="disabled || item.disabled"
+                    tri-checkbox
+                    [checked]="item.checked"
+                    (checkedChange)="onItemSelect(item)"
+                    [disabled]="disabled || item.disabled"
                   >
                     @if (!render) {
                       {{ item.title }}
@@ -121,15 +121,15 @@ import { NzTransferSearchComponent } from './transfer-search.component';
                   </label>
                 } @else {
                   @if (!render) {
-                    <span class="ant-transfer-list-content-item-text">
+                    <span class="tri-transfer-list-content-item-text">
                       {{ item.title }}
                     </span>
                     <div
-                      class="ant-transfer-list-content-item-remove"
+                      class="tri-transfer-list-content-item-remove"
                       [class]="{ 'ant-transfer-list-content-item-disabled': disabled || item.disabled }"
                       (click)="!(disabled || item.disabled) ? deleteItem(item) : null"
                     >
-                      <nz-icon nzType="delete" nzTheme="outline" />
+                      <tri-icon type="delete" theme="outline" />
                     </div>
                   } @else {
                     <ng-template
@@ -142,14 +142,14 @@ import { NzTransferSearchComponent } from './transfer-search.component';
             }
           </ul>
         } @else {
-          <div class="ant-transfer-list-body-not-found">
-            <nz-embed-empty [nzComponentName]="'transfer'" [specificContent]="notFoundContent"></nz-embed-empty>
+          <div class="tri-transfer-list-body-not-found">
+            <tri-embed-empty [componentName]="'transfer'" [specificContent]="notFoundContent"></tri-embed-empty>
           </div>
         }
       }
     </div>
     @if (footer) {
-      <div class="ant-transfer-list-footer">
+      <div class="tri-transfer-list-footer">
         <ng-template [ngTemplateOutlet]="footer" [ngTemplateOutletContext]="{ $implicit: direction }"></ng-template>
       </div>
     }
@@ -157,12 +157,12 @@ import { NzTransferSearchComponent } from './transfer-search.component';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'ant-transfer-list',
-    '[class.ant-transfer-list-with-footer]': '!!footer'
+    class: 'tri-transfer-list',
+    '[class.tri-transfer-list-with-footer]': '!!footer'
   },
-  imports: [NzCheckboxModule, NgTemplateOutlet, NzEmptyModule, NzTransferSearchComponent, NzIconModule, NzButtonModule]
+  imports: [TriCheckboxModule, NgTemplateOutlet, TriEmptyModule, TriTransferSearchComponent, TriIconModule, TriButtonModule]
 })
-export class NzTransferListComponent implements AfterViewInit {
+export class TriTransferListComponent implements AfterViewInit {
   // #region fields
   private cdr = inject(ChangeDetectorRef);
 
@@ -192,7 +192,7 @@ export class NzTransferListComponent implements AfterViewInit {
   @Output() readonly filterChange = new EventEmitter<{ direction: TransferDirection; value: string }>();
   @Output() readonly moveToLeft = new EventEmitter<void>();
 
-  @ViewChild('headerCheckbox', { read: NzCheckboxComponent }) headerCheckbox?: NzCheckboxComponent;
+  @ViewChild('headerCheckbox', { read: TriCheckboxComponent }) headerCheckbox?: TriCheckboxComponent;
 
   @ViewChildren('checkboxes', { read: ElementRef }) checkboxes!: QueryList<ElementRef<HTMLLabelElement>>;
 
@@ -252,7 +252,7 @@ export class NzTransferListComponent implements AfterViewInit {
     // 8) the `nzChecked` is still `true` and the checkbox is not unchecked
     // This is because Angular checks bindings and it checked that `[nzChecked]="stat.checkAll"` has
     // never been updated, so Angular did not set new `nzChecked` value on the checkbox.
-    this.headerCheckbox && (this.headerCheckbox.nzChecked = this.stat.checkAll);
+    this.headerCheckbox && (this.headerCheckbox.checked = this.stat.checkAll);
   }
 
   // #endregion

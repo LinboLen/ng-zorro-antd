@@ -1,23 +1,23 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: 'nz-demo-tabs-custom-add-trigger',
-  imports: [NzButtonModule, NzTabsModule],
+  selector: '',
+  imports: [TriButtonModule, TriTabsModule],
   template: `
     <div style="margin-bottom: 16px;">
-      <button nz-button (click)="newTab()">ADD</button>
+      <button tri-button (click)="newTab()">ADD</button>
     </div>
-    <nz-tabs [(nzSelectedIndex)]="index" nzType="editable-card" nzHideAdd (nzClose)="closeTab($event)">
+    <tri-tabs [(selectedIndexChange)]="index" type="editable-card" hideAdd (close)="closeTab($event)">
       @for (tab of tabs; track tab; let i = $index) {
-        <nz-tab [nzClosable]="i > 1" [nzTitle]="tab">Content of {{ tab }}</nz-tab>
+        <tri-tab [closable]="i > 1" [title]="tab">Content of {{ tab }}</tri-tab>
       }
-    </nz-tabs>
+    </tri-tabs>
   `
 })
-export class NzDemoTabsCustomAddTriggerComponent {
+export class TriDemoTabsCustomAddTriggerComponent {
   index = 0;
   tabs = ['Tab 1', 'Tab 2'];
 

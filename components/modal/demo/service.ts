@@ -1,7 +1,7 @@
 import { Component, inject, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzModalRef, NzModalService, NZ_MODAL_DATA, NzModalModule } from 'ng-zorro-antd/modal';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriModalRef, TriModalService, NZ_MODAL_DATA, TriModalModule } from 'ng-zorro-antd/modal';
 
 interface IModalData {
   favoriteLibrary: string;
@@ -9,14 +9,14 @@ interface IModalData {
 }
 
 @Component({
-  selector: 'nz-demo-modal-service',
-  imports: [NzButtonModule, NzModalModule],
+  selector: '',
+  imports: [TriButtonModule, TriModalModule],
   template: `
-    <button nz-button nzType="primary" (click)="createModal()">
+    <button tri-button type="primary" (click)="createModal()">
       <span>String</span>
     </button>
 
-    <button nz-button nzType="primary" (click)="createTplModal(tplTitle, tplContent, tplFooter)">
+    <button tri-button type="primary" (click)="createTplModal(tplTitle, tplContent, tplFooter)">
       <span>Template</span>
     </button>
     <ng-template #tplTitle>
@@ -28,8 +28,8 @@ interface IModalData {
       <p>{{ params?.value }}</p>
     </ng-template>
     <ng-template #tplFooter let-ref="modalRef">
-      <button nz-button (click)="ref.destroy()">Destroy</button>
-      <button nz-button nzType="primary" (click)="destroyTplModal(ref)" [nzLoading]="tplModalButtonLoading">
+      <button tri-button (click)="ref.destroy()">Destroy</button>
+      <button tri-button type="primary" (click)="destroyTplModal(ref)" [loading]="tplModalButtonLoading">
         Close after submit
       </button>
     </ng-template>
@@ -37,16 +37,16 @@ interface IModalData {
     <br />
     <br />
 
-    <button nz-button nzType="primary" (click)="createComponentModal()">
+    <button tri-button type="primary" (click)="createComponentModal()">
       <span>Use Component</span>
     </button>
 
-    <button nz-button nzType="primary" (click)="createCustomButtonModal()">Custom Button</button>
+    <button tri-button type="primary" (click)="createCustomButtonModal()">Custom Button</button>
 
     <br />
     <br />
 
-    <button nz-button nzType="primary" (click)="openAndCloseAll()">Open more modals then close all after 2s</button>
+    <button tri-button type="primary" (click)="openAndCloseAll()">Open more modals then close all after 2s</button>
   `,
   styles: [
     `
@@ -56,36 +56,36 @@ interface IModalData {
     `
   ]
 })
-export class NzDemoModalServiceComponent {
+export class TriDemoModalServiceComponent {
   tplModalButtonLoading = false;
   disabled = false;
 
   constructor(
-    private modal: NzModalService,
+    private modal: TriModalService,
     private viewContainerRef: ViewContainerRef
   ) {}
 
   createModal(): void {
     this.modal.create({
-      nzTitle: 'Modal Title',
-      nzContent: 'string, will close after 1 sec',
-      nzClosable: false,
-      nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000))
+      title: 'Modal Title',
+      content: 'string, will close after 1 sec',
+      closable: false,
+      onOk: () => new Promise(resolve => setTimeout(resolve, 1000))
     });
   }
 
   createTplModal(tplTitle: TemplateRef<{}>, tplContent: TemplateRef<{}>, tplFooter: TemplateRef<{}>): void {
     this.modal.create({
-      nzTitle: tplTitle,
-      nzContent: tplContent,
-      nzFooter: tplFooter,
-      nzMaskClosable: false,
-      nzClosable: false,
-      nzOnOk: () => console.log('Click ok')
+      title: tplTitle,
+      content: tplContent,
+      footer: tplFooter,
+      maskClosable: false,
+      closable: false,
+      onOk: () => console.log('Click ok')
     });
   }
 
-  destroyTplModal(modelRef: NzModalRef): void {
+  destroyTplModal(modelRef: TriModalRef): void {
     this.tplModalButtonLoading = true;
     setTimeout(() => {
       this.tplModalButtonLoading = false;
@@ -94,16 +94,16 @@ export class NzDemoModalServiceComponent {
   }
 
   createComponentModal(): void {
-    const modal = this.modal.create<NzModalCustomComponent, IModalData>({
-      nzTitle: 'Modal Title',
-      nzContent: NzModalCustomComponent,
-      nzViewContainerRef: this.viewContainerRef,
-      nzData: {
+    const modal = this.modal.create<TriModalCustomComponent, IModalData>({
+      title: 'Modal Title',
+      content: TriModalCustomComponent,
+      viewContainerRef: this.viewContainerRef,
+      data: {
         favoriteLibrary: 'angular',
         favoriteFramework: 'angular'
       },
-      nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000)),
-      nzFooter: [
+      onOk: () => new Promise(resolve => setTimeout(resolve, 1000)),
+      footer: [
         {
           label: 'change component title from outside',
           onClick: componentInstance => {
@@ -113,9 +113,9 @@ export class NzDemoModalServiceComponent {
       ]
     });
     const instance = modal.getContentComponent();
-    modal.afterOpen.subscribe(() => console.log('[afterOpen] emitted!'));
+    modal._afterOpen.subscribe(() => console.log('[afterOpen] emitted!'));
     // Return a result when closed
-    modal.afterClose.subscribe(result => console.log('[afterClose] The result is:', result));
+    modal._afterClose.subscribe(result => console.log('[afterClose] The result is:', result));
 
     // delay until modal instance created
     setTimeout(() => {
@@ -124,10 +124,10 @@ export class NzDemoModalServiceComponent {
   }
 
   createCustomButtonModal(): void {
-    const modal: NzModalRef = this.modal.create({
-      nzTitle: 'custom button demo',
-      nzContent: 'pass array of button config to nzFooter to create multiple buttons',
-      nzFooter: [
+    const modal: TriModalRef = this.modal.create({
+      title: 'custom button demo',
+      content: 'pass array of button config to nzFooter to create multiple buttons',
+      footer: [
         {
           label: 'Close',
           shape: 'round',
@@ -136,7 +136,7 @@ export class NzDemoModalServiceComponent {
         {
           label: 'Confirm',
           type: 'primary',
-          onClick: () => this.modal.confirm({ nzTitle: 'Confirm Modal Title', nzContent: 'Confirm Modal Content' })
+          onClick: () => this.modal.confirm({ title: 'Confirm Modal Title', content: 'Confirm Modal Content' })
         },
         {
           label: 'Change Button Status',
@@ -182,29 +182,29 @@ export class NzDemoModalServiceComponent {
 }
 
 @Component({
-  selector: 'nz-modal-custom-component',
-  imports: [NzButtonModule],
+  selector: '',
+  imports: [TriButtonModule],
   template: `
     <div>
       <h2>{{ title }}</h2>
       <h4>{{ subtitle }}</h4>
       <p
-        >My favorite framework is {{ nzModalData.favoriteFramework }} and my favorite library is
-        {{ nzModalData.favoriteLibrary }}
+        >My favorite framework is {{ modalData.favoriteFramework }} and my favorite library is
+        {{ modalData.favoriteLibrary }}
       </p>
       <p>
         <span>Get Modal instance in component</span>
-        <button nz-button [nzType]="'primary'" (click)="destroyModal()">destroy modal in the component</button>
+        <button tri-button [type]="'primary'" (click)="destroyModal()">destroy modal in the component</button>
       </p>
     </div>
   `
 })
-export class NzModalCustomComponent {
+export class TriModalCustomComponent {
   @Input() title?: string;
   @Input() subtitle?: string;
 
-  readonly #modal = inject(NzModalRef);
-  readonly nzModalData: IModalData = inject(NZ_MODAL_DATA);
+  readonly #modal = inject(TriModalRef);
+  readonly modalData: IModalData = inject(NZ_MODAL_DATA);
 
   destroyModal(): void {
     this.#modal.destroy({ data: 'this the result data' });

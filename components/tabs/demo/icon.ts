@@ -1,26 +1,26 @@
 import { Component } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: 'nz-demo-tabs-icon',
-  imports: [NzIconModule, NzTabsModule],
+  selector: '',
+  imports: [TriIconModule, TriTabsModule],
   template: `
-    <nz-tabs>
+    <tri-tabs>
       @for (tab of tabs; track tab) {
-        <nz-tab [nzTitle]="titleTemplate">
+        <tri-tab [title]="titleTemplate">
           <ng-template #titleTemplate>
-            <nz-icon [nzType]="tab.icon" />
+            <tri-icon [type]="tab.icon" />
             {{ tab.name }}
           </ng-template>
           {{ tab.name }}
-        </nz-tab>
+        </tri-tab>
       }
-    </nz-tabs>
+    </tri-tabs>
   `
 })
-export class NzDemoTabsIconComponent {
+export class TriDemoTabsIconComponent {
   tabs = [
     {
       name: 'Tab 1',

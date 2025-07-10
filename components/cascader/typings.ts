@@ -5,38 +5,38 @@
 
 import { Observable } from 'rxjs';
 
-import { NzTreeNode } from 'ng-zorro-antd/core/tree';
-import { NzSafeAny, NzSizeLDSType } from 'ng-zorro-antd/core/types';
+import { TriTreeNode } from 'ng-zorro-antd/core/tree';
+import { TriSafeAny, TriSizeLDSType } from 'ng-zorro-antd/core/types';
 
-import { NzCascaderTreeService } from './cascader-tree.service';
+import { TriCascaderTreeService } from './cascader-tree.service';
 
-export type NzCascaderExpandTrigger = 'click' | 'hover';
-export type NzCascaderTriggerType = 'click' | 'hover';
-export type NzCascaderSize = NzSizeLDSType;
+export type TriCascaderExpandTrigger = 'click' | 'hover';
+export type TriCascaderTriggerType = 'click' | 'hover';
+export type TriCascaderSize = TriSizeLDSType;
 
-export type NzCascaderFilter = (searchValue: string, path: NzCascaderOption[]) => boolean;
-export type NzCascaderSorter = (a: NzCascaderOption[], b: NzCascaderOption[], inputValue: string) => number;
-export type NzCascaderPlacement = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';
+export type TriCascaderFilter = (searchValue: string, path: TriCascaderOption[]) => boolean;
+export type TriCascaderSorter = (a: TriCascaderOption[], b: TriCascaderOption[], inputValue: string) => number;
+export type TriCascaderPlacement = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';
 
-export interface NzCascaderOption {
-  value?: NzSafeAny;
+export interface TriCascaderOption {
+  value?: TriSafeAny;
   label?: string;
   title?: string;
   disabled?: boolean;
   loading?: boolean;
   isLeaf?: boolean;
-  children?: NzCascaderOption[];
+  children?: TriCascaderOption[];
   disableCheckbox?: boolean;
 
-  [key: string]: NzSafeAny;
+  [key: string]: TriSafeAny;
 }
 
-export interface NzShowSearchOptions {
-  filter?: NzCascaderFilter;
-  sorter?: NzCascaderSorter;
+export interface TriShowSearchOptions {
+  filter?: TriCascaderFilter;
+  sorter?: TriCascaderSorter;
 }
 
-export function isShowSearchObject(options: NzShowSearchOptions | boolean): options is NzShowSearchOptions {
+export function isShowSearchObject(options: TriShowSearchOptions | boolean): options is TriShowSearchOptions {
   return typeof options !== 'boolean';
 }
 
@@ -44,21 +44,21 @@ export function isShowSearchObject(options: NzShowSearchOptions | boolean): opti
  * To avoid circular dependency, provide an interface of `NzCascaderComponent`
  * for `NzCascaderService`.
  */
-export interface NzCascaderComponentAsSource {
+export interface TriCascaderComponentAsSource {
   inputValue: string;
-  nzShowSearch: NzShowSearchOptions | boolean;
-  nzLabelProperty: string;
-  nzValueProperty: string;
-  nzChangeOnSelect: boolean;
-  selectedNodes: NzTreeNode[];
+  showSearch: TriShowSearchOptions | boolean;
+  labelProperty: string;
+  valueProperty: string;
+  changeOnSelect: boolean;
+  selectedNodes: TriTreeNode[];
 
-  get treeService(): NzCascaderTreeService;
+  get treeService(): TriCascaderTreeService;
 
-  coerceTreeNodes(value: NzSafeAny[]): NzTreeNode[];
+  coerceTreeNodes(value: TriSafeAny[]): TriTreeNode[];
 
   updateSelectedNodes(): void;
 
-  nzChangeOn?(option: NzCascaderOption, level: number): boolean;
+  changeOn?(option: TriCascaderOption, level: number): boolean;
 
-  nzLoadData?(node: NzCascaderOption, index: number): PromiseLike<NzSafeAny> | Observable<NzSafeAny>;
+  loadData?(node: TriCascaderOption, index: number): PromiseLike<TriSafeAny> | Observable<TriSafeAny>;
 }

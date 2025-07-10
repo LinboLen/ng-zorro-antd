@@ -20,29 +20,29 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { NzConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { NgStyleInterface } from 'ng-zorro-antd/core/types';
 import { isNotNil, numberAttributeWithZeroFallback } from 'ng-zorro-antd/core/util';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 import {
-  NzProgressCirclePath,
-  NzProgressColorGradient,
-  NzProgressFormatter,
-  NzProgressGapPositionType,
-  NzProgressGradientProgress,
-  NzProgressStatusType,
-  NzProgressStepItem,
-  NzProgressStrokeColorType,
-  NzProgressStrokeLinecapType,
-  NzProgressTypeType
+  TriProgressCirclePath,
+  TriProgressColorGradient,
+  TriProgressFormatter,
+  TriProgressGapPositionType,
+  TriProgressGradientProgress,
+  TriProgressStatusType,
+  TriProgressStepItem,
+  TriProgressStrokeColorType,
+  TriProgressStrokeLinecapType,
+  TriProgressTypeType
 } from './typings';
 import { handleCircleGradient, handleLinearGradient } from './utils';
 
 let gradientIdSeed = 0;
 
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'progress';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'progress';
 const statusIconNameMap = new Map([
   ['success', 'check'],
   ['exception', 'close']
@@ -52,22 +52,22 @@ const statusColorMap = new Map([
   ['exception', '#ff5500'],
   ['success', '#87d068']
 ]);
-const defaultFormatter: NzProgressFormatter = (p: number): string => `${p}%`;
+const defaultFormatter: TriProgressFormatter = (p: number): string => `${p}%`;
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-progress',
-  exportAs: 'nzProgress',
-  imports: [NzIconModule, NzOutletModule, NgTemplateOutlet],
+  selector: '',
+  exportAs: 'triProgress',
+  imports: [TriIconModule, TriOutletModule, NgTemplateOutlet],
   template: `
     <ng-template #progressInfoTemplate>
-      @if (nzShowInfo) {
-        <span class="ant-progress-text">
-          @if ((status === 'exception' || status === 'success') && !nzFormat) {
-            <nz-icon [nzType]="icon" />
+      @if (showInfo) {
+        <span class="tri-progress-text">
+          @if ((status === 'exception' || status === 'success') && !format) {
+            <tri-icon [type]="icon" />
           } @else {
-            <ng-container *nzStringTemplateOutlet="formatter; context: { $implicit: nzPercent }; let formatter">
+            <ng-container *stringTemplateOutlet="formatter; stringTemplateOutletContext: { $implicit: percent }; let formatter">
               {{ formatter(nzPercent) }}
             </ng-container>
           }
@@ -77,40 +77,40 @@ const defaultFormatter: NzProgressFormatter = (p: number): string => `${p}%`;
 
     <div
       [class]="'ant-progress ant-progress-status-' + status"
-      [class.ant-progress-line]="nzType === 'line'"
-      [class.ant-progress-small]="nzSize === 'small'"
-      [class.ant-progress-default]="nzSize === 'default'"
-      [class.ant-progress-show-info]="nzShowInfo"
-      [class.ant-progress-circle]="isCircleStyle"
-      [class.ant-progress-steps]="isSteps"
-      [class.ant-progress-rtl]="dir === 'rtl'"
+      [class.tri-progress-line]="type === 'line'"
+      [class.tri-progress-small]="size === 'small'"
+      [class.tri-progress-default]="size === 'default'"
+      [class.tri-progress-show-info]="showInfo"
+      [class.tri-progress-circle]="isCircleStyle"
+      [class.tri-progress-steps]="isSteps"
+      [class.tri-progress-rtl]="dir === 'rtl'"
     >
-      @if (nzType === 'line') {
+      @if (type === 'line') {
         <div>
           <!-- normal line style -->
           @if (isSteps) {
-            <div class="ant-progress-steps-outer">
+            <div class="tri-progress-steps-outer">
               @for (step of steps; track $index) {
-                <div class="ant-progress-steps-item" [style]="step"></div>
+                <div class="tri-progress-steps-item" [style]="step"></div>
               }
               <ng-template [ngTemplateOutlet]="progressInfoTemplate" />
             </div>
           } @else {
-            <div class="ant-progress-outer">
-              <div class="ant-progress-inner">
+            <div class="tri-progress-outer">
+              <div class="tri-progress-inner">
                 <div
-                  class="ant-progress-bg"
-                  [style.width.%]="nzPercent"
-                  [style.border-radius]="nzStrokeLinecap === 'round' ? '100px' : '0'"
-                  [style.background]="!isGradient ? nzStrokeColor : null"
+                  class="tri-progress-bg"
+                  [style.width.%]="percent"
+                  [style.border-radius]="strokeLinecap === 'round' ? '100px' : '0'"
+                  [style.background]="!isGradient ? strokeColor : null"
                   [style.background-image]="isGradient ? lineGradient : null"
                   [style.height.px]="strokeWidth"
                 ></div>
-                @if (nzSuccessPercent || nzSuccessPercent === 0) {
+                @if (successPercent || successPercent === 0) {
                   <div
-                    class="ant-progress-success-bg"
-                    [style.width.%]="nzSuccessPercent"
-                    [style.border-radius]="nzStrokeLinecap === 'round' ? '100px' : '0'"
+                    class="tri-progress-success-bg"
+                    [style.width.%]="successPercent"
+                    [style.border-radius]="strokeLinecap === 'round' ? '100px' : '0'"
                     [style.height.px]="strokeWidth"
                   ></div>
                 }
@@ -126,13 +126,13 @@ const defaultFormatter: NzProgressFormatter = (p: number): string => `${p}%`;
 
       @if (isCircleStyle) {
         <div
-          [style.width.px]="this.nzWidth"
-          [style.height.px]="this.nzWidth"
-          [style.fontSize.px]="this.nzWidth * 0.15 + 6"
-          class="ant-progress-inner"
-          [class.ant-progress-circle-gradient]="isGradient"
+          [style.width.px]="width"
+          [style.height.px]="width"
+          [style.fontSize.px]="width * 0.15 + 6"
+          class="tri-progress-inner"
+          [class.tri-progress-circle-gradient]="isGradient"
         >
-          <svg class="ant-progress-circle " viewBox="0 0 100 100">
+          <svg class="tri-progress-circle " viewBox="0 0 100 100">
             @if (isGradient) {
               <defs>
                 <linearGradient [id]="'gradient-' + gradientId" x1="100%" y1="0%" x2="0%" y2="0%">
@@ -144,7 +144,7 @@ const defaultFormatter: NzProgressFormatter = (p: number): string => `${p}%`;
             }
 
             <path
-              class="ant-progress-circle-trail"
+              class="tri-progress-circle-trail"
               stroke="#f3f3f3"
               fill-opacity="0"
               [attr.stroke-width]="strokeWidth"
@@ -153,12 +153,12 @@ const defaultFormatter: NzProgressFormatter = (p: number): string => `${p}%`;
             ></path>
             @for (p of progressCirclePath; track $index) {
               <path
-                class="ant-progress-circle-path"
+                class="tri-progress-circle-path"
                 fill-opacity="0"
                 [attr.d]="pathString"
-                [attr.stroke-linecap]="nzStrokeLinecap"
+                [attr.stroke-linecap]="strokeLinecap"
                 [attr.stroke]="p.stroke"
-                [attr.stroke-width]="nzPercent ? strokeWidth : 0"
+                [attr.stroke-width]="percent ? strokeWidth : 0"
                 [style]="p.strokePathStyle"
               ></path>
             }
@@ -169,30 +169,30 @@ const defaultFormatter: NzProgressFormatter = (p: number): string => `${p}%`;
     </div>
   `
 })
-export class NzProgressComponent implements OnChanges, OnInit {
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+export class TriProgressComponent implements OnChanges, OnInit {
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
 
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly directionality = inject(Directionality);
   private readonly destroyRef = inject(DestroyRef);
 
-  @Input() @WithConfig() nzShowInfo: boolean = true;
-  @Input() nzWidth = 132;
-  @Input() @WithConfig() nzStrokeColor?: NzProgressStrokeColorType = undefined;
-  @Input() @WithConfig() nzSize: 'default' | 'small' = 'default';
-  @Input() nzFormat?: NzProgressFormatter;
-  @Input({ transform: numberAttributeWithZeroFallback }) nzSuccessPercent?: number;
-  @Input({ transform: numberAttribute }) nzPercent: number = 0;
-  @Input({ transform: numberAttributeWithZeroFallback }) @WithConfig() nzStrokeWidth?: number;
-  @Input({ transform: numberAttributeWithZeroFallback }) @WithConfig() nzGapDegree?: number;
-  @Input() nzStatus?: NzProgressStatusType;
-  @Input() nzType: NzProgressTypeType = 'line';
-  @Input() @WithConfig() nzGapPosition: NzProgressGapPositionType = 'top';
-  @Input() @WithConfig() nzStrokeLinecap: NzProgressStrokeLinecapType = 'round';
+  @Input() @WithConfig() showInfo: boolean = true;
+  @Input() width = 132;
+  @Input() @WithConfig() strokeColor?: TriProgressStrokeColorType = undefined;
+  @Input() @WithConfig() size: 'default' | 'small' = 'default';
+  @Input() format?: TriProgressFormatter;
+  @Input({ transform: numberAttributeWithZeroFallback }) successPercent?: number;
+  @Input({ transform: numberAttribute }) percent: number = 0;
+  @Input({ transform: numberAttributeWithZeroFallback }) @WithConfig() strokeWidth?: number;
+  @Input({ transform: numberAttributeWithZeroFallback }) @WithConfig() gapDegree?: number;
+  @Input() status?: TriProgressStatusType;
+  @Input() type: TriProgressTypeType = 'line';
+  @Input() @WithConfig() gapPosition: TriProgressGapPositionType = 'top';
+  @Input() @WithConfig() strokeLinecap: TriProgressStrokeLinecapType = 'round';
 
-  @Input({ transform: numberAttribute }) nzSteps: number = 0;
+  @Input({ transform: numberAttribute }) steps: number = 0;
 
-  steps: NzProgressStepItem[] = [];
+  _steps: TriProgressStepItem[] = [];
 
   /** Gradient style when `nzType` is `line`. */
   lineGradient: string | null = null;
@@ -210,7 +210,7 @@ export class NzProgressComponent implements OnChanges, OnInit {
   gradientId = gradientIdSeed++;
 
   /** Paths to rendered in the template. */
-  progressCirclePath: NzProgressCirclePath[] = [];
+  progressCirclePath: TriProgressCirclePath[] = [];
   circleGradient?: Array<{ offset: string; color: string }>;
   trailPathStyle: NgStyleInterface | null = null;
   pathString?: string;
@@ -218,24 +218,24 @@ export class NzProgressComponent implements OnChanges, OnInit {
 
   dir: Direction = 'ltr';
 
-  get formatter(): NzProgressFormatter {
-    return this.nzFormat || defaultFormatter;
+  get formatter(): TriProgressFormatter {
+    return this.format || defaultFormatter;
   }
 
-  get status(): NzProgressStatusType {
-    return this.nzStatus || this.inferredStatus;
+  get _status(): TriProgressStatusType {
+    return this.status || this.inferredStatus;
   }
 
-  get strokeWidth(): number {
-    return this.nzStrokeWidth || (this.nzType === 'line' && this.nzSize !== 'small' ? 8 : 6);
+  get _strokeWidth(): number {
+    return this.strokeWidth || (this.type === 'line' && this.size !== 'small' ? 8 : 6);
   }
 
   get isCircleStyle(): boolean {
-    return this.nzType === 'circle' || this.nzType === 'dashboard';
+    return this.type === 'circle' || this.type === 'dashboard';
   }
 
-  private cachedStatus: NzProgressStatusType = 'normal';
-  private inferredStatus: NzProgressStatusType = 'normal';
+  private cachedStatus: TriProgressStatusType = 'normal';
+  private inferredStatus: TriProgressStatusType = 'normal';
 
   constructor() {
     onConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME, () => {
@@ -260,13 +260,13 @@ export class NzProgressComponent implements OnChanges, OnInit {
     } = changes;
 
     if (nzStatus) {
-      this.cachedStatus = this.nzStatus || this.cachedStatus;
+      this.cachedStatus = this.status || this.cachedStatus;
     }
 
     if (nzPercent || nzSuccessPercent) {
-      const fillAll = parseInt(this.nzPercent.toString(), 10) >= 100;
+      const fillAll = parseInt(this.percent.toString(), 10) >= 100;
       if (fillAll) {
-        if ((isNotNil(this.nzSuccessPercent) && this.nzSuccessPercent! >= 100) || this.nzSuccessPercent === undefined) {
+        if ((isNotNil(this.successPercent) && this.successPercent! >= 100) || this.successPercent === undefined) {
           this.inferredStatus = 'success';
         }
       } else {
@@ -287,7 +287,7 @@ export class NzProgressComponent implements OnChanges, OnInit {
     }
 
     if (nzPercent || nzSteps || nzStrokeWidth) {
-      this.isSteps = this.nzSteps > 0;
+      this.isSteps = this.steps > 0;
       if (this.isSteps) {
         this.getSteps();
       }
@@ -303,7 +303,7 @@ export class NzProgressComponent implements OnChanges, OnInit {
   }
 
   private updateIcon(): void {
-    const ret = statusIconNameMap.get(this.status);
+    const ret = statusIconNameMap.get(this._status);
     this.icon = ret ? ret + (this.isCircleStyle ? '-o' : '-circle-fill') : '';
   }
 
@@ -311,25 +311,25 @@ export class NzProgressComponent implements OnChanges, OnInit {
    * Calculate step render configs.
    */
   private getSteps(): void {
-    const current = Math.floor(this.nzSteps * (this.nzPercent / 100));
-    const stepWidth = this.nzSize === 'small' ? 2 : 14;
+    const current = Math.floor(this.steps * (this.percent / 100));
+    const stepWidth = this.size === 'small' ? 2 : 14;
 
     const steps = [];
 
-    for (let i = 0; i < this.nzSteps; i++) {
+    for (let i = 0; i < this.steps; i++) {
       let color;
       if (i <= current - 1) {
-        color = this.nzStrokeColor;
+        color = this.strokeColor;
       }
       const stepStyle = {
         backgroundColor: `${color}`,
         width: `${stepWidth}px`,
-        height: `${this.strokeWidth}px`
+        height: `${this._strokeWidth}px`
       };
       steps.push(stepStyle);
     }
 
-    this.steps = steps;
+    this._steps = steps;
   }
 
   /**
@@ -340,13 +340,13 @@ export class NzProgressComponent implements OnChanges, OnInit {
       return;
     }
 
-    const values = isNotNil(this.nzSuccessPercent) ? [this.nzSuccessPercent!, this.nzPercent] : [this.nzPercent];
+    const values = isNotNil(this.successPercent) ? [this.successPercent!, this.percent] : [this.percent];
 
     // Calculate shared styles.
-    const radius = 50 - this.strokeWidth / 2;
-    const gapPosition = this.nzGapPosition || (this.nzType === 'circle' ? 'top' : 'bottom');
+    const radius = 50 - this._strokeWidth / 2;
+    const gapPosition = this.gapPosition || (this.type === 'circle' ? 'top' : 'bottom');
     const len = Math.PI * 2 * radius;
-    const gapDegree = this.nzGapDegree || (this.nzType === 'circle' ? 0 : 75);
+    const gapDegree = this.gapDegree || (this.type === 'circle' ? 0 : 75);
 
     let beginPositionX = 0;
     let beginPositionY = -radius;
@@ -393,7 +393,7 @@ export class NzProgressComponent implements OnChanges, OnInit {
             stroke: !this.isGradient
               ? isSuccessPercent
                 ? statusColorMap.get('success')
-                : (this.nzStrokeColor as string)
+                : (this.strokeColor as string)
               : null,
             transition:
               'stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s',
@@ -406,12 +406,12 @@ export class NzProgressComponent implements OnChanges, OnInit {
   }
 
   private setStrokeColor(): void {
-    const color = this.nzStrokeColor;
+    const color = this.strokeColor;
     const isGradient = (this.isGradient = !!color && typeof color !== 'string');
     if (isGradient && !this.isCircleStyle) {
-      this.lineGradient = handleLinearGradient(color as NzProgressColorGradient);
+      this.lineGradient = handleLinearGradient(color as TriProgressColorGradient);
     } else if (isGradient && this.isCircleStyle) {
-      this.circleGradient = handleCircleGradient(this.nzStrokeColor as NzProgressGradientProgress);
+      this.circleGradient = handleCircleGradient(this.strokeColor as TriProgressGradientProgress);
     } else {
       this.lineGradient = null;
       this.circleGradient = [];

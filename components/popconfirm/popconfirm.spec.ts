@@ -12,14 +12,14 @@ import { Observable } from 'rxjs';
 
 import { dispatchMouseEvent } from 'ng-zorro-antd/core/testing';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
-import { NzAutoFocusType } from 'ng-zorro-antd/popconfirm/popconfirm';
-import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm/popconfirm.module';
+import { TriAutoFocusType } from 'ng-zorro-antd/popconfirm/popconfirm';
+import { TriPopconfirmModule } from 'ng-zorro-antd/popconfirm/popconfirm.module';
 
-import { NzPopConfirmButtonProps } from './popconfirm-option';
+import { TriPopConfirmButtonProps } from './popconfirm-option';
 
 describe('NzPopconfirm', () => {
-  let fixture: ComponentFixture<NzPopconfirmTestNewComponent>;
-  let component: NzPopconfirmTestNewComponent;
+  let fixture: ComponentFixture<TriPopconfirmTestNewComponent>;
+  let component: TriPopconfirmTestNewComponent;
   let overlayContainer: OverlayContainer;
   let overlayContainerElement: HTMLElement;
 
@@ -27,7 +27,7 @@ describe('NzPopconfirm', () => {
     TestBed.configureTestingModule({
       providers: [provideNzIconsTesting(), provideNoopAnimations()]
     });
-    fixture = TestBed.createComponent(NzPopconfirmTestNewComponent);
+    fixture = TestBed.createComponent(TriPopconfirmTestNewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
@@ -73,7 +73,7 @@ describe('NzPopconfirm', () => {
   });
 
   it('should support nzOkType danger case', () => {
-    component.nzOkType = 'danger';
+    component.okType = 'danger';
     fixture.detectChanges();
 
     const triggerElement = component.stringTemplate.nativeElement;
@@ -85,7 +85,7 @@ describe('NzPopconfirm', () => {
   });
 
   it('should support nzOkDisabled case', () => {
-    component.nzOkDisabled = true;
+    component.okDisabled = true;
     fixture.detectChanges();
 
     const triggerElement = component.stringTemplate.nativeElement;
@@ -99,7 +99,7 @@ describe('NzPopconfirm', () => {
     fixture.detectChanges();
     const triggerElement = component.stringTemplate.nativeElement;
     dispatchMouseEvent(triggerElement, 'click');
-    component.nzOkButtonProps.update(props => ({ ...props, nzDisabled: true }));
+    component.okButtonProps.update(props => ({ ...props, nzDisabled: true }));
     fixture.detectChanges();
     expect(getTooltipTrigger(1).disabled).toBeTrue();
   });
@@ -109,7 +109,7 @@ describe('NzPopconfirm', () => {
     const triggerElement = component.stringTemplate.nativeElement;
     dispatchMouseEvent(triggerElement, 'click');
     expect(getTooltipTrigger(0).disabled).toBeFalse();
-    component.nzCancelButtonProps.update(props => ({ ...props, nzDisabled: true }));
+    component.cancelButtonProps.update(props => ({ ...props, nzDisabled: true }));
     fixture.detectChanges();
     expect(getTooltipTrigger(0).disabled).toBeTrue();
   });
@@ -250,17 +250,17 @@ describe('NzPopconfirm', () => {
     const triggerElement = component.stringTemplate.nativeElement;
     dispatchMouseEvent(triggerElement, 'click');
 
-    component.nzPopconfirmShowArrow = false;
+    component.popconfirmShowArrow = false;
     fixture.detectChanges();
     expect(overlayContainerElement.querySelector('.ant-popover-arrow')).toBeFalsy();
 
-    component.nzPopconfirmShowArrow = true;
+    component.popconfirmShowArrow = true;
     fixture.detectChanges();
     expect(overlayContainerElement.querySelector('.ant-popover-arrow')).toBeTruthy();
   }));
 
   it('should nzPopconfirmBackdrop work', fakeAsync(() => {
-    component.nzPopconfirmBackdrop = true;
+    component.popconfirmBackdrop = true;
     fixture.detectChanges();
     const triggerElement = component.stringTemplate.nativeElement;
     dispatchMouseEvent(triggerElement, 'click');
@@ -293,59 +293,59 @@ describe('NzPopconfirm', () => {
 });
 
 @Component({
-  imports: [NzPopconfirmModule],
+  imports: [TriPopconfirmModule],
   template: `
     <a
-      nz-popconfirm
+      tri-popconfirm
       #stringTemplate
-      nzPopconfirmTitle="title-string"
-      nzOkText="ok-text"
-      [nzOkType]="nzOkType"
-      [nzOkDisabled]="nzOkDisabled"
-      nzCancelText="cancel-text"
-      [nzAutofocus]="autoFocus"
-      [nzCondition]="condition"
-      [nzBeforeConfirm]="beforeConfirm"
-      [nzPopconfirmShowArrow]="nzPopconfirmShowArrow"
-      [nzPopconfirmBackdrop]="nzPopconfirmBackdrop"
-      [nzPopconfirmOverlayClassName]="class"
-      (nzOnConfirm)="confirm()"
-      (nzOnCancel)="cancel()"
-      [nzOkButtonProps]="nzOkButtonProps()"
-      [nzCancelButtonProps]="nzCancelButtonProps()"
+      popconfirmTitle="title-string"
+      okText="ok-text"
+      [okType]="okType"
+      [okDisabled]="okDisabled"
+      cancelText="cancel-text"
+      [autofocus]="autoFocus"
+      [condition]="condition"
+      [beforeConfirm]="beforeConfirm"
+      [popconfirmShowArrow]="popconfirmShowArrow"
+      [popconfirmBackdrop]="popconfirmBackdrop"
+      [popconfirmOverlayClassName]="class"
+      (onConfirm)="confirm()"
+      (onCancel)="cancel()"
+      [okButtonProps]="okButtonProps()"
+      [cancelButtonProps]="cancelButtonProps()"
     >
       Delete
     </a>
     <a
-      nz-popconfirm
+      tri-popconfirm
       #templateTemplate
-      [nzIcon]="icon"
-      [nzPopconfirmTitle]="titleTemplate"
-      (nzOnConfirm)="confirm()"
-      (nzOnCancel)="cancel()"
+      [icon]="icon"
+      [popconfirmTitle]="titleTemplate"
+      (onConfirm)="confirm()"
+      (onCancel)="cancel()"
     >
       Delete
     </a>
 
-    <a nz-popconfirm #iconTemplate [nzIcon]="icon">Delete</a>
+    <a tri-popconfirm #iconTemplate [icon]="icon">Delete</a>
 
     <ng-template #titleTemplate>title-template</ng-template>
   `
 })
-export class NzPopconfirmTestNewComponent {
+export class TriPopconfirmTestNewComponent {
   confirm = jasmine.createSpy('confirm');
   cancel = jasmine.createSpy('cancel');
   condition = false;
-  nzOkType: string = 'default';
-  nzOkDisabled: boolean = false;
-  nzCancelText = 'Cancel';
-  nzOkText = 'Ok';
-  nzOkButtonProps = signal<NzPopConfirmButtonProps>({ nzDisabled: false });
-  nzCancelButtonProps = signal<NzPopConfirmButtonProps>({ nzDisabled: false });
-  nzPopconfirmShowArrow = true;
+  okType: string = 'default';
+  okDisabled: boolean = false;
+  cancelText = 'Cancel';
+  okText = 'Ok';
+  okButtonProps = signal<TriPopConfirmButtonProps>({ nzDisabled: false });
+  cancelButtonProps = signal<TriPopConfirmButtonProps>({ nzDisabled: false });
+  popconfirmShowArrow = true;
   icon: string | undefined = undefined;
-  nzPopconfirmBackdrop = false;
-  autoFocus: NzAutoFocusType = null;
+  popconfirmBackdrop = false;
+  autoFocus: TriAutoFocusType = null;
   beforeConfirm?: () => Observable<boolean> | Promise<boolean> | boolean = undefined;
 
   @ViewChild('stringTemplate', { static: false }) stringTemplate!: ElementRef;

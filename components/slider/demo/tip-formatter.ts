@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
 
-import { NzSliderModule } from 'ng-zorro-antd/slider';
+import { TriSliderModule } from 'ng-zorro-antd/slider';
 
 @Component({
-  selector: 'nz-demo-slider-tip-formatter',
-  imports: [NzSliderModule],
+  selector: '',
+  imports: [TriSliderModule],
   template: `
-    <nz-slider [nzTipFormatter]="formatter"></nz-slider>
-    <nz-slider [nzTipFormatter]="null"></nz-slider>
-    <nz-slider [nzTipFormatter]="titleTemplate"></nz-slider>
+    <tri-slider [tipFormatter]="formatter"></tri-slider>
+    <tri-slider [tipFormatter]="null"></tri-slider>
+    <tri-slider [tipFormatter]="titleTemplate"></tri-slider>
     <ng-template #titleTemplate let-value>
       <span>Slider value: {{ value }}</span>
     </ng-template>
   `
 })
-export class NzDemoSliderTipFormatterComponent {
+export class TriDemoSliderTipFormatterComponent {
   formatter(value: number): string {
     return `${value}%`;
   }

@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: 'nz-demo-date-picker-status',
-  imports: [NzDatePickerModule, NzSpaceModule],
+  selector: '',
+  imports: [TriDatePickerModule, TriSpaceModule],
   template: `
-    <nz-space nzDirection="vertical" style="width: 100%">
-      <nz-date-picker *nzSpaceItem nzStatus="error" style="width: 100%"></nz-date-picker>
-      <nz-date-picker *nzSpaceItem nzStatus="warning" style="width: 100%"></nz-date-picker>
-      <nz-range-picker *nzSpaceItem nzStatus="error" style="width: 100%"></nz-range-picker>
-      <nz-range-picker *nzSpaceItem nzStatus="warning" style="width: 100%"></nz-range-picker>
-    </nz-space>
+    <tri-space direction="vertical" style="width: 100%">
+      <tri-date-picker *spaceItem status="error" style="width: 100%"></tri-date-picker>
+      <tri-date-picker *spaceItem status="warning" style="width: 100%"></tri-date-picker>
+      <tri-range-picker *spaceItem status="error" style="width: 100%"></tri-range-picker>
+      <tri-range-picker *spaceItem status="warning" style="width: 100%"></tri-range-picker>
+    </tri-space>
   `
 })
-export class NzDemoDatePickerStatusComponent {}
+export class TriDemoDatePickerStatusComponent {}

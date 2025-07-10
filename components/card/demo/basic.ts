@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 
-import { NzCardModule } from 'ng-zorro-antd/card';
+import { TriCardModule } from 'ng-zorro-antd/card';
 
 @Component({
-  selector: 'nz-demo-card-basic',
-  imports: [NzCardModule],
+  selector: '',
+  imports: [TriCardModule],
   template: `
-    <nz-card style="width:300px;" nzTitle="Card title" [nzExtra]="extraTemplate">
+    <tri-card style="width:300px;" title="Card title" [extra]="extraTemplate">
       <p>Card content</p>
       <p>Card content</p>
       <p>Card content</p>
-    </nz-card>
+    </tri-card>
     <ng-template #extraTemplate>
       <a>More</a>
     </ng-template>
@@ -23,4 +23,4 @@ import { NzCardModule } from 'ng-zorro-antd/card';
     `
   ]
 })
-export class NzDemoCardBasicComponent {}
+export class TriDemoCardBasicComponent {}

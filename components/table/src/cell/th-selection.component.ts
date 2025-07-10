@@ -17,46 +17,46 @@ import {
   booleanAttribute
 } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzTableSelectionComponent } from '../addon/selection.component';
+import { TriTableSelectionComponent } from '../addon/selection.component';
 
 @Component({
-  selector: 'th[nzSelections],th[nzChecked],th[nzShowCheckbox],th[nzShowRowSelection]',
+  selector: '',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <nz-table-selection
-      [checked]="nzChecked"
-      [disabled]="nzDisabled"
-      [indeterminate]="nzIndeterminate"
-      [label]="nzLabel"
-      [listOfSelections]="nzSelections"
-      [showCheckbox]="nzShowCheckbox"
-      [showRowSelection]="nzShowRowSelection"
+    <tri-table-selection
+      [checked]="checked"
+      [disabled]="disabled"
+      [indeterminate]="indeterminate"
+      [label]="label"
+      [listOfSelections]="selections"
+      [showCheckbox]="showCheckbox"
+      [showRowSelection]="showRowSelection"
       (checkedChange)="onCheckedChange($event)"
-    ></nz-table-selection>
+    ></tri-table-selection>
     <ng-content></ng-content>
   `,
-  host: { class: 'ant-table-selection-column' },
-  imports: [NzTableSelectionComponent]
+  host: { class: 'tri-table-selection-column' },
+  imports: [TriTableSelectionComponent]
 })
-export class NzThSelectionComponent implements OnChanges {
-  @Input() nzSelections: Array<{ text: string; onSelect(...args: NzSafeAny[]): NzSafeAny }> = [];
-  @Input({ transform: booleanAttribute }) nzChecked = false;
-  @Input({ transform: booleanAttribute }) nzDisabled = false;
-  @Input() nzIndeterminate = false;
-  @Input() nzLabel: string | null = null;
-  @Input({ transform: booleanAttribute }) nzShowCheckbox = false;
-  @Input({ transform: booleanAttribute }) nzShowRowSelection = false;
-  @Output() readonly nzCheckedChange = new EventEmitter<boolean>();
+export class TriThSelectionComponent implements OnChanges {
+  @Input() selections: Array<{ text: string; onSelect(...args: TriSafeAny[]): TriSafeAny }> = [];
+  @Input({ transform: booleanAttribute }) checked = false;
+  @Input({ transform: booleanAttribute }) disabled = false;
+  @Input() indeterminate = false;
+  @Input() label: string | null = null;
+  @Input({ transform: booleanAttribute }) showCheckbox = false;
+  @Input({ transform: booleanAttribute }) showRowSelection = false;
+  @Output() readonly checkedChange = new EventEmitter<boolean>();
 
   private isNzShowExpandChanged = false;
   private isNzShowCheckboxChanged = false;
 
   onCheckedChange(checked: boolean): void {
-    this.nzChecked = checked;
-    this.nzCheckedChange.emit(checked);
+    this.checked = checked;
+    this.checkedChange.emit(checked);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -70,10 +70,10 @@ export class NzThSelectionComponent implements OnChanges {
       this.isNzShowCheckboxChanged = true;
     }
     if (isFirstChange(nzSelections) && !this.isNzShowExpandChanged) {
-      this.nzShowRowSelection = true;
+      this.showRowSelection = true;
     }
     if (isFirstChange(nzChecked) && !this.isNzShowCheckboxChanged) {
-      this.nzShowCheckbox = true;
+      this.showCheckbox = true;
     }
   }
 }

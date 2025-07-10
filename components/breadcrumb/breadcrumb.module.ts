@@ -5,12 +5,12 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzBreadCrumbItemComponent } from './breadcrumb-item.component';
-import { NzBreadCrumbSeparatorComponent } from './breadcrumb-separator.component';
-import { NzBreadCrumbComponent } from './breadcrumb.component';
+import { TriBreadCrumbItemComponent } from './breadcrumb-item.component';
+import { TriBreadCrumbSeparatorComponent } from './breadcrumb-separator.component';
+import { TriBreadCrumbComponent } from './breadcrumb.component';
 
 @NgModule({
-  imports: [NzBreadCrumbComponent, NzBreadCrumbItemComponent, NzBreadCrumbSeparatorComponent],
-  exports: [NzBreadCrumbComponent, NzBreadCrumbItemComponent, NzBreadCrumbSeparatorComponent]
+  imports: [TriBreadCrumbComponent, TriBreadCrumbItemComponent, TriBreadCrumbSeparatorComponent],
+  exports: [TriBreadCrumbComponent, TriBreadCrumbItemComponent, TriBreadCrumbSeparatorComponent]
 })
-export class NzBreadCrumbModule {}
+export class TriBreadCrumbModule {}

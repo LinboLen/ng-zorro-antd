@@ -24,105 +24,105 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable } from 'rxjs';
 
-import { NzButtonType } from 'ng-zorro-antd/button';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriButtonType } from 'ng-zorro-antd/button';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzModalContentDirective } from './modal-content.directive';
-import { NzModalFooterDirective } from './modal-footer.directive';
-import { NzModalLegacyAPI } from './modal-legacy-api';
-import { NzModalRef } from './modal-ref';
-import { NzModalTitleDirective } from './modal-title.directive';
+import { TriModalContentDirective } from './modal-content.directive';
+import { TriModalFooterDirective } from './modal-footer.directive';
+import { TriModalLegacyAPI } from './modal-legacy-api';
+import { TriModalRef } from './modal-ref';
+import { TriModalTitleDirective } from './modal-title.directive';
 import { ModalButtonOptions, ModalOptions, ModalTypes, OnClickCallback, StyleObjectLike } from './modal-types';
-import { NzModalService } from './modal.service';
+import { TriModalService } from './modal.service';
 import { getConfigFromComponent } from './utils';
 
 @Component({
-  selector: 'nz-modal',
-  exportAs: 'nzModal',
+  selector: '',
+  exportAs: 'triModal',
   template: ``,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NzModalComponent<T extends ModalOptions = NzSafeAny, R = NzSafeAny>
-  implements OnChanges, NzModalLegacyAPI<T, R>
+export class TriModalComponent<T extends ModalOptions = TriSafeAny, R = TriSafeAny>
+  implements OnChanges, TriModalLegacyAPI<T, R>
 {
   private cdr = inject(ChangeDetectorRef);
-  private modal = inject(NzModalService);
+  private modal = inject(TriModalService);
   private viewContainerRef = inject(ViewContainerRef);
   private destroyRef = inject(DestroyRef);
 
-  @Input({ transform: booleanAttribute }) nzMask?: boolean;
-  @Input({ transform: booleanAttribute }) nzMaskClosable?: boolean;
-  @Input({ transform: booleanAttribute }) nzCloseOnNavigation?: boolean;
-  @Input({ transform: booleanAttribute }) nzVisible: boolean = false;
-  @Input({ transform: booleanAttribute }) nzClosable: boolean = true;
-  @Input({ transform: booleanAttribute }) nzOkLoading: boolean = false;
-  @Input({ transform: booleanAttribute }) nzOkDisabled: boolean = false;
-  @Input({ transform: booleanAttribute }) nzCancelDisabled: boolean = false;
-  @Input({ transform: booleanAttribute }) nzCancelLoading: boolean = false;
-  @Input({ transform: booleanAttribute }) nzKeyboard: boolean = true;
-  @Input({ transform: booleanAttribute }) nzNoAnimation = false;
-  @Input({ transform: booleanAttribute }) nzCentered = false;
-  @Input({ transform: booleanAttribute }) nzDraggable = false;
-  @Input() nzContent?: string | TemplateRef<{}> | Type<T>;
-  @Input() nzFooter?: string | TemplateRef<{}> | Array<ModalButtonOptions<T>> | null;
-  @Input({ transform: numberAttribute }) nzZIndex: number = 1000;
-  @Input() nzWidth: number | string = 520;
-  @Input() nzWrapClassName?: string;
-  @Input() nzClassName?: string;
-  @Input() nzStyle?: object;
-  @Input() nzTitle?: string | TemplateRef<{}>;
-  @Input() nzCloseIcon: string | TemplateRef<void> = 'close';
-  @Input() nzMaskStyle?: StyleObjectLike;
-  @Input() nzBodyStyle?: StyleObjectLike;
-  @Input() nzOkText?: string | null;
-  @Input() nzCancelText?: string | null;
-  @Input() nzOkType: NzButtonType = 'primary';
-  @Input({ transform: booleanAttribute }) nzOkDanger: boolean = false;
-  @Input() nzIconType: string = 'question-circle'; // Confirm Modal ONLY
-  @Input() nzModalType: ModalTypes = 'default';
-  @Input() nzAutofocus: 'ok' | 'cancel' | 'auto' | null = 'auto';
+  @Input({ transform: booleanAttribute }) mask?: boolean;
+  @Input({ transform: booleanAttribute }) maskClosable?: boolean;
+  @Input({ transform: booleanAttribute }) closeOnNavigation?: boolean;
+  @Input({ transform: booleanAttribute }) visible: boolean = false;
+  @Input({ transform: booleanAttribute }) closable: boolean = true;
+  @Input({ transform: booleanAttribute }) okLoading: boolean = false;
+  @Input({ transform: booleanAttribute }) okDisabled: boolean = false;
+  @Input({ transform: booleanAttribute }) cancelDisabled: boolean = false;
+  @Input({ transform: booleanAttribute }) cancelLoading: boolean = false;
+  @Input({ transform: booleanAttribute }) keyboard: boolean = true;
+  @Input({ transform: booleanAttribute }) noAnimation = false;
+  @Input({ transform: booleanAttribute }) centered = false;
+  @Input({ transform: booleanAttribute }) draggable = false;
+  @Input() content?: string | TemplateRef<{}> | Type<T>;
+  @Input() footer?: string | TemplateRef<{}> | Array<ModalButtonOptions<T>> | null;
+  @Input({ transform: numberAttribute }) zIndex: number = 1000;
+  @Input() width: number | string = 520;
+  @Input() wrapClassName?: string;
+  @Input() className?: string;
+  @Input() style?: object;
+  @Input() title?: string | TemplateRef<{}>;
+  @Input() closeIcon: string | TemplateRef<void> = 'close';
+  @Input() maskStyle?: StyleObjectLike;
+  @Input() bodyStyle?: StyleObjectLike;
+  @Input() okText?: string | null;
+  @Input() cancelText?: string | null;
+  @Input() okType: TriButtonType = 'primary';
+  @Input({ transform: booleanAttribute }) okDanger: boolean = false;
+  @Input() iconType: string = 'question-circle'; // Confirm Modal ONLY
+  @Input() modalType: ModalTypes = 'default';
+  @Input() autofocus: 'ok' | 'cancel' | 'auto' | null = 'auto';
 
   // TODO(@hsuanxyz) Input will not be supported
   @Input()
   @Output()
-  readonly nzOnOk: EventEmitter<T> | OnClickCallback<T> | NzSafeAny = new EventEmitter<T>();
+  readonly onOk: EventEmitter<T> | OnClickCallback<T> | TriSafeAny = new EventEmitter<T>();
 
   // TODO(@hsuanxyz) Input will not be supported
   @Input()
   @Output()
-  readonly nzOnCancel: EventEmitter<T> | OnClickCallback<T> | NzSafeAny = new EventEmitter<T>();
+  readonly onCancel: EventEmitter<T> | OnClickCallback<T> | TriSafeAny = new EventEmitter<T>();
 
-  @Output() readonly nzAfterOpen = new EventEmitter<void>();
-  @Output() readonly nzAfterClose = new EventEmitter<R>();
-  @Output() readonly nzVisibleChange = new EventEmitter<boolean>();
+  @Output() readonly afterOpen = new EventEmitter<void>();
+  @Output() readonly afterClose = new EventEmitter<R>();
+  @Output() readonly visibleChange = new EventEmitter<boolean>();
 
-  @ContentChild(NzModalTitleDirective, { static: true, read: TemplateRef })
-  set modalTitle(value: TemplateRef<NzSafeAny>) {
+  @ContentChild(TriModalTitleDirective, { static: true, read: TemplateRef })
+  set modalTitle(value: TemplateRef<TriSafeAny>) {
     if (value) {
       this.setTitleWithTemplate(value);
     }
   }
 
-  @ContentChild(NzModalContentDirective, { static: true, read: TemplateRef })
-  contentFromContentChild!: TemplateRef<NzSafeAny>;
+  @ContentChild(TriModalContentDirective, { static: true, read: TemplateRef })
+  contentFromContentChild!: TemplateRef<TriSafeAny>;
 
-  @ContentChild(NzModalFooterDirective, { static: true, read: TemplateRef })
-  set modalFooter(value: TemplateRef<NzSafeAny>) {
+  @ContentChild(TriModalFooterDirective, { static: true, read: TemplateRef })
+  set modalFooter(value: TemplateRef<TriSafeAny>) {
     if (value) {
       this.setFooterWithTemplate(value);
     }
   }
 
-  private modalRef: NzModalRef | null = null;
+  private modalRef: TriModalRef | null = null;
 
-  get afterOpen(): Observable<void> {
+  get _afterOpen(): Observable<void> {
     // Observable alias for nzAfterOpen
-    return this.nzAfterOpen.asObservable();
+    return this.afterOpen.asObservable();
   }
 
-  get afterClose(): Observable<R> {
+  get _afterClose(): Observable<R> {
     // Observable alias for nzAfterClose
-    return this.nzAfterClose.asObservable();
+    return this.afterClose.asObservable();
   }
 
   constructor() {
@@ -132,9 +132,9 @@ export class NzModalComponent<T extends ModalOptions = NzSafeAny, R = NzSafeAny>
   }
 
   open(): void {
-    if (!this.nzVisible) {
-      this.nzVisible = true;
-      this.nzVisibleChange.emit(true);
+    if (!this.visible) {
+      this.visible = true;
+      this.visibleChange.emit(true);
     }
 
     if (!this.modalRef) {
@@ -142,7 +142,7 @@ export class NzModalComponent<T extends ModalOptions = NzSafeAny, R = NzSafeAny>
       this.modalRef = this.modal.create(config);
 
       // When the modal is implicitly closed (e.g. closeAll) the nzVisible needs to be set to the correct value and emit.
-      this.modalRef.afterClose
+      this.modalRef._afterClose
         .asObservable()
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(() => {
@@ -152,9 +152,9 @@ export class NzModalComponent<T extends ModalOptions = NzSafeAny, R = NzSafeAny>
   }
 
   close(result?: R): void {
-    if (this.nzVisible) {
-      this.nzVisible = false;
-      this.nzVisibleChange.emit(false);
+    if (this.visible) {
+      this.visible = false;
+      this.visibleChange.emit(false);
     }
 
     if (this.modalRef) {
@@ -183,29 +183,29 @@ export class NzModalComponent<T extends ModalOptions = NzSafeAny, R = NzSafeAny>
     return this.modalRef?.getElement();
   }
 
-  getModalRef(): NzModalRef | null {
+  getModalRef(): TriModalRef | null {
     return this.modalRef;
   }
 
   private setTitleWithTemplate(templateRef: TemplateRef<{}>): void {
-    this.nzTitle = templateRef;
+    this.title = templateRef;
     if (this.modalRef) {
       // If modalRef already created, set the title in next tick
       Promise.resolve().then(() => {
         this.modalRef!.updateConfig({
-          nzTitle: this.nzTitle
+          title: this.title
         });
       });
     }
   }
 
   private setFooterWithTemplate(templateRef: TemplateRef<{}>): void {
-    this.nzFooter = templateRef;
+    this.footer = templateRef;
     if (this.modalRef) {
       // If modalRef already created, set the footer in next tick
       Promise.resolve().then(() => {
         this.modalRef!.updateConfig({
-          nzFooter: this.nzFooter
+          footer: this.footer
         });
       });
     }
@@ -215,8 +215,8 @@ export class NzModalComponent<T extends ModalOptions = NzSafeAny, R = NzSafeAny>
 
   private getConfig(): ModalOptions {
     const componentConfig = getConfigFromComponent(this);
-    componentConfig.nzViewContainerRef = this.viewContainerRef;
-    componentConfig.nzContent = this.nzContent || this.contentFromContentChild;
+    componentConfig.viewContainerRef = this.viewContainerRef;
+    componentConfig.content = this.content || this.contentFromContentChild;
     return componentConfig;
   }
 
@@ -228,7 +228,7 @@ export class NzModalComponent<T extends ModalOptions = NzSafeAny, R = NzSafeAny>
     }
 
     if (nzVisible) {
-      if (this.nzVisible) {
+      if (this.visible) {
         this.open();
       } else {
         this.close();

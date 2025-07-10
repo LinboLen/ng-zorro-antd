@@ -7,35 +7,35 @@ import { TemplateRef } from '@angular/core';
 
 import { NgStyleInterface } from 'ng-zorro-antd/core/types';
 
-export type NzProgressGapPositionType = 'top' | 'bottom' | 'left' | 'right';
+export type TriProgressGapPositionType = 'top' | 'bottom' | 'left' | 'right';
 
-export type NzProgressStatusType = 'success' | 'exception' | 'active' | 'normal';
+export type TriProgressStatusType = 'success' | 'exception' | 'active' | 'normal';
 
-export type NzProgressTypeType = 'line' | 'circle' | 'dashboard';
+export type TriProgressTypeType = 'line' | 'circle' | 'dashboard';
 
-export type NzProgressStrokeLinecapType = 'round' | 'square';
+export type TriProgressStrokeLinecapType = 'round' | 'square';
 
-export interface NzProgressGradientProgress {
+export interface TriProgressGradientProgress {
   [percent: string]: string;
 }
 
-export interface NzProgressGradientFromTo {
+export interface TriProgressGradientFromTo {
   from: string;
   to: string;
 }
 
-export type NzProgressColorGradient = { direction?: string } & (NzProgressGradientProgress | NzProgressGradientFromTo);
+export type TriProgressColorGradient = { direction?: string } & (TriProgressGradientProgress | TriProgressGradientFromTo);
 
-export type NzProgressStrokeColorType = string | NzProgressColorGradient;
+export type TriProgressStrokeColorType = string | TriProgressColorGradient;
 
-export type NzProgressFormatter = ((percent: number) => string | null) | TemplateRef<{ $implicit: number }>;
+export type TriProgressFormatter = ((percent: number) => string | null) | TemplateRef<{ $implicit: number }>;
 
-export interface NzProgressCirclePath {
+export interface TriProgressCirclePath {
   stroke: string | null;
   strokePathStyle: NgStyleInterface;
 }
 
-export interface NzProgressStepItem {
+export interface TriProgressStepItem {
   backgroundColor: string;
   width: string;
   height: string;

@@ -20,48 +20,48 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { NzConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
-import { NzShapeSCType, NzSizeLDSType } from 'ng-zorro-antd/core/types';
+import { TriConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriShapeSCType, TriSizeLDSType } from 'ng-zorro-antd/core/types';
 import { toCssPixel } from 'ng-zorro-antd/core/util';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'avatar';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'avatar';
 
 /** https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-loading */
-type NzAvatarLoading = 'eager' | 'lazy';
+type TriAvatarLoading = 'eager' | 'lazy';
 
 /** https://wicg.github.io/priority-hints/#idl-index */
-type NzAvatarFetchPriority = 'high' | 'low' | 'auto';
+type TriAvatarFetchPriority = 'high' | 'low' | 'auto';
 
 @Component({
-  selector: 'nz-avatar',
-  exportAs: 'nzAvatar',
-  imports: [NzIconModule],
+  selector: '',
+  exportAs: 'triAvatar',
+  imports: [TriIconModule],
   template: `
-    @if (nzIcon && hasIcon) {
-      <nz-icon [nzType]="nzIcon" />
-    } @else if (nzSrc && hasSrc) {
+    @if (icon && hasIcon) {
+      <tri-icon [type]="icon" />
+    } @else if (src && hasSrc) {
       <img
-        [src]="nzSrc"
-        [attr.srcset]="nzSrcSet"
-        [attr.alt]="nzAlt"
-        [attr.loading]="nzLoading() || 'eager'"
-        [attr.fetchpriority]="nzFetchPriority() || 'auto'"
+        [src]="src"
+        [attr.srcset]="srcSet"
+        [attr.alt]="alt"
+        [attr.loading]="loading() || 'eager'"
+        [attr.fetchpriority]="fetchPriority() || 'auto'"
         (error)="imgError($event)"
       />
-    } @else if (nzText && hasText) {
-      <span class="ant-avatar-string" #textEl>{{ nzText }}</span>
+    } @else if (text && hasText) {
+      <span class="tri-avatar-string" #textEl>{{ text }}</span>
     }
     <ng-content></ng-content>
   `,
   host: {
-    class: 'ant-avatar',
-    '[class.ant-avatar-lg]': `nzSize === 'large'`,
-    '[class.ant-avatar-sm]': `nzSize === 'small'`,
-    '[class.ant-avatar-square]': `nzShape === 'square'`,
-    '[class.ant-avatar-circle]': `nzShape === 'circle'`,
-    '[class.ant-avatar-icon]': `nzIcon`,
-    '[class.ant-avatar-image]': `hasSrc `,
+    class: 'tri-avatar',
+    '[class.tri-avatar-lg]': `size === 'large'`,
+    '[class.tri-avatar-sm]': `size === 'small'`,
+    '[class.tri-avatar-square]': `shape === 'square'`,
+    '[class.tri-avatar-circle]': `shape === 'circle'`,
+    '[class.tri-avatar-icon]': `icon`,
+    '[class.tri-avatar-image]': `hasSrc`,
     '[style.width]': 'customSize',
     '[style.height]': 'customSize',
     '[style.line-height]': 'customSize',
@@ -71,19 +71,19 @@ type NzAvatarFetchPriority = 'high' | 'low' | 'auto';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class NzAvatarComponent implements OnChanges {
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
-  @Input() @WithConfig() nzShape: NzShapeSCType = 'circle';
-  @Input() @WithConfig() nzSize: NzSizeLDSType | number = 'default';
-  @Input({ transform: numberAttribute }) @WithConfig() nzGap = 4;
-  @Input() nzText?: string;
-  @Input() nzSrc?: string;
-  @Input() nzSrcSet?: string;
-  @Input() nzAlt?: string;
-  @Input() nzIcon?: string;
-  readonly nzLoading = input<NzAvatarLoading>();
-  readonly nzFetchPriority = input<NzAvatarFetchPriority>();
-  @Output() readonly nzError = new EventEmitter<Event>();
+export class TriAvatarComponent implements OnChanges {
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  @Input() @WithConfig() shape: TriShapeSCType = 'circle';
+  @Input() @WithConfig() size: TriSizeLDSType | number = 'default';
+  @Input({ transform: numberAttribute }) @WithConfig() gap = 4;
+  @Input() text?: string;
+  @Input() src?: string;
+  @Input() srcSet?: string;
+  @Input() alt?: string;
+  @Input() icon?: string;
+  readonly loading = input<TriAvatarLoading>();
+  readonly fetchPriority = input<TriAvatarFetchPriority>();
+  @Output() readonly error = new EventEmitter<Event>();
 
   hasText: boolean = false;
   hasSrc: boolean = true;
@@ -100,14 +100,14 @@ export class NzAvatarComponent implements OnChanges {
   }
 
   imgError(event: Event): void {
-    this.nzError.emit(event);
+    this.error.emit(event);
     if (!event.defaultPrevented) {
       this.hasSrc = false;
       this.hasIcon = false;
       this.hasText = false;
-      if (this.nzIcon) {
+      if (this.icon) {
         this.hasIcon = true;
-      } else if (this.nzText) {
+      } else if (this.text) {
         this.hasText = true;
       }
       this.cdr.detectChanges();
@@ -117,9 +117,9 @@ export class NzAvatarComponent implements OnChanges {
   }
 
   ngOnChanges(): void {
-    this.hasText = !this.nzSrc && !!this.nzText;
-    this.hasIcon = !this.nzSrc && !!this.nzIcon;
-    this.hasSrc = !!this.nzSrc;
+    this.hasText = !this.src && !!this.text;
+    this.hasIcon = !this.src && !!this.icon;
+    this.hasSrc = !!this.src;
 
     this.setSizeStyle();
     this.calcStringSize();
@@ -133,7 +133,7 @@ export class NzAvatarComponent implements OnChanges {
     const textEl = this.textEl.nativeElement;
     const childrenWidth = textEl.offsetWidth;
     const avatarWidth = this.el.getBoundingClientRect?.().width ?? 0;
-    const offset = this.nzGap * 2 < avatarWidth ? this.nzGap * 2 : 8;
+    const offset = this.gap * 2 < avatarWidth ? this.gap * 2 : 8;
     const scale = avatarWidth - offset < childrenWidth ? (avatarWidth - offset) / childrenWidth : 1;
 
     textEl.style.transform = `scale(${scale}) translateX(-50%)`;
@@ -141,8 +141,8 @@ export class NzAvatarComponent implements OnChanges {
   }
 
   private setSizeStyle(): void {
-    if (typeof this.nzSize === 'number') {
-      this.customSize = toCssPixel(this.nzSize);
+    if (typeof this.size === 'number') {
+      this.customSize = toCssPixel(this.size);
     } else {
       this.customSize = null;
     }

@@ -1,34 +1,34 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzUploadChangeParam, NzUploadModule } from 'ng-zorro-antd/upload';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriMessageService } from 'ng-zorro-antd/message';
+import { TriUploadChangeParam, TriUploadModule } from 'ng-zorro-antd/upload';
 
 @Component({
-  selector: 'nz-demo-upload-drag',
-  imports: [NzButtonModule, NzIconModule, NzUploadModule],
+  selector: '',
+  imports: [TriButtonModule, TriIconModule, TriUploadModule],
   template: `
-    <nz-upload
-      nzType="drag"
-      [nzMultiple]="true"
-      nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-      (nzChange)="handleChange($event)"
+    <tri-upload
+      type="drag"
+      [multiple]="true"
+      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+      (change)="handleChange($event)"
     >
-      <p class="ant-upload-drag-icon">
-        <nz-icon nzType="inbox" />
+      <p class="tri-upload-drag-icon">
+        <tri-icon type="inbox" />
       </p>
-      <p class="ant-upload-text">Click or drag file to this area to upload</p>
-      <p class="ant-upload-hint">
+      <p class="tri-upload-text">Click or drag file to this area to upload</p>
+      <p class="tri-upload-hint">
         Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files
       </p>
-    </nz-upload>
+    </tri-upload>
   `
 })
-export class NzDemoUploadDragComponent {
-  constructor(private messageService: NzMessageService) {}
+export class TriDemoUploadDragComponent {
+  constructor(private messageService: TriMessageService) {}
 
-  handleChange({ file, fileList }: NzUploadChangeParam): void {
+  handleChange({ file, fileList }: TriUploadChangeParam): void {
     const status = file.status;
     if (status !== 'uploading') {
       console.log(file, fileList);

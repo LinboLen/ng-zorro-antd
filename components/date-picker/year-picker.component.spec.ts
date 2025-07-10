@@ -12,17 +12,17 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { dispatchFakeEvent, dispatchMouseEvent } from 'ng-zorro-antd/core/testing';
 import { NgStyleInterface } from 'ng-zorro-antd/core/types';
-import { NzDatePickerSizeType } from 'ng-zorro-antd/date-picker/date-picker.component';
+import { TriDatePickerSizeType } from 'ng-zorro-antd/date-picker/date-picker.component';
 import { getPickerAbstract, getPickerInput } from 'ng-zorro-antd/date-picker/testing/util';
 import { PREFIX_CLASS } from 'ng-zorro-antd/date-picker/util';
-import { NzDatePickerI18nInterface, NzDatePickerLangI18nInterface } from 'ng-zorro-antd/i18n';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { TriDatePickerI18nInterface, TriDatePickerLangI18nInterface } from 'ng-zorro-antd/i18n';
+import { TriInputModule } from 'ng-zorro-antd/input';
 
-import { NzDatePickerModule } from './date-picker.module';
+import { TriDatePickerModule } from './date-picker.module';
 
 describe('NzYearPickerComponent', () => {
-  let fixture: ComponentFixture<NzTestYearPickerComponent>;
-  let fixtureInstance: NzTestYearPickerComponent;
+  let fixture: ComponentFixture<TriTestYearPickerComponent>;
+  let fixtureInstance: TriTestYearPickerComponent;
   let debugElement: DebugElement;
   let overlayContainerElement: HTMLElement;
 
@@ -33,7 +33,7 @@ describe('NzYearPickerComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NzTestYearPickerComponent);
+    fixture = TestBed.createComponent(TriTestYearPickerComponent);
     fixtureInstance = fixture.componentInstance;
     debugElement = fixture.debugElement;
   });
@@ -63,18 +63,18 @@ describe('NzYearPickerComponent', () => {
 
     it('should support nzAllowClear and work properly', fakeAsync(() => {
       const clearBtnSelector = By.css(`.${PREFIX_CLASS}-clear`);
-      const initial = (fixtureInstance.nzValue = new Date());
-      fixtureInstance.nzAllowClear = false;
+      const initial = (fixtureInstance.value = new Date());
+      fixtureInstance.allowClear = false;
       fixture.detectChanges();
       tick(500);
       fixture.detectChanges();
       expect(debugElement.query(clearBtnSelector)).toBeFalsy();
 
-      fixtureInstance.nzAllowClear = true;
+      fixtureInstance.allowClear = true;
       fixture.detectChanges();
       tick(500);
       fixture.detectChanges();
-      expect(fixtureInstance.nzValue).toBe(initial);
+      expect(fixtureInstance.value).toBe(initial);
       expect(debugElement.query(clearBtnSelector)).toBeDefined();
 
       const nzOnChange = spyOn(fixtureInstance, 'nzOnChange');
@@ -82,30 +82,30 @@ describe('NzYearPickerComponent', () => {
       fixture.detectChanges();
       tick(500);
       fixture.detectChanges();
-      expect(fixtureInstance.nzValue).toBe(initial);
+      expect(fixtureInstance.value).toBe(initial);
       expect(nzOnChange).toHaveBeenCalledWith(null);
       expect(debugElement.query(clearBtnSelector)).toBeFalsy();
     }));
 
     it('should support nzAutoFocus', () => {
-      fixtureInstance.nzAutoFocus = true;
+      fixtureInstance.autoFocus = true;
       fixture.detectChanges();
       expect(getPickerInput(fixture.debugElement) === document.activeElement).toBeTruthy();
     });
 
     it('should support nzDisabled', fakeAsync(() => {
       // Make sure picker clear button shown up
-      fixtureInstance.nzAllowClear = true;
-      fixtureInstance.nzValue = new Date();
+      fixtureInstance.allowClear = true;
+      fixtureInstance.value = new Date();
 
-      fixtureInstance.nzDisabled = true;
+      fixtureInstance.disabled = true;
       fixture.detectChanges();
       flush();
       fixture.detectChanges();
       expect(debugElement.query(By.css('.ant-picker-disabled'))).not.toBeNull();
       expect(debugElement.query(By.css('.ant-picker-clear'))).toBeNull();
 
-      fixtureInstance.nzDisabled = false;
+      fixtureInstance.disabled = false;
       fixture.detectChanges();
       flush();
       fixture.detectChanges();
@@ -120,13 +120,13 @@ describe('NzYearPickerComponent', () => {
       fixture.whenRenderingDone().then(() => {
         expect(getPickerContainer()).toBeNull();
 
-        fixtureInstance.nzOpen = true;
+        fixtureInstance.open = true;
         fixture.detectChanges();
         tick(500);
         fixture.detectChanges();
         expect(getPickerContainer()).not.toBeNull();
 
-        fixtureInstance.nzOpen = false;
+        fixtureInstance.open = false;
         fixture.detectChanges();
         tick(500);
         fixture.detectChanges();
@@ -147,8 +147,8 @@ describe('NzYearPickerComponent', () => {
 
     it('should support nzDisabledDate', fakeAsync(() => {
       fixture.detectChanges();
-      fixtureInstance.nzValue = new Date('2018-11-11 12:12:12');
-      fixtureInstance.nzDisabledDate = (current: Date) => current.getFullYear() === 2013;
+      fixtureInstance.value = new Date('2018-11-11 12:12:12');
+      fixtureInstance.disabledDate = (current: Date) => current.getFullYear() === 2013;
       fixture.detectChanges();
       flush();
       fixture.detectChanges();
@@ -162,8 +162,8 @@ describe('NzYearPickerComponent', () => {
 
     it('should support nzLocale', () => {
       const featureKey = 'TEST_PLACEHOLDER';
-      fixtureInstance.nzLocale = {
-        lang: { yearPlaceholder: featureKey } as unknown as NzDatePickerLangI18nInterface,
+      fixtureInstance.locale = {
+        lang: { yearPlaceholder: featureKey } as unknown as TriDatePickerLangI18nInterface,
         timePickerLocale: {}
       };
       fixture.detectChanges();
@@ -172,31 +172,31 @@ describe('NzYearPickerComponent', () => {
 
     it('should support nzPlaceHolder', () => {
       const featureKey = 'TEST_PLACEHOLDER';
-      fixtureInstance.nzPlaceHolder = featureKey;
+      fixtureInstance.placeHolder = featureKey;
       fixture.detectChanges();
       expect(getPickerInput(fixture.debugElement).getAttribute('placeholder')).toBe(featureKey);
     });
 
     it('should support nzPopupStyle', fakeAsync(() => {
-      fixtureInstance.nzPopupStyle = { color: 'red' };
+      fixtureInstance.popupStyle = { color: 'red' };
       fixture.detectChanges();
       openPickerByClickTrigger();
       expect(queryFromOverlay(`.${PREFIX_CLASS}-dropdown`).style.color).toBe('red');
     }));
 
     it('should support nzDropdownClassName', fakeAsync(() => {
-      const keyCls = (fixtureInstance.nzDropdownClassName = 'my-test-class');
+      const keyCls = (fixtureInstance.dropdownClassName = 'my-test-class');
       fixture.detectChanges();
       openPickerByClickTrigger();
       expect(queryFromOverlay(`.${PREFIX_CLASS}-dropdown`).classList.contains(keyCls)).toBeTruthy();
     }));
 
     it('should support nzSize', () => {
-      fixtureInstance.nzSize = 'large';
+      fixtureInstance.size = 'large';
       fixture.detectChanges();
       expect(getPickerAbstract(fixture.debugElement).classList.contains('ant-picker-large')).toBeTruthy();
 
-      fixtureInstance.nzSize = 'small';
+      fixtureInstance.size = 'small';
       fixture.detectChanges();
       expect(getPickerAbstract(fixture.debugElement).classList.contains('ant-picker-small')).toBeTruthy();
     });
@@ -214,7 +214,7 @@ describe('NzYearPickerComponent', () => {
       expect(nzOnOpenChange).toHaveBeenCalledTimes(2);
     }));
     it('should support nzValue', fakeAsync(() => {
-      fixtureInstance.nzValue = new Date('2018-11-22');
+      fixtureInstance.value = new Date('2018-11-22');
       fixture.detectChanges();
       flush();
       fixture.detectChanges();
@@ -223,7 +223,7 @@ describe('NzYearPickerComponent', () => {
     }));
 
     it('should support nzOnChange', fakeAsync(() => {
-      fixtureInstance.nzValue = new Date('2018-11');
+      fixtureInstance.value = new Date('2018-11');
       const nzOnChange = spyOn(fixtureInstance, 'nzOnChange');
       fixture.detectChanges();
       openPickerByClickTrigger();
@@ -244,7 +244,7 @@ describe('NzYearPickerComponent', () => {
     beforeEach(() => (fixtureInstance.useSuite = 1));
 
     it('should support decade panel changes', fakeAsync(() => {
-      fixtureInstance.nzValue = new Date('2018-11');
+      fixtureInstance.value = new Date('2018-11');
       fixture.detectChanges();
       openPickerByClickTrigger();
       // Click to show decade panel
@@ -278,15 +278,15 @@ describe('NzYearPickerComponent', () => {
     beforeEach(() => (fixtureInstance.useSuite = 1));
 
     it('should support nzRenderExtraFooter', fakeAsync(() => {
-      fixtureInstance.nzRenderExtraFooter = () => fixtureInstance.tplExtraFooter;
+      fixtureInstance.renderExtraFooter = () => fixtureInstance.tplExtraFooter;
       fixture.detectChanges();
 
       openPickerByClickTrigger();
       expect(overlayContainerElement.textContent!.indexOf('TEST_EXTRA_FOOTER') > -1).toBeTruthy();
 
-      fixtureInstance.nzRenderExtraFooter = 'TEST_EXTRA_FOOTER_STRING';
+      fixtureInstance.renderExtraFooter = 'TEST_EXTRA_FOOTER_STRING';
       fixture.detectChanges();
-      expect(overlayContainerElement.textContent!.indexOf(fixtureInstance.nzRenderExtraFooter) > -1).toBeTruthy();
+      expect(overlayContainerElement.textContent!.indexOf(fixtureInstance.renderExtraFooter) > -1).toBeTruthy();
     }));
   }); // /specified date picker testing
 
@@ -347,65 +347,65 @@ describe('NzYearPickerComponent', () => {
 });
 
 @Component({
-  imports: [FormsModule, NzDatePickerModule, NzInputModule],
+  imports: [FormsModule, TriDatePickerModule, TriInputModule],
   template: `
     <ng-template #tplExtraFooter>TEST_EXTRA_FOOTER</ng-template>
     @switch (useSuite) {
       @case (1) {
-        <nz-date-picker
-          nzMode="year"
-          [nzAllowClear]="nzAllowClear"
-          [nzAutoFocus]="nzAutoFocus"
-          [nzDisabled]="nzDisabled"
-          [nzDisabledDate]="nzDisabledDate"
-          [nzLocale]="nzLocale"
-          [nzPlaceHolder]="nzPlaceHolder"
-          [nzPopupStyle]="nzPopupStyle ?? {}"
-          [nzDropdownClassName]="nzDropdownClassName"
-          [nzSize]="nzSize"
-          (nzOnOpenChange)="nzOnOpenChange($event)"
-          [ngModel]="nzValue"
-          (ngModelChange)="nzOnChange($event)"
-          [nzRenderExtraFooter]="nzRenderExtraFooter"
+        <tri-date-picker
+          mode="year"
+          [allowClear]="allowClear"
+          [autoFocus]="autoFocus"
+          [disabled]="disabled"
+          [disabledDate]="disabledDate"
+          [locale]="locale"
+          [placeHolder]="placeHolder"
+          [popupStyle]="popupStyle ?? {}"
+          [dropdownClassName]="dropdownClassName"
+          [size]="size"
+          (onOpenChange)="onOpenChange($event)"
+          [ngModel]="value"
+          (ngModelChange)="onChange($event)"
+          [renderExtraFooter]="renderExtraFooter"
         />
       }
       @case (2) {
-        <nz-date-picker nzMode="year" [nzOpen]="nzOpen" />
+        <tri-date-picker mode="year" [open]="open" />
       }
       @case (3) {
-        <nz-date-picker nzMode="year" nzOpen [(ngModel)]="modelValue" />
+        <tri-date-picker mode="year" open [(ngModel)]="modelValue" />
       }
       @case (4) {
-        <nz-year-picker nzOpen [(ngModel)]="modelValue" />
+        <tri-year-picker open [(ngModel)]="modelValue" />
       }
     }
   `
 })
-class NzTestYearPickerComponent {
+class TriTestYearPickerComponent {
   useSuite?: 1 | 2 | 3 | 4;
   @ViewChild('tplExtraFooter', { static: true }) tplExtraFooter!: TemplateRef<void>;
 
   // --- Suite 1
-  nzAllowClear: boolean = false;
-  nzAutoFocus: boolean = false;
-  nzDisabled: boolean = false;
-  nzDisabledDate?: (d: Date) => boolean;
-  nzLocale!: NzDatePickerI18nInterface;
-  nzPlaceHolder!: string;
-  nzPopupStyle?: NgStyleInterface;
-  nzDropdownClassName?: string;
-  nzSize!: NzDatePickerSizeType;
+  allowClear: boolean = false;
+  autoFocus: boolean = false;
+  disabled: boolean = false;
+  disabledDate?: (d: Date) => boolean;
+  locale!: TriDatePickerI18nInterface;
+  placeHolder!: string;
+  popupStyle?: NgStyleInterface;
+  dropdownClassName?: string;
+  size!: TriDatePickerSizeType;
 
-  nzOnOpenChange(_: boolean): void {}
+  onOpenChange(_: boolean): void {}
 
-  nzOnChange(_: Date | null): void {}
+  onChange(_: Date | null): void {}
 
-  nzValue: Date | null = null;
+  value: Date | null = null;
 
-  nzRenderExtraFooter?: string | (() => TemplateRef<void> | string);
+  renderExtraFooter?: string | (() => TemplateRef<void> | string);
 
   // --- Suite 2
-  nzOpen: boolean = false;
+  open: boolean = false;
 
   // --- Suite 3
   modelValue?: Date;

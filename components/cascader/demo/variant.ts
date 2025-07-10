@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 
-import { NzCascaderModule, NzCascaderOption } from 'ng-zorro-antd/cascader';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { TriCascaderModule, TriCascaderOption } from 'ng-zorro-antd/cascader';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
 
-const options: NzCascaderOption[] = [
+const options: TriCascaderOption[] = [
   {
     value: 'zhejiang',
     label: 'Zhejiang',
@@ -46,17 +46,17 @@ const options: NzCascaderOption[] = [
 ];
 
 @Component({
-  selector: 'nz-demo-cascader-variant',
-  imports: [NzCascaderModule, NzSpaceModule],
+  selector: '',
+  imports: [TriCascaderModule, TriSpaceModule],
   template: `
-    <nz-space nzDirection="vertical" style="width: 100%">
-      <nz-cascader *nzSpaceItem [nzOptions]="options" nzVariant="outlined" />
-      <nz-cascader *nzSpaceItem [nzOptions]="options" nzVariant="filled" />
-      <nz-cascader *nzSpaceItem [nzOptions]="options" nzVariant="borderless" />
-      <nz-cascader *nzSpaceItem [nzOptions]="options" nzVariant="underlined" />
-    </nz-space>
+    <tri-space direction="vertical" style="width: 100%">
+      <tri-cascader *spaceItem [options]="options" variant="outlined" />
+      <tri-cascader *spaceItem [options]="options" variant="filled" />
+      <tri-cascader *spaceItem [options]="options" variant="borderless" />
+      <tri-cascader *spaceItem [options]="options" variant="underlined" />
+    </tri-space>
   `
 })
-export class NzDemoCascaderVariantComponent {
+export class TriDemoCascaderVariantComponent {
   protected readonly options = options;
 }

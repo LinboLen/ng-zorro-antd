@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzRateModule } from 'ng-zorro-antd/rate';
+import { TriRateModule } from 'ng-zorro-antd/rate';
 
 @Component({
-  selector: 'nz-demo-rate-half',
-  imports: [FormsModule, NzRateModule],
-  template: `<nz-rate [ngModel]="2.5" nzAllowHalf></nz-rate>`
+  selector: '',
+  imports: [FormsModule, TriRateModule],
+  template: `<tri-rate [ngModel]="2.5" allowHalf></tri-rate>`
 })
-export class NzDemoRateHalfComponent {}
+export class TriDemoRateHalfComponent {}

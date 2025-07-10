@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 
-import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { TriDividerModule } from 'ng-zorro-antd/divider';
 
 @Component({
-  selector: 'nz-demo-divider-vertical',
-  imports: [NzDividerModule],
+  selector: '',
+  imports: [TriDividerModule],
   template: `
     <div>
       Text
-      <nz-divider nzType="vertical"></nz-divider>
+      <tri-divider type="vertical"></tri-divider>
       <a href="#">Link</a>
-      <nz-divider nzType="vertical"></nz-divider>
+      <tri-divider type="vertical"></tri-divider>
       <a href="#">Link</a>
     </div>
   `
 })
-export class NzDemoDividerVerticalComponent {}
+export class TriDemoDividerVerticalComponent {}

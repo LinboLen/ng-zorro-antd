@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzSpinComponent } from './spin.component';
+import { TriSpinComponent } from './spin.component';
 
 @NgModule({
-  imports: [NzSpinComponent],
-  exports: [NzSpinComponent]
+  imports: [TriSpinComponent],
+  exports: [TriSpinComponent]
 })
-export class NzSpinModule {}
+export class TriSpinModule {}

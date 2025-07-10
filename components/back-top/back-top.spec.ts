@@ -11,17 +11,17 @@ import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Subject } from 'rxjs';
 
-import { NzScrollService } from 'ng-zorro-antd/core/services';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriScrollService } from 'ng-zorro-antd/core/services';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzBackTopComponent } from './back-top.component';
-import { NzBackTopModule } from './back-top.module';
+import { TriBackTopComponent } from './back-top.component';
+import { TriBackTopModule } from './back-top.module';
 
 describe('nz-back-top', () => {
   let scrollService: MockNzScrollService;
   let fixture: ComponentFixture<TestBackTopComponent>;
   let debugElement: DebugElement;
-  let component: NzBackTopComponent;
+  let component: TriBackTopComponent;
   let componentObject: NzBackTopPageObject;
   const defaultVisibilityHeight = 400;
 
@@ -45,18 +45,18 @@ describe('nz-back-top', () => {
       providers: [
         provideNoopAnimations(),
         {
-          provide: NzScrollService,
+          provide: TriScrollService,
           useClass: MockNzScrollService
         }
       ]
     });
 
     fixture = TestBed.createComponent(TestBackTopComponent);
-    component = fixture.componentInstance.nzBackTopComponent;
+    component = fixture.componentInstance.backTopComponent;
     componentObject = new NzBackTopPageObject();
     debugElement = fixture.debugElement;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    scrollService = TestBed.inject(NzScrollService) as any;
+    scrollService = TestBed.inject(TriScrollService) as any;
   });
 
   describe('[default]', () => {
@@ -103,7 +103,7 @@ describe('nz-back-top', () => {
     const customVisibilityHeight = 100;
 
     beforeEach(() => {
-      component.nzVisibilityHeight = customVisibilityHeight;
+      component.visibilityHeight = customVisibilityHeight;
     });
 
     it(`should not show when scroll is below ${customVisibilityHeight}`, fakeAsync(() => {
@@ -144,7 +144,7 @@ describe('nz-back-top', () => {
 
     describe('when clicked', () => {
       it(`emit event on nzClick`, fakeAsync(() => {
-        component.nzClick.subscribe((returnValue: boolean) => {
+        component.click.subscribe((returnValue: boolean) => {
           expect(returnValue).toBe(true);
         });
 
@@ -154,7 +154,7 @@ describe('nz-back-top', () => {
 
     describe('change detection behavior', () => {
       it('should emit click event only when there are subscribers', fakeAsync(() => {
-        const emitSpy = spyOn(component.nzClick, 'emit');
+        const emitSpy = spyOn(component.click, 'emit');
 
         const backTopButton = componentObject.backTopButton().nativeElement;
         backTopButton.dispatchEvent(new MouseEvent('click'));
@@ -162,7 +162,7 @@ describe('nz-back-top', () => {
 
         expect(emitSpy).not.toHaveBeenCalled();
 
-        const subscription = component.nzClick.subscribe();
+        const subscription = component.click.subscribe();
 
         backTopButton.dispatchEvent(new MouseEvent('click'));
         tick();
@@ -201,7 +201,7 @@ describe('nz-back-top', () => {
     });
 
     it('element (use string id) scroll shows the button', (done: () => void) => {
-      component.nzTarget = '#fakeTarget';
+      component.target = '#fakeTarget';
 
       componentObject.scrollTo(fakeTarget, defaultVisibilityHeight + 1);
       fixture.detectChanges();
@@ -226,15 +226,15 @@ describe('nz-back-top', () => {
 });
 
 @Component({
-  imports: [NzBackTopModule],
+  imports: [TriBackTopModule],
   template: `
-    <nz-back-top [nzTarget]="target"></nz-back-top>
+    <tri-back-top [target]="target"></tri-back-top>
     <div id="fakeTarget"></div>
   `
 })
 class TestBackTopComponent {
-  @ViewChild(NzBackTopComponent, { static: true })
-  nzBackTopComponent!: NzBackTopComponent;
+  @ViewChild(TriBackTopComponent, { static: true })
+  backTopComponent!: TriBackTopComponent;
 
   target: HTMLElement | undefined = undefined;
 
@@ -244,19 +244,19 @@ class TestBackTopComponent {
 }
 
 @Component({
-  imports: [NzBackTopModule],
+  imports: [TriBackTopModule],
   template: `
     my comp
-    <nz-back-top [nzTemplate]="tpl">
+    <tri-back-top [template]="tpl">
       <ng-template #tpl>
         <div class="this-is-my-template"></div>
       </ng-template>
-    </nz-back-top>
+    </tri-back-top>
   `
 })
 class TestBackTopTemplateComponent {
-  @ViewChild(NzBackTopComponent, { static: false })
-  nzBackTopComponent!: NzBackTopComponent;
+  @ViewChild(TriBackTopComponent, { static: false })
+  backTopComponent!: TriBackTopComponent;
 }
 
 class MockNzScrollService {
@@ -277,8 +277,8 @@ class MockDirectionality {
 }
 
 describe('back-to-top', () => {
-  let component: NzBackTopComponent;
-  let fixture: ComponentFixture<NzBackTopComponent>;
+  let component: TriBackTopComponent;
+  let fixture: ComponentFixture<TriBackTopComponent>;
   let mockDirectionality: MockDirectionality;
 
   beforeEach(() => {
@@ -293,13 +293,13 @@ describe('back-to-top', () => {
       ]
     });
 
-    fixture = TestBed.createComponent(NzBackTopComponent);
+    fixture = TestBed.createComponent(TriBackTopComponent);
     component = fixture.componentInstance;
     mockDirectionality = TestBed.inject(Directionality) as unknown as MockDirectionality;
   });
 
   it('dir change should work properly', fakeAsync(() => {
-    spyOn<NzSafeAny>(component['cdr'], 'detectChanges');
+    spyOn<TriSafeAny>(component['cdr'], 'detectChanges');
     mockDirectionality.value = 'ltr';
     component.ngOnInit();
     expect(component.dir).toEqual('ltr');
@@ -311,17 +311,17 @@ describe('back-to-top', () => {
   }));
 
   it('should return if platform is not browser', () => {
-    spyOn<NzSafeAny>(component, 'handleScroll');
+    spyOn<TriSafeAny>(component, 'handleScroll');
     component['registerScrollEvent']();
 
     expect(component['handleScroll']).not.toHaveBeenCalled();
   });
 
   it('should set correct value for target', fakeAsync(() => {
-    spyOn<NzSafeAny>(component, 'registerScrollEvent');
+    spyOn<TriSafeAny>(component, 'registerScrollEvent');
     spyOn(document, 'querySelector').and.returnValue({} as HTMLElement);
-    const mockTarget: NzSafeAny = 'mockTarget';
-    component.nzTarget = mockTarget;
+    const mockTarget: TriSafeAny = 'mockTarget';
+    component.target = mockTarget;
     const change: SimpleChanges = {
       nzTarget: {
         currentValue: mockTarget,

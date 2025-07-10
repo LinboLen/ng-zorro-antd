@@ -17,39 +17,39 @@ import {
 } from '@angular/core';
 
 import { zoomBigMotion } from 'ng-zorro-antd/core/animation';
-import { NzConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
-import { NzNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzOverlayModule } from 'ng-zorro-antd/core/overlay';
-import { NgStyleInterface, NzSafeAny, NzTSType } from 'ng-zorro-antd/core/types';
+import { TriConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriOverlayModule } from 'ng-zorro-antd/core/overlay';
+import { NgStyleInterface, TriSafeAny, TriTSType } from 'ng-zorro-antd/core/types';
 import {
-  NzToolTipComponent,
-  NzTooltipBaseDirective,
-  NzTooltipTrigger,
+  TriToolTipComponent,
+  TriTooltipBaseDirective,
+  TriTooltipTrigger,
   PropertyMapping,
   isTooltipEmpty
 } from 'ng-zorro-antd/tooltip';
 
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'popover';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'popover';
 
 @Directive({
-  selector: '[nz-popover]',
-  exportAs: 'nzPopover',
+  selector: '',
+  exportAs: 'triPopover',
   host: {
-    '[class.ant-popover-open]': 'visible'
+    '[class.tri-popover-open]': 'visible'
   }
 })
-export class NzPopoverDirective extends NzTooltipBaseDirective {
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+export class TriPopoverDirective extends TriTooltipBaseDirective {
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
 
   /* eslint-disable @angular-eslint/no-input-rename, @angular-eslint/no-output-rename */
   @Input({ alias: 'nzPopoverArrowPointAtCenter', transform: booleanAttribute }) override arrowPointAtCenter?: boolean;
-  @Input('nzPopoverTitle') override title?: NzTSType;
-  @Input('nzPopoverTitleContext') titleContext?: NzSafeAny | null = null;
-  @Input('nzPopoverContent') override content?: NzTSType;
-  @Input('nzPopoverContentContext') contentContext?: NzSafeAny | null = null;
-  @Input('nz-popover') override directiveTitle?: NzTSType | null;
-  @Input('nzPopoverTrigger') override trigger?: NzTooltipTrigger = 'hover';
+  @Input('nzPopoverTitle') override title?: TriTSType;
+  @Input('nzPopoverTitleContext') titleContext?: TriSafeAny | null = null;
+  @Input('nzPopoverContent') override content?: TriTSType;
+  @Input('nzPopoverContentContext') contentContext?: TriSafeAny | null = null;
+  @Input('nz-popover') override directiveTitle?: TriTSType | null;
+  @Input('nzPopoverTrigger') override trigger?: TriTooltipTrigger = 'hover';
   @Input('nzPopoverPlacement') override placement?: string | string[] = 'top';
   @Input('nzPopoverOrigin') override origin?: ElementRef<HTMLElement>;
   @Input('nzPopoverVisible') override visible?: boolean;
@@ -59,15 +59,15 @@ export class NzPopoverDirective extends NzTooltipBaseDirective {
   @Input('nzPopoverOverlayStyle') override overlayStyle?: NgStyleInterface;
   @Input('nzPopoverOverlayClickable') override overlayClickable?: boolean;
 
-  override directiveContent?: NzTSType | null = null;
+  override directiveContent?: TriTSType | null = null;
 
-  @Input() @WithConfig() nzPopoverBackdrop?: boolean = false;
+  @Input() @WithConfig() popoverBackdrop?: boolean = false;
 
   @Output('nzPopoverVisibleChange') override readonly visibleChange = new EventEmitter<boolean>();
 
   protected override getProxyPropertyMap(): PropertyMapping {
     return {
-      nzPopoverBackdrop: ['nzBackdrop', () => this.nzPopoverBackdrop],
+      nzPopoverBackdrop: ['nzBackdrop', () => this.popoverBackdrop],
       titleContext: ['nzTitleContext', () => this.titleContext],
       contentContext: ['nzContentContext', () => this.contentContext],
       ...super.getProxyPropertyMap()
@@ -75,13 +75,13 @@ export class NzPopoverDirective extends NzTooltipBaseDirective {
   }
 
   constructor() {
-    super(NzPopoverComponent);
+    super(TriPopoverComponent);
   }
 }
 
 @Component({
-  selector: 'nz-popover',
-  exportAs: 'nzPopoverComponent',
+  selector: '',
+  exportAs: 'triPopoverComponent',
   animations: [zoomBigMotion],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
@@ -89,42 +89,42 @@ export class NzPopoverDirective extends NzTooltipBaseDirective {
     <ng-template
       #overlay="cdkConnectedOverlay"
       cdkConnectedOverlay
-      nzConnectedOverlay
+      connectedOverlay
       [cdkConnectedOverlayHasBackdrop]="hasBackdrop"
       [cdkConnectedOverlayOrigin]="origin"
       [cdkConnectedOverlayPositions]="_positions"
       [cdkConnectedOverlayOpen]="_visible"
       [cdkConnectedOverlayPush]="cdkConnectedOverlayPush"
-      [nzArrowPointAtCenter]="nzArrowPointAtCenter"
+      [arrowPointAtCenter]="arrowPointAtCenter"
       (overlayOutsideClick)="onClickOutside($event)"
       (detach)="hide()"
       (positionChange)="onPositionChange($event)"
     >
       <div
-        class="ant-popover"
-        [class.ant-popover-rtl]="dir === 'rtl'"
+        class="tri-popover"
+        [class.tri-popover-rtl]="dir === 'rtl'"
         [class]="_classMap"
-        [style]="nzOverlayStyle"
+        [style]="overlayStyle"
         [@.disabled]="!!noAnimation?.nzNoAnimation"
-        [nzNoAnimation]="noAnimation?.nzNoAnimation"
+        [noAnimation]="noAnimation?.nzNoAnimation"
         [@zoomBigMotion]="'active'"
       >
-        <div class="ant-popover-content">
-          <div class="ant-popover-arrow">
-            <span class="ant-popover-arrow-content"></span>
+        <div class="tri-popover-content">
+          <div class="tri-popover-arrow">
+            <span class="tri-popover-arrow-content"></span>
           </div>
-          <div class="ant-popover-inner" role="tooltip">
+          <div class="tri-popover-inner" role="tooltip">
             <div>
-              @if (nzTitle) {
-                <div class="ant-popover-title">
-                  <ng-container *nzStringTemplateOutlet="nzTitle; context: { $implicit: nzTitleContext }">
-                    {{ nzTitle }}
+              @if (title) {
+                <div class="tri-popover-title">
+                  <ng-container *stringTemplateOutlet="title; stringTemplateOutletContext: { $implicit: titleContext }">
+                    {{ title }}
                   </ng-container>
                 </div>
               }
-              <div class="ant-popover-inner-content">
-                <ng-container *nzStringTemplateOutlet="nzContent; context: { $implicit: nzContentContext }">
-                  {{ nzContent }}
+              <div class="tri-popover-inner-content">
+                <ng-container *stringTemplateOutlet="content; stringTemplateOutletContext: { $implicit: contentContext }">
+                  {{ content }}
                 </ng-container>
               </div>
             </div>
@@ -133,17 +133,17 @@ export class NzPopoverDirective extends NzTooltipBaseDirective {
       </div>
     </ng-template>
   `,
-  imports: [OverlayModule, NzOverlayModule, NzNoAnimationDirective, NzOutletModule]
+  imports: [OverlayModule, TriOverlayModule, TriNoAnimationDirective, TriOutletModule]
 })
-export class NzPopoverComponent extends NzToolTipComponent {
+export class TriPopoverComponent extends TriToolTipComponent {
   override _prefix = 'ant-popover';
-  nzContentContext: object | null = null;
+  contentContext: object | null = null;
 
   get hasBackdrop(): boolean {
-    return this.nzTrigger === 'click' ? this.nzBackdrop : false;
+    return this.trigger === 'click' ? this.backdrop : false;
   }
 
   protected override isEmpty(): boolean {
-    return isTooltipEmpty(this.nzTitle) && isTooltipEmpty(this.nzContent);
+    return isTooltipEmpty(this.title) && isTooltipEmpty(this.content);
   }
 }

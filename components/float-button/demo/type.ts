@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 
-import { NzFloatButtonModule } from 'ng-zorro-antd/float-button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriFloatButtonModule } from 'ng-zorro-antd/float-button';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-demo-float-button-type',
-  imports: [NzFloatButtonModule, NzIconModule],
+  selector: '',
+  imports: [TriFloatButtonModule, TriIconModule],
   template: `
     <div class="type">
-      <nz-float-button nzType="primary" style="right: 24px" [nzIcon]="icon"></nz-float-button>
-      <nz-float-button nzType="default" style="right: 94px" [nzIcon]="icon"></nz-float-button>
+      <tri-float-button type="primary" style="right: 24px" [icon]="icon"></tri-float-button>
+      <tri-float-button type="default" style="right: 94px" [icon]="icon"></tri-float-button>
     </div>
     <ng-template #icon>
-      <nz-icon nzType="question-circle" nzTheme="outline"></nz-icon>
+      <tri-icon type="question-circle" theme="outline"></tri-icon>
     </ng-template>
   `,
   styles: [
@@ -27,4 +27,4 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     `
   ]
 })
-export class NzDemoFloatButtonTypeComponent {}
+export class TriDemoFloatButtonTypeComponent {}

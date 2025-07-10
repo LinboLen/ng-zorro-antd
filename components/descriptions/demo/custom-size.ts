@@ -1,29 +1,29 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDescriptionsModule, NzDescriptionsSize } from 'ng-zorro-antd/descriptions';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriDescriptionsModule, TriDescriptionsSize } from 'ng-zorro-antd/descriptions';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: 'nz-demo-descriptions-custom-size',
-  imports: [FormsModule, NzButtonModule, NzDescriptionsModule, NzRadioModule],
+  selector: '',
+  imports: [FormsModule, TriButtonModule, TriDescriptionsModule, TriRadioModule],
   template: `
-    <nz-radio-group [(ngModel)]="size">
-      <label nz-radio nzValue="default">default</label>
-      <label nz-radio nzValue="middle">middle</label>
-      <label nz-radio nzValue="small">small</label>
-    </nz-radio-group>
+    <tri-radio-group [(ngModel)]="size">
+      <label tri-radio value="default">default</label>
+      <label tri-radio value="middle">middle</label>
+      <label tri-radio value="small">small</label>
+    </tri-radio-group>
     <br />
     <br />
-    <nz-descriptions nzTitle="Custom Size" [nzExtra]="extraTpl" nzBordered [nzSize]="size">
-      <nz-descriptions-item nzTitle="Product">Cloud Database</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Billing">Prepaid</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="time">18:00:00</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Amount">$80.00</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Discount">$20.00</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Official">$60.00</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Config Info">
+    <tri-descriptions title="Custom Size" [extra]="extraTpl" bordered [size]="size">
+      <tri-descriptions-item title="Product">Cloud Database</tri-descriptions-item>
+      <tri-descriptions-item title="Billing">Prepaid</tri-descriptions-item>
+      <tri-descriptions-item title="time">18:00:00</tri-descriptions-item>
+      <tri-descriptions-item title="Amount">$80.00</tri-descriptions-item>
+      <tri-descriptions-item title="Discount">$20.00</tri-descriptions-item>
+      <tri-descriptions-item title="Official">$60.00</tri-descriptions-item>
+      <tri-descriptions-item title="Config Info">
         Data disk type: MongoDB
         <br />
         Database version: 3.4
@@ -36,23 +36,23 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
         <br />
         Region: East China 1
         <br />
-      </nz-descriptions-item>
-    </nz-descriptions>
+      </tri-descriptions-item>
+    </tri-descriptions>
     <br />
     <br />
-    <nz-descriptions nzTitle="Custom Size" [nzSize]="size" [nzExtra]="extraTpl">
-      <nz-descriptions-item nzTitle="Product">Cloud Database</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Billing">Prepaid</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Time">18:00:00</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Amount">$80.00</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Discount">$20.00</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Official">$60.00</nz-descriptions-item>
-    </nz-descriptions>
+    <tri-descriptions title="Custom Size" [size]="size" [extra]="extraTpl">
+      <tri-descriptions-item title="Product">Cloud Database</tri-descriptions-item>
+      <tri-descriptions-item title="Billing">Prepaid</tri-descriptions-item>
+      <tri-descriptions-item title="Time">18:00:00</tri-descriptions-item>
+      <tri-descriptions-item title="Amount">$80.00</tri-descriptions-item>
+      <tri-descriptions-item title="Discount">$20.00</tri-descriptions-item>
+      <tri-descriptions-item title="Official">$60.00</tri-descriptions-item>
+    </tri-descriptions>
     <ng-template #extraTpl>
-      <button nz-button nzType="primary">Edit</button>
+      <button tri-button type="primary">Edit</button>
     </ng-template>
   `
 })
-export class NzDemoDescriptionsCustomSizeComponent {
-  size: NzDescriptionsSize = 'default';
+export class TriDemoDescriptionsCustomSizeComponent {
+  size: TriDescriptionsSize = 'default';
 }

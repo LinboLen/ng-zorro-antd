@@ -2,27 +2,27 @@ import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { filter } from 'rxjs/operators';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzUploadFile, NzUploadModule } from 'ng-zorro-antd/upload';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriMessageService } from 'ng-zorro-antd/message';
+import { TriUploadFile, TriUploadModule } from 'ng-zorro-antd/upload';
 
 @Component({
-  selector: 'nz-demo-upload-upload-manually',
-  imports: [NzButtonModule, NzIconModule, NzUploadModule],
+  selector: '',
+  imports: [TriButtonModule, TriIconModule, TriUploadModule],
   template: `
-    <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload">
-      <button nz-button>
-        <nz-icon nzType="upload" />
+    <tri-upload [(fileListChange)]="fileList" [beforeUpload]="beforeUpload">
+      <button tri-button>
+        <tri-icon type="upload" />
         Select File
       </button>
-    </nz-upload>
+    </tri-upload>
     <br />
     <br />
     <button
-      nz-button
-      nzType="primary"
-      [nzLoading]="uploading"
+      tri-button
+      type="primary"
+      [loading]="uploading"
       (click)="handleUpload()"
       [disabled]="fileList.length === 0"
     >
@@ -30,16 +30,16 @@ import { NzUploadFile, NzUploadModule } from 'ng-zorro-antd/upload';
     </button>
   `
 })
-export class NzDemoUploadUploadManuallyComponent {
+export class TriDemoUploadUploadManuallyComponent {
   uploading = false;
-  fileList: NzUploadFile[] = [];
+  fileList: TriUploadFile[] = [];
 
   constructor(
     private http: HttpClient,
-    private messageService: NzMessageService
+    private messageService: TriMessageService
   ) {}
 
-  beforeUpload = (file: NzUploadFile): boolean => {
+  beforeUpload = (file: TriUploadFile): boolean => {
     this.fileList = this.fileList.concat(file);
     return false;
   };

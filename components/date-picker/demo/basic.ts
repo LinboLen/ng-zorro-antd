@@ -3,25 +3,25 @@ import { FormsModule } from '@angular/forms';
 
 import { getISOWeek } from 'date-fns';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import { en_US, NzI18nService, zh_CN } from 'ng-zorro-antd/i18n';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { en_US, TriI18nService, zh_CN } from 'ng-zorro-antd/i18n';
 
 @Component({
-  selector: 'nz-demo-date-picker-basic',
-  imports: [FormsModule, NzButtonModule, NzDatePickerModule],
+  selector: '',
+  imports: [FormsModule, TriButtonModule, TriDatePickerModule],
   template: `
-    <nz-date-picker [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-date-picker>
+    <tri-date-picker [(ngModel)]="date" (ngModelChange)="onChange($event)"></tri-date-picker>
     <br />
-    <nz-date-picker nzMode="week" [(ngModel)]="date" (ngModelChange)="getWeek($event)"></nz-date-picker>
+    <tri-date-picker mode="week" [(ngModel)]="date" (ngModelChange)="getWeek($event)"></tri-date-picker>
     <br />
-    <nz-date-picker nzMode="month" [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-date-picker>
+    <tri-date-picker mode="month" [(ngModel)]="date" (ngModelChange)="onChange($event)"></tri-date-picker>
     <br />
-    <nz-date-picker nzMode="quarter" [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-date-picker>
+    <tri-date-picker mode="quarter" [(ngModel)]="date" (ngModelChange)="onChange($event)"></tri-date-picker>
     <br />
-    <nz-date-picker nzMode="year" [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-date-picker>
+    <tri-date-picker mode="year" [(ngModel)]="date" (ngModelChange)="onChange($event)"></tri-date-picker>
     <br />
-    <button nz-button nzType="default" (click)="changeLanguage()">Switch language for all pickers</button>
+    <button tri-button type="default" (click)="changeLanguage()">Switch language for all pickers</button>
   `,
   styles: [
     `
@@ -31,11 +31,11 @@ import { en_US, NzI18nService, zh_CN } from 'ng-zorro-antd/i18n';
     `
   ]
 })
-export class NzDemoDatePickerBasicComponent {
+export class TriDemoDatePickerBasicComponent {
   date = null;
   isEnglish = false;
 
-  constructor(private i18n: NzI18nService) {}
+  constructor(private i18n: TriI18nService) {}
 
   onChange(result: Date): void {
     console.log('onChange: ', result);

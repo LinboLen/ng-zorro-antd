@@ -7,23 +7,23 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
-import { NzCodeEditorModule } from 'ng-zorro-antd/code-editor';
+import { TriCodeEditorModule } from 'ng-zorro-antd/code-editor';
 
 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
 declare const monaco: any;
 
 @Component({
-  imports: [FormsModule, NzCodeEditorModule],
+  imports: [FormsModule, TriCodeEditorModule],
   template: `
-    <nz-code-editor
+    <tri-code-editor
       class="editor"
       [ngModel]="code"
-      [nzFullControl]="true"
-      (nzEditorInitialized)="onEditorInit($event)"
-    ></nz-code-editor>
+      [fullControl]="true"
+      (editorInitialized)="onEditorInit($event)"
+    ></tri-code-editor>
   `
 })
-export class NzTestCodeEditorFullControlComponent {
+export class TriTestCodeEditorFullControlComponent {
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   editor: any;
 
@@ -53,11 +53,11 @@ describe('code editor', () => {
   // });
 
   describe('full control', () => {
-    let fixture: ComponentFixture<NzTestCodeEditorFullControlComponent>;
-    let testComponent: NzTestCodeEditorFullControlComponent;
+    let fixture: ComponentFixture<TriTestCodeEditorFullControlComponent>;
+    let testComponent: TriTestCodeEditorFullControlComponent;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestCodeEditorFullControlComponent);
+      fixture = TestBed.createComponent(TriTestCodeEditorFullControlComponent);
       testComponent = fixture.debugElement.componentInstance;
     });
 

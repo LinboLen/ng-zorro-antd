@@ -1,35 +1,35 @@
 import { Component } from '@angular/core';
 
-import { NzAvatarModule } from 'ng-zorro-antd/avatar';
-import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriAvatarModule } from 'ng-zorro-antd/avatar';
+import { TriCardModule } from 'ng-zorro-antd/card';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-demo-card-meta',
-  imports: [NzAvatarModule, NzCardModule, NzIconModule],
+  selector: '',
+  imports: [TriAvatarModule, TriCardModule, TriIconModule],
   template: `
-    <nz-card style="width:300px;" [nzCover]="coverTemplate" [nzActions]="[actionSetting, actionEdit, actionEllipsis]">
-      <nz-card-meta
-        nzTitle="Card title"
-        nzDescription="This is the description"
-        [nzAvatar]="avatarTemplate"
-      ></nz-card-meta>
-    </nz-card>
+    <tri-card style="width:300px;" [cover]="coverTemplate" [actions]="[actionSetting, actionEdit, actionEllipsis]">
+      <tri-card-meta
+        title="Card title"
+        description="This is the description"
+        [avatar]="avatarTemplate"
+      ></tri-card-meta>
+    </tri-card>
     <ng-template #avatarTemplate>
-      <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+      <tri-avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></tri-avatar>
     </ng-template>
     <ng-template #coverTemplate>
       <img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
     </ng-template>
     <ng-template #actionSetting>
-      <nz-icon nzType="setting" />
+      <tri-icon type="setting" />
     </ng-template>
     <ng-template #actionEdit>
-      <nz-icon nzType="edit" />
+      <tri-icon type="edit" />
     </ng-template>
     <ng-template #actionEllipsis>
-      <nz-icon nzType="ellipsis" />
+      <tri-icon type="ellipsis" />
     </ng-template>
   `
 })
-export class NzDemoCardMetaComponent {}
+export class TriDemoCardMetaComponent {}

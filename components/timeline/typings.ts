@@ -3,9 +3,9 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export type NzTimelineMode = 'left' | 'alternate' | 'right' | 'custom';
+export type TriTimelineMode = 'left' | 'alternate' | 'right' | 'custom';
 
-export type NzTimelinePosition = 'left' | 'right';
+export type TriTimelinePosition = 'left' | 'right';
 
 export const TimelineTimeDefaultColors = ['red', 'blue', 'green', 'grey', 'gray'] as const;
-export type NzTimelineItemColor = (typeof TimelineTimeDefaultColors)[number] | string;
+export type TriTimelineItemColor = (typeof TimelineTimeDefaultColors)[number] | string;

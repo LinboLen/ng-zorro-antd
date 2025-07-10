@@ -5,12 +5,12 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzColorBlockComponent } from './color-block.component';
-import { NzColorFormatComponent } from './color-format.component';
-import { NzColorPickerComponent } from './color-picker.component';
+import { TriColorBlockComponent } from './color-block.component';
+import { TriColorFormatComponent } from './color-format.component';
+import { TriColorPickerComponent } from './color-picker.component';
 
 @NgModule({
-  imports: [NzColorPickerComponent, NzColorBlockComponent, NzColorFormatComponent],
-  exports: [NzColorPickerComponent, NzColorBlockComponent]
+  imports: [TriColorPickerComponent, TriColorBlockComponent, TriColorFormatComponent],
+  exports: [TriColorPickerComponent, TriColorBlockComponent]
 })
-export class NzColorPickerModule {}
+export class TriColorPickerModule {}

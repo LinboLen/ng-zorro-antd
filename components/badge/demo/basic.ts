@@ -1,23 +1,23 @@
 import { Component } from '@angular/core';
 
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriBadgeModule } from 'ng-zorro-antd/badge';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-demo-badge-basic',
-  imports: [NzBadgeModule, NzIconModule],
+  selector: '',
+  imports: [TriBadgeModule, TriIconModule],
   template: `
-    <nz-badge [nzCount]="5">
+    <tri-badge [count]="5">
       <a class="head-example"></a>
-    </nz-badge>
-    <nz-badge [nzCount]="0" nzShowZero>
+    </tri-badge>
+    <tri-badge [count]="0" showZero>
       <a class="head-example"></a>
-    </nz-badge>
-    <nz-badge [nzCount]="iconTemplate">
+    </tri-badge>
+    <tri-badge [count]="iconTemplate">
       <a class="head-example"></a>
-    </nz-badge>
+    </tri-badge>
     <ng-template #iconTemplate>
-      <nz-icon nzType="clock-circle" class="ant-scroll-number-custom-component" style="color: #f5222d" />
+      <tri-icon type="clock-circle" class="tri-scroll-number-custom-component" style="color: #f5222d" />
     </ng-template>
   `,
   styles: [
@@ -37,4 +37,4 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     `
   ]
 })
-export class NzDemoBadgeBasicComponent {}
+export class TriDemoBadgeBasicComponent {}

@@ -1,88 +1,88 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { TriDividerModule } from 'ng-zorro-antd/divider';
+import { TriGridModule } from 'ng-zorro-antd/grid';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
 import {
-  NzSkeletonAvatarShape,
-  NzSkeletonButtonShape,
-  NzSkeletonInputSize,
-  NzSkeletonModule
+  TriSkeletonAvatarShape,
+  TriSkeletonButtonShape,
+  TriSkeletonInputSize,
+  TriSkeletonModule
 } from 'ng-zorro-antd/skeleton';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
-import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
+import { TriSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
-  selector: 'nz-demo-skeleton-element',
-  imports: [FormsModule, NzDividerModule, NzGridModule, NzSkeletonModule, NzRadioModule, NzSpaceModule, NzSwitchModule],
+  selector: '',
+  imports: [FormsModule, TriDividerModule, TriGridModule, TriSkeletonModule, TriRadioModule, TriSpaceModule, TriSwitchModule],
   template: `
-    <nz-space nzSize="middle">
-      <nz-skeleton-element
-        *nzSpaceItem
-        nzType="button"
-        [nzActive]="elementActive"
-        [nzSize]="elementSize"
-        [nzShape]="buttonShape"
-      ></nz-skeleton-element>
-      <nz-skeleton-element
-        *nzSpaceItem
-        nzType="avatar"
-        [nzActive]="elementActive"
-        [nzSize]="elementSize"
-        [nzShape]="avatarShape"
-      ></nz-skeleton-element>
-      <nz-skeleton-element
-        *nzSpaceItem
-        nzType="input"
-        [nzActive]="elementActive"
-        [nzSize]="elementSize"
+    <tri-space size="middle">
+      <tri-skeleton-element
+        *spaceItem
+        type="button"
+        [active]="elementActive"
+        [size]="elementSize"
+        [shape]="buttonShape"
+      ></tri-skeleton-element>
+      <tri-skeleton-element
+        *spaceItem
+        type="avatar"
+        [active]="elementActive"
+        [size]="elementSize"
+        [shape]="avatarShape"
+      ></tri-skeleton-element>
+      <tri-skeleton-element
+        *spaceItem
+        type="input"
+        [active]="elementActive"
+        [size]="elementSize"
         style="width:200px"
-      ></nz-skeleton-element>
-    </nz-space>
+      ></tri-skeleton-element>
+    </tri-space>
     <br />
     <br />
-    <nz-skeleton-element nzType="image" [nzActive]="elementActive"></nz-skeleton-element>
-    <nz-divider></nz-divider>
-    <div nz-row nzAlign="middle" [nzGutter]="8">
-      <div nz-col nzSpan="10">
+    <tri-skeleton-element type="image" [active]="elementActive"></tri-skeleton-element>
+    <tri-divider></tri-divider>
+    <div tri-row align="middle" [gutter]="8">
+      <div tri-col span="10">
         Size:
-        <nz-radio-group [(ngModel)]="elementSize">
-          <label nz-radio-button nzValue="default">Default</label>
-          <label nz-radio-button nzValue="large">Large</label>
-          <label nz-radio-button nzValue="small">Small</label>
-        </nz-radio-group>
+        <tri-radio-group [(ngModel)]="elementSize">
+          <label tri-radio-button value="default">Default</label>
+          <label tri-radio-button value="large">Large</label>
+          <label tri-radio-button value="small">Small</label>
+        </tri-radio-group>
       </div>
-      <div nz-col nzSpan="5">
+      <div tri-col span="5">
         Active:
-        <nz-switch [(ngModel)]="elementActive"></nz-switch>
+        <tri-switch [(ngModel)]="elementActive"></tri-switch>
       </div>
     </div>
     <br />
     <br />
-    <div nz-row nzAlign="middle" [nzGutter]="8">
-      <div nz-col nzSpan="10">
+    <div tri-row align="middle" [gutter]="8">
+      <div tri-col span="10">
         Button Shape:
-        <nz-radio-group [(ngModel)]="buttonShape">
-          <label nz-radio-button nzValue="default">Default</label>
-          <label nz-radio-button nzValue="square">Square</label>
-          <label nz-radio-button nzValue="circle">Circle</label>
-          <label nz-radio-button nzValue="round">Round</label>
-        </nz-radio-group>
+        <tri-radio-group [(ngModel)]="buttonShape">
+          <label tri-radio-button value="default">Default</label>
+          <label tri-radio-button value="square">Square</label>
+          <label tri-radio-button value="circle">Circle</label>
+          <label tri-radio-button value="round">Round</label>
+        </tri-radio-group>
       </div>
-      <div nz-col nzSpan="10">
+      <div tri-col span="10">
         Avatar Shape:
-        <nz-radio-group [(ngModel)]="avatarShape">
-          <label nz-radio-button nzValue="circle">Circle</label>
-          <label nz-radio-button nzValue="square">Square</label>
-        </nz-radio-group>
+        <tri-radio-group [(ngModel)]="avatarShape">
+          <label tri-radio-button value="circle">Circle</label>
+          <label tri-radio-button value="square">Square</label>
+        </tri-radio-group>
       </div>
     </div>
   `
 })
-export class NzDemoSkeletonElementComponent {
+export class TriDemoSkeletonElementComponent {
   elementActive = false;
-  buttonShape: NzSkeletonButtonShape = 'default';
-  avatarShape: NzSkeletonAvatarShape = 'circle';
-  elementSize: NzSkeletonInputSize = 'default';
+  buttonShape: TriSkeletonButtonShape = 'default';
+  avatarShape: TriSkeletonAvatarShape = 'circle';
+  elementSize: TriSkeletonInputSize = 'default';
 }

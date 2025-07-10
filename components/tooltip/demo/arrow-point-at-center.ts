@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
-  selector: 'nz-demo-tooltip-arrow-point-at-center',
-  imports: [NzButtonModule, NzToolTipModule],
+  selector: '',
+  imports: [TriButtonModule, TriToolTipModule],
   template: `
-    <button nz-button nzTooltipTitle="prompt text" nzTooltipPlacement="topLeft" nz-tooltip>
+    <button tri-button tooltipTitle="prompt text" tooltipPlacement="topLeft" tri-tooltip>
       Align edge / 边缘对齐
     </button>
     <button
-      nz-button
-      nz-tooltip
-      nzTooltipTitle="prompt text"
-      nzTooltipPlacement="bottomLeft"
-      [nzTooltipArrowPointAtCenter]="true"
+      tri-button
+      tri-tooltip
+      tooltipTitle="prompt text"
+      tooltipPlacement="bottomLeft"
+      [tooltipArrowPointAtCenter]="true"
     >
       Arrow points to center / 箭头指向中心
     </button>
@@ -29,4 +29,4 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     `
   ]
 })
-export class NzDemoTooltipArrowPointAtCenterComponent {}
+export class TriDemoTooltipArrowPointAtCenterComponent {}

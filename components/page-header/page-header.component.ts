@@ -24,30 +24,30 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
 
-import { NzResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
-import { NzConfigKey, NzConfigService, WithConfig } from 'ng-zorro-antd/core/config';
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
+import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
-import { NzPageHeaderBreadcrumbDirective, NzPageHeaderFooterDirective } from './page-header-cells';
+import { TriPageHeaderBreadcrumbDirective, TriPageHeaderFooterDirective } from './page-header-cells';
 
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'pageHeader';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'pageHeader';
 
 @Component({
-  selector: 'nz-page-header',
-  exportAs: 'nzPageHeader',
+  selector: '',
+  exportAs: 'triPageHeader',
   template: `
     <ng-content select="nz-breadcrumb[nz-page-header-breadcrumb]" />
 
-    <div class="ant-page-header-heading">
-      <div class="ant-page-header-heading-left">
+    <div class="tri-page-header-heading">
+      <div class="tri-page-header-heading-left">
         <!--back-->
-        @if (nzBackIcon !== null && enableBackButton) {
-          <div (click)="onBack()" class="ant-page-header-back">
-            <div role="button" tabindex="0" class="ant-page-header-back-button">
-              <ng-container *nzStringTemplateOutlet="nzBackIcon; let backIcon">
-                <nz-icon [nzType]="backIcon || getBackIcon()" nzTheme="outline" />
+        @if (backIcon !== null && enableBackButton) {
+          <div (click)="onBack()" class="tri-page-header-back">
+            <div role="button" tabindex="0" class="tri-page-header-back-button">
+              <ng-container *stringTemplateOutlet="backIcon; let backIcon">
+                <tri-icon [type]="backIcon || getBackIcon()" theme="outline" />
               </ng-container>
             </div>
           </div>
@@ -56,18 +56,18 @@ const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'pageHeader';
         <!--avatar-->
         <ng-content select="nz-avatar[nz-page-header-avatar]" />
         <!--title-->
-        @if (nzTitle) {
-          <span class="ant-page-header-heading-title">
-            <ng-container *nzStringTemplateOutlet="nzTitle">{{ nzTitle }}</ng-container>
+        @if (title) {
+          <span class="tri-page-header-heading-title">
+            <ng-container *stringTemplateOutlet="title">{{ title }}</ng-container>
           </span>
         } @else {
           <ng-content select="nz-page-header-title, [nz-page-header-title]" />
         }
 
         <!--subtitle-->
-        @if (nzSubtitle) {
-          <span class="ant-page-header-heading-sub-title">
-            <ng-container *nzStringTemplateOutlet="nzSubtitle">{{ nzSubtitle }}</ng-container>
+        @if (subtitle) {
+          <span class="tri-page-header-heading-sub-title">
+            <ng-container *stringTemplateOutlet="subtitle">{{ subtitle }}</ng-container>
           </span>
         } @else {
           <ng-content select="nz-page-header-subtitle, [nz-page-header-subtitle]" />
@@ -84,31 +84,31 @@ const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'pageHeader';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
-    class: 'ant-page-header',
+    class: 'tri-page-header',
     '[class.has-footer]': 'nzPageHeaderFooter',
-    '[class.ant-page-header-ghost]': 'nzGhost',
+    '[class.tri-page-header-ghost]': 'ghost',
     '[class.has-breadcrumb]': 'nzPageHeaderBreadcrumb',
-    '[class.ant-page-header-compact]': 'compact',
-    '[class.ant-page-header-rtl]': `dir === 'rtl'`
+    '[class.tri-page-header-compact]': 'compact',
+    '[class.tri-page-header-rtl]': `dir === 'rtl'`
   },
-  imports: [NzOutletModule, NzIconModule]
+  imports: [TriOutletModule, TriIconModule]
 })
-export class NzPageHeaderComponent implements AfterViewInit, OnInit {
+export class TriPageHeaderComponent implements AfterViewInit, OnInit {
   private location = inject(Location);
   private destroyRef = inject(DestroyRef);
 
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
 
-  @Input() nzBackIcon: string | TemplateRef<void> | null = null;
-  @Input() nzTitle?: string | TemplateRef<void>;
-  @Input() nzSubtitle?: string | TemplateRef<void>;
-  @Input() @WithConfig() nzGhost: boolean = true;
-  @Output() readonly nzBack = new EventEmitter<void>();
+  @Input() backIcon: string | TemplateRef<void> | null = null;
+  @Input() title?: string | TemplateRef<void>;
+  @Input() subtitle?: string | TemplateRef<void>;
+  @Input() @WithConfig() ghost: boolean = true;
+  @Output() readonly back = new EventEmitter<void>();
 
-  @ContentChild(NzPageHeaderFooterDirective, { static: false })
-  nzPageHeaderFooter?: ElementRef<NzPageHeaderFooterDirective>;
-  @ContentChild(NzPageHeaderBreadcrumbDirective, { static: false })
-  nzPageHeaderBreadcrumb?: ElementRef<NzPageHeaderBreadcrumbDirective>;
+  @ContentChild(TriPageHeaderFooterDirective, { static: false })
+  pageHeaderFooter?: ElementRef<TriPageHeaderFooterDirective>;
+  @ContentChild(TriPageHeaderBreadcrumbDirective, { static: false })
+  pageHeaderBreadcrumb?: ElementRef<TriPageHeaderBreadcrumbDirective>;
 
   compact = false;
   dir: Direction = 'ltr';
@@ -116,9 +116,9 @@ export class NzPageHeaderComponent implements AfterViewInit, OnInit {
   enableBackButton = true;
 
   constructor(
-    public nzConfigService: NzConfigService,
+    public nzConfigService: TriConfigService,
     private elementRef: ElementRef,
-    private nzResizeObserver: NzResizeObserver,
+    private nzResizeObserver: TriResizeObserver,
     private cdr: ChangeDetectorRef,
     private directionality: Directionality
   ) {}
@@ -132,8 +132,8 @@ export class NzPageHeaderComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
-    if (!this.nzBack.observers.length) {
-      this.enableBackButton = (this.location.getState() as NzSafeAny)?.navigationId > 1;
+    if (!this.back.observers.length) {
+      this.enableBackButton = (this.location.getState() as TriSafeAny)?.navigationId > 1;
       // Location is not an RxJS construct, as a result, we can't pipe it.
       const subscription = this.location.subscribe(() => {
         this.enableBackButton = true;
@@ -155,8 +155,8 @@ export class NzPageHeaderComponent implements AfterViewInit, OnInit {
   }
 
   onBack(): void {
-    if (this.nzBack.observers.length) {
-      this.nzBack.emit();
+    if (this.back.observers.length) {
+      this.back.emit();
     } else {
       this.location.back();
     }

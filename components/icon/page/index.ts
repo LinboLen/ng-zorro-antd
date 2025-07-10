@@ -22,21 +22,21 @@ import { of, Subscription } from 'rxjs';
 import { manifest, ThemeType } from '@ant-design/icons-angular';
 import { AccountBookFill } from '@ant-design/icons-angular/icons';
 
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
-import { NzButtonModule } from 'ng-zorro-antd/button';
+import { TriBadgeModule } from 'ng-zorro-antd/badge';
+import { TriButtonModule } from 'ng-zorro-antd/button';
 import { PREFIX } from 'ng-zorro-antd/core/logger';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzIconModule, NzIconService } from 'ng-zorro-antd/icon';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzModalModule } from 'ng-zorro-antd/modal';
-import { NzPopoverModule } from 'ng-zorro-antd/popover';
-import { NzProgressModule } from 'ng-zorro-antd/progress';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { NzResultModule } from 'ng-zorro-antd/result';
-import { NzSpinModule } from 'ng-zorro-antd/spin';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
-import { NzUploadFile, NzUploadModule, NzUploadXHRArgs } from 'ng-zorro-antd/upload';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { TriIconModule, TriIconService } from 'ng-zorro-antd/icon';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriMessageService } from 'ng-zorro-antd/message';
+import { TriModalModule } from 'ng-zorro-antd/modal';
+import { TriPopoverModule } from 'ng-zorro-antd/popover';
+import { TriProgressModule } from 'ng-zorro-antd/progress';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
+import { TriResultModule } from 'ng-zorro-antd/result';
+import { TriSpinModule } from 'ng-zorro-antd/spin';
+import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriUploadFile, TriUploadModule, TriUploadXHRArgs } from 'ng-zorro-antd/upload';
 
 export interface Categories {
   direction: string[];
@@ -311,76 +311,76 @@ const newIconNames: string[] = [
   'code-sandbox-circle'
 ];
 
-declare const locale: NzSafeAny;
+declare const locale: TriSafeAny;
 
 @Component({
-  selector: 'nz-page-demo-icon',
+  selector: '',
   imports: [
     FormsModule,
-    NzBadgeModule,
-    NzButtonModule,
-    NzIconModule,
-    NzInputModule,
-    NzModalModule,
-    NzPopoverModule,
-    NzRadioModule,
-    NzResultModule,
-    NzSpinModule,
-    NzToolTipModule,
-    NzProgressModule,
-    NzUploadModule
+    TriBadgeModule,
+    TriButtonModule,
+    TriIconModule,
+    TriInputModule,
+    TriModalModule,
+    TriPopoverModule,
+    TriRadioModule,
+    TriResultModule,
+    TriSpinModule,
+    TriToolTipModule,
+    TriProgressModule,
+    TriUploadModule
   ],
   template: `
     <h3>{{ localeObj.chooseTheme }}</h3>
     <div class="icon-selector">
-      <nz-radio-group [ngModel]="currentTheme" (ngModelChange)="setIconsShouldBeDisplayed($event)">
-        <label nz-radio-button nzValue="outline">
-          <nz-icon>
+      <tri-radio-group [ngModel]="currentTheme" (ngModelChange)="setIconsShouldBeDisplayed($event)">
+        <label tri-radio-button value="outline">
+          <tri-icon>
             <svg>
               <path
                 d="M864 64H160C107 64 64 107 64 160v704c0 53 43 96 96 96h704c53 0 96-43 96-96V160c0-53-43-96-96-96z m-12 800H172c-6.6 0-12-5.4-12-12V172c0-6.6 5.4-12 12-12h680c6.6 0 12 5.4 12 12v680c0 6.6-5.4 12-12 12z"
               ></path>
             </svg>
-          </nz-icon>
+          </tri-icon>
           Outlined
         </label>
-        <label nz-radio-button nzValue="fill">
-          <nz-icon>
+        <label tri-radio-button value="fill">
+          <tri-icon>
             <svg>
               <path
                 d="M864 64H160C107 64 64 107 64 160v704c0 53 43 96 96 96h704c53 0 96-43 96-96V160c0-53-43-96-96-96z"
               ></path>
             </svg>
-          </nz-icon>
+          </tri-icon>
           Filled
         </label>
-        <label nz-radio-button nzValue="twotone">
-          <nz-icon>
+        <label tri-radio-button value="twotone">
+          <tri-icon>
             <svg>
               <path
                 d="M16 512c0 273.932 222.066 496 496 496s496-222.068 496-496S785.932 16 512 16 16 238.066 16 512z m496 368V144c203.41 0 368 164.622 368 368 0 203.41-164.622 368-368 368z"
               ></path>
             </svg>
-          </nz-icon>
+          </tri-icon>
           Two Tone
         </label>
-      </nz-radio-group>
-      <nz-input-group nzSearch [nzSuffix]="suffixIconCamera" [nzAddOnAfter]="addOnAfterIconSearch">
+      </tri-radio-group>
+      <tri-input-group search [suffix]="suffixIconCamera" [addOnAfter]="addOnAfterIconSearch">
         <input
-          nz-input
+          tri-input
           [placeholder]="localeObj.search"
           [(ngModel)]="searchingString"
           (ngModelChange)="onSearchChange()"
         />
-      </nz-input-group>
+      </tri-input-group>
       <ng-template #suffixIconCamera>
         <div class="icon-pic-searcher">
-          <nz-icon
+          <tri-icon
             class="icon-pic-btn"
-            nz-popover
-            [nzPopoverTrigger]="null"
-            [(nzPopoverVisible)]="popoverVisible"
-            [nzPopoverContent]="localeObj.picSearcherIntro"
+            tri-popover
+            [popoverTrigger]="null"
+            [(popoverVisibleChange)]="popoverVisible"
+            [popoverContent]="localeObj.picSearcherIntro"
             (click)="toggleModal()"
           >
             <svg viewBox="64 64 896 896">
@@ -388,12 +388,12 @@ declare const locale: NzSafeAny;
                 d="M864 248H728l-32.4-90.8a32.07 32.07 0 00-30.2-21.2H358.6c-13.5 0-25.6 8.5-30.1 21.2L296 248H160c-44.2 0-80 35.8-80 80v456c0 44.2 35.8 80 80 80h704c44.2 0 80-35.8 80-80V328c0-44.2-35.8-80-80-80zm8 536c0 4.4-3.6 8-8 8H160c-4.4 0-8-3.6-8-8V328c0-4.4 3.6-8 8-8h186.7l17.1-47.8 22.9-64.2h250.5l22.9 64.2 17.1 47.8H864c4.4 0 8 3.6 8 8v456zM512 384c-88.4 0-160 71.6-160 160s71.6 160 160 160 160-71.6 160-160-71.6-160-160-160zm0 256c-53 0-96-43-96-96s43-96 96-96 96 43 96 96-43 96-96 96z"
               ></path>
             </svg>
-          </nz-icon>
+          </tri-icon>
         </div>
       </ng-template>
       <ng-template #addOnAfterIconSearch>
-        <button nz-button nzType="default" nzSearch>
-          <nz-icon nzType="search"></nz-icon>
+        <button tri-button type="default" search>
+          <tri-icon type="search"></tri-icon>
         </button>
       </ng-template>
     </div>
@@ -402,12 +402,12 @@ declare const locale: NzSafeAny;
       <ul class="anticons-list">
         @for (icon of displayedNames[i].icons; track trackByFn(icon)) {
           <li (click)="onIconClick($event, icon)">
-            <nz-icon [nzType]="kebabCase(icon)" [nzTheme]="currentTheme"></nz-icon>
+            <tri-icon [type]="kebabCase(icon)" [theme]="currentTheme"></tri-icon>
             <span class="anticon-class">
               @if (isNewIcon(icon)) {
-                <nz-badge nzDot>
+                <tri-badge dot>
                   {{ icon }}
-                </nz-badge>
+                </tri-badge>
               } @else {
                 {{ icon }}
               }
@@ -416,29 +416,29 @@ declare const locale: NzSafeAny;
         }
       </ul>
     }
-    <nz-modal
-      [nzTitle]="localeObj.picSearcherTitle"
-      [(nzVisible)]="modalVisible"
-      (nzOnCancel)="toggleModal()"
-      [nzFooter]="null"
+    <tri-modal
+      [title]="localeObj.picSearcherTitle"
+      [(visibleChange)]="modalVisible"
+      (onCancel)="toggleModal()"
+      [footer]="null"
     >
-      <ng-container *nzModalContent>
+      <ng-container *modalContent>
         @if (modelLoaded) {
-          <nz-upload
-            nzType="drag"
-            nzAccept="image/jpeg, image/png"
-            nzListType="picture"
-            [nzCustomRequest]="customRequestUploadFile"
-            [nzFileList]="fileList"
-            [nzShowUploadList]="{ showPreviewIcon: false, showRemoveIcon: false }"
+          <tri-upload
+            type="drag"
+            accept="image/jpeg, image/png"
+            listType="picture"
+            [customRequest]="customRequestUploadFile"
+            [fileList]="fileList"
+            [showUploadList]="{ showPreviewIcon: false, showRemoveIcon: false }"
           >
-            <p class="ant-upload-drag-icon">
-              <nz-icon nzType="inbox" nzTheme="outline"></nz-icon>
+            <p class="tri-upload-drag-icon">
+              <tri-icon type="inbox" theme="outline"></tri-icon>
             </p>
-            <p class="ant-upload-text">{{ localeObj.picSearcherUploadText }}</p>
-            <p class="ant-upload-hint">{{ localeObj.picSearcherUploadHint }}</p>
-          </nz-upload>
-          <nz-spin [nzSpinning]="loading" [nzTip]="localeObj.picSearcherMatching">
+            <p class="tri-upload-text">{{ localeObj.picSearcherUploadText }}</p>
+            <p class="tri-upload-hint">{{ localeObj.picSearcherUploadHint }}</p>
+          </tri-upload>
+          <tri-spin [spinning]="loading" [tip]="localeObj.picSearcherMatching">
             <div class="icon-pic-search-result">
               @if (icons.length) {
                 <div class="result-tip">
@@ -457,18 +457,18 @@ declare const locale: NzSafeAny;
                     @for (icon of icons; track icon) {
                       <tr>
                         <td class="col-icon">
-                          <nz-icon
-                            nz-tooltip
-                            [nzTooltipTitle]="icon.type"
-                            nzTooltipPlacement="right"
-                            [nzType]="icon.type"
-                            [nzTheme]="currentTheme"
+                          <tri-icon
+                            tri-tooltip
+                            [tooltipTitle]="icon.type"
+                            tooltipPlacement="right"
+                            [type]="icon.type"
+                            [theme]="currentTheme"
                             (click)="onIconClick($event, icon.type)"
                           >
-                          </nz-icon>
+                          </tri-icon>
                         </td>
                         <td>
-                          <nz-progress nzStrokeLinecap="round" [nzPercent]="icon.score"></nz-progress>
+                          <tri-progress strokeLinecap="round" [percent]="icon.score"></tri-progress>
                         </td>
                       </tr>
                     }
@@ -476,17 +476,17 @@ declare const locale: NzSafeAny;
                 </table>
               }
               @if (error) {
-                <nz-result nzStatus="500" nzTitle="503" [nzSubTitle]="localeObj.picSearcherServerError" />
+                <tri-result status="500" title="503" [subTitle]="localeObj.picSearcherServerError" />
               }
             </div>
-          </nz-spin>
+          </tri-spin>
         } @else {
-          <nz-spin [nzTip]="localeObj.picSearcherModelLoading">
+          <tri-spin [tip]="localeObj.picSearcherModelLoading">
             <div style="height: 100px;"></div>
-          </nz-spin>
+          </tri-spin>
         }
       </ng-container>
-    </nz-modal>
+    </tri-modal>
   `,
   styles: [
     `
@@ -511,9 +511,9 @@ declare const locale: NzSafeAny;
     `
   ]
 })
-export class NzPageDemoIconComponent implements OnInit {
+export class TriPageDemoIconComponent implements OnInit {
   private platformId = inject(PLATFORM_ID);
-  private message = inject(NzMessageService);
+  private message = inject(TriMessageService);
   private viewContainerRef = inject(ViewContainerRef);
 
   displayedNames: Array<{ name: string; icons: string[] }> = [];
@@ -527,7 +527,7 @@ export class NzPageDemoIconComponent implements OnInit {
   modelLoaded = false;
   modalVisible = false;
   popoverVisible = false;
-  fileList: NzUploadFile[] = [];
+  fileList: TriUploadFile[] = [];
   icons: Icon[] = [];
 
   private document: Document = inject(DOCUMENT);
@@ -610,7 +610,7 @@ export class NzPageDemoIconComponent implements OnInit {
 
   private getCopiedStringTemplateRef(copiedString: string): TemplateRef<void> {
     this.viewContainerRef.clear();
-    const componentRef = this.viewContainerRef.createComponent(NzPageDemoIconCopiedCodeComponent);
+    const componentRef = this.viewContainerRef.createComponent(TriPageDemoIconCopiedCodeComponent);
     componentRef.instance.copiedCode = copiedString;
 
     return componentRef.instance.templateRef;
@@ -659,13 +659,13 @@ export class NzPageDemoIconComponent implements OnInit {
   };
 
   // We don't need to upload it, so just fake api here
-  customRequestUploadFile = (o: NzUploadXHRArgs): Subscription => {
+  customRequestUploadFile = (o: TriUploadXHRArgs): Subscription => {
     return of(true).subscribe(() => {
       this.uploadFile(o.file);
     });
   };
 
-  private uploadFile = (file: File | NzUploadFile): void => {
+  private uploadFile = (file: File | TriUploadFile): void => {
     this.loading = true;
     const reader: FileReader = new FileReader();
     reader.onload = () => {
@@ -714,7 +714,7 @@ export class NzPageDemoIconComponent implements OnInit {
 
   constructor() {
     // This is to test that tree shake works!
-    inject(NzIconService).addIcon(AccountBookFill);
+    inject(TriIconService).addIcon(AccountBookFill);
 
     inject(DestroyRef).onDestroy(() => {
       this.document.removeEventListener('paste', this.onPaste as EventListener);
@@ -733,7 +733,7 @@ export class NzPageDemoIconComponent implements OnInit {
 }
 
 @Component({
-  selector: 'nz-page-demo-icon-copied-code',
+  selector: '',
   template: `
     <ng-template #templateRef>
       <span>
@@ -742,7 +742,7 @@ export class NzPageDemoIconComponent implements OnInit {
     </ng-template>
   `
 })
-export class NzPageDemoIconCopiedCodeComponent {
+export class TriPageDemoIconCopiedCodeComponent {
   @Input() copiedCode!: string;
   @ViewChild('templateRef', { static: true }) templateRef!: TemplateRef<void>;
 }

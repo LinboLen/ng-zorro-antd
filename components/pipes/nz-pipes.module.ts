@@ -5,17 +5,17 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzAggregatePipe } from './nz-aggregate.pipe';
-import { NzBytesPipe } from './nz-bytes.pipe';
-import { NzToCssUnitPipe } from './nz-css-unit.pipe';
-import { NzEllipsisPipe } from './nz-ellipsis.pipe';
-import { NzSanitizerPipe } from './nz-sanitizer.pipe';
-import { NzTrimPipe } from './nz-trim.pipe';
+import { TriAggregatePipe } from './nz-aggregate.pipe';
+import { TriBytesPipe } from './nz-bytes.pipe';
+import { TriToCssUnitPipe } from './nz-css-unit.pipe';
+import { TriEllipsisPipe } from './nz-ellipsis.pipe';
+import { TriSanitizerPipe } from './nz-sanitizer.pipe';
+import { TriTrimPipe } from './nz-trim.pipe';
 
-const pipes = [NzToCssUnitPipe, NzSanitizerPipe, NzTrimPipe, NzBytesPipe, NzAggregatePipe, NzEllipsisPipe];
+const pipes = [TriToCssUnitPipe, TriSanitizerPipe, TriTrimPipe, TriBytesPipe, TriAggregatePipe, TriEllipsisPipe];
 
 @NgModule({
   imports: [pipes],
   exports: [pipes]
 })
-export class NzPipesModule {}
+export class TriPipesModule {}

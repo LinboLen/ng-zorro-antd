@@ -1,45 +1,45 @@
 import { Component } from '@angular/core';
 
-import { NzLayoutModule } from 'ng-zorro-antd/layout';
-import { NzResizableModule, NzResizeEvent } from 'ng-zorro-antd/resizable';
+import { TriLayoutModule } from 'ng-zorro-antd/layout';
+import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
 
 @Component({
-  selector: 'nz-demo-resizable-layout',
-  imports: [NzLayoutModule, NzResizableModule],
+  selector: '',
+  imports: [TriLayoutModule, TriResizableModule],
   template: `
-    <nz-layout>
-      <nz-header>Header</nz-header>
-      <nz-layout>
-        <nz-sider
-          [nzWidth]="siderWidth"
-          nz-resizable
-          [nzMinWidth]="50"
-          [nzMaxWidth]="300"
-          (nzResize)="onSideResize($event)"
+    <tri-layout>
+      <tri-header>Header</tri-header>
+      <tri-layout>
+        <tri-sider
+          [width]="siderWidth"
+          tri-resizable
+          [minWidth]="50"
+          [maxWidth]="300"
+          (resize)="onSideResize($event)"
         >
-          <nz-resize-handle nzDirection="right" nzCursorType="grid">
+          <tri-resize-handle direction="right" cursorType="grid">
             <div class="sider-resize-line"></div>
-          </nz-resize-handle>
+          </tri-resize-handle>
           Sider
-        </nz-sider>
-        <nz-content>
+        </tri-sider>
+        <tri-content>
           <div
-            nz-resizable
+            tri-resizable
             class="resizable-box"
             [style.height.px]="contentHeight"
-            [nzMaxHeight]="300"
-            [nzMinHeight]="50"
-            (nzResize)="onContentResize($event)"
+            [maxHeight]="300"
+            [minHeight]="50"
+            (resize)="onContentResize($event)"
           >
-            <nz-resize-handle nzDirection="bottom" nzCursorType="grid">
+            <tri-resize-handle direction="bottom" cursorType="grid">
               <div class="content-resize-line"></div>
-            </nz-resize-handle>
+            </tri-resize-handle>
             Content 1
           </div>
           <div>Content 2</div>
-        </nz-content>
-      </nz-layout>
-    </nz-layout>
+        </tri-content>
+      </tri-layout>
+    </tri-layout>
   `,
   styles: [
     `
@@ -98,19 +98,19 @@ import { NzResizableModule, NzResizeEvent } from 'ng-zorro-antd/resizable';
     `
   ]
 })
-export class NzDemoResizableLayoutComponent {
+export class TriDemoResizableLayoutComponent {
   siderWidth = 120;
   contentHeight = 200;
   id = -1;
 
-  onSideResize({ width }: NzResizeEvent): void {
+  onSideResize({ width }: TriResizeEvent): void {
     cancelAnimationFrame(this.id);
     this.id = requestAnimationFrame(() => {
       this.siderWidth = width!;
     });
   }
 
-  onContentResize({ height }: NzResizeEvent): void {
+  onContentResize({ height }: TriResizeEvent): void {
     cancelAnimationFrame(this.id);
     this.id = requestAnimationFrame(() => {
       this.contentHeight = height!;

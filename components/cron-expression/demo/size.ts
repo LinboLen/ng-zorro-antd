@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 
-import { NzCronExpressionModule } from 'ng-zorro-antd/cron-expression';
+import { TriCronExpressionModule } from 'ng-zorro-antd/cron-expression';
 
 @Component({
-  selector: 'nz-demo-cron-expression-size',
-  imports: [NzCronExpressionModule],
+  selector: '',
+  imports: [TriCronExpressionModule],
   template: `
     <div class="example-cron-expression">
-      <nz-cron-expression nzSize="small"></nz-cron-expression>
-      <nz-cron-expression nzSize="default"></nz-cron-expression>
-      <nz-cron-expression nzSize="large"></nz-cron-expression>
+      <tri-cron-expression size="small"></tri-cron-expression>
+      <tri-cron-expression size="default"></tri-cron-expression>
+      <tri-cron-expression size="large"></tri-cron-expression>
     </div>
   `,
   styles: [
@@ -20,4 +20,4 @@ import { NzCronExpressionModule } from 'ng-zorro-antd/cron-expression';
     `
   ]
 })
-export class NzDemoCronExpressionSizeComponent {}
+export class TriDemoCronExpressionSizeComponent {}

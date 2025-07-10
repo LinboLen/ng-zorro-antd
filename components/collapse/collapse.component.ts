@@ -17,42 +17,42 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { NzConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
 
-import { NzCollapsePanelComponent } from './collapse-panel.component';
+import { TriCollapsePanelComponent } from './collapse-panel.component';
 
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'collapse';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'collapse';
 
 @Component({
-  selector: 'nz-collapse',
-  exportAs: 'nzCollapse',
+  selector: '',
+  exportAs: 'triCollapse',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `<ng-content></ng-content>`,
   host: {
-    class: 'ant-collapse',
-    '[class.ant-collapse-icon-position-start]': `nzExpandIconPosition === 'start'`,
-    '[class.ant-collapse-icon-position-end]': `nzExpandIconPosition === 'end'`,
-    '[class.ant-collapse-ghost]': `nzGhost`,
-    '[class.ant-collapse-borderless]': '!nzBordered',
-    '[class.ant-collapse-rtl]': "dir === 'rtl'"
+    class: 'tri-collapse',
+    '[class.tri-collapse-icon-position-start]': `expandIconPosition === 'start'`,
+    '[class.tri-collapse-icon-position-end]': `expandIconPosition === 'end'`,
+    '[class.tri-collapse-ghost]': `ghost`,
+    '[class.tri-collapse-borderless]': '!bordered',
+    '[class.tri-collapse-rtl]': "dir === 'rtl'"
   }
 })
-export class NzCollapseComponent implements OnInit {
+export class TriCollapseComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
 
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
 
-  @Input({ transform: booleanAttribute }) @WithConfig() nzAccordion: boolean = false;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzBordered: boolean = true;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzGhost: boolean = false;
-  @Input() nzExpandIconPosition: 'start' | 'end' = 'start';
+  @Input({ transform: booleanAttribute }) @WithConfig() accordion: boolean = false;
+  @Input({ transform: booleanAttribute }) @WithConfig() bordered: boolean = true;
+  @Input({ transform: booleanAttribute }) @WithConfig() ghost: boolean = false;
+  @Input() expandIconPosition: 'start' | 'end' = 'start';
 
   dir: Direction = 'ltr';
 
-  private listOfNzCollapsePanelComponent: NzCollapsePanelComponent[] = [];
+  private listOfNzCollapsePanelComponent: TriCollapsePanelComponent[] = [];
 
   constructor() {
     onConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME, () => this.cdr.markForCheck());
@@ -67,27 +67,27 @@ export class NzCollapseComponent implements OnInit {
     this.dir = this.directionality.value;
   }
 
-  addPanel(value: NzCollapsePanelComponent): void {
+  addPanel(value: TriCollapsePanelComponent): void {
     this.listOfNzCollapsePanelComponent.push(value);
   }
 
-  removePanel(value: NzCollapsePanelComponent): void {
+  removePanel(value: TriCollapsePanelComponent): void {
     this.listOfNzCollapsePanelComponent.splice(this.listOfNzCollapsePanelComponent.indexOf(value), 1);
   }
 
-  click(collapse: NzCollapsePanelComponent): void {
-    if (this.nzAccordion && !collapse.nzActive) {
+  click(collapse: TriCollapsePanelComponent): void {
+    if (this.accordion && !collapse.active) {
       this.listOfNzCollapsePanelComponent
         .filter(item => item !== collapse)
         .forEach(item => {
-          if (item.nzActive) {
-            item.nzActive = false;
-            item.nzActiveChange.emit(item.nzActive);
+          if (item.active) {
+            item.active = false;
+            item.activeChange.emit(item.active);
             item.markForCheck();
           }
         });
     }
-    collapse.nzActive = !collapse.nzActive;
-    collapse.nzActiveChange.emit(collapse.nzActive);
+    collapse.active = !collapse.active;
+    collapse.activeChange.emit(collapse.active);
   }
 }

@@ -28,114 +28,114 @@ import {
 } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
 
-import { NzInputDirective, NzInputGroupComponent } from 'ng-zorro-antd/input';
-import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
-import { NzSelectModule } from 'ng-zorro-antd/select';
+import { TriInputDirective, TriInputGroupComponent } from 'ng-zorro-antd/input';
+import { TriInputNumberComponent } from 'ng-zorro-antd/input-number';
+import { TriSelectModule } from 'ng-zorro-antd/select';
 
 import { generateColor } from './src/util/util';
-import { NzColorPickerFormatType, ValidFormKey } from './typings';
+import { TriColorPickerFormatType, ValidFormKey } from './typings';
 
 @Component({
-  selector: 'nz-color-format',
-  exportAs: 'nzColorFormat',
+  selector: '',
+  exportAs: 'triColorFormat',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, NzSelectModule, NzInputDirective, NzInputGroupComponent, NzInputNumberComponent],
+  imports: [ReactiveFormsModule, TriSelectModule, TriInputDirective, TriInputGroupComponent, TriInputNumberComponent],
   template: `
-    <div [formGroup]="validateForm" class="ant-color-picker-input-container">
-      <div class="ant-color-picker-format-select">
-        <nz-select formControlName="isFormat" nzBorderless nzSize="small">
-          <nz-option nzValue="hex" nzLabel="HEX" />
-          <nz-option nzValue="hsb" nzLabel="HSB" />
-          <nz-option nzValue="rgb" nzLabel="RGB" />
-        </nz-select>
+    <div [formGroup]="validateForm" class="tri-color-picker-input-container">
+      <div class="tri-color-picker-format-select">
+        <tri-select formControlName="isFormat" borderless size="small">
+          <tri-option value="hex" label="HEX" />
+          <tri-option value="hsb" label="HSB" />
+          <tri-option value="rgb" label="RGB" />
+        </tri-select>
       </div>
 
-      <div class="ant-color-picker-input">
+      <div class="tri-color-picker-input">
         @switch (validateForm.controls.isFormat.value) {
           @case ('hex') {
-            <div class="ant-color-picker-hex-input">
-              <nz-input-group nzPrefix="#" nzSize="small">
-                <input nz-input nzSize="small" formControlName="hex" />
-              </nz-input-group>
+            <div class="tri-color-picker-hex-input">
+              <tri-input-group prefix="#" size="small">
+                <input tri-input size="small" formControlName="hex" />
+              </tri-input-group>
             </div>
           }
           @case ('hsb') {
-            <div class="ant-color-picker-hsb-input">
-              <div class="ant-color-picker-steppers ant-color-picker-hsb-input">
-                <nz-input-number
+            <div class="tri-color-picker-hsb-input">
+              <div class="tri-color-picker-steppers tri-color-picker-hsb-input">
+                <tri-input-number
                   formControlName="hsbH"
-                  [nzMin]="0"
-                  [nzMax]="360"
-                  [nzStep]="1"
-                  [nzPrecision]="0"
-                  nzSize="small"
+                  [min]="0"
+                  [max]="360"
+                  [step]="1"
+                  [precision]="0"
+                  size="small"
                 />
               </div>
-              <div class="ant-color-picker-steppers ant-color-picker-hsb-input">
-                <nz-input-number
+              <div class="tri-color-picker-steppers tri-color-picker-hsb-input">
+                <tri-input-number
                   formControlName="hsbS"
-                  [nzMin]="0"
-                  [nzMax]="100"
-                  [nzStep]="1"
-                  [nzFormatter]="formatterPercent"
-                  [nzParser]="parserPercent"
-                  nzSize="small"
+                  [min]="0"
+                  [max]="100"
+                  [step]="1"
+                  [formatter]="formatterPercent"
+                  [parser]="parserPercent"
+                  size="small"
                 />
               </div>
-              <div class="ant-color-picker-steppers ant-color-picker-hsb-input">
-                <nz-input-number
+              <div class="tri-color-picker-steppers tri-color-picker-hsb-input">
+                <tri-input-number
                   formControlName="hsbB"
-                  [nzMin]="0"
-                  [nzMax]="100"
-                  [nzStep]="1"
-                  [nzFormatter]="formatterPercent"
-                  [nzParser]="parserPercent"
-                  nzSize="small"
+                  [min]="0"
+                  [max]="100"
+                  [step]="1"
+                  [formatter]="formatterPercent"
+                  [parser]="parserPercent"
+                  size="small"
                 />
               </div>
             </div>
           }
           @default {
-            <div class="ant-color-picker-rgb-input">
-              <div class="ant-color-picker-steppers ant-color-picker-rgb-input">
-                <nz-input-number formControlName="rgbR" [nzMin]="0" [nzMax]="255" [nzStep]="1" nzSize="small" />
+            <div class="tri-color-picker-rgb-input">
+              <div class="tri-color-picker-steppers tri-color-picker-rgb-input">
+                <tri-input-number formControlName="rgbR" [min]="0" [max]="255" [step]="1" size="small" />
               </div>
-              <div class="ant-color-picker-steppers ant-color-picker-rgb-input">
-                <nz-input-number formControlName="rgbG" [nzMin]="0" [nzMax]="255" [nzStep]="1" nzSize="small" />
+              <div class="tri-color-picker-steppers tri-color-picker-rgb-input">
+                <tri-input-number formControlName="rgbG" [min]="0" [max]="255" [step]="1" size="small" />
               </div>
-              <div class="ant-color-picker-steppers ant-color-picker-rgb-input">
-                <nz-input-number formControlName="rgbB" [nzMin]="0" [nzMax]="255" [nzStep]="1" nzSize="small" />
+              <div class="tri-color-picker-steppers tri-color-picker-rgb-input">
+                <tri-input-number formControlName="rgbB" [min]="0" [max]="255" [step]="1" size="small" />
               </div>
             </div>
           }
         }
       </div>
 
-      @if (!nzDisabledAlpha) {
-        <div class="ant-color-picker-steppers ant-color-picker-alpha-input">
-          <nz-input-number
+      @if (!disabledAlpha) {
+        <div class="tri-color-picker-steppers tri-color-picker-alpha-input">
+          <tri-input-number
             formControlName="roundA"
-            [nzMin]="0"
-            [nzMax]="100"
-            [nzStep]="1"
-            [nzFormatter]="formatterPercent"
-            [nzParser]="parserPercent"
-            nzSize="small"
+            [min]="0"
+            [max]="100"
+            [step]="1"
+            [formatter]="formatterPercent"
+            [parser]="parserPercent"
+            size="small"
           />
         </div>
       }
     </div>
   `
 })
-export class NzColorFormatComponent implements OnChanges, OnInit {
+export class TriColorFormatComponent implements OnChanges, OnInit {
   private destroyRef = inject(DestroyRef);
   private formBuilder = inject(FormBuilder);
-  @Input() format: NzColorPickerFormatType | null = null;
+  @Input() format: TriColorPickerFormatType | null = null;
   @Input() colorValue: string = '';
   @Input({ transform: booleanAttribute }) clearColor: boolean = false;
-  @Input({ transform: booleanAttribute }) nzDisabledAlpha: boolean = false;
-  @Output() readonly formatChange = new EventEmitter<{ color: string; format: NzColorPickerFormatType }>();
-  @Output() readonly nzOnFormatChange = new EventEmitter<NzColorPickerFormatType>();
+  @Input({ transform: booleanAttribute }) disabledAlpha: boolean = false;
+  @Output() readonly formatChange = new EventEmitter<{ color: string; format: TriColorPickerFormatType }>();
+  @Output() readonly onFormatChange = new EventEmitter<TriColorPickerFormatType>();
 
   validatorFn(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -150,7 +150,7 @@ export class NzColorFormatComponent implements OnChanges, OnInit {
   }
 
   validateForm: FormGroup<{
-    isFormat: FormControl<NzColorPickerFormatType | null>;
+    isFormat: FormControl<TriColorPickerFormatType | null>;
     hex: FormControl<string | null>;
     hsbH: FormControl<number>;
     hsbS: FormControl<number>;
@@ -160,7 +160,7 @@ export class NzColorFormatComponent implements OnChanges, OnInit {
     rgbB: FormControl<number>;
     roundA: FormControl<number>;
   }> = this.formBuilder.nonNullable.group({
-    isFormat: this.formBuilder.control<NzColorPickerFormatType>('hex'),
+    isFormat: this.formBuilder.control<TriColorPickerFormatType>('hex'),
     hex: this.formBuilder.control<string>('1677FF', this.validatorFn()),
     hsbH: 215,
     hsbS: 91,
@@ -204,7 +204,7 @@ export class NzColorFormatComponent implements OnChanges, OnInit {
             }).toRgbString();
             break;
           default: {
-            const hex = generateColor(value.hex as NzColorPickerFormatType);
+            const hex = generateColor(value.hex as TriColorPickerFormatType);
             const hexColor = generateColor({
               r: hex.r,
               g: hex.g,
@@ -222,7 +222,7 @@ export class NzColorFormatComponent implements OnChanges, OnInit {
       .get('isFormat')
       ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(value => {
-        this.nzOnFormatChange.emit(value as NzColorPickerFormatType);
+        this.onFormatChange.emit(value as TriColorPickerFormatType);
       });
   }
 

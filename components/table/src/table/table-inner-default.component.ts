@@ -5,19 +5,19 @@
 
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzTableLayout } from '../table.types';
-import { NzTableContentComponent } from './table-content.component';
+import { TriTableLayout } from '../table.types';
+import { TriTableContentComponent } from './table-content.component';
 
 @Component({
-  selector: 'nz-table-inner-default',
+  selector: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
-    <div class="ant-table-content">
+    <div class="tri-table-content">
       <table
-        nz-table-content
+        tri-table-content
         [contentTemplate]="contentTemplate"
         [tableLayout]="tableLayout"
         [listOfColWidth]="listOfColWidth"
@@ -26,13 +26,13 @@ import { NzTableContentComponent } from './table-content.component';
       ></table>
     </div>
   `,
-  host: { class: 'ant-table-container' },
-  imports: [NzTableContentComponent]
+  host: { class: 'tri-table-container' },
+  imports: [TriTableContentComponent]
 })
-export class NzTableInnerDefaultComponent {
-  @Input() tableLayout: NzTableLayout = 'auto';
+export class TriTableInnerDefaultComponent {
+  @Input() tableLayout: TriTableLayout = 'auto';
   @Input() listOfColWidth: ReadonlyArray<string | null> = [];
-  @Input() theadTemplate: TemplateRef<NzSafeAny> | null = null;
-  @Input() contentTemplate: TemplateRef<NzSafeAny> | null = null;
-  @Input() tfootTemplate: TemplateRef<NzSafeAny> | null = null;
+  @Input() theadTemplate: TemplateRef<TriSafeAny> | null = null;
+  @Input() contentTemplate: TemplateRef<TriSafeAny> | null = null;
+  @Input() tfootTemplate: TemplateRef<TriSafeAny> | null = null;
 }

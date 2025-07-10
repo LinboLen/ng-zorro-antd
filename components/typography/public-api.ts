@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export { NzTypographyModule } from './typography.module';
-export { NzTypographyComponent } from './typography.component';
-export { NzTextCopyComponent } from './text-copy.component';
-export { NzTextEditComponent } from './text-edit.component';
+export { TriTypographyModule } from './typography.module';
+export { TriTypographyComponent } from './typography.component';
+export { TriTextCopyComponent } from './text-copy.component';
+export { TriTextEditComponent } from './text-edit.component';

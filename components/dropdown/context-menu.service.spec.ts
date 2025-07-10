@@ -11,11 +11,11 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Subject } from 'rxjs';
 
 import { createKeyboardEvent, createMouseEvent, dispatchEvent } from 'ng-zorro-antd/core/testing';
-import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { TriMenuModule } from 'ng-zorro-antd/menu';
 
-import { NzContextMenuService } from './context-menu.service';
-import { NzDropdownMenuComponent } from './dropdown-menu.component';
-import { NzDropDownModule } from './dropdown.module';
+import { TriContextMenuService } from './context-menu.service';
+import { TriDropdownMenuComponent } from './dropdown-menu.component';
+import { TriDropDownModule } from './dropdown.module';
 
 describe('context-menu', () => {
   let overlayContainer: OverlayContainer;
@@ -39,14 +39,14 @@ describe('context-menu', () => {
     overlayContainer.ngOnDestroy();
   }));
   it('should create dropdown', fakeAsync(() => {
-    const fixture = createComponent(NzTestDropdownContextMenuComponent);
+    const fixture = createComponent(TriTestDropdownContextMenuComponent);
     fixture.detectChanges();
     expect(overlayContainerElement.textContent).toBe('');
     fixture.detectChanges();
     expect(() => {
       const fakeEvent = createMouseEvent('contextmenu', 300, 300);
       const component = fixture.componentInstance;
-      const viewRef = component.nzContextMenuService.create(fakeEvent, component.nzDropdownMenuComponent);
+      const viewRef = component.nzContextMenuService.create(fakeEvent, component.dropdownMenuComponent);
       expect(viewRef).toBeTruthy();
       fixture.detectChanges();
       tick(1000);
@@ -55,20 +55,20 @@ describe('context-menu', () => {
     }).not.toThrowError();
   }));
   it('should only one dropdown exist', fakeAsync(() => {
-    const fixture = createComponent(NzTestDropdownContextMenuComponent);
+    const fixture = createComponent(TriTestDropdownContextMenuComponent);
     fixture.detectChanges();
     expect(overlayContainerElement.textContent).toBe('');
     fixture.detectChanges();
     expect(() => {
       let fakeEvent = createMouseEvent('contextmenu', 0, 0);
       const component = fixture.componentInstance;
-      component.nzContextMenuService.create(fakeEvent, component.nzDropdownMenuComponent);
+      component.nzContextMenuService.create(fakeEvent, component.dropdownMenuComponent);
       fixture.detectChanges();
       tick(1000);
       fixture.detectChanges();
       expect(overlayContainerElement.textContent).toContain('1st menu item');
       fakeEvent = createMouseEvent('contextmenu', window.innerWidth, window.innerHeight);
-      component.nzContextMenuService.create(fakeEvent, component.nzDropdownMenuComponent);
+      component.nzContextMenuService.create(fakeEvent, component.dropdownMenuComponent);
       fixture.detectChanges();
       tick(1000);
       fixture.detectChanges();
@@ -77,7 +77,7 @@ describe('context-menu', () => {
   }));
   it('should dropdown close when scroll', fakeAsync(() => {
     const scrolledSubject = new Subject<void>();
-    const fixture = createComponent(NzTestDropdownContextMenuComponent, [
+    const fixture = createComponent(TriTestDropdownContextMenuComponent, [
       { provide: ScrollDispatcher, useFactory: () => ({ scrolled: () => scrolledSubject }) }
     ]);
     fixture.detectChanges();
@@ -85,7 +85,7 @@ describe('context-menu', () => {
     expect(() => {
       const fakeEvent = createMouseEvent('contextmenu', 0, 0);
       const component = fixture.componentInstance;
-      component.nzContextMenuService.create(fakeEvent, component.nzDropdownMenuComponent);
+      component.nzContextMenuService.create(fakeEvent, component.dropdownMenuComponent);
       fixture.detectChanges();
       tick(1000);
       fixture.detectChanges();
@@ -98,14 +98,14 @@ describe('context-menu', () => {
     }).not.toThrowError();
   }));
   it('should backdrop work with click', fakeAsync(() => {
-    const fixture = createComponent(NzTestDropdownContextMenuComponent);
+    const fixture = createComponent(TriTestDropdownContextMenuComponent);
     fixture.detectChanges();
     expect(overlayContainerElement.textContent).toBe('');
     fixture.detectChanges();
     expect(() => {
       const fakeEvent = createMouseEvent('contextmenu', 300, 300);
       const component = fixture.componentInstance;
-      component.nzContextMenuService.create(fakeEvent, component.nzDropdownMenuComponent);
+      component.nzContextMenuService.create(fakeEvent, component.dropdownMenuComponent);
       fixture.detectChanges();
       tick(1000);
       fixture.detectChanges();
@@ -118,7 +118,7 @@ describe('context-menu', () => {
     }).not.toThrowError();
   }));
   it('should backdrop work with keyboard event ESCAPE', fakeAsync(() => {
-    const fixture = createComponent(NzTestDropdownContextMenuComponent);
+    const fixture = createComponent(TriTestDropdownContextMenuComponent);
     const keyboardEvent = createKeyboardEvent('keydown', ESCAPE, undefined, 'Escape');
     fixture.detectChanges();
     expect(overlayContainerElement.textContent).toBe('');
@@ -126,7 +126,7 @@ describe('context-menu', () => {
     expect(() => {
       const fakeEvent = createMouseEvent('contextmenu', 300, 300);
       const component = fixture.componentInstance;
-      component.nzContextMenuService.create(fakeEvent, component.nzDropdownMenuComponent);
+      component.nzContextMenuService.create(fakeEvent, component.dropdownMenuComponent);
       fixture.detectChanges();
       tick(1000);
       fixture.detectChanges();
@@ -139,11 +139,11 @@ describe('context-menu', () => {
     }).not.toThrowError();
   }));
   it('should not call the method close if the overlay is clicked inside', async () => {
-    const fixture = createComponent(NzTestDropdownContextMenuComponent);
+    const fixture = createComponent(TriTestDropdownContextMenuComponent);
     fixture.detectChanges();
     const fakeEvent = createMouseEvent('contextmenu', 300, 300);
     const component = fixture.componentInstance;
-    component.nzContextMenuService.create(fakeEvent, component.nzDropdownMenuComponent);
+    component.nzContextMenuService.create(fakeEvent, component.dropdownMenuComponent);
     fixture.detectChanges();
     await fixture.whenStable();
     fixture.detectChanges();
@@ -156,19 +156,19 @@ describe('context-menu', () => {
 });
 
 @Component({
-  imports: [NzDropDownModule, NzMenuModule],
+  imports: [TriDropDownModule, TriMenuModule],
   template: `
-    <nz-dropdown-menu>
-      <ul nz-menu>
-        <li nz-menu-item>1st menu item</li>
-        <li nz-menu-item>2nd menu item</li>
-        <li nz-menu-item>3rd menu item</li>
+    <tri-dropdown-menu>
+      <ul tri-menu>
+        <li tri-menu-item>1st menu item</li>
+        <li tri-menu-item>2nd menu item</li>
+        <li tri-menu-item>3rd menu item</li>
       </ul>
-    </nz-dropdown-menu>
+    </tri-dropdown-menu>
   `
 })
-export class NzTestDropdownContextMenuComponent {
-  @ViewChild(NzDropdownMenuComponent, { static: true }) nzDropdownMenuComponent!: NzDropdownMenuComponent;
+export class TriTestDropdownContextMenuComponent {
+  @ViewChild(TriDropdownMenuComponent, { static: true }) dropdownMenuComponent!: TriDropdownMenuComponent;
 
-  constructor(public nzContextMenuService: NzContextMenuService) {}
+  constructor(public nzContextMenuService: TriContextMenuService) {}
 }

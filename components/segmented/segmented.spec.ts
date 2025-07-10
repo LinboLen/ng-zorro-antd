@@ -10,16 +10,16 @@ import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { dispatchMouseEvent } from 'ng-zorro-antd/core/testing';
-import { NzSizeLDSType } from 'ng-zorro-antd/core/types';
+import { TriSizeLDSType } from 'ng-zorro-antd/core/types';
 
-import { NzSegmentedComponent } from './segmented.component';
-import { NzSegmentedModule } from './segmented.module';
-import { NzSegmentedOptions } from './types';
+import { TriSegmentedComponent } from './segmented.component';
+import { TriSegmentedModule } from './segmented.module';
+import { TriSegmentedOptions } from './types';
 
 describe('nz-segmented', () => {
   describe('basic', () => {
-    let fixture: ComponentFixture<NzSegmentedTestComponent>;
-    let component: NzSegmentedTestComponent;
+    let fixture: ComponentFixture<TriSegmentedTestComponent>;
+    let component: TriSegmentedTestComponent;
     let segmentedComponent: DebugElement;
 
     function getSegmentedOptionByIndex(index: number): HTMLElement {
@@ -30,10 +30,10 @@ describe('nz-segmented', () => {
       TestBed.configureTestingModule({
         providers: [provideNoopAnimations()]
       });
-      fixture = TestBed.createComponent(NzSegmentedTestComponent);
+      fixture = TestBed.createComponent(TriSegmentedTestComponent);
       component = fixture.componentInstance;
       spyOn(component, 'handleValueChange');
-      segmentedComponent = fixture.debugElement.query(By.directive(NzSegmentedComponent));
+      segmentedComponent = fixture.debugElement.query(By.directive(TriSegmentedComponent));
       fixture.detectChanges();
     });
 
@@ -135,8 +135,8 @@ describe('nz-segmented', () => {
   });
 
   describe('ng model', () => {
-    let fixture: ComponentFixture<NzSegmentedNgModelTestComponent>;
-    let component: NzSegmentedNgModelTestComponent;
+    let fixture: ComponentFixture<TriSegmentedNgModelTestComponent>;
+    let component: TriSegmentedNgModelTestComponent;
     let segmentedComponent: DebugElement;
 
     function getSegmentedOptionByIndex(index: number): HTMLElement {
@@ -147,10 +147,10 @@ describe('nz-segmented', () => {
       TestBed.configureTestingModule({
         providers: [provideNoopAnimations()]
       });
-      fixture = TestBed.createComponent(NzSegmentedNgModelTestComponent);
+      fixture = TestBed.createComponent(TriSegmentedNgModelTestComponent);
       component = fixture.componentInstance;
       spyOn(component, 'handleValueChange');
-      segmentedComponent = fixture.debugElement.query(By.directive(NzSegmentedComponent));
+      segmentedComponent = fixture.debugElement.query(By.directive(TriSegmentedComponent));
       fixture.detectChanges();
     });
 
@@ -185,8 +185,8 @@ describe('nz-segmented', () => {
   });
 
   describe('reactive form', () => {
-    let fixture: ComponentFixture<NzSegmentedInReactiveFormTestComponent>;
-    let component: NzSegmentedInReactiveFormTestComponent;
+    let fixture: ComponentFixture<TriSegmentedInReactiveFormTestComponent>;
+    let component: TriSegmentedInReactiveFormTestComponent;
     let segmentedComponent: DebugElement;
 
     function getSegmentedOptionByIndex(index: number): HTMLElement {
@@ -197,9 +197,9 @@ describe('nz-segmented', () => {
       TestBed.configureTestingModule({
         providers: [provideNoopAnimations()]
       });
-      fixture = TestBed.createComponent(NzSegmentedInReactiveFormTestComponent);
+      fixture = TestBed.createComponent(TriSegmentedInReactiveFormTestComponent);
       component = fixture.componentInstance;
-      segmentedComponent = fixture.debugElement.query(By.directive(NzSegmentedComponent));
+      segmentedComponent = fixture.debugElement.query(By.directive(TriSegmentedComponent));
       fixture.detectChanges();
     });
 
@@ -220,20 +220,20 @@ describe('nz-segmented', () => {
 });
 
 @Component({
-  imports: [FormsModule, NzSegmentedModule],
+  imports: [FormsModule, TriSegmentedModule],
   template: `
-    <nz-segmented
-      [nzSize]="size"
-      [nzOptions]="options"
-      [nzDisabled]="disabled"
-      [nzBlock]="block"
-      (nzValueChange)="handleValueChange($event)"
-    ></nz-segmented>
+    <tri-segmented
+      [size]="size"
+      [options]="options"
+      [disabled]="disabled"
+      [block]="block"
+      (valueChange)="handleValueChange($event)"
+    ></tri-segmented>
   `
 })
-export class NzSegmentedTestComponent {
-  size: NzSizeLDSType = 'default';
-  options: NzSegmentedOptions = [1, 2, 3];
+export class TriSegmentedTestComponent {
+  size: TriSizeLDSType = 'default';
+  options: TriSegmentedOptions = [1, 2, 3];
   block = false;
   disabled = false;
 
@@ -243,11 +243,11 @@ export class NzSegmentedTestComponent {
 }
 
 @Component({
-  imports: [FormsModule, NzSegmentedModule],
-  template: `<nz-segmented [nzOptions]="options" [(ngModel)]="value" (ngModelChange)="handleValueChange($event)" />`
+  imports: [FormsModule, TriSegmentedModule],
+  template: `<tri-segmented [options]="options" [(ngModel)]="value" (ngModelChange)="handleValueChange($event)" />`
 })
-export class NzSegmentedNgModelTestComponent {
-  options: NzSegmentedOptions = [1, 2, 3];
+export class TriSegmentedNgModelTestComponent {
+  options: TriSegmentedOptions = [1, 2, 3];
   value: number | string = 1;
 
   handleValueChange(_e: string | number): void {
@@ -256,10 +256,10 @@ export class NzSegmentedNgModelTestComponent {
 }
 
 @Component({
-  imports: [ReactiveFormsModule, NzSegmentedModule],
-  template: `<nz-segmented [nzOptions]="options" [formControl]="formControl"></nz-segmented>`
+  imports: [ReactiveFormsModule, TriSegmentedModule],
+  template: `<tri-segmented [options]="options" [formControl]="formControl"></tri-segmented>`
 })
-export class NzSegmentedInReactiveFormTestComponent {
+export class TriSegmentedInReactiveFormTestComponent {
   options = ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly'];
   formControl = new FormControl('Weekly');
 }

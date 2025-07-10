@@ -16,38 +16,38 @@ import {
 
 import { NgStyleInterface } from 'ng-zorro-antd/core/types';
 
-import { NzDisplayedMark, NzExtendedMark, NzMark, NzMarkObj } from './typings';
+import { TriDisplayedMark, TriExtendedMark, TriMark, TriMarkObj } from './typings';
 
 @Component({
-  selector: 'nz-slider-marks',
-  exportAs: 'nzSliderMarks',
+  selector: '',
+  exportAs: 'triSliderMarks',
   template: `
     @for (attr of marks; track attr.value) {
       <span
-        class="ant-slider-mark-text"
-        [class.ant-slider-mark-active]="attr.active"
+        class="tri-slider-mark-text"
+        [class.tri-slider-mark-active]="attr.active"
         [style]="attr.style"
         [innerHTML]="attr.label"
       ></span>
     }
   `,
   host: {
-    class: 'ant-slider-mark'
+    class: 'tri-slider-mark'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class NzSliderMarksComponent implements OnChanges {
+export class TriSliderMarksComponent implements OnChanges {
   @Input() lowerBound: number | null = null;
   @Input() upperBound: number | null = null;
-  @Input() marksArray: NzExtendedMark[] = [];
+  @Input() marksArray: TriExtendedMark[] = [];
   @Input({ transform: numberAttribute }) min!: number;
   @Input({ transform: numberAttribute }) max!: number;
   @Input({ transform: booleanAttribute }) vertical = false;
   @Input({ transform: booleanAttribute }) included = false;
   @Input({ transform: booleanAttribute }) reverse!: boolean;
 
-  marks: NzDisplayedMark[] = [];
+  marks: TriDisplayedMark[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
     const { marksArray, lowerBound, upperBound, reverse } = changes;
@@ -80,7 +80,7 @@ export class NzSliderMarksComponent implements OnChanges {
     });
   }
 
-  private getMarkStyles(value: number, range: number, config: NzMark): NgStyleInterface {
+  private getMarkStyles(value: number, range: number, config: TriMark): NgStyleInterface {
     let style;
     const markValue = this.reverse ? this.max + this.min - value : value;
 
@@ -115,6 +115,6 @@ export class NzSliderMarksComponent implements OnChanges {
   }
 }
 
-function isConfigObject(config: NzMark): config is NzMarkObj {
+function isConfigObject(config: TriMark): config is TriMarkObj {
   return typeof config !== 'string';
 }

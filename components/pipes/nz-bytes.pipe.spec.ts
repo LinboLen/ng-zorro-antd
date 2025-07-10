@@ -3,13 +3,13 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ByteUnit, NzBytesPipe } from './nz-bytes.pipe';
+import { ByteUnit, TriBytesPipe } from './nz-bytes.pipe';
 
 describe('NzBytesPipe', () => {
-  let pipe: NzBytesPipe;
+  let pipe: TriBytesPipe;
 
   beforeEach(() => {
-    pipe = new NzBytesPipe();
+    pipe = new TriBytesPipe();
   });
 
   it('Should return 150 B', () => {
@@ -113,14 +113,14 @@ describe('NzBytesPipe', () => {
   it('Should return 100 TB', () => {
     const bytes = 100;
     const unit = 'TB';
-    const result = NzBytesPipe.formatResult(bytes, unit);
+    const result = TriBytesPipe.formatResult(bytes, unit);
     expect(result).toEqual('100 TB');
   });
 
   it('Should return 1', () => {
     const format = { max: Math.pow(1024, 4), prev: 'MB' as ByteUnit };
     const bytes = 1024 * 1024 * 1024;
-    const result = NzBytesPipe.calculateResult(format, bytes);
+    const result = TriBytesPipe.calculateResult(format, bytes);
     expect(result).toEqual(1);
   });
 

@@ -26,63 +26,63 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { NzConfigKey, NzConfigService, WithConfig } from 'ng-zorro-antd/core/config';
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzSizeDSType, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
+import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriSizeDSType, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
-import { NzWaveModule } from 'ng-zorro-antd/core/wave';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriWaveModule } from 'ng-zorro-antd/core/wave';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'switch';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'switch';
 
 @Component({
-  selector: 'nz-switch',
-  exportAs: 'nzSwitch',
+  selector: '',
+  exportAs: 'triSwitch',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NzSwitchComponent),
+      useExisting: forwardRef(() => TriSwitchComponent),
       multi: true
     }
   ],
   template: `
     <button
-      nz-wave
+      tri-wave
       type="button"
-      class="ant-switch"
+      class="tri-switch"
       #switchElement
-      [attr.id]="nzId"
-      [disabled]="nzDisabled"
-      [class.ant-switch-checked]="isChecked"
-      [class.ant-switch-loading]="nzLoading"
-      [class.ant-switch-disabled]="nzDisabled"
-      [class.ant-switch-small]="nzSize === 'small'"
-      [class.ant-switch-rtl]="dir === 'rtl'"
-      [nzWaveExtraNode]="true"
+      [attr.id]="id"
+      [disabled]="disabled"
+      [class.tri-switch-checked]="isChecked"
+      [class.tri-switch-loading]="loading"
+      [class.tri-switch-disabled]="disabled"
+      [class.tri-switch-small]="size === 'small'"
+      [class.tri-switch-rtl]="dir === 'rtl'"
+      [waveExtraNode]="true"
     >
-      <span class="ant-switch-handle">
-        @if (nzLoading) {
-          <nz-icon nzType="loading" class="ant-switch-loading-icon" />
+      <span class="tri-switch-handle">
+        @if (loading) {
+          <tri-icon type="loading" class="tri-switch-loading-icon" />
         }
       </span>
-      <span class="ant-switch-inner">
+      <span class="tri-switch-inner">
         @if (isChecked) {
-          <ng-container *nzStringTemplateOutlet="nzCheckedChildren">{{ nzCheckedChildren }}</ng-container>
+          <ng-container *stringTemplateOutlet="checkedChildren">{{ checkedChildren }}</ng-container>
         } @else {
-          <ng-container *nzStringTemplateOutlet="nzUnCheckedChildren">{{ nzUnCheckedChildren }}</ng-container>
+          <ng-container *stringTemplateOutlet="unCheckedChildren">{{ unCheckedChildren }}</ng-container>
         }
       </span>
-      <div class="ant-click-animating-node"></div>
+      <div class="tri-click-animating-node"></div>
     </button>
   `,
-  imports: [NzWaveModule, NzIconModule, NzOutletModule]
+  imports: [TriWaveModule, TriIconModule, TriOutletModule]
 })
-export class NzSwitchComponent implements ControlValueAccessor, AfterViewInit, OnInit {
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+export class TriSwitchComponent implements ControlValueAccessor, AfterViewInit, OnInit {
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
 
-  nzConfigService = inject(NzConfigService);
+  configService = inject(TriConfigService);
   private el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
   private ngZone = inject(NgZone);
   private cdr = inject(ChangeDetectorRef);
@@ -94,13 +94,13 @@ export class NzSwitchComponent implements ControlValueAccessor, AfterViewInit, O
   onChange: OnChangeType = () => {};
   onTouched: OnTouchedType = () => {};
   @ViewChild('switchElement', { static: true }) switchElement!: ElementRef<HTMLElement>;
-  @Input({ transform: booleanAttribute }) nzLoading = false;
-  @Input({ transform: booleanAttribute }) nzDisabled = false;
-  @Input({ transform: booleanAttribute }) nzControl = false;
-  @Input() nzCheckedChildren: string | TemplateRef<void> | null = null;
-  @Input() nzUnCheckedChildren: string | TemplateRef<void> | null = null;
-  @Input() @WithConfig() nzSize: NzSizeDSType = 'default';
-  @Input() nzId: string | null = null;
+  @Input({ transform: booleanAttribute }) loading = false;
+  @Input({ transform: booleanAttribute }) disabled = false;
+  @Input({ transform: booleanAttribute }) control = false;
+  @Input() checkedChildren: string | TemplateRef<void> | null = null;
+  @Input() unCheckedChildren: string | TemplateRef<void> | null = null;
+  @Input() @WithConfig() size: TriSizeDSType = 'default';
+  @Input() id: string | null = null;
 
   dir: Direction = 'ltr';
 
@@ -140,7 +140,7 @@ export class NzSwitchComponent implements ControlValueAccessor, AfterViewInit, O
       .subscribe(event => {
         event.preventDefault();
 
-        if (this.nzControl || this.nzDisabled || this.nzLoading) {
+        if (this.control || this.disabled || this.loading) {
           return;
         }
 
@@ -153,7 +153,7 @@ export class NzSwitchComponent implements ControlValueAccessor, AfterViewInit, O
     fromEventOutsideAngular<KeyboardEvent>(this.switchElement.nativeElement, 'keydown')
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(event => {
-        if (this.nzControl || this.nzDisabled || this.nzLoading) {
+        if (this.control || this.disabled || this.loading) {
           return;
         }
 
@@ -204,7 +204,7 @@ export class NzSwitchComponent implements ControlValueAccessor, AfterViewInit, O
   }
 
   setDisabledState(disabled: boolean): void {
-    this.nzDisabled = (this.isNzDisableFirstChange && this.nzDisabled) || disabled;
+    this.disabled = (this.isNzDisableFirstChange && this.disabled) || disabled;
     this.isNzDisableFirstChange = false;
     this.cdr.markForCheck();
   }

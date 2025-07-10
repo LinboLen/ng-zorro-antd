@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NzTableModule } from 'ng-zorro-antd/table';
+import { TriTableModule } from 'ng-zorro-antd/table';
 
 interface ItemData {
   name: string;
@@ -14,19 +14,19 @@ interface ItemData {
 }
 
 @Component({
-  selector: 'nz-demo-table-grouping-columns',
-  imports: [NzTableModule],
+  selector: '',
+  imports: [TriTableModule],
   template: `
-    <nz-table #groupingTable [nzData]="listOfData" nzBordered nzSize="middle" [nzScroll]="{ x: '1200px', y: '240px' }">
+    <tri-table #groupingTable [data]="listOfData" bordered size="middle" [scroll]="{ x: '1200px', y: '240px' }">
       <thead>
         <tr>
-          <th rowspan="4" nzLeft [nzFilters]="filterName" [nzFilterFn]="nameFilterFn">Name</th>
+          <th rowspan="4" left [filters]="filterName" [filterFn]="nameFilterFn">Name</th>
           <th colspan="4">Other</th>
           <th colspan="2">Company</th>
-          <th rowspan="4" nzRight>Gender</th>
+          <th rowspan="4" right>Gender</th>
         </tr>
         <tr>
-          <th rowspan="3" [nzSortFn]="sortAgeFn">Age</th>
+          <th rowspan="3" [sortFn]="sortAgeFn">Age</th>
           <th colspan="3">Address</th>
           <th rowspan="3">Company Address</th>
           <th rowspan="3">Company Name</th>
@@ -43,21 +43,21 @@ interface ItemData {
       <tbody>
         @for (data of groupingTable.data; track data) {
           <tr>
-            <td nzLeft>{{ data.name }}</td>
+            <td left>{{ data.name }}</td>
             <td>{{ data.age }}</td>
             <td>{{ data.street }}</td>
             <td>{{ data.building }}</td>
             <td>{{ data.number }}</td>
             <td>{{ data.companyAddress }}</td>
             <td>{{ data.companyName }}</td>
-            <td nzRight>{{ data.gender }}</td>
+            <td right>{{ data.gender }}</td>
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `
 })
-export class NzDemoTableGroupingColumnsComponent implements OnInit {
+export class TriDemoTableGroupingColumnsComponent implements OnInit {
   listOfData: ItemData[] = [];
   sortAgeFn = (a: ItemData, b: ItemData): number => a.age - b.age;
   nameFilterFn = (list: string[], item: ItemData): boolean => list.some(name => item.name.indexOf(name) !== -1);

@@ -1,49 +1,49 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: 'nz-demo-tab-content-lazy',
+  selector: '',
   template: `lazy`
 })
-export class NzDemoTabContentLazyComponent implements OnInit {
+export class TriDemoTabContentLazyComponent implements OnInit {
   ngOnInit(): void {
     console.log(`I will init when tab active`);
   }
 }
 
 @Component({
-  selector: 'nz-demo-tab-content-eagerly',
+  selector: '',
   template: `eagerly`
 })
-export class NzDemoTabContentEagerlyComponent implements OnInit {
+export class TriDemoTabContentEagerlyComponent implements OnInit {
   ngOnInit(): void {
     console.log(`I will init eagerly`);
   }
 }
 
 @Component({
-  selector: 'nz-demo-tabs-lazy',
-  imports: [NzTabsModule, NzDemoTabContentEagerlyComponent, NzDemoTabContentLazyComponent],
+  selector: '',
+  imports: [TriTabsModule, TriDemoTabContentEagerlyComponent, TriDemoTabContentLazyComponent],
   template: `
-    <nz-tabs>
-      <nz-tab nzTitle="Tab Eagerly 1">
-        <nz-demo-tab-content-eagerly></nz-demo-tab-content-eagerly>
-      </nz-tab>
-      <nz-tab nzTitle="Tab Eagerly 2">
-        <nz-demo-tab-content-eagerly></nz-demo-tab-content-eagerly>
-      </nz-tab>
-      <nz-tab nzTitle="Tab Lazy 1">
-        <ng-template nz-tab>
-          <nz-demo-tab-content-lazy></nz-demo-tab-content-lazy>
+    <tri-tabs>
+      <tri-tab title="Tab Eagerly 1">
+        <tri-demo-tab-content-eagerly></tri-demo-tab-content-eagerly>
+      </tri-tab>
+      <tri-tab title="Tab Eagerly 2">
+        <tri-demo-tab-content-eagerly></tri-demo-tab-content-eagerly>
+      </tri-tab>
+      <tri-tab title="Tab Lazy 1">
+        <ng-template tri-tab>
+          <tri-demo-tab-content-lazy></tri-demo-tab-content-lazy>
         </ng-template>
-      </nz-tab>
-      <nz-tab nzTitle="Tab Lazy 2">
-        <ng-template nz-tab>
-          <nz-demo-tab-content-lazy></nz-demo-tab-content-lazy>
+      </tri-tab>
+      <tri-tab title="Tab Lazy 2">
+        <ng-template tri-tab>
+          <tri-demo-tab-content-lazy></tri-demo-tab-content-lazy>
         </ng-template>
-      </nz-tab>
-    </nz-tabs>
+      </tri-tab>
+    </tri-tabs>
   `
 })
-export class NzDemoTabsLazyComponent {}
+export class TriDemoTabsLazyComponent {}

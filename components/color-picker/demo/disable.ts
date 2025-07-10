@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
-import { NzColorPickerModule } from 'ng-zorro-antd/color-picker';
+import { TriColorPickerModule } from 'ng-zorro-antd/color-picker';
 
 @Component({
-  selector: 'nz-demo-color-picker-disable',
-  imports: [NzColorPickerModule],
-  template: `<nz-color-picker nzDisabled nzShowText></nz-color-picker>`
+  selector: '',
+  imports: [TriColorPickerModule],
+  template: `<tri-color-picker disabled showText></tri-color-picker>`
 })
-export class NzDemoColorPickerDisableComponent {}
+export class TriDemoColorPickerDisableComponent {}

@@ -1,55 +1,55 @@
 import { Component } from '@angular/core';
 
-import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzLayoutModule } from 'ng-zorro-antd/layout';
-import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { TriBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriLayoutModule } from 'ng-zorro-antd/layout';
+import { TriMenuModule } from 'ng-zorro-antd/menu';
 
 @Component({
-  selector: 'nz-demo-layout-custom-trigger',
-  imports: [NzBreadCrumbModule, NzIconModule, NzMenuModule, NzLayoutModule],
+  selector: '',
+  imports: [TriBreadCrumbModule, TriIconModule, TriMenuModule, TriLayoutModule],
   template: `
-    <nz-layout>
-      <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+    <tri-layout>
+      <tri-sider collapsible [(collapsedChange)]="isCollapsed" [trigger]="null">
         <div class="logo"></div>
-        <ul nz-menu nzTheme="dark" nzMode="inline">
-          <li nz-submenu nzTitle="User" nzIcon="user">
+        <ul tri-menu theme="dark" mode="inline">
+          <li tri-submenu title="User" icon="user">
             <ul>
-              <li nz-menu-item>Tom</li>
-              <li nz-menu-item>Bill</li>
-              <li nz-menu-item>Alex</li>
+              <li tri-menu-item>Tom</li>
+              <li tri-menu-item>Bill</li>
+              <li tri-menu-item>Alex</li>
             </ul>
           </li>
-          <li nz-submenu nzTitle="Team" nzIcon="team">
+          <li tri-submenu title="Team" icon="team">
             <ul>
-              <li nz-menu-item>Team 1</li>
-              <li nz-menu-item>Team 2</li>
+              <li tri-menu-item>Team 1</li>
+              <li tri-menu-item>Team 2</li>
             </ul>
           </li>
-          <li nz-menu-item>
-            <nz-icon nzType="file" />
+          <li tri-menu-item>
+            <tri-icon type="file" />
             <span>File</span>
           </li>
         </ul>
-      </nz-sider>
-      <nz-layout>
-        <nz-header>
-          <nz-icon
+      </tri-sider>
+      <tri-layout>
+        <tri-header>
+          <tri-icon
             class="trigger"
-            [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+            [type]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
             (click)="isCollapsed = !isCollapsed"
           />
-        </nz-header>
-        <nz-content>
-          <nz-breadcrumb>
-            <nz-breadcrumb-item>User</nz-breadcrumb-item>
-            <nz-breadcrumb-item>Bill</nz-breadcrumb-item>
-          </nz-breadcrumb>
+        </tri-header>
+        <tri-content>
+          <tri-breadcrumb>
+            <tri-breadcrumb-item>User</tri-breadcrumb-item>
+            <tri-breadcrumb-item>Bill</tri-breadcrumb-item>
+          </tri-breadcrumb>
           <div class="inner-content">Bill is a cat.</div>
-        </nz-content>
-        <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
-      </nz-layout>
-    </nz-layout>
+        </tri-content>
+        <tri-footer>Ant Design ©2020 Implement By Angular</tri-footer>
+      </tri-layout>
+    </tri-layout>
   `,
   styles: [
     `
@@ -96,6 +96,6 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
     `
   ]
 })
-export class NzDemoLayoutCustomTriggerComponent {
+export class TriDemoLayoutCustomTriggerComponent {
   isCollapsed = false;
 }

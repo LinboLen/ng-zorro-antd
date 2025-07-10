@@ -16,84 +16,84 @@ import {
   TemplateRef
 } from '@angular/core';
 
-import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
-import { NzModeType } from './typings';
+import { TriModeType } from './typings';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NzIconModule, NzStringTemplateOutletDirective],
-  selector: 'nz-hash-code',
-  exportAs: 'nzHashCode',
+  imports: [TriIconModule, TriStringTemplateOutletDirective],
+  selector: '',
+  exportAs: 'triHashCode',
   template: `
-    @if (nzMode !== 'single' && nzMode !== 'rect') {
-      <div class="ant-hash-code-header">
-        <div class="ant-hash-code-header-title">{{ nzTitle }}</div>
-        <div class="ant-hash-code-header-copy" (click)="copyHandle()">
-          <nz-icon nzType="copy" nzTheme="outline" />
+    @if (mode !== 'single' && mode !== 'rect') {
+      <div class="tri-hash-code-header">
+        <div class="tri-hash-code-header-title">{{ title }}</div>
+        <div class="tri-hash-code-header-copy" (click)="copyHandle()">
+          <tri-icon type="copy" theme="outline" />
         </div>
-        <div class="ant-hash-code-header-logo">
-          <ng-template [nzStringTemplateOutlet]="nzLogo">{{ nzLogo }}</ng-template>
+        <div class="tri-hash-code-header-logo">
+          <ng-template [stringTemplateOutlet]="logo">{{ logo }}</ng-template>
         </div>
       </div>
     }
 
-    @if (nzMode === 'single' || nzMode === 'rect') {
-      <div class="ant-hash-code-header-copy" (click)="copyHandle()">
-        <nz-icon nzType="copy" nzTheme="outline" />
+    @if (mode === 'single' || mode === 'rect') {
+      <div class="tri-hash-code-header-copy" (click)="copyHandle()">
+        <tri-icon type="copy" theme="outline" />
       </div>
     }
 
     <div
-      class="ant-hash-code-contant"
-      [class.ant-hash-code-value-default]="nzType === 'default'"
-      [class.ant-hash-code-value-primary]="nzType === 'primary'"
+      class="tri-hash-code-contant"
+      [class.tri-hash-code-value-default]="type === 'default'"
+      [class.tri-hash-code-value-primary]="type === 'primary'"
     >
       <div
-        class="ant-hash-code-code-value"
-        [style]="{ height: nzMode === 'rect' ? '70px' : nzMode === 'single' ? '18px' : '35px' }"
+        class="tri-hash-code-code-value"
+        [style]="{ height: mode === 'rect' ? '70px' : mode === 'single' ? '18px' : '35px' }"
       >
-        @if (nzMode === 'double') {
+        @if (mode === 'double') {
           @if (hashDataList.length > 8) {
             @for (v of hashDataList.slice(0, 6); track v) {
-              <div class="ant-hash-code-code-value-block">{{ v }}</div>
+              <div class="tri-hash-code-code-value-block">{{ v }}</div>
             }
-            <div class="ant-hash-code-code-value-block">····</div>
-            <div class="ant-hash-code-code-value-block">{{ hashDataList[hashDataList.length - 1] }}</div>
+            <div class="tri-hash-code-code-value-block">····</div>
+            <div class="tri-hash-code-code-value-block">{{ hashDataList[hashDataList.length - 1] }}</div>
           } @else {
             @for (v of hashDataList; track v) {
-              <div class="ant-hash-code-code-value-block">{{ v }}</div>
+              <div class="tri-hash-code-code-value-block">{{ v }}</div>
             }
           }
         }
 
-        @if (nzMode === 'single') {
-          <div class="ant-hash-code-code-value-block">{{ hashDataList[0] }}</div>
-          <div class="ant-hash-code-code-value-block">····</div>
-          <div class="ant-hash-code-code-value-block">{{ hashDataList[hashDataList.length - 1] }}</div>
+        @if (mode === 'single') {
+          <div class="tri-hash-code-code-value-block">{{ hashDataList[0] }}</div>
+          <div class="tri-hash-code-code-value-block">····</div>
+          <div class="tri-hash-code-code-value-block">{{ hashDataList[hashDataList.length - 1] }}</div>
         }
 
-        @if (nzMode === 'rect' || nzMode === 'strip') {
+        @if (mode === 'rect' || mode === 'strip') {
           @if (hashDataList.length > 16) {
             @for (v of hashDataList.slice(0, 14); track v) {
-              <div class="ant-hash-code-code-value-block">{{ v }}</div>
+              <div class="tri-hash-code-code-value-block">{{ v }}</div>
             }
-            <div class="ant-hash-code-code-value-block">····</div>
-            <div class="ant-hash-code-code-value-block">{{ hashDataList[hashDataList.length - 1] }}</div>
+            <div class="tri-hash-code-code-value-block">····</div>
+            <div class="tri-hash-code-code-value-block">{{ hashDataList[hashDataList.length - 1] }}</div>
           } @else {
             @for (v of hashDataList; track v) {
-              <div class="ant-hash-code-code-value-block">{{ v }}</div>
+              <div class="tri-hash-code-code-value-block">{{ v }}</div>
             }
           }
         }
       </div>
       <div
-        class="ant-hash-code-texaure"
-        [class.ant-hash-code-texaure-double]="nzMode === 'double'"
-        [class.ant-hash-code-texaure-single]="nzMode === 'single'"
-        [class.ant-hash-code-texaure-strip]="nzMode === 'strip'"
-        [class.ant-hash-code-texaure-rect]="nzMode === 'rect'"
+        class="tri-hash-code-texaure"
+        [class.tri-hash-code-texaure-double]="mode === 'double'"
+        [class.tri-hash-code-texaure-single]="mode === 'single'"
+        [class.tri-hash-code-texaure-strip]="mode === 'strip'"
+        [class.tri-hash-code-texaure-rect]="mode === 'rect'"
       >
         <svg width="545px" height="111px" viewBox="0 0 545 111" version="1.1" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -202,41 +202,41 @@ import { NzModeType } from './typings';
     </div>
   `,
   host: {
-    class: 'ant-hash-code',
-    '[class.ant-hash-code-default]': `nzType === 'default'`,
-    '[class.ant-hash-code-primary]': `nzType === 'primary'`,
-    '[class.ant-hash-code-double]': `nzMode === 'double'`,
-    '[class.ant-hash-code-single]': `nzMode === 'single'`,
-    '[class.ant-hash-code-strip]': `nzMode === 'strip'`,
-    '[class.ant-hash-code-rect]': `nzMode === 'rect'`
+    class: 'tri-hash-code',
+    '[class.tri-hash-code-default]': `type === 'default'`,
+    '[class.tri-hash-code-primary]': `type === 'primary'`,
+    '[class.tri-hash-code-double]': `mode === 'double'`,
+    '[class.tri-hash-code-single]': `mode === 'single'`,
+    '[class.tri-hash-code-strip]': `mode === 'strip'`,
+    '[class.tri-hash-code-rect]': `mode === 'rect'`
   }
 })
-export class NzHashCodeComponent implements OnChanges {
+export class TriHashCodeComponent implements OnChanges {
   private cdr = inject(ChangeDetectorRef);
 
-  @Input() nzValue: string = '';
-  @Input() nzTitle: string = 'HashCode';
-  @Input() nzLogo: TemplateRef<void> | string = '';
-  @Input() nzMode: NzModeType = 'double';
-  @Input() nzType: 'default' | 'primary' = 'default';
-  @Output() readonly nzOnCopy = new EventEmitter<string>();
+  @Input() value: string = '';
+  @Input() title: string = 'HashCode';
+  @Input() logo: TemplateRef<void> | string = '';
+  @Input() mode: TriModeType = 'double';
+  @Input() type: 'default' | 'primary' = 'default';
+  @Output() readonly onCopy = new EventEmitter<string>();
 
   hashDataList: string[] = [];
 
   copyHandle(): void {
-    this.nzOnCopy.emit(this.nzValue);
+    this.onCopy.emit(this.value);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     const { nzValue } = changes;
 
     if (nzValue) {
-      this.setData(this.nzValue);
+      this.setData(this.value);
     }
   }
 
   setData(value: string): void {
-    if (this.nzMode !== 'single') {
+    if (this.mode !== 'single') {
       this.hashDataList = value.match(/.{1,4}/g) as string[];
     } else {
       this.hashDataList = value.match(/.{1,8}/g) as string[];

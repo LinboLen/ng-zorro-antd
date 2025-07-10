@@ -1,29 +1,29 @@
 import { Component } from '@angular/core';
 
-import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
 
 @Component({
-  selector: 'nz-demo-breadcrumb-dropdown',
-  imports: [NzBreadCrumbModule, NzDropDownModule],
+  selector: '',
+  imports: [TriBreadCrumbModule, TriDropDownModule],
   template: `
-    <nz-breadcrumb>
-      <nz-breadcrumb-item>Ant Design</nz-breadcrumb-item>
-      <nz-breadcrumb-item>
+    <tri-breadcrumb>
+      <tri-breadcrumb-item>Ant Design</tri-breadcrumb-item>
+      <tri-breadcrumb-item>
         <a>Component</a>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item [nzOverlay]="menu">
+      </tri-breadcrumb-item>
+      <tri-breadcrumb-item [overlay]="menu">
         <a href>An Application</a>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item>Button</nz-breadcrumb-item>
-    </nz-breadcrumb>
-    <nz-dropdown-menu #menu="nzDropdownMenu">
-      <ul nz-menu nzSelectable>
-        <li nz-menu-item>General</li>
-        <li nz-menu-item>Layout</li>
-        <li nz-menu-item>Navigation</li>
+      </tri-breadcrumb-item>
+      <tri-breadcrumb-item>Button</tri-breadcrumb-item>
+    </tri-breadcrumb>
+    <tri-dropdown-menu #menu="nzDropdownMenu">
+      <ul tri-menu selectable>
+        <li tri-menu-item>General</li>
+        <li tri-menu-item>Layout</li>
+        <li tri-menu-item>Navigation</li>
       </ul>
-    </nz-dropdown-menu>
+    </tri-dropdown-menu>
   `
 })
-export class NzDemoBreadcrumbDropdownComponent {}
+export class TriDemoBreadcrumbDropdownComponent {}

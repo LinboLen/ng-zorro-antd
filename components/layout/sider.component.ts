@@ -24,87 +24,87 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { NzBreakpointKey, NzBreakpointService, siderResponsiveMap } from 'ng-zorro-antd/core/services';
+import { TriBreakpointKey, TriBreakpointService, siderResponsiveMap } from 'ng-zorro-antd/core/services';
 import { inNextTick, toCssPixel } from 'ng-zorro-antd/core/util';
-import { NzMenuDirective } from 'ng-zorro-antd/menu';
+import { TriMenuDirective } from 'ng-zorro-antd/menu';
 
-import { NzSiderTriggerComponent } from './sider-trigger.component';
+import { TriSiderTriggerComponent } from './sider-trigger.component';
 
 @Component({
-  selector: 'nz-sider',
-  exportAs: 'nzSider',
+  selector: '',
+  exportAs: 'triSider',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="ant-layout-sider-children">
+    <div class="tri-layout-sider-children">
       <ng-content></ng-content>
     </div>
-    @if (nzCollapsible && nzTrigger !== null) {
+    @if (collapsible && trigger !== null) {
       <div
-        nz-sider-trigger
+        tri-sider-trigger
         [matchBreakPoint]="matchBreakPoint"
-        [nzCollapsedWidth]="nzCollapsedWidth"
-        [nzCollapsed]="nzCollapsed"
-        [nzBreakpoint]="nzBreakpoint"
-        [nzReverseArrow]="nzReverseArrow"
-        [nzTrigger]="nzTrigger"
-        [nzZeroTrigger]="nzZeroTrigger"
+        [collapsedWidth]="collapsedWidth"
+        [collapsed]="collapsed"
+        [breakpoint]="breakpoint"
+        [reverseArrow]="reverseArrow"
+        [trigger]="trigger"
+        [zeroTrigger]="zeroTrigger"
         [siderWidth]="widthSetting"
-        (click)="setCollapsed(!nzCollapsed)"
+        (click)="setCollapsed(!collapsed)"
       ></div>
     }
   `,
   host: {
-    class: 'ant-layout-sider',
-    '[class.ant-layout-sider-zero-width]': `nzCollapsed && nzCollapsedWidth === 0`,
-    '[class.ant-layout-sider-light]': `nzTheme === 'light'`,
-    '[class.ant-layout-sider-dark]': `nzTheme === 'dark'`,
-    '[class.ant-layout-sider-collapsed]': `nzCollapsed`,
-    '[class.ant-layout-sider-has-trigger]': `nzCollapsible && nzTrigger !== null`,
+    class: 'tri-layout-sider',
+    '[class.tri-layout-sider-zero-width]': `collapsed && collapsedWidth === 0`,
+    '[class.tri-layout-sider-light]': `theme === 'light'`,
+    '[class.tri-layout-sider-dark]': `theme === 'dark'`,
+    '[class.tri-layout-sider-collapsed]': `collapsed`,
+    '[class.tri-layout-sider-has-trigger]': `collapsible && trigger !== null`,
     '[style.flex]': 'flexSetting',
     '[style.maxWidth]': 'widthSetting',
     '[style.minWidth]': 'widthSetting',
     '[style.width]': 'widthSetting'
   },
-  imports: [NzSiderTriggerComponent]
+  imports: [TriSiderTriggerComponent]
 })
-export class NzSiderComponent implements OnInit, OnChanges, AfterContentInit {
+export class TriSiderComponent implements OnInit, OnChanges, AfterContentInit {
   private destroyRef = inject(DestroyRef);
   private platform = inject(Platform);
   private cdr = inject(ChangeDetectorRef);
-  private breakpointService = inject(NzBreakpointService);
+  private breakpointService = inject(TriBreakpointService);
 
-  @ContentChild(NzMenuDirective) nzMenuDirective: NzMenuDirective | null = null;
-  @Output() readonly nzCollapsedChange = new EventEmitter();
-  @Input() nzWidth: string | number = 200;
-  @Input() nzTheme: 'light' | 'dark' = 'dark';
-  @Input() nzCollapsedWidth = 80;
-  @Input() nzBreakpoint: NzBreakpointKey | null = null;
-  @Input() nzZeroTrigger: TemplateRef<void> | null = null;
-  @Input() nzTrigger: TemplateRef<void> | undefined | null = undefined;
-  @Input({ transform: booleanAttribute }) nzReverseArrow = false;
-  @Input({ transform: booleanAttribute }) nzCollapsible = false;
-  @Input({ transform: booleanAttribute }) nzCollapsed = false;
+  @ContentChild(TriMenuDirective) menuDirective: TriMenuDirective | null = null;
+  @Output() readonly collapsedChange = new EventEmitter();
+  @Input() width: string | number = 200;
+  @Input() theme: 'light' | 'dark' = 'dark';
+  @Input() collapsedWidth = 80;
+  @Input() breakpoint: TriBreakpointKey | null = null;
+  @Input() zeroTrigger: TemplateRef<void> | null = null;
+  @Input() trigger: TemplateRef<void> | undefined | null = undefined;
+  @Input({ transform: booleanAttribute }) reverseArrow = false;
+  @Input({ transform: booleanAttribute }) collapsible = false;
+  @Input({ transform: booleanAttribute }) collapsed = false;
   matchBreakPoint = false;
   flexSetting: string | null = null;
   widthSetting: string | null = null;
 
   updateStyleMap(): void {
-    this.widthSetting = this.nzCollapsed ? `${this.nzCollapsedWidth}px` : toCssPixel(this.nzWidth);
+    this.widthSetting = this.collapsed ? `${this.collapsedWidth}px` : toCssPixel(this.width);
     this.flexSetting = `0 0 ${this.widthSetting}`;
     this.cdr.markForCheck();
   }
 
   updateMenuInlineCollapsed(): void {
-    if (this.nzMenuDirective && this.nzMenuDirective.nzMode === 'inline' && this.nzCollapsedWidth !== 0) {
-      this.nzMenuDirective.setInlineCollapsed(this.nzCollapsed);
+    if (this.menuDirective && this.menuDirective.mode === 'inline' && this.collapsedWidth !== 0) {
+      this.menuDirective.setInlineCollapsed(this.collapsed);
     }
   }
 
   setCollapsed(collapsed: boolean): void {
-    if (collapsed !== this.nzCollapsed) {
-      this.nzCollapsed = collapsed;
-      this.nzCollapsedChange.emit(collapsed);
+    if (collapsed !== this.collapsed) {
+      this.collapsed = collapsed;
+      this.collapsedChange.emit(collapsed);
       this.updateMenuInlineCollapsed();
       this.updateStyleMap();
       this.cdr.markForCheck();
@@ -119,7 +119,7 @@ export class NzSiderComponent implements OnInit, OnChanges, AfterContentInit {
         .subscribe(siderResponsiveMap, true)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(map => {
-          const breakpoint = this.nzBreakpoint;
+          const breakpoint = this.breakpoint;
           if (breakpoint) {
             inNextTick().subscribe(() => {
               this.matchBreakPoint = !map[breakpoint];

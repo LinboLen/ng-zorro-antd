@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzTableModule } from 'ng-zorro-antd/table';
+import { TriDividerModule } from 'ng-zorro-antd/divider';
+import { TriTableModule } from 'ng-zorro-antd/table';
 
 interface Person {
   key: string;
@@ -11,10 +11,10 @@ interface Person {
 }
 
 @Component({
-  selector: 'nz-demo-table-basic',
-  imports: [NzDividerModule, NzTableModule],
+  selector: '',
+  imports: [TriDividerModule, TriTableModule],
   template: `
-    <nz-table #basicTable [nzData]="listOfData">
+    <tri-table #basicTable [data]="listOfData">
       <thead>
         <tr>
           <th>Name</th>
@@ -31,16 +31,16 @@ interface Person {
             <td>{{ data.address }}</td>
             <td>
               <a>Action 一 {{ data.name }}</a>
-              <nz-divider nzType="vertical"></nz-divider>
+              <tri-divider type="vertical"></tri-divider>
               <a>Delete</a>
             </td>
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `
 })
-export class NzDemoTableBasicComponent {
+export class TriDemoTableBasicComponent {
   listOfData: Person[] = [
     {
       key: '1',

@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzInputNumberLegacyModule } from 'ng-zorro-antd/input-number-legacy';
+import { TriInputNumberLegacyModule } from 'ng-zorro-antd/input-number-legacy';
 
 @Component({
-  selector: 'nz-demo-input-number-legacy-size',
-  imports: [FormsModule, NzInputNumberLegacyModule],
+  selector: '',
+  imports: [FormsModule, TriInputNumberLegacyModule],
   template: `
-    <nz-input-number [(ngModel)]="value" [nzSize]="'large'" [nzMin]="1" [nzMax]="10" [nzStep]="1"></nz-input-number>
-    <nz-input-number [(ngModel)]="value" [nzMin]="1" [nzMax]="10" [nzStep]="1"></nz-input-number>
-    <nz-input-number [(ngModel)]="value" [nzSize]="'small'" [nzMin]="1" [nzMax]="10" [nzStep]="1"></nz-input-number>
+    <tri-input-number [(ngModel)]="value" [size]="'large'" [min]="1" [max]="10" [step]="1"></tri-input-number>
+    <tri-input-number [(ngModel)]="value" [min]="1" [max]="10" [step]="1"></tri-input-number>
+    <tri-input-number [(ngModel)]="value" [size]="'small'" [min]="1" [max]="10" [step]="1"></tri-input-number>
   `,
   styles: [
     `
@@ -19,6 +19,6 @@ import { NzInputNumberLegacyModule } from 'ng-zorro-antd/input-number-legacy';
     `
   ]
 })
-export class NzDemoInputNumberLegacySizeComponent {
+export class TriDemoInputNumberLegacySizeComponent {
   value = 3;
 }

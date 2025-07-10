@@ -6,14 +6,14 @@
 import { fakeAsync, TestBed } from '@angular/core/testing';
 
 import { CandyDate } from 'ng-zorro-antd/core/time';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 import { DateTableComponent } from './date-table.component';
 import { LibPackerModule } from './lib-packer.module';
 import { MonthTableComponent } from './month-table.component';
 
 describe('Coverage supplements', () => {
-  let componentInstance: NzSafeAny;
+  let componentInstance: TriSafeAny;
 
   beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({

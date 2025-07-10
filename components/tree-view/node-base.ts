@@ -5,7 +5,7 @@
 
 import { CdkTreeNode } from '@angular/cdk/tree';
 
-export abstract class NzNodeBase<T> extends CdkTreeNode<T> {
+export abstract class TriNodeBase<T> extends CdkTreeNode<T> {
   abstract setIndents(indents: boolean[]): void;
   abstract isLeaf: boolean;
 }

@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
 
 @Component({
-  selector: 'nz-demo-input-number-status',
-  imports: [FormsModule, NzInputNumberModule, NzIconModule],
+  selector: '',
+  imports: [FormsModule, TriInputNumberModule, TriIconModule],
   template: `
-    <nz-input-number nzStatus="error" [style.width.%]="100"></nz-input-number>
-    <nz-input-number nzStatus="warning" [style.width.%]="100"></nz-input-number>
-    <nz-input-number nzStatus="error" [style.width.%]="100">
-      <nz-icon nzInputPrefix nzType="clock-circle" />
-    </nz-input-number>
-    <nz-input-number nzStatus="warning" [style.width.%]="100">
-      <nz-icon nzInputPrefix nzType="clock-circle" />
-    </nz-input-number>
+    <tri-input-number status="error" [style.width.%]="100"></tri-input-number>
+    <tri-input-number status="warning" [style.width.%]="100"></tri-input-number>
+    <tri-input-number status="error" [style.width.%]="100">
+      <tri-icon inputPrefix type="clock-circle" />
+    </tri-input-number>
+    <tri-input-number status="warning" [style.width.%]="100">
+      <tri-icon inputPrefix type="clock-circle" />
+    </tri-input-number>
   `,
   styles: [
     `
@@ -25,4 +25,4 @@ import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
     `
   ]
 })
-export class NzDemoInputNumberStatusComponent {}
+export class TriDemoInputNumberStatusComponent {}

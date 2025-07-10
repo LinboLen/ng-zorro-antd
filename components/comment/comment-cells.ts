@@ -20,24 +20,24 @@ import {
 } from '@angular/core';
 
 @Directive({
-  selector: 'nz-avatar[nz-comment-avatar]',
-  exportAs: 'nzCommentAvatar'
+  selector: '',
+  exportAs: 'triCommentAvatar'
 })
-export class NzCommentAvatarDirective {}
+export class TriCommentAvatarDirective {}
 
 @Directive({
-  selector: 'nz-comment-content, [nz-comment-content]',
-  exportAs: 'nzCommentContent',
-  host: { class: 'ant-comment-content-detail' }
+  selector: '',
+  exportAs: 'triCommentContent',
+  host: { class: 'tri-comment-content-detail' }
 })
-export class NzCommentContentDirective {}
+export class TriCommentContentDirective {}
 
 @Directive({
-  selector: '[nzCommentActionHost]',
-  exportAs: 'nzCommentActionHost'
+  selector: '',
+  exportAs: 'triCommentActionHost'
 })
-export class NzCommentActionHostDirective extends CdkPortalOutlet implements OnInit, OnDestroy, AfterViewInit {
-  @Input() nzCommentActionHost?: TemplatePortal | null;
+export class TriCommentActionHostDirective extends CdkPortalOutlet implements OnInit, OnDestroy, AfterViewInit {
+  @Input() commentActionHost?: TemplatePortal | null;
 
   override ngOnInit(): void {
     super.ngOnInit();
@@ -48,18 +48,18 @@ export class NzCommentActionHostDirective extends CdkPortalOutlet implements OnI
   }
 
   ngAfterViewInit(): void {
-    this.attach(this.nzCommentActionHost);
+    this.attach(this.commentActionHost);
   }
 }
 
 @Component({
-  selector: 'nz-comment-action',
-  exportAs: 'nzCommentAction',
+  selector: '',
+  exportAs: 'triCommentAction',
   template: '<ng-template><ng-content /></ng-template>',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NzCommentActionComponent implements OnInit {
+export class TriCommentActionComponent implements OnInit {
   @ViewChild(TemplateRef, { static: true }) implicitContent!: TemplateRef<void>;
   private viewContainerRef = inject(ViewContainerRef);
   private contentPortal: TemplatePortal | null = null;

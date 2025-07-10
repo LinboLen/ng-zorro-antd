@@ -20,55 +20,55 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { NzDirectionVHType, NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriDirectionVHType, TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzAnchorComponent } from './anchor.component';
+import { TriAnchorComponent } from './anchor.component';
 
 @Component({
-  selector: 'nz-link',
-  exportAs: 'nzLink',
+  selector: '',
+  exportAs: 'triLink',
   imports: [NgTemplateOutlet],
   template: `
     <a
       #linkTitle
-      class="ant-anchor-link-title"
-      [href]="nzHref"
+      class="tri-anchor-link-title"
+      [href]="href"
       [attr.title]="titleStr"
-      [target]="nzTarget"
+      [target]="target"
       (click)="goToClick($event)"
     >
       @if (titleStr) {
         <span>{{ titleStr }}</span>
       } @else {
-        <ng-template [ngTemplateOutlet]="titleTpl || nzTemplate" />
+        <ng-template [ngTemplateOutlet]="titleTpl || template" />
       }
     </a>
-    @if (nzDirection === 'vertical') {
+    @if (direction === 'vertical') {
       <ng-content></ng-content>
     }
   `,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'ant-anchor-link'
+    class: 'tri-anchor-link'
   }
 })
-export class NzAnchorLinkComponent implements OnInit {
+export class TriAnchorLinkComponent implements OnInit {
   public elementRef = inject(ElementRef<HTMLElement>);
-  private anchorComp = inject(NzAnchorComponent);
+  private anchorComp = inject(TriAnchorComponent);
   private platform = inject(Platform);
   private renderer = inject(Renderer2);
   private readonly destroyRef = inject(DestroyRef);
 
-  @Input() nzHref = '#';
-  @Input() nzTarget?: string;
+  @Input() href = '#';
+  @Input() target?: string;
 
   titleStr: string | null = '';
-  titleTpl?: TemplateRef<NzSafeAny>;
-  nzDirection: NzDirectionVHType = 'vertical';
+  titleTpl?: TemplateRef<TriSafeAny>;
+  direction: TriDirectionVHType = 'vertical';
 
   @Input()
-  set nzTitle(value: string | TemplateRef<void>) {
+  set title(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this.titleStr = null;
       this.titleTpl = value;
@@ -77,7 +77,7 @@ export class NzAnchorLinkComponent implements OnInit {
     }
   }
 
-  @ContentChild('nzTemplate', { static: false }) nzTemplate!: TemplateRef<void>;
+  @ContentChild('nzTemplate', { static: false }) template!: TemplateRef<void>;
   @ViewChild('linkTitle') linkTitle!: ElementRef<HTMLAnchorElement>;
 
   constructor() {
@@ -88,7 +88,7 @@ export class NzAnchorLinkComponent implements OnInit {
 
   ngOnInit(): void {
     this.anchorComp.registerLink(this);
-    this.nzDirection = this.anchorComp.nzDirection;
+    this.direction = this.anchorComp.direction;
   }
 
   getLinkTitleElement(): HTMLAnchorElement {

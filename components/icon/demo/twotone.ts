@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-demo-icon-twotone',
-  imports: [NzIconModule],
+  selector: '',
+  imports: [TriIconModule],
   template: `
-    <nz-icon nzType="smile" nzTheme="twotone" />
-    <nz-icon nzType="heart" nzTheme="twotone" nzTwotoneColor="#eb2f96" />
-    <nz-icon nzType="check-circle" nzTheme="twotone" nzTwotoneColor="#52c41a" />
+    <tri-icon type="smile" theme="twotone" />
+    <tri-icon type="heart" theme="twotone" twotoneColor="#eb2f96" />
+    <tri-icon type="check-circle" theme="twotone" twotoneColor="#52c41a" />
   `,
   styles: [
     `
@@ -19,4 +19,4 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     `
   ]
 })
-export class NzDemoIconTwotoneComponent {}
+export class TriDemoIconTwotoneComponent {}

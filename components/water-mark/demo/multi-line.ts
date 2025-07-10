@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 
-import { NzWaterMarkModule } from 'ng-zorro-antd/water-mark';
+import { TriWaterMarkModule } from 'ng-zorro-antd/water-mark';
 
 @Component({
-  selector: 'nz-demo-water-mark-multi-line',
-  imports: [NzWaterMarkModule],
+  selector: '',
+  imports: [TriWaterMarkModule],
   template: `
-    <nz-water-mark [nzContent]="['Angular', 'NG Ant Design']">
+    <tri-water-mark [content]="['Angular', 'NG Ant Design']">
       <div style="height: 500px"></div>
-    </nz-water-mark>
+    </tri-water-mark>
   `
 })
-export class NzDemoWaterMarkMultiLineComponent {}
+export class TriDemoWaterMarkMultiLineComponent {}

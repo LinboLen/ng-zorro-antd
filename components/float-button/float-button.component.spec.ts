@@ -8,11 +8,11 @@ import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
-import { NzFloatButtonComponent } from './float-button.component';
-import { NzFloatButtonModule } from './float-button.module';
+import { TriFloatButtonComponent } from './float-button.component';
+import { TriFloatButtonModule } from './float-button.module';
 
 describe('nz-float-button', () => {
   beforeEach(waitForAsync(() => {
@@ -22,33 +22,33 @@ describe('nz-float-button', () => {
   }));
 
   describe('float-button basic', () => {
-    let fixture: ComponentFixture<NzTestFloatButtonBasicComponent>;
-    let testComponent: NzTestFloatButtonBasicComponent;
+    let fixture: ComponentFixture<TriTestFloatButtonBasicComponent>;
+    let testComponent: TriTestFloatButtonBasicComponent;
     let resultEl: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestFloatButtonBasicComponent);
+      fixture = TestBed.createComponent(TriTestFloatButtonBasicComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      resultEl = fixture.debugElement.query(By.directive(NzFloatButtonComponent));
+      resultEl = fixture.debugElement.query(By.directive(TriFloatButtonComponent));
     });
 
     it('nzType', () => {
-      testComponent.nzType = 'primary';
+      testComponent.type = 'primary';
       fixture.detectChanges();
       const view = resultEl.nativeElement.querySelector('.ant-float-btn > .ant-btn-primary');
       expect(view.tagName).toBe('BUTTON');
     });
 
     it('nzShape', () => {
-      testComponent.nzShape = 'square';
+      testComponent.shape = 'square';
       fixture.detectChanges();
       expect(resultEl.nativeElement.classList).toContain('ant-float-btn-square');
     });
 
     it('nzHref && nzTarget', () => {
-      testComponent.nzTarget = '_blank';
-      testComponent.nzHref = 'https://ng.ant.design/';
+      testComponent.target = '_blank';
+      testComponent.href = 'https://ng.ant.design/';
       fixture.detectChanges();
       const view = resultEl.nativeElement.querySelector('.ant-float-btn > .ant-btn');
       expect(view.getAttribute('href') === 'https://ng.ant.design/').toBe(true);
@@ -56,7 +56,7 @@ describe('nz-float-button', () => {
     });
 
     it('nzIcon', () => {
-      testComponent.nzIcon = testComponent.icon;
+      testComponent.icon = testComponent._icon;
       fixture.detectChanges();
       const view = resultEl.nativeElement.getElementsByClassName('anticon-question-circle')[0];
       expect(view.getAttribute('nztype') === 'question-circle').toBe(true);
@@ -71,15 +71,15 @@ describe('nz-float-button', () => {
 });
 
 describe('nz-float-button RTL', () => {
-  let fixture: ComponentFixture<NzTestFloatButtonRtlComponent>;
+  let fixture: ComponentFixture<TriTestFloatButtonRtlComponent>;
   let resultEl: DebugElement;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       providers: [provideNzIconsTesting()]
     });
-    fixture = TestBed.createComponent(NzTestFloatButtonRtlComponent);
-    resultEl = fixture.debugElement.query(By.directive(NzFloatButtonComponent));
+    fixture = TestBed.createComponent(TriTestFloatButtonRtlComponent);
+    resultEl = fixture.debugElement.query(By.directive(TriFloatButtonComponent));
   }));
 
   it('rtl', () => {
@@ -89,34 +89,34 @@ describe('nz-float-button RTL', () => {
 });
 
 @Component({
-  selector: 'nz-test-basic-float-button',
-  imports: [NzFloatButtonModule, NzIconModule],
+  selector: '',
+  imports: [TriFloatButtonModule, TriIconModule],
   template: `
-    <nz-float-button
-      [nzIcon]="nzIcon"
-      [nzDescription]="nzDescription"
-      [nzHref]="nzHref"
-      [nzTarget]="nzTarget"
-      [nzType]="nzType"
-      [nzShape]="nzShape"
-      (nzOnClick)="onClick($event)"
-    ></nz-float-button>
+    <tri-float-button
+      [icon]="icon"
+      [description]="description"
+      [href]="href"
+      [target]="target"
+      [type]="type"
+      [shape]="shape"
+      (onClick)="onClick($event)"
+    ></tri-float-button>
     <ng-template #icon>
-      <nz-icon nzType="question-circle" nzTheme="outline" />
+      <tri-icon type="question-circle" theme="outline" />
     </ng-template>
     <ng-template #description>HELP</ng-template>
   `
 })
-export class NzTestFloatButtonBasicComponent {
-  nzHref: string | null = null;
-  nzTarget: string | null = null;
-  nzType: 'default' | 'primary' = 'default';
-  nzShape: 'circle' | 'square' = 'circle';
-  nzIcon: TemplateRef<void> | null = null;
-  nzDescription: TemplateRef<void> | null = null;
+export class TriTestFloatButtonBasicComponent {
+  href: string | null = null;
+  target: string | null = null;
+  type: 'default' | 'primary' = 'default';
+  shape: 'circle' | 'square' = 'circle';
+  icon: TemplateRef<void> | null = null;
+  description: TemplateRef<void> | null = null;
 
-  @ViewChild('icon', { static: false }) icon!: TemplateRef<void>;
-  @ViewChild('description', { static: false }) description!: TemplateRef<void>;
+  @ViewChild('icon', { static: false }) _icon!: TemplateRef<void>;
+  @ViewChild('description', { static: false }) _description!: TemplateRef<void>;
 
   isClick: boolean = false;
 
@@ -126,14 +126,14 @@ export class NzTestFloatButtonBasicComponent {
 }
 
 @Component({
-  imports: [BidiModule, NzFloatButtonModule],
+  imports: [BidiModule, TriFloatButtonModule],
   template: `
     <div [dir]="direction">
-      <nz-float-button></nz-float-button>
+      <tri-float-button></tri-float-button>
     </div>
   `
 })
-export class NzTestFloatButtonRtlComponent {
+export class TriTestFloatButtonRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 }

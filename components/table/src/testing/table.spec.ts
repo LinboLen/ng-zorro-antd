@@ -8,21 +8,21 @@ import { Component, DebugElement, OnInit, ViewChild, ViewEncapsulation } from '@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzI18nService } from 'ng-zorro-antd/i18n';
+import { TriI18nService } from 'ng-zorro-antd/i18n';
 import en_US from 'ng-zorro-antd/i18n/languages/en_US';
-import { NzTableComponent, NzTableModule, NzTableSize } from 'ng-zorro-antd/table';
+import { TriTableComponent, TriTableModule, TriTableSize } from 'ng-zorro-antd/table';
 
 describe('nz-table', () => {
   describe('basic nz-table', () => {
-    let fixture: ComponentFixture<NzTestTableBasicComponent>;
-    let testComponent: NzTestTableBasicComponent;
+    let fixture: ComponentFixture<TriTestTableBasicComponent>;
+    let testComponent: TriTestTableBasicComponent;
     let table: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTableBasicComponent);
+      fixture = TestBed.createComponent(TriTestTableBasicComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      table = fixture.debugElement.query(By.directive(NzTableComponent));
+      table = fixture.debugElement.query(By.directive(TriTableComponent));
     });
 
     it('should className correct', () => {
@@ -82,7 +82,7 @@ describe('nz-table', () => {
       expect(testComponent.pageIndex).toBe(2);
       expect(testComponent.pageSizeChange).toHaveBeenCalledTimes(0);
       expect(testComponent.pageIndexChange).toHaveBeenCalledTimes(0);
-      testComponent.nzTableComponent.onPageIndexChange(1);
+      testComponent.tableComponent.onPageIndexChange(1);
       fixture.detectChanges();
       tick();
       fixture.detectChanges();
@@ -227,22 +227,22 @@ describe('nz-table', () => {
       testComponent.dataSet = [];
       fixture.detectChanges();
       expect(table.nativeElement.querySelector('.ant-table-placeholder').innerText.trim()).toBe('暂无数据');
-      TestBed.inject(NzI18nService).setLocale(en_US);
+      TestBed.inject(TriI18nService).setLocale(en_US);
       fixture.detectChanges();
       expect(table.nativeElement.querySelector('.ant-table-placeholder').innerText.trim()).toBe('No Data');
     });
   });
 
   describe('scroll nz-table', () => {
-    let fixture: ComponentFixture<NzTestTableScrollComponent>;
-    let testComponent: NzTestTableScrollComponent;
+    let fixture: ComponentFixture<TriTestTableScrollComponent>;
+    let testComponent: TriTestTableScrollComponent;
     let table: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTableScrollComponent);
+      fixture = TestBed.createComponent(TriTestTableScrollComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      table = fixture.debugElement.query(By.directive(NzTableComponent));
+      table = fixture.debugElement.query(By.directive(TriTableComponent));
     });
 
     it('should change width affect scroll', () => {
@@ -256,11 +256,11 @@ describe('nz-table', () => {
   });
 
   describe('double binding nz-table', () => {
-    let fixture: ComponentFixture<NzTableSpecCrashComponent>;
-    let testComponent: NzTableSpecCrashComponent;
+    let fixture: ComponentFixture<TriTableSpecCrashComponent>;
+    let testComponent: TriTableSpecCrashComponent;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTableSpecCrashComponent);
+      fixture = TestBed.createComponent(TriTableSpecCrashComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
     });
@@ -272,13 +272,13 @@ describe('nz-table', () => {
   });
 
   describe('RTL', () => {
-    let fixture: ComponentFixture<NzTestTableRtlComponent>;
+    let fixture: ComponentFixture<TriTestTableRtlComponent>;
     let table: DebugElement;
     let tableElement: HTMLElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTableRtlComponent);
-      table = fixture.debugElement.query(By.directive(NzTableComponent));
+      fixture = TestBed.createComponent(TriTestTableRtlComponent);
+      table = fixture.debugElement.query(By.directive(TriTableComponent));
       fixture.detectChanges();
       tableElement = table.nativeElement;
     });
@@ -303,32 +303,32 @@ interface BasicTestDataItem {
   expand?: boolean;
 }
 
-type NzPageSizeChangeFn = (pageSize: number) => void;
+type TriPageSizeChangeFn = (pageSize: number) => void;
 
 @Component({
-  imports: [NzTableModule],
+  imports: [TriTableModule],
   template: `
-    <nz-table
+    <tri-table
       #dynamicTable
-      [nzScroll]="fixHeader ? { y: '240px' } : {}"
-      [(nzPageIndex)]="pageIndex"
-      (nzPageIndexChange)="pageIndexChange($event)"
-      [(nzPageSize)]="pageSize"
-      (nzPageSizeChange)="pageSizeChange($event)"
-      [nzData]="dataSet"
-      [nzBordered]="bordered"
-      [nzLoading]="loading"
-      [nzShowSizeChanger]="showSizeChanger"
-      [nzSimple]="simple"
-      [nzShowQuickJumper]="showQuickJumper"
-      [nzHideOnSinglePage]="hideOnSinglePage"
-      [nzWidthConfig]="widthConfig"
-      [nzShowPagination]="pagination"
-      [nzFrontPagination]="front"
-      [nzFooter]="footer ? 'Here is Footer' : null"
-      [nzNoResult]="noResult"
-      [nzTitle]="title ? 'Here is Title' : null"
-      [nzSize]="size"
+      [scroll]="fixHeader ? { y: '240px' } : {}"
+      [(pageIndexChange)]="pageIndex"
+      (pageIndexChange)="pageIndexChange($event)"
+      [(pageSizeChange)]="pageSize"
+      (pageSizeChange)="pageSizeChange($event)"
+      [data]="dataSet"
+      [bordered]="bordered"
+      [loading]="loading"
+      [showSizeChanger]="showSizeChanger"
+      [simple]="simple"
+      [showQuickJumper]="showQuickJumper"
+      [hideOnSinglePage]="hideOnSinglePage"
+      [widthConfig]="widthConfig"
+      [showPagination]="pagination"
+      [frontPagination]="front"
+      [footer]="footer ? 'Here is Footer' : null"
+      [noResult]="noResult"
+      [title]="title ? 'Here is Title' : null"
+      [size]="size"
     >
       @if (header) {
         <thead>
@@ -353,15 +353,15 @@ type NzPageSizeChangeFn = (pageSize: number) => void;
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `
 })
-export class NzTestTableBasicComponent implements OnInit {
-  @ViewChild(NzTableComponent, { static: false }) nzTableComponent!: NzTableComponent<BasicTestDataItem>;
+export class TriTestTableBasicComponent implements OnInit {
+  @ViewChild(TriTableComponent, { static: false }) tableComponent!: TriTableComponent<BasicTestDataItem>;
   pageIndex = 1;
-  pageIndexChange = jasmine.createSpy<NzPageSizeChangeFn>('pageIndex callback');
+  pageIndexChange = jasmine.createSpy<TriPageSizeChangeFn>('pageIndex callback');
   pageSize = 10;
-  pageSizeChange = jasmine.createSpy<NzPageSizeChangeFn>('pageSize callback');
+  pageSizeChange = jasmine.createSpy<TriPageSizeChangeFn>('pageSize callback');
   dataSet: BasicTestDataItem[] = [];
   noResult = '';
   showSizeChanger = false;
@@ -376,7 +376,7 @@ export class NzTestTableBasicComponent implements OnInit {
   front = true;
   fixHeader = false;
   simple = false;
-  size: NzTableSize = 'small';
+  size: TriTableSize = 'small';
   widthConfig: string[] = [];
 
   ngOnInit(): void {
@@ -400,10 +400,10 @@ interface ScrollTestDataItem {
 }
 
 @Component({
-  imports: [NzTableModule],
+  imports: [TriTableModule],
   template: `
     <div style="display: block;" [style.width.px]="width">
-      <nz-table #nzTable [nzData]="dataSet" [nzPageSize]="10" [nzScroll]="{ x: '600px', y: '240px' }">
+      <tri-table #nzTable [data]="dataSet" [pageSize]="10" [scroll]="{ x: '600px', y: '240px' }">
         <thead>
           <tr>
             <th>Full Name</th>
@@ -420,7 +420,7 @@ interface ScrollTestDataItem {
           </tr>
         </thead>
         <tbody>
-          @for (data of nzTable.data; track data) {
+          @for (data of table.data; track data) {
             <tr>
               <td>{{ data.name }}</td>
               <td>{{ data.age }}</td>
@@ -438,7 +438,7 @@ interface ScrollTestDataItem {
             </tr>
           }
         </tbody>
-      </nz-table>
+      </tri-table>
     </div>
   `,
   encapsulation: ViewEncapsulation.None,
@@ -447,8 +447,8 @@ interface ScrollTestDataItem {
     @import '../../../style/entry.less';
   `
 })
-export class NzTestTableScrollComponent implements OnInit {
-  @ViewChild(NzTableComponent, { static: false }) nzTableComponent!: NzTableComponent<ScrollTestDataItem>;
+export class TriTestTableScrollComponent implements OnInit {
+  @ViewChild(TriTableComponent, { static: false }) tableComponent!: TriTableComponent<ScrollTestDataItem>;
   dataSet: ScrollTestDataItem[] = [];
   width = 300;
 
@@ -465,14 +465,14 @@ export class NzTestTableScrollComponent implements OnInit {
 
 /** https://github.com/NG-ZORRO/ng-zorro-antd/issues/3004 **/
 @Component({
-  imports: [NzTableModule],
+  imports: [TriTableModule],
   template: `
-    <nz-table
+    <tri-table
       #nzTable
-      [nzData]="data"
-      [(nzPageIndex)]="pageIndex"
-      [(nzPageSize)]="pageSize"
-      (nzPageIndexChange)="pageIndexChange($event)"
+      [data]="data"
+      [(pageIndexChange)]="pageIndex"
+      [(pageSizeChange)]="pageSize"
+      (pageIndexChange)="pageIndexChange($event)"
     >
       <thead>
         <tr>
@@ -481,21 +481,21 @@ export class NzTestTableScrollComponent implements OnInit {
         </tr>
       </thead>
       <tbody>
-        @for (item of nzTable.data; track item) {
+        @for (item of table.data; track item) {
           <tr>
             <td>{{ item.id }}</td>
             <td>{{ item.name }}</td>
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `
 })
-export class NzTableSpecCrashComponent {
+export class TriTableSpecCrashComponent {
   data: Array<{ id: number; name: string }> = [];
   pageIndex = 1;
   pageSize = 10;
-  pageIndexChange = jasmine.createSpy<NzPageSizeChangeFn>('pageSize callback');
+  pageIndexChange = jasmine.createSpy<TriPageSizeChangeFn>('pageSize callback');
 
   constructor() {
     setTimeout(() => {
@@ -517,10 +517,10 @@ interface RtlTestDataItem {
 }
 
 @Component({
-  imports: [BidiModule, NzTableModule],
+  imports: [BidiModule, TriTableModule],
   template: `
     <div [dir]="direction">
-      <nz-table #dynamicTable [nzData]="dataSet" [nzSimple]="simple">
+      <tri-table #dynamicTable [data]="dataSet" [simple]="simple">
         @if (header) {
           <thead>
             <tr>
@@ -544,15 +544,15 @@ interface RtlTestDataItem {
             </tr>
           }
         </tbody>
-      </nz-table>
+      </tri-table>
     </div>
   `
 })
-export class NzTestTableRtlComponent implements OnInit {
+export class TriTestTableRtlComponent implements OnInit {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 
-  @ViewChild(NzTableComponent, { static: false }) nzTableComponent!: NzTableComponent<RtlTestDataItem>;
+  @ViewChild(TriTableComponent, { static: false }) tableComponent!: TriTableComponent<RtlTestDataItem>;
   pageIndex = 1;
   pageSize = 10;
   dataSet: RtlTestDataItem[] = [];

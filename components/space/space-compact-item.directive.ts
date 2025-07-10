@@ -7,21 +7,21 @@ import { Directionality } from '@angular/cdk/bidi';
 import { afterNextRender, computed, DestroyRef, Directive, ElementRef, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 
-import { NzSpaceCompactComponent } from './space-compact.component';
+import { TriSpaceCompactComponent } from './space-compact.component';
 import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_ITEMS } from './space-compact.token';
 
 @Directive({
-  exportAs: 'nzSpaceCompactItem',
+  exportAs: 'triSpaceCompactItem',
   host: {
     '[class]': 'class()'
   }
 })
-export class NzSpaceCompactItemDirective {
+export class TriSpaceCompactItemDirective {
   /**
    * Ancestor component injected from the parent.
    * Note that it is not necessarily the direct parent component.
    */
-  private readonly spaceCompactCmp = inject(NzSpaceCompactComponent, { host: true, optional: true });
+  private readonly spaceCompactCmp = inject(TriSpaceCompactComponent, { host: true, optional: true });
   private readonly items = inject(NZ_SPACE_COMPACT_ITEMS, { host: true, optional: true });
   private readonly type = inject(NZ_SPACE_COMPACT_ITEM_TYPE);
   private readonly elementRef: ElementRef<HTMLElement> = inject(ElementRef);
@@ -39,7 +39,7 @@ export class NzSpaceCompactItemDirective {
     if (this.parentElement !== this.spaceCompactCmp!.elementRef.nativeElement) return null;
 
     const items = this.items();
-    const direction = this.spaceCompactCmp.nzDirection();
+    const direction = this.spaceCompactCmp.direction();
     const classes = [compactItemClassOf(this.type, direction, this.dir() === 'rtl')];
     const index = items.indexOf(this);
     const firstIndex = items.findIndex(element => element);

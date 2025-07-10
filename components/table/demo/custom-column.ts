@@ -1,12 +1,12 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzModalModule } from 'ng-zorro-antd/modal';
-import { NzCustomColumn, NzTableModule } from 'ng-zorro-antd/table';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriDividerModule } from 'ng-zorro-antd/divider';
+import { TriGridModule } from 'ng-zorro-antd/grid';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriModalModule } from 'ng-zorro-antd/modal';
+import { TriCustomColumn, TriTableModule } from 'ng-zorro-antd/table';
 
 interface Person {
   key: string;
@@ -16,59 +16,59 @@ interface Person {
   address: string;
 }
 
-interface CustomColumn extends NzCustomColumn {
+interface CustomColumn extends TriCustomColumn {
   name: string;
   required?: boolean;
   position?: 'left' | 'right';
 }
 
 @Component({
-  selector: 'nz-demo-table-custom-column',
+  selector: '',
   imports: [
-    NzButtonModule,
-    NzDividerModule,
-    NzGridModule,
-    NzIconModule,
-    NzModalModule,
-    NzTableModule,
+    TriButtonModule,
+    TriDividerModule,
+    TriGridModule,
+    TriIconModule,
+    TriModalModule,
+    TriTableModule,
     CdkDrag,
     CdkDropList
   ],
   template: `
-    <button nz-button nzType="primary" nzSize="small" (click)="showModal()" style="margin-bottom: 8px;">
-      <nz-icon nzType="setting" nzTheme="outline" />
+    <button tri-button type="primary" size="small" (click)="showModal()" style="margin-bottom: 8px;">
+      <tri-icon type="setting" theme="outline" />
     </button>
-    <nz-table #basicTable [nzData]="listOfData" [nzCustomColumn]="customColumn">
+    <tri-table #basicTable [data]="listOfData" [customColumn]="customColumn">
       <thead>
         <tr>
-          <th nzCellControl="name">Name</th>
-          <th nzCellControl="gender">Gender</th>
-          <th nzCellControl="age">Age</th>
-          <th nzCellControl="address">Address</th>
-          <th nzCellControl="action">Action</th>
+          <th cellControl="name">Name</th>
+          <th cellControl="gender">Gender</th>
+          <th cellControl="age">Age</th>
+          <th cellControl="address">Address</th>
+          <th cellControl="action">Action</th>
         </tr>
       </thead>
       <tbody>
         @for (data of basicTable.data; track data) {
           <tr>
-            <td nzCellControl="name">{{ data.name }}</td>
-            <td nzCellControl="gender">{{ data.gender }}</td>
-            <td nzCellControl="age">{{ data.age }}</td>
-            <td nzCellControl="address">{{ data.address }}</td>
-            <td nzCellControl="action">
+            <td cellControl="name">{{ data.name }}</td>
+            <td cellControl="gender">{{ data.gender }}</td>
+            <td cellControl="age">{{ data.age }}</td>
+            <td cellControl="address">{{ data.address }}</td>
+            <td cellControl="action">
               <a>Action</a>
-              <nz-divider nzType="vertical"></nz-divider>
+              <tri-divider type="vertical"></tri-divider>
               <a>Delete</a>
             </td>
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
 
-    <nz-modal [(nzVisible)]="isVisible" nzTitle="Custom Column" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
-      <ng-container *nzModalContent>
-        <div nz-row [nzGutter]="24">
-          <div nz-col class="gutter-row" [nzSpan]="12">
+    <tri-modal [(visibleChange)]="isVisible" title="Custom Column" (onCancel)="handleCancel()" (onOk)="handleOk()">
+      <ng-container *modalContent>
+        <div tri-row [gutter]="24">
+          <div tri-col class="gutter-row" [span]="12">
             <div class="example-container">
               <p>Displayed (drag and drop to sort)</p>
               @for (item of title; track item) {
@@ -87,7 +87,7 @@ interface CustomColumn extends NzCustomColumn {
                 @for (item of fix; track item; let i = $index) {
                   <div class="example-box" cdkDrag>
                     {{ item.name }}
-                    <nz-icon nzType="minus-circle" nzTheme="outline" (click)="deleteCustom(item, i)" />
+                    <tri-icon type="minus-circle" theme="outline" (click)="deleteCustom(item, i)" />
                   </div>
                 }
               </div>
@@ -98,7 +98,7 @@ interface CustomColumn extends NzCustomColumn {
               }
             </div>
           </div>
-          <div nz-col class="gutter-row" [nzSpan]="12">
+          <div tri-col class="gutter-row" [span]="12">
             <div class="example-container">
               <p>Not Shown</p>
               <div
@@ -112,7 +112,7 @@ interface CustomColumn extends NzCustomColumn {
                 @for (item of notFix; track item; let i = $index) {
                   <div class="example-box" cdkDrag>
                     {{ item.name }}
-                    <nz-icon nzType="plus-circle" nzTheme="outline" (click)="addCustom(item, i)" />
+                    <tri-icon type="plus-circle" theme="outline" (click)="addCustom(item, i)" />
                   </div>
                 }
               </div>
@@ -120,7 +120,7 @@ interface CustomColumn extends NzCustomColumn {
           </div>
         </div>
       </ng-container>
-    </nz-modal>
+    </tri-modal>
   `,
   styles: [
     `
@@ -182,7 +182,7 @@ interface CustomColumn extends NzCustomColumn {
     `
   ]
 })
-export class NzDemoTableCustomColumnComponent implements OnInit {
+export class TriDemoTableCustomColumnComponent implements OnInit {
   listOfData: Person[] = [
     {
       key: '1',

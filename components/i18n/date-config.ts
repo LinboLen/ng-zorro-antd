@@ -7,17 +7,17 @@ import { InjectionToken } from '@angular/core';
 
 import { WeekDayIndex } from 'ng-zorro-antd/core/time';
 
-export interface NzDateConfig {
+export interface TriDateConfig {
   /** Customize the first day of a week */
   firstDayOfWeek?: WeekDayIndex;
 }
 
-export const NZ_DATE_CONFIG = new InjectionToken<NzDateConfig>('date-config');
+export const NZ_DATE_CONFIG = new InjectionToken<TriDateConfig>('date-config');
 
-export const NZ_DATE_CONFIG_DEFAULT: NzDateConfig = {
+export const NZ_DATE_CONFIG_DEFAULT: TriDateConfig = {
   firstDayOfWeek: undefined
 };
 
-export function mergeDateConfig(config: NzDateConfig | null): NzDateConfig {
+export function mergeDateConfig(config: TriDateConfig | null): TriDateConfig {
   return { ...NZ_DATE_CONFIG_DEFAULT, ...config };
 }

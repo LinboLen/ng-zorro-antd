@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 @Component({
-  selector: 'nz-demo-date-picker-disabled',
-  imports: [NzDatePickerModule],
+  selector: '',
+  imports: [TriDatePickerModule],
   template: `
-    <nz-date-picker nzDisabled></nz-date-picker>
+    <tri-date-picker disabled></tri-date-picker>
     <br />
-    <nz-date-picker nzMode="month" nzDisabled></nz-date-picker>
+    <tri-date-picker mode="month" disabled></tri-date-picker>
     <br />
-    <nz-range-picker nzDisabled></nz-range-picker>
+    <tri-range-picker disabled></tri-range-picker>
   `,
   styles: [
     `
@@ -21,4 +21,4 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
     `
   ]
 })
-export class NzDemoDatePickerDisabledComponent {}
+export class TriDemoDatePickerDisabledComponent {}

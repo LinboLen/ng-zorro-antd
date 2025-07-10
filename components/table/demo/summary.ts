@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NzTableModule } from 'ng-zorro-antd/table';
-import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { TriTableModule } from 'ng-zorro-antd/table';
+import { TriTypographyModule } from 'ng-zorro-antd/typography';
 
 @Component({
-  selector: 'nz-demo-table-summary',
-  imports: [NzTableModule, NzTypographyModule],
+  selector: '',
+  imports: [TriTableModule, TriTypographyModule],
   template: `
-    <nz-table #middleTable nzBordered [nzData]="data" [nzShowPagination]="false">
+    <tri-table #middleTable bordered [data]="data" [showPagination]="false">
       <thead>
         <tr>
           <th>Name</th>
@@ -24,33 +24,33 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
           </tr>
         }
       </tbody>
-      <tfoot nzSummary>
+      <tfoot summary>
         <tr>
           <td>Total</td>
           <td>
-            <span nz-typography nzType="danger">{{ totalBorrow }}</span>
+            <span tri-typography type="danger">{{ totalBorrow }}</span>
           </td>
           <td>
-            <span nz-typography>{{ totalRepayment }}</span>
+            <span tri-typography>{{ totalRepayment }}</span>
           </td>
         </tr>
         <tr>
           <td>Balance</td>
           <td colspan="2">
-            <span nz-typography>{{ totalBorrow - totalRepayment }}</span>
+            <span tri-typography>{{ totalBorrow - totalRepayment }}</span>
           </td>
         </tr>
       </tfoot>
-    </nz-table>
+    </tri-table>
 
     <br />
 
-    <nz-table
+    <tri-table
       #fixedTable
-      nzBordered
-      [nzData]="fixedData"
-      [nzShowPagination]="false"
-      [nzScroll]="{ x: '1280px', y: '500px' }"
+      bordered
+      [data]="fixedData"
+      [showPagination]="false"
+      [scroll]="{ x: '1280px', y: '500px' }"
     >
       <thead>
         <tr>
@@ -66,13 +66,13 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
           </tr>
         }
       </tbody>
-      <tfoot nzSummary nzFixed>
+      <tfoot summary fixed>
         <tr>
           <td>Summary</td>
           <td>This is a summary content</td>
         </tr>
       </tfoot>
-    </nz-table>
+    </tri-table>
   `,
   styles: [
     `
@@ -82,7 +82,7 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
     `
   ]
 })
-export class NzDemoTableSummaryComponent implements OnInit {
+export class TriDemoTableSummaryComponent implements OnInit {
   data = [
     {
       name: 'John Brown',

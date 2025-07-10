@@ -11,26 +11,26 @@ import { Observable, of, Subscription } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 
 import { warn } from 'ng-zorro-antd/core/logger';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 
-import { NzUploadFile, NzUploadXHRArgs, ZipButtonOptions } from './interface';
+import { TriUploadFile, TriUploadXHRArgs, ZipButtonOptions } from './interface';
 
 @Component({
-  selector: '[nz-upload-btn]',
-  exportAs: 'nzUploadBtn',
+  selector: '',
+  exportAs: 'triUploadBtn',
   templateUrl: './upload-btn.component.html',
   host: {
-    class: 'ant-upload',
+    class: 'tri-upload',
     '[attr.tabindex]': '"0"',
     '[attr.role]': '"button"',
-    '[class.ant-upload-disabled]': 'options.disabled',
+    '[class.tri-upload-disabled]': 'options.disabled',
     '(drop)': 'onFileDrop($event)',
     '(dragover)': 'onFileDrop($event)'
   },
   encapsulation: ViewEncapsulation.None
 })
-export class NzUploadBtnComponent implements OnInit {
+export class TriUploadBtnComponent implements OnInit {
   reqs: Record<string, Subscription> = {};
   private destroyed = false;
   @ViewChild('file', { static: true }) file!: ElementRef<HTMLInputElement>;
@@ -73,7 +73,7 @@ export class NzUploadBtnComponent implements OnInit {
   }
 
   private traverseFileTree(files: DataTransferItemList): void {
-    const _traverseFileTree = (item: NzSafeAny, path: string): void => {
+    const _traverseFileTree = (item: TriSafeAny, path: string): void => {
       if (item.isFile) {
         item.file((file: File) => {
           if (this.attrAccept(file, this.options.accept)) {
@@ -83,7 +83,7 @@ export class NzUploadBtnComponent implements OnInit {
       } else if (item.isDirectory) {
         const dirReader = item.createReader();
 
-        dirReader.readEntries((entries: NzSafeAny) => {
+        dirReader.readEntries((entries: TriSafeAny) => {
           for (const entrieItem of entries) {
             _traverseFileTree(entrieItem, `${path}${item.name}/`);
           }
@@ -91,7 +91,7 @@ export class NzUploadBtnComponent implements OnInit {
       }
     };
 
-    for (const file of files as NzSafeAny) {
+    for (const file of files as TriSafeAny) {
       _traverseFileTree(file.webkitGetAsEntry(), '');
     }
   }
@@ -121,7 +121,7 @@ export class NzUploadBtnComponent implements OnInit {
     return true;
   }
 
-  private attachUid(file: NzUploadFile): NzUploadFile {
+  private attachUid(file: TriUploadFile): TriUploadFile {
     if (!file.uid) {
       file.uid = Math.random().toString(36).substring(2);
     }
@@ -129,7 +129,7 @@ export class NzUploadBtnComponent implements OnInit {
   }
 
   uploadFiles(fileList: FileList | File[]): void {
-    let filters$: Observable<NzUploadFile[]> = of(Array.prototype.slice.call(fileList));
+    let filters$: Observable<TriUploadFile[]> = of(Array.prototype.slice.call(fileList));
     if (this.options.filters) {
       this.options.filters.forEach(f => {
         filters$ = filters$.pipe(
@@ -142,7 +142,7 @@ export class NzUploadBtnComponent implements OnInit {
     }
     filters$.subscribe({
       next: list => {
-        list.forEach((file: NzUploadFile) => {
+        list.forEach((file: TriUploadFile) => {
           this.attachUid(file);
           this.upload(file, list);
         });
@@ -153,14 +153,14 @@ export class NzUploadBtnComponent implements OnInit {
     });
   }
 
-  private upload(file: NzUploadFile, fileList: NzUploadFile[]): void {
+  private upload(file: TriUploadFile, fileList: TriUploadFile[]): void {
     if (!this.options.beforeUpload) {
       return this.post(file);
     }
     const before = this.options.beforeUpload(file, fileList);
     if (before instanceof Observable) {
       before.subscribe({
-        next: (processedFile: NzUploadFile) => {
+        next: (processedFile: TriUploadFile) => {
           const processedFileType = Object.prototype.toString.call(processedFile);
           if (processedFileType === '[object File]' || processedFileType === '[object Blob]') {
             this.attachUid(processedFile);
@@ -178,17 +178,17 @@ export class NzUploadBtnComponent implements OnInit {
     }
   }
 
-  private post(file: NzUploadFile): void {
+  private post(file: TriUploadFile): void {
     if (this.destroyed) {
       return;
     }
-    let process$: Observable<string | Blob | File | NzUploadFile> = of(file);
-    let transformedFile: string | Blob | File | NzUploadFile | undefined;
+    let process$: Observable<string | Blob | File | TriUploadFile> = of(file);
+    let transformedFile: string | Blob | File | TriUploadFile | undefined;
     const opt = this.options;
     const { uid } = file;
     const { action, data, headers, transformFile } = opt;
 
-    const args: NzUploadXHRArgs = {
+    const args: TriUploadXHRArgs = {
       action: typeof action === 'string' ? action : '',
       name: opt.name,
       headers,
@@ -212,7 +212,7 @@ export class NzUploadBtnComponent implements OnInit {
     };
 
     if (typeof action === 'function') {
-      const actionResult = (action as (file: NzUploadFile) => string | Observable<string>)(file);
+      const actionResult = (action as (file: TriUploadFile) => string | Observable<string>)(file);
       if (actionResult instanceof Observable) {
         process$ = process$.pipe(
           switchMap(() => actionResult),
@@ -235,7 +235,7 @@ export class NzUploadBtnComponent implements OnInit {
     }
 
     if (typeof data === 'function') {
-      const dataResult = (data as (file: NzUploadFile) => {} | Observable<{}>)(file);
+      const dataResult = (data as (file: TriUploadFile) => {} | Observable<{}>)(file);
       if (dataResult instanceof Observable) {
         process$ = process$.pipe(
           switchMap(() => dataResult),
@@ -250,7 +250,7 @@ export class NzUploadBtnComponent implements OnInit {
     }
 
     if (typeof headers === 'function') {
-      const headersResult = (headers as (file: NzUploadFile) => {} | Observable<{}>)(file);
+      const headersResult = (headers as (file: TriUploadFile) => {} | Observable<{}>)(file);
       if (headersResult instanceof Observable) {
         process$ = process$.pipe(
           switchMap(() => headersResult),
@@ -275,7 +275,7 @@ export class NzUploadBtnComponent implements OnInit {
     });
   }
 
-  private xhr(args: NzUploadXHRArgs): Subscription {
+  private xhr(args: TriUploadXHRArgs): Subscription {
     const formData = new FormData();
 
     if (args.data) {
@@ -284,7 +284,7 @@ export class NzUploadBtnComponent implements OnInit {
       });
     }
 
-    formData.append(args.name!, args.postFile as NzSafeAny);
+    formData.append(args.name!, args.postFile as TriSafeAny);
 
     if (!args.headers) {
       args.headers = {};
@@ -300,10 +300,10 @@ export class NzUploadBtnComponent implements OnInit {
       headers: new HttpHeaders(args.headers)
     });
     return this.http!.request(req).subscribe({
-      next: (event: HttpEvent<NzSafeAny>) => {
+      next: (event: HttpEvent<TriSafeAny>) => {
         if (event.type === HttpEventType.UploadProgress) {
           if (event.total! > 0) {
-            (event as NzSafeAny).percent = (event.loaded / event.total!) * 100;
+            (event as TriSafeAny).percent = (event.loaded / event.total!) * 100;
           }
           args.onProgress!(event, args.file);
         } else if (event instanceof HttpResponse) {
@@ -325,7 +325,7 @@ export class NzUploadBtnComponent implements OnInit {
     delete this.reqs[uid];
   }
 
-  abort(file?: NzUploadFile): void {
+  abort(file?: TriUploadFile): void {
     if (file) {
       this.clean(file && file.uid);
     } else {

@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 
-import { NzCalendarModule } from 'ng-zorro-antd/calendar';
+import { TriCalendarModule } from 'ng-zorro-antd/calendar';
 
 @Component({
-  selector: 'nz-demo-calendar-customize-header',
-  imports: [NzCalendarModule],
+  selector: '',
+  imports: [TriCalendarModule],
   template: `
     <div class="card">
-      <nz-calendar [nzFullscreen]="false" [nzCustomHeader]="customHeader"></nz-calendar>
+      <tri-calendar [fullscreen]="false" [customHeader]="customHeader"></tri-calendar>
     </div>
 
     <ng-template #customHeader>
@@ -26,4 +26,4 @@ import { NzCalendarModule } from 'ng-zorro-antd/calendar';
     `
   ]
 })
-export class NzDemoCalendarCustomizeHeaderComponent {}
+export class TriDemoCalendarCustomizeHeaderComponent {}

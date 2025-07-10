@@ -8,7 +8,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TestBed } from '@angular/core/testing';
 import { fromEvent } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 import { fromEventOutsideAngular } from './from-event-outside-angular';
 
@@ -16,7 +16,7 @@ import { fromEventOutsideAngular } from './from-event-outside-angular';
   template: ``
 })
 class TestComponent {
-  readonly recorder: NzSafeAny[] = [];
+  readonly recorder: TriSafeAny[] = [];
 
   constructor() {
     const ngZone = inject(NgZone);

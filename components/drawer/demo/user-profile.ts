@@ -1,69 +1,69 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzDrawerModule } from 'ng-zorro-antd/drawer';
-import { NzListModule } from 'ng-zorro-antd/list';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { TriDividerModule } from 'ng-zorro-antd/divider';
+import { TriDrawerModule } from 'ng-zorro-antd/drawer';
+import { TriListModule } from 'ng-zorro-antd/list';
 
 @Component({
-  selector: 'nz-demo-drawer-user-profile',
-  imports: [NzButtonModule, NzDescriptionsModule, NzDividerModule, NzDrawerModule, NzListModule],
+  selector: '',
+  imports: [TriButtonModule, TriDescriptionsModule, TriDividerModule, TriDrawerModule, TriListModule],
   template: `
-    <nz-list [nzDataSource]="data" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
+    <tri-list [dataSource]="data" [renderItem]="item" [itemLayout]="'horizontal'">
       <ng-template #item let-item>
-        <nz-list-item [nzActions]="[viewAction]">
+        <tri-list-item [actions]="[viewAction]">
           <ng-template #viewAction>
             <a (click)="open()">View Profile</a>
           </ng-template>
-          <nz-list-item-meta
-            [nzTitle]="nzTitle"
-            nzAvatar="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
-            nzDescription="Progresser AFX"
+          <tri-list-item-meta
+            [title]="title"
+            avatar="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
+            description="Progresser AFX"
           >
             <ng-template #nzTitle>
               <a href="https://ng.ant.design">{{ item.name }}</a>
             </ng-template>
-          </nz-list-item-meta>
-        </nz-list-item>
+          </tri-list-item-meta>
+        </tri-list-item>
       </ng-template>
-    </nz-list>
-    <nz-drawer [nzVisible]="visible" [nzWidth]="640" [nzClosable]="false" (nzOnClose)="close()">
-      <ng-container *nzDrawerContent>
+    </tri-list>
+    <tri-drawer [visible]="visible" [width]="640" [closable]="false" (onClose)="close()">
+      <ng-container *drawerContent>
         <p class="title">User Profile</p>
-        <nz-descriptions [nzColumn]="2" nzTitle="Personal">
-          <nz-descriptions-item nzTitle="Full Name" [nzSpan]="1">Lily</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Account" [nzSpan]="1">AntDesign&#64;example.com</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="City" [nzSpan]="1">HangZhou</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Country" [nzSpan]="1">China🇨🇳</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Birthday" [nzSpan]="1">February 2,1900</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Website" [nzSpan]="1">-</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Message" [nzSpan]="2">
+        <tri-descriptions [column]="2" title="Personal">
+          <tri-descriptions-item title="Full Name" [span]="1">Lily</tri-descriptions-item>
+          <tri-descriptions-item title="Account" [span]="1">AntDesign&#64;example.com</tri-descriptions-item>
+          <tri-descriptions-item title="City" [span]="1">HangZhou</tri-descriptions-item>
+          <tri-descriptions-item title="Country" [span]="1">China🇨🇳</tri-descriptions-item>
+          <tri-descriptions-item title="Birthday" [span]="1">February 2,1900</tri-descriptions-item>
+          <tri-descriptions-item title="Website" [span]="1">-</tri-descriptions-item>
+          <tri-descriptions-item title="Message" [span]="2">
             Make things as simple as possible but no simpler.
-          </nz-descriptions-item>
-        </nz-descriptions>
-        <nz-divider></nz-divider>
-        <nz-descriptions [nzColumn]="2" nzTitle="Company">
-          <nz-descriptions-item nzTitle="Position" [nzSpan]="1">Programmer</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Responsibilities" [nzSpan]="1">Coding</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Department" [nzSpan]="1">AFX</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Supervisor" [nzSpan]="1">Lin</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Skills" [nzSpan]="2">
+          </tri-descriptions-item>
+        </tri-descriptions>
+        <tri-divider></tri-divider>
+        <tri-descriptions [column]="2" title="Company">
+          <tri-descriptions-item title="Position" [span]="1">Programmer</tri-descriptions-item>
+          <tri-descriptions-item title="Responsibilities" [span]="1">Coding</tri-descriptions-item>
+          <tri-descriptions-item title="Department" [span]="1">AFX</tri-descriptions-item>
+          <tri-descriptions-item title="Supervisor" [span]="1">Lin</tri-descriptions-item>
+          <tri-descriptions-item title="Skills" [span]="2">
             C / C + +, data structures, software engineering, operating systems, computer networks, databases, compiler
             theory, computer architecture, Microcomputer Principle and Interface Technology, Computer English, Java,
             ASP, etc.
-          </nz-descriptions-item>
-        </nz-descriptions>
-        <nz-divider></nz-divider>
-        <nz-descriptions [nzColumn]="2" nzTitle="Contacts">
-          <nz-descriptions-item nzTitle="Email" [nzSpan]="1">AntDesign&#64;example.com</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Phone Number" [nzSpan]="1">+86 181 0000 0000</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Github" [nzSpan]="2">
+          </tri-descriptions-item>
+        </tri-descriptions>
+        <tri-divider></tri-divider>
+        <tri-descriptions [column]="2" title="Contacts">
+          <tri-descriptions-item title="Email" [span]="1">AntDesign&#64;example.com</tri-descriptions-item>
+          <tri-descriptions-item title="Phone Number" [span]="1">+86 181 0000 0000</tri-descriptions-item>
+          <tri-descriptions-item title="Github" [span]="2">
             <a href="https://github.com/NG-ZORRO/ng-zorro-antd" target="_blank">github.com/NG-ZORRO/ng-zorro-antd</a>
-          </nz-descriptions-item>
-        </nz-descriptions>
+          </tri-descriptions-item>
+        </tri-descriptions>
       </ng-container>
-    </nz-drawer>
+    </tri-drawer>
   `,
   styles: [
     `
@@ -77,7 +77,7 @@ import { NzListModule } from 'ng-zorro-antd/list';
     `
   ]
 })
-export class NzDemoDrawerUserProfileComponent {
+export class TriDemoDrawerUserProfileComponent {
   data = [
     {
       name: 'Lily'

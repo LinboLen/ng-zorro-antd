@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NzTableModule } from 'ng-zorro-antd/table';
+import { TriTableModule } from 'ng-zorro-antd/table';
 
 export interface TreeNodeInterface {
   key: string;
@@ -14,10 +14,10 @@ export interface TreeNodeInterface {
 }
 
 @Component({
-  selector: 'nz-demo-table-expand-children',
-  imports: [NzTableModule],
+  selector: '',
+  imports: [TriTableModule],
   template: `
-    <nz-table #expandTable [nzData]="listOfMapData" nzTableLayout="fixed">
+    <tri-table #expandTable [data]="listOfMapData" tableLayout="fixed">
       <thead>
         <tr>
           <th>Name</th>
@@ -31,10 +31,10 @@ export interface TreeNodeInterface {
             @if ((item.parent && item.parent.expand) || !item.parent) {
               <tr>
                 <td
-                  [nzIndentSize]="item.level! * 20"
-                  [nzShowExpand]="!!item.children"
-                  [(nzExpand)]="item.expand"
-                  (nzExpandChange)="collapse(mapOfExpandedData[data.key], item, $event)"
+                  [indentSize]="item.level! * 20"
+                  [showExpand]="!!item.children"
+                  [(expandChange)]="item.expand"
+                  (expandChange)="collapse(mapOfExpandedData[data.key], item, $event)"
                 >
                   {{ item.name }}
                 </td>
@@ -45,10 +45,10 @@ export interface TreeNodeInterface {
           }
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `
 })
-export class NzDemoTableExpandChildrenComponent implements OnInit {
+export class TriDemoTableExpandChildrenComponent implements OnInit {
   listOfMapData: TreeNodeInterface[] = [
     {
       key: `1`,

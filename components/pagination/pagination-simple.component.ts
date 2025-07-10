@@ -24,22 +24,22 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { toNumber } from 'ng-zorro-antd/core/util';
-import { NzPaginationI18nInterface } from 'ng-zorro-antd/i18n';
+import { TriPaginationI18nInterface } from 'ng-zorro-antd/i18n';
 
-import { NzPaginationItemComponent } from './pagination-item.component';
+import { TriPaginationItemComponent } from './pagination-item.component';
 import { PaginationItemRenderContext } from './pagination.types';
 
 @Component({
-  selector: 'nz-pagination-simple',
+  selector: '',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ng-template #containerTemplate>
       <ul>
         <li
-          nz-pagination-item
+          tri-pagination-item
           [locale]="locale"
           [attr.title]="locale.prev_page"
           [disabled]="isFirstIndex"
@@ -48,13 +48,13 @@ import { PaginationItemRenderContext } from './pagination.types';
           type="prev"
           [itemRender]="itemRender"
         ></li>
-        <li [attr.title]="pageIndex + '/' + lastIndex" class="ant-pagination-simple-pager">
+        <li [attr.title]="pageIndex + '/' + lastIndex" class="tri-pagination-simple-pager">
           <input [disabled]="disabled" [value]="pageIndex" (keydown.enter)="jumpToPageViaInput($event)" size="3" />
-          <span class="ant-pagination-slash">/</span>
+          <span class="tri-pagination-slash">/</span>
           {{ lastIndex }}
         </li>
         <li
-          nz-pagination-item
+          tri-pagination-item
           [locale]="locale"
           [attr.title]="locale?.next_page"
           [disabled]="isLastIndex"
@@ -66,20 +66,20 @@ import { PaginationItemRenderContext } from './pagination.types';
       </ul>
     </ng-template>
   `,
-  imports: [NzPaginationItemComponent],
+  imports: [TriPaginationItemComponent],
   host: {
-    '[class.ant-pagination-rtl]': "dir === 'rtl'"
+    '[class.tri-pagination-rtl]': "dir === 'rtl'"
   }
 })
-export class NzPaginationSimpleComponent implements OnChanges, OnInit {
+export class TriPaginationSimpleComponent implements OnChanges, OnInit {
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly directionality = inject(Directionality);
   private readonly destroyRef = inject(DestroyRef);
 
-  @ViewChild('containerTemplate', { static: true }) template!: TemplateRef<NzSafeAny>;
+  @ViewChild('containerTemplate', { static: true }) template!: TemplateRef<TriSafeAny>;
   @Input() itemRender: TemplateRef<PaginationItemRenderContext> | null = null;
   @Input() disabled = false;
-  @Input() locale!: NzPaginationI18nInterface;
+  @Input() locale!: TriPaginationI18nInterface;
   @Input() total = 0;
   @Input() pageIndex = 1;
   @Input() pageSize = 10;

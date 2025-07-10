@@ -6,10 +6,10 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-  selector: '[nz-menu-divider]',
-  exportAs: 'nzMenuDivider',
+  selector: '',
+  exportAs: 'triMenuDivider',
   host: {
-    class: 'ant-dropdown-menu-item-divider'
+    class: 'tri-dropdown-menu-item-divider'
   }
 })
-export class NzMenuDividerDirective {}
+export class TriMenuDividerDirective {}

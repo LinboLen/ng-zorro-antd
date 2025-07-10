@@ -1,15 +1,15 @@
 import { Component, inject } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzImageModule, NzImageService } from 'ng-zorro-antd/image';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriImageModule, TriImageService } from 'ng-zorro-antd/image';
 
 @Component({
-  selector: 'nz-demo-image-service',
-  imports: [NzButtonModule, NzImageModule],
-  template: `<button nz-button nzType="primary" (click)="onClick()">Preview</button>`
+  selector: '',
+  imports: [TriButtonModule, TriImageModule],
+  template: `<button tri-button type="primary" (click)="onClick()">Preview</button>`
 })
-export class NzDemoImageServiceComponent {
-  private nzImageService = inject(NzImageService);
+export class TriDemoImageServiceComponent {
+  private imageService = inject(TriImageService);
   readonly images = [
     {
       src: 'https://img.alicdn.com/tfs/TB1g.mWZAL0gK0jSZFtXXXQCXXa-200-200.svg',
@@ -26,6 +26,6 @@ export class NzDemoImageServiceComponent {
   ];
 
   onClick(): void {
-    this.nzImageService.preview(this.images, { nzZoom: 1.5, nzRotate: 0 });
+    this.imageService.preview(this.images, { zoom: 1.5, rotate: 0 });
   }
 }

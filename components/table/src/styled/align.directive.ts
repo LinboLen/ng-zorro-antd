@@ -6,11 +6,11 @@
 import { Directive, Input } from '@angular/core';
 
 @Directive({
-  selector: 'th[nzAlign],td[nzAlign]',
+  selector: '',
   host: {
     '[style.text-align]': 'nzAlign'
   }
 })
-export class NzCellAlignDirective {
-  @Input() nzAlign: 'left' | 'right' | 'center' | null = null;
+export class TriCellAlignDirective {
+  @Input() align: 'left' | 'right' | 'center' | null = null;
 }

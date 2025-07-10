@@ -1,25 +1,25 @@
 import { Component } from '@angular/core';
 
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-demo-dropdown-overlay-visible',
-  imports: [NzDropDownModule, NzIconModule],
+  selector: '',
+  imports: [TriDropDownModule, TriIconModule],
   template: `
-    <a nz-dropdown [nzDropdownMenu]="menu" [nzClickHide]="false" [(nzVisible)]="visible">
+    <a tri-dropdown [dropdownMenu]="menu" [clickHide]="false" [(visibleChange)]="visible">
       Hover me
-      <nz-icon nzType="down" />
+      <tri-icon type="down" />
     </a>
-    <nz-dropdown-menu #menu="nzDropdownMenu">
-      <ul nz-menu>
-        <li nz-menu-item>Clicking me will not close the menu.</li>
-        <li nz-menu-item>Clicking me will not close the menu also.</li>
-        <li nz-menu-item (click)="visible = false">Clicking me will close the menu</li>
+    <tri-dropdown-menu #menu="nzDropdownMenu">
+      <ul tri-menu>
+        <li tri-menu-item>Clicking me will not close the menu.</li>
+        <li tri-menu-item>Clicking me will not close the menu also.</li>
+        <li tri-menu-item (click)="visible = false">Clicking me will close the menu</li>
       </ul>
-    </nz-dropdown-menu>
+    </tri-dropdown-menu>
   `
 })
-export class NzDemoDropdownOverlayVisibleComponent {
+export class TriDemoDropdownOverlayVisibleComponent {
   visible = false;
 }

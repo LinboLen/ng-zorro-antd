@@ -1,24 +1,24 @@
 import { Component } from '@angular/core';
 
-import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-demo-breadcrumb-with-icon',
-  imports: [NzBreadCrumbModule, NzIconModule],
+  selector: '',
+  imports: [TriBreadCrumbModule, TriIconModule],
   template: `
-    <nz-breadcrumb>
-      <nz-breadcrumb-item>
-        <nz-icon nzType="home" />
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item>
+    <tri-breadcrumb>
+      <tri-breadcrumb-item>
+        <tri-icon type="home" />
+      </tri-breadcrumb-item>
+      <tri-breadcrumb-item>
         <a>
-          <nz-icon nzType="user" />
+          <tri-icon type="user" />
           <span>Application List</span>
         </a>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item>Application</nz-breadcrumb-item>
-    </nz-breadcrumb>
+      </tri-breadcrumb-item>
+      <tri-breadcrumb-item>Application</tri-breadcrumb-item>
+    </tri-breadcrumb>
   `
 })
-export class NzDemoBreadcrumbWithIconComponent {}
+export class TriDemoBreadcrumbWithIconComponent {}

@@ -11,12 +11,12 @@ import { By } from '@angular/platform-browser';
 import { Observable, timer } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { NzDirectionVHType, NzSizeLDSType } from 'ng-zorro-antd/core/types';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriDirectionVHType, TriSizeLDSType } from 'ng-zorro-antd/core/types';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
-import { NzListComponent } from './list.component';
-import { NzListModule } from './list.module';
+import { TriListComponent } from './list.component';
+import { TriListModule } from './list.module';
 
 describe('list', () => {
   let fixture: ComponentFixture<TestListComponent>;
@@ -39,7 +39,7 @@ describe('list', () => {
         { type: 'vertical', ret: true }
       ]) {
         it(`[${item.type}]`, () => {
-          context.nzItemLayout = item.type as NzDirectionVHType;
+          context.itemLayout = item.type as TriDirectionVHType;
           fixture.detectChanges();
           expect(dl.query(By.css(`.ant-list-${item.type}`)) != null).toBe(item.ret);
         });
@@ -49,7 +49,7 @@ describe('list', () => {
     describe('#nzBordered', () => {
       for (const value of [true, false]) {
         it(`[${value}]`, () => {
-          context.nzBordered = value;
+          context.bordered = value;
           fixture.detectChanges();
           expect(dl.query(By.css('.ant-list-bordered')) != null).toBe(value);
         });
@@ -79,13 +79,13 @@ describe('list', () => {
       it('with custom template', () => {
         const footerEl = fixtureTemp.debugElement.query(By.css('.ant-list-footer'));
         expect((footerEl.nativeElement as HTMLDivElement).innerText).toBe(
-          fixtureTemp.componentInstance.footer as string
+          fixtureTemp.componentInstance._footer as string
         );
       });
       it('change string to template', () => {
         const footerEl = fixtureTemp.debugElement.query(By.css('.ant-list-footer'));
         expect((footerEl.nativeElement as HTMLDivElement).innerText).toBe(
-          fixtureTemp.componentInstance.footer as string
+          fixtureTemp.componentInstance._footer as string
         );
         (fixtureTemp.debugElement.query(By.css('#change')).nativeElement as HTMLButtonElement).click();
         fixtureTemp.detectChanges();
@@ -100,7 +100,7 @@ describe('list', () => {
         { type: 'large', cls: '.ant-list-lg' }
       ]) {
         it(`[${item.type}]`, () => {
-          context.nzSize = item.type as NzSizeLDSType;
+          context.size = item.type as TriSizeLDSType;
           fixture.detectChanges();
           expect(dl.query(By.css(item.cls)) != null).toBe(true);
         });
@@ -110,7 +110,7 @@ describe('list', () => {
     describe('#nzSplit', () => {
       for (const value of [true, false]) {
         it(`[${value}]`, () => {
-          context.nzSplit = value;
+          context.split = value;
           fixture.detectChanges();
           expect(dl.query(By.css('.ant-list-split')) != null).toBe(value);
         });
@@ -120,14 +120,14 @@ describe('list', () => {
     describe('#nzLoading', () => {
       for (const value of [true, false]) {
         it(`[${value}]`, () => {
-          context.nzLoading = value;
+          context.loading = value;
           fixture.detectChanges();
           expect(dl.query(By.css('.ant-list-loading')) != null).toBe(value);
         });
       }
 
       it('should be minimum area block when data is empty', () => {
-        context.nzLoading = true;
+        context.loading = true;
         context.data = [];
         fixture.detectChanges();
         expect(dl.query(By.css('.ant-spin-nested-loading'))).not.toBeNull();
@@ -154,7 +154,7 @@ describe('list', () => {
     });
 
     it('#nzGrid', () => {
-      const colCls = `.ant-col-${context.nzGrid.span}`;
+      const colCls = `.ant-col-${context.grid.span}`;
       expect(dl.queryAll(By.css(colCls)).length).toBe(context.data!.length);
     });
 
@@ -167,7 +167,7 @@ describe('list', () => {
     });
 
     it('should be use split main and extra when item layout is vertical', () => {
-      context.nzItemLayout = 'vertical';
+      context.itemLayout = 'vertical';
       fixture.detectChanges();
       expect(dl.query(By.css('.ant-list-item-main')) != null).toBe(true);
       expect(dl.query(By.css('.ant-list-item-extra')) != null).toBe(true);
@@ -225,15 +225,15 @@ describe('list', () => {
 });
 
 describe('list RTL', () => {
-  let fixture: ComponentFixture<NzTestListRtlComponent>;
+  let fixture: ComponentFixture<TriTestListRtlComponent>;
   let componentElement: HTMLElement;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [provideNzIconsTesting()]
     });
-    fixture = TestBed.createComponent(NzTestListRtlComponent);
-    componentElement = fixture.debugElement.query(By.directive(NzListComponent)).nativeElement;
+    fixture = TestBed.createComponent(TriTestListRtlComponent);
+    componentElement = fixture.debugElement.query(By.directive(TriListComponent)).nativeElement;
     fixture.detectChanges();
   });
 
@@ -246,37 +246,37 @@ describe('list RTL', () => {
 });
 
 @Component({
-  imports: [NzListModule, AsyncPipe],
-  selector: 'nz-test-list',
+  imports: [TriListModule, AsyncPipe],
+  selector: '',
   template: `
-    <nz-list
+    <tri-list
       #comp
-      [nzDataSource]="data"
-      [nzItemLayout]="nzItemLayout"
-      [nzBordered]="nzBordered"
-      [nzFooter]="nzFooter"
-      [nzHeader]="nzHeader"
-      [nzLoading]="nzLoading"
-      [nzSize]="nzSize"
-      [nzSplit]="nzSplit"
-      [nzGrid]="nzGrid"
-      [nzRenderItem]="item"
-      [nzLoadMore]="loadMore"
-      [nzPagination]="pagination"
+      [dataSource]="data"
+      [itemLayout]="itemLayout"
+      [bordered]="bordered"
+      [footer]="footer"
+      [header]="header"
+      [loading]="loading"
+      [size]="size"
+      [split]="split"
+      [grid]="grid"
+      [renderItem]="item"
+      [loadMore]="loadMore"
+      [pagination]="pagination"
     >
       <ng-template #item let-item>
-        <nz-list-item [nzExtra]="extra">
-          <nz-list-item-meta
-            nzTitle="title"
-            nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            nzDescription="Ant Design, a design language for background applications, is refined by Ant UED Team"
-          ></nz-list-item-meta>
-          <ul nz-list-item-actions>
+        <tri-list-item [extra]="extra">
+          <tri-list-item-meta
+            title="title"
+            avatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+          ></tri-list-item-meta>
+          <ul tri-list-item-actions>
             @for (action of actions$ | async; track action) {
-              <nz-list-item-action>{{ action }}</nz-list-item-action>
+              <tri-list-item-action>{{ action }}</tri-list-item-action>
             }
           </ul>
-        </nz-list-item>
+        </tri-list-item>
       </ng-template>
       <ng-template #loadMore>
         <div class="loadmore">load more</div>
@@ -287,18 +287,18 @@ describe('list RTL', () => {
       <ng-template #extra>
         <span class="extra-content">extra content</span>
       </ng-template>
-    </nz-list>
+    </tri-list>
   `
 })
 class TestListComponent {
-  @ViewChild('comp', { static: false }) comp!: NzListComponent;
-  nzItemLayout: NzDirectionVHType = 'horizontal';
-  nzBordered = false;
-  nzFooter = 'footer';
-  nzHeader = 'header';
-  nzLoading = false;
-  nzSize: NzSizeLDSType = 'default';
-  nzSplit = true;
+  @ViewChild('comp', { static: false }) comp!: TriListComponent;
+  itemLayout: TriDirectionVHType = 'horizontal';
+  bordered = false;
+  footer = 'footer';
+  header = 'header';
+  loading = false;
+  size: TriSizeLDSType = 'default';
+  split = true;
   data?: string[] = [
     'Racing car sprays burning fuel into crowd.',
     'Japanese princess to wed commoner.',
@@ -306,33 +306,33 @@ class TestListComponent {
     'Japanese princess to wed commoner.'
   ];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  nzGrid: any = { gutter: 16, span: 12 };
+  grid: any = { gutter: 16, span: 12 };
   actions$: Observable<string[]> = timer(500).pipe(map(() => ['Edit', 'Delete']));
 }
 
 @Component({
-  imports: [NzListModule],
+  imports: [TriListModule],
   template: `
-    <button (click)="footer = nzFooter" id="change">change</button>
-    <nz-list [nzFooter]="footer" [nzHeader]="nzHeader">
+    <button (click)="footer = footer" id="change">change</button>
+    <tri-list [footer]="footer" [header]="header">
       <ng-template #nzFooter><p class="list-footer">footer</p></ng-template>
       <ng-template #nzHeader><p class="list-header">header</p></ng-template>
-    </nz-list>
+    </tri-list>
   `
 })
 class TestListWithTemplateComponent {
-  @ViewChild('nzFooter', { static: false }) nzFooter!: TemplateRef<void>;
+  @ViewChild('nzFooter', { static: false }) footer!: TemplateRef<void>;
 
-  footer: string | TemplateRef<void> = 'footer with string';
+  _footer: string | TemplateRef<void> = 'footer with string';
 }
 
 @Component({
-  imports: [NzIconModule, NzListModule],
+  imports: [TriIconModule, TriListModule],
   template: `
-    <nz-list id="item-string">
-      <nz-list-item [nzContent]="'content'" [nzActions]="[action]" [nzExtra]="extra" [nzNoFlex]="noFlex">
+    <tri-list id="item-string">
+      <tri-list-item [content]="'content'" [actions]="[action]" [extra]="extra" [noFlex]="noFlex">
         <ng-template #action>
-          <nz-icon nzType="star-o" style="margin-right: 8px;" />
+          <tri-icon type="star-o" style="margin-right: 8px;" />
           156
         </ng-template>
         <ng-template #extra>
@@ -343,23 +343,23 @@ class TestListWithTemplateComponent {
             src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
           />
         </ng-template>
-        <nz-list-item-meta
-          nzTitle="title"
-          nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-          nzDescription="Ant Design, a design language for background applications, is refined by Ant UED Team"
-        ></nz-list-item-meta>
-      </nz-list-item>
-    </nz-list>
-    <nz-list id="item-template">
-      <nz-list-item [nzContent]="nzContent">
+        <tri-list-item-meta
+          title="title"
+          avatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+          description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+        ></tri-list-item-meta>
+      </tri-list-item>
+    </tri-list>
+    <tri-list id="item-template">
+      <tri-list-item [content]="content">
         <ng-template #nzContent><p class="item-content">nzContent</p></ng-template>
-        <nz-list-item-meta [nzTitle]="nzTitle" [nzAvatar]="nzAvatar" [nzDescription]="nzDescription">
+        <tri-list-item-meta [title]="title" [avatar]="avatar" [description]="description">
           <ng-template #nzTitle><p class="item-title">nzTitle</p></ng-template>
           <ng-template #nzAvatar><p class="item-avatar">nzAvatar</p></ng-template>
           <ng-template #nzDescription><p class="item-desc">nzDescription</p></ng-template>
-        </nz-list-item-meta>
-      </nz-list-item>
-    </nz-list>
+        </tri-list-item-meta>
+      </tri-list-item>
+    </tri-list>
   `
 })
 class TestListItemComponent {
@@ -370,11 +370,11 @@ class TestListItemComponent {
   imports: [BidiModule, TestListComponent],
   template: `
     <div [dir]="direction">
-      <nz-test-list></nz-test-list>
+      <tri-test-list></tri-test-list>
     </div>
   `
 })
-export class NzTestListRtlComponent {
+export class TriTestListRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 }

@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 
-import { NzQRCodeModule } from 'ng-zorro-antd/qr-code';
+import { TriQRCodeModule } from 'ng-zorro-antd/qr-code';
 
 @Component({
-  selector: 'nz-demo-qr-code-padding',
-  imports: [NzQRCodeModule],
+  selector: '',
+  imports: [TriQRCodeModule],
   template: `
-    <nz-qrcode [nzPadding]="12" nzValue="https://ng.ant.design/"></nz-qrcode>
-    <nz-qrcode [nzPadding]="[12, 24]" nzValue="https://ng.ant.design/"></nz-qrcode>
+    <tri-qrcode [padding]="12" value="https://ng.ant.design/"></tri-qrcode>
+    <tri-qrcode [padding]="[12, 24]" value="https://ng.ant.design/"></tri-qrcode>
   `,
   styles: [
     `
@@ -17,4 +17,4 @@ import { NzQRCodeModule } from 'ng-zorro-antd/qr-code';
     `
   ]
 })
-export class NzDemoQrCodePaddingComponent {}
+export class TriDemoQrCodePaddingComponent {}

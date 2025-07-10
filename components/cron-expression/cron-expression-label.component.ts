@@ -5,25 +5,25 @@
 
 import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
 
-import { NzCronExpressionLabelI18n } from 'ng-zorro-antd/i18n';
+import { TriCronExpressionLabelI18n } from 'ng-zorro-antd/i18n';
 
 import { TimeType } from './typings';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-cron-expression-label',
-  exportAs: 'nzCronExpressionLabel',
+  selector: '',
+  exportAs: 'triCronExpressionLabel',
   template: `
-    <div class="ant-cron-expression-label" [class.ant-cron-expression-label-foucs]="labelFocus === type">
+    <div class="tri-cron-expression-label" [class.tri-cron-expression-label-foucs]="labelFocus === type">
       <label>
         {{ locale[type] }}
       </label>
     </div>
   `
 })
-export class NzCronExpressionLabelComponent {
+export class TriCronExpressionLabelComponent {
   @Input() type: TimeType = 'second';
-  @Input() locale!: NzCronExpressionLabelI18n;
+  @Input() locale!: TriCronExpressionLabelI18n;
   @Input() labelFocus: string | null = null;
 }

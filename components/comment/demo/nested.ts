@@ -1,32 +1,32 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { Component } from '@angular/core';
 
-import { NzAvatarModule } from 'ng-zorro-antd/avatar';
-import { NzCommentModule } from 'ng-zorro-antd/comment';
+import { TriAvatarModule } from 'ng-zorro-antd/avatar';
+import { TriCommentModule } from 'ng-zorro-antd/comment';
 
 @Component({
-  selector: 'nz-demo-comment-nested',
-  imports: [NgTemplateOutlet, NzAvatarModule, NzCommentModule],
+  selector: '',
+  imports: [NgTemplateOutlet, TriAvatarModule, TriCommentModule],
   template: `
     <ng-template #commentTemplateRef let-comment="comment">
-      <nz-comment [nzAuthor]="comment.author">
-        <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="comment.avatar"></nz-avatar>
-        <nz-comment-content>
+      <tri-comment [author]="comment.author">
+        <tri-avatar tri-comment-avatar icon="user" [src]="comment.avatar"></tri-avatar>
+        <tri-comment-content>
           <p>{{ comment.content }}</p>
-        </nz-comment-content>
-        <nz-comment-action>Reply to</nz-comment-action>
+        </tri-comment-content>
+        <tri-comment-action>Reply to</tri-comment-action>
         @if (comment.children && comment.children.length) {
           @for (child of comment.children; track child) {
             <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: child }" />
           }
         }
-      </nz-comment>
+      </tri-comment>
     </ng-template>
 
     <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: data }"></ng-template>
   `
 })
-export class NzDemoCommentNestedComponent {
+export class TriDemoCommentNestedComponent {
   data = {
     author: 'Han Solo',
     avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',

@@ -8,23 +8,23 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, inject, TestBed, waitForAsync } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzModalRef } from './modal-ref';
-import { NzModalTitleDirective } from './modal-title.directive';
-import { NzModalComponent } from './modal.component';
-import { NzModalModule } from './modal.module';
-import { NzModalService } from './modal.service';
+import { TriModalRef } from './modal-ref';
+import { TriModalTitleDirective } from './modal-title.directive';
+import { TriModalComponent } from './modal.component';
+import { TriModalModule } from './modal.module';
+import { TriModalService } from './modal.service';
 
 describe('modal title directive', () => {
   let overlayContainer: OverlayContainer;
   let fixture: ComponentFixture<TestDirectiveTitleComponent>;
   let testComponent: TestDirectiveTitleComponent;
-  let modalService: NzModalService;
+  let modalService: TriModalService;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      providers: [NzModalService, provideNoopAnimations()]
+      providers: [TriModalService, provideNoopAnimations()]
     });
   }));
 
@@ -34,7 +34,7 @@ describe('modal title directive', () => {
     fixture.detectChanges();
   });
 
-  beforeEach(inject([OverlayContainer, NzModalService], (oc: OverlayContainer, m: NzModalService) => {
+  beforeEach(inject([OverlayContainer, TriModalService], (oc: OverlayContainer, m: TriModalService) => {
     overlayContainer = oc;
     modalService = m;
   }));
@@ -47,8 +47,8 @@ describe('modal title directive', () => {
     testComponent.showModal();
     fixture.detectChanges();
     expect(testComponent.isVisible).toBe(true);
-    const modalRef = testComponent.nzModalComponent.getModalRef();
-    expect(modalRef!.getConfig().nzTitle).toEqual(testComponent.nzModalTitleDirective);
+    const modalRef = testComponent.modalComponent.getModalRef();
+    expect(modalRef!.getConfig().title).toEqual(testComponent.modalTitleDirective);
 
     testComponent.handleCancel();
     fixture.detectChanges();
@@ -61,37 +61,37 @@ describe('modal title directive', () => {
     expect(initOpenedComponent.isVisible).toBe(true);
     flush();
     initOpenedComponentFixture.detectChanges();
-    const modalRef = initOpenedComponent.nzModalComponent.getModalRef();
+    const modalRef = initOpenedComponent.modalComponent.getModalRef();
 
-    expect(modalRef!.getConfig().nzTitle).toEqual(initOpenedComponent.nzModalTitleDirective);
+    expect(modalRef!.getConfig().title).toEqual(initOpenedComponent.modalTitleDirective);
 
     initOpenedComponentFixture.detectChanges();
   }));
 
   it('should work with service', () => {
-    const modalRef = modalService.create({ nzContent: TestDirectiveTitleInServiceComponent, nzTitle: '' });
+    const modalRef = modalService.create({ content: TestDirectiveTitleInServiceComponent, title: '' });
     fixture.detectChanges();
 
     expect(modalRef.componentInstance!.nzModalRef).toBe(modalRef);
-    expect(modalRef.componentInstance!.NzModalTitleDirective).toEqual(modalRef.getConfig().nzTitle as TemplateRef<{}>);
+    expect(modalRef.componentInstance!.NzModalTitleDirective).toEqual(modalRef.getConfig().title as TemplateRef<{}>);
   });
 });
 
 @Component({
-  imports: [NzModalModule],
+  imports: [TriModalModule],
   template: `
-    <nz-modal [(nzVisible)]="isVisible" (nzOnCancel)="handleCancel()">
+    <tri-modal [(visibleChange)]="isVisible" (onCancel)="handleCancel()">
       <div>
         <p>Modal Content</p>
       </div>
-      <div *nzModalTitle>Custom Modal Title</div>
-    </nz-modal>
+      <div *modalTitle>Custom Modal Title</div>
+    </tri-modal>
   `
 })
 class TestDirectiveTitleComponent {
   isVisible = false;
-  @ViewChild(NzModalComponent) nzModalComponent!: NzModalComponent;
-  @ViewChild(NzModalTitleDirective, { static: true, read: TemplateRef }) nzModalTitleDirective!: TemplateRef<NzSafeAny>;
+  @ViewChild(TriModalComponent) modalComponent!: TriModalComponent;
+  @ViewChild(TriModalTitleDirective, { static: true, read: TemplateRef }) modalTitleDirective!: TemplateRef<TriSafeAny>;
 
   handleCancel(): void {
     this.isVisible = false;
@@ -103,30 +103,30 @@ class TestDirectiveTitleComponent {
 }
 
 @Component({
-  imports: [NzModalModule],
+  imports: [TriModalModule],
   template: `
-    <nz-modal [(nzVisible)]="isVisible">
+    <tri-modal [(visibleChange)]="isVisible">
       <div>
         <p>Modal Content</p>
       </div>
-      <div *nzModalTitle>Custom Modal Title</div>
-    </nz-modal>
+      <div *modalTitle>Custom Modal Title</div>
+    </tri-modal>
   `
 })
 class TestDirectiveTitleWithInitOpenedComponent {
   isVisible = true;
-  @ViewChild(NzModalComponent) nzModalComponent!: NzModalComponent;
-  @ViewChild(NzModalTitleDirective, { static: true, read: TemplateRef }) nzModalTitleDirective!: TemplateRef<NzSafeAny>;
+  @ViewChild(TriModalComponent) modalComponent!: TriModalComponent;
+  @ViewChild(TriModalTitleDirective, { static: true, read: TemplateRef }) modalTitleDirective!: TemplateRef<TriSafeAny>;
 }
 
 @Component({
-  imports: [NzModalModule],
-  template: `<div *nzModalTitle>Custom Modal Title</div>`
+  imports: [TriModalModule],
+  template: `<div *modalTitle>Custom Modal Title</div>`
 })
 class TestDirectiveTitleInServiceComponent {
-  @ViewChild(NzModalTitleDirective, { static: true, read: TemplateRef }) NzModalTitleDirective!: TemplateRef<NzSafeAny>;
+  @ViewChild(TriModalTitleDirective, { static: true, read: TemplateRef }) NzModalTitleDirective!: TemplateRef<TriSafeAny>;
 
-  constructor(public nzModalRef: NzModalRef) {}
+  constructor(public nzModalRef: TriModalRef) {}
 
   handleCancel(): void {
     this.nzModalRef.close();

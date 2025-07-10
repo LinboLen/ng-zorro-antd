@@ -1,27 +1,27 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzFormatEmitEvent, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
-import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
+import { TriFormatEmitEvent, TriTreeNodeOptions } from 'ng-zorro-antd/tree';
+import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
 @Component({
-  selector: 'nz-demo-tree-select-async',
-  imports: [FormsModule, NzTreeSelectModule],
+  selector: '',
+  imports: [FormsModule, TriTreeSelectModule],
   template: `
-    <nz-tree-select
+    <tri-tree-select
       style="width: 250px"
-      nzPlaceHolder="Please select"
-      [nzExpandedKeys]="expandKeys"
+      placeHolder="Please select"
+      [expandedKeys]="expandKeys"
       [(ngModel)]="value"
-      [nzDropdownMatchSelectWidth]="true"
-      [nzDropdownStyle]="{ 'max-height': '300px' }"
-      [nzNodes]="nodes"
-      [nzAsyncData]="true"
-      (nzExpandChange)="onExpandChange($event)"
-    ></nz-tree-select>
+      [dropdownMatchSelectWidth]="true"
+      [dropdownStyle]="{ 'max-height': '300px' }"
+      [nodes]="nodes"
+      [asyncData]="true"
+      (expandChange)="onExpandChange($event)"
+    ></tri-tree-select>
   `
 })
-export class NzDemoTreeSelectAsyncComponent {
+export class TriDemoTreeSelectAsyncComponent {
   expandKeys = ['0-0'];
   value?: string;
   readonly nodes = [
@@ -49,7 +49,7 @@ export class NzDemoTreeSelectAsyncComponent {
     }
   ];
 
-  onExpandChange(e: NzFormatEmitEvent): void {
+  onExpandChange(e: TriFormatEmitEvent): void {
     const node = e.node;
     if (node && node.getChildren().length === 0 && node.isExpanded) {
       this.loadNode().then(data => {
@@ -58,7 +58,7 @@ export class NzDemoTreeSelectAsyncComponent {
     }
   }
 
-  loadNode(): Promise<NzTreeNodeOptions[]> {
+  loadNode(): Promise<TriTreeNodeOptions[]> {
     return new Promise(resolve => {
       setTimeout(
         () =>

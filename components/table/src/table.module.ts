@@ -5,88 +5,88 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzFilterTriggerComponent } from './addon/filter-trigger.component';
-import { NzTableFilterComponent } from './addon/filter.component';
-import { NzRowExpandButtonDirective } from './addon/row-expand-button.directive';
-import { NzRowIndentDirective } from './addon/row-indent.directive';
-import { NzTableSelectionComponent } from './addon/selection.component';
-import { NzTableSortersComponent } from './addon/sorters.component';
-import { NzCellFixedDirective } from './cell/cell-fixed.directive';
-import { NzTableCellDirective } from './cell/cell.directive';
-import { NzCustomColumnDirective } from './cell/custom-column.directive';
-import { NzTdAddOnComponent } from './cell/td-addon.component';
-import { NzThAddOnComponent } from './cell/th-addon.component';
-import { NzThMeasureDirective } from './cell/th-measure.directive';
-import { NzThSelectionComponent } from './cell/th-selection.component';
-import { NzCellAlignDirective } from './styled/align.directive';
-import { NzCellEllipsisDirective } from './styled/ellipsis.directive';
-import { NzCellBreakWordDirective } from './styled/word-break.directive';
-import { NzTableContentComponent } from './table/table-content.component';
-import { NzTableFixedRowComponent } from './table/table-fixed-row.component';
-import { NzTableInnerDefaultComponent } from './table/table-inner-default.component';
-import { NzTableInnerScrollComponent } from './table/table-inner-scroll.component';
-import { NzTableVirtualScrollDirective } from './table/table-virtual-scroll.directive';
-import { NzTableComponent } from './table/table.component';
-import { NzTbodyComponent } from './table/tbody.component';
-import { NzTfootSummaryComponent } from './table/tfoot-summary.component';
-import { NzTheadComponent } from './table/thead.component';
-import { NzTableTitleFooterComponent } from './table/title-footer.component';
-import { NzTrExpandDirective } from './table/tr-expand.directive';
-import { NzTrMeasureComponent } from './table/tr-measure.component';
-import { NzTrDirective } from './table/tr.directive';
+import { TriFilterTriggerComponent } from './addon/filter-trigger.component';
+import { TriTableFilterComponent } from './addon/filter.component';
+import { TriRowExpandButtonDirective } from './addon/row-expand-button.directive';
+import { TriRowIndentDirective } from './addon/row-indent.directive';
+import { TriTableSelectionComponent } from './addon/selection.component';
+import { TriTableSortersComponent } from './addon/sorters.component';
+import { TriCellFixedDirective } from './cell/cell-fixed.directive';
+import { TriTableCellDirective } from './cell/cell.directive';
+import { TriCustomColumnDirective } from './cell/custom-column.directive';
+import { TriTdAddOnComponent } from './cell/td-addon.component';
+import { TriThAddOnComponent } from './cell/th-addon.component';
+import { TriThMeasureDirective } from './cell/th-measure.directive';
+import { TriThSelectionComponent } from './cell/th-selection.component';
+import { TriCellAlignDirective } from './styled/align.directive';
+import { TriCellEllipsisDirective } from './styled/ellipsis.directive';
+import { TriCellBreakWordDirective } from './styled/word-break.directive';
+import { TriTableContentComponent } from './table/table-content.component';
+import { TriTableFixedRowComponent } from './table/table-fixed-row.component';
+import { TriTableInnerDefaultComponent } from './table/table-inner-default.component';
+import { TriTableInnerScrollComponent } from './table/table-inner-scroll.component';
+import { TriTableVirtualScrollDirective } from './table/table-virtual-scroll.directive';
+import { TriTableComponent } from './table/table.component';
+import { TriTbodyComponent } from './table/tbody.component';
+import { TriTfootSummaryComponent } from './table/tfoot-summary.component';
+import { TriTheadComponent } from './table/thead.component';
+import { TriTableTitleFooterComponent } from './table/title-footer.component';
+import { TriTrExpandDirective } from './table/tr-expand.directive';
+import { TriTrMeasureComponent } from './table/tr-measure.component';
+import { TriTrDirective } from './table/tr.directive';
 
 @NgModule({
   imports: [
-    NzTableComponent,
-    NzThAddOnComponent,
-    NzTableCellDirective,
-    NzThMeasureDirective,
-    NzTdAddOnComponent,
-    NzTheadComponent,
-    NzTbodyComponent,
-    NzTrDirective,
-    NzTrExpandDirective,
-    NzTfootSummaryComponent,
-    NzTableVirtualScrollDirective,
-    NzCellFixedDirective,
-    NzCustomColumnDirective,
-    NzTableContentComponent,
-    NzTableTitleFooterComponent,
-    NzTableInnerDefaultComponent,
-    NzTableInnerScrollComponent,
-    NzTrMeasureComponent,
-    NzRowIndentDirective,
-    NzRowExpandButtonDirective,
-    NzCellBreakWordDirective,
-    NzCellAlignDirective,
-    NzTableSortersComponent,
-    NzTableFilterComponent,
-    NzTableSelectionComponent,
-    NzCellEllipsisDirective,
-    NzFilterTriggerComponent,
-    NzTableFixedRowComponent,
-    NzThSelectionComponent
+    TriTableComponent,
+    TriThAddOnComponent,
+    TriTableCellDirective,
+    TriThMeasureDirective,
+    TriTdAddOnComponent,
+    TriTheadComponent,
+    TriTbodyComponent,
+    TriTrDirective,
+    TriTrExpandDirective,
+    TriTfootSummaryComponent,
+    TriTableVirtualScrollDirective,
+    TriCellFixedDirective,
+    TriCustomColumnDirective,
+    TriTableContentComponent,
+    TriTableTitleFooterComponent,
+    TriTableInnerDefaultComponent,
+    TriTableInnerScrollComponent,
+    TriTrMeasureComponent,
+    TriRowIndentDirective,
+    TriRowExpandButtonDirective,
+    TriCellBreakWordDirective,
+    TriCellAlignDirective,
+    TriTableSortersComponent,
+    TriTableFilterComponent,
+    TriTableSelectionComponent,
+    TriCellEllipsisDirective,
+    TriFilterTriggerComponent,
+    TriTableFixedRowComponent,
+    TriThSelectionComponent
   ],
   exports: [
-    NzTableComponent,
-    NzThAddOnComponent,
-    NzTableCellDirective,
-    NzThMeasureDirective,
-    NzTdAddOnComponent,
-    NzTheadComponent,
-    NzTbodyComponent,
-    NzTrDirective,
-    NzTableVirtualScrollDirective,
-    NzCellFixedDirective,
-    NzCustomColumnDirective,
-    NzFilterTriggerComponent,
-    NzTrExpandDirective,
-    NzTfootSummaryComponent,
-    NzCellBreakWordDirective,
-    NzCellAlignDirective,
-    NzCellEllipsisDirective,
-    NzTableFixedRowComponent,
-    NzThSelectionComponent
+    TriTableComponent,
+    TriThAddOnComponent,
+    TriTableCellDirective,
+    TriThMeasureDirective,
+    TriTdAddOnComponent,
+    TriTheadComponent,
+    TriTbodyComponent,
+    TriTrDirective,
+    TriTableVirtualScrollDirective,
+    TriCellFixedDirective,
+    TriCustomColumnDirective,
+    TriFilterTriggerComponent,
+    TriTrExpandDirective,
+    TriTfootSummaryComponent,
+    TriCellBreakWordDirective,
+    TriCellAlignDirective,
+    TriCellEllipsisDirective,
+    TriTableFixedRowComponent,
+    TriThSelectionComponent
   ]
 })
-export class NzTableModule {}
+export class TriTableModule {}

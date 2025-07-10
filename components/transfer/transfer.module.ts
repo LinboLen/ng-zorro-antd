@@ -5,12 +5,12 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzTransferListComponent } from './transfer-list.component';
-import { NzTransferSearchComponent } from './transfer-search.component';
-import { NzTransferComponent } from './transfer.component';
+import { TriTransferListComponent } from './transfer-list.component';
+import { TriTransferSearchComponent } from './transfer-search.component';
+import { TriTransferComponent } from './transfer.component';
 
 @NgModule({
-  imports: [NzTransferComponent, NzTransferListComponent, NzTransferSearchComponent],
-  exports: [NzTransferComponent]
+  imports: [TriTransferComponent, TriTransferListComponent, TriTransferSearchComponent],
+  exports: [TriTransferComponent]
 })
-export class NzTransferModule {}
+export class TriTransferModule {}

@@ -19,62 +19,62 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 
-import { NzCommentActionComponent as CommentAction, NzCommentActionHostDirective } from './comment-cells';
+import { TriCommentActionComponent as CommentAction, TriCommentActionHostDirective } from './comment-cells';
 
 @Component({
-  selector: 'nz-comment',
-  exportAs: 'nzComment',
+  selector: '',
+  exportAs: 'triComment',
   template: `
-    <div class="ant-comment-inner">
-      <div class="ant-comment-avatar">
+    <div class="tri-comment-inner">
+      <div class="tri-comment-avatar">
         <ng-content select="nz-avatar[nz-comment-avatar]"></ng-content>
       </div>
-      <div class="ant-comment-content">
-        <div class="ant-comment-content-author">
-          @if (nzAuthor) {
-            <span class="ant-comment-content-author-name">
-              <ng-container *nzStringTemplateOutlet="nzAuthor">{{ nzAuthor }}</ng-container>
+      <div class="tri-comment-content">
+        <div class="tri-comment-content-author">
+          @if (author) {
+            <span class="tri-comment-content-author-name">
+              <ng-container *stringTemplateOutlet="author">{{ author }}</ng-container>
             </span>
           }
-          @if (nzDatetime) {
-            <span class="ant-comment-content-author-time">
-              <ng-container *nzStringTemplateOutlet="nzDatetime">{{ nzDatetime }}</ng-container>
+          @if (datetime) {
+            <span class="tri-comment-content-author-time">
+              <ng-container *stringTemplateOutlet="datetime">{{ datetime }}</ng-container>
             </span>
           }
         </div>
         <ng-content select="nz-comment-content" />
         @if (actions?.length) {
-          <ul class="ant-comment-actions">
+          <ul class="tri-comment-actions">
             @for (action of actions; track action) {
               <li>
-                <span><ng-template [nzCommentActionHost]="action.content" /></span>
+                <span><ng-template [commentActionHost]="action.content" /></span>
               </li>
             }
           </ul>
         }
       </div>
     </div>
-    <div class="ant-comment-nested">
+    <div class="tri-comment-nested">
       <ng-content />
     </div>
   `,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[class.ant-comment]': `true`,
-    '[class.ant-comment-rtl]': `dir === "rtl"`
+    '[class.tri-comment]': `true`,
+    '[class.tri-comment-rtl]': `dir === "rtl"`
   },
-  imports: [NzOutletModule, NzCommentActionHostDirective]
+  imports: [TriOutletModule, TriCommentActionHostDirective]
 })
-export class NzCommentComponent implements OnInit {
+export class TriCommentComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
   private cdr = inject(ChangeDetectorRef);
   private directionality = inject(Directionality);
 
-  @Input() nzAuthor?: string | TemplateRef<void>;
-  @Input() nzDatetime?: string | TemplateRef<void>;
+  @Input() author?: string | TemplateRef<void>;
+  @Input() datetime?: string | TemplateRef<void>;
   dir: Direction = 'ltr';
 
   @ContentChildren(CommentAction) actions!: QueryList<CommentAction>;

@@ -1,36 +1,36 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzCheckboxModule, NzCheckboxOption } from 'ng-zorro-antd/checkbox';
-import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { TriCheckboxModule, TriCheckboxOption } from 'ng-zorro-antd/checkbox';
+import { TriDividerModule } from 'ng-zorro-antd/divider';
 
 @Component({
-  selector: 'nz-demo-checkbox-check-all',
-  imports: [FormsModule, NzCheckboxModule, NzDividerModule],
+  selector: '',
+  imports: [FormsModule, TriCheckboxModule, TriDividerModule],
   template: `
     <label
-      nz-checkbox
+      tri-checkbox
       [(ngModel)]="allChecked"
       (ngModelChange)="updateAllChecked()"
-      [nzIndeterminate]="value.length > 0 && value.length !== options.length"
+      [indeterminate]="value.length > 0 && value.length !== options.length"
     >
       Check all
     </label>
 
-    <nz-divider />
+    <tri-divider />
 
-    <nz-checkbox-group
-      [nzOptions]="options"
+    <tri-checkbox-group
+      [options]="options"
       [(ngModel)]="value"
       (ngModelChange)="updateSingleChecked()"
-    ></nz-checkbox-group>
+    ></tri-checkbox-group>
   `
 })
-export class NzDemoCheckboxCheckAllComponent {
+export class TriDemoCheckboxCheckAllComponent {
   isAllCheckedFirstChange = true;
   allChecked = false;
   value: Array<string | number> = ['Apple', 'Orange'];
-  options: NzCheckboxOption[] = [
+  options: TriCheckboxOption[] = [
     { label: 'Apple', value: 'Apple' },
     { label: 'Pear', value: 'Pear' },
     { label: 'Orange', value: 'Orange' }

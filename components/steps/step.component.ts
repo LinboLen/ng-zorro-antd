@@ -22,123 +22,123 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NgClassType, NzSizeDSType } from 'ng-zorro-antd/core/types';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { NgClassType, TriSizeDSType } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzProgressFormatter, NzProgressModule } from 'ng-zorro-antd/progress';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriProgressFormatter, TriProgressModule } from 'ng-zorro-antd/progress';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-step',
-  exportAs: 'nzStep',
+  selector: '',
+  exportAs: 'triStep',
   template: `
     <div
       #itemContainer
-      class="ant-steps-item-container"
-      [attr.role]="clickable && !nzDisabled ? 'button' : null"
-      [tabindex]="clickable && !nzDisabled ? 0 : null"
+      class="tri-steps-item-container"
+      [attr.role]="clickable && !disabled ? 'button' : null"
+      [tabindex]="clickable && !disabled ? 0 : null"
     >
       @if (!last) {
-        <div class="ant-steps-item-tail"></div>
+        <div class="tri-steps-item-tail"></div>
       }
-      <div class="ant-steps-item-icon">
+      <div class="tri-steps-item-icon">
         @if (!showProcessDot) {
           @if (showProgress) {
-            <div class="ant-steps-progress-icon">
-              <nz-progress
-                [nzPercent]="nzPercentage"
-                nzType="circle"
-                [nzWidth]="nzSize === 'small' ? 32 : 40"
-                [nzFormat]="nullProcessFormat"
-                [nzStrokeWidth]="4"
-              ></nz-progress>
+            <div class="tri-steps-progress-icon">
+              <tri-progress
+                [percent]="percentage"
+                type="circle"
+                [width]="size === 'small' ? 32 : 40"
+                [format]="nullProcessFormat"
+                [strokeWidth]="4"
+              ></tri-progress>
             </div>
           }
-          @if (nzStatus === 'finish' && !nzIcon) {
-            <span class="ant-steps-icon"><nz-icon nzType="check" /></span>
+          @if (status === 'finish' && !icon) {
+            <span class="tri-steps-icon"><tri-icon type="check" /></span>
           }
-          @if (nzStatus === 'error') {
-            <span class="ant-steps-icon"><nz-icon nzType="close" /></span>
+          @if (status === 'error') {
+            <span class="tri-steps-icon"><tri-icon type="close" /></span>
           }
-          @if ((nzStatus === 'process' || nzStatus === 'wait') && !nzIcon) {
-            <span class="ant-steps-icon">
+          @if ((status === 'process' || status === 'wait') && !icon) {
+            <span class="tri-steps-icon">
               {{ index + 1 }}
             </span>
           }
-          @if (nzIcon) {
-            <span class="ant-steps-icon">
-              <ng-container *nzStringTemplateOutlet="nzIcon; let icon">
-                <nz-icon [nzType]="icon" />
+          @if (icon) {
+            <span class="tri-steps-icon">
+              <ng-container *stringTemplateOutlet="icon; let icon">
+                <tri-icon [type]="icon" />
               </ng-container>
             </span>
           }
         }
         @if (showProcessDot) {
-          <span class="ant-steps-icon">
+          <span class="tri-steps-icon">
             <ng-template #processDotTemplate>
-              <span class="ant-steps-icon-dot"></span>
+              <span class="tri-steps-icon-dot"></span>
             </ng-template>
             <ng-template
               [ngTemplateOutlet]="customProcessTemplate || processDotTemplate"
               [ngTemplateOutletContext]="{
                 $implicit: processDotTemplate,
-                status: nzStatus,
+                status: status,
                 index: index
               }"
             ></ng-template>
           </span>
         }
       </div>
-      <div class="ant-steps-item-content">
-        <div class="ant-steps-item-title">
-          <ng-container *nzStringTemplateOutlet="nzTitle">{{ nzTitle }}</ng-container>
-          @if (nzSubtitle) {
-            <div class="ant-steps-item-subtitle">
-              <ng-container *nzStringTemplateOutlet="nzSubtitle">{{ nzSubtitle }}</ng-container>
+      <div class="tri-steps-item-content">
+        <div class="tri-steps-item-title">
+          <ng-container *stringTemplateOutlet="title">{{ title }}</ng-container>
+          @if (subtitle) {
+            <div class="tri-steps-item-subtitle">
+              <ng-container *stringTemplateOutlet="subtitle">{{ subtitle }}</ng-container>
             </div>
           }
         </div>
-        <div class="ant-steps-item-description">
-          <ng-container *nzStringTemplateOutlet="nzDescription">{{ nzDescription }}</ng-container>
+        <div class="tri-steps-item-description">
+          <ng-container *stringTemplateOutlet="description">{{ description }}</ng-container>
         </div>
       </div>
     </div>
   `,
   host: {
-    class: 'ant-steps-item',
-    '[class.ant-steps-item-wait]': 'nzStatus === "wait"',
-    '[class.ant-steps-item-process]': 'nzStatus === "process"',
-    '[class.ant-steps-item-finish]': 'nzStatus === "finish"',
-    '[class.ant-steps-item-error]': 'nzStatus === "error"',
-    '[class.ant-steps-item-active]': 'currentIndex === index',
-    '[class.ant-steps-item-disabled]': 'nzDisabled',
-    '[class.ant-steps-item-custom]': '!!nzIcon',
-    '[class.ant-steps-next-error]': '(outStatus === "error") && (currentIndex === index + 1)'
+    class: 'tri-steps-item',
+    '[class.tri-steps-item-wait]': 'status === "wait"',
+    '[class.tri-steps-item-process]': 'status === "process"',
+    '[class.tri-steps-item-finish]': 'status === "finish"',
+    '[class.tri-steps-item-error]': 'status === "error"',
+    '[class.tri-steps-item-active]': 'currentIndex === index',
+    '[class.tri-steps-item-disabled]': 'disabled',
+    '[class.tri-steps-item-custom]': '!!icon',
+    '[class.tri-steps-next-error]': '(outStatus === "error") && (currentIndex === index + 1)'
   },
-  imports: [NzProgressModule, NzIconModule, NzOutletModule, NgTemplateOutlet]
+  imports: [TriProgressModule, TriIconModule, TriOutletModule, NgTemplateOutlet]
 })
-export class NzStepComponent implements OnInit {
+export class TriStepComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
 
   @ViewChild('processDotTemplate', { static: false }) processDotTemplate?: TemplateRef<void>;
   @ViewChild('itemContainer', { static: true }) itemContainer!: ElementRef<HTMLElement>;
 
-  @Input() nzTitle?: string | TemplateRef<void>;
-  @Input() nzSubtitle?: string | TemplateRef<void>;
-  @Input() nzDescription?: string | TemplateRef<void>;
-  @Input({ transform: booleanAttribute }) nzDisabled = false;
-  @Input() nzPercentage: number | null = null;
-  @Input() nzSize: NzSizeDSType = 'default';
+  @Input() title?: string | TemplateRef<void>;
+  @Input() subtitle?: string | TemplateRef<void>;
+  @Input() description?: string | TemplateRef<void>;
+  @Input({ transform: booleanAttribute }) disabled = false;
+  @Input() percentage: number | null = null;
+  @Input() size: TriSizeDSType = 'default';
 
   @Input()
-  get nzStatus(): string {
+  get status(): string {
     return this._status;
   }
 
-  set nzStatus(status: string) {
+  set status(status: string) {
     this._status = status;
     this.isCustomStatus = true;
   }
@@ -147,11 +147,11 @@ export class NzStepComponent implements OnInit {
   private _status = 'wait';
 
   @Input()
-  get nzIcon(): NgClassType | TemplateRef<void> | undefined {
+  get icon(): NgClassType | TemplateRef<void> | undefined {
     return this._icon;
   }
 
-  set nzIcon(value: NgClassType | TemplateRef<void> | undefined) {
+  set icon(value: NgClassType | TemplateRef<void> | undefined) {
     if (!(value instanceof TemplateRef)) {
       this.oldAPIIcon = typeof value === 'string' && value.indexOf('anticon') > -1;
     }
@@ -171,15 +171,15 @@ export class NzStepComponent implements OnInit {
 
   clickOutsideAngular$ = new Subject<number>();
 
-  readonly nullProcessFormat: NzProgressFormatter = () => null;
+  readonly nullProcessFormat: TriProgressFormatter = () => null;
 
   get showProgress(): boolean {
     return (
-      this.nzPercentage !== null &&
-      !this.nzIcon &&
-      this.nzStatus === 'process' &&
-      this.nzPercentage >= 0 &&
-      this.nzPercentage <= 100
+      this.percentage !== null &&
+      !this.icon &&
+      this.status === 'process' &&
+      this.percentage >= 0 &&
+      this.percentage <= 100
     );
   }
 
@@ -199,7 +199,7 @@ export class NzStepComponent implements OnInit {
   ngOnInit(): void {
     fromEventOutsideAngular(this.itemContainer.nativeElement, 'click')
       .pipe(
-        filter(() => this.clickable && this.currentIndex !== this.index && !this.nzDisabled),
+        filter(() => this.clickable && this.currentIndex !== this.index && !this.disabled),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(() => {
@@ -208,12 +208,12 @@ export class NzStepComponent implements OnInit {
   }
 
   enable(): void {
-    this.nzDisabled = false;
+    this.disabled = false;
     this.cdr.markForCheck();
   }
 
   disable(): void {
-    this.nzDisabled = true;
+    this.disabled = true;
     this.cdr.markForCheck();
   }
 

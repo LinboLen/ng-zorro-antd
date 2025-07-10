@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 
-import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
+import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
 
 @Component({
-  selector: 'nz-demo-segmented-disabled',
-  imports: [NzSegmentedModule],
+  selector: '',
+  imports: [TriSegmentedModule],
   template: `
-    <nz-segmented [nzOptions]="['Map', 'Transit', 'Satellite']" nzDisabled></nz-segmented>
+    <tri-segmented [options]="['Map', 'Transit', 'Satellite']" disabled></tri-segmented>
     <br />
-    <nz-segmented [nzOptions]="options"></nz-segmented>
+    <tri-segmented [options]="options"></tri-segmented>
   `,
   styles: [
     `
@@ -18,7 +18,7 @@ import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
     `
   ]
 })
-export class NzDemoSegmentedDisabledComponent {
+export class TriDemoSegmentedDisabledComponent {
   options = [
     'Daily',
     { label: 'Weekly', value: 'Weekly', disabled: true },

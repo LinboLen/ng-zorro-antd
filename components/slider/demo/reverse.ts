@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzMarks, NzSliderModule } from 'ng-zorro-antd/slider';
+import { TriMarks, TriSliderModule } from 'ng-zorro-antd/slider';
 
 @Component({
-  selector: 'nz-demo-slider-reverse',
-  imports: [FormsModule, NzSliderModule],
+  selector: '',
+  imports: [FormsModule, TriSliderModule],
   template: `
-    <nz-slider [ngModel]="30" [nzReverse]="reverse"></nz-slider>
-    <nz-slider nzRange [ngModel]="[20, 50]" [nzReverse]="reverse"></nz-slider>
-    <nz-slider [nzMarks]="marks" [ngModel]="30" [nzReverse]="reverse"></nz-slider>
+    <tri-slider [ngModel]="30" [reverse]="reverse"></tri-slider>
+    <tri-slider range [ngModel]="[20, 50]" [reverse]="reverse"></tri-slider>
+    <tri-slider [marks]="marks" [ngModel]="30" [reverse]="reverse"></tri-slider>
     Reversed:
-    <nz-switch nzSize="small" [(ngModel)]="reverse"></nz-switch>
+    <tri-switch size="small" [(ngModel)]="reverse"></tri-switch>
   `,
   styles: [
     `
@@ -21,10 +21,10 @@ import { NzMarks, NzSliderModule } from 'ng-zorro-antd/slider';
     `
   ]
 })
-export class NzDemoSliderReverseComponent {
+export class TriDemoSliderReverseComponent {
   reverse = true;
 
-  marks: NzMarks = {
+  marks: TriMarks = {
     0: '0°C',
     26: '26°C',
     37: '37°C',

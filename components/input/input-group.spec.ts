@@ -9,14 +9,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { dispatchFakeEvent } from 'ng-zorro-antd/core/testing';
-import { NzSizeLDSType, NzStatus } from 'ng-zorro-antd/core/types';
-import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriSizeLDSType, TriStatus } from 'ng-zorro-antd/core/types';
+import { TriGridModule } from 'ng-zorro-antd/grid';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
-import { NzFormControlStatusType, NzFormModule } from '../form';
-import { NzInputGroupComponent } from './input-group.component';
-import { NzInputModule } from './input.module';
+import { TriFormControlStatusType, TriFormModule } from '../form';
+import { TriInputGroupComponent } from './input-group.component';
+import { TriInputModule } from './input.module';
 
 describe('input-group', () => {
   beforeEach(waitForAsync(() => {
@@ -27,15 +27,15 @@ describe('input-group', () => {
 
   describe('input group', () => {
     describe('addon', () => {
-      let testComponent: NzTestInputGroupAddonComponent;
-      let fixture: ComponentFixture<NzTestInputGroupAddonComponent>;
+      let testComponent: TriTestInputGroupAddonComponent;
+      let fixture: ComponentFixture<TriTestInputGroupAddonComponent>;
       let inputGroupElement: HTMLElement;
 
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestInputGroupAddonComponent);
+        fixture = TestBed.createComponent(TriTestInputGroupAddonComponent);
         testComponent = fixture.debugElement.componentInstance;
         fixture.detectChanges();
-        inputGroupElement = fixture.debugElement.query(By.directive(NzInputGroupComponent)).nativeElement;
+        inputGroupElement = fixture.debugElement.query(By.directive(TriInputGroupComponent)).nativeElement;
       });
 
       it('should not show addon without before and after content', () => {
@@ -95,15 +95,15 @@ describe('input-group', () => {
     });
 
     describe('affix', () => {
-      let fixture: ComponentFixture<NzTestInputGroupAffixComponent>;
-      let testComponent: NzTestInputGroupAffixComponent;
+      let fixture: ComponentFixture<TriTestInputGroupAffixComponent>;
+      let testComponent: TriTestInputGroupAffixComponent;
       let inputGroupElement: HTMLElement;
 
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestInputGroupAffixComponent);
+        fixture = TestBed.createComponent(TriTestInputGroupAffixComponent);
         testComponent = fixture.debugElement.componentInstance;
         fixture.detectChanges();
-        inputGroupElement = fixture.debugElement.query(By.directive(NzInputGroupComponent)).nativeElement;
+        inputGroupElement = fixture.debugElement.query(By.directive(TriInputGroupComponent)).nativeElement;
       });
 
       it('should not show addon without before and after content', () => {
@@ -178,14 +178,14 @@ describe('input-group', () => {
     });
 
     describe('multiple', () => {
-      let fixture: ComponentFixture<NzTestInputGroupMultipleComponent>;
-      let testComponent: NzTestInputGroupMultipleComponent;
+      let fixture: ComponentFixture<TriTestInputGroupMultipleComponent>;
+      let testComponent: TriTestInputGroupMultipleComponent;
       let inputGroupElement: HTMLElement;
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestInputGroupMultipleComponent);
+        fixture = TestBed.createComponent(TriTestInputGroupMultipleComponent);
         testComponent = fixture.debugElement.componentInstance;
         fixture.detectChanges();
-        inputGroupElement = fixture.debugElement.query(By.directive(NzInputGroupComponent)).nativeElement;
+        inputGroupElement = fixture.debugElement.query(By.directive(TriInputGroupComponent)).nativeElement;
       });
 
       it('should search work', () => {
@@ -221,13 +221,13 @@ describe('input-group', () => {
     });
 
     describe('mix', () => {
-      let fixture: ComponentFixture<NzTestInputGroupMixComponent>;
+      let fixture: ComponentFixture<TriTestInputGroupMixComponent>;
       let inputGroupElement: HTMLElement;
 
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestInputGroupMixComponent);
+        fixture = TestBed.createComponent(TriTestInputGroupMixComponent);
         fixture.detectChanges();
-        inputGroupElement = fixture.debugElement.query(By.directive(NzInputGroupComponent)).nativeElement;
+        inputGroupElement = fixture.debugElement.query(By.directive(TriInputGroupComponent)).nativeElement;
       });
 
       it('should mix work', () => {
@@ -238,13 +238,13 @@ describe('input-group', () => {
     });
 
     describe('status', () => {
-      let fixture: ComponentFixture<NzTestInputGroupWithStatusComponent>;
+      let fixture: ComponentFixture<TriTestInputGroupWithStatusComponent>;
       let inputElement: DebugElement;
 
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestInputGroupWithStatusComponent);
+        fixture = TestBed.createComponent(TriTestInputGroupWithStatusComponent);
         fixture.detectChanges();
-        inputElement = fixture.debugElement.query(By.directive(NzInputGroupComponent));
+        inputElement = fixture.debugElement.query(By.directive(TriInputGroupComponent));
       });
 
       it('should className correct with prefix', () => {
@@ -264,7 +264,7 @@ describe('input-group', () => {
         fixture.componentInstance.isAddon = true;
         fixture.detectChanges();
         // re-query input element
-        inputElement = fixture.debugElement.query(By.directive(NzInputGroupComponent));
+        inputElement = fixture.debugElement.query(By.directive(TriInputGroupComponent));
         expect(inputElement.nativeElement.classList).toContain('ant-input-group-wrapper-status-error');
 
         fixture.componentInstance.status = 'warning';
@@ -278,12 +278,12 @@ describe('input-group', () => {
     });
 
     describe('in form', () => {
-      let fixture: ComponentFixture<NzTestInputGroupInFormComponent>;
+      let fixture: ComponentFixture<TriTestInputGroupInFormComponent>;
       let inputElement: DebugElement;
 
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestInputGroupInFormComponent);
-        inputElement = fixture.debugElement.query(By.directive(NzInputGroupComponent));
+        fixture = TestBed.createComponent(TriTestInputGroupInFormComponent);
+        inputElement = fixture.debugElement.query(By.directive(TriInputGroupComponent));
         fixture.detectChanges();
       });
 
@@ -318,120 +318,120 @@ describe('input-group', () => {
 });
 
 @Component({
-  imports: [NzInputModule],
+  imports: [TriInputModule],
   template: `
-    <nz-input-group [nzAddOnBefore]="beforeContent" [nzAddOnAfter]="afterContent" [nzSize]="size">
-      <input type="text" nz-input />
-    </nz-input-group>
+    <tri-input-group [addOnBefore]="beforeContent" [addOnAfter]="afterContent" [size]="size">
+      <input type="text" tri-input />
+    </tri-input-group>
     <ng-template #beforeTemplate>beforeTemplate</ng-template>
     <ng-template #afterTemplate>afterTemplate</ng-template>
   `
 })
-export class NzTestInputGroupAddonComponent {
+export class TriTestInputGroupAddonComponent {
   @ViewChild('beforeTemplate', { static: false }) beforeTemplate!: TemplateRef<void>;
   @ViewChild('afterTemplate', { static: false }) afterTemplate!: TemplateRef<void>;
   beforeContent?: string | TemplateRef<void>;
   afterContent?: string | TemplateRef<void>;
-  size: NzSizeLDSType = 'default';
+  size: TriSizeLDSType = 'default';
 }
 
 @Component({
-  imports: [NzInputModule],
+  imports: [TriInputModule],
   template: `
-    <nz-input-group [nzPrefix]="beforeContent" [nzSuffix]="afterContent" [nzSize]="size">
-      <input type="text" nz-input [disabled]="disabled" />
-    </nz-input-group>
+    <tri-input-group [prefix]="beforeContent" [suffix]="afterContent" [size]="size">
+      <input type="text" tri-input [disabled]="disabled" />
+    </tri-input-group>
     <ng-template #beforeTemplate>beforeTemplate</ng-template>
     <ng-template #afterTemplate>afterTemplate</ng-template>
   `
 })
-export class NzTestInputGroupAffixComponent {
+export class TriTestInputGroupAffixComponent {
   @ViewChild('beforeTemplate', { static: false }) beforeTemplate!: TemplateRef<void>;
   @ViewChild('afterTemplate', { static: false }) afterTemplate!: TemplateRef<void>;
   beforeContent?: string | TemplateRef<void>;
   afterContent?: string | TemplateRef<void>;
-  size: NzSizeLDSType = 'default';
+  size: TriSizeLDSType = 'default';
   disabled = false;
 }
 
 @Component({
-  imports: [NzInputModule],
+  imports: [TriInputModule],
   template: `
-    <nz-input-group [nzSearch]="search" [nzSize]="size">
-      <input type="text" nz-input />
-      <input type="text" nz-input />
-    </nz-input-group>
+    <tri-input-group [search]="search" [size]="size">
+      <input type="text" tri-input />
+      <input type="text" tri-input />
+    </tri-input-group>
   `
 })
-export class NzTestInputGroupMultipleComponent {
+export class TriTestInputGroupMultipleComponent {
   search = false;
-  size: NzSizeLDSType = 'default';
+  size: TriSizeLDSType = 'default';
 }
 
 /** https://github.com/NG-ZORRO/ng-zorro-antd/issues/1795 **/
 @Component({
-  imports: [NzInputModule],
+  imports: [TriInputModule],
   template: `
-    <nz-input-group nzPrefixIcon="user" nzAddOnAfter="@example.com">
-      <input type="text" nz-input placeholder="邮箱地址" />
-    </nz-input-group>
+    <tri-input-group prefixIcon="user" addOnAfter="@example.com">
+      <input type="text" tri-input placeholder="邮箱地址" />
+    </tri-input-group>
   `
 })
-export class NzTestInputGroupMixComponent {}
+export class TriTestInputGroupMixComponent {}
 
 @Component({
-  imports: [FormsModule, NzGridModule, NzInputModule],
+  imports: [FormsModule, TriGridModule, TriInputModule],
   template: `
-    <nz-input-group>
-      <div nz-col nzSpan="4">
-        <input type="text" nz-input [ngModel]="'0571'" />
+    <tri-input-group>
+      <div tri-col span="4">
+        <input type="text" tri-input [ngModel]="'0571'" />
       </div>
-      <div nz-col nzSpan="8">
-        <input type="text" nz-input [ngModel]="'26888888'" />
+      <div tri-col span="8">
+        <input type="text" tri-input [ngModel]="'26888888'" />
       </div>
-    </nz-input-group>
+    </tri-input-group>
   `
 })
-export class NzTestInputGroupColComponent {}
+export class TriTestInputGroupColComponent {}
 
 @Component({
-  imports: [NzInputModule, NzIconModule],
+  imports: [TriInputModule, TriIconModule],
   template: `
     @if (!isAddon) {
-      <nz-input-group [nzPrefix]="prefixTemplateClock" [nzStatus]="status">
-        <input type="text" nz-input />
-      </nz-input-group>
+      <tri-input-group [prefix]="prefixTemplateClock" [status]="status">
+        <input type="text" tri-input />
+      </tri-input-group>
       <ng-template #prefixTemplateClock>
-        <nz-icon nzType="clock-circle" nzTheme="outline" />
+        <tri-icon type="clock-circle" theme="outline" />
       </ng-template>
     } @else {
-      <nz-input-group nzAddOnAfterIcon="setting" [nzStatus]="status">
-        <input type="text" nz-input />
-      </nz-input-group>
+      <tri-input-group addOnAfterIcon="setting" [status]="status">
+        <input type="text" tri-input />
+      </tri-input-group>
     }
   `
 })
-export class NzTestInputGroupWithStatusComponent {
+export class TriTestInputGroupWithStatusComponent {
   isAddon = false;
-  status: NzStatus = 'error';
+  status: TriStatus = 'error';
 }
 
 @Component({
-  imports: [ReactiveFormsModule, NzFormModule, NzInputModule],
+  imports: [ReactiveFormsModule, TriFormModule, TriInputModule],
   template: `
-    <form nz-form>
-      <nz-form-item>
-        <nz-form-control [nzHasFeedback]="feedback" [nzValidateStatus]="status">
-          <nz-input-group [nzAddOnBefore]="addon">
-            <input type="text" nz-input />
-          </nz-input-group>
-        </nz-form-control>
-      </nz-form-item>
+    <form tri-form>
+      <tri-form-item>
+        <tri-form-control [hasFeedback]="feedback" [validateStatus]="status">
+          <tri-input-group [addOnBefore]="addon">
+            <input type="text" tri-input />
+          </tri-input-group>
+        </tri-form-control>
+      </tri-form-item>
     </form>
   `
 })
-export class NzTestInputGroupInFormComponent {
-  status: NzFormControlStatusType = 'error';
+export class TriTestInputGroupInFormComponent {
+  status: TriFormControlStatusType = 'error';
   feedback = true;
   addon: string = '';
 }

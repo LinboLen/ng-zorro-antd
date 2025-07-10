@@ -6,9 +6,9 @@
 import { Directive, inject, TemplateRef } from '@angular/core';
 
 @Directive({
-  selector: '[nzModalContent]',
-  exportAs: 'nzModalContent'
+  selector: '',
+  exportAs: 'triModalContent'
 })
-export class NzModalContentDirective {
+export class TriModalContentDirective {
   public readonly templateRef: TemplateRef<{}> = inject(TemplateRef);
 }

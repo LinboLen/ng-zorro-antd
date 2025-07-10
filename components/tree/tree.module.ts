@@ -5,25 +5,25 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzTreeDropIndicatorComponent } from './tree-drop-indicator.component';
-import { NzTreeIndentComponent } from './tree-indent.component';
-import { NzTreeNodeBuiltinCheckboxComponent } from './tree-node-checkbox.component';
-import { NzTreeNodeSwitcherComponent } from './tree-node-switcher.component';
-import { NzTreeNodeTitleComponent } from './tree-node-title.component';
-import { NzTreeNodeBuiltinComponent } from './tree-node.component';
-import { NzTreeComponent } from './tree.component';
+import { TriTreeDropIndicatorComponent } from './tree-drop-indicator.component';
+import { TriTreeIndentComponent } from './tree-indent.component';
+import { TriTreeNodeBuiltinCheckboxComponent } from './tree-node-checkbox.component';
+import { TriTreeNodeSwitcherComponent } from './tree-node-switcher.component';
+import { TriTreeNodeTitleComponent } from './tree-node-title.component';
+import { TriTreeNodeBuiltinComponent } from './tree-node.component';
+import { TriTreeComponent } from './tree.component';
 
 @NgModule({
   imports: [
-    NzTreeComponent,
-    NzTreeNodeBuiltinComponent,
-    NzTreeIndentComponent,
-    NzTreeNodeSwitcherComponent,
-    NzTreeNodeBuiltinCheckboxComponent,
-    NzTreeNodeTitleComponent,
-    NzTreeDropIndicatorComponent
+    TriTreeComponent,
+    TriTreeNodeBuiltinComponent,
+    TriTreeIndentComponent,
+    TriTreeNodeSwitcherComponent,
+    TriTreeNodeBuiltinCheckboxComponent,
+    TriTreeNodeTitleComponent,
+    TriTreeDropIndicatorComponent
   ],
 
-  exports: [NzTreeComponent, NzTreeNodeBuiltinComponent, NzTreeIndentComponent]
+  exports: [TriTreeComponent, TriTreeNodeBuiltinComponent, TriTreeIndentComponent]
 })
-export class NzTreeModule {}
+export class TriTreeModule {}

@@ -5,24 +5,24 @@
 
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 @Component({
-  selector: 'nz-table-title-footer',
+  selector: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
-    <ng-container *nzStringTemplateOutlet="title">{{ title }}</ng-container>
-    <ng-container *nzStringTemplateOutlet="footer">{{ footer }}</ng-container>
+    <ng-container *stringTemplateOutlet="title">{{ title }}</ng-container>
+    <ng-container *stringTemplateOutlet="footer">{{ footer }}</ng-container>
   `,
   host: {
-    '[class.ant-table-title]': `title !== null`,
-    '[class.ant-table-footer]': `footer !== null`
+    '[class.tri-table-title]': `title !== null`,
+    '[class.tri-table-footer]': `footer !== null`
   },
-  imports: [NzOutletModule]
+  imports: [TriOutletModule]
 })
-export class NzTableTitleFooterComponent {
-  @Input() title: string | TemplateRef<NzSafeAny> | null = null;
-  @Input() footer: string | TemplateRef<NzSafeAny> | null = null;
+export class TriTableTitleFooterComponent {
+  @Input() title: string | TemplateRef<TriSafeAny> | null = null;
+  @Input() footer: string | TemplateRef<TriSafeAny> | null = null;
 }

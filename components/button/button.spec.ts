@@ -8,10 +8,10 @@ import { ApplicationRef, Component, Input, OnInit, ViewChild } from '@angular/co
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
-import { NzButtonComponent, NzButtonModule, NzButtonShape, NzButtonSize, NzButtonType } from './index';
+import { TriButtonComponent, TriButtonModule, TriButtonShape, TriButtonSize, TriButtonType } from './index';
 
 describe('button', () => {
   beforeEach(() => {
@@ -28,7 +28,7 @@ describe('button', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(TestButtonComponent);
       component = fixture.componentInstance;
-      buttonElement = fixture.debugElement.query(By.directive(NzButtonComponent)).nativeElement;
+      buttonElement = fixture.debugElement.query(By.directive(TriButtonComponent)).nativeElement;
     });
 
     it('should apply classname', () => {
@@ -37,74 +37,74 @@ describe('button', () => {
 
     it('should apply classname based on nzDanger', () => {
       expect(buttonElement.classList).not.toContain('ant-btn-dangerous');
-      component.nzDanger = true;
+      component.danger = true;
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-dangerous');
     });
 
     it('should apply classname based on nzGhost', () => {
       expect(buttonElement.classList).not.toContain('ant-btn-background-ghost');
-      component.nzGhost = true;
+      component.ghost = true;
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-background-ghost');
     });
 
     it('should apply classname based on nzSearch', () => {
       expect(buttonElement.classList).not.toContain('ant-input-search-button');
-      component.nzSearch = true;
+      component.search = true;
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-input-search-button');
     });
 
     it('should apply classname based on nzLoading', () => {
       expect(buttonElement.classList).not.toContain('ant-btn-loading');
-      component.nzLoading = true;
+      component.loading = true;
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-loading');
     });
 
     it('should apply classname based on nzBlock', () => {
       expect(buttonElement.classList).not.toContain('ant-btn-block');
-      component.nzBlock = true;
+      component.block = true;
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-block');
     });
 
     it('should apply classname based on nzType', () => {
-      component.nzType = 'default';
+      component.type = 'default';
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-default');
-      component.nzType = 'primary';
+      component.type = 'primary';
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-primary');
-      component.nzType = 'link';
+      component.type = 'link';
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-link');
-      component.nzType = 'dashed';
+      component.type = 'dashed';
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-dashed');
-      component.nzType = null;
+      component.type = null;
       fixture.detectChanges();
       expect(buttonElement.className).toBe('ant-btn');
     });
 
     it('should apply classname based on nzShape', () => {
-      component.nzShape = 'round';
+      component.shape = 'round';
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-round');
-      component.nzShape = 'circle';
+      component.shape = 'circle';
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-circle');
     });
 
     it('should apply classname based on nzSize', () => {
-      component.nzSize = 'large';
+      component.size = 'large';
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-lg');
-      component.nzSize = 'small';
+      component.size = 'small';
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-sm');
-      component.nzSize = 'default';
+      component.size = 'default';
       fixture.detectChanges();
       expect(buttonElement.className).toBe('ant-btn');
     });
@@ -119,7 +119,7 @@ describe('button', () => {
 
     it('should hide icon when loading correct', fakeAsync(() => {
       fixture.detectChanges();
-      const buttonElement = fixture.debugElement.query(By.directive(NzButtonComponent)).nativeElement;
+      const buttonElement = fixture.debugElement.query(By.directive(TriButtonComponent)).nativeElement;
       expect(buttonElement.classList.contains('ant-btn-loading')).toBe(false);
       expect(buttonElement.classList).not.toContain('ant-btn-icon-only');
       expect(buttonElement.firstElementChild.querySelector('svg')).not.toBe(null);
@@ -146,7 +146,7 @@ describe('button', () => {
     });
 
     it('should insert span correctly', fakeAsync(() => {
-      const buttonElement = fixture.debugElement.query(By.directive(NzButtonComponent)).nativeElement;
+      const buttonElement = fixture.debugElement.query(By.directive(TriButtonComponent)).nativeElement;
       fixture.detectChanges();
       expect(buttonElement.firstElementChild.tagName).toBe('SPAN');
       tick(5000);
@@ -158,35 +158,35 @@ describe('button', () => {
   describe('icon only', () => {
     it('should icon only works correctly', fakeAsync(() => {
       const fixture = TestBed.createComponent(TestButtonIconOnlyComponent);
-      const buttonElement = fixture.debugElement.query(By.directive(NzButtonComponent)).nativeElement;
+      const buttonElement = fixture.debugElement.query(By.directive(TriButtonComponent)).nativeElement;
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-icon-only');
     }));
 
     it('should icon only works correctly with any tag', fakeAsync(() => {
       const fixture = TestBed.createComponent(TestButtonIconOnlyWithAnyTagComponent);
-      const buttonElement = fixture.debugElement.query(By.directive(NzButtonComponent)).nativeElement;
+      const buttonElement = fixture.debugElement.query(By.directive(TriButtonComponent)).nativeElement;
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-icon-only');
     }));
 
     it('should icon only works correctly with any comments', fakeAsync(() => {
       const fixture = TestBed.createComponent(TestButtonIconOnlyWithCommentComponent);
-      const buttonElement = fixture.debugElement.query(By.directive(NzButtonComponent)).nativeElement;
+      const buttonElement = fixture.debugElement.query(By.directive(TriButtonComponent)).nativeElement;
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-icon-only');
     }));
 
     it('should icon only works correctly with any text', fakeAsync(() => {
       const fixture = TestBed.createComponent(TestButtonIconOnlyWithTextComponent);
-      const buttonElement = fixture.debugElement.query(By.directive(NzButtonComponent)).nativeElement;
+      const buttonElement = fixture.debugElement.query(By.directive(TriButtonComponent)).nativeElement;
       fixture.detectChanges();
       expect(buttonElement.classList).not.toContain('ant-btn-icon-only');
     }));
 
     it('should icon only works correctly without nz-icon', fakeAsync(() => {
       const fixture = TestBed.createComponent(TestButtonIconOnlyWithoutIconComponent);
-      const buttonElement = fixture.debugElement.query(By.directive(NzButtonComponent)).nativeElement;
+      const buttonElement = fixture.debugElement.query(By.directive(TriButtonComponent)).nativeElement;
       fixture.detectChanges();
       expect(buttonElement.classList).not.toContain('ant-btn-icon-only');
     }));
@@ -194,7 +194,7 @@ describe('button', () => {
     it('should icon only loading works correctly', () => {
       const fixture = TestBed.createComponent(TestButtonIconOnlyLoadingComponent);
       fixture.detectChanges();
-      const buttonElement = fixture.debugElement.query(By.directive(NzButtonComponent)).nativeElement;
+      const buttonElement = fixture.debugElement.query(By.directive(TriButtonComponent)).nativeElement;
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-icon-only');
     });
@@ -206,7 +206,7 @@ describe('button', () => {
 
     beforeEach(() => {
       fixture = TestBed.createComponent(TestButtonRtlComponent);
-      buttonElement = fixture.debugElement.query(By.directive(NzButtonComponent)).nativeElement;
+      buttonElement = fixture.debugElement.query(By.directive(TriButtonComponent)).nativeElement;
     });
 
     it('should apply classname', () => {
@@ -226,7 +226,7 @@ describe('button', () => {
 
     beforeEach(() => {
       fixture = TestBed.createComponent(TestButtonComponent);
-      buttonElement = fixture.debugElement.query(By.directive(NzButtonComponent)).nativeElement;
+      buttonElement = fixture.debugElement.query(By.directive(TriButtonComponent)).nativeElement;
       component = fixture.componentInstance;
     });
 
@@ -240,7 +240,7 @@ describe('button', () => {
     });
 
     it('prevent default and stop propagation when the button state is loading', fakeAsync(() => {
-      component.nzLoading = true;
+      component.loading = true;
       fixture.detectChanges();
       const event = new MouseEvent('click');
       const preventDefaultSpy = spyOn(event, 'preventDefault').and.callThrough();
@@ -252,11 +252,11 @@ describe('button', () => {
   });
 
   describe('basic', () => {
-    let fixture: ComponentFixture<NzButtonComponent>;
-    let component: NzButtonComponent;
+    let fixture: ComponentFixture<TriButtonComponent>;
+    let component: TriButtonComponent;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzButtonComponent);
+      fixture = TestBed.createComponent(TriButtonComponent);
       component = fixture.componentInstance;
     });
 
@@ -276,7 +276,7 @@ describe('anchor', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestAnchorComponent);
-    anchorElement = fixture.debugElement.query(By.directive(NzButtonComponent)).nativeElement;
+    anchorElement = fixture.debugElement.query(By.directive(TriButtonComponent)).nativeElement;
     component = fixture.componentInstance;
   });
 
@@ -293,40 +293,40 @@ describe('anchor', () => {
 });
 
 @Component({
-  imports: [NzButtonModule],
+  imports: [TriButtonModule],
   template: `
     <button
-      nz-button
-      [nzType]="nzType"
-      [nzGhost]="nzGhost"
-      [nzSearch]="nzSearch"
-      [nzLoading]="nzLoading"
-      [nzDanger]="nzDanger"
-      [nzShape]="nzShape"
-      [nzBlock]="nzBlock"
-      [nzSize]="nzSize"
+      tri-button
+      [type]="type"
+      [ghost]="ghost"
+      [search]="search"
+      [loading]="loading"
+      [danger]="danger"
+      [shape]="shape"
+      [block]="block"
+      [size]="size"
     >
       button
     </button>
   `
 })
 export class TestButtonComponent {
-  @Input() nzBlock: boolean = false;
-  @Input() nzGhost: boolean = false;
-  @Input() nzSearch: boolean = false;
-  @Input() nzLoading: boolean = false;
-  @Input() nzDanger: boolean = false;
-  @Input() nzType: NzButtonType = null;
-  @Input() nzShape: NzButtonShape = null;
-  @Input() nzSize: NzButtonSize = 'default';
+  @Input() block: boolean = false;
+  @Input() ghost: boolean = false;
+  @Input() search: boolean = false;
+  @Input() loading: boolean = false;
+  @Input() danger: boolean = false;
+  @Input() type: TriButtonType = null;
+  @Input() shape: TriButtonShape = null;
+  @Input() size: TriButtonSize = 'default';
 }
 
 // https://github.com/NG-ZORRO/ng-zorro-antd/issues/2191
 @Component({
-  imports: [NzIconModule, NzButtonModule],
+  imports: [TriIconModule, TriButtonModule],
   template: `
-    <button nz-button nzType="primary" (click)="load()" [nzLoading]="loading">
-      <nz-icon nzType="poweroff" />
+    <button tri-button type="primary" (click)="load()" [loading]="loading">
+      <tri-icon type="poweroff" />
       {{ 'Click me!' }}
     </button>
   `
@@ -341,11 +341,11 @@ export class TestButtonBindingComponent {
 
 // https://github.com/NG-ZORRO/ng-zorro-antd/issues/3079
 @Component({
-  imports: [NzIconModule, NzButtonModule],
+  imports: [TriIconModule, TriButtonModule],
   template: `
-    <button nz-button>
+    <button tri-button>
       {{ title }}
-      <nz-icon nzType="caret-down" />
+      <tri-icon type="caret-down" />
     </button>
   `
 })
@@ -357,30 +357,30 @@ export class TestButtonWithIconComponent implements OnInit {
 }
 
 @Component({
-  imports: [NzIconModule, NzButtonModule],
+  imports: [TriIconModule, TriButtonModule],
   template: `
-    <button nz-button>
-      <nz-icon nzType="caret-down" />
+    <button tri-button>
+      <tri-icon type="caret-down" />
     </button>
   `
 })
 export class TestButtonIconOnlyComponent {}
 
 @Component({
-  imports: [NzIconModule, NzButtonModule],
+  imports: [TriIconModule, TriButtonModule],
   template: `
-    <button nz-button>
-      <u nz-icon nzType="up"></u>
+    <button tri-button>
+      <u tri-icon type="up"></u>
     </button>
   `
 })
 export class TestButtonIconOnlyWithAnyTagComponent {}
 
 @Component({
-  imports: [NzIconModule, NzButtonModule],
+  imports: [TriIconModule, TriButtonModule],
   template: `
-    <button nz-button>
-      <i nz-icon nzType="down"></i>
+    <button tri-button>
+      <i tri-icon type="down"></i>
       <!-- comment -->
     </button>
   `
@@ -388,10 +388,10 @@ export class TestButtonIconOnlyWithAnyTagComponent {}
 export class TestButtonIconOnlyWithCommentComponent {}
 
 @Component({
-  imports: [NzIconModule, NzButtonModule],
+  imports: [TriIconModule, TriButtonModule],
   template: `
-    <button nz-button>
-      <i nz-icon nzType="down"></i>
+    <button tri-button>
+      <i tri-icon type="down"></i>
       text
     </button>
   `
@@ -399,9 +399,9 @@ export class TestButtonIconOnlyWithCommentComponent {}
 export class TestButtonIconOnlyWithTextComponent {}
 
 @Component({
-  imports: [NzButtonModule],
+  imports: [TriButtonModule],
   template: `
-    <button nz-button>
+    <button tri-button>
       <span>text</span>
     </button>
   `
@@ -409,29 +409,29 @@ export class TestButtonIconOnlyWithTextComponent {}
 export class TestButtonIconOnlyWithoutIconComponent {}
 
 @Component({
-  imports: [NzIconModule, NzButtonModule],
+  imports: [TriIconModule, TriButtonModule],
   template: `
-    <button nz-button nzLoading>
-      <nz-icon nzType="caret-down" />
+    <button tri-button loading>
+      <tri-icon type="caret-down" />
     </button>
   `
 })
 export class TestButtonIconOnlyLoadingComponent {}
 
 @Component({
-  imports: [BidiModule, NzButtonModule],
+  imports: [BidiModule, TriButtonModule],
   template: `
     <div [dir]="direction">
       <button
-        nz-button
-        [nzType]="nzType"
-        [nzGhost]="nzGhost"
-        [nzSearch]="nzSearch"
-        [nzLoading]="nzLoading"
-        [nzDanger]="nzDanger"
-        [nzShape]="nzShape"
-        [nzBlock]="nzBlock"
-        [nzSize]="nzSize"
+        tri-button
+        [type]="type"
+        [ghost]="ghost"
+        [search]="search"
+        [loading]="loading"
+        [danger]="danger"
+        [shape]="shape"
+        [block]="block"
+        [size]="size"
       >
         button
       </button>
@@ -444,8 +444,8 @@ export class TestButtonRtlComponent extends TestButtonComponent {
 }
 
 @Component({
-  imports: [NzButtonModule],
-  template: '<a nz-button [disabled]="disabled">anchor</a>'
+  imports: [TriButtonModule],
+  template: '<a tri-button [disabled]="disabled">anchor</a>'
 })
 export class TestAnchorComponent {
   disabled = false;

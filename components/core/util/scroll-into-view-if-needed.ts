@@ -3,10 +3,10 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 export function scrollIntoView(node: HTMLElement): void {
-  const nodeAsAny = node as NzSafeAny;
+  const nodeAsAny = node as TriSafeAny;
   if (nodeAsAny.scrollIntoViewIfNeeded) {
     nodeAsAny.scrollIntoViewIfNeeded(false);
     return;

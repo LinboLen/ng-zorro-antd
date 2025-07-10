@@ -18,7 +18,7 @@ import {
 
 import { CandyDate } from 'ng-zorro-antd/core/time';
 import { FunctionProp } from 'ng-zorro-antd/core/types';
-import { NzCalendarI18nInterface } from 'ng-zorro-antd/i18n';
+import { TriCalendarI18nInterface } from 'ng-zorro-antd/i18n';
 
 import { DateBodyRow, DateCell } from './interface';
 
@@ -31,7 +31,7 @@ export abstract class AbstractTable implements OnInit, OnChanges {
 
   @Input() prefixCls: string = 'ant-picker';
   @Input() value!: CandyDate;
-  @Input() locale!: NzCalendarI18nInterface;
+  @Input() locale!: TriCalendarI18nInterface;
   @Input() activeDate: CandyDate = new CandyDate();
   @Input({ transform: booleanAttribute }) showWeek: boolean = false;
   @Input() selectedValue: CandyDate[] = []; // Range ONLY

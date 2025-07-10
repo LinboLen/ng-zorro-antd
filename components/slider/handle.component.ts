@@ -19,54 +19,54 @@ import {
   inject
 } from '@angular/core';
 
-import { NgStyleInterface, NzTSType } from 'ng-zorro-antd/core/types';
+import { NgStyleInterface, TriTSType } from 'ng-zorro-antd/core/types';
 import { numberAttributeWithZeroFallback } from 'ng-zorro-antd/core/util';
-import { NzToolTipModule, NzTooltipDirective } from 'ng-zorro-antd/tooltip';
+import { TriToolTipModule, TriTooltipDirective } from 'ng-zorro-antd/tooltip';
 
-import { NzSliderShowTooltip } from './typings';
+import { TriSliderShowTooltip } from './typings';
 
 @Component({
-  selector: 'nz-slider-handle',
-  exportAs: 'nzSliderHandle',
+  selector: '',
+  exportAs: 'triSliderHandle',
   template: `
     <div
       #handle
-      class="ant-slider-handle"
+      class="tri-slider-handle"
       tabindex="0"
-      nz-tooltip
+      tri-tooltip
       [style]="style"
-      [nzTooltipTitle]="tooltipFormatter === null || tooltipVisible === 'never' ? null : tooltipTitle"
-      [nzTooltipTitleContext]="{ $implicit: value }"
-      [nzTooltipTrigger]="null"
-      [nzTooltipPlacement]="tooltipPlacement"
+      [tooltipTitle]="tooltipFormatter === null || tooltipVisible === 'never' ? null : tooltipTitle"
+      [tooltipTitleContext]="{ $implicit: value }"
+      [tooltipTrigger]="null"
+      [tooltipPlacement]="tooltipPlacement"
     ></div>
   `,
   host: {
     '(mouseenter)': 'enterHandle()',
     '(mouseleave)': 'leaveHandle()'
   },
-  imports: [NzToolTipModule],
+  imports: [TriToolTipModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class NzSliderHandleComponent implements OnChanges {
+export class TriSliderHandleComponent implements OnChanges {
   private cdr = inject(ChangeDetectorRef);
 
   @ViewChild('handle', { static: false }) handleEl?: ElementRef;
-  @ViewChild(NzTooltipDirective, { static: false }) tooltip?: NzTooltipDirective;
+  @ViewChild(TriTooltipDirective, { static: false }) tooltip?: TriTooltipDirective;
 
   @Input({ transform: booleanAttribute }) vertical?: boolean;
   @Input({ transform: booleanAttribute }) reverse?: boolean;
   @Input({ transform: numberAttributeWithZeroFallback }) offset?: number;
   @Input({ transform: numberAttributeWithZeroFallback }) value?: number;
-  @Input() tooltipVisible: NzSliderShowTooltip = 'default';
+  @Input() tooltipVisible: TriSliderShowTooltip = 'default';
   @Input() tooltipPlacement?: string;
   @Input() tooltipFormatter?: null | ((value: number) => string) | TemplateRef<void>;
   @Input({ transform: booleanAttribute }) active = false;
   @Input() dir: Direction = 'ltr';
   @Input() dragging?: boolean;
 
-  tooltipTitle?: NzTSType;
+  tooltipTitle?: TriTSType;
   style: NgStyleInterface = {};
 
   ngOnChanges(changes: SimpleChanges): void {

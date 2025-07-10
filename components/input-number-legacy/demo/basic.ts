@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzInputNumberLegacyModule } from 'ng-zorro-antd/input-number-legacy';
+import { TriInputNumberLegacyModule } from 'ng-zorro-antd/input-number-legacy';
 
 @Component({
-  selector: 'nz-demo-input-number-legacy-basic',
-  imports: [FormsModule, NzInputNumberLegacyModule],
-  template: `<nz-input-number [(ngModel)]="value" [nzMin]="1" [nzMax]="10" [nzStep]="1"></nz-input-number>`
+  selector: '',
+  imports: [FormsModule, TriInputNumberLegacyModule],
+  template: `<tri-input-number [(ngModel)]="value" [min]="1" [max]="10" [step]="1"></tri-input-number>`
 })
-export class NzDemoInputNumberLegacyBasicComponent {
+export class TriDemoInputNumberLegacyBasicComponent {
   value = 3;
 }

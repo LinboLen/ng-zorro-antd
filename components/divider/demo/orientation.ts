@@ -1,27 +1,27 @@
 import { Component } from '@angular/core';
 
-import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { TriDividerModule } from 'ng-zorro-antd/divider';
 
 @Component({
-  selector: 'nz-demo-divider-orientation',
-  imports: [NzDividerModule],
+  selector: '',
+  imports: [TriDividerModule],
   template: `
     <div>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae
         sunt a te dicta? Refert tamen, quo modo.
       </p>
-      <nz-divider nzText="Text"></nz-divider>
+      <tri-divider text="Text"></tri-divider>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae
         sunt a te dicta? Refert tamen, quo modo.
       </p>
-      <nz-divider nzText="Left Text" nzOrientation="left"></nz-divider>
+      <tri-divider text="Left Text" orientation="left"></tri-divider>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae
         sunt a te dicta? Refert tamen, quo modo.
       </p>
-      <nz-divider nzText="Right Text" nzOrientation="right"></nz-divider>
+      <tri-divider text="Right Text" orientation="right"></tri-divider>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae
         sunt a te dicta? Refert tamen, quo modo.
@@ -29,4 +29,4 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
     </div>
   `
 })
-export class NzDemoDividerOrientationComponent {}
+export class TriDemoDividerOrientationComponent {}

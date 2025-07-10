@@ -28,59 +28,59 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject } from 'rxjs';
 
-import { NzFormStatusService } from 'ng-zorro-antd/core/form';
-import { NzSafeAny, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
+import { TriFormStatusService } from 'ng-zorro-antd/core/form';
+import { TriSafeAny, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 
-import { NzCheckboxWrapperComponent } from './checkbox-wrapper.component';
+import { TriCheckboxWrapperComponent } from './checkbox-wrapper.component';
 import { NZ_CHECKBOX_GROUP } from './tokens';
 
 @Component({
-  selector: '[nz-checkbox]',
-  exportAs: 'nzCheckbox',
+  selector: '',
+  exportAs: 'triCheckbox',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
     <span
-      class="ant-checkbox"
-      [class.ant-checkbox-checked]="nzChecked && !nzIndeterminate"
-      [class.ant-checkbox-disabled]="nzDisabled || checkboxGroupComponent?.finalDisabled()"
-      [class.ant-checkbox-indeterminate]="nzIndeterminate"
+      class="tri-checkbox"
+      [class.tri-checkbox-checked]="checked && !indeterminate"
+      [class.tri-checkbox-disabled]="disabled || checkboxGroupComponent?.finalDisabled()"
+      [class.tri-checkbox-indeterminate]="indeterminate"
     >
       <input
         #inputElement
         type="checkbox"
-        class="ant-checkbox-input"
-        [attr.autofocus]="nzAutoFocus ? 'autofocus' : null"
-        [attr.id]="nzId"
-        [attr.name]="nzName || checkboxGroupComponent?.nzName()"
-        [checked]="nzChecked"
-        [ngModel]="nzChecked"
-        [disabled]="nzDisabled || (checkboxGroupComponent?.finalDisabled() ?? false)"
+        class="tri-checkbox-input"
+        [attr.autofocus]="autoFocus ? 'autofocus' : null"
+        [attr.id]="id"
+        [attr.name]="name || checkboxGroupComponent?.nzName()"
+        [checked]="checked"
+        [ngModel]="checked"
+        [disabled]="disabled || (checkboxGroupComponent?.finalDisabled() ?? false)"
         (ngModelChange)="innerCheckedChange($event)"
       />
-      <span class="ant-checkbox-inner"></span>
+      <span class="tri-checkbox-inner"></span>
     </span>
     <span><ng-content></ng-content></span>
   `,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NzCheckboxComponent),
+      useExisting: forwardRef(() => TriCheckboxComponent),
       multi: true
     }
   ],
   host: {
-    class: 'ant-checkbox-wrapper',
-    '[class.ant-checkbox-group-item]': '!!checkboxGroupComponent',
-    '[class.ant-checkbox-wrapper-in-form-item]': '!!nzFormStatusService',
-    '[class.ant-checkbox-wrapper-checked]': 'nzChecked',
-    '[class.ant-checkbox-wrapper-disabled]': 'nzDisabled || checkboxGroupComponent?.finalDisabled()',
-    '[class.ant-checkbox-rtl]': `dir === 'rtl'`
+    class: 'tri-checkbox-wrapper',
+    '[class.tri-checkbox-group-item]': '!!checkboxGroupComponent',
+    '[class.tri-checkbox-wrapper-in-form-item]': '!!formStatusService',
+    '[class.tri-checkbox-wrapper-checked]': 'checked',
+    '[class.tri-checkbox-wrapper-disabled]': 'disabled || checkboxGroupComponent?.finalDisabled()',
+    '[class.tri-checkbox-rtl]': `dir === 'rtl'`
   },
   imports: [FormsModule]
 })
-export class NzCheckboxComponent implements OnInit, ControlValueAccessor, AfterViewInit {
+export class TriCheckboxComponent implements OnInit, ControlValueAccessor, AfterViewInit {
   private ngZone = inject(NgZone);
   private elementRef = inject(ElementRef<HTMLElement>);
   private cdr = inject(ChangeDetectorRef);
@@ -88,9 +88,9 @@ export class NzCheckboxComponent implements OnInit, ControlValueAccessor, AfterV
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
   protected checkboxGroupComponent = inject(NZ_CHECKBOX_GROUP, { optional: true });
-  protected nzFormStatusService = inject(NzFormStatusService, { optional: true });
+  protected formStatusService = inject(TriFormStatusService, { optional: true });
   /** @deprecated */
-  private nzCheckboxWrapperComponent = inject(NzCheckboxWrapperComponent, { optional: true });
+  private checkboxWrapperComponent = inject(TriCheckboxWrapperComponent, { optional: true });
 
   dir: Direction = 'ltr';
   private destroy$ = new Subject<void>();
@@ -99,25 +99,25 @@ export class NzCheckboxComponent implements OnInit, ControlValueAccessor, AfterV
   onChange: OnChangeType = () => {};
   onTouched: OnTouchedType = () => {};
   @ViewChild('inputElement', { static: true }) inputElement!: ElementRef<HTMLInputElement>;
-  @Output() readonly nzCheckedChange = new EventEmitter<boolean>();
-  @Input() nzValue: NzSafeAny | null = null;
-  @Input({ transform: booleanAttribute }) nzAutoFocus = false;
-  @Input({ transform: booleanAttribute }) nzDisabled = false;
-  @Input({ transform: booleanAttribute }) nzIndeterminate = false;
-  @Input({ transform: booleanAttribute }) nzChecked = false;
-  @Input() nzId: string | null = null;
-  @Input() nzName: string | null = null;
+  @Output() readonly checkedChange = new EventEmitter<boolean>();
+  @Input() value: TriSafeAny | null = null;
+  @Input({ transform: booleanAttribute }) autoFocus = false;
+  @Input({ transform: booleanAttribute }) disabled = false;
+  @Input({ transform: booleanAttribute }) indeterminate = false;
+  @Input({ transform: booleanAttribute }) checked = false;
+  @Input() id: string | null = null;
+  @Input() name: string | null = null;
 
   innerCheckedChange(checked: boolean): void {
-    if (!this.nzDisabled && !this.checkboxGroupComponent?.finalDisabled()) {
+    if (!this.disabled && !this.checkboxGroupComponent?.finalDisabled()) {
       this.setValue(checked);
-      this.nzCheckboxWrapperComponent?.onChange();
-      this.checkboxGroupComponent?.onCheckedChange(this.nzValue, checked);
+      this.checkboxWrapperComponent?._onChange();
+      this.checkboxGroupComponent?.onCheckedChange(this.value, checked);
     }
   }
 
   writeValue(value: boolean): void {
-    this.nzChecked = value;
+    this.checked = value;
     this.cdr.markForCheck();
   }
 
@@ -130,7 +130,7 @@ export class NzCheckboxComponent implements OnInit, ControlValueAccessor, AfterV
   }
 
   setDisabledState(disabled: boolean): void {
-    this.nzDisabled = (this.isNzDisableFirstChange && this.nzDisabled) || disabled;
+    this.disabled = (this.isNzDisableFirstChange && this.disabled) || disabled;
     this.isNzDisableFirstChange = false;
     this.cdr.markForCheck();
   }
@@ -146,12 +146,12 @@ export class NzCheckboxComponent implements OnInit, ControlValueAccessor, AfterV
   constructor() {
     this.destroyRef.onDestroy(() => {
       this.focusMonitor.stopMonitoring(this.elementRef);
-      this.nzCheckboxWrapperComponent?.removeCheckbox(this);
+      this.checkboxWrapperComponent?.removeCheckbox(this);
     });
     if (this.checkboxGroupComponent) {
       effect(() => {
         const values = this.checkboxGroupComponent!.value() || [];
-        this.setValue(values.includes(this.nzValue));
+        this.setValue(values.includes(this.value));
         this.cdr.markForCheck();
       });
     }
@@ -167,7 +167,7 @@ export class NzCheckboxComponent implements OnInit, ControlValueAccessor, AfterV
         }
       });
 
-    this.nzCheckboxWrapperComponent?.addCheckbox(this);
+    this.checkboxWrapperComponent?.addCheckbox(this);
 
     this.directionality.change.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
       this.dir = direction;
@@ -181,11 +181,11 @@ export class NzCheckboxComponent implements OnInit, ControlValueAccessor, AfterV
       .subscribe(event => {
         event.preventDefault();
         this.focus();
-        if (this.nzDisabled) {
+        if (this.disabled) {
           return;
         }
         this.ngZone.run(() => {
-          this.innerCheckedChange(!this.nzChecked);
+          this.innerCheckedChange(!this.checked);
           this.cdr.markForCheck();
         });
       });
@@ -196,14 +196,14 @@ export class NzCheckboxComponent implements OnInit, ControlValueAccessor, AfterV
   }
 
   ngAfterViewInit(): void {
-    if (this.nzAutoFocus) {
+    if (this.autoFocus) {
       this.focus();
     }
   }
 
   private setValue(value: boolean): void {
-    this.nzChecked = value;
+    this.checked = value;
     this.onChange(value);
-    this.nzCheckedChange.emit(value);
+    this.checkedChange.emit(value);
   }
 }

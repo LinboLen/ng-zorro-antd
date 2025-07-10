@@ -10,7 +10,7 @@ import { encodeEntities } from 'ng-zorro-antd/core/util';
 @Pipe({
   name: 'nzHighlight'
 })
-export class NzHighlightPipe implements PipeTransform {
+export class TriHighlightPipe implements PipeTransform {
   private UNIQUE_WRAPPERS: [string, string] = ['##==-open_tag-==##', '##==-close_tag-==##'];
 
   transform(value: string, highlightValue: string, flags?: string, klass?: string): string | null {

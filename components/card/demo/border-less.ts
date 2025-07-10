@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 
-import { NzCardModule } from 'ng-zorro-antd/card';
+import { TriCardModule } from 'ng-zorro-antd/card';
 
 @Component({
-  selector: 'nz-demo-card-border-less',
-  imports: [NzCardModule],
+  selector: '',
+  imports: [TriCardModule],
   template: `
     <div style="background: #ECECEC; padding:30px;">
-      <nz-card style="width:300px;" [nzBordered]="false" nzTitle="Card title" [nzExtra]="extraTemplate">
+      <tri-card style="width:300px;" [bordered]="false" title="Card title" [extra]="extraTemplate">
         <p>Card content</p>
         <p>Card content</p>
         <p>Card content</p>
-      </nz-card>
+      </tri-card>
     </div>
     <ng-template #extraTemplate>
       <a>More</a>
@@ -25,4 +25,4 @@ import { NzCardModule } from 'ng-zorro-antd/card';
     `
   ]
 })
-export class NzDemoCardBorderLessComponent {}
+export class TriDemoCardBorderLessComponent {}

@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 
-import { NzSegmentedModule, NzSegmentedOptions } from 'ng-zorro-antd/segmented';
+import { TriSegmentedModule, TriSegmentedOptions } from 'ng-zorro-antd/segmented';
 
 @Component({
-  selector: 'nz-demo-segmented-with-icon-only',
-  imports: [NzSegmentedModule],
-  template: `<nz-segmented [nzOptions]="options"></nz-segmented>`
+  selector: '',
+  imports: [TriSegmentedModule],
+  template: `<tri-segmented [options]="options"></tri-segmented>`
 })
-export class NzDemoSegmentedWithIconOnlyComponent {
-  options: NzSegmentedOptions = [
+export class TriDemoSegmentedWithIconOnlyComponent {
+  options: TriSegmentedOptions = [
     { value: 'List', icon: 'bars' },
     { value: 'Kanban', icon: 'appstore' }
   ];

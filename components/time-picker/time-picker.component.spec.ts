@@ -14,13 +14,13 @@ import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { dispatchFakeEvent, dispatchMouseEvent, typeInElement } from 'ng-zorro-antd/core/testing';
-import { NzStatus, NzVariant } from 'ng-zorro-antd/core/types';
+import { TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
 import { PREFIX_CLASS } from 'ng-zorro-antd/date-picker';
 import { getPickerInput, getPickerOkButton } from 'ng-zorro-antd/date-picker/testing/util';
-import { NzFormControlStatusType, NzFormModule } from 'ng-zorro-antd/form';
+import { TriFormControlStatusType, TriFormModule } from 'ng-zorro-antd/form';
 
-import { en_GB, NzI18nService } from '../i18n';
-import { NzTimePickerComponent } from './time-picker.component';
+import { en_GB, TriI18nService } from '../i18n';
+import { TriTimePickerComponent } from './time-picker.component';
 
 registerLocaleData(zh);
 
@@ -45,14 +45,14 @@ describe('time-picker', () => {
   }));
 
   describe('basic', () => {
-    let testComponent: NzTestTimePickerComponent;
-    let fixture: ComponentFixture<NzTestTimePickerComponent>;
+    let testComponent: TriTestTimePickerComponent;
+    let fixture: ComponentFixture<TriTestTimePickerComponent>;
     let timeElement: DebugElement;
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTimePickerComponent);
+      fixture = TestBed.createComponent(TriTestTimePickerComponent);
       testComponent = fixture.debugElement.componentInstance;
       fixture.detectChanges();
-      timeElement = fixture.debugElement.query(By.directive(NzTimePickerComponent));
+      timeElement = fixture.debugElement.query(By.directive(TriTimePickerComponent));
     });
 
     it('should init work', () => {
@@ -76,10 +76,10 @@ describe('time-picker', () => {
     it('should focus and blur function work', () => {
       fixture.detectChanges();
       expect(timeElement.nativeElement.querySelector('input') === document.activeElement).toBe(false);
-      testComponent.nzTimePickerComponent.focus();
+      testComponent.timePickerComponent.focus();
       fixture.detectChanges();
       expect(timeElement.nativeElement.querySelector('input') === document.activeElement).toBe(true);
-      testComponent.nzTimePickerComponent.blur();
+      testComponent.timePickerComponent.blur();
       fixture.detectChanges();
       expect(timeElement.nativeElement.querySelector('input') === document.activeElement).toBe(false);
     });
@@ -92,37 +92,37 @@ describe('time-picker', () => {
       expect(inputElement.disabled).toBe(true);
       expect(timeElement.nativeElement.classList).toContain('ant-picker-disabled');
       expect(timeElement.componentInstance.nzDisabled).toBeTruthy();
-      testComponent.nzTimePickerComponent.focus();
+      testComponent.timePickerComponent.focus();
       fixture.detectChanges();
       expect(timeElement.nativeElement.querySelector('input') === document.activeElement).toBe(false);
 
-      testComponent.nzTimePickerComponent.setDisabledState(false);
+      testComponent.timePickerComponent.setDisabledState(false);
       fixture.detectChanges();
       flush();
       expect(inputElement.disabled).toBe(false);
       expect(timeElement.nativeElement.classList).not.toContain('ant-picker-disabled');
       expect(timeElement.componentInstance.nzDisabled).toBeFalsy();
-      testComponent.nzTimePickerComponent.focus();
+      testComponent.timePickerComponent.focus();
       fixture.detectChanges();
       expect(timeElement.nativeElement.querySelector('input') === document.activeElement).toBe(true);
 
-      testComponent.nzTimePickerComponent.setDisabledState(true);
+      testComponent.timePickerComponent.setDisabledState(true);
       fixture.detectChanges();
       flush();
       expect(inputElement.disabled).toBe(true);
       expect(timeElement.nativeElement.classList).toContain('ant-picker-disabled');
       expect(timeElement.componentInstance.nzDisabled).toBeTruthy();
-      testComponent.nzTimePickerComponent.focus();
+      testComponent.timePickerComponent.focus();
       fixture.detectChanges();
       expect(timeElement.nativeElement.querySelector('input') === document.activeElement).toBe(false);
     }));
 
     it('should readOnly work', () => {
-      testComponent.nzInputReadOnly = true;
+      testComponent.inputReadOnly = true;
       fixture.detectChanges();
       expect(getPickerInput(fixture.debugElement).readOnly).toBeTruthy();
 
-      testComponent.nzInputReadOnly = false;
+      testComponent.inputReadOnly = false;
       fixture.detectChanges();
       expect(getPickerInput(fixture.debugElement).readOnly).not.toBeTruthy();
     });
@@ -131,11 +131,11 @@ describe('time-picker', () => {
       testComponent.open = true;
       fixture.detectChanges();
       expect(testComponent.openChange).toHaveBeenCalledTimes(0);
-      testComponent.nzTimePickerComponent.close();
+      testComponent.timePickerComponent.close();
       fixture.detectChanges();
       expect(testComponent.openChange).toHaveBeenCalledTimes(2);
       expect(testComponent.open).toBe(false);
-      testComponent.nzTimePickerComponent.open();
+      testComponent.timePickerComponent._open();
       fixture.detectChanges();
       expect(testComponent.openChange).toHaveBeenCalledTimes(3);
       expect(testComponent.open).toBe(true);
@@ -155,7 +155,7 @@ describe('time-picker', () => {
     it('should support default nzfomat in 12-hours', () => {
       testComponent.use12Hours = true;
       fixture.detectChanges();
-      expect(testComponent.nzTimePickerComponent.nzFormat).toBe('h:mm:ss a');
+      expect(testComponent.timePickerComponent.format).toBe('h:mm:ss a');
     });
 
     it('should support ngModelChange', fakeAsync(() => {
@@ -181,7 +181,7 @@ describe('time-picker', () => {
       expect(nzOnChange).toHaveBeenCalled();
       const result = (nzOnChange.calls.allArgs()[0] as Date[])[0];
       expect(result.getHours()).toBe(0);
-      expect(testComponent.nzTimePickerComponent.inputRef.nativeElement.value).toBe('00:33:00');
+      expect(testComponent.timePickerComponent.inputRef.nativeElement.value).toBe('00:33:00');
     }));
 
     it('should support ISO string', fakeAsync(() => {
@@ -205,13 +205,13 @@ describe('time-picker', () => {
     }));
 
     it('should support custom suffixIcon', fakeAsync(() => {
-      testComponent.nzSuffixIcon = 'calendar';
+      testComponent.suffixIcon = 'calendar';
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css(`.anticon-calendar`))).toBeDefined();
     }));
 
     it('should backdrop work', fakeAsync(() => {
-      testComponent.nzBackdrop = true;
+      testComponent.backdrop = true;
       testComponent.open = true;
       fixture.detectChanges();
       tick(500);
@@ -320,7 +320,7 @@ describe('time-picker', () => {
     }));
 
     it('should support nzBorderless', fakeAsync(() => {
-      fixture.componentInstance.nzBorderless = true;
+      fixture.componentInstance.borderless = true;
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css(`.ant-picker-borderless`))).toBeDefined();
     }));
@@ -329,21 +329,21 @@ describe('time-picker', () => {
       it('filled', () => {
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css(`.ant-picker-filled`))).toBeNull();
-        fixture.componentInstance.nzVariant = 'filled';
+        fixture.componentInstance.variant = 'filled';
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css(`.ant-picker-filled`))).toBeDefined();
       });
       it('borderless', () => {
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css(`.ant-picker-borderless`))).toBeNull();
-        fixture.componentInstance.nzVariant = 'borderless';
+        fixture.componentInstance.variant = 'borderless';
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css(`.ant-picker-borderless`))).toBeDefined();
       });
       it('underlined', () => {
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css(`.ant-picker-underlined`))).toBeNull();
-        fixture.componentInstance.nzVariant = 'underlined';
+        fixture.componentInstance.variant = 'underlined';
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css(`.ant-picker-underlined`))).toBeDefined();
       });
@@ -367,9 +367,9 @@ describe('time-picker', () => {
     }));
 
     describe('setup I18n service', () => {
-      let srv: NzI18nService;
+      let srv: TriI18nService;
 
-      beforeEach(inject([NzI18nService], (s: NzI18nService) => {
+      beforeEach(inject([TriI18nService], (s: TriI18nService) => {
         srv = s;
       }));
 
@@ -390,14 +390,14 @@ describe('time-picker', () => {
   });
 
   describe('status', () => {
-    let testComponent: NzTestTimePickerStatusComponent;
-    let fixture: ComponentFixture<NzTestTimePickerStatusComponent>;
+    let testComponent: TriTestTimePickerStatusComponent;
+    let fixture: ComponentFixture<TriTestTimePickerStatusComponent>;
     let timeElement: DebugElement;
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTimePickerStatusComponent);
+      fixture = TestBed.createComponent(TriTestTimePickerStatusComponent);
       testComponent = fixture.debugElement.componentInstance;
       fixture.detectChanges();
-      timeElement = fixture.debugElement.query(By.directive(NzTimePickerComponent));
+      timeElement = fixture.debugElement.query(By.directive(TriTimePickerComponent));
     });
 
     it('should className correct with nzStatus', () => {
@@ -415,14 +415,14 @@ describe('time-picker', () => {
   });
 
   describe('RTL', () => {
-    let testComponent: NzTestTimePickerDirComponent;
-    let fixture: ComponentFixture<NzTestTimePickerDirComponent>;
+    let testComponent: TriTestTimePickerDirComponent;
+    let fixture: ComponentFixture<TriTestTimePickerDirComponent>;
     let timeElement: DebugElement;
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTimePickerDirComponent);
+      fixture = TestBed.createComponent(TriTestTimePickerDirComponent);
       testComponent = fixture.debugElement.componentInstance;
       fixture.detectChanges();
-      timeElement = fixture.debugElement.query(By.directive(NzTimePickerComponent));
+      timeElement = fixture.debugElement.query(By.directive(TriTimePickerComponent));
     });
 
     it('should className correct on dir change', () => {
@@ -434,10 +434,10 @@ describe('time-picker', () => {
   });
 
   describe('in form', () => {
-    let testComponent: NzTestTimePickerInFormComponent;
-    let fixture: ComponentFixture<NzTestTimePickerInFormComponent>;
+    let testComponent: TriTestTimePickerInFormComponent;
+    let fixture: ComponentFixture<TriTestTimePickerInFormComponent>;
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestTimePickerInFormComponent);
+      fixture = TestBed.createComponent(TriTestTimePickerInFormComponent);
       testComponent = fixture.debugElement.componentInstance;
     });
 
@@ -445,7 +445,7 @@ describe('time-picker', () => {
       testComponent.disable();
       fixture.detectChanges();
       flush();
-      const timeElement = fixture.debugElement.query(By.directive(NzTimePickerComponent));
+      const timeElement = fixture.debugElement.query(By.directive(TriTimePickerComponent));
       const inputElement = fixture.debugElement.query(By.css('input')).nativeElement as HTMLInputElement;
 
       expect(timeElement.componentInstance.nzDisabled).toBe(true);
@@ -455,7 +455,7 @@ describe('time-picker', () => {
 
     it('should className correct', () => {
       fixture.detectChanges();
-      const timeElement = fixture.debugElement.query(By.directive(NzTimePickerComponent)).nativeElement;
+      const timeElement = fixture.debugElement.query(By.directive(TriTimePickerComponent)).nativeElement;
       expect(timeElement.classList).toContain('ant-picker-status-error');
       expect(timeElement.querySelector('nz-form-item-feedback-icon')).toBeTruthy();
 
@@ -487,79 +487,79 @@ describe('time-picker', () => {
 });
 
 @Component({
-  imports: [NzTimePickerComponent, FormsModule],
+  imports: [TriTimePickerComponent, FormsModule],
   template: `
-    <nz-time-picker
-      [nzAutoFocus]="autoFocus"
+    <tri-time-picker
+      [autoFocus]="autoFocus"
       [(ngModel)]="date"
       (ngModelChange)="onChange($event)"
-      [(nzOpen)]="open"
-      (nzOpenChange)="openChange($event)"
-      [nzDisabled]="disabled"
-      [nzInputReadOnly]="nzInputReadOnly"
-      [nzUse12Hours]="use12Hours"
-      [nzSuffixIcon]="nzSuffixIcon"
-      [nzBackdrop]="nzBackdrop"
-      [nzDefaultOpenValue]="defaultOpenValue"
-      [nzBorderless]="nzBorderless"
-      [nzVariant]="nzVariant"
-    ></nz-time-picker>
+      [(openChange)]="open"
+      (openChange)="openChange($event)"
+      [disabled]="disabled"
+      [inputReadOnly]="inputReadOnly"
+      [use12Hours]="use12Hours"
+      [suffixIcon]="suffixIcon"
+      [backdrop]="backdrop"
+      [defaultOpenValue]="defaultOpenValue"
+      [borderless]="borderless"
+      [variant]="variant"
+    ></tri-time-picker>
   `
 })
-export class NzTestTimePickerComponent {
+export class TriTestTimePickerComponent {
   open = false;
   openChange = jasmine.createSpy('open change');
   autoFocus = false;
   date: Date | string = new Date();
   disabled = false;
-  nzInputReadOnly = false;
+  inputReadOnly = false;
   use12Hours = false;
-  nzSuffixIcon: string = 'close-circle';
-  nzBackdrop = false;
-  nzBorderless = false;
-  nzVariant: NzVariant = 'outlined';
+  suffixIcon: string = 'close-circle';
+  backdrop = false;
+  borderless = false;
+  variant: TriVariant = 'outlined';
   defaultOpenValue: Date = new Date('2020-03-27T00:00:00');
   onChange(_: Date | null): void {}
-  @ViewChild(NzTimePickerComponent, { static: false }) nzTimePickerComponent!: NzTimePickerComponent;
+  @ViewChild(TriTimePickerComponent, { static: false }) timePickerComponent!: TriTimePickerComponent;
 }
 
 @Component({
-  imports: [NzTimePickerComponent],
-  template: `<nz-time-picker [nzStatus]="status"></nz-time-picker>`
+  imports: [TriTimePickerComponent],
+  template: `<tri-time-picker [status]="status"></tri-time-picker>`
 })
-export class NzTestTimePickerStatusComponent {
-  status: NzStatus = 'error';
+export class TriTestTimePickerStatusComponent {
+  status: TriStatus = 'error';
 }
 
 @Component({
-  imports: [NzTimePickerComponent, BidiModule],
+  imports: [TriTimePickerComponent, BidiModule],
   template: `
     <div [dir]="dir">
-      <nz-time-picker></nz-time-picker>
+      <tri-time-picker></tri-time-picker>
     </div>
   `
 })
-export class NzTestTimePickerDirComponent {
+export class TriTestTimePickerDirComponent {
   dir: Direction = 'ltr';
 }
 
 @Component({
-  imports: [NzFormModule, ReactiveFormsModule, NzTimePickerComponent],
+  imports: [TriFormModule, ReactiveFormsModule, TriTimePickerComponent],
   template: `
-    <form nz-form [formGroup]="timePickerForm">
-      <nz-form-item>
-        <nz-form-control [nzHasFeedback]="feedback" [nzValidateStatus]="status">
-          <nz-time-picker formControlName="time" [nzDisabled]="disabled"></nz-time-picker>
-        </nz-form-control>
-      </nz-form-item>
+    <form tri-form [formGroup]="timePickerForm">
+      <tri-form-item>
+        <tri-form-control [hasFeedback]="feedback" [validateStatus]="status">
+          <tri-time-picker formControlName="time" [disabled]="disabled"></tri-time-picker>
+        </tri-form-control>
+      </tri-form-item>
     </form>
   `
 })
-export class NzTestTimePickerInFormComponent {
+export class TriTestTimePickerInFormComponent {
   timePickerForm = new FormGroup({
     time: new FormControl(new Date())
   });
-  status: NzFormControlStatusType = 'error';
+  status: TriFormControlStatusType = 'error';
   feedback = true;
   disabled = false;
 

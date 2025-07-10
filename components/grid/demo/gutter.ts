@@ -1,36 +1,36 @@
 import { Component } from '@angular/core';
 
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzGridModule } from 'ng-zorro-antd/grid';
+import { TriDividerModule } from 'ng-zorro-antd/divider';
+import { TriGridModule } from 'ng-zorro-antd/grid';
 
 @Component({
-  selector: 'nz-demo-grid-gutter',
-  imports: [NzDividerModule, NzGridModule],
+  selector: '',
+  imports: [TriDividerModule, TriGridModule],
   template: `
-    <nz-divider nzOrientation="left" nzText="Horizontal"></nz-divider>
-    <div nz-row [nzGutter]="16">
-      <div nz-col class="gutter-row" [nzSpan]="6"><div class="inner-box">col-6</div></div>
-      <div nz-col class="gutter-row" [nzSpan]="6"><div class="inner-box">col-6</div></div>
-      <div nz-col class="gutter-row" [nzSpan]="6"><div class="inner-box">col-6</div></div>
-      <div nz-col class="gutter-row" [nzSpan]="6"><div class="inner-box">col-6</div></div>
+    <tri-divider orientation="left" text="Horizontal"></tri-divider>
+    <div tri-row [gutter]="16">
+      <div tri-col class="gutter-row" [span]="6"><div class="inner-box">col-6</div></div>
+      <div tri-col class="gutter-row" [span]="6"><div class="inner-box">col-6</div></div>
+      <div tri-col class="gutter-row" [span]="6"><div class="inner-box">col-6</div></div>
+      <div tri-col class="gutter-row" [span]="6"><div class="inner-box">col-6</div></div>
     </div>
-    <nz-divider nzOrientation="left" nzText="Responsive"></nz-divider>
-    <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
-      <div nz-col class="gutter-row" [nzSpan]="6"><div class="inner-box">col-6</div></div>
-      <div nz-col class="gutter-row" [nzSpan]="6"><div class="inner-box">col-6</div></div>
-      <div nz-col class="gutter-row" [nzSpan]="6"><div class="inner-box">col-6</div></div>
-      <div nz-col class="gutter-row" [nzSpan]="6"><div class="inner-box">col-6</div></div>
+    <tri-divider orientation="left" text="Responsive"></tri-divider>
+    <div tri-row [gutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+      <div tri-col class="gutter-row" [span]="6"><div class="inner-box">col-6</div></div>
+      <div tri-col class="gutter-row" [span]="6"><div class="inner-box">col-6</div></div>
+      <div tri-col class="gutter-row" [span]="6"><div class="inner-box">col-6</div></div>
+      <div tri-col class="gutter-row" [span]="6"><div class="inner-box">col-6</div></div>
     </div>
-    <nz-divider nzOrientation="left" nzText="Vertical"></nz-divider>
-    <div nz-row [nzGutter]="[16, 24]">
-      <div nz-col class="gutter-row" [nzSpan]="6"><div class="inner-box">col-6</div></div>
-      <div nz-col class="gutter-row" [nzSpan]="6"><div class="inner-box">col-6</div></div>
-      <div nz-col class="gutter-row" [nzSpan]="6"><div class="inner-box">col-6</div></div>
-      <div nz-col class="gutter-row" [nzSpan]="6"><div class="inner-box">col-6</div></div>
-      <div nz-col class="gutter-row" [nzSpan]="6"><div class="inner-box">col-6</div></div>
-      <div nz-col class="gutter-row" [nzSpan]="6"><div class="inner-box">col-6</div></div>
-      <div nz-col class="gutter-row" [nzSpan]="6"><div class="inner-box">col-6</div></div>
-      <div nz-col class="gutter-row" [nzSpan]="6"><div class="inner-box">col-6</div></div>
+    <tri-divider orientation="left" text="Vertical"></tri-divider>
+    <div tri-row [gutter]="[16, 24]">
+      <div tri-col class="gutter-row" [span]="6"><div class="inner-box">col-6</div></div>
+      <div tri-col class="gutter-row" [span]="6"><div class="inner-box">col-6</div></div>
+      <div tri-col class="gutter-row" [span]="6"><div class="inner-box">col-6</div></div>
+      <div tri-col class="gutter-row" [span]="6"><div class="inner-box">col-6</div></div>
+      <div tri-col class="gutter-row" [span]="6"><div class="inner-box">col-6</div></div>
+      <div tri-col class="gutter-row" [span]="6"><div class="inner-box">col-6</div></div>
+      <div tri-col class="gutter-row" [span]="6"><div class="inner-box">col-6</div></div>
+      <div tri-col class="gutter-row" [span]="6"><div class="inner-box">col-6</div></div>
     </div>
   `,
   styles: [
@@ -46,4 +46,4 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
     `
   ]
 })
-export class NzDemoGridGutterComponent {}
+export class TriDemoGridGutterComponent {}

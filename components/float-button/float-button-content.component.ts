@@ -6,41 +6,41 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, TemplateRef } from '@angular/core';
 
-import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-float-button-content',
-  exportAs: 'nzFloatButtonContent',
-  imports: [NzIconModule, NgTemplateOutlet, NzStringTemplateOutletDirective],
+  selector: '',
+  exportAs: 'triFloatButtonContent',
+  imports: [TriIconModule, NgTemplateOutlet, TriStringTemplateOutletDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="ant-float-btn-body">
-      <div class="ant-float-btn-content">
-        @if (nzDescription || nzIcon) {
-          @if (nzIcon) {
-            <div class="ant-float-btn-icon">
-              <ng-template [ngTemplateOutlet]="nzIcon"></ng-template>
+    <div class="tri-float-btn-body">
+      <div class="tri-float-btn-content">
+        @if (description || icon) {
+          @if (icon) {
+            <div class="tri-float-btn-icon">
+              <ng-template [ngTemplateOutlet]="icon"></ng-template>
             </div>
           }
-          @if (nzDescription && nzShape === 'square') {
-            <div class="ant-float-btn-description">
-              <ng-container *nzStringTemplateOutlet="nzDescription">
-                {{ nzDescription }}
+          @if (description && shape === 'square') {
+            <div class="tri-float-btn-description">
+              <ng-container *stringTemplateOutlet="description">
+                {{ description }}
               </ng-container>
             </div>
           }
         } @else {
-          <div class="ant-float-btn-icon">
-            <nz-icon nzType="file-text" nzTheme="outline" />
+          <div class="tri-float-btn-icon">
+            <tri-icon type="file-text" theme="outline" />
           </div>
         }
       </div>
     </div>
   `
 })
-export class NzFloatButtonContentComponent {
-  @Input() nzIcon: TemplateRef<void> | null = null;
-  @Input() nzDescription: string | TemplateRef<void> | null = null;
-  @Input() nzShape: 'circle' | 'square' = 'circle';
+export class TriFloatButtonContentComponent {
+  @Input() icon: TemplateRef<void> | null = null;
+  @Input() description: string | TemplateRef<void> | null = null;
+  @Input() shape: 'circle' | 'square' = 'circle';
 }

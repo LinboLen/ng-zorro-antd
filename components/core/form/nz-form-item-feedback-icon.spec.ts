@@ -7,14 +7,14 @@ import { DebugElement, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { NzValidateStatus } from 'ng-zorro-antd/core/types';
+import { TriValidateStatus } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
-import { NzFormItemFeedbackIconComponent } from './nz-form-item-feedback-icon.component';
+import { TriFormItemFeedbackIconComponent } from './nz-form-item-feedback-icon.component';
 
 describe('nz-form-item-feedback-icon', () => {
-  let fixture: ComponentFixture<NzFormItemFeedbackIconComponent>;
-  let component: NzFormItemFeedbackIconComponent;
+  let fixture: ComponentFixture<TriFormItemFeedbackIconComponent>;
+  let component: TriFormItemFeedbackIconComponent;
   let feedback: DebugElement;
   let firstChange = true;
 
@@ -22,14 +22,14 @@ describe('nz-form-item-feedback-icon', () => {
     TestBed.configureTestingModule({
       providers: [provideNoopAnimations(), provideNzIconsTesting()]
     });
-    fixture = TestBed.createComponent(NzFormItemFeedbackIconComponent);
+    fixture = TestBed.createComponent(TriFormItemFeedbackIconComponent);
     component = fixture.componentInstance;
     feedback = fixture.debugElement;
     fixture.detectChanges();
   });
 
-  function changeStatus(status: NzValidateStatus): void {
-    const previousStatus: NzValidateStatus = component.status;
+  function changeStatus(status: TriValidateStatus): void {
+    const previousStatus: TriValidateStatus = component.status;
     component.status = status;
     component.ngOnChanges({ status: new SimpleChange(previousStatus, status, firstChange) });
     firstChange = false;

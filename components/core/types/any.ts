@@ -4,4 +4,4 @@
  */
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type NzSafeAny = any;
+export type TriSafeAny = any;

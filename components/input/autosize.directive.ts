@@ -7,7 +7,7 @@ import { Platform } from '@angular/cdk/platform';
 import { AfterViewInit, DestroyRef, Directive, DoCheck, ElementRef, inject, Input, NgZone } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { NzResizeService } from 'ng-zorro-antd/core/services';
+import { TriResizeService } from 'ng-zorro-antd/core/services';
 
 export interface AutoSizeType {
   minRows?: number;
@@ -15,8 +15,8 @@ export interface AutoSizeType {
 }
 
 @Directive({
-  selector: 'textarea[nzAutosize]',
-  exportAs: 'nzAutosize',
+  selector: '',
+  exportAs: 'triAutosize',
   host: {
     // Textarea elements that have the directive applied should have a single row by default.
     // Browsers normally show two rows by default and therefore this limits the minRows binding.
@@ -24,14 +24,14 @@ export interface AutoSizeType {
     '(input)': 'noopInputHandler()'
   }
 })
-export class NzAutosizeDirective implements AfterViewInit, DoCheck {
+export class TriAutosizeDirective implements AfterViewInit, DoCheck {
   private ngZone = inject(NgZone);
   private platform = inject(Platform);
   private destroyRef = inject(DestroyRef);
-  private resizeService = inject(NzResizeService);
+  private resizeService = inject(TriResizeService);
   private el: HTMLTextAreaElement | HTMLInputElement = inject(ElementRef).nativeElement;
 
-  private autosize: boolean = false;
+  #autosize: boolean = false;
   private cachedLineHeight!: number;
   private previousValue!: string;
   private previousMinRows: number | undefined;
@@ -49,13 +49,13 @@ export class NzAutosizeDirective implements AfterViewInit, DoCheck {
   }
 
   @Input()
-  set nzAutosize(value: string | boolean | AutoSizeType) {
+  set autosize(value: string | boolean | AutoSizeType) {
     const isAutoSizeType = (data: string | boolean | AutoSizeType): data is AutoSizeType =>
       typeof data !== 'string' && typeof data !== 'boolean' && (!!data.maxRows || !!data.minRows);
     if (typeof value === 'string' || value === true) {
-      this.autosize = true;
+      this.#autosize = true;
     } else if (isAutoSizeType(value)) {
-      this.autosize = true;
+      this.#autosize = true;
       this.minRows = value.minRows;
       this.maxRows = value.maxRows;
       this.maxHeight = this.setMaxHeight();
@@ -186,7 +186,7 @@ export class NzAutosizeDirective implements AfterViewInit, DoCheck {
   }
 
   ngAfterViewInit(): void {
-    if (this.autosize && this.platform.isBrowser) {
+    if (this.#autosize && this.platform.isBrowser) {
       this.resizeToFitContent();
       this.resizeService
         .connect()
@@ -196,7 +196,7 @@ export class NzAutosizeDirective implements AfterViewInit, DoCheck {
   }
 
   ngDoCheck(): void {
-    if (this.autosize && this.platform.isBrowser) {
+    if (this.#autosize && this.platform.isBrowser) {
       this.resizeToFitContent();
     }
   }

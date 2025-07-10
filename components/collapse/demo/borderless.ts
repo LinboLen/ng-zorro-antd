@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
 
-import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { TriCollapseModule } from 'ng-zorro-antd/collapse';
 
 @Component({
-  selector: 'nz-demo-collapse-borderless',
-  imports: [NzCollapseModule],
+  selector: '',
+  imports: [TriCollapseModule],
   template: `
-    <nz-collapse [nzBordered]="false">
+    <tri-collapse [bordered]="false">
       @for (panel of panels; track panel) {
-        <nz-collapse-panel [nzHeader]="panel.name" [nzActive]="panel.active">
+        <tri-collapse-panel [header]="panel.name" [active]="panel.active">
           <p>{{ panel.name }} content</p>
-        </nz-collapse-panel>
+        </tri-collapse-panel>
       }
-    </nz-collapse>
+    </tri-collapse>
   `
 })
-export class NzDemoCollapseBorderlessComponent {
+export class TriDemoCollapseBorderlessComponent {
   panels = [
     {
       active: true,

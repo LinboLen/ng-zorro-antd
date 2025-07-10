@@ -8,24 +8,24 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { NzLabelAlignType } from 'ng-zorro-antd/form/form.directive';
-import { NzFormModule } from 'ng-zorro-antd/form/form.module';
+import { TriLabelAlignType } from 'ng-zorro-antd/form/form.directive';
+import { TriFormModule } from 'ng-zorro-antd/form/form.module';
 
-import { NzFormLabelComponent, NzFormTooltipIcon } from './form-label.component';
+import { TriFormLabelComponent, TriFormTooltipIcon } from './form-label.component';
 
 const testBedOptions = { imports: [NoopAnimationsModule] };
 
 describe('nz-form-label', () => {
   describe('default', () => {
-    let fixture: ComponentFixture<NzTestFormLabelComponent>;
-    let testComponent: NzTestFormLabelComponent;
+    let fixture: ComponentFixture<TriTestFormLabelComponent>;
+    let testComponent: TriTestFormLabelComponent;
     let label: DebugElement;
     beforeEach(() => {
       TestBed.configureTestingModule(testBedOptions);
-      fixture = TestBed.createComponent(NzTestFormLabelComponent);
+      fixture = TestBed.createComponent(TriTestFormLabelComponent);
       testComponent = fixture.componentInstance;
       fixture.detectChanges();
-      label = fixture.debugElement.query(By.directive(NzFormLabelComponent));
+      label = fixture.debugElement.query(By.directive(TriFormLabelComponent));
     });
     it('should className correct', () => {
       expect(label.nativeElement.classList).toContain('ant-form-item-label');
@@ -90,25 +90,25 @@ describe('nz-form-label', () => {
 });
 
 @Component({
-  imports: [NzFormModule],
+  imports: [TriFormModule],
   template: `
-    <nz-form-label
-      [nzFor]="forValue"
-      [nzNoColon]="noColon"
-      [nzRequired]="required"
-      [nzTooltipTitle]="tooltipTitle"
-      [nzTooltipIcon]="tooltipIcon"
-      [nzLabelAlign]="align"
-      [nzLabelWrap]="labelWrap"
-    ></nz-form-label>
+    <tri-form-label
+      [for]="forValue"
+      [noColon]="noColon"
+      [required]="required"
+      [tooltipTitle]="tooltipTitle"
+      [tooltipIcon]="tooltipIcon"
+      [labelAlign]="align"
+      [labelWrap]="labelWrap"
+    ></tri-form-label>
   `
 })
-export class NzTestFormLabelComponent {
+export class TriTestFormLabelComponent {
   forValue = 'test';
   required = false;
   noColon = false;
   tooltipTitle?: string;
-  tooltipIcon!: string | NzFormTooltipIcon;
-  align: NzLabelAlignType = 'right';
+  tooltipIcon!: string | TriFormTooltipIcon;
+  align: TriLabelAlignType = 'right';
   labelWrap = false;
 }

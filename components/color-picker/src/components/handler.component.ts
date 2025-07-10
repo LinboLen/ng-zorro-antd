@@ -9,12 +9,12 @@ type HandlerSize = 'default' | 'small';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'color-handler',
+  selector: '',
   template: `
     <div
-      class="ant-color-picker-handler"
+      class="tri-color-picker-handler"
       [style.background-color]="color"
-      [class.ant-color-picker-handler-sm]="size === 'small'"
+      [class.tri-color-picker-handler-sm]="size === 'small'"
     ></div>
   `
 })

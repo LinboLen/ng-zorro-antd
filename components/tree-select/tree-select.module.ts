@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzTreeSelectComponent } from './tree-select.component';
+import { TriTreeSelectComponent } from './tree-select.component';
 
 @NgModule({
-  imports: [NzTreeSelectComponent],
-  exports: [NzTreeSelectComponent]
+  imports: [TriTreeSelectComponent],
+  exports: [TriTreeSelectComponent]
 })
-export class NzTreeSelectModule {}
+export class TriTreeSelectModule {}

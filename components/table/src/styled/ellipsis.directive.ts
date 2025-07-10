@@ -6,11 +6,11 @@
 import { Directive, Input, booleanAttribute } from '@angular/core';
 
 @Directive({
-  selector: 'th[nzEllipsis],td[nzEllipsis]',
+  selector: '',
   host: {
-    '[class.ant-table-cell-ellipsis]': 'nzEllipsis'
+    '[class.tri-table-cell-ellipsis]': 'ellipsis'
   }
 })
-export class NzCellEllipsisDirective {
-  @Input({ transform: booleanAttribute }) nzEllipsis = true;
+export class TriCellEllipsisDirective {
+  @Input({ transform: booleanAttribute }) ellipsis = true;
 }

@@ -46,18 +46,18 @@ import { BehaviorSubject, combineLatest, merge, of as observableOf } from 'rxjs'
 import { distinctUntilChanged, map, startWith, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import { slideMotion } from 'ng-zorro-antd/core/animation';
-import { NzConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
-import { NzFormItemFeedbackIconComponent, NzFormNoStatusService, NzFormStatusService } from 'ng-zorro-antd/core/form';
-import { NzNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
-import { NzOverlayModule, POSITION_MAP, POSITION_TYPE, getPlacementName } from 'ng-zorro-antd/core/overlay';
+import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriOverlayModule, POSITION_MAP, POSITION_TYPE, getPlacementName } from 'ng-zorro-antd/core/overlay';
 import { cancelAnimationFrame, requestAnimationFrame } from 'ng-zorro-antd/core/polyfill';
 import {
   NgClassInterface,
-  NzSafeAny,
-  NzSizeLDSType,
-  NzStatus,
-  NzValidateStatus,
-  NzVariant,
+  TriSafeAny,
+  TriSizeLDSType,
+  TriStatus,
+  TriValidateStatus,
+  TriVariant,
   OnChangeType,
   OnTouchedType
 } from 'ng-zorro-antd/core/types';
@@ -67,23 +67,23 @@ import {
   isNotNil,
   numberAttributeWithInfinityFallback
 } from 'ng-zorro-antd/core/util';
-import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, NzSpaceCompactItemDirective } from 'ng-zorro-antd/space';
+import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
-import { NzOptionContainerComponent } from './option-container.component';
-import { NzOptionGroupComponent } from './option-group.component';
-import { NzOptionComponent } from './option.component';
-import { NzSelectArrowComponent } from './select-arrow.component';
-import { NzSelectClearComponent } from './select-clear.component';
-import { NzSelectTopControlComponent } from './select-top-control.component';
+import { TriOptionContainerComponent } from './option-container.component';
+import { TriOptionGroupComponent } from './option-group.component';
+import { TriOptionComponent } from './option.component';
+import { TriSelectArrowComponent } from './select-arrow.component';
+import { TriSelectClearComponent } from './select-clear.component';
+import { TriSelectTopControlComponent } from './select-top-control.component';
 import {
-  NzFilterOptionType,
-  NzSelectItemInterface,
-  NzSelectModeType,
-  NzSelectOptionInterface,
-  NzSelectPlacementType
+  TriFilterOptionType,
+  TriSelectItemInterface,
+  TriSelectModeType,
+  TriSelectOptionInterface,
+  TriSelectPlacementType
 } from './select.types';
 
-const defaultFilterOption: NzFilterOptionType = (searchValue: string, item: NzSelectItemInterface): boolean => {
+const defaultFilterOption: TriFilterOptionType = (searchValue: string, item: TriSelectItemInterface): boolean => {
   if (item && item.nzLabel) {
     return item.nzLabel.toString().toLowerCase().indexOf(searchValue.toLowerCase()) > -1;
   } else {
@@ -91,17 +91,17 @@ const defaultFilterOption: NzFilterOptionType = (searchValue: string, item: NzSe
   }
 };
 
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'select';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'select';
 
-export type NzSelectSizeType = NzSizeLDSType;
+export type TriSelectSizeType = TriSizeLDSType;
 
 @Component({
-  selector: 'nz-select',
-  exportAs: 'nzSelect',
+  selector: '',
+  exportAs: 'triSelect',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NzSelectComponent),
+      useExisting: forwardRef(() => TriSelectComponent),
       multi: true
     },
     { provide: NZ_SPACE_COMPACT_ITEM_TYPE, useValue: 'select' }
@@ -110,126 +110,126 @@ export type NzSelectSizeType = NzSizeLDSType;
   encapsulation: ViewEncapsulation.None,
   animations: [slideMotion],
   template: `
-    <nz-select-top-control
+    <tri-select-top-control
       cdkOverlayOrigin
       #origin="cdkOverlayOrigin"
-      [nzId]="nzId"
-      [open]="nzOpen"
-      [disabled]="nzDisabled"
-      [mode]="nzMode"
+      [id]="id"
+      [open]="open"
+      [disabled]="disabled"
+      [mode]="mode"
       [@.disabled]="!!noAnimation?.nzNoAnimation"
-      [nzNoAnimation]="noAnimation?.nzNoAnimation"
-      [maxTagPlaceholder]="nzMaxTagPlaceholder"
-      [removeIcon]="nzRemoveIcon"
-      [placeHolder]="nzPlaceHolder"
-      [maxTagCount]="nzMaxTagCount"
-      [customTemplate]="nzCustomTemplate"
-      [tokenSeparators]="nzTokenSeparators"
-      [showSearch]="nzShowSearch"
-      [autofocus]="nzAutoFocus"
+      [noAnimation]="noAnimation?.nzNoAnimation"
+      [maxTagPlaceholder]="maxTagPlaceholder"
+      [removeIcon]="removeIcon"
+      [placeHolder]="placeHolder"
+      [maxTagCount]="maxTagCount"
+      [customTemplate]="customTemplate"
+      [tokenSeparators]="tokenSeparators"
+      [showSearch]="showSearch"
+      [autofocus]="autoFocus"
       [listOfTopItem]="listOfTopItem"
       (inputValueChange)="onInputValueChange($event)"
       (tokenize)="onTokenSeparate($event)"
       (deleteItem)="onItemDelete($event)"
       (keydown)="onKeyDown($event)"
-    ></nz-select-top-control>
-    @if (nzShowArrow || (hasFeedback && !!status) || isMaxMultipleCountSet) {
-      <nz-select-arrow
-        [showArrow]="nzShowArrow"
-        [loading]="nzLoading"
-        [search]="nzOpen && nzShowSearch"
-        [suffixIcon]="nzSuffixIcon"
+    ></tri-select-top-control>
+    @if (showArrow || (hasFeedback && !!status) || isMaxMultipleCountSet) {
+      <tri-select-arrow
+        [showArrow]="showArrow"
+        [loading]="loading"
+        [search]="open && showSearch"
+        [suffixIcon]="suffixIcon"
         [feedbackIcon]="feedbackIconTpl"
-        [nzMaxMultipleCount]="nzMaxMultipleCount"
+        [maxMultipleCount]="maxMultipleCount"
         [listOfValue]="listOfValue"
         [isMaxMultipleCountSet]="isMaxMultipleCountSet"
       >
         <ng-template #feedbackIconTpl>
           @if (hasFeedback && !!status) {
-            <nz-form-item-feedback-icon [status]="status"></nz-form-item-feedback-icon>
+            <tri-form-item-feedback-icon [status]="status"></tri-form-item-feedback-icon>
           }
         </ng-template>
-      </nz-select-arrow>
+      </tri-select-arrow>
     }
 
-    @if (nzAllowClear && !nzDisabled && listOfValue.length) {
-      <nz-select-clear [clearIcon]="nzClearIcon" (clear)="onClearSelection()"></nz-select-clear>
+    @if (allowClear && !disabled && listOfValue.length) {
+      <tri-select-clear [clearIcon]="clearIcon" (clear)="onClearSelection()"></tri-select-clear>
     }
     <ng-template
       cdkConnectedOverlay
-      nzConnectedOverlay
-      [cdkConnectedOverlayHasBackdrop]="nzBackdrop"
-      [cdkConnectedOverlayMinWidth]="$any(nzDropdownMatchSelectWidth ? null : triggerWidth)"
-      [cdkConnectedOverlayWidth]="$any(nzDropdownMatchSelectWidth ? triggerWidth : null)"
+      connectedOverlay
+      [cdkConnectedOverlayHasBackdrop]="backdrop"
+      [cdkConnectedOverlayMinWidth]="$any(dropdownMatchSelectWidth ? null : triggerWidth)"
+      [cdkConnectedOverlayWidth]="$any(dropdownMatchSelectWidth ? triggerWidth : null)"
       [cdkConnectedOverlayOrigin]="origin"
       [cdkConnectedOverlayTransformOriginOn]="'.ant-select-dropdown'"
-      [cdkConnectedOverlayPanelClass]="nzDropdownClassName!"
-      [cdkConnectedOverlayOpen]="nzOpen"
+      [cdkConnectedOverlayPanelClass]="dropdownClassName!"
+      [cdkConnectedOverlayOpen]="open"
       [cdkConnectedOverlayPositions]="positions"
       (overlayOutsideClick)="onClickOutside($event)"
       (detach)="setOpenState(false)"
       (positionChange)="onPositionChange($event)"
     >
-      <nz-option-container
-        [style]="nzDropdownStyle"
-        [itemSize]="nzOptionHeightPx"
-        [maxItemLength]="nzOptionOverflowSize"
-        [matchWidth]="nzDropdownMatchSelectWidth"
-        [class.ant-select-dropdown-placement-bottomLeft]="dropdownPosition === 'bottomLeft'"
-        [class.ant-select-dropdown-placement-topLeft]="dropdownPosition === 'topLeft'"
-        [class.ant-select-dropdown-placement-bottomRight]="dropdownPosition === 'bottomRight'"
-        [class.ant-select-dropdown-placement-topRight]="dropdownPosition === 'topRight'"
+      <tri-option-container
+        [style]="dropdownStyle"
+        [itemSize]="optionHeightPx"
+        [maxItemLength]="optionOverflowSize"
+        [matchWidth]="dropdownMatchSelectWidth"
+        [class.tri-select-dropdown-placement-bottomLeft]="dropdownPosition === 'bottomLeft'"
+        [class.tri-select-dropdown-placement-topLeft]="dropdownPosition === 'topLeft'"
+        [class.tri-select-dropdown-placement-bottomRight]="dropdownPosition === 'bottomRight'"
+        [class.tri-select-dropdown-placement-topRight]="dropdownPosition === 'topRight'"
         [@slideMotion]="'enter'"
         [@.disabled]="!!noAnimation?.nzNoAnimation"
-        [nzNoAnimation]="noAnimation?.nzNoAnimation"
+        [noAnimation]="noAnimation?.nzNoAnimation"
         [listOfContainerItem]="listOfContainerItem"
-        [menuItemSelectedIcon]="nzMenuItemSelectedIcon"
-        [notFoundContent]="nzNotFoundContent"
+        [menuItemSelectedIcon]="menuItemSelectedIcon"
+        [notFoundContent]="notFoundContent"
         [activatedValue]="activatedValue"
         [listOfSelectedValue]="listOfValue"
-        [dropdownRender]="nzDropdownRender"
+        [dropdownRender]="dropdownRender"
         [compareWith]="compareWith"
-        [mode]="nzMode"
+        [mode]="mode"
         [isMaxMultipleCountReached]="isMaxMultipleCountReached"
         (keydown)="onKeyDown($event)"
         (itemClick)="onItemClick($event)"
-        (scrollToBottom)="nzScrollToBottom.emit()"
-      ></nz-option-container>
+        (scrollToBottom)="scrollToBottom.emit()"
+      ></tri-option-container>
     </ng-template>
   `,
   host: {
-    class: 'ant-select',
-    '[class.ant-select-in-form-item]': '!!nzFormStatusService',
-    '[class.ant-select-lg]': 'finalSize() === "large"',
-    '[class.ant-select-sm]': 'finalSize() === "small"',
-    '[class.ant-select-show-arrow]': `nzShowArrow`,
-    '[class.ant-select-disabled]': 'nzDisabled',
-    '[class.ant-select-show-search]': `(nzShowSearch || nzMode !== 'default') && !nzDisabled`,
-    '[class.ant-select-allow-clear]': 'nzAllowClear',
-    '[class.ant-select-borderless]': `nzVariant === 'borderless' || (nzVariant === 'outlined' && nzBorderless)`,
-    '[class.ant-select-filled]': `nzVariant === 'filled'`,
-    '[class.ant-select-underlined]': `nzVariant === 'underlined'`,
-    '[class.ant-select-open]': 'nzOpen',
-    '[class.ant-select-focused]': 'nzOpen || focused',
-    '[class.ant-select-single]': `nzMode === 'default'`,
-    '[class.ant-select-multiple]': `nzMode !== 'default'`,
-    '[class.ant-select-rtl]': `dir === 'rtl'`
+    class: 'tri-select',
+    '[class.tri-select-in-form-item]': '!!formStatusService',
+    '[class.tri-select-lg]': 'finalSize() === "large"',
+    '[class.tri-select-sm]': 'finalSize() === "small"',
+    '[class.tri-select-show-arrow]': `showArrow`,
+    '[class.tri-select-disabled]': 'disabled',
+    '[class.tri-select-show-search]': `(showSearch || mode !== 'default') && !disabled`,
+    '[class.tri-select-allow-clear]': 'allowClear',
+    '[class.tri-select-borderless]': `variant === 'borderless' || (variant === 'outlined' && borderless)`,
+    '[class.tri-select-filled]': `variant === 'filled'`,
+    '[class.tri-select-underlined]': `variant === 'underlined'`,
+    '[class.tri-select-open]': 'open',
+    '[class.tri-select-focused]': 'open || focused',
+    '[class.tri-select-single]': `mode === 'default'`,
+    '[class.tri-select-multiple]': `mode !== 'default'`,
+    '[class.tri-select-rtl]': `dir === 'rtl'`
   },
-  hostDirectives: [NzSpaceCompactItemDirective],
+  hostDirectives: [TriSpaceCompactItemDirective],
   imports: [
-    NzSelectTopControlComponent,
+    TriSelectTopControlComponent,
     CdkOverlayOrigin,
-    NzNoAnimationDirective,
-    NzSelectArrowComponent,
-    NzFormItemFeedbackIconComponent,
-    NzSelectClearComponent,
+    TriNoAnimationDirective,
+    TriSelectArrowComponent,
+    TriFormItemFeedbackIconComponent,
+    TriSelectClearComponent,
     CdkConnectedOverlay,
-    NzOverlayModule,
-    NzOptionContainerComponent
+    TriOverlayModule,
+    TriOptionContainerComponent
   ]
 })
-export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterContentInit, OnChanges {
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterContentInit, OnChanges {
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
 
   private readonly ngZone = inject(NgZone);
   private readonly cdr = inject(ChangeDetectorRef);
@@ -240,112 +240,112 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
   private readonly directionality = inject(Directionality);
   private readonly destroyRef = inject(DestroyRef);
 
-  @Input() nzId: string | null = null;
-  @Input() nzSize: NzSelectSizeType = 'default';
-  @Input() nzStatus: NzStatus = '';
-  @Input() @WithConfig() nzVariant: NzVariant = 'outlined';
-  @Input() @WithConfig() nzOptionHeightPx = 32;
-  @Input() nzOptionOverflowSize = 8;
-  @Input() nzDropdownClassName: string[] | string | null = null;
-  @Input() nzDropdownMatchSelectWidth = true;
-  @Input() nzDropdownStyle: Record<string, string> | null = null;
-  @Input() nzNotFoundContent: string | TemplateRef<NzSafeAny> | undefined = undefined;
-  @Input() nzPlaceHolder: string | TemplateRef<NzSafeAny> | null = null;
-  @Input() nzPlacement: NzSelectPlacementType | null = null;
-  @Input() nzMaxTagCount = Infinity;
-  @Input() nzDropdownRender: TemplateRef<NzSafeAny> | null = null;
-  @Input() nzCustomTemplate: TemplateRef<{ $implicit: NzSelectItemInterface }> | null = null;
+  @Input() id: string | null = null;
+  @Input() size: TriSelectSizeType = 'default';
+  @Input() status: TriStatus = '';
+  @Input() @WithConfig() variant: TriVariant = 'outlined';
+  @Input() @WithConfig() optionHeightPx = 32;
+  @Input() optionOverflowSize = 8;
+  @Input() dropdownClassName: string[] | string | null = null;
+  @Input() dropdownMatchSelectWidth = true;
+  @Input() dropdownStyle: Record<string, string> | null = null;
+  @Input() notFoundContent: string | TemplateRef<TriSafeAny> | undefined = undefined;
+  @Input() placeHolder: string | TemplateRef<TriSafeAny> | null = null;
+  @Input() placement: TriSelectPlacementType | null = null;
+  @Input() maxTagCount = Infinity;
+  @Input() dropdownRender: TemplateRef<TriSafeAny> | null = null;
+  @Input() customTemplate: TemplateRef<{ $implicit: TriSelectItemInterface }> | null = null;
   @Input()
   @WithConfig()
-  nzSuffixIcon: TemplateRef<NzSafeAny> | string | null = null;
-  @Input() nzClearIcon: TemplateRef<NzSafeAny> | null = null;
-  @Input() nzRemoveIcon: TemplateRef<NzSafeAny> | null = null;
-  @Input() nzMenuItemSelectedIcon: TemplateRef<NzSafeAny> | null = null;
-  @Input() nzTokenSeparators: string[] = [];
-  @Input() nzMaxTagPlaceholder: TemplateRef<{ $implicit: NzSafeAny[] }> | null = null;
-  @Input({ transform: numberAttributeWithInfinityFallback }) nzMaxMultipleCount = Infinity;
-  @Input() nzMode: NzSelectModeType = 'default';
-  @Input() nzFilterOption: NzFilterOptionType = defaultFilterOption;
-  @Input() compareWith: (o1: NzSafeAny, o2: NzSafeAny) => boolean = (o1: NzSafeAny, o2: NzSafeAny) => o1 === o2;
-  @Input({ transform: booleanAttribute }) nzAllowClear = false;
+  suffixIcon: TemplateRef<TriSafeAny> | string | null = null;
+  @Input() clearIcon: TemplateRef<TriSafeAny> | null = null;
+  @Input() removeIcon: TemplateRef<TriSafeAny> | null = null;
+  @Input() menuItemSelectedIcon: TemplateRef<TriSafeAny> | null = null;
+  @Input() tokenSeparators: string[] = [];
+  @Input() maxTagPlaceholder: TemplateRef<{ $implicit: TriSafeAny[] }> | null = null;
+  @Input({ transform: numberAttributeWithInfinityFallback }) maxMultipleCount = Infinity;
+  @Input() mode: TriSelectModeType = 'default';
+  @Input() filterOption: TriFilterOptionType = defaultFilterOption;
+  @Input() compareWith: (o1: TriSafeAny, o2: TriSafeAny) => boolean = (o1: TriSafeAny, o2: TriSafeAny) => o1 === o2;
+  @Input({ transform: booleanAttribute }) allowClear = false;
   /**
    * @deprecated Will be removed in v21. It is recommended to use `nzVariant` instead.
    */
-  @Input({ transform: booleanAttribute }) @WithConfig() nzBorderless = false;
-  @Input({ transform: booleanAttribute }) nzShowSearch = false;
-  @Input({ transform: booleanAttribute }) nzLoading = false;
-  @Input({ transform: booleanAttribute }) nzAutoFocus = false;
-  @Input({ transform: booleanAttribute }) nzAutoClearSearchValue = true;
-  @Input({ transform: booleanAttribute }) nzServerSearch = false;
-  @Input({ transform: booleanAttribute }) nzDisabled = false;
-  @Input({ transform: booleanAttribute }) nzOpen = false;
-  @Input({ transform: booleanAttribute }) nzSelectOnTab = false;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzBackdrop = false;
-  @Input() nzOptions: NzSelectOptionInterface[] = [];
+  @Input({ transform: booleanAttribute }) @WithConfig() borderless = false;
+  @Input({ transform: booleanAttribute }) showSearch = false;
+  @Input({ transform: booleanAttribute }) loading = false;
+  @Input({ transform: booleanAttribute }) autoFocus = false;
+  @Input({ transform: booleanAttribute }) autoClearSearchValue = true;
+  @Input({ transform: booleanAttribute }) serverSearch = false;
+  @Input({ transform: booleanAttribute }) disabled = false;
+  @Input({ transform: booleanAttribute }) open = false;
+  @Input({ transform: booleanAttribute }) selectOnTab = false;
+  @Input({ transform: booleanAttribute }) @WithConfig() backdrop = false;
+  @Input() options: TriSelectOptionInterface[] = [];
 
   @Input({ transform: booleanAttribute })
-  set nzShowArrow(value: boolean) {
+  set showArrow(value: boolean) {
     this._nzShowArrow = value;
   }
-  get nzShowArrow(): boolean {
-    return this._nzShowArrow === undefined ? this.nzMode === 'default' : this._nzShowArrow;
+  get showArrow(): boolean {
+    return this._nzShowArrow === undefined ? this.mode === 'default' : this._nzShowArrow;
   }
 
   get isMultiple(): boolean {
-    return this.nzMode === 'multiple' || this.nzMode === 'tags';
+    return this.mode === 'multiple' || this.mode === 'tags';
   }
 
   get isMaxMultipleCountSet(): boolean {
-    return this.isMultiple && this.nzMaxMultipleCount !== Infinity;
+    return this.isMultiple && this.maxMultipleCount !== Infinity;
   }
 
   get isMaxMultipleCountReached(): boolean {
-    return this.nzMaxMultipleCount !== Infinity && this.listOfValue.length === this.nzMaxMultipleCount;
+    return this.maxMultipleCount !== Infinity && this.listOfValue.length === this.maxMultipleCount;
   }
 
-  @Output() readonly nzOnSearch = new EventEmitter<string>();
-  @Output() readonly nzScrollToBottom = new EventEmitter<void>();
-  @Output() readonly nzOpenChange = new EventEmitter<boolean>();
-  @Output() readonly nzBlur = new EventEmitter<void>();
-  @Output() readonly nzFocus = new EventEmitter<void>();
-  readonly nzOnClear = output<void>();
+  @Output() readonly onSearch = new EventEmitter<string>();
+  @Output() readonly scrollToBottom = new EventEmitter<void>();
+  @Output() readonly openChange = new EventEmitter<boolean>();
+  @Output() readonly blur = new EventEmitter<void>();
+  @Output() readonly focus = new EventEmitter<void>();
+  readonly onClear = output<void>();
   @ViewChild(CdkOverlayOrigin, { static: true, read: ElementRef }) originElement!: ElementRef;
   @ViewChild(CdkConnectedOverlay, { static: true }) cdkConnectedOverlay!: CdkConnectedOverlay;
-  @ViewChild(NzSelectTopControlComponent, { static: true }) nzSelectTopControlComponent!: NzSelectTopControlComponent;
-  @ContentChildren(NzOptionComponent, { descendants: true }) listOfNzOptionComponent!: QueryList<NzOptionComponent>;
-  @ContentChildren(NzOptionGroupComponent, { descendants: true })
-  listOfNzOptionGroupComponent!: QueryList<NzOptionGroupComponent>;
-  @ViewChild(NzOptionGroupComponent, { static: true, read: ElementRef }) nzOptionGroupComponentElement!: ElementRef;
-  @ViewChild(NzSelectTopControlComponent, { static: true, read: ElementRef })
-  nzSelectTopControlComponentElement!: ElementRef;
+  @ViewChild(TriSelectTopControlComponent, { static: true }) selectTopControlComponent!: TriSelectTopControlComponent;
+  @ContentChildren(TriOptionComponent, { descendants: true }) listOfNzOptionComponent!: QueryList<TriOptionComponent>;
+  @ContentChildren(TriOptionGroupComponent, { descendants: true })
+  listOfNzOptionGroupComponent!: QueryList<TriOptionGroupComponent>;
+  @ViewChild(TriOptionGroupComponent, { static: true, read: ElementRef }) optionGroupComponentElement!: ElementRef;
+  @ViewChild(TriSelectTopControlComponent, { static: true, read: ElementRef })
+  selectTopControlComponentElement!: ElementRef;
 
   protected finalSize = computed(() => {
     if (this.compactSize) {
       return this.compactSize();
     }
-    return this.size();
+    return this.#size();
   });
 
-  private size = signal<NzSizeLDSType>(this.nzSize);
+  #size = signal<TriSizeLDSType>(this.size);
   private compactSize = inject(NZ_SPACE_COMPACT_SIZE, { optional: true });
-  private listOfValue$ = new BehaviorSubject<NzSafeAny[]>([]);
-  private listOfTemplateItem$ = new BehaviorSubject<NzSelectItemInterface[]>([]);
-  private listOfTagAndTemplateItem: NzSelectItemInterface[] = [];
+  private listOfValue$ = new BehaviorSubject<TriSafeAny[]>([]);
+  private listOfTemplateItem$ = new BehaviorSubject<TriSelectItemInterface[]>([]);
+  private listOfTagAndTemplateItem: TriSelectItemInterface[] = [];
   private searchValue: string = '';
   private isReactiveDriven = false;
-  private value: NzSafeAny | NzSafeAny[];
+  private value: TriSafeAny | TriSafeAny[];
   private _nzShowArrow: boolean | undefined;
   private requestId: number = -1;
   private isNzDisableFirstChange: boolean = true;
 
   onChange: OnChangeType = () => {};
   onTouched: OnTouchedType = () => {};
-  dropdownPosition: NzSelectPlacementType = 'bottomLeft';
+  dropdownPosition: TriSelectPlacementType = 'bottomLeft';
   triggerWidth: number | null = null;
-  listOfContainerItem: NzSelectItemInterface[] = [];
-  listOfTopItem: NzSelectItemInterface[] = [];
-  activatedValue: NzSafeAny | null = null;
-  listOfValue: NzSafeAny[] = [];
+  listOfContainerItem: TriSelectItemInterface[] = [];
+  listOfTopItem: TriSelectItemInterface[] = [];
+  activatedValue: TriSafeAny | null = null;
+  listOfValue: TriSafeAny[] = [];
   focused = false;
   dir: Direction = 'ltr';
   positions: ConnectionPositionPair[] = [];
@@ -353,10 +353,10 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
   // status
   prefixCls: string = 'ant-select';
   statusCls: NgClassInterface = {};
-  status: NzValidateStatus = '';
+  _status: TriValidateStatus = '';
   hasFeedback: boolean = false;
 
-  generateTagItem(value: string): NzSelectItemInterface {
+  generateTagItem(value: string): TriSelectItemInterface {
     return {
       nzValue: value,
       nzLabel: value,
@@ -364,9 +364,9 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
     };
   }
 
-  onItemClick(value: NzSafeAny): void {
+  onItemClick(value: TriSafeAny): void {
     this.activatedValue = value;
-    if (this.nzMode === 'default') {
+    if (this.mode === 'default') {
       if (this.listOfValue.length === 0 || !this.compareWith(this.listOfValue[0], value)) {
         this.updateListOfValue([value]);
       }
@@ -376,18 +376,18 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
       if (targetIndex !== -1) {
         const listOfValueAfterRemoved = this.listOfValue.filter((_, i) => i !== targetIndex);
         this.updateListOfValue(listOfValueAfterRemoved);
-      } else if (this.listOfValue.length < this.nzMaxMultipleCount) {
+      } else if (this.listOfValue.length < this.maxMultipleCount) {
         const listOfValueAfterAdded = [...this.listOfValue, value];
         this.updateListOfValue(listOfValueAfterAdded);
       }
-      this.focus();
-      if (this.nzAutoClearSearchValue) {
+      this._focus();
+      if (this.autoClearSearchValue) {
         this.clearInput();
       }
     }
   }
 
-  onItemDelete(item: NzSelectItemInterface): void {
+  onItemDelete(item: TriSelectItemInterface): void {
     const listOfSelectedValue = this.listOfValue.filter(v => !this.compareWith(v, item.nzValue));
     this.updateListOfValue(listOfSelectedValue);
     this.clearInput();
@@ -397,13 +397,13 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
     let listOfContainerItem = this.listOfTagAndTemplateItem
       .filter(item => !item.nzHide)
       .filter(item => {
-        if (!this.nzServerSearch && this.searchValue) {
-          return this.nzFilterOption(this.searchValue, item);
+        if (!this.serverSearch && this.searchValue) {
+          return this.filterOption(this.searchValue, item);
         } else {
           return true;
         }
       });
-    if (this.nzMode === 'tags' && this.searchValue) {
+    if (this.mode === 'tags' && this.searchValue) {
       const matchedItem = this.listOfTagAndTemplateItem.find(item => item.nzLabel === this.searchValue);
       if (!matchedItem) {
         const tagItem = this.generateTagItem(this.searchValue);
@@ -419,19 +419,19 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
       listOfContainerItem.find(item => this.compareWith(item.nzValue, this.listOfValue[0])) ||
       listOfContainerItem[0];
     this.activatedValue = (activatedItem && activatedItem.nzValue) || null;
-    let listOfGroupLabel: Array<string | number | TemplateRef<NzSafeAny> | null> = [];
+    let listOfGroupLabel: Array<string | number | TemplateRef<TriSafeAny> | null> = [];
     if (this.isReactiveDriven) {
-      listOfGroupLabel = [...new Set(this.nzOptions.filter(o => o.groupLabel).map(o => o.groupLabel!))];
+      listOfGroupLabel = [...new Set(this.options.filter(o => o.groupLabel).map(o => o.groupLabel!))];
     } else {
       if (this.listOfNzOptionGroupComponent) {
-        listOfGroupLabel = this.listOfNzOptionGroupComponent.map(o => o.nzLabel);
+        listOfGroupLabel = this.listOfNzOptionGroupComponent.map(o => o.label);
       }
     }
     /** insert group item **/
     listOfGroupLabel.forEach(label => {
       const index = listOfContainerItem.findIndex(item => label === item.groupLabel);
       if (index > -1) {
-        const groupItem = { groupLabel: label, type: 'group', key: label } as NzSelectItemInterface;
+        const groupItem = { groupLabel: label, type: 'group', key: label } as TriSelectItemInterface;
         listOfContainerItem.splice(index, 0, groupItem);
       }
     });
@@ -440,11 +440,11 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
   }
 
   clearInput(): void {
-    this.nzSelectTopControlComponent.clearInputValue();
+    this.selectTopControlComponent.clearInputValue();
   }
 
-  updateListOfValue(listOfValue: NzSafeAny[]): void {
-    const covertListToModel = (list: NzSafeAny[], mode: NzSelectModeType): NzSafeAny[] | NzSafeAny => {
+  updateListOfValue(listOfValue: TriSafeAny[]): void {
+    const covertListToModel = (list: TriSafeAny[], mode: TriSelectModeType): TriSafeAny[] | TriSafeAny => {
       if (mode === 'default') {
         if (list.length > 0) {
           return list[0];
@@ -455,7 +455,7 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
         return list;
       }
     };
-    const model = covertListToModel(listOfValue, this.nzMode);
+    const model = covertListToModel(listOfValue, this.mode);
     if (this.value !== model) {
       this.listOfValue = listOfValue;
       this.listOfValue$.next(listOfValue);
@@ -473,12 +473,12 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
      * Limit the number of selected items to nzMaxMultipleCount
      */
     const limitWithinMaxCount = <T>(value: T[]): T[] =>
-      this.isMaxMultipleCountSet ? value.slice(0, this.nzMaxMultipleCount) : value;
+      this.isMaxMultipleCountSet ? value.slice(0, this.maxMultipleCount) : value;
 
-    if (this.nzMode === 'multiple') {
+    if (this.mode === 'multiple') {
       const updateValue = limitWithinMaxCount([...this.listOfValue, ...listOfMatchedValue]);
       this.updateListOfValue(updateValue);
-    } else if (this.nzMode === 'tags') {
+    } else if (this.mode === 'tags') {
       const listOfUnMatchedLabel = listOfLabel.filter(
         label => this.listOfTagAndTemplateItem.findIndex(item => item.nzLabel === label) === -1
       );
@@ -489,7 +489,7 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
   }
 
   onKeyDown(e: KeyboardEvent): void {
-    if (this.nzDisabled) {
+    if (this.disabled) {
       return;
     }
     const listOfFilteredOptionNotDisabled = this.listOfContainerItem
@@ -501,14 +501,14 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
     switch (e.keyCode) {
       case UP_ARROW:
         e.preventDefault();
-        if (this.nzOpen && listOfFilteredOptionNotDisabled.length > 0) {
+        if (this.open && listOfFilteredOptionNotDisabled.length > 0) {
           const preIndex = activatedIndex > 0 ? activatedIndex - 1 : listOfFilteredOptionNotDisabled.length - 1;
           this.activatedValue = listOfFilteredOptionNotDisabled[preIndex].nzValue;
         }
         break;
       case DOWN_ARROW:
         e.preventDefault();
-        if (this.nzOpen && listOfFilteredOptionNotDisabled.length > 0) {
+        if (this.open && listOfFilteredOptionNotDisabled.length > 0) {
           const nextIndex = activatedIndex < listOfFilteredOptionNotDisabled.length - 1 ? activatedIndex + 1 : 0;
           this.activatedValue = listOfFilteredOptionNotDisabled[nextIndex].nzValue;
         } else {
@@ -517,7 +517,7 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
         break;
       case ENTER:
         e.preventDefault();
-        if (this.nzOpen) {
+        if (this.open) {
           if (isNotNil(this.activatedValue) && activatedIndex !== -1) {
             this.onItemClick(this.activatedValue);
           }
@@ -526,14 +526,14 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
         }
         break;
       case SPACE:
-        if (!this.nzOpen) {
+        if (!this.open) {
           this.setOpenState(true);
           e.preventDefault();
         }
         break;
       case TAB:
-        if (this.nzSelectOnTab) {
-          if (this.nzOpen) {
+        if (this.selectOnTab) {
+          if (this.open) {
             e.preventDefault();
             if (isNotNil(this.activatedValue)) {
               this.onItemClick(this.activatedValue);
@@ -549,16 +549,16 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
          */
         break;
       default:
-        if (!this.nzOpen) {
+        if (!this.open) {
           this.setOpenState(true);
         }
     }
   }
 
   setOpenState(value: boolean): void {
-    if (this.nzOpen !== value) {
-      this.nzOpen = value;
-      this.nzOpenChange.emit(value);
+    if (this.open !== value) {
+      this.open = value;
+      this.openChange.emit(value);
       this.onOpenChange();
       this.cdr.markForCheck();
     }
@@ -566,7 +566,7 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
 
   onOpenChange(): void {
     this.updateCdkConnectedOverlayStatus();
-    if (this.nzAutoClearSearchValue) {
+    if (this.autoClearSearchValue) {
       this.clearInput();
     }
   }
@@ -574,13 +574,13 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
   onInputValueChange(value: string): void {
     this.searchValue = value;
     this.updateListOfContainerItem();
-    this.nzOnSearch.emit(value);
+    this.onSearch.emit(value);
     this.updateCdkConnectedOverlayPositions();
   }
 
   onClearSelection(): void {
     this.updateListOfValue([]);
-    this.nzOnClear.emit();
+    this.onClear.emit();
   }
 
   onClickOutside(event: MouseEvent): void {
@@ -590,17 +590,17 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
     }
   }
 
-  focus(): void {
-    this.nzSelectTopControlComponent.focus();
+  _focus(): void {
+    this.selectTopControlComponent.focus();
   }
 
-  blur(): void {
-    this.nzSelectTopControlComponent.blur();
+  _blur(): void {
+    this.selectTopControlComponent.blur();
   }
 
   onPositionChange(position: ConnectedOverlayPositionChange): void {
     const placement = getPlacementName(position);
-    this.dropdownPosition = placement as NzSelectPlacementType;
+    this.dropdownPosition = placement as TriSelectPlacementType;
   }
 
   updateCdkConnectedOverlayStatus(): void {
@@ -627,9 +627,9 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
     });
   }
 
-  noAnimation = inject(NzNoAnimationDirective, { host: true, optional: true });
-  protected nzFormStatusService = inject(NzFormStatusService, { optional: true });
-  private nzFormNoStatusService = inject(NzFormNoStatusService, { optional: true });
+  noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
+  protected formStatusService = inject(TriFormStatusService, { optional: true });
+  private formNoStatusService = inject(TriFormNoStatusService, { optional: true });
 
   constructor() {
     this.destroyRef.onDestroy(() => {
@@ -638,16 +638,16 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
     });
 
     onConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME, () => {
-      this.size.set(this.nzSize);
+      this.#size.set(this.size);
       this.cdr.markForCheck();
     });
   }
 
-  writeValue(modelValue: NzSafeAny | NzSafeAny[]): void {
+  writeValue(modelValue: TriSafeAny | TriSafeAny[]): void {
     /** https://github.com/angular/angular/issues/14988 **/
     if (this.value !== modelValue) {
       this.value = modelValue;
-      const covertModelToList = (model: NzSafeAny[] | NzSafeAny, mode: NzSelectModeType): NzSafeAny[] => {
+      const covertModelToList = (model: TriSafeAny[] | TriSafeAny, mode: TriSelectModeType): TriSafeAny[] => {
         if (model === null || model === undefined) {
           return [];
         } else if (mode === 'default') {
@@ -656,7 +656,7 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
           return model;
         }
       };
-      const listOfValue = covertModelToList(modelValue, this.nzMode);
+      const listOfValue = covertModelToList(modelValue, this.mode);
       this.listOfValue = listOfValue;
       this.listOfValue$.next(listOfValue);
       this.cdr.markForCheck();
@@ -672,9 +672,9 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
   }
 
   setDisabledState(disabled: boolean): void {
-    this.nzDisabled = (this.isNzDisableFirstChange && this.nzDisabled) || disabled;
+    this.disabled = (this.isNzDisableFirstChange && this.disabled) || disabled;
     this.isNzDisableFirstChange = false;
-    if (this.nzDisabled) {
+    if (this.disabled) {
       this.setOpenState(false);
     }
     this.cdr.markForCheck();
@@ -684,12 +684,12 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
     if (nzOpen) {
       this.onOpenChange();
     }
-    if (nzDisabled && this.nzDisabled) {
+    if (nzDisabled && this.disabled) {
       this.setOpenState(false);
     }
     if (nzOptions) {
       this.isReactiveDriven = true;
-      const listOfOptions = this.nzOptions || [];
+      const listOfOptions = this.options || [];
       const listOfTransformedItem = listOfOptions.map(item => {
         return {
           template: item.label instanceof TemplateRef ? item.label : null,
@@ -707,11 +707,11 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
       this.listOfTemplateItem$.next(listOfTransformedItem);
     }
     if (nzStatus) {
-      this.setStatusStyles(this.nzStatus, this.hasFeedback);
+      this.setStatusStyles(this.status, this.hasFeedback);
     }
     if (nzPlacement) {
       const { currentValue } = nzPlacement;
-      this.dropdownPosition = currentValue as NzSelectPlacementType;
+      this.dropdownPosition = currentValue as TriSelectPlacementType;
       const listOfPlacement = ['bottomLeft', 'topLeft', 'bottomRight', 'topRight'];
       if (currentValue && listOfPlacement.includes(currentValue)) {
         this.positions = [POSITION_MAP[currentValue as POSITION_TYPE]];
@@ -720,17 +720,17 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
       }
     }
     if (nzSize) {
-      this.size.set(nzSize.currentValue);
+      this.#size.set(nzSize.currentValue);
     }
   }
 
   ngOnInit(): void {
-    this.nzFormStatusService?.formStatusChanges
+    this.formStatusService?.formStatusChanges
       .pipe(
         distinctUntilChanged((pre, cur) => {
           return pre.status === cur.status && pre.hasFeedback === cur.hasFeedback;
         }),
-        withLatestFrom(this.nzFormNoStatusService ? this.nzFormNoStatusService.noFormStatus : observableOf(false)),
+        withLatestFrom(this.formNoStatusService ? this.formNoStatusService.noFormStatus : observableOf(false)),
         map(([{ status, hasFeedback }, noStatus]) => ({ status: noStatus ? '' : status, hasFeedback })),
         takeUntilDestroyed(this.destroyRef)
       )
@@ -745,21 +745,21 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
         if (!focusOrigin) {
           this.focused = false;
           this.cdr.markForCheck();
-          this.nzBlur.emit();
+          this.blur.emit();
           Promise.resolve().then(() => {
             this.onTouched();
           });
         } else {
           this.focused = true;
           this.cdr.markForCheck();
-          this.nzFocus.emit();
+          this.focus.emit();
         }
       });
     combineLatest([this.listOfValue$, this.listOfTemplateItem$])
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(([listOfSelectedValue, listOfTemplateItem]) => {
         const listOfTagItem = listOfSelectedValue
-          .filter(() => this.nzMode === 'tags')
+          .filter(() => this.mode === 'tags')
           .filter(value => listOfTemplateItem.findIndex(o => this.compareWith(o.nzValue, value)) === -1)
           .map(
             value => this.listOfTopItem.find(o => this.compareWith(o.nzValue, value)) || this.generateTagItem(value)
@@ -784,11 +784,11 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
     fromEventOutsideAngular(this.host.nativeElement, 'click')
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
-        if ((this.nzOpen && this.nzShowSearch) || this.nzDisabled) {
+        if ((this.open && this.showSearch) || this.disabled) {
           return;
         }
 
-        this.ngZone.run(() => this.setOpenState(!this.nzOpen));
+        this.ngZone.run(() => this.setOpenState(!this.open));
       });
 
     // Caretaker note: we could've added this listener within the template `(overlayKeydown)="..."`,
@@ -822,7 +822,7 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
         )
         .subscribe(() => {
           const listOfOptionInterface = this.listOfNzOptionComponent.toArray().map(item => {
-            const { template, nzLabel, nzValue, nzKey, nzDisabled, nzHide, nzCustomContent, groupLabel } = item;
+            const { template, label, value, key, disabled, hide, customContent, groupLabel } = item;
             return {
               template,
               nzLabel,
@@ -831,9 +831,9 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
               nzHide,
               nzCustomContent,
               groupLabel,
-              nzTitle: this.getTitle(item.nzTitle, item.nzLabel),
+              nzTitle: this.getTitle(item.title, item.label),
               type: 'item',
-              key: nzKey === undefined ? nzValue : nzKey
+              key: key === undefined ? value : key
             };
           });
           this.listOfTemplateItem$.next(listOfOptionInterface);
@@ -842,8 +842,8 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
     }
   }
 
-  private setStatusStyles(status: NzValidateStatus, hasFeedback: boolean): void {
-    this.status = status;
+  private setStatusStyles(status: TriValidateStatus, hasFeedback: boolean): void {
+    this._status = status;
     this.hasFeedback = hasFeedback;
     this.cdr.markForCheck();
     // render status if nzStatus is set
@@ -857,7 +857,7 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterCon
     });
   }
 
-  private getTitle(title: NzSelectOptionInterface['title'], label: NzSelectOptionInterface['label']): string {
+  private getTitle(title: TriSelectOptionInterface['title'], label: TriSelectOptionInterface['label']): string {
     let rawTitle: string = undefined!;
     if (title === undefined) {
       if (typeof label === 'string' || typeof label === 'number') {

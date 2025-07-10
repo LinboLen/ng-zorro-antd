@@ -5,11 +5,11 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzSplitterPanelComponent } from './splitter-panel.component';
-import { NzSplitterComponent } from './splitter.component';
+import { TriSplitterPanelComponent } from './splitter-panel.component';
+import { TriSplitterComponent } from './splitter.component';
 
 @NgModule({
-  imports: [NzSplitterComponent, NzSplitterPanelComponent],
-  exports: [NzSplitterComponent, NzSplitterPanelComponent]
+  imports: [TriSplitterComponent, TriSplitterPanelComponent],
+  exports: [TriSplitterComponent, TriSplitterPanelComponent]
 })
-export class NzSplitterModule {}
+export class TriSplitterModule {}

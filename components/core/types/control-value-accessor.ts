@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { NzSafeAny } from './any';
+import { TriSafeAny } from './any';
 
-export type OnTouchedType = () => NzSafeAny;
-export type OnChangeType = (value: NzSafeAny) => void;
+export type OnTouchedType = () => TriSafeAny;
+export type OnChangeType = (value: TriSafeAny) => void;

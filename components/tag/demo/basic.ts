@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
 
-import { NzTagModule } from 'ng-zorro-antd/tag';
+import { TriTagModule } from 'ng-zorro-antd/tag';
 
 @Component({
-  selector: 'nz-demo-tag-basic',
-  imports: [NzTagModule],
+  selector: '',
+  imports: [TriTagModule],
   template: `
-    <nz-tag>Tag 1</nz-tag>
-    <nz-tag>
+    <tri-tag>Tag 1</tri-tag>
+    <tri-tag>
       <a href="https://github.com/NG-ZORRO/ng-zorro-antd">Link</a>
-    </nz-tag>
-    <nz-tag nzMode="closeable" (nzOnClose)="onClose()">Tag 2</nz-tag>
-    <nz-tag nzMode="closeable" (nzOnClose)="preventDefault($event)">Prevent Default</nz-tag>
+    </tri-tag>
+    <tri-tag mode="closeable" (onClose)="onClose()">Tag 2</tri-tag>
+    <tri-tag mode="closeable" (onClose)="preventDefault($event)">Prevent Default</tri-tag>
   `
 })
-export class NzDemoTagBasicComponent {
+export class TriDemoTagBasicComponent {
   onClose(): void {
     console.log('tag was closed.');
   }

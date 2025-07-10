@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriModalModule, TriModalService } from 'ng-zorro-antd/modal';
 
 @Component({
-  selector: 'nz-demo-modal-info',
-  imports: [NzButtonModule, NzModalModule],
+  selector: '',
+  imports: [TriButtonModule, TriModalModule],
   template: `
-    <button nz-button (click)="info()">Info</button>
-    <button nz-button (click)="success()">Success</button>
-    <button nz-button (click)="error()">Error</button>
-    <button nz-button (click)="warning()">Warning</button>
+    <button tri-button (click)="info()">Info</button>
+    <button tri-button (click)="success()">Success</button>
+    <button tri-button (click)="error()">Error</button>
+    <button tri-button (click)="warning()">Warning</button>
   `,
   styles: [
     `
@@ -20,35 +20,35 @@ import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
     `
   ]
 })
-export class NzDemoModalInfoComponent {
-  constructor(private modal: NzModalService) {}
+export class TriDemoModalInfoComponent {
+  constructor(private modal: TriModalService) {}
 
   info(): void {
     this.modal.info({
-      nzTitle: 'This is a notification message',
-      nzContent: '<p>some messages...some messages...</p><p>some messages...some messages...</p>',
-      nzOnOk: () => console.log('Info OK')
+      title: 'This is a notification message',
+      content: '<p>some messages...some messages...</p><p>some messages...some messages...</p>',
+      onOk: () => console.log('Info OK')
     });
   }
 
   success(): void {
     this.modal.success({
-      nzTitle: 'This is a success message',
-      nzContent: 'some messages...some messages...'
+      title: 'This is a success message',
+      content: 'some messages...some messages...'
     });
   }
 
   error(): void {
     this.modal.error({
-      nzTitle: 'This is an error message',
-      nzContent: 'some messages...some messages...'
+      title: 'This is an error message',
+      content: 'some messages...some messages...'
     });
   }
 
   warning(): void {
     this.modal.warning({
-      nzTitle: 'This is an warning message',
-      nzContent: 'some messages...some messages...'
+      title: 'This is an warning message',
+      content: 'some messages...some messages...'
     });
   }
 }

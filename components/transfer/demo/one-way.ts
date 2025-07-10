@@ -1,29 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzSwitchModule } from 'ng-zorro-antd/switch';
-import { NzTransferModule, TransferItem } from 'ng-zorro-antd/transfer';
+import { TriSwitchModule } from 'ng-zorro-antd/switch';
+import { TriTransferModule, TransferItem } from 'ng-zorro-antd/transfer';
 
 @Component({
-  selector: 'nz-demo-transfer-one-way',
-  imports: [NzTransferModule, NzSwitchModule, FormsModule],
+  selector: '',
+  imports: [TriTransferModule, TriSwitchModule, FormsModule],
   template: `
-    <nz-transfer
-      [nzDataSource]="list"
-      [nzDisabled]="disabled"
-      [nzTitles]="['Source', 'Target']"
-      (nzSelectChange)="select($event)"
-      [nzSelectedKeys]="['0', '2', '3']"
-      nzOneWay
-      (nzChange)="change($event)"
-    ></nz-transfer>
+    <tri-transfer
+      [dataSource]="list"
+      [disabled]="disabled"
+      [titles]="['Source', 'Target']"
+      (selectChange)="select($event)"
+      [selectedKeys]="['0', '2', '3']"
+      oneWay
+      (change)="change($event)"
+    ></tri-transfer>
     <div style="margin-top: 8px;">
-      <nz-switch [(ngModel)]="disabled" nzCheckedChildren="disabled" nzUnCheckedChildren="disabled"></nz-switch>
+      <tri-switch [(ngModel)]="disabled" checkedChildren="disabled" unCheckedChildren="disabled"></tri-switch>
       <div></div>
     </div>
   `
 })
-export class NzDemoTransferOneWayComponent implements OnInit {
+export class TriDemoTransferOneWayComponent implements OnInit {
   list: TransferItem[] = [];
   disabled = false;
 

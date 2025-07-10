@@ -18,41 +18,41 @@ import {
 
 import { toCssPixel } from 'ng-zorro-antd/core/util';
 
-import { NzSkeletonElementAvatarComponent, NzSkeletonElementDirective } from './skeleton-element.component';
+import { TriSkeletonElementAvatarComponent, TriSkeletonElementDirective } from './skeleton-element.component';
 import {
-  NzSkeletonAvatar,
-  NzSkeletonAvatarShape,
-  NzSkeletonAvatarSize,
-  NzSkeletonParagraph,
-  NzSkeletonTitle
+  TriSkeletonAvatar,
+  TriSkeletonAvatarShape,
+  TriSkeletonAvatarSize,
+  TriSkeletonParagraph,
+  TriSkeletonTitle
 } from './skeleton.type';
 
 @Component({
-  selector: 'nz-skeleton',
-  exportAs: 'nzSkeleton',
+  selector: '',
+  exportAs: 'triSkeleton',
   host: {
-    class: 'ant-skeleton',
-    '[class.ant-skeleton-with-avatar]': '!!nzAvatar',
-    '[class.ant-skeleton-active]': 'nzActive',
-    '[class.ant-skeleton-round]': 'nzRound'
+    class: 'tri-skeleton',
+    '[class.tri-skeleton-with-avatar]': '!!avatar',
+    '[class.tri-skeleton-active]': 'active',
+    '[class.tri-skeleton-round]': 'round'
   },
   template: `
-    @if (nzLoading) {
-      @if (!!nzAvatar) {
-        <div class="ant-skeleton-header">
-          <nz-skeleton-element
-            nzType="avatar"
-            [nzSize]="avatar.size || 'default'"
-            [nzShape]="avatar.shape || 'circle'"
-          ></nz-skeleton-element>
+    @if (loading) {
+      @if (!!avatar) {
+        <div class="tri-skeleton-header">
+          <tri-skeleton-element
+            type="avatar"
+            [size]="avatar.size || 'default'"
+            [shape]="avatar.shape || 'circle'"
+          ></tri-skeleton-element>
         </div>
       }
-      <div class="ant-skeleton-content">
-        @if (!!nzTitle) {
-          <h3 class="ant-skeleton-title" [style.width]="toCSSUnit(title.width)"></h3>
+      <div class="tri-skeleton-content">
+        @if (!!title) {
+          <h3 class="tri-skeleton-title" [style.width]="toCSSUnit(title.width)"></h3>
         }
-        @if (!!nzParagraph) {
-          <ul class="ant-skeleton-paragraph">
+        @if (!!paragraph) {
+          <ul class="tri-skeleton-paragraph">
             @for (row of rowsList; track row; let i = $index) {
               <li [style.width]="toCSSUnit(widthList[i])"></li>
             }
@@ -63,23 +63,23 @@ import {
       <ng-content></ng-content>
     }
   `,
-  imports: [NzSkeletonElementDirective, NzSkeletonElementAvatarComponent],
+  imports: [TriSkeletonElementDirective, TriSkeletonElementAvatarComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class NzSkeletonComponent implements OnInit, OnChanges {
+export class TriSkeletonComponent implements OnInit, OnChanges {
   private cdr = inject(ChangeDetectorRef);
 
-  @Input({ transform: booleanAttribute }) nzActive = false;
-  @Input({ transform: booleanAttribute }) nzLoading = true;
-  @Input({ transform: booleanAttribute }) nzRound = false;
-  @Input() nzTitle: NzSkeletonTitle | boolean = true;
-  @Input() nzAvatar: NzSkeletonAvatar | boolean = false;
-  @Input() nzParagraph: NzSkeletonParagraph | boolean = true;
+  @Input({ transform: booleanAttribute }) active = false;
+  @Input({ transform: booleanAttribute }) loading = true;
+  @Input({ transform: booleanAttribute }) round = false;
+  @Input() title: TriSkeletonTitle | boolean = true;
+  @Input() avatar: TriSkeletonAvatar | boolean = false;
+  @Input() paragraph: TriSkeletonParagraph | boolean = true;
 
-  title!: NzSkeletonTitle;
-  avatar!: NzSkeletonAvatar;
-  paragraph!: NzSkeletonParagraph;
+  _title!: TriSkeletonTitle;
+  _avatar!: TriSkeletonAvatar;
+  _paragraph!: TriSkeletonParagraph;
   rowsList: number[] = [];
   widthList: Array<number | string> = [];
 
@@ -87,28 +87,28 @@ export class NzSkeletonComponent implements OnInit, OnChanges {
     return toCssPixel(value);
   }
 
-  private getTitleProps(): NzSkeletonTitle {
-    const hasAvatar = !!this.nzAvatar;
-    const hasParagraph = !!this.nzParagraph;
+  private getTitleProps(): TriSkeletonTitle {
+    const hasAvatar = !!this.avatar;
+    const hasParagraph = !!this.paragraph;
     let width = '';
     if (!hasAvatar && hasParagraph) {
       width = '38%';
     } else if (hasAvatar && hasParagraph) {
       width = '50%';
     }
-    return { width, ...this.getProps(this.nzTitle) };
+    return { width, ...this.getProps(this.title) };
   }
 
-  private getAvatarProps(): NzSkeletonAvatar {
-    const shape: NzSkeletonAvatarShape = !!this.nzTitle && !this.nzParagraph ? 'square' : 'circle';
-    const size: NzSkeletonAvatarSize = 'large';
-    return { shape, size, ...this.getProps(this.nzAvatar) };
+  private getAvatarProps(): TriSkeletonAvatar {
+    const shape: TriSkeletonAvatarShape = !!this.title && !this.paragraph ? 'square' : 'circle';
+    const size: TriSkeletonAvatarSize = 'large';
+    return { shape, size, ...this.getProps(this.avatar) };
   }
 
-  private getParagraphProps(): NzSkeletonParagraph {
-    const hasAvatar = !!this.nzAvatar;
-    const hasTitle = !!this.nzTitle;
-    const basicProps: NzSkeletonParagraph = {};
+  private getParagraphProps(): TriSkeletonParagraph {
+    const hasAvatar = !!this.avatar;
+    const hasTitle = !!this.title;
+    const basicProps: TriSkeletonParagraph = {};
     // Width
     if (!hasAvatar || !hasTitle) {
       basicProps.width = '61%';
@@ -119,7 +119,7 @@ export class NzSkeletonComponent implements OnInit, OnChanges {
     } else {
       basicProps.rows = 2;
     }
-    return { ...basicProps, ...this.getProps(this.nzParagraph) };
+    return { ...basicProps, ...this.getProps(this.paragraph) };
   }
 
   private getProps<T>(prop: T | boolean | undefined): T | {} {
@@ -127,7 +127,7 @@ export class NzSkeletonComponent implements OnInit, OnChanges {
   }
 
   private getWidthList(): Array<number | string> {
-    const { width, rows } = this.paragraph;
+    const { width, rows } = this._paragraph;
     let widthList: Array<string | number> = [];
     if (width && Array.isArray(width)) {
       widthList = width;
@@ -139,10 +139,10 @@ export class NzSkeletonComponent implements OnInit, OnChanges {
   }
 
   private updateProps(): void {
-    this.title = this.getTitleProps();
-    this.avatar = this.getAvatarProps();
-    this.paragraph = this.getParagraphProps();
-    this.rowsList = [...Array(this.paragraph.rows)];
+    this._title = this.getTitleProps();
+    this._avatar = this.getAvatarProps();
+    this._paragraph = this.getParagraphProps();
+    this.rowsList = [...Array(this._paragraph.rows)];
     this.widthList = this.getWidthList();
     this.cdr.markForCheck();
   }

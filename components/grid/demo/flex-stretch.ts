@@ -1,26 +1,26 @@
 import { Component } from '@angular/core';
 
-import { NzGridModule } from 'ng-zorro-antd/grid';
+import { TriGridModule } from 'ng-zorro-antd/grid';
 
 @Component({
-  selector: 'nz-demo-grid-flex-stretch',
-  imports: [NzGridModule],
+  selector: '',
+  imports: [TriGridModule],
   template: `
     <div>
       <p>Percentage columns</p>
-      <div nz-row>
-        <div nz-col nzFlex="2">2 / 5</div>
-        <div nz-col nzFlex="3">3 / 5</div>
+      <div tri-row>
+        <div tri-col flex="2">2 / 5</div>
+        <div tri-col flex="3">3 / 5</div>
       </div>
       <p>Fill rest</p>
-      <div nz-row>
-        <div nz-col nzFlex="100px">100px</div>
-        <div nz-col nzFlex="auto">Fill Rest</div>
+      <div tri-row>
+        <div tri-col flex="100px">100px</div>
+        <div tri-col flex="auto">Fill Rest</div>
       </div>
       <p>Raw flex style</p>
-      <div nz-row>
-        <div nz-col nzFlex="1 1 200px">1 1 200px</div>
-        <div nz-col nzFlex="0 1 300px">0 1 300px</div>
+      <div tri-row>
+        <div tri-col flex="1 1 200px">1 1 200px</div>
+        <div tri-col flex="0 1 300px">0 1 300px</div>
       </div>
     </div>
   `,
@@ -32,4 +32,4 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
     `
   ]
 })
-export class NzDemoGridFlexStretchComponent {}
+export class TriDemoGridFlexStretchComponent {}

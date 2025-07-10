@@ -1,23 +1,23 @@
 import { Component } from '@angular/core';
 
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { TriDividerModule } from 'ng-zorro-antd/divider';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: 'nz-demo-space-split',
-  imports: [NzDividerModule, NzSpaceModule],
+  selector: '',
+  imports: [TriDividerModule, TriSpaceModule],
   template: `
-    <nz-space [nzSplit]="spaceSplit">
+    <tri-space [split]="spaceSplit">
       <ng-template #spaceSplit>
-        <nz-divider nzType="vertical"></nz-divider>
+        <tri-divider type="vertical"></tri-divider>
       </ng-template>
 
-      <a *nzSpaceItem>Link</a>
-      <a *nzSpaceItem>Link</a>
-      <a *nzSpaceItem>Link</a>
-    </nz-space>
+      <a *spaceItem>Link</a>
+      <a *spaceItem>Link</a>
+      <a *spaceItem>Link</a>
+    </tri-space>
   `
 })
-export class NzDemoSpaceSplitComponent {
+export class TriDemoSpaceSplitComponent {
   size = 8;
 }

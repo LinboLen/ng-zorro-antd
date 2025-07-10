@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: 'nz-demo-input-size',
-  imports: [NzInputModule],
+  selector: '',
+  imports: [TriInputModule],
   template: `
-    <input nz-input placeholder="large size" nzSize="large" />
+    <input tri-input placeholder="large size" size="large" />
     <br />
     <br />
-    <input nz-input placeholder="default size" nzSize="default" />
+    <input tri-input placeholder="default size" size="default" />
     <br />
     <br />
-    <input nz-input placeholder="small size" nzSize="small" />
+    <input tri-input placeholder="small size" size="small" />
   `
 })
-export class NzDemoInputSizeComponent {}
+export class TriDemoInputSizeComponent {}

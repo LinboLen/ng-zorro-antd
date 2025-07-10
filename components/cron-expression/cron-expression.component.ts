@@ -37,15 +37,15 @@ import { Observable, of } from 'rxjs';
 
 import { CronExpression, parseExpression } from 'cron-parser';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzCronExpressionI18nInterface, NzI18nService } from 'ng-zorro-antd/i18n';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { TriCronExpressionI18nInterface, TriI18nService } from 'ng-zorro-antd/i18n';
 
-import { NzCronExpressionInputComponent } from './cron-expression-input.component';
-import { NzCronExpressionLabelComponent } from './cron-expression-label.component';
-import { NzCronExpressionPreviewComponent } from './cron-expression-preview.component';
-import { Cron, CronChangeType, CronValue, NzCronExpressionSize, NzCronExpressionType, TimeType } from './typings';
+import { TriCronExpressionInputComponent } from './cron-expression-input.component';
+import { TriCronExpressionLabelComponent } from './cron-expression-label.component';
+import { TriCronExpressionPreviewComponent } from './cron-expression-preview.component';
+import { Cron, CronChangeType, CronValue, TriCronExpressionSize, TriCronExpressionType, TimeType } from './typings';
 
-function labelsOfType(type: NzCronExpressionType): TimeType[] {
+function labelsOfType(type: TriCronExpressionType): TimeType[] {
   if (type === 'spring') {
     return ['second', 'minute', 'hour', 'day', 'month', 'week'];
   }
@@ -55,26 +55,26 @@ function labelsOfType(type: NzCronExpressionType): TimeType[] {
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-cron-expression',
-  exportAs: 'nzCronExpression',
+  selector: '',
+  exportAs: 'triCronExpression',
   template: `
-    <div class="ant-cron-expression">
-      <div class="ant-cron-expression-content">
+    <div class="tri-cron-expression">
+      <div class="tri-cron-expression-content">
         <div
-          class="ant-input ant-cron-expression-input-group"
-          [class.ant-input-lg]="nzSize === 'large'"
-          [class.ant-input-sm]="nzSize === 'small'"
-          [class.ant-input-borderless]="nzBorderless"
-          [class.ant-cron-expression-input-group-focus]="focus && !nzBorderless"
-          [class.ant-input-status-error]="!validateForm.valid && !nzBorderless"
-          [class.ant-cron-expression-input-group-error-focus]="!validateForm.valid && focus && !nzBorderless"
-          [class.ant-input-disabled]="nzDisabled"
+          class="tri-input tri-cron-expression-input-group"
+          [class.tri-input-lg]="size === 'large'"
+          [class.tri-input-sm]="size === 'small'"
+          [class.tri-input-borderless]="borderless"
+          [class.tri-cron-expression-input-group-focus]="focus && !borderless"
+          [class.tri-input-status-error]="!validateForm.valid && !borderless"
+          [class.tri-cron-expression-input-group-error-focus]="!validateForm.valid && focus && !borderless"
+          [class.tri-input-disabled]="disabled"
         >
           @for (label of labels; track label) {
-            <nz-cron-expression-input
+            <tri-cron-expression-input
               [value]="this.validateForm.controls[label].value"
               [label]="label"
-              [disabled]="nzDisabled"
+              [disabled]="disabled"
               (focusEffect)="focusEffect($event)"
               (blurEffect)="blurEffect()"
               (getValue)="getValue($event)"
@@ -82,28 +82,28 @@ function labelsOfType(type: NzCronExpressionType): TimeType[] {
           }
         </div>
         <div
-          class="ant-cron-expression-label-group"
-          [class.ant-input-lg]="nzSize === 'large'"
-          [class.ant-cron-expression-label-group-default]="nzSize === 'default'"
-          [class.ant-input-sm]="nzSize === 'small'"
+          class="tri-cron-expression-label-group"
+          [class.tri-input-lg]="size === 'large'"
+          [class.tri-cron-expression-label-group-default]="size === 'default'"
+          [class.tri-input-sm]="size === 'small'"
         >
           @for (label of labels; track label) {
-            <nz-cron-expression-label [type]="label" [labelFocus]="labelFocus" [locale]="locale" />
+            <tri-cron-expression-label [type]="label" [labelFocus]="labelFocus" [locale]="locale" />
           }
         </div>
-        @if (!nzCollapseDisable) {
-          <nz-cron-expression-preview
+        @if (!collapseDisable) {
+          <tri-cron-expression-preview
             [TimeList]="nextTimeList"
             [visible]="validateForm.valid"
             [locale]="locale"
-            [nzSemantic]="nzSemantic"
+            [semantic]="semantic"
             (loadMorePreview)="loadMorePreview()"
           />
         }
       </div>
-      @if (nzExtra) {
-        <div class="ant-cron-expression-map">
-          <ng-template [ngTemplateOutlet]="nzExtra" />
+      @if (extra) {
+        <div class="tri-cron-expression-map">
+          <ng-template [ngTemplateOutlet]="extra" />
         </div>
       }
     </div>
@@ -111,47 +111,47 @@ function labelsOfType(type: NzCronExpressionType): TimeType[] {
   providers: [
     {
       provide: NG_ASYNC_VALIDATORS,
-      useExisting: forwardRef(() => NzCronExpressionComponent),
+      useExisting: forwardRef(() => TriCronExpressionComponent),
       multi: true
     },
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NzCronExpressionComponent),
+      useExisting: forwardRef(() => TriCronExpressionComponent),
       multi: true
     }
   ],
   imports: [
-    NzCronExpressionInputComponent,
-    NzCronExpressionLabelComponent,
-    NzCronExpressionPreviewComponent,
+    TriCronExpressionInputComponent,
+    TriCronExpressionLabelComponent,
+    TriCronExpressionPreviewComponent,
     NgTemplateOutlet
   ]
 })
-export class NzCronExpressionComponent implements OnInit, OnChanges, ControlValueAccessor, AsyncValidator {
+export class TriCronExpressionComponent implements OnInit, OnChanges, ControlValueAccessor, AsyncValidator {
   private formBuilder = inject(FormBuilder);
   private cdr = inject(ChangeDetectorRef);
-  private i18n = inject(NzI18nService);
+  private i18n = inject(TriI18nService);
   private destroyRef = inject(DestroyRef);
 
-  @Input() nzSize: NzCronExpressionSize = 'default';
-  @Input() nzType: NzCronExpressionType = 'linux';
-  @Input({ transform: booleanAttribute }) nzCollapseDisable: boolean = false;
-  @Input() nzExtra?: TemplateRef<void> | null = null;
-  @Input() nzSemantic: TemplateRef<void> | null = null;
-  @Input({ transform: booleanAttribute }) nzBorderless = false;
-  @Input({ transform: booleanAttribute }) nzDisabled = false;
+  @Input() size: TriCronExpressionSize = 'default';
+  @Input() type: TriCronExpressionType = 'linux';
+  @Input({ transform: booleanAttribute }) collapseDisable: boolean = false;
+  @Input() extra?: TemplateRef<void> | null = null;
+  @Input() semantic: TemplateRef<void> | null = null;
+  @Input({ transform: booleanAttribute }) borderless = false;
+  @Input({ transform: booleanAttribute }) disabled = false;
 
-  locale!: NzCronExpressionI18nInterface;
+  locale!: TriCronExpressionI18nInterface;
   focus: boolean = false;
   labelFocus: TimeType | null = null;
-  labels: TimeType[] = labelsOfType(this.nzType);
+  labels: TimeType[] = labelsOfType(this.type);
   interval!: CronExpression<false>;
   nextTimeList: Date[] = [];
   private isNzDisableFirstChange: boolean = true;
 
   validateForm: FormGroup<Record<TimeType, FormControl<CronValue>>>;
 
-  onChange: NzSafeAny = () => {};
+  onChange: TriSafeAny = () => {};
   onTouch: () => void = () => null;
 
   convertFormat(value: string): void {
@@ -169,11 +169,11 @@ export class NzCronExpressionComponent implements OnInit, OnChanges, ControlValu
     }
   }
 
-  registerOnChange(fn: NzSafeAny): void {
+  registerOnChange(fn: TriSafeAny): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: NzSafeAny): void {
+  registerOnTouched(fn: TriSafeAny): void {
     this.onTouch = fn;
   }
 
@@ -186,7 +186,7 @@ export class NzCronExpressionComponent implements OnInit, OnChanges, ControlValu
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.nzDisabled = (this.isNzDisableFirstChange && this.nzDisabled) || isDisabled;
+    this.disabled = (this.isNzDisableFirstChange && this.disabled) || isDisabled;
     this.isNzDisableFirstChange = false;
     this.cdr.markForCheck();
   }
@@ -224,13 +224,13 @@ export class NzCronExpressionComponent implements OnInit, OnChanges, ControlValu
     const { nzType } = changes;
 
     if (nzType) {
-      this.labels = labelsOfType(this.nzType);
+      this.labels = labelsOfType(this.type);
       this.cronFormType();
     }
   }
 
   cronFormType(): void {
-    if (this.nzType === 'spring') {
+    if (this.type === 'spring') {
       this.validateForm.controls.second.enable();
     } else {
       this.validateForm.controls.second.disable();

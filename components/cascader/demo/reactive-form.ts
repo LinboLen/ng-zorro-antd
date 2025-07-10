@@ -2,10 +2,10 @@ import { Component, inject, OnDestroy } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzCascaderModule, NzCascaderOption } from 'ng-zorro-antd/cascader';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriCascaderModule, TriCascaderOption } from 'ng-zorro-antd/cascader';
 
-const options: NzCascaderOption[] = [
+const options: TriCascaderOption[] = [
   {
     value: 'zhejiang',
     label: 'Zhejiang',
@@ -48,15 +48,15 @@ const options: NzCascaderOption[] = [
 ];
 
 @Component({
-  selector: 'nz-demo-cascader-reactive-form',
-  imports: [ReactiveFormsModule, NzButtonModule, NzCascaderModule],
+  selector: '',
+  imports: [ReactiveFormsModule, TriButtonModule, TriCascaderModule],
   template: `
     <form [formGroup]="form" novalidate>
-      <nz-cascader [nzOptions]="nzOptions" formControlName="name"></nz-cascader>
+      <tri-cascader [options]="options" formControlName="name"></tri-cascader>
     </form>
     <br />
-    <button nz-button (click)="reset()">Reset</button>
-    <button nz-button (click)="submit()">Submit</button>
+    <button tri-button (click)="reset()">Reset</button>
+    <button tri-button (click)="submit()">Submit</button>
   `,
   styles: [
     `
@@ -66,12 +66,12 @@ const options: NzCascaderOption[] = [
     `
   ]
 })
-export class NzDemoCascaderReactiveFormComponent implements OnDestroy {
+export class TriDemoCascaderReactiveFormComponent implements OnDestroy {
   private fb = inject(FormBuilder);
   form = this.fb.group({
     name: this.fb.control<string[] | null>(null, Validators.required)
   });
-  nzOptions: NzCascaderOption[] = options;
+  options: TriCascaderOption[] = options;
   changeSubscription: Subscription;
 
   constructor() {

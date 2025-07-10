@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzElementPatchDirective } from './element-patch.directive';
+import { TriElementPatchDirective } from './element-patch.directive';
 
 @NgModule({
-  imports: [NzElementPatchDirective],
-  exports: [NzElementPatchDirective]
+  imports: [TriElementPatchDirective],
+  exports: [TriElementPatchDirective]
 })
-export class NzElementPatchModule {}
+export class TriElementPatchModule {}

@@ -10,9 +10,9 @@ import { pointer, select } from 'd3-selection';
 import { ZoomBehavior, zoomIdentity, ZoomTransform } from 'd3-zoom';
 
 import { requestAnimationFrame } from 'ng-zorro-antd/core/polyfill';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzZoomTransform } from '../interface';
+import { TriZoomTransform } from '../interface';
 
 const FRAC_VIEWPOINT_AREA = 0.8;
 
@@ -34,7 +34,7 @@ export class Minimap {
     private ngZone: NgZone,
     private svg: SVGSVGElement,
     private zoomG: SVGGElement,
-    private mainZoom: ZoomBehavior<NzSafeAny, NzSafeAny>,
+    private mainZoom: ZoomBehavior<TriSafeAny, TriSafeAny>,
     private minimap: HTMLElement,
     private maxWidth: number,
     private labelPadding: number
@@ -45,11 +45,11 @@ export class Minimap {
     this.canvas = minimapElement.select('canvas.viewport').node() as HTMLCanvasElement;
     this.canvasRect = this.canvas.getBoundingClientRect();
 
-    const handleEvent = (event: NzSafeAny): void => {
+    const handleEvent = (event: TriSafeAny): void => {
       const minimapOffset = this.minimapOffset();
       const width = Number(viewpointElement.attr('width'));
       const height = Number(viewpointElement.attr('height'));
-      const clickCoords = pointer(event, minimapSvgElement.node() as NzSafeAny);
+      const clickCoords = pointer(event, minimapSvgElement.node() as TriSafeAny);
       this.viewpointCoord.x = clickCoords[0] - width / 2 - minimapOffset.x;
       this.viewpointCoord.y = clickCoords[1] - height / 2 - minimapOffset.y;
       this.updateViewpoint();
@@ -57,7 +57,7 @@ export class Minimap {
     this.viewpointCoord = { x: 0, y: 0 };
     const subject = drag().subject(Object);
     const dragEvent = subject.on('drag', handleEvent);
-    viewpointElement.datum(this.viewpointCoord as NzSafeAny).call(dragEvent as NzSafeAny);
+    viewpointElement.datum(this.viewpointCoord as TriSafeAny).call(dragEvent as TriSafeAny);
 
     // Make the minimap clickable.
     minimapSvgElement.on('click', event => {
@@ -124,7 +124,7 @@ export class Minimap {
     for (const k of new Array(document.styleSheets.length).keys()) {
       try {
         const cssRules =
-          (document.styleSheets[k] as NzSafeAny).cssRules || (document.styleSheets[k] as NzSafeAny).rules;
+          (document.styleSheets[k] as TriSafeAny).cssRules || (document.styleSheets[k] as TriSafeAny).rules;
         if (cssRules == null) {
           continue;
         }
@@ -132,7 +132,7 @@ export class Minimap {
           // Remove tf-* selectors from the styles.
           stylesText += `${cssRules[i].cssText.replace(/ ?tf-[\w-]+ ?/g, '')}\n`;
         }
-      } catch (e: NzSafeAny) {
+      } catch (e: TriSafeAny) {
         if (e.name !== 'SecurityError') {
           throw e;
         }
@@ -172,8 +172,8 @@ export class Minimap {
 
     // Update the size of the minimap's svg, the buffer canvas and the
     // viewpoint rect.
-    select(this.minimapSvg).attr(this.minimapSize as NzSafeAny);
-    select(this.canvasBuffer).attr(this.minimapSize as NzSafeAny);
+    select(this.minimapSvg).attr(this.minimapSize as TriSafeAny);
+    select(this.canvasBuffer).attr(this.minimapSize as TriSafeAny);
 
     if (this.translate != null && this.zoom != null) {
       // Update the viewpoint rectangle shape since the aspect ratio of the
@@ -227,7 +227,7 @@ export class Minimap {
    *
    * @param transform
    */
-  zoom(transform?: ZoomTransform | NzZoomTransform): void {
+  zoom(transform?: ZoomTransform | TriZoomTransform): void {
     if (this.scaleMinimap == null) {
       // Scene is not ready yet.
       return;

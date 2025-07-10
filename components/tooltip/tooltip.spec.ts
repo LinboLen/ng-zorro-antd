@@ -8,16 +8,16 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { NzElementPatchModule } from 'ng-zorro-antd/core/element-patch';
+import { TriElementPatchModule } from 'ng-zorro-antd/core/element-patch';
 import { dispatchMouseEvent } from 'ng-zorro-antd/core/testing';
 
-import { NzTooltipBaseDirective, NzTooltipTrigger } from './base';
-import { NzTooltipDirective } from './tooltip';
-import { NzToolTipModule } from './tooltip.module';
+import { TriTooltipBaseDirective, TriTooltipTrigger } from './base';
+import { TriTooltipDirective } from './tooltip';
+import { TriToolTipModule } from './tooltip.module';
 
 describe('nz-tooltip', () => {
-  let fixture: ComponentFixture<NzTooltipTestComponent>;
-  let component: NzTooltipTestComponent;
+  let fixture: ComponentFixture<TriTooltipTestComponent>;
+  let component: TriTooltipTestComponent;
   let overlayContainer: OverlayContainer;
   let overlayContainerElement: HTMLElement;
 
@@ -25,7 +25,7 @@ describe('nz-tooltip', () => {
     TestBed.configureTestingModule({
       providers: [provideNoopAnimations()]
     });
-    fixture = TestBed.createComponent(NzTooltipTestComponent);
+    fixture = TestBed.createComponent(TriTooltipTestComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
@@ -256,12 +256,12 @@ describe('nz-tooltip', () => {
 
       dispatchMouseEvent(triggerElement, 'mouseenter');
       waitingForTooltipToggling();
-      expect(tooltipComponent.nzTitle).toBe('title-string');
+      expect(tooltipComponent.title).toBe('title-string');
       expect(overlayContainerElement.textContent).toContain('title-string');
 
       component.title = 'changed!';
       fixture.detectChanges();
-      expect(tooltipComponent.nzTitle).toBe('changed!');
+      expect(tooltipComponent.title).toBe('changed!');
       expect(overlayContainerElement.textContent).toContain('changed!');
     }));
 
@@ -327,13 +327,13 @@ describe('nz-tooltip', () => {
 });
 
 describe('origin', () => {
-  let component: NzTestTooltipTargetComponent;
+  let component: TriTestTooltipTargetComponent;
 
   beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
       providers: [provideNoopAnimations()]
     });
-    const fixture = TestBed.createComponent(NzTestTooltipTargetComponent);
+    const fixture = TestBed.createComponent(TriTestTooltipTargetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
@@ -344,13 +344,13 @@ describe('origin', () => {
 });
 
 describe('arrow', () => {
-  let component: NzTestTooltipArrowComponent;
+  let component: TriTestTooltipArrowComponent;
 
   beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
       providers: [provideNoopAnimations()]
     });
-    const fixture = TestBed.createComponent(NzTestTooltipArrowComponent);
+    const fixture = TestBed.createComponent(TriTestTooltipArrowComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
@@ -367,77 +367,77 @@ describe('arrow', () => {
   });
 });
 
-function getOverlayElementForTooltip(tooltip: NzTooltipBaseDirective): HTMLElement {
+function getOverlayElementForTooltip(tooltip: TriTooltipBaseDirective): HTMLElement {
   return tooltip!.component!.overlay.overlayRef.overlayElement;
 }
 
 @Component({
-  imports: [NzToolTipModule],
+  imports: [TriToolTipModule],
   template: `
     <a
       #titleString
-      nz-tooltip
-      [nzTooltipTitle]="title"
-      nzTooltipTrigger="hover"
-      nzTooltipPlacement="topLeft"
-      [nzTooltipOverlayClassName]="class"
-      [nzTooltipOverlayStyle]="style"
-      [nzTooltipMouseEnterDelay]="mouseEnterDelay"
-      [nzTooltipMouseLeaveDelay]="mouseLeaveDelay"
-      (nzTooltipVisibleChange)="onVisibleChange()"
+      tri-tooltip
+      [tooltipTitle]="title"
+      tooltipTrigger="hover"
+      tooltipPlacement="topLeft"
+      [tooltipOverlayClassName]="class"
+      [tooltipOverlayStyle]="style"
+      [tooltipMouseEnterDelay]="mouseEnterDelay"
+      [tooltipMouseLeaveDelay]="mouseLeaveDelay"
+      (tooltipVisibleChange)="onVisibleChange()"
     >
       Hover
     </a>
 
-    <a #titleTemplate nz-tooltip [nzTooltipTitle]="template" [nzTooltipTrigger]="trigger" [nzTooltipColor]="color">
+    <a #titleTemplate tri-tooltip [tooltipTitle]="template" [tooltipTrigger]="trigger" [tooltipColor]="color">
       Click
     </a>
 
-    <a #focusTooltip nz-tooltip nzTooltipTrigger="focus" nzTooltipTitle="focus">Focus</a>
+    <a #focusTooltip tri-tooltip tooltipTrigger="focus" tooltipTitle="focus">Focus</a>
 
     <a
       #program
-      nz-tooltip
-      [nzTooltipTrigger]="null"
-      nzTooltipTitle="program"
-      [nzTooltipVisible]="visible"
-      (nzTooltipVisibleChange)="onVisibleChange()"
+      tri-tooltip
+      [tooltipTrigger]="null"
+      tooltipTitle="program"
+      [tooltipVisible]="visible"
+      (tooltipVisibleChange)="onVisibleChange()"
     >
       Manually
     </a>
 
     <a
       #alwaysShow
-      nz-tooltip
-      [nzTooltipTrigger]="trigger"
-      [nzTooltipTitle]="'always show'"
-      [nzTooltipVisible]="visible"
+      tri-tooltip
+      [tooltipTrigger]="trigger"
+      [tooltipTitle]="'always show'"
+      [tooltipVisible]="visible"
     >
       Always Show
     </a>
 
     <div>
       <button>A</button>
-      <button #inBtnGroup nz-tooltip nzTooltipTitle="title-string">B</button>
+      <button #inBtnGroup tri-tooltip tooltipTitle="title-string">B</button>
       <button>C</button>
     </div>
 
     <ng-template #template>title-template</ng-template>
   `
 })
-export class NzTooltipTestComponent {
+export class TriTooltipTestComponent {
   @ViewChild('titleString', { static: false }) titleString!: ElementRef;
-  @ViewChild('titleString', { static: false, read: NzTooltipDirective })
-  titleStringDirective!: NzTooltipDirective;
+  @ViewChild('titleString', { static: false, read: TriTooltipDirective })
+  titleStringDirective!: TriTooltipDirective;
 
   @ViewChild('titleTemplate', { static: false }) titleTemplate!: ElementRef;
-  @ViewChild('titleTemplate', { static: false, read: NzTooltipDirective })
-  titleTemplateDirective!: NzTooltipDirective;
+  @ViewChild('titleTemplate', { static: false, read: TriTooltipDirective })
+  titleTemplateDirective!: TriTooltipDirective;
 
   @ViewChild('focusTooltip', { static: false }) focusTemplate!: ElementRef;
   @ViewChild('alwaysShow', { static: false }) alwaysShow!: ElementRef;
 
-  trigger: NzTooltipTrigger = 'click';
+  trigger: TriTooltipTrigger = 'click';
 
   @ViewChild('inBtnGroup', { static: false }) inBtnGroup!: ElementRef;
 
@@ -455,31 +455,31 @@ export class NzTooltipTestComponent {
 }
 
 @Component({
-  imports: [NzElementPatchModule, NzToolTipModule],
+  imports: [TriElementPatchModule, TriToolTipModule],
   template: `
-    <button nz-element #button="nzElement">Action</button>
-    <a nz-tooltip nzTooltipTitle="This action could not be revoked!" [nzTooltipOrigin]="button.elementRef">Notice</a>
+    <button tri-element #button="nzElement">Action</button>
+    <a tri-tooltip tooltipTitle="This action could not be revoked!" [tooltipOrigin]="button.elementRef">Notice</a>
   `
 })
-export class NzTestTooltipTargetComponent {
-  @ViewChild(NzTooltipDirective) tooltip?: NzTooltipDirective;
+export class TriTestTooltipTargetComponent {
+  @ViewChild(TriTooltipDirective) tooltip?: TriTooltipDirective;
 }
 
 @Component({
-  imports: [NzToolTipModule],
+  imports: [TriToolTipModule],
   template: `
     <a
       #titleString
-      nz-tooltip
-      [nzTooltipVisible]="true"
-      nzTooltipTitle="Title"
-      nzTooltipPlacement="bottomLeft"
-      [nzTooltipArrowPointAtCenter]="true"
+      tri-tooltip
+      [tooltipVisible]="true"
+      tooltipTitle="Title"
+      tooltipPlacement="bottomLeft"
+      [tooltipArrowPointAtCenter]="true"
     >
       Tooltip
     </a>
   `
 })
-export class NzTestTooltipArrowComponent {
-  @ViewChild('titleString', { static: false, read: NzTooltipDirective }) tooltipDirective!: NzTooltipDirective;
+export class TriTestTooltipArrowComponent {
+  @ViewChild('titleString', { static: false, read: TriTooltipDirective }) tooltipDirective!: TriTooltipDirective;
 }

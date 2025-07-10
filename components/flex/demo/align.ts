@@ -1,29 +1,29 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzAlign, NzFlexModule, NzJustify } from 'ng-zorro-antd/flex';
-import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriAlign, TriFlexModule, TriJustify } from 'ng-zorro-antd/flex';
+import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
 
 @Component({
-  selector: 'nz-demo-flex-align',
-  imports: [FormsModule, NzButtonModule, NzFlexModule, NzSegmentedModule],
+  selector: '',
+  imports: [FormsModule, TriButtonModule, TriFlexModule, TriSegmentedModule],
   template: `
     <div class="segment-wrapper">
       <span>Select justify:</span>
-      <nz-segmented [nzOptions]="justifySegment" [(ngModel)]="selectedJustification"></nz-segmented>
+      <tri-segmented [options]="justifySegment" [(ngModel)]="selectedJustification"></tri-segmented>
     </div>
 
     <div class="segment-wrapper">
       <span>Select align:</span>
-      <nz-segmented [nzOptions]="alignSegment" [(ngModel)]="selectedLAlignment"></nz-segmented>
+      <tri-segmented [options]="alignSegment" [(ngModel)]="selectedLAlignment"></tri-segmented>
     </div>
 
-    <div class="btn-wrappers" nz-flex [nzJustify]="selectedJustification" [nzAlign]="selectedLAlignment">
-      <button nz-button nzType="primary">Primary</button>
-      <button nz-button nzType="primary">Primary</button>
-      <button nz-button nzType="primary">Primary</button>
-      <button nz-button nzType="primary">Primary</button>
+    <div class="btn-wrappers" tri-flex [justify]="selectedJustification" [align]="selectedLAlignment">
+      <button tri-button type="primary">Primary</button>
+      <button tri-button type="primary">Primary</button>
+      <button tri-button type="primary">Primary</button>
+      <button tri-button type="primary">Primary</button>
     </div>
   `,
   styles: [
@@ -43,8 +43,8 @@ import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
     `
   ]
 })
-export class NzDemoFlexAlignComponent {
-  public justifySegment: NzJustify[] = [
+export class TriDemoFlexAlignComponent {
+  public justifySegment: TriJustify[] = [
     'flex-start',
     'center',
     'flex-end',
@@ -52,7 +52,7 @@ export class NzDemoFlexAlignComponent {
     'space-around',
     'space-evenly'
   ];
-  public alignSegment: NzAlign[] = ['flex-start', 'center', 'flex-end'];
-  public selectedJustification: NzJustify = 'flex-start';
-  public selectedLAlignment: NzAlign = 'flex-start';
+  public alignSegment: TriAlign[] = ['flex-start', 'center', 'flex-end'];
+  public selectedJustification: TriJustify = 'flex-start';
+  public selectedLAlignment: TriAlign = 'flex-start';
 }

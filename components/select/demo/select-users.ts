@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, debounceTime, map, switchMap } from 'rxjs/operators';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzSelectModule } from 'ng-zorro-antd/select';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriSelectModule } from 'ng-zorro-antd/select';
 
 interface MockUser {
   name: {
@@ -14,29 +14,29 @@ interface MockUser {
 }
 
 @Component({
-  selector: 'nz-demo-select-select-users',
-  imports: [FormsModule, NzIconModule, NzSelectModule],
+  selector: '',
+  imports: [FormsModule, TriIconModule, TriSelectModule],
   template: `
-    <nz-select
-      nzMode="multiple"
-      nzPlaceHolder="Select users"
-      nzAllowClear
-      nzShowSearch
-      nzServerSearch
+    <tri-select
+      mode="multiple"
+      placeHolder="Select users"
+      allowClear
+      showSearch
+      serverSearch
       [(ngModel)]="selectedUser"
-      (nzOnSearch)="onSearch($event)"
+      (onSearch)="onSearch($event)"
     >
       @if (!loading) {
         @for (o of optionList; track o) {
-          <nz-option [nzValue]="o" [nzLabel]="o"></nz-option>
+          <tri-option [value]="o" [label]="o"></tri-option>
         }
       } @else {
-        <nz-option nzDisabled nzCustomContent>
-          <nz-icon nzType="loading" class="loading-icon" />
+        <tri-option disabled customContent>
+          <tri-icon type="loading" class="loading-icon" />
           Loading Data...
-        </nz-option>
+        </tri-option>
       }
-    </nz-select>
+    </tri-select>
   `,
   styles: [
     `
@@ -50,7 +50,7 @@ interface MockUser {
     `
   ]
 })
-export class NzDemoSelectSelectUsersComponent implements OnInit {
+export class TriDemoSelectSelectUsersComponent implements OnInit {
   randomUserUrl = 'https://api.randomuser.me/?results=5';
   searchChange$ = new BehaviorSubject('');
   optionList: string[] = [];

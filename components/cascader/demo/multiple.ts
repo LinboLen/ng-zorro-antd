@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzCascaderModule, NzCascaderOption } from 'ng-zorro-antd/cascader';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriCascaderModule, TriCascaderOption } from 'ng-zorro-antd/cascader';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-const getOptions = (): NzCascaderOption[] => [
+const getOptions = (): TriCascaderOption[] => [
   {
     label: 'Light',
     value: 'light',
@@ -41,24 +41,24 @@ const getOptions = (): NzCascaderOption[] => [
 ];
 
 @Component({
-  selector: 'nz-demo-cascader-multiple',
-  imports: [FormsModule, NzCascaderModule],
+  selector: '',
+  imports: [FormsModule, TriCascaderModule],
   template: `
-    <nz-cascader
+    <tri-cascader
       style="width: 100%;"
-      [nzOptions]="nzOptions"
+      [options]="options"
       [(ngModel)]="values"
       (ngModelChange)="onChanges($event)"
-      nzMultiple
-      [nzMaxTagCount]="3"
-    ></nz-cascader>
+      multiple
+      [maxTagCount]="3"
+    ></tri-cascader>
   `
 })
-export class NzDemoCascaderMultipleComponent {
-  nzOptions: NzCascaderOption[] = getOptions();
-  values: NzSafeAny[][] | null = null;
+export class TriDemoCascaderMultipleComponent {
+  options: TriCascaderOption[] = getOptions();
+  values: TriSafeAny[][] | null = null;
 
-  onChanges(values: NzSafeAny[][]): void {
+  onChanges(values: TriSafeAny[][]): void {
     console.log(values, this.values);
   }
 }

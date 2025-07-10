@@ -1,43 +1,43 @@
 import { Component } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzTagModule } from 'ng-zorro-antd/tag';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriTagModule } from 'ng-zorro-antd/tag';
 
 @Component({
-  selector: 'nz-demo-tag-status',
-  imports: [NzIconModule, NzTagModule],
+  selector: '',
+  imports: [TriIconModule, TriTagModule],
   template: `
     <div>
       <h4>Without icon</h4>
-      <nz-tag nzColor="success">success</nz-tag>
-      <nz-tag nzColor="processing">processing</nz-tag>
-      <nz-tag nzColor="error">error</nz-tag>
-      <nz-tag nzColor="warning">warning</nz-tag>
-      <nz-tag nzColor="default">default</nz-tag>
+      <tri-tag color="success">success</tri-tag>
+      <tri-tag color="processing">processing</tri-tag>
+      <tri-tag color="error">error</tri-tag>
+      <tri-tag color="warning">warning</tri-tag>
+      <tri-tag color="default">default</tri-tag>
     </div>
     <div>
       <h4>With icon</h4>
-      <nz-tag nzColor="success">
-        <nz-icon nzType="check-circle" />
+      <tri-tag color="success">
+        <tri-icon type="check-circle" />
         <span>success</span>
-      </nz-tag>
-      <nz-tag nzColor="processing">
-        <nz-icon nzType="sync" nzSpin />
+      </tri-tag>
+      <tri-tag color="processing">
+        <tri-icon type="sync" spin />
         <span>processing</span>
-      </nz-tag>
-      <nz-tag nzColor="error">
-        <nz-icon nzType="close-circle" />
+      </tri-tag>
+      <tri-tag color="error">
+        <tri-icon type="close-circle" />
         <span>error</span>
-      </nz-tag>
-      <nz-tag nzColor="warning">
-        <nz-icon nzType="exclamation-circle" />
+      </tri-tag>
+      <tri-tag color="warning">
+        <tri-icon type="exclamation-circle" />
         <span>warning</span>
-      </nz-tag>
-      <nz-tag nzColor="default">
-        <nz-icon nzType="clock-circle" />
+      </tri-tag>
+      <tri-tag color="default">
+        <tri-icon type="clock-circle" />
         <span>default</span>
-      </nz-tag>
+      </tri-tag>
     </div>
   `
 })
-export class NzDemoTagStatusComponent {}
+export class TriDemoTagStatusComponent {}

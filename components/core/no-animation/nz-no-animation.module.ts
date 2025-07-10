@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzNoAnimationDirective } from './nz-no-animation.directive';
+import { TriNoAnimationDirective } from './nz-no-animation.directive';
 
 @NgModule({
-  imports: [NzNoAnimationDirective],
-  exports: [NzNoAnimationDirective]
+  imports: [TriNoAnimationDirective],
+  exports: [TriNoAnimationDirective]
 })
-export class NzNoAnimationModule {}
+export class TriNoAnimationModule {}

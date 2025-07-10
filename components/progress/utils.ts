@@ -3,13 +3,13 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { NzProgressColorGradient, NzProgressGradientProgress } from './typings';
+import { TriProgressColorGradient, TriProgressGradientProgress } from './typings';
 
 function stripPercentToNumber(percent: string): number {
   return +percent.replace('%', '');
 }
 
-export const sortGradient = (gradients: NzProgressGradientProgress): Array<{ key: number; value: string }> => {
+export const sortGradient = (gradients: TriProgressGradientProgress): Array<{ key: number; value: string }> => {
   let tempArr: Array<{ key: number; value: string }> = [];
 
   Object.keys(gradients).forEach(key => {
@@ -28,14 +28,14 @@ export const sortGradient = (gradients: NzProgressGradientProgress): Array<{ key
 };
 
 export const handleCircleGradient = (
-  strokeColor: NzProgressGradientProgress
+  strokeColor: TriProgressGradientProgress
 ): Array<{ offset: string; color: string }> =>
   sortGradient(strokeColor).map(({ key, value }) => ({ offset: `${key}%`, color: value }));
 
-export const handleLinearGradient = (strokeColor: NzProgressColorGradient): string => {
+export const handleLinearGradient = (strokeColor: TriProgressColorGradient): string => {
   const { from = '#1890ff', to = '#1890ff', direction = 'to right', ...rest } = strokeColor;
   if (Object.keys(rest).length !== 0) {
-    const sortedGradients = sortGradient(rest as NzProgressGradientProgress)
+    const sortedGradients = sortGradient(rest as TriProgressGradientProgress)
       .map(({ key, value }) => `${value} ${key}%`)
       .join(', ');
     return `linear-gradient(${direction}, ${sortedGradients})`;

@@ -6,17 +6,17 @@
 import { TemplateRef } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 
-import { IndexableObject, NzSafeAny } from 'ng-zorro-antd/core/types';
+import { IndexableObject, TriSafeAny } from 'ng-zorro-antd/core/types';
 
 /** Status */
 export type UploadFileStatus = 'error' | 'success' | 'done' | 'uploading' | 'removed';
 
-export type NzUploadType = 'select' | 'drag';
+export type TriUploadType = 'select' | 'drag';
 
 /** Built-in styles of the uploading list. */
-export type NzUploadListType = 'text' | 'picture' | 'picture-card';
+export type TriUploadListType = 'text' | 'picture' | 'picture-card';
 
-export interface NzUploadFile {
+export interface TriUploadFile {
   uid: string;
   size?: number;
   name: string;
@@ -28,67 +28,67 @@ export interface NzUploadFile {
   originFileObj?: File;
   percent?: number;
   thumbUrl?: string;
-  response?: NzSafeAny;
-  error?: NzSafeAny;
+  response?: TriSafeAny;
+  error?: TriSafeAny;
   linkProps?: { download: string };
   type?: string;
 
-  [key: string]: NzSafeAny;
+  [key: string]: TriSafeAny;
 }
 
-export interface NzUploadChangeParam {
-  file: NzUploadFile;
-  fileList: NzUploadFile[];
+export interface TriUploadChangeParam {
+  file: TriUploadFile;
+  fileList: TriUploadFile[];
   event?: { percent: number };
   /** Callback type. */
   type?: string;
 }
 
-export interface NzShowUploadList {
+export interface TriShowUploadList {
   showRemoveIcon?: boolean;
   showPreviewIcon?: boolean;
   showDownloadIcon?: boolean;
 }
 
-export type NzUploadTransformFileType = string | Blob | NzUploadFile | Observable<string | Blob | File>;
+export type TriUploadTransformFileType = string | Blob | TriUploadFile | Observable<string | Blob | File>;
 
 export interface ZipButtonOptions {
   disabled?: boolean;
   accept?: string | string[];
-  action?: string | ((file: NzUploadFile) => string | Observable<string>);
+  action?: string | ((file: TriUploadFile) => string | Observable<string>);
   directory?: boolean;
   openFileDialogOnClick?: boolean;
-  beforeUpload?(file: NzUploadFile, fileList: NzUploadFile[]): boolean | Observable<NzSafeAny>;
-  customRequest?(item: NzSafeAny): Subscription;
-  data?: {} | ((file: NzUploadFile) => {} | Observable<{}>);
-  headers?: {} | ((file: NzUploadFile) => {} | Observable<{}>);
+  beforeUpload?(file: TriUploadFile, fileList: TriUploadFile[]): boolean | Observable<TriSafeAny>;
+  customRequest?(item: TriSafeAny): Subscription;
+  data?: {} | ((file: TriUploadFile) => {} | Observable<{}>);
+  headers?: {} | ((file: TriUploadFile) => {} | Observable<{}>);
   name?: string;
   multiple?: boolean;
   withCredentials?: boolean;
   filters?: UploadFilter[];
-  transformFile?(file: NzUploadFile): NzUploadTransformFileType;
-  onStart?(file: NzUploadFile): void;
-  onProgress?(e: NzSafeAny, file: NzUploadFile): void;
-  onSuccess?(ret: NzSafeAny, file: NzUploadFile, xhr: NzSafeAny): void;
-  onError?(err: NzSafeAny, file: NzUploadFile): void;
+  transformFile?(file: TriUploadFile): TriUploadTransformFileType;
+  onStart?(file: TriUploadFile): void;
+  onProgress?(e: TriSafeAny, file: TriUploadFile): void;
+  onSuccess?(ret: TriSafeAny, file: TriUploadFile, xhr: TriSafeAny): void;
+  onError?(err: TriSafeAny, file: TriUploadFile): void;
 }
 
 export interface UploadFilter {
   name: string;
-  fn(fileList: NzUploadFile[]): NzUploadFile[] | Observable<NzUploadFile[]>;
+  fn(fileList: TriUploadFile[]): TriUploadFile[] | Observable<TriUploadFile[]>;
 }
 
-export interface NzUploadXHRArgs {
+export interface TriUploadXHRArgs {
   action?: string;
   name?: string;
   headers?: IndexableObject;
-  file: NzUploadFile;
-  postFile: string | Blob | File | NzUploadFile;
+  file: TriUploadFile;
+  postFile: string | Blob | File | TriUploadFile;
   data?: IndexableObject;
   withCredentials?: boolean;
-  onProgress?(e: NzSafeAny, file: NzUploadFile): void;
-  onSuccess?(ret: NzSafeAny, file: NzUploadFile, xhr: NzSafeAny): void;
-  onError?(err: NzSafeAny, file: NzUploadFile): void;
+  onProgress?(e: TriSafeAny, file: TriUploadFile): void;
+  onSuccess?(ret: TriSafeAny, file: TriUploadFile, xhr: TriSafeAny): void;
+  onError?(err: TriSafeAny, file: TriUploadFile): void;
 }
 
-export type NzIconRenderTemplate = TemplateRef<{ $implicit: NzUploadFile }>;
+export type TriIconRenderTemplate = TemplateRef<{ $implicit: TriUploadFile }>;

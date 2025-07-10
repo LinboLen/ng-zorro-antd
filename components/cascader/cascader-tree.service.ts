@@ -5,11 +5,11 @@
 
 import { Injectable } from '@angular/core';
 
-import { NzTreeBaseService, NzTreeNode, NzTreeNodeKey } from 'ng-zorro-antd/core/tree';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriTreeBaseService, TriTreeNode, TriTreeNodeKey } from 'ng-zorro-antd/core/tree';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { arraysEqual, isNotNil } from 'ng-zorro-antd/core/util';
 
-import { NzCascaderOption } from './typings';
+import { TriCascaderOption } from './typings';
 
 interface InternalFieldNames {
   label: string;
@@ -17,41 +17,41 @@ interface InternalFieldNames {
 }
 
 @Injectable()
-export class NzCascaderTreeService extends NzTreeBaseService {
+export class TriCascaderTreeService extends TriTreeBaseService {
   fieldNames: InternalFieldNames = {
     label: 'label',
     value: 'value'
   };
 
-  override treeNodePostProcessor = (node: NzTreeNode): void => {
+  override treeNodePostProcessor = (node: TriTreeNode): void => {
     node.key = this.getOptionValue(node);
     node.title = this.getOptionLabel(node);
   };
 
-  getOptionValue(node: NzTreeNode): NzSafeAny {
+  getOptionValue(node: TriTreeNode): TriSafeAny {
     return node.origin[this.fieldNames.value || 'value'];
   }
 
-  getOptionLabel(node: NzTreeNode): string {
+  getOptionLabel(node: TriTreeNode): string {
     return node.origin[this.fieldNames.label || 'label'];
   }
 
-  get children(): NzTreeNode[] {
+  get children(): TriTreeNode[] {
     return this.rootNodes;
   }
 
-  set children(value: Array<NzTreeNode | NzSafeAny>) {
-    this.rootNodes = value.map(v => (v instanceof NzTreeNode ? v : new NzTreeNode(v, null)));
+  set children(value: Array<TriTreeNode | TriSafeAny>) {
+    this.rootNodes = value.map(v => (v instanceof TriTreeNode ? v : new TriTreeNode(v, null)));
   }
 
   /**
    * Map list of nodes to list of option
    */
-  toOptions(nodes: NzTreeNode[]): NzCascaderOption[] {
+  toOptions(nodes: TriTreeNode[]): TriCascaderOption[] {
     return nodes.map(node => node.origin);
   }
 
-  getAncestorNodeList(node: NzTreeNode | null): NzTreeNode[] {
+  getAncestorNodeList(node: TriTreeNode | null): TriTreeNode[] {
     if (!node) {
       return [];
     }
@@ -68,11 +68,11 @@ export class NzCascaderTreeService extends NzTreeBaseService {
    * @param paths
    * @param checkStrictly
    */
-  conductCheckPaths(paths: NzTreeNodeKey[][] | null, checkStrictly: boolean): void {
+  conductCheckPaths(paths: TriTreeNodeKey[][] | null, checkStrictly: boolean): void {
     this.checkedNodeList = [];
     this.halfCheckedNodeList = [];
-    const existsPathList: NzTreeNodeKey[][] = [];
-    const calc = (nodes: NzTreeNode[]): void => {
+    const existsPathList: TriTreeNodeKey[][] = [];
+    const calc = (nodes: TriTreeNode[]): void => {
       nodes.forEach(node => {
         if (paths === null) {
           // render tree if no default checked keys found
@@ -100,11 +100,11 @@ export class NzCascaderTreeService extends NzTreeBaseService {
     this.handleMissingNodeList(paths, existsPathList);
   }
 
-  conductSelectedPaths(paths: NzTreeNodeKey[][]): void {
+  conductSelectedPaths(paths: TriTreeNodeKey[][]): void {
     this.selectedNodeList.forEach(node => (node.isSelected = false));
     this.selectedNodeList = [];
-    const existsPathList: NzTreeNodeKey[][] = [];
-    const calc = (nodes: NzTreeNode[]): boolean =>
+    const existsPathList: TriTreeNodeKey[][] = [];
+    const calc = (nodes: TriTreeNode[]): boolean =>
       nodes.every(node => {
         // if node is in selected path
         const nodePath = this.getAncestorNodeList(node).map(n => this.getOptionValue(n));
@@ -125,14 +125,14 @@ export class NzCascaderTreeService extends NzTreeBaseService {
     this.handleMissingNodeList(paths, existsPathList);
   }
 
-  private handleMissingNodeList(paths: NzTreeNodeKey[][] | null, existsPathList: NzTreeNodeKey[][]): void {
+  private handleMissingNodeList(paths: TriTreeNodeKey[][] | null, existsPathList: TriTreeNodeKey[][]): void {
     const missingNodeList = this.getMissingNodeList(paths, existsPathList);
     missingNodeList.forEach(node => {
       this.setSelectedNodeList(node);
     });
   }
 
-  private getMissingNodeList(paths: NzTreeNodeKey[][] | null, existsPathList: NzTreeNodeKey[][]): NzTreeNode[] {
+  private getMissingNodeList(paths: TriTreeNodeKey[][] | null, existsPathList: TriTreeNodeKey[][]): TriTreeNode[] {
     if (!paths) {
       return [];
     }
@@ -142,22 +142,22 @@ export class NzCascaderTreeService extends NzTreeBaseService {
       .filter(isNotNil);
   }
 
-  private createMissingNode(path: NzTreeNodeKey[]): NzTreeNode | null {
+  private createMissingNode(path: TriTreeNodeKey[]): TriTreeNode | null {
     if (!path?.length) {
       return null;
     }
 
-    const createOption = (key: NzTreeNodeKey): NzSafeAny => {
+    const createOption = (key: TriTreeNodeKey): TriSafeAny => {
       return {
         [this.fieldNames.value || 'value']: key,
         [this.fieldNames.label || 'label']: key
       };
     };
 
-    let node = new NzTreeNode(createOption(path[0]), null, this);
+    let node = new TriTreeNode(createOption(path[0]), null, this);
 
     for (let i = 1; i < path.length; i++) {
-      const childNode = new NzTreeNode(createOption(path[i]));
+      const childNode = new TriTreeNode(createOption(path[i]));
       node.addChildren([childNode]);
       node = childNode;
     }

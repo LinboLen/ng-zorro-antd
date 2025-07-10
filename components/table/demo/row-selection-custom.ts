@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NzTableModule } from 'ng-zorro-antd/table';
+import { TriTableModule } from 'ng-zorro-antd/table';
 
 interface ItemData {
   id: number;
@@ -10,22 +10,22 @@ interface ItemData {
 }
 
 @Component({
-  selector: 'nz-demo-table-row-selection-custom',
-  imports: [NzTableModule],
+  selector: '',
+  imports: [TriTableModule],
   template: `
-    <nz-table
+    <tri-table
       #rowSelectionTable
-      nzShowSizeChanger
-      [nzData]="listOfData"
-      (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+      showSizeChanger
+      [data]="listOfData"
+      (currentPageDataChange)="onCurrentPageDataChange($event)"
     >
       <thead>
         <tr>
           <th
-            [nzSelections]="listOfSelection"
-            [(nzChecked)]="checked"
-            [nzIndeterminate]="indeterminate"
-            (nzCheckedChange)="onAllChecked($event)"
+            [selections]="listOfSelection"
+            [(checkedChange)]="checked"
+            [indeterminate]="indeterminate"
+            (checkedChange)="onAllChecked($event)"
           ></th>
           <th>Name</th>
           <th>Age</th>
@@ -35,17 +35,17 @@ interface ItemData {
       <tbody>
         @for (data of rowSelectionTable.data; track data) {
           <tr>
-            <td [nzChecked]="setOfCheckedId.has(data.id)" (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
+            <td [checked]="setOfCheckedId.has(data.id)" (checkedChange)="onItemChecked(data.id, $event)"></td>
             <td>{{ data.name }}</td>
             <td>{{ data.age }}</td>
             <td>{{ data.address }}</td>
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `
 })
-export class NzDemoTableRowSelectionCustomComponent implements OnInit {
+export class TriDemoTableRowSelectionCustomComponent implements OnInit {
   listOfSelection = [
     {
       text: 'Select All Row',

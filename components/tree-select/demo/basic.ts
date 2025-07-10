@@ -1,24 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
+import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
 @Component({
-  selector: 'nz-demo-tree-select-basic',
-  imports: [FormsModule, NzTreeSelectModule],
+  selector: '',
+  imports: [FormsModule, TriTreeSelectModule],
   template: `
-    <nz-tree-select
+    <tri-tree-select
       style="width: 250px"
-      [nzExpandedKeys]="expandKeys"
-      [nzNodes]="nodes"
-      nzShowSearch
-      nzPlaceHolder="Please select"
+      [expandedKeys]="expandKeys"
+      [nodes]="nodes"
+      showSearch
+      placeHolder="Please select"
       [(ngModel)]="value"
       (ngModelChange)="onChange($event)"
-    ></nz-tree-select>
+    ></tri-tree-select>
   `
 })
-export class NzDemoTreeSelectBasicComponent implements OnInit {
+export class TriDemoTreeSelectBasicComponent implements OnInit {
   expandKeys = ['100', '1001'];
   value?: string;
   readonly nodes = [

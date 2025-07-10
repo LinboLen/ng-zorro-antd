@@ -6,13 +6,13 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'nz-content',
-  exportAs: 'nzContent',
+  selector: '',
+  exportAs: 'triContent',
   template: `<ng-content></ng-content>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
-    class: 'ant-layout-content'
+    class: 'tri-layout-content'
   }
 })
-export class NzContentComponent {}
+export class TriContentComponent {}

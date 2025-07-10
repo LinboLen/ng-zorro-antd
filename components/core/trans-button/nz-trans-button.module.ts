@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzTransButtonDirective } from './nz-trans-button.directive';
+import { TriTransButtonDirective } from './nz-trans-button.directive';
 
 @NgModule({
-  imports: [NzTransButtonDirective],
-  exports: [NzTransButtonDirective]
+  imports: [TriTransButtonDirective],
+  exports: [TriTransButtonDirective]
 })
-export class NzTransButtonModule {}
+export class TriTransButtonModule {}

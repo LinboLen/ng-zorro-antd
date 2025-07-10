@@ -1,63 +1,63 @@
 import { Component } from '@angular/core';
 
-import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzLayoutModule } from 'ng-zorro-antd/layout';
-import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { TriBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriLayoutModule } from 'ng-zorro-antd/layout';
+import { TriMenuModule } from 'ng-zorro-antd/menu';
 
 @Component({
-  selector: 'nz-demo-layout-top-side',
-  imports: [NzBreadCrumbModule, NzIconModule, NzMenuModule, NzLayoutModule],
+  selector: '',
+  imports: [TriBreadCrumbModule, TriIconModule, TriMenuModule, TriLayoutModule],
   template: `
-    <nz-layout>
-      <nz-header>
+    <tri-layout>
+      <tri-header>
         <div class="logo"></div>
-        <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
-          <li nz-menu-item>nav 1</li>
-          <li nz-menu-item nzSelected>nav 2</li>
-          <li nz-menu-item>nav 3</li>
+        <ul tri-menu theme="dark" mode="horizontal" class="header-menu">
+          <li tri-menu-item>nav 1</li>
+          <li tri-menu-item selected>nav 2</li>
+          <li tri-menu-item>nav 3</li>
         </ul>
-      </nz-header>
-      <nz-content class="outer-content">
-        <nz-breadcrumb>
-          <nz-breadcrumb-item>Home</nz-breadcrumb-item>
-          <nz-breadcrumb-item>List</nz-breadcrumb-item>
-          <nz-breadcrumb-item>App</nz-breadcrumb-item>
-        </nz-breadcrumb>
-        <nz-layout class="inner-layout">
-          <nz-sider nzWidth="200px" nzTheme="light">
-            <ul nz-menu nzMode="inline" class="sider-menu">
-              <li nz-submenu nzOpen nzTitle="subnav 1" nzIcon="user">
+      </tri-header>
+      <tri-content class="outer-content">
+        <tri-breadcrumb>
+          <tri-breadcrumb-item>Home</tri-breadcrumb-item>
+          <tri-breadcrumb-item>List</tri-breadcrumb-item>
+          <tri-breadcrumb-item>App</tri-breadcrumb-item>
+        </tri-breadcrumb>
+        <tri-layout class="inner-layout">
+          <tri-sider width="200px" theme="light">
+            <ul tri-menu mode="inline" class="sider-menu">
+              <li tri-submenu open title="subnav 1" icon="user">
                 <ul>
-                  <li nz-menu-item nzSelected>option1</li>
-                  <li nz-menu-item>option2</li>
-                  <li nz-menu-item>option3</li>
-                  <li nz-menu-item>option4</li>
+                  <li tri-menu-item selected>option1</li>
+                  <li tri-menu-item>option2</li>
+                  <li tri-menu-item>option3</li>
+                  <li tri-menu-item>option4</li>
                 </ul>
               </li>
-              <li nz-submenu nzTitle="subnav 2" nzIcon="laptop">
+              <li tri-submenu title="subnav 2" icon="laptop">
                 <ul>
-                  <li nz-menu-item>option5</li>
-                  <li nz-menu-item>option6</li>
-                  <li nz-menu-item>option7</li>
-                  <li nz-menu-item>option8</li>
+                  <li tri-menu-item>option5</li>
+                  <li tri-menu-item>option6</li>
+                  <li tri-menu-item>option7</li>
+                  <li tri-menu-item>option8</li>
                 </ul>
               </li>
-              <li nz-submenu nzTitle="subnav 3" nzIcon="notification">
+              <li tri-submenu title="subnav 3" icon="notification">
                 <ul>
-                  <li nz-menu-item>option9</li>
-                  <li nz-menu-item>option10</li>
-                  <li nz-menu-item>option11</li>
-                  <li nz-menu-item>option12</li>
+                  <li tri-menu-item>option9</li>
+                  <li tri-menu-item>option10</li>
+                  <li tri-menu-item>option11</li>
+                  <li tri-menu-item>option12</li>
                 </ul>
               </li>
             </ul>
-          </nz-sider>
-          <nz-content class="inner-content">Content</nz-content>
-        </nz-layout>
-        <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
-      </nz-content>
-    </nz-layout>
+          </tri-sider>
+          <tri-content class="inner-content">Content</tri-content>
+        </tri-layout>
+        <tri-footer>Ant Design ©2020 Implement By Angular</tri-footer>
+      </tri-content>
+    </tri-layout>
   `,
   styles: [
     `
@@ -101,4 +101,4 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
     `
   ]
 })
-export class NzDemoLayoutTopSideComponent {}
+export class TriDemoLayoutTopSideComponent {}

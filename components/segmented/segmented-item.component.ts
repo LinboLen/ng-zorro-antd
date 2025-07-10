@@ -18,19 +18,19 @@ import {
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { filter, map, switchMap, take, tap } from 'rxjs/operators';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
-import { NzSegmentedService } from './segmented.service';
+import { TriSegmentedService } from './segmented.service';
 
 @Component({
-  selector: 'label[nz-segmented-item],label[nzSegmentedItem]',
-  exportAs: 'nzSegmentedItem',
-  imports: [NzIconModule, NgTemplateOutlet],
+  selector: '',
+  exportAs: 'triSegmentedItem',
+  imports: [TriIconModule, NgTemplateOutlet],
   template: `
-    <input class="ant-segmented-item-input" type="radio" [checked]="isChecked" (click)="$event.stopPropagation()" />
-    <div class="ant-segmented-item-label">
-      @if (nzIcon) {
-        <span class="ant-segmented-item-icon"><nz-icon [nzType]="nzIcon" /></span>
+    <input class="tri-segmented-item-input" type="radio" [checked]="isChecked" (click)="$event.stopPropagation()" />
+    <div class="tri-segmented-item-label">
+      @if (icon) {
+        <span class="tri-segmented-item-icon"><tri-icon [type]="icon" /></span>
         <span>
           <ng-template [ngTemplateOutlet]="content" />
         </span>
@@ -44,23 +44,23 @@ import { NzSegmentedService } from './segmented.service';
     </ng-template>
   `,
   host: {
-    class: 'ant-segmented-item',
-    '[class.ant-segmented-item-selected]': 'isChecked',
-    '[class.ant-segmented-item-disabled]': 'nzDisabled || parentDisabled()',
+    class: 'tri-segmented-item',
+    '[class.tri-segmented-item-selected]': 'isChecked',
+    '[class.tri-segmented-item-disabled]': 'disabled || parentDisabled()',
     '(click)': 'handleClick()'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class NzSegmentedItemComponent implements OnInit {
-  private readonly service = inject(NzSegmentedService);
+export class TriSegmentedItemComponent implements OnInit {
+  private readonly service = inject(TriSegmentedService);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly elementRef = inject(ElementRef);
   private readonly destroyRef = inject(DestroyRef);
 
-  @Input() nzIcon?: string;
-  @Input() nzValue!: string | number;
-  @Input() nzDisabled?: boolean;
+  @Input() icon?: string;
+  @Input() value!: string | number;
+  @Input() disabled?: boolean;
 
   protected isChecked = false;
   readonly parentDisabled = toSignal(this.service.disabled$, { initialValue: false });
@@ -71,7 +71,7 @@ export class NzSegmentedItemComponent implements OnInit {
         tap(value => {
           this.isChecked = false;
           this.cdr.markForCheck();
-          if (value === this.nzValue) {
+          if (value === this.value) {
             this.service.activated$.next(this.elementRef.nativeElement);
           }
         }),
@@ -82,7 +82,7 @@ export class NzSegmentedItemComponent implements OnInit {
             map(() => value)
           )
         ),
-        filter(value => value === this.nzValue),
+        filter(value => value === this.value),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(() => {
@@ -92,9 +92,9 @@ export class NzSegmentedItemComponent implements OnInit {
   }
 
   handleClick(): void {
-    if (!this.nzDisabled && !this.parentDisabled()) {
-      this.service.selected$.next(this.nzValue);
-      this.service.change$.next(this.nzValue);
+    if (!this.disabled && !this.parentDisabled()) {
+      this.service.selected$.next(this.value);
+      this.service.change$.next(this.value);
     }
   }
 }

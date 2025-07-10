@@ -32,26 +32,26 @@ import {
 } from '@angular/forms';
 import { tap } from 'rxjs/operators';
 
-import { NzSafeAny, NzSizeLDSType, NzStatus, OnTouchedType } from 'ng-zorro-antd/core/types';
+import { TriSafeAny, TriSizeLDSType, TriStatus, OnTouchedType } from 'ng-zorro-antd/core/types';
 
-import { NzInputDirective } from './input.directive';
+import { TriInputDirective } from './input.directive';
 
 @Component({
-  selector: 'nz-input-otp',
-  exportAs: 'nzInputOtp',
+  selector: '',
+  exportAs: 'triInputOtp',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @for (item of otpArray.controls; track $index) {
       <input
-        nz-input
-        class="ant-otp-input"
+        tri-input
+        class="tri-otp-input"
         type="text"
         maxlength="1"
         size="1"
-        [nzSize]="nzSize"
+        [size]="size"
         [formControl]="item"
-        [nzStatus]="nzStatus"
+        [status]="status"
         (input)="onInput($index, $event)"
         (focus)="onFocus($event)"
         (keydown)="onKeyDown($index, $event)"
@@ -61,33 +61,33 @@ import { NzInputDirective } from './input.directive';
     }
   `,
   host: {
-    class: 'ant-otp'
+    class: 'tri-otp'
   },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NzInputOtpComponent),
+      useExisting: forwardRef(() => TriInputOtpComponent),
       multi: true
     }
   ],
-  imports: [NzInputDirective, ReactiveFormsModule]
+  imports: [TriInputDirective, ReactiveFormsModule]
 })
-export class NzInputOtpComponent implements ControlValueAccessor, OnChanges {
+export class TriInputOtpComponent implements ControlValueAccessor, OnChanges {
   private formBuilder = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
 
   @ViewChildren('otpInput') otpInputs!: QueryList<ElementRef>;
 
-  @Input({ transform: numberAttribute }) nzLength: number = 6;
-  @Input() nzSize: NzSizeLDSType = 'default';
+  @Input({ transform: numberAttribute }) length: number = 6;
+  @Input() size: TriSizeLDSType = 'default';
   @Input({ transform: booleanAttribute }) disabled = false;
-  @Input() nzStatus: NzStatus = '';
-  @Input() nzFormatter: (value: string) => string = value => value;
-  @Input() nzMask: string | null = null;
+  @Input() status: TriStatus = '';
+  @Input() formatter: (value: string) => string = value => value;
+  @Input() mask: string | null = null;
 
   protected otpArray!: FormArray<FormControl<string>>;
   private internalValue: string[] = [];
-  private onChangeCallback?: (_: NzSafeAny) => void;
+  private onChangeCallback?: (_: TriSafeAny) => void;
   onTouched: OnTouchedType = () => {};
 
   constructor() {
@@ -147,8 +147,8 @@ export class NzInputOtpComponent implements ControlValueAccessor, OnChanges {
     this.internalValue = controlValues;
 
     controlValues.forEach((val, i) => {
-      const formattedValue = this.nzFormatter(val);
-      const value = this.nzMask ? this.nzMask : formattedValue;
+      const formattedValue = this.formatter(val);
+      const value = this.mask ? this.mask : formattedValue;
       this.otpArray.at(i).setValue(value, { emitEvent: false });
     });
   }
@@ -175,10 +175,10 @@ export class NzInputOtpComponent implements ControlValueAccessor, OnChanges {
 
     let currentIndex = index;
     for (const char of pastedText.split('')) {
-      if (currentIndex < this.nzLength) {
-        const formattedChar = this.nzFormatter(char);
+      if (currentIndex < this.length) {
+        const formattedChar = this.formatter(char);
         this.internalValue[currentIndex] = char;
-        const maskedValue = this.nzMask ? this.nzMask : formattedChar;
+        const maskedValue = this.mask ? this.mask : formattedChar;
         this.otpArray.at(currentIndex).setValue(maskedValue, { emitEvent: false });
         currentIndex++;
       } else {
@@ -193,18 +193,18 @@ export class NzInputOtpComponent implements ControlValueAccessor, OnChanges {
 
   private createFormArray(): void {
     this.otpArray = this.formBuilder.array<FormControl<string>>([]);
-    this.internalValue = new Array(this.nzLength).fill('');
+    this.internalValue = new Array(this.length).fill('');
 
-    for (let i = 0; i < this.nzLength; i++) {
+    for (let i = 0; i < this.length; i++) {
       const control = this.formBuilder.nonNullable.control('', [Validators.required]);
 
       control.valueChanges
         .pipe(
           tap(value => {
-            const unmaskedValue = this.nzFormatter(value);
+            const unmaskedValue = this.formatter(value);
             this.internalValue[i] = unmaskedValue;
 
-            control.setValue(this.nzMask ?? unmaskedValue, { emitEvent: false });
+            control.setValue(this.mask ?? unmaskedValue, { emitEvent: false });
 
             this.emitValue();
           }),

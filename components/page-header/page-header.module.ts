@@ -6,30 +6,30 @@
 import { NgModule } from '@angular/core';
 
 import {
-  NzPageHeaderAvatarDirective,
-  NzPageHeaderBreadcrumbDirective,
-  NzPageHeaderContentDirective,
-  NzPageHeaderExtraDirective,
-  NzPageHeaderFooterDirective,
-  NzPageHeaderSubtitleDirective,
-  NzPageHeaderTagDirective,
-  NzPageHeaderTitleDirective
+  TriPageHeaderAvatarDirective,
+  TriPageHeaderBreadcrumbDirective,
+  TriPageHeaderContentDirective,
+  TriPageHeaderExtraDirective,
+  TriPageHeaderFooterDirective,
+  TriPageHeaderSubtitleDirective,
+  TriPageHeaderTagDirective,
+  TriPageHeaderTitleDirective
 } from './page-header-cells';
-import { NzPageHeaderComponent } from './page-header.component';
+import { TriPageHeaderComponent } from './page-header.component';
 
 const NzPageHeaderCells = [
-  NzPageHeaderTitleDirective,
-  NzPageHeaderSubtitleDirective,
-  NzPageHeaderContentDirective,
-  NzPageHeaderTagDirective,
-  NzPageHeaderExtraDirective,
-  NzPageHeaderFooterDirective,
-  NzPageHeaderBreadcrumbDirective,
-  NzPageHeaderAvatarDirective
+  TriPageHeaderTitleDirective,
+  TriPageHeaderSubtitleDirective,
+  TriPageHeaderContentDirective,
+  TriPageHeaderTagDirective,
+  TriPageHeaderExtraDirective,
+  TriPageHeaderFooterDirective,
+  TriPageHeaderBreadcrumbDirective,
+  TriPageHeaderAvatarDirective
 ];
 
 @NgModule({
-  imports: [NzPageHeaderComponent, NzPageHeaderCells],
-  exports: [NzPageHeaderComponent, NzPageHeaderCells]
+  imports: [TriPageHeaderComponent, NzPageHeaderCells],
+  exports: [TriPageHeaderComponent, NzPageHeaderCells]
 })
-export class NzPageHeaderModule {}
+export class TriPageHeaderModule {}

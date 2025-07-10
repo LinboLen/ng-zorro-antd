@@ -1,26 +1,26 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzSelectModule } from 'ng-zorro-antd/select';
+import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: 'nz-demo-select-basic',
-  imports: [FormsModule, NzSelectModule],
+  selector: '',
+  imports: [FormsModule, TriSelectModule],
   template: `
-    <nz-select ngModel="lucy">
-      <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-      <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
-      <nz-option nzValue="disabled" nzLabel="Disabled" nzDisabled></nz-option>
-    </nz-select>
-    <nz-select ngModel="lucy" nzDisabled>
-      <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
-    </nz-select>
-    <nz-select ngModel="lucy" nzLoading>
-      <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
-    </nz-select>
-    <nz-select ngModel="lucy" nzAllowClear nzPlaceHolder="Choose">
-      <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
-    </nz-select>
+    <tri-select ngModel="lucy">
+      <tri-option value="jack" label="Jack"></tri-option>
+      <tri-option value="lucy" label="Lucy"></tri-option>
+      <tri-option value="disabled" label="Disabled" disabled></tri-option>
+    </tri-select>
+    <tri-select ngModel="lucy" disabled>
+      <tri-option value="lucy" label="Lucy"></tri-option>
+    </tri-select>
+    <tri-select ngModel="lucy" loading>
+      <tri-option value="lucy" label="Lucy"></tri-option>
+    </tri-select>
+    <tri-select ngModel="lucy" allowClear placeHolder="Choose">
+      <tri-option value="lucy" label="Lucy"></tri-option>
+    </tri-select>
   `,
   styles: [
     `
@@ -31,4 +31,4 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     `
   ]
 })
-export class NzDemoSelectBasicComponent {}
+export class TriDemoSelectBasicComponent {}

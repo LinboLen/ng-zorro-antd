@@ -17,11 +17,11 @@ import {
   RightOutline
 } from '@ant-design/icons-angular/icons';
 
-import { NzConfigService } from 'ng-zorro-antd/core/config';
+import { TriConfigService } from 'ng-zorro-antd/core/config';
 
-import { NzIconDirective } from './icon.directive';
-import { NzIconModule } from './icon.module';
-import { NzIconService } from './icon.service';
+import { TriIconDirective } from './icon.directive';
+import { TriIconModule } from './icon.module';
+import { TriIconService } from './icon.service';
 import { provideNzIcons, provideNzIconsPatch } from './provide-icons';
 
 describe('nz-icon', () => {
@@ -41,14 +41,14 @@ describe('nz-icon', () => {
   });
 
   describe('basic', () => {
-    let testComponent: NzTestIconExtensionsComponent;
-    let fixture: ComponentFixture<NzTestIconExtensionsComponent>;
+    let testComponent: TriTestIconExtensionsComponent;
+    let fixture: ComponentFixture<TriTestIconExtensionsComponent>;
     let icons: DebugElement[];
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestIconExtensionsComponent);
+      fixture = TestBed.createComponent(TriTestIconExtensionsComponent);
       testComponent = fixture.componentInstance;
-      icons = fixture.debugElement.queryAll(By.directive(NzIconDirective));
+      icons = fixture.debugElement.queryAll(By.directive(TriIconDirective));
     });
 
     it('should get icon class name back', () => {
@@ -108,16 +108,16 @@ describe('nz-icon', () => {
   });
 
   describe('custom', () => {
-    let fixture: ComponentFixture<NzTestIconCustomComponent>;
+    let fixture: ComponentFixture<TriTestIconCustomComponent>;
     let icons: DebugElement[];
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestIconCustomComponent);
+      fixture = TestBed.createComponent(TriTestIconCustomComponent);
       fixture.detectChanges();
     });
 
     it('should support custom svg element', () => {
-      icons = fixture.debugElement.queryAll(By.directive(NzIconDirective));
+      icons = fixture.debugElement.queryAll(By.directive(TriIconDirective));
       expect(icons[0].nativeElement.className).toContain('anticon');
       expect(icons[0].nativeElement.innerHTML).toContain('svg');
       expect(icons[0].nativeElement.innerHTML).toContain(
@@ -127,18 +127,18 @@ describe('nz-icon', () => {
   });
 
   describe('iconfont', () => {
-    let fixture: ComponentFixture<NzTestIconIconfontComponent>;
+    let fixture: ComponentFixture<TriTestIconIconfontComponent>;
     let icons: DebugElement[];
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestIconIconfontComponent);
+      fixture = TestBed.createComponent(TriTestIconIconfontComponent);
       fixture.detectChanges();
     });
 
     it('should support iconfont', waitForAsync(() => {
       fixture.whenStable().then(() => {
         fixture.detectChanges();
-        icons = fixture.debugElement.queryAll(By.directive(NzIconDirective));
+        icons = fixture.debugElement.queryAll(By.directive(TriIconDirective));
         expect(icons[0].nativeElement.className).toContain('anticon');
         expect(icons[0].nativeElement.innerHTML).toContain('xlink:href="#icon-tuichu"');
         expect(icons[1].nativeElement.innerHTML).toContain('link:href="#icon-facebook"');
@@ -148,17 +148,17 @@ describe('nz-icon', () => {
   });
 
   describe('config service', () => {
-    let fixture: ComponentFixture<NzTestIconExtensionsComponent>;
-    let nzConfigService: NzConfigService;
+    let fixture: ComponentFixture<TriTestIconExtensionsComponent>;
+    let nzConfigService: TriConfigService;
     let icons: DebugElement[];
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestIconExtensionsComponent);
+      fixture = TestBed.createComponent(TriTestIconExtensionsComponent);
       fixture.detectChanges();
-      icons = fixture.debugElement.queryAll(By.directive(NzIconDirective));
+      icons = fixture.debugElement.queryAll(By.directive(TriIconDirective));
     });
 
-    beforeEach(inject([NzConfigService], (c: NzConfigService) => {
+    beforeEach(inject([TriConfigService], (c: TriConfigService) => {
       nzConfigService = c;
     }));
 
@@ -176,7 +176,7 @@ describe('nz-icon', () => {
 
 describe('nz-icon injection', () => {
   describe('injection on multi places', () => {
-    let fixture: ComponentFixture<NzTestIconMultiInjectionComponent>;
+    let fixture: ComponentFixture<TriTestIconMultiInjectionComponent>;
     let icons: DebugElement[];
 
     beforeEach(() => {
@@ -186,20 +186,20 @@ describe('nz-icon injection', () => {
     });
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestIconMultiInjectionComponent);
+      fixture = TestBed.createComponent(TriTestIconMultiInjectionComponent);
       fixture.detectChanges();
     });
 
     it('should support forRoot and forChild', () => {
       fixture.detectChanges();
-      icons = fixture.debugElement.queryAll(By.directive(NzIconDirective));
+      icons = fixture.debugElement.queryAll(By.directive(TriIconDirective));
       expect(icons[0].nativeElement.classList.contains('anticon-home')).toBe(true);
       expect(icons[1].nativeElement.classList.contains('anticon-question')).toBe(true);
     });
   });
 
   describe('[standalone] injection on multi places', () => {
-    let fixture: ComponentFixture<NzTestIconMultiInjectionStandaloneComponent>;
+    let fixture: ComponentFixture<TriTestIconMultiInjectionStandaloneComponent>;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -208,12 +208,12 @@ describe('nz-icon injection', () => {
     });
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestIconMultiInjectionStandaloneComponent);
+      fixture = TestBed.createComponent(TriTestIconMultiInjectionStandaloneComponent);
       fixture.detectChanges();
     });
 
     it('should support forRoot and forChild', () => {
-      const icons = fixture.debugElement.queryAll(By.directive(NzIconDirective));
+      const icons = fixture.debugElement.queryAll(By.directive(TriIconDirective));
       expect(icons[0].nativeElement.classList.contains('anticon-home')).toBe(true);
       expect(icons[1].nativeElement.classList.contains('anticon-question')).toBe(true);
     });
@@ -221,45 +221,45 @@ describe('nz-icon injection', () => {
 });
 
 @Component({
-  imports: [NzIconModule],
+  imports: [TriIconModule],
   template: `
-    <nz-icon [nzType]="type" [nzTheme]="theme" [nzSpin]="spin" [nzRotate]="rotate"></nz-icon>
-    <nz-icon [nzType]="'loading'" [nzTheme]="theme"></nz-icon>
+    <tri-icon [type]="type" [theme]="theme" [spin]="spin" [rotate]="rotate"></tri-icon>
+    <tri-icon [type]="'loading'" [theme]="theme"></tri-icon>
   `
 })
-export class NzTestIconExtensionsComponent {
+export class TriTestIconExtensionsComponent {
   type = 'question';
   theme: 'fill' | 'outline' | 'twotone' = 'outline';
   spin = true;
   rotate = 0;
 
-  constructor(public iconService: NzIconService) {}
+  constructor(public iconService: TriIconService) {}
 }
 
 @Component({
-  imports: [NzIconModule],
+  imports: [TriIconModule],
   template: `
-    <nz-icon style="color: hotpink;">
+    <tri-icon style="color: hotpink;">
       <svg>
         <path
           d="M923 283.6c-13.4-31.1-32.6-58.9-56.9-82.8-24.3-23.8-52.5-42.4-84-55.5-32.5-13.5-66.9-20.3-102.4-20.3-49.3 0-97.4 13.5-139.2 39-10 6.1-19.5 12.8-28.5 20.1-9-7.3-18.5-14-28.5-20.1-41.8-25.5-89.9-39-139.2-39-35.5 0-69.9 6.8-102.4 20.3-31.4 13-59.7 31.7-84 55.5-24.4 23.9-43.5 51.7-56.9 82.8-13.9 32.3-21 66.6-21 101.9 0 33.3 6.8 68 20.3 103.3 11.3 29.5 27.5 60.1 48.2 91 32.8 48.9 77.9 99.9 133.9 151.6 92.8 85.7 184.7 144.9 188.6 147.3l23.7 15.2c10.5 6.7 24 6.7 34.5 0l23.7-15.2c3.9-2.5 95.7-61.6 188.6-147.3 56-51.7 101.1-102.7 133.9-151.6 20.7-30.9 37-61.5 48.2-91 13.5-35.3 20.3-70 20.3-103.3 0.1-35.3-7-69.6-20.9-101.9z"
         />
       </svg>
-    </nz-icon>
+    </tri-icon>
   `
 })
-export class NzTestIconCustomComponent {}
+export class TriTestIconCustomComponent {}
 
 @Component({
-  imports: [NzIconModule],
+  imports: [TriIconModule],
   template: `
-    <nz-icon nzIconfont="icon-tuichu"></nz-icon>
-    <nz-icon nzIconfont="icon-facebook"></nz-icon>
-    <nz-icon nzIconfont="icon-twitter"></nz-icon>
+    <tri-icon iconfont="icon-tuichu"></tri-icon>
+    <tri-icon iconfont="icon-facebook"></tri-icon>
+    <tri-icon iconfont="icon-twitter"></tri-icon>
   `
 })
-export class NzTestIconIconfontComponent {
-  constructor(private iconService: NzIconService) {
+export class TriTestIconIconfontComponent {
+  constructor(private iconService: TriIconService) {
     this.iconService.fetchFromIconfont({
       scriptUrl: 'https://at.alicdn.com/t/font_8d5l8fzk5b87iudi.js'
     });
@@ -267,25 +267,25 @@ export class NzTestIconIconfontComponent {
 }
 
 @NgModule({
-  imports: [NzIconModule.forChild([QuestionOutline])]
+  imports: [TriIconModule.forChild([QuestionOutline])]
 })
 class ChildModule {}
 
 @Component({
-  imports: [NzIconModule, ChildModule],
+  imports: [TriIconModule, ChildModule],
   template: `
-    <nz-icon nzType="home"></nz-icon>
-    <nz-icon nzType="question"></nz-icon>
+    <tri-icon type="home"></tri-icon>
+    <tri-icon type="question"></tri-icon>
   `
 })
-class NzTestIconMultiInjectionComponent {}
+class TriTestIconMultiInjectionComponent {}
 
 @Component({
-  imports: [NzIconModule],
+  imports: [TriIconModule],
   providers: [provideNzIconsPatch([QuestionOutline])],
   template: `
-    <nz-icon nzType="home"></nz-icon>
-    <nz-icon nzType="question"></nz-icon>
+    <tri-icon type="home"></tri-icon>
+    <tri-icon type="question"></tri-icon>
   `
 })
-class NzTestIconMultiInjectionStandaloneComponent {}
+class TriTestIconMultiInjectionStandaloneComponent {}

@@ -6,13 +6,13 @@
 import { Directive, ElementRef, inject, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: '[nz-carousel-content]',
-  exportAs: 'nzCarouselContent',
+  selector: '',
+  exportAs: 'triCarouselContent',
   host: {
     class: 'slick-slide'
   }
 })
-export class NzCarouselContentDirective {
+export class TriCarouselContentDirective {
   private renderer = inject(Renderer2);
   readonly el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
 

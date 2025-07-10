@@ -8,22 +8,22 @@ import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
-import { NzContentComponent } from './content.component';
-import { NzFooterComponent } from './footer.component';
-import { NzHeaderComponent } from './header.component';
-import { NzLayoutComponent } from './layout.component';
-import { NzLayoutModule } from './layout.module';
-import { NzSiderComponent } from './sider.component';
+import { TriContentComponent } from './content.component';
+import { TriFooterComponent } from './footer.component';
+import { TriHeaderComponent } from './header.component';
+import { TriLayoutComponent } from './layout.component';
+import { TriLayoutModule } from './layout.module';
+import { TriSiderComponent } from './sider.component';
 
-declare const viewport: NzSafeAny;
+declare const viewport: TriSafeAny;
 
 describe('nz-layout', () => {
   describe('basic', () => {
-    let fixture: ComponentFixture<NzLayoutBasicComponent>;
+    let fixture: ComponentFixture<TriLayoutBasicComponent>;
     let headers: DebugElement[];
     let contents: DebugElement[];
     let footers: DebugElement[];
@@ -31,12 +31,12 @@ describe('nz-layout', () => {
     let layouts: DebugElement[];
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzLayoutBasicComponent);
-      headers = fixture.debugElement.queryAll(By.directive(NzHeaderComponent));
-      contents = fixture.debugElement.queryAll(By.directive(NzContentComponent));
-      footers = fixture.debugElement.queryAll(By.directive(NzFooterComponent));
-      siders = fixture.debugElement.queryAll(By.directive(NzSiderComponent));
-      layouts = fixture.debugElement.queryAll(By.directive(NzLayoutComponent));
+      fixture = TestBed.createComponent(TriLayoutBasicComponent);
+      headers = fixture.debugElement.queryAll(By.directive(TriHeaderComponent));
+      contents = fixture.debugElement.queryAll(By.directive(TriContentComponent));
+      footers = fixture.debugElement.queryAll(By.directive(TriFooterComponent));
+      siders = fixture.debugElement.queryAll(By.directive(TriSiderComponent));
+      layouts = fixture.debugElement.queryAll(By.directive(TriLayoutComponent));
     });
 
     it('should have correct class', () => {
@@ -59,15 +59,15 @@ describe('nz-layout', () => {
   });
 
   describe('side', () => {
-    let fixture: ComponentFixture<NzLayoutSideComponent>;
-    let testComponent: NzLayoutSideComponent;
+    let fixture: ComponentFixture<TriLayoutSideComponent>;
+    let testComponent: TriLayoutSideComponent;
     let sider: DebugElement;
     let trigger: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzLayoutSideComponent);
+      fixture = TestBed.createComponent(TriLayoutSideComponent);
       testComponent = fixture.componentInstance;
-      sider = fixture.debugElement.query(By.directive(NzSiderComponent));
+      sider = fixture.debugElement.query(By.directive(TriSiderComponent));
     });
 
     it('should nzCollapsed work', () => {
@@ -162,14 +162,14 @@ describe('nz-layout', () => {
   });
 
   describe('custom-trigger', () => {
-    let fixture: ComponentFixture<NzLayoutCustomTriggerComponent>;
-    let testComponent: NzLayoutCustomTriggerComponent;
+    let fixture: ComponentFixture<TriLayoutCustomTriggerComponent>;
+    let testComponent: TriLayoutCustomTriggerComponent;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
         providers: [provideNzIconsTesting()]
       });
-      fixture = TestBed.createComponent(NzLayoutCustomTriggerComponent);
+      fixture = TestBed.createComponent(TriLayoutCustomTriggerComponent);
       testComponent = fixture.componentInstance;
     });
 
@@ -189,15 +189,15 @@ describe('nz-layout', () => {
   });
 
   describe('responsive', () => {
-    let fixture: ComponentFixture<NzLayoutResponsiveComponent>;
+    let fixture: ComponentFixture<TriLayoutResponsiveComponent>;
     let sider: DebugElement;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
         providers: [provideNzIconsTesting()]
       });
-      fixture = TestBed.createComponent(NzLayoutResponsiveComponent);
-      sider = fixture.debugElement.query(By.directive(NzSiderComponent));
+      fixture = TestBed.createComponent(TriLayoutResponsiveComponent);
+      sider = fixture.debugElement.query(By.directive(TriSiderComponent));
     });
 
     it('should responsive work', fakeAsync(() => {
@@ -219,12 +219,12 @@ describe('nz-layout', () => {
   });
 
   describe('RTL', () => {
-    let fixture: ComponentFixture<NzTestLayoutRtlComponent>;
+    let fixture: ComponentFixture<TriTestLayoutRtlComponent>;
     let layouts: DebugElement[];
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestLayoutRtlComponent);
-      layouts = fixture.debugElement.queryAll(By.directive(NzLayoutComponent));
+      fixture = TestBed.createComponent(TriTestLayoutRtlComponent);
+      layouts = fixture.debugElement.queryAll(By.directive(TriLayoutComponent));
     });
 
     it('should className correct on dir change', fakeAsync(() => {
@@ -240,31 +240,31 @@ describe('nz-layout', () => {
 });
 
 @Component({
-  imports: [NzIconModule, NzLayoutModule],
+  imports: [TriIconModule, TriLayoutModule],
   template: `
-    <nz-layout>
-      <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="triggerTemplate"></nz-sider>
-      <nz-layout>
-        <nz-header>
+    <tri-layout>
+      <tri-sider collapsible [(collapsedChange)]="isCollapsed" [trigger]="triggerTemplate"></tri-sider>
+      <tri-layout>
+        <tri-header>
           <span
             class="trigger"
-            nz-icon
-            [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+            tri-icon
+            [type]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
             (click)="isCollapsed = !isCollapsed"
           ></span>
-        </nz-header>
-        <nz-content>
+        </tri-header>
+        <tri-content>
           <div>Bill is a cat.</div>
-        </nz-content>
-        <nz-footer>Ant Design ©2019 Implement By Angular</nz-footer>
-      </nz-layout>
-    </nz-layout>
+        </tri-content>
+        <tri-footer>Ant Design ©2019 Implement By Angular</tri-footer>
+      </tri-layout>
+    </tri-layout>
     <ng-template #trigger>
-      <nz-icon nzType="up" />
+      <tri-icon type="up" />
     </ng-template>
   `
 })
-export class NzLayoutCustomTriggerComponent {
+export class TriLayoutCustomTriggerComponent {
   isCollapsed = false;
   triggerTemplate: TemplateRef<void> | null = null;
   @ViewChild('trigger', { static: true }) customTrigger!: TemplateRef<void>;
@@ -276,108 +276,108 @@ export class NzLayoutCustomTriggerComponent {
 }
 
 @Component({
-  imports: [NzLayoutModule],
+  imports: [TriLayoutModule],
   template: `
-    <nz-layout>
-      <nz-sider
-        nzCollapsible
-        [(nzCollapsed)]="isCollapsed"
-        [nzWidth]="width"
-        [nzReverseArrow]="isReverseArrow"
-      ></nz-sider>
-      <nz-layout>
-        <nz-header></nz-header>
-        <nz-content>
+    <tri-layout>
+      <tri-sider
+        collapsible
+        [(collapsedChange)]="isCollapsed"
+        [width]="width"
+        [reverseArrow]="isReverseArrow"
+      ></tri-sider>
+      <tri-layout>
+        <tri-header></tri-header>
+        <tri-content>
           <div>Bill is a cat.</div>
-        </nz-content>
-        <nz-footer>Ant Design ©2019 Implement By Angular</nz-footer>
-      </nz-layout>
-    </nz-layout>
+        </tri-content>
+        <tri-footer>Ant Design ©2019 Implement By Angular</tri-footer>
+      </tri-layout>
+    </tri-layout>
   `
 })
-export class NzLayoutSideComponent {
+export class TriLayoutSideComponent {
   isCollapsed = false;
   isReverseArrow = false;
   width: string | number = '200px';
 }
 
 @Component({
-  imports: [NzIconModule, NzLayoutModule],
+  imports: [TriIconModule, TriLayoutModule],
   template: `
-    <nz-layout>
-      <nz-sider
-        nzCollapsible
-        [(nzCollapsed)]="isCollapsed"
-        [nzBreakpoint]="'lg'"
-        [nzCollapsedWidth]="0"
-        [nzZeroTrigger]="zeroTrigger"
-      ></nz-sider>
-      <nz-layout>
-        <nz-header></nz-header>
-        <nz-content>
+    <tri-layout>
+      <tri-sider
+        collapsible
+        [(collapsedChange)]="isCollapsed"
+        [breakpoint]="'lg'"
+        [collapsedWidth]="0"
+        [zeroTrigger]="zeroTrigger"
+      ></tri-sider>
+      <tri-layout>
+        <tri-header></tri-header>
+        <tri-content>
           <div>Content</div>
-        </nz-content>
-        <nz-footer>Ant Design ©2019 Implement By Angular</nz-footer>
-      </nz-layout>
-    </nz-layout>
+        </tri-content>
+        <tri-footer>Ant Design ©2019 Implement By Angular</tri-footer>
+      </tri-layout>
+    </tri-layout>
     <ng-template #zeroTrigger>
-      <nz-icon nzType="menu-fold" nzTheme="outline" />
+      <tri-icon type="menu-fold" theme="outline" />
     </ng-template>
   `
 })
-export class NzLayoutResponsiveComponent {
+export class TriLayoutResponsiveComponent {
   isCollapsed = false;
 }
 
 @Component({
-  imports: [NzLayoutModule],
-  selector: 'nz-test-layout-basic',
+  imports: [TriLayoutModule],
+  selector: '',
   template: `
-    <nz-layout>
-      <nz-header>Header</nz-header>
-      <nz-content>Content</nz-content>
-      <nz-footer>Footer</nz-footer>
-    </nz-layout>
+    <tri-layout>
+      <tri-header>Header</tri-header>
+      <tri-content>Content</tri-content>
+      <tri-footer>Footer</tri-footer>
+    </tri-layout>
 
-    <nz-layout>
-      <nz-header>Header</nz-header>
-      <nz-layout>
-        <nz-sider>Sider</nz-sider>
-        <nz-content>Content</nz-content>
-      </nz-layout>
-      <nz-footer>Footer</nz-footer>
-    </nz-layout>
+    <tri-layout>
+      <tri-header>Header</tri-header>
+      <tri-layout>
+        <tri-sider>Sider</tri-sider>
+        <tri-content>Content</tri-content>
+      </tri-layout>
+      <tri-footer>Footer</tri-footer>
+    </tri-layout>
 
-    <nz-layout>
-      <nz-header>Header</nz-header>
-      <nz-layout>
-        <nz-content>Content</nz-content>
-        <nz-sider>Sider</nz-sider>
-      </nz-layout>
-      <nz-footer>Footer</nz-footer>
-    </nz-layout>
+    <tri-layout>
+      <tri-header>Header</tri-header>
+      <tri-layout>
+        <tri-content>Content</tri-content>
+        <tri-sider>Sider</tri-sider>
+      </tri-layout>
+      <tri-footer>Footer</tri-footer>
+    </tri-layout>
 
-    <nz-layout>
-      <nz-sider>Sider</nz-sider>
-      <nz-layout>
-        <nz-header>Header</nz-header>
-        <nz-content>Content</nz-content>
-        <nz-footer>Footer</nz-footer>
-      </nz-layout>
-    </nz-layout>
+    <tri-layout>
+      <tri-sider>Sider</tri-sider>
+      <tri-layout>
+        <tri-header>Header</tri-header>
+        <tri-content>Content</tri-content>
+        <tri-footer>Footer</tri-footer>
+      </tri-layout>
+    </tri-layout>
   `
 })
-export class NzLayoutBasicComponent {}
+export class TriLayoutBasicComponent {}
 
 @Component({
-  imports: [BidiModule, NzLayoutBasicComponent],
+  imports: [BidiModule, TriLayoutBasicComponent],
   template: `
     <div [dir]="direction">
-      <nz-test-layout-basic></nz-test-layout-basic>
+      <tri-test-layout-basic></tri-test-layout-basic>
     </div>
   `
 })
-export class NzTestLayoutRtlComponent {
+export class TriTestLayoutRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 }

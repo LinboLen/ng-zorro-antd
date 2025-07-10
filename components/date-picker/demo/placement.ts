@@ -1,24 +1,24 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzDatePickerModule, NzPlacement } from 'ng-zorro-antd/date-picker';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { TriDatePickerModule, TriPlacement } from 'ng-zorro-antd/date-picker';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: 'nz-demo-date-picker-placement',
-  imports: [FormsModule, NzDatePickerModule, NzRadioModule],
+  selector: '',
+  imports: [FormsModule, TriDatePickerModule, TriRadioModule],
   template: `
-    <nz-radio-group [(ngModel)]="placement">
-      <label nz-radio-button nzValue="bottomLeft">bottomLeft</label>
-      <label nz-radio-button nzValue="bottomRight">bottomRight</label>
-      <label nz-radio-button nzValue="topLeft">topLeft</label>
-      <label nz-radio-button nzValue="topRight">topRight</label>
-    </nz-radio-group>
+    <tri-radio-group [(ngModel)]="placement">
+      <label tri-radio-button value="bottomLeft">bottomLeft</label>
+      <label tri-radio-button value="bottomRight">bottomRight</label>
+      <label tri-radio-button value="topLeft">topLeft</label>
+      <label tri-radio-button value="topRight">topRight</label>
+    </tri-radio-group>
     <br />
     <br />
-    <nz-date-picker [nzPlacement]="placement"></nz-date-picker>
+    <tri-date-picker [placement]="placement"></tri-date-picker>
     <br />
-    <nz-range-picker [nzPlacement]="placement"></nz-range-picker>
+    <tri-range-picker [placement]="placement"></tri-range-picker>
   `,
   styles: [
     `
@@ -29,6 +29,6 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
     `
   ]
 })
-export class NzDemoDatePickerPlacementComponent {
-  placement: NzPlacement = 'bottomLeft';
+export class TriDemoDatePickerPlacementComponent {
+  placement: TriPlacement = 'bottomLeft';
 }

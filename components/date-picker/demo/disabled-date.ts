@@ -2,31 +2,31 @@ import { Component } from '@angular/core';
 
 import { differenceInCalendarDays, setHours } from 'date-fns';
 
-import { DisabledTimeFn, DisabledTimePartial, NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { DisabledTimeFn, DisabledTimePartial, TriDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 @Component({
-  selector: 'nz-demo-date-picker-disabled-date',
-  imports: [NzDatePickerModule],
+  selector: '',
+  imports: [TriDatePickerModule],
   template: `
-    <nz-date-picker
-      nzFormat="yyyy-MM-dd HH:mm:ss"
-      [nzDisabledDate]="disabledDate"
-      [nzDisabledTime]="disabledDateTime"
-      [nzShowTime]="{ nzDefaultOpenValue: timeDefaultValue }"
-    ></nz-date-picker>
+    <tri-date-picker
+      format="yyyy-MM-dd HH:mm:ss"
+      [disabledDate]="disabledDate"
+      [disabledTime]="disabledDateTime"
+      [showTime]="{ nzDefaultOpenValue: timeDefaultValue }"
+    ></tri-date-picker>
     <br />
-    <nz-date-picker nzMode="month" [nzDisabledDate]="disabledDate"></nz-date-picker>
+    <tri-date-picker mode="month" [disabledDate]="disabledDate"></tri-date-picker>
     <br />
-    <nz-date-picker nzMode="quarter" [nzDisabledDate]="disabledDate"></nz-date-picker>
+    <tri-date-picker mode="quarter" [disabledDate]="disabledDate"></tri-date-picker>
     <br />
-    <nz-date-picker nzMode="year" [nzDisabledDate]="disabledDate"></nz-date-picker>
+    <tri-date-picker mode="year" [disabledDate]="disabledDate"></tri-date-picker>
     <br />
-    <nz-range-picker
-      [nzDisabledDate]="disabledDate"
-      [nzDisabledTime]="disabledRangeTime"
-      [nzShowTime]="{ nzHideDisabledOptions: true, nzDefaultOpenValue: timeDefaultValue }"
-      nzFormat="yyyy-MM-dd HH:mm:ss"
-    ></nz-range-picker>
+    <tri-range-picker
+      [disabledDate]="disabledDate"
+      [disabledTime]="disabledRangeTime"
+      [showTime]="{ nzHideDisabledOptions: true, nzDefaultOpenValue: timeDefaultValue }"
+      format="yyyy-MM-dd HH:mm:ss"
+    ></tri-range-picker>
   `,
   styles: [
     `
@@ -37,7 +37,7 @@ import { DisabledTimeFn, DisabledTimePartial, NzDatePickerModule } from 'ng-zorr
     `
   ]
 })
-export class NzDemoDatePickerDisabledDateComponent {
+export class TriDemoDatePickerDisabledDateComponent {
   today = new Date();
   timeDefaultValue = setHours(new Date(), 0);
 

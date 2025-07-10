@@ -10,8 +10,8 @@ import { By } from '@angular/platform-browser';
 
 import { dispatchFakeEvent, MockNgZone } from 'ng-zorro-antd/core/testing';
 
-import { NzAutosizeDirective } from './autosize.directive';
-import { NzInputModule } from './input.module';
+import { TriAutosizeDirective } from './autosize.directive';
+import { TriInputModule } from './input.module';
 
 describe('autoresize', () => {
   let zone: MockNgZone;
@@ -32,17 +32,17 @@ describe('autoresize', () => {
 
   describe('single input', () => {
     describe('textarea autosize string', () => {
-      let fixture: ComponentFixture<NzTestInputWithTextAreaAutoSizeStringComponent>;
-      let testComponent: NzTestInputWithTextAreaAutoSizeStringComponent;
+      let fixture: ComponentFixture<TriTestInputWithTextAreaAutoSizeStringComponent>;
+      let testComponent: TriTestInputWithTextAreaAutoSizeStringComponent;
       let textarea: HTMLTextAreaElement;
-      let autosize: NzAutosizeDirective;
+      let autosize: TriAutosizeDirective;
 
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestInputWithTextAreaAutoSizeStringComponent);
+        fixture = TestBed.createComponent(TriTestInputWithTextAreaAutoSizeStringComponent);
         testComponent = fixture.debugElement.componentInstance;
         fixture.detectChanges();
-        textarea = fixture.debugElement.query(By.directive(NzAutosizeDirective)).nativeElement;
-        autosize = fixture.debugElement.query(By.directive(NzAutosizeDirective)).injector.get(NzAutosizeDirective);
+        textarea = fixture.debugElement.query(By.directive(TriAutosizeDirective)).nativeElement;
+        autosize = fixture.debugElement.query(By.directive(TriAutosizeDirective)).injector.get(TriAutosizeDirective);
       });
       it('should resize the textarea based on its ngModel', fakeAsync(() => {
         let previousHeight = textarea.clientHeight;
@@ -99,17 +99,17 @@ describe('autoresize', () => {
       }));
     });
     describe('textarea autosize object', () => {
-      let fixture: ComponentFixture<NzTestInputWithTextAreaAutoSizeObjectComponent>;
-      let testComponent: NzTestInputWithTextAreaAutoSizeObjectComponent;
+      let fixture: ComponentFixture<TriTestInputWithTextAreaAutoSizeObjectComponent>;
+      let testComponent: TriTestInputWithTextAreaAutoSizeObjectComponent;
       let textarea: HTMLTextAreaElement;
-      let autosize: NzAutosizeDirective;
+      let autosize: TriAutosizeDirective;
 
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestInputWithTextAreaAutoSizeObjectComponent);
+        fixture = TestBed.createComponent(TriTestInputWithTextAreaAutoSizeObjectComponent);
         testComponent = fixture.debugElement.componentInstance;
         fixture.detectChanges();
-        textarea = fixture.debugElement.query(By.directive(NzAutosizeDirective)).nativeElement;
-        autosize = fixture.debugElement.query(By.directive(NzAutosizeDirective)).injector.get(NzAutosizeDirective);
+        textarea = fixture.debugElement.query(By.directive(TriAutosizeDirective)).nativeElement;
+        autosize = fixture.debugElement.query(By.directive(TriAutosizeDirective)).injector.get(TriAutosizeDirective);
       });
       it('should set a min-height based on minRows', fakeAsync(() => {
         autosize.resizeToFitContent(true);
@@ -144,17 +144,17 @@ describe('autoresize', () => {
       }));
     });
     describe('textarea autosize boolean', () => {
-      let fixture: ComponentFixture<NzTestInputWithTextAreaAutoSizeBooleanComponent>;
-      let testComponent: NzTestInputWithTextAreaAutoSizeBooleanComponent;
+      let fixture: ComponentFixture<TriTestInputWithTextAreaAutoSizeBooleanComponent>;
+      let testComponent: TriTestInputWithTextAreaAutoSizeBooleanComponent;
       let textarea: HTMLTextAreaElement;
-      let autosize: NzAutosizeDirective;
+      let autosize: TriAutosizeDirective;
 
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestInputWithTextAreaAutoSizeBooleanComponent);
+        fixture = TestBed.createComponent(TriTestInputWithTextAreaAutoSizeBooleanComponent);
         testComponent = fixture.debugElement.componentInstance;
         fixture.detectChanges();
-        textarea = fixture.debugElement.query(By.directive(NzAutosizeDirective)).nativeElement;
-        autosize = fixture.debugElement.query(By.directive(NzAutosizeDirective)).injector.get(NzAutosizeDirective);
+        textarea = fixture.debugElement.query(By.directive(TriAutosizeDirective)).nativeElement;
+        autosize = fixture.debugElement.query(By.directive(TriAutosizeDirective)).injector.get(TriAutosizeDirective);
       });
       it('should resize the textarea based on its ngModel', fakeAsync(() => {
         let previousHeight = textarea.clientHeight;
@@ -214,26 +214,26 @@ describe('autoresize', () => {
 });
 
 @Component({
-  imports: [FormsModule, NzInputModule],
-  template: `<textarea nz-input nzAutosize [ngModel]="value"></textarea>`
+  imports: [FormsModule, TriInputModule],
+  template: `<textarea tri-input autosize [ngModel]="value"></textarea>`
 })
-export class NzTestInputWithTextAreaAutoSizeStringComponent {
+export class TriTestInputWithTextAreaAutoSizeStringComponent {
   value = '';
 }
 
 @Component({
-  imports: [FormsModule, NzInputModule],
-  template: `<textarea nz-input ngModel [nzAutosize]="{ minRows, maxRows }"></textarea>`
+  imports: [FormsModule, TriInputModule],
+  template: `<textarea tri-input ngModel [autosize]="{ minRows, maxRows }"></textarea>`
 })
-export class NzTestInputWithTextAreaAutoSizeObjectComponent {
+export class TriTestInputWithTextAreaAutoSizeObjectComponent {
   minRows = 2;
   maxRows = 2;
 }
 
 @Component({
-  imports: [FormsModule, NzInputModule],
-  template: `<textarea nz-input [nzAutosize]="true" [ngModel]="value"></textarea>`
+  imports: [FormsModule, TriInputModule],
+  template: `<textarea tri-input [autosize]="true" [ngModel]="value"></textarea>`
 })
-export class NzTestInputWithTextAreaAutoSizeBooleanComponent {
+export class TriTestInputWithTextAreaAutoSizeBooleanComponent {
   value = '';
 }

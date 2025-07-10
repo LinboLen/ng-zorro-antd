@@ -5,43 +5,43 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzTreeNodeCheckboxComponent } from './checkbox';
-import { NzTreeNodeIndentLineDirective, NzTreeNodeIndentsComponent } from './indent';
-import { NzTreeNodeComponent, NzTreeNodeDefDirective, NzTreeVirtualScrollNodeOutletDirective } from './node';
-import { NzTreeNodeOptionComponent } from './option';
-import { NzTreeNodeOutletDirective } from './outlet';
-import { NzTreeNodePaddingDirective } from './padding';
+import { TriTreeNodeCheckboxComponent } from './checkbox';
+import { TriTreeNodeIndentLineDirective, TriTreeNodeIndentsComponent } from './indent';
+import { TriTreeNodeComponent, TriTreeNodeDefDirective, TriTreeVirtualScrollNodeOutletDirective } from './node';
+import { TriTreeNodeOptionComponent } from './option';
+import { TriTreeNodeOutletDirective } from './outlet';
+import { TriTreeNodePaddingDirective } from './padding';
 import {
-  NzTreeNodeNoopToggleDirective,
-  NzTreeNodeToggleActiveIconDirective,
-  NzTreeNodeToggleDirective,
-  NzTreeNodeToggleRotateIconDirective
+  TriTreeNodeNoopToggleDirective,
+  TriTreeNodeToggleActiveIconDirective,
+  TriTreeNodeToggleDirective,
+  TriTreeNodeToggleRotateIconDirective
 } from './toggle';
-import { NzTreeView } from './tree';
-import { NzTreeViewComponent } from './tree-view';
-import { NzTreeVirtualScrollViewComponent } from './tree-virtual-scroll-view';
+import { TriTreeView } from './tree';
+import { TriTreeViewComponent } from './tree-view';
+import { TriTreeVirtualScrollViewComponent } from './tree-virtual-scroll-view';
 
 const treeWithControlComponents = [
-  NzTreeView,
-  NzTreeNodeOutletDirective,
-  NzTreeViewComponent,
-  NzTreeNodeDefDirective,
-  NzTreeNodeComponent,
-  NzTreeNodeToggleDirective,
-  NzTreeNodePaddingDirective,
-  NzTreeNodeToggleRotateIconDirective,
-  NzTreeNodeToggleActiveIconDirective,
-  NzTreeNodeOptionComponent,
-  NzTreeNodeNoopToggleDirective,
-  NzTreeNodeCheckboxComponent,
-  NzTreeNodeIndentsComponent,
-  NzTreeVirtualScrollViewComponent,
-  NzTreeVirtualScrollNodeOutletDirective,
-  NzTreeNodeIndentLineDirective
+  TriTreeView,
+  TriTreeNodeOutletDirective,
+  TriTreeViewComponent,
+  TriTreeNodeDefDirective,
+  TriTreeNodeComponent,
+  TriTreeNodeToggleDirective,
+  TriTreeNodePaddingDirective,
+  TriTreeNodeToggleRotateIconDirective,
+  TriTreeNodeToggleActiveIconDirective,
+  TriTreeNodeOptionComponent,
+  TriTreeNodeNoopToggleDirective,
+  TriTreeNodeCheckboxComponent,
+  TriTreeNodeIndentsComponent,
+  TriTreeVirtualScrollViewComponent,
+  TriTreeVirtualScrollNodeOutletDirective,
+  TriTreeNodeIndentLineDirective
 ];
 
 @NgModule({
   imports: [treeWithControlComponents],
   exports: [treeWithControlComponents]
 })
-export class NzTreeViewModule {}
+export class TriTreeViewModule {}

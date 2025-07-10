@@ -1,37 +1,37 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
+import { TriButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
-  selector: 'nz-demo-button-disabled',
-  imports: [NzButtonModule],
+  selector: '',
+  imports: [TriButtonModule],
   template: `
-    <button nz-button nzType="primary">Primary</button>
-    <button nz-button nzType="primary" disabled>Primary(disabled)</button>
+    <button tri-button type="primary">Primary</button>
+    <button tri-button type="primary" disabled>Primary(disabled)</button>
     <br />
-    <button nz-button nzType="default">Default</button>
-    <button nz-button nzType="default" disabled>Default(disabled)</button>
+    <button tri-button type="default">Default</button>
+    <button tri-button type="default" disabled>Default(disabled)</button>
     <br />
-    <button nz-button nzType="dashed">Dashed</button>
-    <button nz-button nzType="dashed" disabled>Dashed(disabled)</button>
+    <button tri-button type="dashed">Dashed</button>
+    <button tri-button type="dashed" disabled>Dashed(disabled)</button>
     <br />
-    <a nz-button nzType="text">Text</a>
-    <a nz-button nzType="text" disabled>Text(disabled)</a>
+    <a tri-button type="text">Text</a>
+    <a tri-button type="text" disabled>Text(disabled)</a>
     <br />
-    <a nz-button nzType="link">Link</a>
-    <a nz-button nzType="link" disabled>Link(disabled)</a>
+    <a tri-button type="link">Link</a>
+    <a tri-button type="link" disabled>Link(disabled)</a>
     <br />
-    <a nz-button nzType="text" nzDanger>Danger Text</a>
-    <a nz-button nzType="text" disabled nzDanger>Danger Text(disabled)</a>
+    <a tri-button type="text" danger>Danger Text</a>
+    <a tri-button type="text" disabled danger>Danger Text(disabled)</a>
     <br />
-    <a nz-button nzType="link" nzDanger>Danger Link</a>
-    <a nz-button nzType="link" disabled nzDanger>Danger Link(disabled)</a>
+    <a tri-button type="link" danger>Danger Link</a>
+    <a tri-button type="link" disabled danger>Danger Link(disabled)</a>
     <br />
-    <button nz-button nzType="default" nzDanger>Danger Default</button>
-    <button nz-button nzType="default" disabled nzDanger>Danger Default(disabled)</button>
+    <button tri-button type="default" danger>Danger Default</button>
+    <button tri-button type="default" disabled danger>Danger Default(disabled)</button>
     <div class="ghost-background">
-      <button nz-button nzGhost>Ghost</button>
-      <button nz-button nzGhost disabled>Ghost(disabled)</button>
+      <button tri-button ghost>Ghost</button>
+      <button tri-button ghost disabled>Ghost(disabled)</button>
     </div>
   `,
   styles: [
@@ -53,4 +53,4 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     `
   ]
 })
-export class NzDemoButtonDisabledComponent {}
+export class TriDemoButtonDisabledComponent {}

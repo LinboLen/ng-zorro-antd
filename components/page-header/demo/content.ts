@@ -1,93 +1,93 @@
 import { Component } from '@angular/core';
 
-import { NzAvatarModule } from 'ng-zorro-antd/avatar';
-import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzNoAnimationModule } from 'ng-zorro-antd/core/no-animation';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
-import { NzTagModule } from 'ng-zorro-antd/tag';
-import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { TriAvatarModule } from 'ng-zorro-antd/avatar';
+import { TriBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriNoAnimationModule } from 'ng-zorro-antd/core/no-animation';
+import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriGridModule } from 'ng-zorro-antd/grid';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
+import { TriTagModule } from 'ng-zorro-antd/tag';
+import { TriTypographyModule } from 'ng-zorro-antd/typography';
 
 @Component({
-  selector: 'nz-demo-page-header-content',
+  selector: '',
   imports: [
-    NzAvatarModule,
-    NzBreadCrumbModule,
-    NzButtonModule,
-    NzDropDownModule,
-    NzGridModule,
-    NzIconModule,
-    NzNoAnimationModule,
-    NzPageHeaderModule,
-    NzSpaceModule,
-    NzTagModule,
-    NzTypographyModule
+    TriAvatarModule,
+    TriBreadCrumbModule,
+    TriButtonModule,
+    TriDropDownModule,
+    TriGridModule,
+    TriIconModule,
+    TriNoAnimationModule,
+    TriPageHeaderModule,
+    TriSpaceModule,
+    TriTagModule,
+    TriTypographyModule
   ],
   template: `
-    <nz-page-header>
+    <tri-page-header>
       <!--breadcrumb-->
-      <nz-breadcrumb nz-page-header-breadcrumb>
-        <nz-breadcrumb-item>First-level Menu</nz-breadcrumb-item>
-        <nz-breadcrumb-item>
+      <tri-breadcrumb tri-page-header-breadcrumb>
+        <tri-breadcrumb-item>First-level Menu</tri-breadcrumb-item>
+        <tri-breadcrumb-item>
           <a>Second-level Menu</a>
-        </nz-breadcrumb-item>
-        <nz-breadcrumb-item>Third-level Menu</nz-breadcrumb-item>
-      </nz-breadcrumb>
+        </tri-breadcrumb-item>
+        <tri-breadcrumb-item>Third-level Menu</tri-breadcrumb-item>
+      </tri-breadcrumb>
 
       <!--avatar-->
-      <nz-avatar nz-page-header-avatar nzSrc="https://avatars0.githubusercontent.com/u/22736418?s=88&v=4"></nz-avatar>
+      <tri-avatar tri-page-header-avatar src="https://avatars0.githubusercontent.com/u/22736418?s=88&v=4"></tri-avatar>
 
       <!--title-->
-      <nz-page-header-title>Title</nz-page-header-title>
+      <tri-page-header-title>Title</tri-page-header-title>
 
       <!--subtitle-->
-      <nz-page-header-subtitle>This is a subtitle</nz-page-header-subtitle>
+      <tri-page-header-subtitle>This is a subtitle</tri-page-header-subtitle>
 
       <!--tags-->
-      <nz-page-header-tags>
-        <nz-tag [nzColor]="'blue'">Running</nz-tag>
-      </nz-page-header-tags>
+      <tri-page-header-tags>
+        <tri-tag [color]="'blue'">Running</tri-tag>
+      </tri-page-header-tags>
 
       <!--extra-->
-      <nz-page-header-extra>
-        <nz-space>
-          <button *nzSpaceItem nz-button>Operation</button>
-          <button *nzSpaceItem nz-button>Operation</button>
-          <button *nzSpaceItem nz-button nzType="primary">Primary</button>
+      <tri-page-header-extra>
+        <tri-space>
+          <button *spaceItem tri-button>Operation</button>
+          <button *spaceItem tri-button>Operation</button>
+          <button *spaceItem tri-button type="primary">Primary</button>
           <button
-            *nzSpaceItem
-            nz-button
-            nzNoAnimation
-            nz-dropdown
-            [nzDropdownMenu]="menu"
-            nzPlacement="bottomRight"
+            *spaceItem
+            tri-button
+            noAnimation
+            tri-dropdown
+            [dropdownMenu]="menu"
+            placement="bottomRight"
             style="border: none; padding: 0"
           >
-            <nz-icon nzType="more" nzTheme="outline" style="font-size: 20px; vertical-align: top;" />
+            <tri-icon type="more" theme="outline" style="font-size: 20px; vertical-align: top;" />
           </button>
-        </nz-space>
-        <nz-dropdown-menu #menu="nzDropdownMenu">
-          <ul nz-menu>
-            <li nz-menu-item>1st menu item length</li>
-            <li nz-menu-item>2nd menu item length</li>
-            <li nz-menu-item>3rd menu item length</li>
+        </tri-space>
+        <tri-dropdown-menu #menu="nzDropdownMenu">
+          <ul tri-menu>
+            <li tri-menu-item>1st menu item length</li>
+            <li tri-menu-item>2nd menu item length</li>
+            <li tri-menu-item>3rd menu item length</li>
           </ul>
-        </nz-dropdown-menu>
-      </nz-page-header-extra>
+        </tri-dropdown-menu>
+      </tri-page-header-extra>
 
       <!--content-->
-      <nz-page-header-content>
-        <div nz-row>
+      <tri-page-header-content>
+        <div tri-row>
           <div class="content">
-            <p nz-paragraph>
+            <p tri-paragraph>
               Ant Design interprets the color system into two levels: a system-level color system and a product-level
               color system.
             </p>
-            <p nz-paragraph>
+            <p tri-paragraph>
               Ant Design's design team preferred to design with the HSB color model, which makes it easier for designers
               to have a clear psychological expectation of color when adjusting colors, as well as facilitate
               communication in teams.
@@ -111,8 +111,8 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
             <img src="https://gw.alipayobjects.com/zos/antfincdn/K%24NnlsB%26hz/pageHeader.svg" alt="content" />
           </div>
         </div>
-      </nz-page-header-content>
-    </nz-page-header>
+      </tri-page-header-content>
+    </tri-page-header>
   `,
   styles: [
     `
@@ -151,4 +151,4 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
     `
   ]
 })
-export class NzDemoPageHeaderContentComponent {}
+export class TriDemoPageHeaderContentComponent {}

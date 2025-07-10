@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
+import { TriButtonModule } from 'ng-zorro-antd/button';
 import {
-  NzTableFilterFn,
-  NzTableFilterList,
-  NzTableModule,
-  NzTableSortFn,
-  NzTableSortOrder
+  TriTableFilterFn,
+  TriTableFilterList,
+  TriTableModule,
+  TriTableSortFn,
+  TriTableSortOrder
 } from 'ng-zorro-antd/table';
 
 interface ItemData {
@@ -17,30 +17,30 @@ interface ItemData {
 
 interface ColumnItem {
   name: string;
-  sortOrder: NzTableSortOrder | null;
-  sortFn: NzTableSortFn<ItemData> | null;
-  listOfFilter: NzTableFilterList;
-  filterFn: NzTableFilterFn<ItemData> | null;
+  sortOrder: TriTableSortOrder | null;
+  sortFn: TriTableSortFn<ItemData> | null;
+  listOfFilter: TriTableFilterList;
+  filterFn: TriTableFilterFn<ItemData> | null;
 }
 
 @Component({
-  selector: 'nz-demo-table-reset-filter',
-  imports: [NzButtonModule, NzTableModule],
+  selector: '',
+  imports: [TriButtonModule, TriTableModule],
   template: `
     <div class="table-operations">
-      <button nz-button (click)="sortByAge()">Sort age</button>
-      <button nz-button (click)="resetFilters()">Clear filters</button>
-      <button nz-button (click)="resetSortAndFilters()">Clear filters and sorters</button>
+      <button tri-button (click)="sortByAge()">Sort age</button>
+      <button tri-button (click)="resetFilters()">Clear filters</button>
+      <button tri-button (click)="resetSortAndFilters()">Clear filters and sorters</button>
     </div>
-    <nz-table #filterTable [nzData]="listOfData" nzTableLayout="fixed">
+    <tri-table #filterTable [data]="listOfData" tableLayout="fixed">
       <thead>
         <tr>
           @for (column of listOfColumns; track column.name) {
             <th
-              [(nzSortOrder)]="column.sortOrder"
-              [nzSortFn]="column.sortFn"
-              [nzFilters]="column.listOfFilter"
-              [nzFilterFn]="column.filterFn"
+              [(sortOrderChange)]="column.sortOrder"
+              [sortFn]="column.sortFn"
+              [filters]="column.listOfFilter"
+              [filterFn]="column.filterFn"
             >
               {{ column.name }}
             </th>
@@ -56,7 +56,7 @@ interface ColumnItem {
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `,
   styles: [
     `
@@ -70,7 +70,7 @@ interface ColumnItem {
     `
   ]
 })
-export class NzDemoTableResetFilterComponent {
+export class TriDemoTableResetFilterComponent {
   listOfColumns: ColumnItem[] = [
     {
       name: 'Name',

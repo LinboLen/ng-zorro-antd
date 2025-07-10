@@ -5,11 +5,11 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzBadgeComponent } from './badge.component';
-import { NzRibbonComponent } from './ribbon.component';
+import { TriBadgeComponent } from './badge.component';
+import { TriRibbonComponent } from './ribbon.component';
 
 @NgModule({
-  exports: [NzBadgeComponent, NzRibbonComponent],
-  imports: [NzBadgeComponent, NzRibbonComponent]
+  exports: [TriBadgeComponent, TriRibbonComponent],
+  imports: [TriBadgeComponent, TriRibbonComponent]
 })
-export class NzBadgeModule {}
+export class TriBadgeModule {}

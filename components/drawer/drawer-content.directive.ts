@@ -5,12 +5,12 @@
 
 import { Directive, inject, TemplateRef } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 @Directive({
-  selector: '[nzDrawerContent]',
-  exportAs: 'nzDrawerContent'
+  selector: '',
+  exportAs: 'triDrawerContent'
 })
-export class NzDrawerContentDirective {
-  public templateRef = inject(TemplateRef<NzSafeAny>);
+export class TriDrawerContentDirective {
+  public templateRef = inject(TemplateRef<TriSafeAny>);
 }

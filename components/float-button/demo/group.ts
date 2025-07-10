@@ -1,31 +1,31 @@
 import { Component } from '@angular/core';
 
-import { NzFloatButtonModule } from 'ng-zorro-antd/float-button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriFloatButtonModule } from 'ng-zorro-antd/float-button';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-demo-float-button-group',
-  imports: [NzFloatButtonModule, NzIconModule],
+  selector: '',
+  imports: [TriFloatButtonModule, TriIconModule],
   template: `
     <div class="group">
-      <nz-float-button-group nzShape="circle" style="right: 24px">
-        <nz-float-button [nzIcon]="icon"></nz-float-button>
-        <nz-float-button></nz-float-button>
-        <nz-float-button-top [nzVisibilityHeight]="600"></nz-float-button-top>
-        <nz-float-button [nzIcon]="customer"></nz-float-button>
-      </nz-float-button-group>
-      <nz-float-button-group nzShape="square" style="right: 94px">
-        <nz-float-button [nzIcon]="icon"></nz-float-button>
-        <nz-float-button></nz-float-button>
-        <nz-float-button-top [nzVisibilityHeight]="600"></nz-float-button-top>
-        <nz-float-button [nzIcon]="customer"></nz-float-button>
-      </nz-float-button-group>
+      <tri-float-button-group shape="circle" style="right: 24px">
+        <tri-float-button [icon]="icon"></tri-float-button>
+        <tri-float-button></tri-float-button>
+        <tri-float-button-top [visibilityHeight]="600"></tri-float-button-top>
+        <tri-float-button [icon]="customer"></tri-float-button>
+      </tri-float-button-group>
+      <tri-float-button-group shape="square" style="right: 94px">
+        <tri-float-button [icon]="icon"></tri-float-button>
+        <tri-float-button></tri-float-button>
+        <tri-float-button-top [visibilityHeight]="600"></tri-float-button-top>
+        <tri-float-button [icon]="customer"></tri-float-button>
+      </tri-float-button-group>
     </div>
     <ng-template #icon>
-      <nz-icon nzType="question-circle" nzTheme="outline"></nz-icon>
+      <tri-icon type="question-circle" theme="outline"></tri-icon>
     </ng-template>
     <ng-template #customer>
-      <nz-icon nzType="customer-service" nzTheme="outline"></nz-icon>
+      <tri-icon type="customer-service" theme="outline"></tri-icon>
     </ng-template>
   `,
   styles: [
@@ -41,4 +41,4 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     `
   ]
 })
-export class NzDemoFloatButtonGroupComponent {}
+export class TriDemoFloatButtonGroupComponent {}

@@ -9,18 +9,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormArray, FormControl } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzInputOtpComponent } from 'ng-zorro-antd/input/input-otp.component';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { TriInputOtpComponent } from 'ng-zorro-antd/input/input-otp.component';
 
 describe('NzInputOtpComponent', () => {
-  let component: NzInputOtpComponent;
-  let fixture: ComponentFixture<NzInputOtpComponent>;
+  let component: TriInputOtpComponent;
+  let fixture: ComponentFixture<TriInputOtpComponent>;
   let inputElements: DebugElement[];
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NzInputOtpComponent);
+    fixture = TestBed.createComponent(TriInputOtpComponent);
     component = fixture.componentInstance;
-    component.nzLength = 6;
+    component.length = 6;
     fixture.detectChanges();
 
     inputElements = fixture.debugElement.queryAll(By.css('.ant-otp-input'));
@@ -36,7 +36,7 @@ describe('NzInputOtpComponent', () => {
   });
 
   it('should format the value on input using nzFormatter', () => {
-    component.nzFormatter = value => value.toUpperCase();
+    component.formatter = value => value.toUpperCase();
     inputElements[0].nativeElement.value = 'a';
     inputElements[0].triggerEventHandler('input', { target: inputElements[0].nativeElement });
 
@@ -45,7 +45,7 @@ describe('NzInputOtpComponent', () => {
   });
 
   it('should apply nzMask if defined', () => {
-    component.nzMask = '*';
+    component.mask = '*';
     inputElements[0].nativeElement.value = '1';
     inputElements[0].triggerEventHandler('input', { target: inputElements[0].nativeElement });
 
@@ -97,7 +97,7 @@ describe('NzInputOtpComponent', () => {
   });
 
   it('should update internal value correctly on paste event with nzMask', () => {
-    component.nzMask = '*';
+    component.mask = '*';
     const event = new ClipboardEvent('paste', {
       clipboardData: new DataTransfer()
     });
@@ -126,11 +126,11 @@ describe('NzInputOtpComponent', () => {
   });
 
   it('should recreate form array when nzLength changes', () => {
-    component.nzLength = 6;
+    component.length = 6;
     component['createFormArray']();
     const initialFormArray = component['otpArray'];
 
-    component.nzLength = 8;
+    component.length = 8;
     component.ngOnChanges({
       nzLength: {
         currentValue: 8,
@@ -145,7 +145,7 @@ describe('NzInputOtpComponent', () => {
   });
 
   it('should set disabled state correctly when disabled input changes', () => {
-    (component as NzSafeAny)['otpArray'] = new FormArray([]);
+    (component as TriSafeAny)['otpArray'] = new FormArray([]);
     const spy = spyOn(component['otpArray'], 'disable').and.callThrough();
     const enableSpy = spyOn(component['otpArray'], 'enable').and.callThrough();
 
@@ -172,7 +172,7 @@ describe('NzInputOtpComponent', () => {
   });
 
   it('should set formatted values correctly in the form array', () => {
-    component.nzFormatter = value => value.toUpperCase();
+    component.formatter = value => value.toUpperCase();
     component['createFormArray']();
 
     component.writeValue('abcd');

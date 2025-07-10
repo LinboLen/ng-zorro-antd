@@ -1,36 +1,36 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzCodeEditorModule } from 'ng-zorro-antd/code-editor';
-import { NzConfigService } from 'ng-zorro-antd/core/config';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzSwitchModule } from 'ng-zorro-antd/switch';
-import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { TriCodeEditorModule } from 'ng-zorro-antd/code-editor';
+import { TriConfigService } from 'ng-zorro-antd/core/config';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriSwitchModule } from 'ng-zorro-antd/switch';
+import { TriTypographyModule } from 'ng-zorro-antd/typography';
 
 @Component({
-  selector: 'nz-demo-code-editor-config',
-  imports: [FormsModule, NzCodeEditorModule, NzIconModule, NzSwitchModule, NzTypographyModule],
+  selector: '',
+  imports: [FormsModule, TriCodeEditorModule, TriIconModule, TriSwitchModule, TriTypographyModule],
   template: `
-    <p nz-paragraph style="margin-bottom: 8px;">
+    <p tri-paragraph style="margin-bottom: 8px;">
       Change Theme
-      <nz-switch
+      <tri-switch
         [ngModel]="dark"
         (ngModelChange)="onDarkModeChange($event)"
-        [nzUnCheckedChildren]="unchecked"
-        [nzCheckedChildren]="checked"
-      ></nz-switch>
+        [unCheckedChildren]="unchecked"
+        [checkedChildren]="checked"
+      ></tri-switch>
     </p>
     <ng-template #unchecked>
-      <nz-icon nzType="bulb" />
+      <tri-icon type="bulb" />
     </ng-template>
     <ng-template #checked>
-      <nz-icon nzType="poweroff" />
+      <tri-icon type="poweroff" />
     </ng-template>
-    <nz-code-editor style="height: 200px" [ngModel]="code" [nzEditorOption]="{ language: 'markdown' }"></nz-code-editor>
+    <tri-code-editor style="height: 200px" [ngModel]="code" [editorOption]="{ language: 'markdown' }"></tri-code-editor>
   `
 })
-export class NzDemoCodeEditorConfigComponent {
-  private nzConfigService = inject(NzConfigService);
+export class TriDemoCodeEditorConfigComponent {
+  private configService = inject(TriConfigService);
 
   dark = false;
 
@@ -40,8 +40,8 @@ You can refer to [this issue](https://github.com/Microsoft/monaco-editor/issues/
 
   onDarkModeChange(dark: boolean): void {
     this.dark = dark;
-    const defaultEditorOption = this.nzConfigService.getConfigForComponent('codeEditor')?.defaultEditorOption || {};
-    this.nzConfigService.set('codeEditor', {
+    const defaultEditorOption = this.configService.getConfigForComponent('codeEditor')?.defaultEditorOption || {};
+    this.configService.set('codeEditor', {
       defaultEditorOption: {
         ...defaultEditorOption,
         theme: dark ? 'vs-dark' : 'vs'

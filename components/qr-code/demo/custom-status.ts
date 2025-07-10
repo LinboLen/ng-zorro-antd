@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzQRCodeModule } from 'ng-zorro-antd/qr-code';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriQRCodeModule } from 'ng-zorro-antd/qr-code';
 
 @Component({
-  selector: 'nz-demo-qr-code-custom-status',
-  imports: [NzQRCodeModule, NzIconModule],
+  selector: '',
+  imports: [TriQRCodeModule, TriIconModule],
   template: `
-    <nz-qrcode nzValue="https://ng.ant.design/" nzStatusRender="NgZorro"></nz-qrcode>
-    <nz-qrcode nzValue="https://ng.ant.design/" [nzStatusRender]="customTemplate"></nz-qrcode>
+    <tri-qrcode value="https://ng.ant.design/" statusRender="NgZorro"></tri-qrcode>
+    <tri-qrcode value="https://ng.ant.design/" [statusRender]="customTemplate"></tri-qrcode>
     <ng-template #customTemplate>
       <div>
-        <nz-icon nzType="check-circle" nzTheme="outline" style="color: red" />
+        <tri-icon type="check-circle" theme="outline" style="color: red" />
         success
       </div>
     </ng-template>
@@ -24,4 +24,4 @@ import { NzQRCodeModule } from 'ng-zorro-antd/qr-code';
     `
   ]
 })
-export class NzDemoQrCodeCustomStatusComponent {}
+export class TriDemoQrCodeCustomStatusComponent {}

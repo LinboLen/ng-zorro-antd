@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 
-import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: 'nz-demo-tabs-editable-card',
-  imports: [NzTabsModule],
+  selector: '',
+  imports: [TriTabsModule],
   template: `
-    <nz-tabs [(nzSelectedIndex)]="selectedIndex" nzType="editable-card" (nzAdd)="newTab()" (nzClose)="closeTab($event)">
+    <tri-tabs [(selectedIndexChange)]="selectedIndex" type="editable-card" (add)="newTab()" (close)="closeTab($event)">
       @for (tab of tabs; track tab) {
-        <nz-tab nzClosable [nzTitle]="tab">Content of {{ tab }}</nz-tab>
+        <tri-tab closable [title]="tab">Content of {{ tab }}</tri-tab>
       }
-    </nz-tabs>
+    </tri-tabs>
   `
 })
-export class NzDemoTabsEditableCardComponent {
+export class TriDemoTabsEditableCardComponent {
   tabs = ['Tab 1', 'Tab 2'];
   selectedIndex = 0;
 

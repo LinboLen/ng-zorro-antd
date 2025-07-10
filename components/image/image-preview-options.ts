@@ -5,21 +5,21 @@
 
 import { Direction } from '@angular/cdk/bidi';
 
-export class NzImagePreviewOptions {
-  nzKeyboard?: boolean = true;
-  nzNoAnimation?: boolean = false;
-  nzMaskClosable?: boolean = true;
-  nzCloseOnNavigation?: boolean = true;
-  nzZIndex?: number;
-  nzZoom?: number;
-  nzRotate?: number;
-  nzFlipHorizontally?: boolean;
-  nzFlipVertically?: boolean;
-  nzScaleStep?: number;
-  nzDirection?: Direction;
+export class TriImagePreviewOptions {
+  keyboard?: boolean = true;
+  noAnimation?: boolean = false;
+  maskClosable?: boolean = true;
+  closeOnNavigation?: boolean = true;
+  zIndex?: number;
+  zoom?: number;
+  rotate?: number;
+  flipHorizontally?: boolean;
+  flipVertically?: boolean;
+  scaleStep?: number;
+  direction?: Direction;
 }
 
-export interface NzImage {
+export interface TriImage {
   src: string;
   srcset?: string;
   alt?: string;

@@ -9,13 +9,13 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
-import { NzCollapsePanelComponent } from './collapse-panel.component';
-import { NzCollapseComponent } from './collapse.component';
-import { NzCollapseModule } from './collapse.module';
+import { TriCollapsePanelComponent } from './collapse-panel.component';
+import { TriCollapseComponent } from './collapse.component';
+import { TriCollapseModule } from './collapse.module';
 
 describe('collapse', () => {
   beforeEach(waitForAsync(() => {
@@ -24,17 +24,17 @@ describe('collapse', () => {
     });
   }));
   describe('collapse basic', () => {
-    let fixture: ComponentFixture<NzTestCollapseBasicComponent>;
-    let testComponent: NzTestCollapseBasicComponent;
+    let fixture: ComponentFixture<TriTestCollapseBasicComponent>;
+    let testComponent: TriTestCollapseBasicComponent;
     let collapse: DebugElement;
     let panels: DebugElement[];
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestCollapseBasicComponent);
+      fixture = TestBed.createComponent(TriTestCollapseBasicComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      collapse = fixture.debugElement.query(By.directive(NzCollapseComponent));
-      panels = fixture.debugElement.queryAll(By.directive(NzCollapsePanelComponent));
+      collapse = fixture.debugElement.query(By.directive(TriCollapseComponent));
+      panels = fixture.debugElement.queryAll(By.directive(TriCollapsePanelComponent));
     });
     it('should className correct', () => {
       fixture.detectChanges();
@@ -149,12 +149,12 @@ describe('collapse', () => {
     });
   });
   describe('collapse template', () => {
-    let fixture: ComponentFixture<NzTestCollapseTemplateComponent>;
+    let fixture: ComponentFixture<TriTestCollapseTemplateComponent>;
     let panels: DebugElement[];
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestCollapseTemplateComponent);
+      fixture = TestBed.createComponent(TriTestCollapseTemplateComponent);
       fixture.detectChanges();
-      panels = fixture.debugElement.queryAll(By.directive(NzCollapsePanelComponent));
+      panels = fixture.debugElement.queryAll(By.directive(TriCollapsePanelComponent));
     });
     it('should header work', () => {
       fixture.detectChanges();
@@ -163,12 +163,12 @@ describe('collapse', () => {
   });
 
   describe('collapse icon', () => {
-    let fixture: ComponentFixture<NzTestCollapseIconComponent>;
+    let fixture: ComponentFixture<TriTestCollapseIconComponent>;
     let panels: DebugElement[];
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestCollapseIconComponent);
+      fixture = TestBed.createComponent(TriTestCollapseIconComponent);
       fixture.detectChanges();
-      panels = fixture.debugElement.queryAll(By.directive(NzCollapsePanelComponent));
+      panels = fixture.debugElement.queryAll(By.directive(TriCollapsePanelComponent));
     });
     it('should icon work', () => {
       fixture.detectChanges();
@@ -180,8 +180,8 @@ describe('collapse', () => {
 
   describe('RTL', () => {
     it('should className correct on dir change', () => {
-      const fixture = TestBed.createComponent(NzTestCollapseRtlComponent);
-      const collapse = fixture.debugElement.query(By.directive(NzCollapseComponent));
+      const fixture = TestBed.createComponent(TriTestCollapseRtlComponent);
+      const collapse = fixture.debugElement.query(By.directive(TriCollapseComponent));
       fixture.detectChanges();
       expect(collapse.nativeElement!.classList).toContain('ant-collapse-rtl');
 
@@ -193,27 +193,27 @@ describe('collapse', () => {
 });
 
 @Component({
-  selector: 'nz-test-basic-collapse',
-  imports: [NzCollapseModule],
+  selector: '',
+  imports: [TriCollapseModule],
   template: `
     <ng-template #headerTemplate>template</ng-template>
-    <nz-collapse [nzAccordion]="accordion" [nzBordered]="bordered">
-      <nz-collapse-panel
-        [(nzActive)]="active01"
-        (nzActiveChange)="active01Change($event)"
-        [nzHeader]="header"
-        [nzShowArrow]="showArrow"
-        [nzExtra]="showExtra"
+    <tri-collapse [accordion]="accordion" [bordered]="bordered">
+      <tri-collapse-panel
+        [(activeChange)]="active01"
+        (activeChange)="active01Change($event)"
+        [header]="header"
+        [showArrow]="showArrow"
+        [extra]="showExtra"
       >
         <p>Panel01</p>
-      </nz-collapse-panel>
-      <nz-collapse-panel [(nzActive)]="active02" (nzActiveChange)="active02Change($event)" [nzDisabled]="disabled">
+      </tri-collapse-panel>
+      <tri-collapse-panel [(activeChange)]="active02" (activeChange)="active02Change($event)" [disabled]="disabled">
         <p>Panel02</p>
-      </nz-collapse-panel>
-    </nz-collapse>
+      </tri-collapse-panel>
+    </tri-collapse>
   `
 })
-export class NzTestCollapseBasicComponent {
+export class TriTestCollapseBasicComponent {
   @ViewChild('headerTemplate', { static: false }) headerTemplate!: TemplateRef<void>;
   accordion = false;
   bordered = true;
@@ -223,53 +223,53 @@ export class NzTestCollapseBasicComponent {
   showArrow = true;
   showExtra = '';
   header = 'string';
-  active01Change = jasmine.createSpy<NzSafeAny>('active01 callback');
-  active02Change = jasmine.createSpy<NzSafeAny>('active02 callback');
+  active01Change = jasmine.createSpy<TriSafeAny>('active01 callback');
+  active02Change = jasmine.createSpy<TriSafeAny>('active02 callback');
 }
 
 @Component({
-  imports: [NzCollapseModule],
+  imports: [TriCollapseModule],
   template: `
     <ng-template #headerTemplate>template</ng-template>
-    <nz-collapse>
-      <nz-collapse-panel [nzHeader]="headerTemplate">
+    <tri-collapse>
+      <tri-collapse-panel [header]="headerTemplate">
         <p>Panel01</p>
-      </nz-collapse-panel>
-    </nz-collapse>
+      </tri-collapse-panel>
+    </tri-collapse>
   `
 })
-export class NzTestCollapseTemplateComponent {}
+export class TriTestCollapseTemplateComponent {}
 
 @Component({
-  imports: [NzIconModule, NzCollapseModule],
+  imports: [TriIconModule, TriCollapseModule],
   template: `
-    <nz-collapse>
-      <nz-collapse-panel>
+    <tri-collapse>
+      <tri-collapse-panel>
         <p>Panel01</p>
-      </nz-collapse-panel>
-      <nz-collapse-panel [nzExpandedIcon]="'double-right'">
+      </tri-collapse-panel>
+      <tri-collapse-panel [expandedIcon]="'double-right'">
         <p>Panel02</p>
-      </nz-collapse-panel>
-      <nz-collapse-panel [nzExpandedIcon]="expandedIcon">
+      </tri-collapse-panel>
+      <tri-collapse-panel [expandedIcon]="expandedIcon">
         <p>Panel01</p>
-      </nz-collapse-panel>
+      </tri-collapse-panel>
       <ng-template #expandedIcon>
-        <nz-icon nzType="caret-right" class="ant-collapse-arrow" />
+        <tri-icon type="caret-right" class="tri-collapse-arrow" />
       </ng-template>
-    </nz-collapse>
+    </tri-collapse>
   `
 })
-export class NzTestCollapseIconComponent {}
+export class TriTestCollapseIconComponent {}
 
 @Component({
-  imports: [BidiModule, NzTestCollapseBasicComponent],
+  imports: [BidiModule, TriTestCollapseBasicComponent],
   template: `
     <div [dir]="direction">
-      <nz-test-basic-collapse></nz-test-basic-collapse>
+      <tri-test-basic-collapse></tri-test-basic-collapse>
     </div>
   `
 })
-export class NzTestCollapseRtlComponent {
+export class TriTestCollapseRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 }

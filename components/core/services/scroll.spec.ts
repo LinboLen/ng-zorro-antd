@@ -7,14 +7,14 @@ import { PlatformLocation } from '@angular/common';
 import { ApplicationRef, DOCUMENT, NgZone } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzScrollService } from './scroll';
+import { TriScrollService } from './scroll';
 
 describe('NzScrollService', () => {
   const TOP = 10;
   let document: MockDocument;
-  let scrollService: NzScrollService;
+  let scrollService: TriScrollService;
 
   class MockDocument {
     body = new MockElement();
@@ -40,14 +40,14 @@ describe('NzScrollService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        NzScrollService,
+        TriScrollService,
         { provide: DOCUMENT, useClass: MockDocument },
         { provide: PlatformLocation, useClass: MockPlatformLocation }
       ]
     });
 
     document = TestBed.inject<MockDocument>(DOCUMENT);
-    scrollService = TestBed.inject(NzScrollService);
+    scrollService = TestBed.inject(TriScrollService);
   });
 
   describe('#setScrollTop', () => {
@@ -58,7 +58,7 @@ describe('NzScrollService', () => {
     });
 
     it(`should scroll to dom element ${TOP} x`, () => {
-      const el: Element = new MockElement() as NzSafeAny;
+      const el: Element = new MockElement() as TriSafeAny;
       scrollService.setScrollTop(el, TOP);
       expect(el.scrollTop).toBe(TOP);
       scrollService.setScrollTop(el, 0);
@@ -76,13 +76,13 @@ describe('NzScrollService', () => {
         },
         getClientRects: () => [0],
         getBoundingClientRect: () => ({ top: 10, left: 10, width: 100, height: 100 })
-      } as NzSafeAny);
+      } as TriSafeAny);
       expect(ret.left).toBe(9);
       expect(ret.top).toBe(9);
     });
 
     it(`should be return 0 when is no getClientRects`, () => {
-      const ret = scrollService.getOffset({ getClientRects: () => [] } as NzSafeAny);
+      const ret = scrollService.getOffset({ getClientRects: () => [] } as TriSafeAny);
       expect(ret.left).toBe(0);
       expect(ret.top).toBe(0);
     });
@@ -91,7 +91,7 @@ describe('NzScrollService', () => {
       const ret = scrollService.getOffset({
         getClientRects: () => [0],
         getBoundingClientRect: () => ({ top: 1, left: 1 })
-      } as NzSafeAny);
+      } as TriSafeAny);
       expect(ret.left).toBe(1);
       expect(ret.top).toBe(1);
     });
@@ -99,12 +99,12 @@ describe('NzScrollService', () => {
 
   describe('#getScroll', () => {
     it('should be return scrollTop when target is window', () => {
-      const mockWin: NzSafeAny = { pageYOffset: 10 };
+      const mockWin: TriSafeAny = { pageYOffset: 10 };
       mockWin.window = mockWin;
       expect(scrollService.getScroll(mockWin)).toBe(10);
     });
     it('should be return scrollTop when target is html element', () => {
-      const mockEl: NzSafeAny = { scrollTop: 10 };
+      const mockEl: TriSafeAny = { scrollTop: 10 };
       expect(scrollService.getScroll(mockEl)).toBe(10);
     });
   });

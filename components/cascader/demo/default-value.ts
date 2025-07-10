@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzCascaderModule, NzCascaderOption } from 'ng-zorro-antd/cascader';
+import { TriCascaderModule, TriCascaderOption } from 'ng-zorro-antd/cascader';
 
-const options: NzCascaderOption[] = [
+const options: TriCascaderOption[] = [
   {
     value: 'zhejiang',
     label: 'Zhejiang',
@@ -46,14 +46,14 @@ const options: NzCascaderOption[] = [
 ];
 
 @Component({
-  selector: 'nz-demo-cascader-default-value',
-  imports: [FormsModule, NzCascaderModule],
+  selector: '',
+  imports: [FormsModule, TriCascaderModule],
   template: `
-    <nz-cascader [nzOptions]="nzOptions" [(ngModel)]="values" (ngModelChange)="onChanges($event)"></nz-cascader>
+    <tri-cascader [options]="options" [(ngModel)]="values" (ngModelChange)="onChanges($event)"></tri-cascader>
   `
 })
-export class NzDemoCascaderDefaultValueComponent {
-  nzOptions: NzCascaderOption[] = options;
+export class TriDemoCascaderDefaultValueComponent {
+  options: TriCascaderOption[] = options;
 
   values: string[] = ['zhejiang', 'hangzhou', 'xihu'];
   /* // or like this:

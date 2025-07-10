@@ -1,35 +1,35 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzListModule } from 'ng-zorro-antd/list';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriListModule } from 'ng-zorro-antd/list';
 
 @Component({
-  selector: 'nz-demo-list-basic',
-  imports: [NzButtonModule, NzListModule],
+  selector: '',
+  imports: [TriButtonModule, TriListModule],
   template: `
     <div style="margin-bottom: 8px;">
-      <button nz-button (click)="change()">Switch Data</button>
+      <button tri-button (click)="change()">Switch Data</button>
     </div>
-    <nz-list nzItemLayout="horizontal" [nzLoading]="loading">
+    <tri-list itemLayout="horizontal" [loading]="loading">
       @for (item of data; track item) {
-        <nz-list-item>
-          <nz-list-item-meta
-            nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            nzDescription="Ant Design, a design language for background applications, is refined by Ant UED Team"
+        <tri-list-item>
+          <tri-list-item-meta
+            avatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
           >
-            <nz-list-item-meta-title>
+            <tri-list-item-meta-title>
               <a href="https://ng.ant.design">{{ item.title }}</a>
-            </nz-list-item-meta-title>
-          </nz-list-item-meta>
-        </nz-list-item>
+            </tri-list-item-meta-title>
+          </tri-list-item-meta>
+        </tri-list-item>
       }
       @if (data.length === 0) {
-        <nz-list-empty />
+        <tri-list-empty />
       }
-    </nz-list>
+    </tri-list>
   `
 })
-export class NzDemoListBasicComponent {
+export class TriDemoListBasicComponent {
   loading = false;
   data = [
     {

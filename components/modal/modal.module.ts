@@ -5,30 +5,30 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzModalCloseComponent } from './modal-close.component';
-import { NzModalConfirmContainerComponent } from './modal-confirm-container.component';
-import { NzModalContainerComponent } from './modal-container.component';
-import { NzModalContentDirective } from './modal-content.directive';
-import { NzModalFooterComponent } from './modal-footer.component';
-import { NzModalFooterDirective } from './modal-footer.directive';
-import { NzModalTitleComponent } from './modal-title.component';
-import { NzModalTitleDirective } from './modal-title.directive';
-import { NzModalComponent } from './modal.component';
-import { NzModalService } from './modal.service';
+import { TriModalCloseComponent } from './modal-close.component';
+import { TriModalConfirmContainerComponent } from './modal-confirm-container.component';
+import { TriModalContainerComponent } from './modal-container.component';
+import { TriModalContentDirective } from './modal-content.directive';
+import { TriModalFooterComponent } from './modal-footer.component';
+import { TriModalFooterDirective } from './modal-footer.directive';
+import { TriModalTitleComponent } from './modal-title.component';
+import { TriModalTitleDirective } from './modal-title.directive';
+import { TriModalComponent } from './modal.component';
+import { TriModalService } from './modal.service';
 
 @NgModule({
   imports: [
-    NzModalComponent,
-    NzModalFooterDirective,
-    NzModalContentDirective,
-    NzModalCloseComponent,
-    NzModalFooterComponent,
-    NzModalTitleComponent,
-    NzModalTitleDirective,
-    NzModalContainerComponent,
-    NzModalConfirmContainerComponent
+    TriModalComponent,
+    TriModalFooterDirective,
+    TriModalContentDirective,
+    TriModalCloseComponent,
+    TriModalFooterComponent,
+    TriModalTitleComponent,
+    TriModalTitleDirective,
+    TriModalContainerComponent,
+    TriModalConfirmContainerComponent
   ],
-  exports: [NzModalComponent, NzModalFooterDirective, NzModalContentDirective, NzModalTitleDirective],
-  providers: [NzModalService]
+  exports: [TriModalComponent, TriModalFooterDirective, TriModalContentDirective, TriModalTitleDirective],
+  providers: [TriModalService]
 })
-export class NzModalModule {}
+export class TriModalModule {}

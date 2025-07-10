@@ -1,33 +1,33 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzCheckboxModule, NzCheckboxOption } from 'ng-zorro-antd/checkbox';
+import { TriCheckboxModule, TriCheckboxOption } from 'ng-zorro-antd/checkbox';
 
 @Component({
-  selector: 'nz-demo-checkbox-group',
-  imports: [FormsModule, NzCheckboxModule],
+  selector: '',
+  imports: [FormsModule, TriCheckboxModule],
   template: `
-    <nz-checkbox-group [nzOptions]="options1" [(ngModel)]="value" (ngModelChange)="log($event)" />
+    <tri-checkbox-group [options]="options1" [(ngModel)]="value" (ngModelChange)="log($event)" />
     <br />
     <br />
-    <nz-checkbox-group [nzOptions]="options2" [(ngModel)]="value" (ngModelChange)="log($event)" />
+    <tri-checkbox-group [options]="options2" [(ngModel)]="value" (ngModelChange)="log($event)" />
     <br />
     <br />
-    <nz-checkbox-group nzDisabled [nzOptions]="options3" [(ngModel)]="value" (ngModelChange)="log($event)" />
+    <tri-checkbox-group disabled [options]="options3" [(ngModel)]="value" (ngModelChange)="log($event)" />
   `
 })
-export class NzDemoCheckboxGroupComponent {
-  options1: NzCheckboxOption[] = [
+export class TriDemoCheckboxGroupComponent {
+  options1: TriCheckboxOption[] = [
     { label: 'Apple', value: 'Apple' },
     { label: 'Pear', value: 'Pear' },
     { label: 'Orange', value: 'Orange' }
   ];
-  options2: NzCheckboxOption[] = [
+  options2: TriCheckboxOption[] = [
     { label: 'Apple', value: 'Apple' },
     { label: 'Pear', value: 'Pear' },
     { label: 'Orange', value: 'Orange', disabled: true }
   ];
-  options3: NzCheckboxOption[] = [
+  options3: TriCheckboxOption[] = [
     { label: 'Apple', value: 'Apple' },
     { label: 'Pear', value: 'Pear' },
     { label: 'Orange', value: 'Orange' }

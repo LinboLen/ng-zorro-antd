@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzImageViewComponent } from './image.component';
+import { TriImageViewComponent } from './image.component';
 
 @NgModule({
-  imports: [NzImageViewComponent],
-  exports: [NzImageViewComponent]
+  imports: [TriImageViewComponent],
+  exports: [TriImageViewComponent]
 })
-export class NzImageModule {}
+export class TriImageModule {}

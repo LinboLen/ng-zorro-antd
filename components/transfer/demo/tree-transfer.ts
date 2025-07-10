@@ -1,45 +1,45 @@
 import { Component, ViewChild } from '@angular/core';
 
-import { NzFormatEmitEvent, NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/core/tree';
-import { NzTransferModule, TransferChange } from 'ng-zorro-antd/transfer';
-import { NzTreeComponent, NzTreeModule } from 'ng-zorro-antd/tree';
+import { TriFormatEmitEvent, TriTreeNode, TriTreeNodeOptions } from 'ng-zorro-antd/core/tree';
+import { TriTransferModule, TransferChange } from 'ng-zorro-antd/transfer';
+import { TriTreeComponent, TriTreeModule } from 'ng-zorro-antd/tree';
 
 @Component({
-  selector: 'nz-demo-transfer-tree-transfer',
-  imports: [NzTransferModule, NzTreeModule],
+  selector: '',
+  imports: [TriTransferModule, TriTreeModule],
   template: `
-    <nz-transfer
-      [nzDataSource]="list"
-      [nzShowSelectAll]="false"
-      [nzRenderList]="[leftRenderList, null]"
-      (nzChange)="change($event)"
+    <tri-transfer
+      [dataSource]="list"
+      [showSelectAll]="false"
+      [renderList]="[leftRenderList, null]"
+      (change)="change($event)"
     >
       <ng-template #leftRenderList let-items let-onItemSelectAll="onItemSelectAll" let-onItemSelect="onItemSelect">
-        <nz-tree
+        <tri-tree
           #tree
-          [nzData]="treeData"
-          nzExpandAll
-          nzBlockNode
-          nzCheckable
-          nzCheckStrictly
-          (nzCheckboxChange)="treeCheckboxChange($event, onItemSelect)"
+          [data]="treeData"
+          expandAll
+          blockNode
+          checkable
+          checkStrictly
+          (checkboxChange)="treeCheckboxChange($event, onItemSelect)"
         >
           <ng-template #nzTreeTemplate let-node>
             <span
               (click)="checkboxChange(node, onItemSelect)"
-              class="ant-tree-node-content-wrapper ant-tree-node-content-wrapper-open"
+              class="tri-tree-node-content-wrapper tri-tree-node-content-wrapper-open"
             >
               {{ node.title }}
             </span>
           </ng-template>
-        </nz-tree>
+        </tri-tree>
       </ng-template>
-    </nz-transfer>
+    </tri-transfer>
   `
 })
-export class NzDemoTransferTreeTransferComponent {
-  @ViewChild('tree', { static: true }) tree!: NzTreeComponent;
-  list: NzTreeNodeOptions[] = [
+export class TriDemoTransferTreeTransferComponent {
+  @ViewChild('tree', { static: true }) tree!: TriTreeComponent;
+  list: TriTreeNodeOptions[] = [
     { key: '0', id: 0, title: '0-0', isLeaf: true },
     { key: '1', id: 1, parentid: 0, title: '0-1' },
     { key: '2', id: 2, parentid: 1, title: '0-1-0', isLeaf: true },
@@ -47,13 +47,13 @@ export class NzDemoTransferTreeTransferComponent {
     { key: '4', id: 4, title: '0-3', isLeaf: true }
   ];
   treeData = this.generateTree(this.list);
-  checkedNodeList: NzTreeNode[] = [];
+  checkedNodeList: TriTreeNode[] = [];
 
-  private generateTree(arr: NzTreeNodeOptions[]): NzTreeNodeOptions[] {
-    const tree: NzTreeNodeOptions[] = [];
-    const mappedArr: Record<string, NzTreeNodeOptions> = {};
-    let arrElem: NzTreeNodeOptions;
-    let mappedElem: NzTreeNodeOptions;
+  private generateTree(arr: TriTreeNodeOptions[]): TriTreeNodeOptions[] {
+    const tree: TriTreeNodeOptions[] = [];
+    const mappedArr: Record<string, TriTreeNodeOptions> = {};
+    let arrElem: TriTreeNodeOptions;
+    let mappedElem: TriTreeNodeOptions;
 
     for (let i = 0, len = arr.length; i < len; i++) {
       arrElem = arr[i];
@@ -74,11 +74,11 @@ export class NzDemoTransferTreeTransferComponent {
     return tree;
   }
 
-  treeCheckboxChange(event: NzFormatEmitEvent, onItemSelect: (item: NzTreeNodeOptions) => void): void {
+  treeCheckboxChange(event: TriFormatEmitEvent, onItemSelect: (item: TriTreeNodeOptions) => void): void {
     this.checkboxChange(event.node!, onItemSelect);
   }
 
-  checkboxChange(node: NzTreeNode, onItemSelect: (item: NzTreeNodeOptions) => void): void {
+  checkboxChange(node: TriTreeNode, onItemSelect: (item: TriTreeNodeOptions) => void): void {
     if (node.isDisabled) {
       return;
     }

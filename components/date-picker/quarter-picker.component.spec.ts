@@ -16,11 +16,11 @@ import { CandyDate } from 'ng-zorro-antd/core/time';
 import { getPickerInput } from 'ng-zorro-antd/date-picker/testing/util';
 import { PREFIX_CLASS } from 'ng-zorro-antd/date-picker/util';
 
-import { NzDatePickerModule } from './date-picker.module';
+import { TriDatePickerModule } from './date-picker.module';
 
 describe('NzQuarterPickerComponent', () => {
-  let fixture: ComponentFixture<NzTestQuarterPickerComponent>;
-  let fixtureInstance: NzTestQuarterPickerComponent;
+  let fixture: ComponentFixture<TriTestQuarterPickerComponent>;
+  let fixtureInstance: TriTestQuarterPickerComponent;
   let overlayContainer: OverlayContainer;
   let overlayContainerElement: HTMLElement;
 
@@ -36,7 +36,7 @@ describe('NzQuarterPickerComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NzTestQuarterPickerComponent);
+    fixture = TestBed.createComponent(TriTestQuarterPickerComponent);
     fixtureInstance = fixture.componentInstance;
     // set initial mode
     fixtureInstance.useSuite = 1;
@@ -48,14 +48,14 @@ describe('NzQuarterPickerComponent', () => {
   });
 
   it('should show quarter panel', fakeAsync(() => {
-    fixtureInstance.nzFormat = undefined; // cover branch
+    fixtureInstance.format = undefined; // cover branch
     fixture.detectChanges();
     openPickerByClickTrigger();
     expect(queryFromOverlay('.ant-picker-quarter-panel')).toBeDefined();
   }));
 
   it('should change input value when click quarter', fakeAsync(() => {
-    fixtureInstance.nzValue = new Date('2024-04-04');
+    fixtureInstance.value = new Date('2024-04-04');
     fixture.detectChanges();
     flush();
     fixture.detectChanges();
@@ -69,7 +69,7 @@ describe('NzQuarterPickerComponent', () => {
 
   it('should specified date provide by "value" be chosen', fakeAsync(() => {
     fixtureInstance.useSuite = 3;
-    fixtureInstance.nzValue = new Date('2024-04-30');
+    fixtureInstance.value = new Date('2024-04-30');
     fixture.detectChanges();
     flush(); // Wait writeValue() tobe done
     fixture.detectChanges();
@@ -84,7 +84,7 @@ describe('NzQuarterPickerComponent', () => {
     fixture.detectChanges();
     tick(500);
     fixture.detectChanges();
-    expect(`Q${new CandyDate(fixtureInstance.nzValue).setMonth(0).getQuarter().toString()}`).toBe(cellText);
+    expect(`Q${new CandyDate(fixtureInstance.value).setMonth(0).getQuarter().toString()}`).toBe(cellText);
   }));
 
   it('should nz-quarter-picker work', fakeAsync(() => {
@@ -103,7 +103,7 @@ describe('NzQuarterPickerComponent', () => {
 
   it('should nz-range-picker "nzValue" work', fakeAsync(() => {
     fixtureInstance.useSuite = 4;
-    fixtureInstance.nzValue = [new Date('2024-04-30'), new Date('2025-12-30')];
+    fixtureInstance.value = [new Date('2024-04-30'), new Date('2025-12-30')];
     fixture.whenRenderingDone().then(() => {
       tick(500);
       fixture.detectChanges();
@@ -126,7 +126,7 @@ describe('NzQuarterPickerComponent', () => {
   it('should support year panel changes', fakeAsync(() => {
     fixtureInstance.useSuite = 3;
 
-    fixtureInstance.nzValue = new Date('2024-04-30');
+    fixtureInstance.value = new Date('2024-04-30');
     fixture.detectChanges();
     tick();
     fixture.detectChanges();
@@ -161,11 +161,11 @@ describe('NzQuarterPickerComponent', () => {
 
   it('should support nzDisabledDate', fakeAsync(() => {
     fixtureInstance.useSuite = 1;
-    fixtureInstance.nzValue = null;
+    fixtureInstance.value = null;
     fixture.detectChanges();
     const compareDate = new Date('2024-8-01');
-    fixtureInstance.nzValue = new Date('2024-04-01');
-    fixtureInstance.nzDisabledDate = (current: Date) => isBefore(current, compareDate);
+    fixtureInstance.value = new Date('2024-04-01');
+    fixtureInstance.disabledDate = (current: Date) => isBefore(current, compareDate);
     fixture.detectChanges();
     flush();
     fixture.detectChanges();
@@ -233,34 +233,34 @@ describe('NzQuarterPickerComponent', () => {
 });
 
 @Component({
-  imports: [NzDatePickerModule, FormsModule],
+  imports: [TriDatePickerModule, FormsModule],
   template: `
     @switch (useSuite) {
       @case (1) {
-        <nz-date-picker
-          nzMode="quarter"
-          [nzFormat]="nzFormat!"
-          [ngModel]="nzValue"
-          [nzDisabled]="nzDisabled"
-          [nzDisabledDate]="nzDisabledDate"
+        <tri-date-picker
+          mode="quarter"
+          [format]="format!"
+          [ngModel]="value"
+          [disabled]="disabled"
+          [disabledDate]="disabledDate"
         />
       }
       @case (2) {
-        <nz-quarter-picker [ngModel]="nzValue" />
+        <tri-quarter-picker [ngModel]="value" />
       }
       @case (3) {
-        <nz-quarter-picker [ngModel]="nzValue" nzOpen />
+        <tri-quarter-picker [ngModel]="value" open />
       }
       @case (4) {
-        <nz-range-picker nzMode="quarter" [ngModel]="nzValue" nzOpen />
+        <tri-range-picker mode="quarter" [ngModel]="value" open />
       }
     }
   `
 })
-export class NzTestQuarterPickerComponent {
+export class TriTestQuarterPickerComponent {
   useSuite!: 1 | 2 | 3 | 4;
-  nzFormat?: string;
-  nzValue: Date | Date[] | null = null;
-  nzDisabled: boolean = false;
-  nzDisabledDate!: (d: Date) => boolean;
+  format?: string;
+  value: Date | Date[] | null = null;
+  disabled: boolean = false;
+  disabledDate!: (d: Date) => boolean;
 }

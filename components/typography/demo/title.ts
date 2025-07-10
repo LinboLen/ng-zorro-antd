@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 
-import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { TriTypographyModule } from 'ng-zorro-antd/typography';
 
 @Component({
-  selector: 'nz-demo-typography-title',
-  imports: [NzTypographyModule],
+  selector: '',
+  imports: [TriTypographyModule],
   template: `
-    <h1 nz-typography>h1. Ant Design</h1>
-    <h2 nz-typography>h2. Ant Design</h2>
-    <h3 nz-typography>h3. Ant Design</h3>
-    <h4 nz-typography>h4. Ant Design</h4>
-    <h5 nz-typography>h5. Ant Design</h5>
+    <h1 tri-typography>h1. Ant Design</h1>
+    <h2 tri-typography>h2. Ant Design</h2>
+    <h3 tri-typography>h3. Ant Design</h3>
+    <h4 tri-typography>h4. Ant Design</h4>
+    <h5 tri-typography>h5. Ant Design</h5>
   `
 })
-export class NzDemoTypographyTitleComponent {}
+export class TriDemoTypographyTitleComponent {}

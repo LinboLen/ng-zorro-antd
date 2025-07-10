@@ -1,30 +1,30 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriPopoverModule } from 'ng-zorro-antd/popover';
 
 @Component({
-  selector: 'nz-demo-popover-overlay',
-  imports: [NzButtonModule, NzPopoverModule],
+  selector: '',
+  imports: [TriButtonModule, TriPopoverModule],
   template: `
     <button
-      nz-button
-      nz-popover
-      nzType="primary"
-      nzPopoverTitle="Title"
-      nzPopoverTrigger="click"
-      [nzPopoverContent]="contentTemplate"
-      [nzPopoverOverlayClickable]="false"
-      [nzPopoverVisible]="visible"
-      (nzPopoverVisibleChange)="visibleChange($event)"
+      tri-button
+      tri-popover
+      type="primary"
+      popoverTitle="Title"
+      popoverTrigger="click"
+      [popoverContent]="contentTemplate"
+      [popoverOverlayClickable]="false"
+      [popoverVisible]="visible"
+      (popoverVisibleChange)="visibleChange($event)"
       >Click me</button
     >
     <ng-template #contentTemplate>
-      <button nz-button nzSize="small" nzType="primary" (click)="visibleChange(false)"> Close me </button>
+      <button tri-button size="small" type="primary" (click)="visibleChange(false)"> Close me </button>
     </ng-template>
   `
 })
-export class NzDemoPopoverOverlayComponent {
+export class TriDemoPopoverOverlayComponent {
   visible = false;
 
   visibleChange(value: boolean): void {

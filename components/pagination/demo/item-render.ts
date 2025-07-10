@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
-import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { TriPaginationModule } from 'ng-zorro-antd/pagination';
 
 @Component({
-  selector: 'nz-demo-pagination-item-render',
-  imports: [NzPaginationModule],
+  selector: '',
+  imports: [TriPaginationModule],
   template: `
-    <nz-pagination [nzPageIndex]="1" [nzTotal]="500" [nzItemRender]="renderItemTemplate"></nz-pagination>
+    <tri-pagination [pageIndex]="1" [total]="500" [itemRender]="renderItemTemplate"></tri-pagination>
     <ng-template #renderItemTemplate let-type let-page="page">
       @switch (type) {
         @case ('page') {
@@ -28,4 +28,4 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
     </ng-template>
   `
 })
-export class NzDemoPaginationItemRenderComponent {}
+export class TriDemoPaginationItemRenderComponent {}

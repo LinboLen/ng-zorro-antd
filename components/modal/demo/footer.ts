@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzModalModule } from 'ng-zorro-antd/modal';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriModalModule } from 'ng-zorro-antd/modal';
 
 @Component({
-  selector: 'nz-demo-modal-footer',
-  imports: [NzButtonModule, NzModalModule],
+  selector: '',
+  imports: [TriButtonModule, TriModalModule],
   template: `
-    <button nz-button nzType="primary" (click)="showModal()">
+    <button tri-button type="primary" (click)="showModal()">
       <span>Show Modal</span>
     </button>
-    <nz-modal
-      [(nzVisible)]="isVisible"
-      [nzTitle]="modalTitle"
-      [nzContent]="modalContent"
-      [nzFooter]="modalFooter"
-      (nzOnCancel)="handleCancel()"
+    <tri-modal
+      [(visibleChange)]="isVisible"
+      [title]="modalTitle"
+      [content]="modalContent"
+      [footer]="modalFooter"
+      (onCancel)="handleCancel()"
     >
       <ng-template #modalTitle>Custom Modal Title</ng-template>
 
@@ -29,13 +29,13 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 
       <ng-template #modalFooter>
         <span>Modal Footer:</span>
-        <button nz-button nzType="default" (click)="handleCancel()">Custom Callback</button>
-        <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">Custom Submit</button>
+        <button tri-button type="default" (click)="handleCancel()">Custom Callback</button>
+        <button tri-button type="primary" (click)="handleOk()" [loading]="isConfirmLoading">Custom Submit</button>
       </ng-template>
-    </nz-modal>
+    </tri-modal>
   `
 })
-export class NzDemoModalFooterComponent {
+export class TriDemoModalFooterComponent {
   isVisible = false;
   isConfirmLoading = false;
 

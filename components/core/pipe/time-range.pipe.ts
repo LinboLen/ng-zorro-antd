@@ -11,7 +11,7 @@ import { padStart } from 'ng-zorro-antd/core/util';
 @Pipe({
   name: 'nzTimeRange'
 })
-export class NzTimeRangePipe implements PipeTransform {
+export class TriTimeRangePipe implements PipeTransform {
   transform(value: string | number, format: string = 'HH:mm:ss'): string {
     let duration = Number(value || 0);
 

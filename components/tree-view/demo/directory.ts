@@ -2,8 +2,8 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { AfterViewInit, Component } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzTreeFlatDataSource, NzTreeFlattener, NzTreeViewModule } from 'ng-zorro-antd/tree-view';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriTreeFlatDataSource, TriTreeFlattener, TriTreeViewModule } from 'ng-zorro-antd/tree-view';
 
 interface FoodNode {
   name: string;
@@ -40,39 +40,39 @@ interface ExampleFlatNode {
 }
 
 @Component({
-  selector: 'nz-demo-tree-view-directory',
-  imports: [NzIconModule, NzTreeViewModule],
+  selector: '',
+  imports: [TriIconModule, TriTreeViewModule],
   template: `
-    <nz-tree-view [nzTreeControl]="treeControl" [nzDataSource]="dataSource" [nzDirectoryTree]="true">
-      <nz-tree-node *nzTreeNodeDef="let node" nzTreeNodePadding>
-        <nz-tree-node-toggle nzTreeNodeNoopToggle></nz-tree-node-toggle>
-        <nz-tree-node-option
-          [nzDisabled]="node.disabled"
-          [nzSelected]="selectListSelection.isSelected(node)"
-          (nzClick)="selectListSelection.toggle(node)"
+    <tri-tree-view [treeControl]="treeControl" [dataSource]="dataSource" [directoryTree]="true">
+      <tri-tree-node *treeNodeDef="let node" treeNodePadding>
+        <tri-tree-node-toggle treeNodeNoopToggle></tri-tree-node-toggle>
+        <tri-tree-node-option
+          [disabled]="node.disabled"
+          [selected]="selectListSelection.isSelected(node)"
+          (click)="selectListSelection.toggle(node)"
         >
-          <nz-icon nzType="file" nzTheme="outline" />
+          <tri-icon type="file" theme="outline" />
           {{ node.name }}
-        </nz-tree-node-option>
-      </nz-tree-node>
+        </tri-tree-node-option>
+      </tri-tree-node>
 
-      <nz-tree-node *nzTreeNodeDef="let node; when: hasChild" nzTreeNodePadding>
-        <nz-tree-node-toggle>
-          <nz-icon nzType="caret-down" nzTreeNodeToggleRotateIcon />
-        </nz-tree-node-toggle>
-        <nz-tree-node-option
-          [nzDisabled]="node.disabled"
-          [nzSelected]="selectListSelection.isSelected(node)"
-          (nzClick)="selectListSelection.toggle(node)"
+      <tri-tree-node *treeNodeDef="let node; treeNodeDefWhen: hasChild" treeNodePadding>
+        <tri-tree-node-toggle>
+          <tri-icon type="caret-down" treeNodeToggleRotateIcon />
+        </tri-tree-node-toggle>
+        <tri-tree-node-option
+          [disabled]="node.disabled"
+          [selected]="selectListSelection.isSelected(node)"
+          (click)="selectListSelection.toggle(node)"
         >
-          <nz-icon [nzType]="treeControl.isExpanded(node) ? 'folder-open' : 'folder'" nzTheme="outline" />
+          <tri-icon [type]="treeControl.isExpanded(node) ? 'folder-open' : 'folder'" theme="outline" />
           {{ node.name }}
-        </nz-tree-node-option>
-      </nz-tree-node>
-    </nz-tree-view>
+        </tri-tree-node-option>
+      </tri-tree-node>
+    </tri-tree-view>
   `
 })
-export class NzDemoTreeViewDirectoryComponent implements AfterViewInit {
+export class TriDemoTreeViewDirectoryComponent implements AfterViewInit {
   private transformer = (node: FoodNode, level: number): ExampleFlatNode => ({
     expandable: !!node.children && node.children.length > 0,
     name: node.name,
@@ -86,14 +86,14 @@ export class NzDemoTreeViewDirectoryComponent implements AfterViewInit {
     node => node.expandable
   );
 
-  treeFlattener = new NzTreeFlattener(
+  treeFlattener = new TriTreeFlattener(
     this.transformer,
     node => node.level,
     node => node.expandable,
     node => node.children
   );
 
-  dataSource = new NzTreeFlatDataSource(this.treeControl, this.treeFlattener);
+  dataSource = new TriTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   constructor() {
     this.dataSource.setData(TREE_DATA);

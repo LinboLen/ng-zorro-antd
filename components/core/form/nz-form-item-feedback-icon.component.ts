@@ -14,8 +14,8 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { NzValidateStatus } from 'ng-zorro-antd/core/types';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriValidateStatus } from 'ng-zorro-antd/core/types';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 const iconTypeMap = {
   error: 'close-circle-fill',
@@ -25,27 +25,27 @@ const iconTypeMap = {
 } as const;
 
 @Component({
-  selector: 'nz-form-item-feedback-icon',
-  exportAs: 'nzFormFeedbackIcon',
-  imports: [NzIconModule],
+  selector: '',
+  exportAs: 'triFormFeedbackIcon',
+  imports: [TriIconModule],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (iconType) {
-      <nz-icon [nzType]="iconType" />
+      <tri-icon [type]="iconType" />
     }
   `,
   host: {
-    class: 'ant-form-item-feedback-icon',
-    '[class.ant-form-item-feedback-icon-error]': 'status==="error"',
-    '[class.ant-form-item-feedback-icon-warning]': 'status==="warning"',
-    '[class.ant-form-item-feedback-icon-success]': 'status==="success"',
-    '[class.ant-form-item-feedback-icon-validating]': 'status==="validating"'
+    class: 'tri-form-item-feedback-icon',
+    '[class.tri-form-item-feedback-icon-error]': 'status==="error"',
+    '[class.tri-form-item-feedback-icon-warning]': 'status==="warning"',
+    '[class.tri-form-item-feedback-icon-success]': 'status==="success"',
+    '[class.tri-form-item-feedback-icon-validating]': 'status==="validating"'
   }
 })
-export class NzFormItemFeedbackIconComponent implements OnChanges {
+export class TriFormItemFeedbackIconComponent implements OnChanges {
   public cdr = inject(ChangeDetectorRef);
-  @Input() status: NzValidateStatus = '';
+  @Input() status: TriValidateStatus = '';
 
   iconType: (typeof iconTypeMap)[keyof typeof iconTypeMap] | null = null;
 

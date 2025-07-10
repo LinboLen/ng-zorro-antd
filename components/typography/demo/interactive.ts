@@ -1,35 +1,35 @@
 import { Component } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriTypographyModule } from 'ng-zorro-antd/typography';
 
 @Component({
-  selector: 'nz-demo-typography-interactive',
-  imports: [NzIconModule, NzTypographyModule],
+  selector: '',
+  imports: [TriIconModule, TriTypographyModule],
   template: `
-    <p nz-typography nzEditable [(nzContent)]="editStr"></p>
+    <p tri-typography editable [(contentChange)]="editStr"></p>
     <p
-      nz-typography
-      nzEditable
-      nzEditIcon="highlight"
-      nzEditTooltip="click to edit text"
-      [(nzContent)]="customEditIconStr"
+      tri-typography
+      editable
+      editIcon="highlight"
+      editTooltip="click to edit text"
+      [(contentChange)]="customEditIconStr"
     ></p>
-    <p nz-typography nzEditable [nzEditTooltip]="null" [(nzContent)]="hideEditTooltipStr"></p>
-    <p nz-typography nzCopyable nzEditable [(nzContent)]="copyStr"></p>
-    <p nz-typography nzCopyable nzCopyText="Hello, Ant Design!">Replace copy text.</p>
+    <p tri-typography editable [editTooltip]="null" [(contentChange)]="hideEditTooltipStr"></p>
+    <p tri-typography copyable editable [(contentChange)]="copyStr"></p>
+    <p tri-typography copyable copyText="Hello, Ant Design!">Replace copy text.</p>
     <p
-      nz-typography
-      nzCopyable
-      nzContent="Custom copy icons and tooltips text."
-      [nzCopyTooltips]="['click here', copedIcon]"
-      [nzCopyIcons]="['meh', 'smile']"
+      tri-typography
+      copyable
+      content="Custom copy icons and tooltips text."
+      [copyTooltips]="['click here', copedIcon]"
+      [copyIcons]="['meh', 'smile']"
     ></p>
     <ng-template #copedIcon>
-      <nz-icon nzType="smile" nzTheme="fill" />
+      <tri-icon type="smile" theme="fill" />
       you clicked!!
     </ng-template>
-    <p nz-typography nzCopyable [nzCopyTooltips]="null" nzContent="Hide copy tooltips."></p>
+    <p tri-typography copyable [copyTooltips]="null" content="Hide copy tooltips."></p>
   `,
   styles: [
     `
@@ -39,7 +39,7 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
     `
   ]
 })
-export class NzDemoTypographyInteractiveComponent {
+export class TriDemoTypographyInteractiveComponent {
   editStr = 'This is an editable text.';
   customEditIconStr = 'Custom edit icon and tooltip text.';
   hideEditTooltipStr = 'Hide edit tooltip.';

@@ -37,89 +37,89 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable, Subject } from 'rxjs';
 
 import { drawerMaskMotion } from 'ng-zorro-antd/core/animation';
-import { NzConfigKey, NzConfigService, WithConfig } from 'ng-zorro-antd/core/config';
-import { NzNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { overlayZIndexSetter } from 'ng-zorro-antd/core/overlay';
-import { NgStyleInterface, NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NgStyleInterface, TriSafeAny } from 'ng-zorro-antd/core/types';
 import { isTemplateRef, toCssPixel } from 'ng-zorro-antd/core/util';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
-import { NzDrawerContentDirective } from './drawer-content.directive';
+import { TriDrawerContentDirective } from './drawer-content.directive';
 import {
   DRAWER_DEFAULT_SIZE,
   DRAWER_LARGE_SIZE,
   NZ_DRAWER_DATA,
-  NzDrawerOptionsOfComponent,
-  NzDrawerPlacement,
-  NzDrawerSize
+  TriDrawerOptionsOfComponent,
+  TriDrawerPlacement,
+  TriDrawerSize
 } from './drawer-options';
-import { NzDrawerRef } from './drawer-ref';
+import { TriDrawerRef } from './drawer-ref';
 
 export const DRAWER_ANIMATE_DURATION = 300;
 
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'drawer';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'drawer';
 
 @Component({
-  selector: 'nz-drawer',
-  exportAs: 'nzDrawer',
+  selector: '',
+  exportAs: 'triDrawer',
   template: `
     <ng-template #drawerTemplate>
       <div
-        class="ant-drawer"
-        [nzNoAnimation]="nzNoAnimation"
-        [class.ant-drawer-rtl]="dir === 'rtl'"
-        [class.ant-drawer-open]="isOpen"
-        [class.no-mask]="!nzMask"
-        [class.ant-drawer-top]="nzPlacement === 'top'"
-        [class.ant-drawer-bottom]="nzPlacement === 'bottom'"
-        [class.ant-drawer-right]="nzPlacement === 'right'"
-        [class.ant-drawer-left]="nzPlacement === 'left'"
+        class="tri-drawer"
+        [noAnimation]="noAnimation"
+        [class.tri-drawer-rtl]="dir === 'rtl'"
+        [class.tri-drawer-open]="isOpen"
+        [class.no-mask]="!mask"
+        [class.tri-drawer-top]="placement === 'top'"
+        [class.tri-drawer-bottom]="placement === 'bottom'"
+        [class.tri-drawer-right]="placement === 'right'"
+        [class.tri-drawer-left]="placement === 'left'"
         [style.transform]="offsetTransform"
         [style.transition]="placementChanging ? 'none' : null"
-        [style.zIndex]="nzZIndex"
+        [style.zIndex]="zIndex"
       >
-        @if (nzMask && isOpen) {
-          <div @drawerMaskMotion class="ant-drawer-mask" (click)="maskClick()" [style]="nzMaskStyle"></div>
+        @if (mask && isOpen) {
+          <div @drawerMaskMotion class="tri-drawer-mask" (click)="maskClick()" [style]="maskStyle"></div>
         }
         <div
-          class="ant-drawer-content-wrapper {{ nzWrapClassName }}"
+          class="ant-drawer-content-wrapper {{ wrapClassName }}"
           [style.width]="width"
           [style.height]="height"
           [style.transform]="transform"
           [style.transition]="placementChanging ? 'none' : null"
         >
-          <div class="ant-drawer-content">
-            <div class="ant-drawer-wrapper-body" [style.height]="isLeftOrRight ? '100%' : null">
-              @if (nzTitle || nzClosable) {
-                <div class="ant-drawer-header" [class.ant-drawer-header-close-only]="!nzTitle">
-                  <div class="ant-drawer-header-title">
-                    @if (nzClosable) {
-                      <button (click)="closeClick()" aria-label="Close" class="ant-drawer-close">
-                        <ng-container *nzStringTemplateOutlet="nzCloseIcon; let closeIcon">
-                          <nz-icon [nzType]="closeIcon" />
+          <div class="tri-drawer-content">
+            <div class="tri-drawer-wrapper-body" [style.height]="isLeftOrRight ? '100%' : null">
+              @if (title || closable) {
+                <div class="tri-drawer-header" [class.tri-drawer-header-close-only]="!title">
+                  <div class="tri-drawer-header-title">
+                    @if (closable) {
+                      <button (click)="closeClick()" aria-label="Close" class="tri-drawer-close">
+                        <ng-container *stringTemplateOutlet="closeIcon; let closeIcon">
+                          <tri-icon [type]="closeIcon" />
                         </ng-container>
                       </button>
                     }
 
-                    @if (nzTitle) {
-                      <div class="ant-drawer-title">
-                        <ng-container *nzStringTemplateOutlet="nzTitle">{{ nzTitle }}</ng-container>
+                    @if (title) {
+                      <div class="tri-drawer-title">
+                        <ng-container *stringTemplateOutlet="title">{{ title }}</ng-container>
                       </div>
                     }
                   </div>
-                  @if (nzExtra) {
-                    <div class="ant-drawer-extra">
-                      <ng-container *nzStringTemplateOutlet="nzExtra">{{ nzExtra }}</ng-container>
+                  @if (extra) {
+                    <div class="tri-drawer-extra">
+                      <ng-container *stringTemplateOutlet="extra">{{ extra }}</ng-container>
                     </div>
                   }
                 </div>
               }
-              <div class="ant-drawer-body" [style]="nzBodyStyle" cdkScrollable>
+              <div class="tri-drawer-body" [style]="bodyStyle" cdkScrollable>
                 <ng-template cdkPortalOutlet />
-                @if (nzContent) {
-                  @if (isTemplateRef(nzContent)) {
-                    <ng-container *ngTemplateOutlet="nzContent; context: templateContext" />
+                @if (content) {
+                  @if (isTemplateRef(content)) {
+                    <ng-container *ngTemplateOutlet="content; context: templateContext" />
                   }
                 } @else {
                   @if (contentFromContentChild && (isOpen || inAnimation)) {
@@ -127,9 +127,9 @@ const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'drawer';
                   }
                 }
               </div>
-              @if (nzFooter) {
-                <div class="ant-drawer-footer">
-                  <ng-container *nzStringTemplateOutlet="nzFooter">{{ nzFooter }}</ng-container>
+              @if (footer) {
+                <div class="tri-drawer-footer">
+                  <ng-container *stringTemplateOutlet="footer">{{ footer }}</ng-container>
                 </div>
               }
             </div>
@@ -140,14 +140,14 @@ const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'drawer';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [drawerMaskMotion],
-  imports: [NzNoAnimationDirective, NzOutletModule, NzIconModule, PortalModule, NgTemplateOutlet, CdkScrollable]
+  imports: [TriNoAnimationDirective, TriOutletModule, TriIconModule, PortalModule, NgTemplateOutlet, CdkScrollable]
 })
-export class NzDrawerComponent<T extends {} = NzSafeAny, R = NzSafeAny, D extends Partial<T> = NzSafeAny>
-  extends NzDrawerRef<T, R>
-  implements OnInit, AfterViewInit, OnChanges, NzDrawerOptionsOfComponent
+export class TriDrawerComponent<T extends {} = TriSafeAny, R = TriSafeAny, D extends Partial<T> = TriSafeAny>
+  extends TriDrawerRef<T, R>
+  implements OnInit, AfterViewInit, OnChanges, TriDrawerOptionsOfComponent
 {
   private cdr = inject(ChangeDetectorRef);
-  public nzConfigService = inject(NzConfigService);
+  public configService = inject(TriConfigService);
   private renderer = inject(Renderer2);
   private overlay = inject(Overlay);
   private injector = inject(Injector);
@@ -157,79 +157,79 @@ export class NzDrawerComponent<T extends {} = NzSafeAny, R = NzSafeAny, D extend
   private overlayKeyboardDispatcher = inject(OverlayKeyboardDispatcher);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
 
-  @Input() nzContent!: TemplateRef<{ $implicit: D; drawerRef: NzDrawerRef<R> }> | Type<T>;
-  @Input() nzCloseIcon: string | TemplateRef<void> = 'close';
-  @Input({ transform: booleanAttribute }) nzClosable: boolean = true;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzMaskClosable: boolean = true;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzMask: boolean = true;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzCloseOnNavigation: boolean = true;
-  @Input({ transform: booleanAttribute }) nzNoAnimation = false;
-  @Input({ transform: booleanAttribute }) nzKeyboard: boolean = true;
-  @Input() nzTitle?: string | TemplateRef<{}>;
-  @Input() nzExtra?: string | TemplateRef<{}>;
-  @Input() nzFooter?: string | TemplateRef<{}>;
-  @Input() nzPlacement: NzDrawerPlacement = 'right';
-  @Input() nzSize: NzDrawerSize = 'default';
-  @Input() nzMaskStyle: NgStyleInterface = {};
-  @Input() nzBodyStyle: NgStyleInterface = {};
-  @Input() nzWrapClassName?: string;
-  @Input() nzWidth?: number | string;
-  @Input() nzHeight?: number | string;
-  @Input() nzZIndex = 1000;
-  @Input() nzOffsetX = 0;
-  @Input() nzOffsetY = 0;
+  @Input() content!: TemplateRef<{ $implicit: D; drawerRef: TriDrawerRef<R> }> | Type<T>;
+  @Input() closeIcon: string | TemplateRef<void> = 'close';
+  @Input({ transform: booleanAttribute }) closable: boolean = true;
+  @Input({ transform: booleanAttribute }) @WithConfig() maskClosable: boolean = true;
+  @Input({ transform: booleanAttribute }) @WithConfig() mask: boolean = true;
+  @Input({ transform: booleanAttribute }) @WithConfig() closeOnNavigation: boolean = true;
+  @Input({ transform: booleanAttribute }) noAnimation = false;
+  @Input({ transform: booleanAttribute }) keyboard: boolean = true;
+  @Input() title?: string | TemplateRef<{}>;
+  @Input() extra?: string | TemplateRef<{}>;
+  @Input() footer?: string | TemplateRef<{}>;
+  @Input() placement: TriDrawerPlacement = 'right';
+  @Input() size: TriDrawerSize = 'default';
+  @Input() maskStyle: NgStyleInterface = {};
+  @Input() bodyStyle: NgStyleInterface = {};
+  @Input() wrapClassName?: string;
+  @Input() width?: number | string;
+  @Input() height?: number | string;
+  @Input() zIndex = 1000;
+  @Input() offsetX = 0;
+  @Input() offsetY = 0;
   private componentInstance: T | null = null;
   private componentRef: ComponentRef<T> | null = null;
 
   @Input({ transform: booleanAttribute })
-  set nzVisible(value: boolean) {
+  set visible(value: boolean) {
     this.isOpen = value;
   }
 
-  get nzVisible(): boolean {
+  get visible(): boolean {
     return this.isOpen;
   }
 
-  @Output() readonly nzOnViewInit = new EventEmitter<void>();
-  @Output() readonly nzOnClose = new EventEmitter<MouseEvent>();
-  @Output() readonly nzVisibleChange = new EventEmitter<boolean>();
+  @Output() readonly onViewInit = new EventEmitter<void>();
+  @Output() readonly onClose = new EventEmitter<MouseEvent>();
+  @Output() readonly visibleChange = new EventEmitter<boolean>();
 
   @ViewChild('drawerTemplate', { static: true }) drawerTemplate!: TemplateRef<void>;
   @ViewChild(CdkPortalOutlet, { static: false }) bodyPortalOutlet?: CdkPortalOutlet;
-  @ContentChild(NzDrawerContentDirective, { static: true, read: TemplateRef })
-  contentFromContentChild?: TemplateRef<NzSafeAny>;
+  @ContentChild(TriDrawerContentDirective, { static: true, read: TemplateRef })
+  contentFromContentChild?: TemplateRef<TriSafeAny>;
 
   previouslyFocusedElement?: HTMLElement;
   placementChanging = false;
   placementChangeTimeoutId?: ReturnType<typeof setTimeout>;
-  nzContentParams?: NzSafeAny; // only service
-  nzData?: D;
+  contentParams?: TriSafeAny; // only service
+  data?: D;
   overlayRef?: OverlayRef | null;
   portal?: TemplatePortal;
   focusTrap?: FocusTrap;
   isOpen = false;
   inAnimation = false;
-  templateContext: { $implicit: D | undefined; drawerRef: NzDrawerRef<R> } = {
+  templateContext: { $implicit: D | undefined; drawerRef: TriDrawerRef<R> } = {
     $implicit: undefined,
-    drawerRef: this as NzDrawerRef<R>
+    drawerRef: this as TriDrawerRef<R>
   };
   protected isTemplateRef = isTemplateRef;
 
   get offsetTransform(): string | null {
-    if (!this.isOpen || this.nzOffsetX + this.nzOffsetY === 0) {
+    if (!this.isOpen || this.offsetX + this.offsetY === 0) {
       return null;
     }
-    switch (this.nzPlacement) {
+    switch (this.placement) {
       case 'left':
-        return `translateX(${this.nzOffsetX}px)`;
+        return `translateX(${this.offsetX}px)`;
       case 'right':
-        return `translateX(-${this.nzOffsetX}px)`;
+        return `translateX(-${this.offsetX}px)`;
       case 'top':
-        return `translateY(${this.nzOffsetY}px)`;
+        return `translateY(${this.offsetY}px)`;
       case 'bottom':
-        return `translateY(-${this.nzOffsetY}px)`;
+        return `translateY(-${this.offsetY}px)`;
     }
   }
 
@@ -238,7 +238,7 @@ export class NzDrawerComponent<T extends {} = NzSafeAny, R = NzSafeAny, D extend
       return null;
     }
 
-    switch (this.nzPlacement) {
+    switch (this.placement) {
       case 'left':
         return `translateX(-100%)`;
       case 'right':
@@ -252,41 +252,41 @@ export class NzDrawerComponent<T extends {} = NzSafeAny, R = NzSafeAny, D extend
 
   get width(): string | null {
     if (this.isLeftOrRight) {
-      const defaultWidth = this.nzSize === 'large' ? DRAWER_LARGE_SIZE : DRAWER_DEFAULT_SIZE;
-      return this.nzWidth === undefined ? toCssPixel(defaultWidth) : toCssPixel(this.nzWidth);
+      const defaultWidth = this.size === 'large' ? DRAWER_LARGE_SIZE : DRAWER_DEFAULT_SIZE;
+      return this.width === undefined ? toCssPixel(defaultWidth) : toCssPixel(this.width);
     }
     return null;
   }
 
   get height(): string | null {
     if (!this.isLeftOrRight) {
-      const defaultHeight = this.nzSize === 'large' ? DRAWER_LARGE_SIZE : DRAWER_DEFAULT_SIZE;
-      return this.nzHeight === undefined ? toCssPixel(defaultHeight) : toCssPixel(this.nzHeight);
+      const defaultHeight = this.size === 'large' ? DRAWER_LARGE_SIZE : DRAWER_DEFAULT_SIZE;
+      return this.height === undefined ? toCssPixel(defaultHeight) : toCssPixel(this.height);
     }
     return null;
   }
 
   get isLeftOrRight(): boolean {
-    return this.nzPlacement === 'left' || this.nzPlacement === 'right';
+    return this.placement === 'left' || this.placement === 'right';
   }
 
-  nzAfterOpen = new Subject<void>();
-  nzAfterClose = new Subject<R | undefined>();
+  afterOpen = new Subject<void>();
+  afterClose = new Subject<R | undefined>();
 
-  get afterOpen(): Observable<void> {
-    return this.nzAfterOpen.asObservable();
+  get _afterOpen(): Observable<void> {
+    return this.afterOpen.asObservable();
   }
 
-  get afterClose(): Observable<R | undefined> {
-    return this.nzAfterClose.asObservable();
+  get _afterClose(): Observable<R | undefined> {
+    return this.afterClose.asObservable();
   }
 
   get isNzContentTemplateRef(): boolean {
-    return isTemplateRef(this.nzContent);
+    return isTemplateRef(this.content);
   }
 
   // from service config
-  @WithConfig() nzDirection?: Direction = undefined;
+  @WithConfig() direction?: Direction = undefined;
 
   dir: Direction = 'ltr';
   private document: Document = inject(DOCUMENT);
@@ -304,12 +304,12 @@ export class NzDrawerComponent<T extends {} = NzSafeAny, R = NzSafeAny, D extend
       this.dir = direction;
       this.cdr.detectChanges();
     });
-    this.dir = this.nzDirection || this.directionality.value;
+    this.dir = this.direction || this.directionality.value;
 
     this.attachOverlay();
     this.updateOverlayStyle();
     this.updateBodyOverflow();
-    this.templateContext = { $implicit: this.nzData || this.nzContentParams, drawerRef: this as NzDrawerRef<R> };
+    this.templateContext = { $implicit: this.data || this.contentParams, drawerRef: this as TriDrawerRef<R> };
     this.changeDetectorRef.detectChanges();
   }
 
@@ -317,9 +317,9 @@ export class NzDrawerComponent<T extends {} = NzSafeAny, R = NzSafeAny, D extend
     this.attachBodyContent();
     // The `setTimeout` triggers change detection. There's no sense to schedule the DOM timer if anyone is
     // listening to the `nzOnViewInit` event inside the template, for instance `<nz-drawer (nzOnViewInit)="...">`.
-    if (this.nzOnViewInit.observers.length) {
+    if (this.onViewInit.observers.length) {
       setTimeout(() => {
-        this.nzOnViewInit.emit();
+        this.onViewInit.emit();
       });
     }
   }
@@ -340,12 +340,12 @@ export class NzDrawerComponent<T extends {} = NzSafeAny, R = NzSafeAny, D extend
   }
 
   private getAnimationDuration(): number {
-    return this.nzNoAnimation ? 0 : DRAWER_ANIMATE_DURATION;
+    return this.noAnimation ? 0 : DRAWER_ANIMATE_DURATION;
   }
 
   // Disable the transition animation temporarily when the placement changing
   private triggerPlacementChangeCycleOnce(): void {
-    if (!this.nzNoAnimation) {
+    if (!this.noAnimation) {
       this.placementChanging = true;
       this.changeDetectorRef.markForCheck();
       clearTimeout(this.placementChangeTimeoutId);
@@ -359,7 +359,7 @@ export class NzDrawerComponent<T extends {} = NzSafeAny, R = NzSafeAny, D extend
   close(result?: R): void {
     this.isOpen = false;
     this.inAnimation = true;
-    this.nzVisibleChange.emit(false);
+    this.visibleChange.emit(false);
     this.updateOverlayStyle();
     this.overlayKeyboardDispatcher.remove(this.overlayRef!);
     this.changeDetectorRef.detectChanges();
@@ -367,8 +367,8 @@ export class NzDrawerComponent<T extends {} = NzSafeAny, R = NzSafeAny, D extend
       this.updateBodyOverflow();
       this.restoreFocus();
       this.inAnimation = false;
-      this.nzAfterClose.next(result);
-      this.nzAfterClose.complete();
+      this.afterClose.next(result);
+      this.afterClose.complete();
       this.componentInstance = null;
       this.componentRef = null;
     }, this.getAnimationDuration());
@@ -378,7 +378,7 @@ export class NzDrawerComponent<T extends {} = NzSafeAny, R = NzSafeAny, D extend
     this.attachOverlay();
     this.isOpen = true;
     this.inAnimation = true;
-    this.nzVisibleChange.emit(true);
+    this.visibleChange.emit(true);
     this.overlayKeyboardDispatcher.add(this.overlayRef!);
     this.updateOverlayStyle();
     this.updateBodyOverflow();
@@ -388,7 +388,7 @@ export class NzDrawerComponent<T extends {} = NzSafeAny, R = NzSafeAny, D extend
     setTimeout(() => {
       this.inAnimation = false;
       this.changeDetectorRef.detectChanges();
-      this.nzAfterOpen.next();
+      this.afterOpen.next();
     }, this.getAnimationDuration());
   }
 
@@ -401,34 +401,34 @@ export class NzDrawerComponent<T extends {} = NzSafeAny, R = NzSafeAny, D extend
   }
 
   closeClick(): void {
-    this.nzOnClose.emit();
+    this.onClose.emit();
   }
 
   maskClick(): void {
-    if (this.nzMaskClosable && this.nzMask) {
-      this.nzOnClose.emit();
+    if (this.maskClosable && this.mask) {
+      this.onClose.emit();
     }
   }
 
   private attachBodyContent(): void {
     this.bodyPortalOutlet!.dispose();
 
-    if (this.nzContent instanceof Type) {
+    if (this.content instanceof Type) {
       const childInjector = Injector.create({
         parent: this.injector,
         providers: [
-          { provide: NzDrawerRef, useValue: this },
-          { provide: NZ_DRAWER_DATA, useValue: this.nzData }
+          { provide: TriDrawerRef, useValue: this },
+          { provide: NZ_DRAWER_DATA, useValue: this.data }
         ]
       });
-      const componentPortal = new ComponentPortal<T>(this.nzContent, null, childInjector);
+      const componentPortal = new ComponentPortal<T>(this.content, null, childInjector);
       this.componentRef = this.bodyPortalOutlet!.attachComponentPortal(componentPortal);
 
       this.componentInstance = this.componentRef.instance;
       /**TODO
        * When nzContentParam will be remove in the next major version, we have to remove the following line
        * **/
-      Object.assign(this.componentRef.instance!, this.nzData || this.nzContentParams);
+      Object.assign(this.componentRef.instance!, this.data || this.contentParams);
       this.componentRef.changeDetectorRef.detectChanges();
     }
   }
@@ -438,7 +438,7 @@ export class NzDrawerComponent<T extends {} = NzSafeAny, R = NzSafeAny, D extend
       this.portal = new TemplatePortal(this.drawerTemplate, this.viewContainerRef);
       this.overlayRef = this.overlay.create(this.getOverlayConfig());
 
-      overlayZIndexSetter(this.overlayRef, this.nzZIndex);
+      overlayZIndexSetter(this.overlayRef, this.zIndex);
     }
 
     if (this.overlayRef && !this.overlayRef.hasAttached()) {
@@ -446,8 +446,8 @@ export class NzDrawerComponent<T extends {} = NzSafeAny, R = NzSafeAny, D extend
       this.overlayRef!.keydownEvents()
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((event: KeyboardEvent) => {
-          if (event.keyCode === ESCAPE && this.isOpen && this.nzKeyboard) {
-            this.nzOnClose.emit();
+          if (event.keyCode === ESCAPE && this.isOpen && this.keyboard) {
+            this.onClose.emit();
           }
         });
       this.overlayRef
@@ -467,7 +467,7 @@ export class NzDrawerComponent<T extends {} = NzSafeAny, R = NzSafeAny, D extend
 
   private getOverlayConfig(): OverlayConfig {
     return new OverlayConfig({
-      disposeOnNavigation: this.nzCloseOnNavigation,
+      disposeOnNavigation: this.closeOnNavigation,
       positionStrategy: this.overlay.position().global(),
       scrollStrategy: this.overlay.scrollStrategies.block()
     });

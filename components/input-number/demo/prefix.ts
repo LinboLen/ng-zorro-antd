@@ -1,25 +1,25 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
 
 @Component({
-  selector: 'nz-demo-input-number-prefix',
-  imports: [FormsModule, NzInputNumberModule, NzIconModule],
+  selector: '',
+  imports: [FormsModule, TriInputNumberModule, TriIconModule],
   template: `
-    <nz-input-number [style.width.%]="100">
-      <span nzInputPrefix>￥</span>
-    </nz-input-number>
+    <tri-input-number [style.width.%]="100">
+      <span inputPrefix>￥</span>
+    </tri-input-number>
 
-    <nz-input-number [style.width.%]="100">
-      <nz-icon nzInputAddonBefore nzType="user" />
-      <span nzInputPrefix>￥</span>
-    </nz-input-number>
+    <tri-input-number [style.width.%]="100">
+      <tri-icon inputAddonBefore type="user" />
+      <span inputPrefix>￥</span>
+    </tri-input-number>
 
-    <nz-input-number nzDisabled [style.width.%]="100">
-      <span nzInputPrefix>￥</span>
-    </nz-input-number>
+    <tri-input-number disabled [style.width.%]="100">
+      <span inputPrefix>￥</span>
+    </tri-input-number>
   `,
   styles: [
     `
@@ -29,4 +29,4 @@ import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
     `
   ]
 })
-export class NzDemoInputNumberPrefixComponent {}
+export class TriDemoInputNumberPrefixComponent {}

@@ -5,11 +5,11 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzColDirective } from './col.directive';
-import { NzRowDirective } from './row.directive';
+import { TriColDirective } from './col.directive';
+import { TriRowDirective } from './row.directive';
 
 @NgModule({
-  imports: [NzColDirective, NzRowDirective],
-  exports: [NzColDirective, NzRowDirective]
+  imports: [TriColDirective, TriRowDirective],
+  exports: [TriColDirective, TriRowDirective]
 })
-export class NzGridModule {}
+export class TriGridModule {}

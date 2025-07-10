@@ -1,30 +1,30 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzUploadChangeParam, NzUploadModule } from 'ng-zorro-antd/upload';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriMessageService } from 'ng-zorro-antd/message';
+import { TriUploadChangeParam, TriUploadModule } from 'ng-zorro-antd/upload';
 
 @Component({
-  selector: 'nz-demo-upload-basic',
-  imports: [NzButtonModule, NzIconModule, NzUploadModule],
+  selector: '',
+  imports: [TriButtonModule, TriIconModule, TriUploadModule],
   template: `
-    <nz-upload
-      nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-      [nzHeaders]="{ authorization: 'authorization-text' }"
-      (nzChange)="handleChange($event)"
+    <tri-upload
+      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+      [headers]="{ authorization: 'authorization-text' }"
+      (change)="handleChange($event)"
     >
-      <button nz-button>
-        <nz-icon nzType="upload" />
+      <button tri-button>
+        <tri-icon type="upload" />
         Click to Upload
       </button>
-    </nz-upload>
+    </tri-upload>
   `
 })
-export class NzDemoUploadBasicComponent {
-  constructor(private messageService: NzMessageService) {}
+export class TriDemoUploadBasicComponent {
+  constructor(private messageService: TriMessageService) {}
 
-  handleChange(info: NzUploadChangeParam): void {
+  handleChange(info: TriUploadChangeParam): void {
     if (info.file.status !== 'uploading') {
       console.log(info.file, info.fileList);
     }

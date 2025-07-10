@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
-import { NzFlexModule } from 'ng-zorro-antd/flex';
+import { TriFlexModule } from 'ng-zorro-antd/flex';
 
 @Component({
-  selector: 'nz-demo-flex-combination',
-  imports: [NzFlexModule],
+  selector: '',
+  imports: [TriFlexModule],
   template: `
-    <div class="combination-wrapper" nz-flex [nzGap]="80">
+    <div class="combination-wrapper" tri-flex [gap]="80">
       <img
         alt="Angular"
         width="150"
@@ -14,7 +14,7 @@ import { NzFlexModule } from 'ng-zorro-antd/flex';
         src="https://img.alicdn.com/tfs/TB1g.mWZAL0gK0jSZFtXXXQCXXa-200-200.svg"
       />
 
-      <div nz-flex [nzVertical]="true" [nzGap]="'large'">
+      <div tri-flex [vertical]="true" [gap]="'large'">
         <h2> Ant Design of Angular </h2>
 
         <h3>
@@ -35,4 +35,4 @@ import { NzFlexModule } from 'ng-zorro-antd/flex';
     `
   ]
 })
-export class NzDemoFlexCombinationComponent {}
+export class TriDemoFlexCombinationComponent {}

@@ -25,61 +25,61 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject } from 'rxjs';
 import { first, switchMap } from 'rxjs/operators';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzTransButtonModule } from 'ng-zorro-antd/core/trans-button';
-import { NzTSType } from 'ng-zorro-antd/core/types';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriTransButtonModule } from 'ng-zorro-antd/core/trans-button';
+import { TriTSType } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
-import { NzI18nService, NzTextI18nInterface } from 'ng-zorro-antd/i18n';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzAutosizeDirective, NzInputModule } from 'ng-zorro-antd/input';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriI18nService, TriTextI18nInterface } from 'ng-zorro-antd/i18n';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriAutosizeDirective, TriInputModule } from 'ng-zorro-antd/input';
+import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
-  selector: 'nz-text-edit',
-  exportAs: 'nzTextEdit',
+  selector: '',
+  exportAs: 'triTextEdit',
   template: `
     @if (editing) {
-      <textarea #textarea nz-input nzAutosize (blur)="confirm()"></textarea>
-      <button nz-trans-button class="ant-typography-edit-content-confirm" (click)="confirm()">
-        <nz-icon nzType="enter" />
+      <textarea #textarea tri-input autosize (blur)="confirm()"></textarea>
+      <button tri-trans-button class="tri-typography-edit-content-confirm" (click)="confirm()">
+        <tri-icon type="enter" />
       </button>
     } @else {
       <button
-        nz-tooltip
-        nz-trans-button
-        class="ant-typography-edit"
-        [nzTooltipTitle]="tooltip === null ? null : tooltip || locale?.edit"
+        tri-tooltip
+        tri-trans-button
+        class="tri-typography-edit"
+        [tooltipTitle]="tooltip === null ? null : tooltip || locale?.edit"
         (click)="onClick()"
       >
-        <ng-container *nzStringTemplateOutlet="icon; let icon">
-          <nz-icon [nzType]="icon" />
+        <ng-container *stringTemplateOutlet="icon; let icon">
+          <tri-icon [type]="icon" />
         </ng-container>
       </button>
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  imports: [NzInputModule, NzTransButtonModule, NzIconModule, NzToolTipModule, NzOutletModule]
+  imports: [TriInputModule, TriTransButtonModule, TriIconModule, TriToolTipModule, TriOutletModule]
 })
-export class NzTextEditComponent implements OnInit {
+export class TriTextEditComponent implements OnInit {
   private ngZone = inject(NgZone);
   private cdr = inject(ChangeDetectorRef);
-  private i18n = inject(NzI18nService);
+  private i18n = inject(TriI18nService);
   private destroyRef = inject(DestroyRef);
 
   editing = false;
-  locale!: NzTextI18nInterface;
+  locale!: TriTextI18nInterface;
 
   @Input() text?: string;
-  @Input() icon: NzTSType = 'edit';
-  @Input() tooltip?: null | NzTSType;
+  @Input() icon: TriTSType = 'edit';
+  @Input() tooltip?: null | TriTSType;
   @Output() readonly startEditing = new EventEmitter<void>();
   @Output() readonly endEditing = new EventEmitter<string>(true);
   @ViewChild('textarea', { static: false })
   set textarea(textarea: ElementRef<HTMLTextAreaElement> | undefined) {
     this.textarea$.next(textarea);
   }
-  @ViewChild(NzAutosizeDirective, { static: false }) autosizeDirective!: NzAutosizeDirective;
+  @ViewChild(TriAutosizeDirective, { static: false }) autosizeDirective!: TriAutosizeDirective;
 
   beforeText?: string;
   currentText?: string;

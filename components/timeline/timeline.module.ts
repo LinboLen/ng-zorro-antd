@@ -5,11 +5,11 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzTimelineItemComponent } from './timeline-item.component';
-import { NzTimelineComponent } from './timeline.component';
+import { TriTimelineItemComponent } from './timeline-item.component';
+import { TriTimelineComponent } from './timeline.component';
 
 @NgModule({
-  imports: [NzTimelineItemComponent, NzTimelineComponent],
-  exports: [NzTimelineItemComponent, NzTimelineComponent]
+  imports: [TriTimelineItemComponent, TriTimelineComponent],
+  exports: [TriTimelineItemComponent, TriTimelineComponent]
 })
-export class NzTimelineModule {}
+export class TriTimelineModule {}

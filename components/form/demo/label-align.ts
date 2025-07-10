@@ -1,30 +1,30 @@
 import { Component, inject } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { TriFormModule } from 'ng-zorro-antd/form';
+import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: 'nz-demo-form-label-align',
-  imports: [ReactiveFormsModule, NzFormModule, NzInputModule],
+  selector: '',
+  imports: [ReactiveFormsModule, TriFormModule, TriInputModule],
   template: `
-    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
-      <nz-form-item>
-        <nz-form-label nzRequired nzLabelAlign="left" nzSpan="4">Left-aligned text label</nz-form-label>
-        <nz-form-control nzErrorTip="Please input your username!" nzSpan="8">
-          <input formControlName="username" nz-input placeholder="username" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label nzRequired nzLabelAlign="right" nzSpan="4">Right-aligned text label</nz-form-label>
-        <nz-form-control nzErrorTip="Please input your Password!" nzSpan="8">
-          <input formControlName="password" nz-input type="password" placeholder="Password" />
-        </nz-form-control>
-      </nz-form-item>
+    <form tri-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+      <tri-form-item>
+        <tri-form-label required labelAlign="left" span="4">Left-aligned text label</tri-form-label>
+        <tri-form-control errorTip="Please input your username!" span="8">
+          <input formControlName="username" tri-input placeholder="username" />
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label required labelAlign="right" span="4">Right-aligned text label</tri-form-label>
+        <tri-form-control errorTip="Please input your Password!" span="8">
+          <input formControlName="password" tri-input type="password" placeholder="Password" />
+        </tri-form-control>
+      </tri-form-item>
     </form>
   `
 })
-export class NzDemoFormLabelAlignComponent {
+export class TriDemoFormLabelAlignComponent {
   private fb = inject(NonNullableFormBuilder);
   validateForm = this.fb.group({
     username: this.fb.control('', [Validators.required]),

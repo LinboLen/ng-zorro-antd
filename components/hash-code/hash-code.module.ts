@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzHashCodeComponent } from './hash-code.component';
+import { TriHashCodeComponent } from './hash-code.component';
 
 @NgModule({
-  exports: [NzHashCodeComponent],
-  imports: [NzHashCodeComponent]
+  exports: [TriHashCodeComponent],
+  imports: [TriHashCodeComponent]
 })
-export class NzHashCodeModule {}
+export class TriHashCodeModule {}

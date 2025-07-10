@@ -7,18 +7,18 @@ import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzTdAddOnComponent, NzTableModule } from 'ng-zorro-antd/table';
+import { TriTdAddOnComponent, TriTableModule } from 'ng-zorro-antd/table';
 
 describe('nz-td', () => {
-  let fixture: ComponentFixture<NzTestTdComponent>;
-  let testComponent: NzTestTdComponent;
+  let fixture: ComponentFixture<TriTestTdComponent>;
+  let testComponent: TriTestTdComponent;
   let td: DebugElement;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NzTestTdComponent);
+    fixture = TestBed.createComponent(TriTestTdComponent);
     fixture.detectChanges();
     testComponent = fixture.debugElement.componentInstance;
-    td = fixture.debugElement.query(By.directive(NzTdAddOnComponent));
+    td = fixture.debugElement.query(By.directive(TriTdAddOnComponent));
   });
 
   it('should checkbox work', () => {
@@ -140,8 +140,8 @@ describe('nz-td', () => {
   it('should be throw error when use specific class name', () => {
     expect(() => {
       TestBed.configureTestingModule({
-        declarations: [NzTestDisableTdComponent]
-      }).createComponent(NzTestDisableTdComponent);
+        declarations: [TriTestDisableTdComponent]
+      }).createComponent(TriTestDisableTdComponent);
     }).toThrow();
   });
 
@@ -154,23 +154,23 @@ describe('nz-td', () => {
 });
 
 @Component({
-  imports: [NzTableModule],
+  imports: [TriTableModule],
   template: `
     <td
-      [(nzChecked)]="checked"
-      [nzIndeterminate]="indeterminate"
-      [nzLabel]="label"
-      (nzCheckedChange)="checkedChange($event)"
-      [nzDisabled]="disabled"
-      [(nzExpand)]="expand"
-      (nzExpandChange)="expandChange($event)"
-      [nzIndentSize]="indentSize"
-      [nzLeft]="left"
-      [nzRight]="right"
+      [(checkedChange)]="checked"
+      [indeterminate]="indeterminate"
+      [label]="label"
+      (checkedChange)="checkedChange($event)"
+      [disabled]="disabled"
+      [(expandChange)]="expand"
+      (expandChange)="expandChange($event)"
+      [indentSize]="indentSize"
+      [left]="left"
+      [right]="right"
     ></td>
   `
 })
-export class NzTestTdComponent {
+export class TriTestTdComponent {
   checked = false;
   checkedChange = jasmine.createSpy('show change');
   indeterminate = false;
@@ -184,7 +184,7 @@ export class NzTestTdComponent {
 }
 
 @Component({
-  imports: [NzTableModule],
-  template: `<td class="nz-disable-td" [nzChecked]="true"></td>`
+  imports: [TriTableModule],
+  template: `<td class="nz-disable-td" [checked]="true"></td>`
 })
-export class NzTestDisableTdComponent {}
+export class TriTestDisableTdComponent {}

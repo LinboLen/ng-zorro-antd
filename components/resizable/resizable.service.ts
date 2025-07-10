@@ -8,10 +8,10 @@ import { Subject } from 'rxjs';
 
 import { isTouchEvent } from 'ng-zorro-antd/core/util';
 
-import { NzResizeHandleMouseDownEvent } from './resize-handle.component';
+import { TriResizeHandleMouseDownEvent } from './resize-handle.component';
 
 @Injectable()
-export class NzResizableService implements OnDestroy {
+export class TriResizableService implements OnDestroy {
   private readonly document: Document = inject(DOCUMENT);
   private readonly ngZone = inject(NgZone);
   private listeners = new Map<string, (event: MouseEvent | TouchEvent) => void>();
@@ -26,7 +26,7 @@ export class NzResizableService implements OnDestroy {
    * });
    * ```
    */
-  handleMouseDownOutsideAngular$ = new Subject<NzResizeHandleMouseDownEvent>();
+  handleMouseDownOutsideAngular$ = new Subject<TriResizeHandleMouseDownEvent>();
   documentMouseUpOutsideAngular$ = new Subject<MouseEvent | TouchEvent | null>();
   documentMouseMoveOutsideAngular$ = new Subject<MouseEvent | TouchEvent>();
   mouseEnteredOutsideAngular$ = new Subject<boolean>();

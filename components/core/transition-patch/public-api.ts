@@ -3,5 +3,5 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export { NzTransitionPatchModule as ɵNzTransitionPatchModule } from './transition-patch.module';
-export { NzTransitionPatchDirective as ɵNzTransitionPatchDirective } from './transition-patch.directive';
+export { TriTransitionPatchModule as ɵNzTransitionPatchModule } from './transition-patch.module';
+export { TriTransitionPatchDirective as ɵNzTransitionPatchDirective } from './transition-patch.directive';

@@ -19,74 +19,74 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
+import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import { CandyDate } from 'ng-zorro-antd/core/time';
-import { DateHelperService, NzI18nService } from 'ng-zorro-antd/i18n';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { NzSelectModule, NzSelectSizeType } from 'ng-zorro-antd/select';
+import { DateHelperService, TriI18nService } from 'ng-zorro-antd/i18n';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
+import { TriSelectModule, TriSelectSizeType } from 'ng-zorro-antd/select';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'nz-calendar-header',
-  exportAs: 'nzCalendarHeader',
+  selector: '',
+  exportAs: 'triCalendarHeader',
   template: `
-    @if (nzCustomHeader) {
-      <ng-container *nzStringTemplateOutlet="nzCustomHeader">{{ nzCustomHeader }}</ng-container>
+    @if (customHeader) {
+      <ng-container *stringTemplateOutlet="customHeader">{{ customHeader }}</ng-container>
     } @else {
-      <div class="ant-picker-calendar-header">
-        <nz-select
-          class="ant-picker-calendar-year-select"
-          [nzSize]="size"
-          [nzDropdownMatchSelectWidth]="false"
+      <div class="tri-picker-calendar-header">
+        <tri-select
+          class="tri-picker-calendar-year-select"
+          [size]="size"
+          [dropdownMatchSelectWidth]="false"
           [ngModel]="activeYear"
           (ngModelChange)="updateYear($event)"
         >
           @for (year of years; track year.value) {
-            <nz-option [nzLabel]="year.label" [nzValue]="year.value" />
+            <tri-option [label]="year.label" [value]="year.value" />
           }
-        </nz-select>
+        </tri-select>
 
         @if (mode === 'month') {
-          <nz-select
-            class="ant-picker-calendar-month-select"
-            [nzSize]="size"
-            [nzDropdownMatchSelectWidth]="false"
+          <tri-select
+            class="tri-picker-calendar-month-select"
+            [size]="size"
+            [dropdownMatchSelectWidth]="false"
             [ngModel]="activeMonth"
             (ngModelChange)="monthChange.emit($event)"
           >
             @for (month of months; track month.value) {
-              <nz-option [nzLabel]="month.label" [nzValue]="month.value" />
+              <tri-option [label]="month.label" [value]="month.value" />
             }
-          </nz-select>
+          </tri-select>
         }
 
-        <nz-radio-group
-          class="ant-picker-calendar-mode-switch"
+        <tri-radio-group
+          class="tri-picker-calendar-mode-switch"
           [(ngModel)]="mode"
           (ngModelChange)="modeChange.emit($event)"
-          [nzSize]="size"
+          [size]="size"
         >
-          <label nz-radio-button nzValue="month">{{ monthTypeText }}</label>
-          <label nz-radio-button nzValue="year">{{ yearTypeText }}</label>
-        </nz-radio-group>
+          <label tri-radio-button value="month">{{ monthTypeText }}</label>
+          <label tri-radio-button value="year">{{ yearTypeText }}</label>
+        </tri-radio-group>
       </div>
     }
   `,
   host: {
-    class: 'ant-fullcalendar-header',
+    class: 'tri-fullcalendar-header',
     '[style.display]': `'block'`
   },
-  imports: [NzSelectModule, FormsModule, NzRadioModule, NzStringTemplateOutletDirective]
+  imports: [TriSelectModule, FormsModule, TriRadioModule, TriStringTemplateOutletDirective]
 })
-export class NzCalendarHeaderComponent implements OnInit, OnChanges {
+export class TriCalendarHeaderComponent implements OnInit, OnChanges {
   private readonly dateHelper = inject(DateHelperService);
-  private readonly i18n = inject(NzI18nService);
+  private readonly i18n = inject(TriI18nService);
 
   @Input() mode: 'month' | 'year' = 'month';
   @Input({ transform: booleanAttribute }) fullscreen: boolean = true;
   @Input() activeDate: CandyDate = new CandyDate();
-  @Input() nzCustomHeader?: string | TemplateRef<void>;
+  @Input() customHeader?: string | TemplateRef<void>;
 
   @Output() readonly modeChange = new EventEmitter<'month' | 'year'>();
   @Output() readonly yearChange = new EventEmitter<number>();
@@ -105,7 +105,7 @@ export class NzCalendarHeaderComponent implements OnInit, OnChanges {
     return this.activeDate.getMonth();
   }
 
-  get size(): NzSelectSizeType {
+  get size(): TriSelectSizeType {
     return this.fullscreen ? 'default' : 'small';
   }
 

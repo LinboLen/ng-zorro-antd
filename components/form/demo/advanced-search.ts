@@ -1,40 +1,40 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormRecord, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriFormModule } from 'ng-zorro-antd/form';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: 'nz-demo-form-advanced-search',
-  imports: [ReactiveFormsModule, NzButtonModule, NzFormModule, NzIconModule, NzInputModule],
+  selector: '',
+  imports: [ReactiveFormsModule, TriButtonModule, TriFormModule, TriIconModule, TriInputModule],
   template: `
-    <form nz-form [formGroup]="validateForm" class="ant-advanced-search-form">
-      <div nz-row [nzGutter]="24">
+    <form tri-form [formGroup]="validateForm" class="tri-advanced-search-form">
+      <div tri-row [gutter]="24">
         @for (control of controlArray; track control) {
-          <div nz-col [nzSpan]="8" [hidden]="!control.show">
-            <nz-form-item>
-              <nz-form-label [nzFor]="'field' + control.index">Field {{ control.index }}</nz-form-label>
-              <nz-form-control>
+          <div tri-col [span]="8" [hidden]="!control.show">
+            <tri-form-item>
+              <tri-form-label [for]="'field' + control.index">Field {{ control.index }}</tri-form-label>
+              <tri-form-control>
                 <input
-                  nz-input
+                  tri-input
                   placeholder="placeholder"
                   [formControlName]="'field' + control.index"
                   [attr.id]="'field' + control.index"
                 />
-              </nz-form-control>
-            </nz-form-item>
+              </tri-form-control>
+            </tri-form-item>
           </div>
         }
       </div>
-      <div nz-row>
-        <div nz-col [nzSpan]="24" class="search-area">
-          <button nz-button [nzType]="'primary'">Search</button>
-          <button nz-button (click)="resetForm()">Clear</button>
+      <div tri-row>
+        <div tri-col [span]="24" class="search-area">
+          <button tri-button [type]="'primary'">Search</button>
+          <button tri-button (click)="resetForm()">Clear</button>
           <a class="collapse" (click)="toggleCollapse()">
             Collapse
-            <nz-icon [nzType]="isCollapse ? 'down' : 'up'" />
+            <tri-icon [type]="isCollapse ? 'down' : 'up'" />
           </a>
         </div>
       </div>
@@ -79,7 +79,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     `
   ]
 })
-export class NzDemoFormAdvancedSearchComponent implements OnInit {
+export class TriDemoFormAdvancedSearchComponent implements OnInit {
   private fb = inject(NonNullableFormBuilder);
   validateForm: FormRecord<FormControl<string>> = this.fb.record({});
   controlArray: Array<{ index: number; show: boolean }> = [];

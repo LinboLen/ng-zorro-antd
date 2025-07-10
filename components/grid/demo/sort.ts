@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 
-import { NzGridModule } from 'ng-zorro-antd/grid';
+import { TriGridModule } from 'ng-zorro-antd/grid';
 
 @Component({
-  selector: 'nz-demo-grid-sort',
-  imports: [NzGridModule],
+  selector: '',
+  imports: [TriGridModule],
   template: `
-    <div nz-row>
-      <div nz-col [nzSpan]="18" [nzPush]="6">col-18 col-push-6</div>
-      <div nz-col [nzSpan]="6" [nzPull]="18">col-6 col-pull-18</div>
+    <div tri-row>
+      <div tri-col [span]="18" [push]="6">col-18 col-push-6</div>
+      <div tri-col [span]="6" [pull]="18">col-6 col-pull-18</div>
     </div>
   `
 })
-export class NzDemoGridSortComponent {}
+export class TriDemoGridSortComponent {}

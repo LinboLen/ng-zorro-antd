@@ -5,7 +5,7 @@
 
 import { SelectionModel } from '@angular/cdk/collections';
 
-export interface NzGraphBaseSource<T, K> {
+export interface TriGraphBaseSource<T, K> {
   /** The saved graph nodes data for `expandAll` action. */
   dataSource: T;
 

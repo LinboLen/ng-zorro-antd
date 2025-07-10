@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzTransitionPatchDirective } from './transition-patch.directive';
+import { TriTransitionPatchDirective } from './transition-patch.directive';
 
 @NgModule({
-  imports: [NzTransitionPatchDirective],
-  exports: [NzTransitionPatchDirective]
+  imports: [TriTransitionPatchDirective],
+  exports: [TriTransitionPatchDirective]
 })
-export class NzTransitionPatchModule {}
+export class TriTransitionPatchModule {}

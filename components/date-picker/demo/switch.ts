@@ -1,26 +1,26 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { TriSelectModule } from 'ng-zorro-antd/select';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: 'nz-demo-date-picker-switch',
-  imports: [FormsModule, NzDatePickerModule, NzSelectModule, NzSpaceModule],
+  selector: '',
+  imports: [FormsModule, TriDatePickerModule, TriSelectModule, TriSpaceModule],
   template: `
-    <nz-space>
-      <nz-select *nzSpaceItem [(ngModel)]="mode">
-        <nz-option nzValue="date" nzLabel="Date"></nz-option>
-        <nz-option nzValue="week" nzLabel="Week"></nz-option>
-        <nz-option nzValue="month" nzLabel="Month"></nz-option>
-        <nz-option nzValue="quarter" nzLabel="Quarter"></nz-option>
-        <nz-option nzValue="year" nzLabel="Year"></nz-option>
-      </nz-select>
-      <nz-date-picker *nzSpaceItem [nzMode]="mode"></nz-date-picker>
-    </nz-space>
+    <tri-space>
+      <tri-select *spaceItem [(ngModel)]="mode">
+        <tri-option value="date" label="Date"></tri-option>
+        <tri-option value="week" label="Week"></tri-option>
+        <tri-option value="month" label="Month"></tri-option>
+        <tri-option value="quarter" label="Quarter"></tri-option>
+        <tri-option value="year" label="Year"></tri-option>
+      </tri-select>
+      <tri-date-picker *spaceItem [mode]="mode"></tri-date-picker>
+    </tri-space>
   `
 })
-export class NzDemoDatePickerSwitchComponent {
+export class TriDemoDatePickerSwitchComponent {
   mode = 'date';
 }

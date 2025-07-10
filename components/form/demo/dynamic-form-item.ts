@@ -1,52 +1,52 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormRecord, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriFormModule } from 'ng-zorro-antd/form';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: 'nz-demo-form-dynamic-form-item',
-  imports: [ReactiveFormsModule, NzButtonModule, NzFormModule, NzIconModule, NzInputModule],
+  selector: '',
+  imports: [ReactiveFormsModule, TriButtonModule, TriFormModule, TriIconModule, TriInputModule],
   template: `
-    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <form tri-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
       @for (control of listOfControl; track control; let i = $index) {
-        <nz-form-item>
+        <tri-form-item>
           @if (i === 0) {
-            <nz-form-label [nzXs]="24" [nzSm]="4" [nzFor]="control.controlInstance"> Passengers </nz-form-label>
+            <tri-form-label [xs]="24" [sm]="4" [for]="control.controlInstance"> Passengers </tri-form-label>
           }
-          <nz-form-control
-            [nzXs]="24"
-            [nzSm]="20"
-            [nzOffset]="i === 0 ? 0 : 4"
-            nzErrorTip="Please input passenger's name or delete this field."
+          <tri-form-control
+            [xs]="24"
+            [sm]="20"
+            [offset]="i === 0 ? 0 : 4"
+            errorTip="Please input passenger's name or delete this field."
           >
             <input
               class="passenger-input"
-              nz-input
+              tri-input
               placeholder="placeholder"
               [attr.id]="control.id"
               [formControlName]="control.controlInstance"
             />
-            <nz-icon nzType="minus-circle-o" class="dynamic-delete-button" (click)="removeField(control, $event)" />
-          </nz-form-control>
-        </nz-form-item>
+            <tri-icon type="minus-circle-o" class="dynamic-delete-button" (click)="removeField(control, $event)" />
+          </tri-form-control>
+        </tri-form-item>
       }
 
-      <nz-form-item>
-        <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 20, offset: 4 }">
-          <button nz-button nzType="dashed" class="add-button" (click)="addField($event)">
-            <nz-icon nzType="plus" />
+      <tri-form-item>
+        <tri-form-control [xs]="{ span: 24, offset: 0 }" [sm]="{ span: 20, offset: 4 }">
+          <button tri-button type="dashed" class="add-button" (click)="addField($event)">
+            <tri-icon type="plus" />
             Add field
           </button>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 20, offset: 4 }">
-          <button nz-button nzType="primary">Submit</button>
-        </nz-form-control>
-      </nz-form-item>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-control [xs]="{ span: 24, offset: 0 }" [sm]="{ span: 20, offset: 4 }">
+          <button tri-button type="primary">Submit</button>
+        </tri-form-control>
+      </tri-form-item>
     </form>
   `,
   styles: [
@@ -79,7 +79,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     `
   ]
 })
-export class NzDemoFormDynamicFormItemComponent implements OnInit {
+export class TriDemoFormDynamicFormItemComponent implements OnInit {
   private fb = inject(NonNullableFormBuilder);
   validateForm: FormRecord<FormControl<string>> = this.fb.record({});
   listOfControl: Array<{ id: number; controlInstance: string }> = [];

@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 
-import { NzColorPickerModule } from 'ng-zorro-antd/color-picker';
+import { TriColorPickerModule } from 'ng-zorro-antd/color-picker';
 
 @Component({
-  selector: 'nz-demo-color-picker-block',
-  imports: [NzColorPickerModule],
+  selector: '',
+  imports: [TriColorPickerModule],
   template: `
-    <nz-color-block nzSize="small"></nz-color-block>
-    <nz-color-block></nz-color-block>
-    <nz-color-block nzSize="large"></nz-color-block>
+    <tri-color-block size="small"></tri-color-block>
+    <tri-color-block></tri-color-block>
+    <tri-color-block size="large"></tri-color-block>
   `,
   styles: [
     `
@@ -18,4 +18,4 @@ import { NzColorPickerModule } from 'ng-zorro-antd/color-picker';
     `
   ]
 })
-export class NzDemoColorPickerBlockComponent {}
+export class TriDemoColorPickerBlockComponent {}

@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzRateModule } from 'ng-zorro-antd/rate';
+import { TriRateModule } from 'ng-zorro-antd/rate';
 
 @Component({
-  selector: 'nz-demo-rate-clear',
-  imports: [FormsModule, NzRateModule],
+  selector: '',
+  imports: [FormsModule, TriRateModule],
   template: `
-    <nz-rate [(ngModel)]="value" nzAllowHalf></nz-rate>
-    <span class="ant-rate-text">allowClear: true</span>
+    <tri-rate [(ngModel)]="value" allowHalf></tri-rate>
+    <span class="tri-rate-text">allowClear: true</span>
     <br />
-    <nz-rate [(ngModel)]="value" nzAllowHalf [nzAllowClear]="false"></nz-rate>
-    <span class="ant-rate-text">allowClear: false</span>
+    <tri-rate [(ngModel)]="value" allowHalf [allowClear]="false"></tri-rate>
+    <span class="tri-rate-text">allowClear: false</span>
   `
 })
-export class NzDemoRateClearComponent {
+export class TriDemoRateClearComponent {
   value = 0;
 }

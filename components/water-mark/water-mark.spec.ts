@@ -8,33 +8,33 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { bootstrapApplication, By } from '@angular/platform-browser';
 import { renderApplication } from '@angular/platform-server';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 import { FontType } from './typings';
-import { NzWaterMarkComponent } from './water-mark.component';
-import { NzWaterMarkModule } from './water-mark.module';
+import { TriWaterMarkComponent } from './water-mark.component';
+import { TriWaterMarkModule } from './water-mark.module';
 
 describe('water-mark', () => {
-  let fixture: ComponentFixture<NzTestWaterMarkBasicComponent>;
-  let testComponent: NzTestWaterMarkBasicComponent;
+  let fixture: ComponentFixture<TriTestWaterMarkBasicComponent>;
+  let testComponent: TriTestWaterMarkBasicComponent;
   let resultEl: DebugElement;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NzTestWaterMarkBasicComponent);
+    fixture = TestBed.createComponent(TriTestWaterMarkBasicComponent);
     fixture.detectChanges();
     testComponent = fixture.debugElement.componentInstance;
-    resultEl = fixture.debugElement.query(By.directive(NzWaterMarkComponent));
+    resultEl = fixture.debugElement.query(By.directive(TriWaterMarkComponent));
   });
 
   it('basic', () => {
-    testComponent.nzContent = 'NG Ant Design';
+    testComponent.content = 'NG Ant Design';
     fixture.detectChanges();
     const view = resultEl.nativeElement.querySelector('.water-mark > div');
     expect(view.tagName).toBe('DIV');
   });
 
   it('image', () => {
-    testComponent.nzImage =
+    testComponent.image =
       'https://img.alicdn.com/imgextra/i3/O1CN01UR3Zkq1va9fnZsZcr_!!6000000006188-55-tps-424-64.svg';
     fixture.detectChanges();
     const view = resultEl.nativeElement.querySelector('.water-mark > div');
@@ -42,15 +42,15 @@ describe('water-mark', () => {
   });
 
   it('invalid image', () => {
-    testComponent.nzImage = 'https://img.alicdn.com/test.svg';
+    testComponent.image = 'https://img.alicdn.com/test.svg';
     fixture.detectChanges();
     const view = resultEl.nativeElement.querySelector('.water-mark > div');
     expect(view.tagName).toBe('DIV');
   });
 
   it('should offset work', () => {
-    testComponent.nzContent = ['Angular', 'NG Ant Design'];
-    testComponent.nzOffset = [200, 200];
+    testComponent.content = ['Angular', 'NG Ant Design'];
+    testComponent.offset = [200, 200];
     fixture.detectChanges();
     const view = resultEl.nativeElement.querySelector('.water-mark > div');
     expect(view?.style.left).toBe('150px');
@@ -60,17 +60,17 @@ describe('water-mark', () => {
   });
 
   it('should backgroundSize work', () => {
-    testComponent.nzContent = 'NG Ant Design';
-    testComponent.nzGap = [100, 100];
-    testComponent.nzWidth = 200;
-    testComponent.nzHeight = 200;
+    testComponent.content = 'NG Ant Design';
+    testComponent.gap = [100, 100];
+    testComponent.width = 200;
+    testComponent.height = 200;
     fixture.detectChanges();
     const view = resultEl.nativeElement.querySelector('.water-mark > div');
     expect(view?.style.backgroundSize).toBe('600px');
   });
 
   it('should MutationObserver work', fakeAsync(() => {
-    testComponent.nzContent = 'NG Ant Design';
+    testComponent.content = 'NG Ant Design';
     fixture.detectChanges();
     const view = resultEl.nativeElement.querySelector('.water-mark > div');
     view?.remove();
@@ -79,7 +79,7 @@ describe('water-mark', () => {
   }));
 
   it('should observe the modification of style', fakeAsync(() => {
-    testComponent.nzContent = 'NG Ant Design';
+    testComponent.content = 'NG Ant Design';
     fixture.detectChanges();
     const view = resultEl.nativeElement.querySelector('.water-mark > div');
     view?.setAttribute('style', '');
@@ -93,16 +93,16 @@ describe('water-mark (SSR)', () => {
     destroyPlatform();
 
     // `as any` because `ngDevMode` is not exposed on the global namespace typings.
-    const ngDevMode = (globalThis as NzSafeAny)['ngDevMode'];
+    const ngDevMode = (globalThis as TriSafeAny)['ngDevMode'];
 
     try {
       // Disable development-mode checks for these tests (we don't care).
-      (globalThis as NzSafeAny)['ngDevMode'] = false;
+      (globalThis as TriSafeAny)['ngDevMode'] = false;
       // Enter server mode for the duration of this function.
       globalThis['ngServerMode'] = true;
 
       const bootstrap = (): Promise<ApplicationRef> =>
-        bootstrapApplication(NzTestWaterMarkBasicComponent, { providers: [] });
+        bootstrapApplication(TriTestWaterMarkBasicComponent, { providers: [] });
       const html = await renderApplication(bootstrap, {
         document: '<html><head></head><body><nz-app></nz-app></body></html>'
       });
@@ -110,7 +110,7 @@ describe('water-mark (SSR)', () => {
       expect(html).toContain('<nz-water-mark class="ant-water-mark water-mark">');
     } finally {
       // Restore the original value.
-      (globalThis as NzSafeAny)['ngDevMode'] = ngDevMode;
+      (globalThis as TriSafeAny)['ngDevMode'] = ngDevMode;
       // Leave server mode so the remaining test is back in "client mode".
       globalThis['ngServerMode'] = undefined;
     }
@@ -120,32 +120,32 @@ describe('water-mark (SSR)', () => {
 });
 
 @Component({
-  selector: 'nz-app',
-  imports: [NzWaterMarkModule],
+  selector: '',
+  imports: [TriWaterMarkModule],
   template: `
-    <nz-water-mark
-      [nzContent]="nzContent"
-      [nzWidth]="nzWidth"
-      [nzHeight]="nzHeight"
-      [nzRotate]="nzRotate"
-      [nzZIndex]="nzZIndex"
-      [nzImage]="nzImage"
-      [nzFont]="nzFont"
-      [nzGap]="nzGap"
-      [nzOffset]="nzOffset"
+    <tri-water-mark
+      [content]="content"
+      [width]="width"
+      [height]="height"
+      [rotate]="rotate"
+      [zIndex]="zIndex"
+      [image]="image"
+      [font]="font"
+      [gap]="gap"
+      [offset]="offset"
       class="water-mark"
     >
-    </nz-water-mark>
+    </tri-water-mark>
   `
 })
-export class NzTestWaterMarkBasicComponent {
-  nzContent: string | string[] = 'NG Ant Design';
-  nzWidth: number = 120;
-  nzHeight: number = 64;
-  nzRotate: number = -22;
-  nzZIndex: number = 9;
-  nzImage: string = '';
-  nzFont: FontType = {};
-  nzGap: [number, number] = [100, 100];
-  nzOffset: [number, number] = [50, 50];
+export class TriTestWaterMarkBasicComponent {
+  content: string | string[] = 'NG Ant Design';
+  width: number = 120;
+  height: number = 64;
+  rotate: number = -22;
+  zIndex: number = 9;
+  image: string = '';
+  font: FontType = {};
+  gap: [number, number] = [100, 100];
+  offset: [number, number] = [50, 50];
 }

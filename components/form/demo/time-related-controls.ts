@@ -1,57 +1,57 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { TriFormModule } from 'ng-zorro-antd/form';
+import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
 
 @Component({
-  selector: 'nz-demo-form-time-related-controls',
-  imports: [ReactiveFormsModule, NzButtonModule, NzDatePickerModule, NzFormModule, NzTimePickerModule],
+  selector: '',
+  imports: [ReactiveFormsModule, TriButtonModule, TriDatePickerModule, TriFormModule, TriTimePickerModule],
   template: `
-    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
-      <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>DatePicker</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24">
-          <nz-date-picker formControlName="datePicker"></nz-date-picker>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>DatePicker[ShowTime]</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24">
-          <nz-date-picker nzShowTime formControlName="datePickerTime"></nz-date-picker>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>MonthPicker</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24">
-          <nz-date-picker nzMode="month" formControlName="monthPicker"></nz-date-picker>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>RangePicker</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24">
-          <nz-range-picker formControlName="rangePicker"></nz-range-picker>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>RangePicker[showTime]</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24">
-          <nz-range-picker nzShowTime formControlName="rangePickerTime"></nz-range-picker>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>TimePicker</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24">
-          <nz-time-picker formControlName="timePicker"></nz-time-picker>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 16, offset: 8 }">
-          <button nz-button nzType="primary">Submit</button>
-        </nz-form-control>
-      </nz-form-item>
+    <form tri-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+      <tri-form-item>
+        <tri-form-label [sm]="8" [xs]="24" required>DatePicker</tri-form-label>
+        <tri-form-control [sm]="16" [xs]="24">
+          <tri-date-picker formControlName="datePicker"></tri-date-picker>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [sm]="8" [xs]="24" required>DatePicker[ShowTime]</tri-form-label>
+        <tri-form-control [sm]="16" [xs]="24">
+          <tri-date-picker showTime formControlName="datePickerTime"></tri-date-picker>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [sm]="8" [xs]="24" required>MonthPicker</tri-form-label>
+        <tri-form-control [sm]="16" [xs]="24">
+          <tri-date-picker mode="month" formControlName="monthPicker"></tri-date-picker>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [sm]="8" [xs]="24" required>RangePicker</tri-form-label>
+        <tri-form-control [sm]="16" [xs]="24">
+          <tri-range-picker formControlName="rangePicker"></tri-range-picker>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [sm]="8" [xs]="24" required>RangePicker[showTime]</tri-form-label>
+        <tri-form-control [sm]="16" [xs]="24">
+          <tri-range-picker showTime formControlName="rangePickerTime"></tri-range-picker>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label [sm]="8" [xs]="24" required>TimePicker</tri-form-label>
+        <tri-form-control [sm]="16" [xs]="24">
+          <tri-time-picker formControlName="timePicker"></tri-time-picker>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-control [xs]="{ span: 24, offset: 0 }" [sm]="{ span: 16, offset: 8 }">
+          <button tri-button type="primary">Submit</button>
+        </tri-form-control>
+      </tri-form-item>
     </form>
   `,
   styles: [
@@ -62,7 +62,7 @@ import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
     `
   ]
 })
-export class NzDemoFormTimeRelatedControlsComponent {
+export class TriDemoFormTimeRelatedControlsComponent {
   private fb = inject(FormBuilder);
   validateForm = this.fb.group({
     datePicker: this.fb.control<Date | null>(null),

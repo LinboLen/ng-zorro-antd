@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 
-import { NzBackTopModule } from 'ng-zorro-antd/back-top';
+import { TriBackTopModule } from 'ng-zorro-antd/back-top';
 
 @Component({
-  selector: 'nz-demo-back-top-custom',
-  imports: [NzBackTopModule],
+  selector: '',
+  imports: [TriBackTopModule],
   template: `
-    <nz-back-top [nzTemplate]="tpl" [nzVisibilityHeight]="100" (nzClick)="notify()">
+    <tri-back-top [template]="tpl" [visibilityHeight]="100" (click)="notify()">
       <ng-template #tpl>
-        <div class="ant-back-top-inner">UP</div>
+        <div class="tri-back-top-inner">UP</div>
       </ng-template>
-    </nz-back-top>
+    </tri-back-top>
     Scroll down to see the bottom-right
     <strong>blue</strong>
     button.
@@ -38,7 +38,7 @@ import { NzBackTopModule } from 'ng-zorro-antd/back-top';
     `
   ]
 })
-export class NzDemoBackTopCustomComponent {
+export class TriDemoBackTopCustomComponent {
   notify(): void {
     console.log('notify');
   }

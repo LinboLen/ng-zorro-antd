@@ -1,27 +1,27 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { NzSpaceModule, NzSpaceSize } from 'ng-zorro-antd/space';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
+import { TriSpaceModule, TriSpaceSize } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: 'nz-demo-space-size',
-  imports: [FormsModule, NzButtonModule, NzRadioModule, NzSpaceModule],
+  selector: '',
+  imports: [FormsModule, TriButtonModule, TriRadioModule, TriSpaceModule],
   template: `
-    <nz-radio-group [(ngModel)]="size">
-      <label nz-radio nzValue="small">Small</label>
-      <label nz-radio nzValue="middle">Middle</label>
-      <label nz-radio nzValue="large">Large</label>
-    </nz-radio-group>
-    <nz-space [nzSize]="size">
-      <button *nzSpaceItem nz-button nzType="primary">Button</button>
-      <button *nzSpaceItem nz-button nzType="default">Default</button>
-      <button *nzSpaceItem nz-button nzType="dashed">Dashed</button>
-      <a *nzSpaceItem nz-button nzType="link">Link</a>
-    </nz-space>
+    <tri-radio-group [(ngModel)]="size">
+      <label tri-radio value="small">Small</label>
+      <label tri-radio value="middle">Middle</label>
+      <label tri-radio value="large">Large</label>
+    </tri-radio-group>
+    <tri-space [size]="size">
+      <button *spaceItem tri-button type="primary">Button</button>
+      <button *spaceItem tri-button type="default">Default</button>
+      <button *spaceItem tri-button type="dashed">Dashed</button>
+      <a *spaceItem tri-button type="link">Link</a>
+    </tri-space>
   `
 })
-export class NzDemoSpaceSizeComponent {
-  size: NzSpaceSize = 'small';
+export class TriDemoSpaceSizeComponent {
+  size: TriSpaceSize = 'small';
 }

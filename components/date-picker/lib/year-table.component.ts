@@ -5,7 +5,7 @@
 
 import { ChangeDetectionStrategy, Component, inject, ViewEncapsulation } from '@angular/core';
 
-import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
+import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import { CandyDate } from 'ng-zorro-antd/core/time';
 import { valueFunctionProp } from 'ng-zorro-antd/core/util';
 import { DateHelperService } from 'ng-zorro-antd/i18n';
@@ -17,9 +17,9 @@ import { DateBodyRow, DateCell, YearCell } from './interface';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'year-table',
+  selector: '',
   templateUrl: 'abstract-table.html',
-  imports: [NzStringTemplateOutletDirective]
+  imports: [TriStringTemplateOutletDirective]
 })
 export class YearTableComponent extends AbstractTable {
   private readonly dateHelper = inject(DateHelperService);

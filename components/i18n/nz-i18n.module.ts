@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzI18nPipe } from './nz-i18n.pipe';
+import { TriI18nPipe } from './nz-i18n.pipe';
 
 @NgModule({
-  imports: [NzI18nPipe],
-  exports: [NzI18nPipe]
+  imports: [TriI18nPipe],
+  exports: [TriI18nPipe]
 })
-export class NzI18nModule {}
+export class TriI18nModule {}

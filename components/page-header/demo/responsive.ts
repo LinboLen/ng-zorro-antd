@@ -1,54 +1,54 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
-import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
-import { NzStatisticModule } from 'ng-zorro-antd/statistic';
-import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { TriPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
+import { TriStatisticModule } from 'ng-zorro-antd/statistic';
+import { TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: 'nz-demo-page-header-responsive',
-  imports: [NzButtonModule, NzDescriptionsModule, NzPageHeaderModule, NzSpaceModule, NzStatisticModule, NzTabsModule],
+  selector: '',
+  imports: [TriButtonModule, TriDescriptionsModule, TriPageHeaderModule, TriSpaceModule, TriStatisticModule, TriTabsModule],
   template: `
-    <nz-page-header nzBackIcon>
-      <nz-page-header-title>Title</nz-page-header-title>
-      <nz-page-header-subtitle>This is a subtitle</nz-page-header-subtitle>
-      <nz-page-header-extra>
-        <nz-space>
-          <button *nzSpaceItem nz-button>Operation</button>
-          <button *nzSpaceItem nz-button>Operation</button>
-          <button *nzSpaceItem nz-button nzType="primary">Primary</button>
-        </nz-space>
-      </nz-page-header-extra>
-      <nz-page-header-content>
+    <tri-page-header backIcon>
+      <tri-page-header-title>Title</tri-page-header-title>
+      <tri-page-header-subtitle>This is a subtitle</tri-page-header-subtitle>
+      <tri-page-header-extra>
+        <tri-space>
+          <button *spaceItem tri-button>Operation</button>
+          <button *spaceItem tri-button>Operation</button>
+          <button *spaceItem tri-button type="primary">Primary</button>
+        </tri-space>
+      </tri-page-header-extra>
+      <tri-page-header-content>
         <div class="content">
           <div class="main">
-            <nz-descriptions nzSize="small" [nzColumn]="2">
-              <nz-descriptions-item nzTitle="Created" [nzSpan]="1">Lili Qu</nz-descriptions-item>
-              <nz-descriptions-item nzTitle="Association" [nzSpan]="1"><a>421421</a></nz-descriptions-item>
-              <nz-descriptions-item nzTitle="Creation Time" [nzSpan]="1">2017-01-10</nz-descriptions-item>
-              <nz-descriptions-item nzTitle="Effective Time" [nzSpan]="1">2017-10-10</nz-descriptions-item>
-              <nz-descriptions-item nzTitle="Remarks" [nzSpan]="2">
+            <tri-descriptions size="small" [column]="2">
+              <tri-descriptions-item title="Created" [span]="1">Lili Qu</tri-descriptions-item>
+              <tri-descriptions-item title="Association" [span]="1"><a>421421</a></tri-descriptions-item>
+              <tri-descriptions-item title="Creation Time" [span]="1">2017-01-10</tri-descriptions-item>
+              <tri-descriptions-item title="Effective Time" [span]="1">2017-10-10</tri-descriptions-item>
+              <tri-descriptions-item title="Remarks" [span]="2">
                 Gonghu Road, Xihu District, Hangzhou, Zhejiang, China
-              </nz-descriptions-item>
-            </nz-descriptions>
+              </tri-descriptions-item>
+            </tri-descriptions>
           </div>
           <div class="extra">
             <div>
-              <nz-statistic nzTitle="Status" nzValue="Pending"></nz-statistic>
-              <nz-statistic nzTitle="Price" [nzValue]="568.08" nzPrefix="$" style="margin: 0 32px"></nz-statistic>
+              <tri-statistic title="Status" value="Pending"></tri-statistic>
+              <tri-statistic title="Price" [value]="568.08" prefix="$" style="margin: 0 32px"></tri-statistic>
             </div>
           </div>
         </div>
-      </nz-page-header-content>
-      <nz-page-header-footer>
-        <nz-tabs [nzSelectedIndex]="1">
-          <nz-tab nzTitle="Details"></nz-tab>
-          <nz-tab nzTitle="Rule"></nz-tab>
-        </nz-tabs>
-      </nz-page-header-footer>
-    </nz-page-header>
+      </tri-page-header-content>
+      <tri-page-header-footer>
+        <tri-tabs [selectedIndex]="1">
+          <tri-tab title="Details"></tri-tab>
+          <tri-tab title="Rule"></tri-tab>
+        </tri-tabs>
+      </tri-page-header-footer>
+    </tri-page-header>
   `,
   styles: [
     `
@@ -81,4 +81,4 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
     `
   ]
 })
-export class NzDemoPageHeaderResponsiveComponent {}
+export class TriDemoPageHeaderResponsiveComponent {}

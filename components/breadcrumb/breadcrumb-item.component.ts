@@ -6,48 +6,45 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, Input, ViewEncapsulation } from '@angular/core';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzDropdownMenuComponent, NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriDropdownMenuComponent, TriDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
-import { NzBreadcrumb } from './breadcrumb';
-import { NzBreadCrumbSeparatorComponent } from './breadcrumb-separator.component';
+import { TriBreadcrumb } from './breadcrumb';
+import { TriBreadCrumbSeparatorComponent } from './breadcrumb-separator.component';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-breadcrumb-item',
-  exportAs: 'nzBreadcrumbItem',
-  imports: [NgTemplateOutlet, NzBreadCrumbSeparatorComponent, NzDropDownModule, NzIconModule, NzOutletModule],
+  selector: '',
+  exportAs: 'triBreadcrumbItem',
+  imports: [NgTemplateOutlet, TriBreadCrumbSeparatorComponent, TriDropDownModule, TriIconModule, TriOutletModule],
   template: `
-    @if (!!nzOverlay) {
-      <span class="ant-breadcrumb-overlay-link" nz-dropdown [nzDropdownMenu]="nzOverlay">
+    @if (!!overlay) {
+      <span class="tri-breadcrumb-overlay-link" tri-dropdown [dropdownMenu]="overlay">
         <ng-template [ngTemplateOutlet]="noMenuTpl"></ng-template>
-        <nz-icon nzType="down" />
+        <tri-icon type="down" />
       </span>
     } @else {
-      <ng-template [ngTemplateOutlet]="noMenuTpl" />
-    }
-
-    @if (nzBreadCrumbComponent.nzSeparator) {
-      <nz-breadcrumb-separator>
-        <ng-container *nzStringTemplateOutlet="nzBreadCrumbComponent.nzSeparator">
-          {{ nzBreadCrumbComponent.nzSeparator }}
+      <ng-template [ngTemplateOutlet]="noMenubreadCrumbComponentf (separator) {
+      <tri-breadcrumb-separator>
+        <ng-containerbreadCrumbComponentt="separator">
+          {{ breadCrumbComponent.separator }}
         </ng-container>
-      </nz-breadcrumb-separator>
+      </tri-breadcrumb-separator>
     }
 
     <ng-template #noMenuTpl>
-      <span class="ant-breadcrumb-link">
+      <span class="tri-breadcrumb-link">
         <ng-content />
       </span>
     </ng-template>
   `
 })
-export class NzBreadCrumbItemComponent {
-  nzBreadCrumbComponent = inject(NzBreadcrumb);
+export class TriBreadCrumbItemComponent {
+  breadCrumbComponent = inject(TriBreadcrumb);
   /**
    * Dropdown content of a breadcrumb item.
    */
-  @Input() nzOverlay?: NzDropdownMenuComponent;
+  @Input() overlay?: TriDropdownMenuComponent;
 }

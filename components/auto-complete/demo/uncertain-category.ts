@@ -1,33 +1,33 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { TriAutocompleteModule } from 'ng-zorro-antd/auto-complete';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: 'nz-demo-auto-complete-uncertain-category',
-  imports: [FormsModule, NzAutocompleteModule, NzButtonModule, NzIconModule, NzInputModule],
+  selector: '',
+  imports: [FormsModule, TriAutocompleteModule, TriButtonModule, TriIconModule, TriInputModule],
   encapsulation: ViewEncapsulation.None,
   template: `
-    <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixIconButton">
+    <tri-input-group search size="large" [addOnAfter]="suffixIconButton">
       <input
         placeholder="input here"
-        nz-input
+        tri-input
         [(ngModel)]="inputValue"
         (input)="onChange($event)"
-        [nzAutocomplete]="auto"
+        [autocomplete]="auto"
       />
-    </nz-input-group>
+    </tri-input-group>
     <ng-template #suffixIconButton>
-      <button nz-button nzType="primary" nzSize="large" nzSearch>
-        <nz-icon nzType="search" nzTheme="outline" />
+      <button tri-button type="primary" size="large" search>
+        <tri-icon type="search" theme="outline" />
       </button>
     </ng-template>
-    <nz-autocomplete #auto>
+    <tri-autocomplete #auto>
       @for (option of options; track option.category) {
-        <nz-auto-option class="search-item" [nzValue]="option.category">
+        <tri-auto-option class="search-item" [value]="option.category">
           Found {{ option.value }} on
           <a
             class="search-item-desc"
@@ -38,9 +38,9 @@ import { NzInputModule } from 'ng-zorro-antd/input';
             {{ option.category }}
           </a>
           <span class="search-item-count">{{ option.count }} results</span>
-        </nz-auto-option>
+        </tri-auto-option>
       }
-    </nz-autocomplete>
+    </tri-autocomplete>
   `,
   styles: [
     `
@@ -60,7 +60,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     `
   ]
 })
-export class NzDemoAutoCompleteUncertainCategoryComponent {
+export class TriDemoAutoCompleteUncertainCategoryComponent {
   inputValue?: string;
   options: Array<{ value: string; category: string; count: number }> = [];
 

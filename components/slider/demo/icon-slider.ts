@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzSliderModule } from 'ng-zorro-antd/slider';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriSliderModule } from 'ng-zorro-antd/slider';
 
 @Component({
-  selector: 'nz-demo-slider-icon-slider',
-  imports: [FormsModule, NzIconModule, NzSliderModule],
+  selector: '',
+  imports: [FormsModule, TriIconModule, TriSliderModule],
   template: `
     <div class="icon-wrapper test-class">
-      <nz-icon nzType="frown" [class.icon-highlight]="preHighLight" />
-      <nz-slider [nzMin]="0" [nzMax]="20" [(ngModel)]="sliderValue"></nz-slider>
-      <nz-icon nzType="smile" [class.icon-highlight]="nextHighLight" />
+      <tri-icon type="frown" [class.icon-highlight]="preHighLight" />
+      <tri-slider [min]="0" [max]="20" [(ngModel)]="sliderValue"></tri-slider>
+      <tri-icon type="smile" [class.icon-highlight]="nextHighLight" />
     </div>
   `,
   styles: [
@@ -45,7 +45,7 @@ import { NzSliderModule } from 'ng-zorro-antd/slider';
     `
   ]
 })
-export class NzDemoSliderIconSliderComponent implements OnInit {
+export class TriDemoSliderIconSliderComponent implements OnInit {
   min = 0;
   max = 20;
   mid = parseFloat(((this.max - this.min) / 2).toFixed(5));

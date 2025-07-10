@@ -1,22 +1,22 @@
 import { Component } from '@angular/core';
 
-import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { TriAvatarModule } from 'ng-zorro-antd/avatar';
 
 @Component({
-  selector: 'nz-demo-avatar-basic',
-  imports: [NzAvatarModule],
+  selector: '',
+  imports: [TriAvatarModule],
   template: `
     <div>
-      <nz-avatar [nzSize]="64" nzIcon="user"></nz-avatar>
-      <nz-avatar nzSize="large" nzIcon="user"></nz-avatar>
-      <nz-avatar nzIcon="user"></nz-avatar>
-      <nz-avatar nzSize="small" nzIcon="user"></nz-avatar>
+      <tri-avatar [size]="64" icon="user"></tri-avatar>
+      <tri-avatar size="large" icon="user"></tri-avatar>
+      <tri-avatar icon="user"></tri-avatar>
+      <tri-avatar size="small" icon="user"></tri-avatar>
     </div>
     <div>
-      <nz-avatar nzShape="square" [nzSize]="64" nzIcon="user"></nz-avatar>
-      <nz-avatar nzShape="square" nzSize="large" nzIcon="user"></nz-avatar>
-      <nz-avatar nzShape="square" nzIcon="user"></nz-avatar>
-      <nz-avatar nzShape="square" nzSize="small" nzIcon="user"></nz-avatar>
+      <tri-avatar shape="square" [size]="64" icon="user"></tri-avatar>
+      <tri-avatar shape="square" size="large" icon="user"></tri-avatar>
+      <tri-avatar shape="square" icon="user"></tri-avatar>
+      <tri-avatar shape="square" size="small" icon="user"></tri-avatar>
     </div>
   `,
   styles: [
@@ -28,4 +28,4 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
     `
   ]
 })
-export class NzDemoAvatarBasicComponent {}
+export class TriDemoAvatarBasicComponent {}

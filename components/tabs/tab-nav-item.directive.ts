@@ -6,14 +6,14 @@
 import { FocusableOption } from '@angular/cdk/a11y';
 import { Directive, ElementRef, Input, booleanAttribute, inject } from '@angular/core';
 
-import { NzTabComponent } from './tab.component';
+import { TriTabComponent } from './tab.component';
 
 @Directive({
-  selector: '[nzTabNavItem]'
+  selector: ''
 })
-export class NzTabNavItemDirective implements FocusableOption {
+export class TriTabNavItemDirective implements FocusableOption {
   @Input({ transform: booleanAttribute }) disabled: boolean = false;
-  @Input() tab!: NzTabComponent;
+  @Input() tab!: TriTabComponent;
   @Input({ transform: booleanAttribute }) active: boolean = false;
 
   public elementRef: ElementRef<HTMLElement> = inject(ElementRef<HTMLElement>);

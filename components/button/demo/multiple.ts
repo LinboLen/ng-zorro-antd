@@ -1,32 +1,32 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-demo-button-multiple',
-  imports: [NzButtonModule, NzDropDownModule, NzIconModule],
+  selector: '',
+  imports: [TriButtonModule, TriDropDownModule, TriIconModule],
   template: `
-    <button nz-button nzType="primary">primary</button>
-    <button nz-button nzType="default">secondary</button>
-    <button nz-button nz-dropdown [nzDropdownMenu]="menu">
+    <button tri-button type="primary">primary</button>
+    <button tri-button type="default">secondary</button>
+    <button tri-button tri-dropdown [dropdownMenu]="menu">
       Actions
-      <nz-icon nzType="down" />
+      <tri-icon type="down" />
     </button>
-    <nz-dropdown-menu #menu="nzDropdownMenu">
-      <ul nz-menu>
-        <li nz-menu-item>
+    <tri-dropdown-menu #menu="nzDropdownMenu">
+      <ul tri-menu>
+        <li tri-menu-item>
           <a>1st item</a>
         </li>
-        <li nz-menu-item>
+        <li tri-menu-item>
           <a>2nd item</a>
         </li>
-        <li nz-menu-item>
+        <li tri-menu-item>
           <a>3rd item</a>
         </li>
       </ul>
-    </nz-dropdown-menu>
+    </tri-dropdown-menu>
   `,
   styles: [
     `
@@ -37,4 +37,4 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     `
   ]
 })
-export class NzDemoButtonMultipleComponent {}
+export class TriDemoButtonMultipleComponent {}

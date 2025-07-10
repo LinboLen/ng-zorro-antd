@@ -5,18 +5,18 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzCronExpressionInputComponent } from './cron-expression-input.component';
-import { NzCronExpressionLabelComponent } from './cron-expression-label.component';
-import { NzCronExpressionPreviewComponent } from './cron-expression-preview.component';
-import { NzCronExpressionComponent } from './cron-expression.component';
+import { TriCronExpressionInputComponent } from './cron-expression-input.component';
+import { TriCronExpressionLabelComponent } from './cron-expression-label.component';
+import { TriCronExpressionPreviewComponent } from './cron-expression-preview.component';
+import { TriCronExpressionComponent } from './cron-expression.component';
 
 @NgModule({
   imports: [
-    NzCronExpressionComponent,
-    NzCronExpressionLabelComponent,
-    NzCronExpressionInputComponent,
-    NzCronExpressionPreviewComponent
+    TriCronExpressionComponent,
+    TriCronExpressionLabelComponent,
+    TriCronExpressionInputComponent,
+    TriCronExpressionPreviewComponent
   ],
-  exports: [NzCronExpressionComponent]
+  exports: [TriCronExpressionComponent]
 })
-export class NzCronExpressionModule {}
+export class TriCronExpressionModule {}

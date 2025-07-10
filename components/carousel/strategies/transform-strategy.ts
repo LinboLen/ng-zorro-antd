@@ -7,15 +7,15 @@ import { Platform } from '@angular/cdk/platform';
 import { ChangeDetectorRef, QueryList, Renderer2 } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
-import { NzCarouselContentDirective } from '../carousel-content.directive';
-import { NzCarouselComponentAsSource, PointerVector } from '../typings';
-import { NzCarouselBaseStrategy } from './base-strategy';
+import { TriCarouselContentDirective } from '../carousel-content.directive';
+import { TriCarouselComponentAsSource, PointerVector } from '../typings';
+import { TriCarouselBaseStrategy } from './base-strategy';
 
-interface NzCarouselTransformStrategyOptions {
+interface TriCarouselTransformStrategyOptions {
   direction: 'left' | 'right';
 }
 
-export class NzCarouselTransformStrategy extends NzCarouselBaseStrategy<NzCarouselTransformStrategyOptions> {
+export class TriCarouselTransformStrategy extends TriCarouselBaseStrategy<TriCarouselTransformStrategyOptions> {
   private isDragging = false;
   private isTransitioning = false;
 
@@ -24,11 +24,11 @@ export class NzCarouselTransformStrategy extends NzCarouselBaseStrategy<NzCarous
   }
 
   constructor(
-    carouselComponent: NzCarouselComponentAsSource,
+    carouselComponent: TriCarouselComponentAsSource,
     cdr: ChangeDetectorRef,
     renderer: Renderer2,
     platform: Platform,
-    options?: NzCarouselTransformStrategyOptions
+    options?: TriCarouselTransformStrategyOptions
   ) {
     super(carouselComponent, cdr, renderer, platform, options);
   }
@@ -38,7 +38,7 @@ export class NzCarouselTransformStrategy extends NzCarouselBaseStrategy<NzCarous
     this.renderer.setStyle(this.slickTrackEl, 'transform', null);
   }
 
-  override withCarouselContents(contents: QueryList<NzCarouselContentDirective> | null): void {
+  override withCarouselContents(contents: QueryList<TriCarouselContentDirective> | null): void {
     super.withCarouselContents(contents);
 
     const carousel = this.carouselComponent!;
@@ -62,7 +62,7 @@ export class NzCarouselTransformStrategy extends NzCarouselBaseStrategy<NzCarous
         this.renderer.setStyle(this.slickTrackEl, 'transform', `translate3d(${-activeIndex * this.unitWidth}px, 0, 0)`);
       }
 
-      this.contents.forEach((content: NzCarouselContentDirective) => {
+      this.contents.forEach((content: TriCarouselContentDirective) => {
         this.renderer.setStyle(content.el, 'position', 'relative');
         this.renderer.setStyle(content.el, 'width', `${this.unitWidth}px`);
         this.renderer.setStyle(content.el, 'height', `${this.unitHeight}px`);
@@ -92,7 +92,7 @@ export class NzCarouselTransformStrategy extends NzCarouselBaseStrategy<NzCarous
     // TODO: use transitionEnd event instead of setTimeout
     setTimeout(() => {
       this.renderer.setStyle(this.slickTrackEl, 'transition', null);
-      this.contents.forEach((content: NzCarouselContentDirective) => {
+      this.contents.forEach((content: TriCarouselContentDirective) => {
         this.renderer.setStyle(content.el, this.vertical ? 'top' : 'left', null);
       });
 

@@ -1,30 +1,30 @@
 import { Component } from '@angular/core';
 
-import { NzResizableModule, NzResizeEvent } from 'ng-zorro-antd/resizable';
-import { NzTableModule } from 'ng-zorro-antd/table';
+import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
+import { TriTableModule } from 'ng-zorro-antd/table';
 
 @Component({
-  selector: 'nz-demo-resizable-table',
-  imports: [NzResizableModule, NzTableModule],
+  selector: '',
+  imports: [TriResizableModule, TriTableModule],
   template: `
-    <nz-table #basicTable [nzData]="listOfData">
+    <tri-table #basicTable [data]="listOfData">
       <thead>
         <tr>
           @for (col of cols; track col) {
             @if (col.width) {
               <th
-                nz-resizable
-                nzBounds="window"
-                nzPreview
-                [nzWidth]="col.width"
-                [nzMaxWidth]="256"
-                [nzMinWidth]="60"
-                (nzResizeEnd)="onResize($event, col.title)"
+                tri-resizable
+                bounds="window"
+                preview
+                [width]="col.width"
+                [maxWidth]="256"
+                [minWidth]="60"
+                (resizeEnd)="onResize($event, col.title)"
               >
                 {{ col.title }}
-                <nz-resize-handle nzDirection="right">
+                <tri-resize-handle direction="right">
                   <div class="resize-trigger"></div>
-                </nz-resize-handle>
+                </tri-resize-handle>
               </th>
             } @else {
               <th>
@@ -44,7 +44,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `,
   styles: [
     `
@@ -55,7 +55,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
     `
   ]
 })
-export class NzDemoResizableTableComponent {
+export class TriDemoResizableTableComponent {
   cols: Array<{ title: string; width?: string }> = [
     {
       title: 'Name',
@@ -95,7 +95,7 @@ export class NzDemoResizableTableComponent {
     }
   ];
 
-  onResize({ width }: NzResizeEvent, col: string): void {
+  onResize({ width }: TriResizeEvent, col: string): void {
     this.cols = this.cols.map(e => (e.title === col ? { ...e, width: `${width}px` } : e));
   }
 }

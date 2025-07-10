@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 
-import { NzImageModule } from 'ng-zorro-antd/image';
+import { TriImageModule } from 'ng-zorro-antd/image';
 
 @Component({
-  selector: 'nz-demo-image-preview-group',
-  imports: [NzImageModule],
+  selector: '',
+  imports: [TriImageModule],
   template: `
-    <nz-image-group>
-      <img nz-image width="200px" nzSrc="https://img.alicdn.com/tfs/TB1g.mWZAL0gK0jSZFtXXXQCXXa-200-200.svg" alt="" />
-      <img nz-image width="200px" nzSrc="https://img.alicdn.com/tfs/TB1Z0PywTtYBeNjy1XdXXXXyVXa-186-200.svg" alt="" />
-    </nz-image-group>
+    <tri-image-group>
+      <img tri-image width="200px" src="https://img.alicdn.com/tfs/TB1g.mWZAL0gK0jSZFtXXXQCXXa-200-200.svg" alt="" />
+      <img tri-image width="200px" src="https://img.alicdn.com/tfs/TB1Z0PywTtYBeNjy1XdXXXXyVXa-186-200.svg" alt="" />
+    </tri-image-group>
   `
 })
-export class NzDemoImagePreviewGroupComponent {}
+export class TriDemoImagePreviewGroupComponent {}

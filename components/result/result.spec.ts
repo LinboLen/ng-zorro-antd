@@ -8,50 +8,50 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
-import { NzResultComponent, NzResultStatusType } from './result.component';
-import { NzResultModule } from './result.module';
+import { TriResultComponent, TriResultStatusType } from './result.component';
+import { TriResultModule } from './result.module';
 
 @Component({
-  selector: 'nz-test-basic-result',
-  imports: [NzIconModule, NzResultModule],
+  selector: '',
+  imports: [TriIconModule, TriResultModule],
   template: `
-    <nz-result [nzIcon]="icon" [nzStatus]="status" [nzTitle]="title" [nzSubTitle]="subtitle" [nzExtra]="extra">
-      <nz-icon nz-result-icon nzType="up" nzTheme="outline" />
-      <div nz-result-title>Content Title</div>
-      <div nz-result-subtitle>Content SubTitle</div>
-      <div nz-result-content>Content</div>
-      <div nz-result-extra>Content Extra</div>
-    </nz-result>
+    <tri-result [icon]="icon" [status]="status" [title]="title" [subTitle]="subtitle" [extra]="extra">
+      <tri-icon tri-result-icon type="up" theme="outline" />
+      <div tri-result-title>Content Title</div>
+      <div tri-result-subtitle>Content SubTitle</div>
+      <div tri-result-content>Content</div>
+      <div tri-result-extra>Content Extra</div>
+    </tri-result>
   `
 })
-export class NzTestResultBasicComponent {
+export class TriTestResultBasicComponent {
   icon?: string = 'success';
   title?: string = 'Title';
-  status?: NzResultStatusType = 'error';
+  status?: TriResultStatusType = 'error';
   subtitle?: string = 'SubTitle';
   extra?: string = 'Extra';
 }
 
 @Component({
-  imports: [BidiModule, NzTestResultBasicComponent],
+  imports: [BidiModule, TriTestResultBasicComponent],
   template: `
     <div [dir]="direction">
-      <nz-test-basic-result></nz-test-basic-result>
+      <tri-test-basic-result></tri-test-basic-result>
     </div>
   `
 })
-export class NzTestResultRtlComponent {
+export class TriTestResultRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 }
 
 describe('nz-result', () => {
   describe('basic', () => {
-    let fixture: ComponentFixture<NzTestResultBasicComponent>;
-    let testComponent: NzTestResultBasicComponent;
+    let fixture: ComponentFixture<TriTestResultBasicComponent>;
+    let testComponent: TriTestResultBasicComponent;
     let resultEl: DebugElement;
 
     beforeEach(() => {
@@ -59,9 +59,9 @@ describe('nz-result', () => {
         providers: [provideNzIconsTesting()]
       });
 
-      fixture = TestBed.createComponent(NzTestResultBasicComponent);
+      fixture = TestBed.createComponent(TriTestResultBasicComponent);
       testComponent = fixture.componentInstance;
-      resultEl = fixture.debugElement.query(By.directive(NzResultComponent));
+      resultEl = fixture.debugElement.query(By.directive(TriResultComponent));
     });
 
     it('should props work and overlap contents', () => {
@@ -116,7 +116,7 @@ describe('nz-result', () => {
   });
 
   describe('RTL', () => {
-    let fixture: ComponentFixture<NzTestResultRtlComponent>;
+    let fixture: ComponentFixture<TriTestResultRtlComponent>;
     let resultEl: DebugElement;
 
     beforeEach(() => {
@@ -124,9 +124,9 @@ describe('nz-result', () => {
         providers: [provideNzIconsTesting()]
       });
 
-      fixture = TestBed.createComponent(NzTestResultRtlComponent);
+      fixture = TestBed.createComponent(TriTestResultRtlComponent);
       fixture.detectChanges();
-      resultEl = fixture.debugElement.query(By.directive(NzResultComponent));
+      resultEl = fixture.debugElement.query(By.directive(TriResultComponent));
     });
 
     it('should className correct', () => {

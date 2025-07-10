@@ -7,26 +7,26 @@ import { Component, DebugElement, TemplateRef, ViewChild, inject } from '@angula
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NZ_CONFIG, NzConfigService } from 'ng-zorro-antd/core/config';
-import { NzI18nService } from 'ng-zorro-antd/i18n';
+import { NZ_CONFIG, TriConfigService } from 'ng-zorro-antd/core/config';
+import { TriI18nService } from 'ng-zorro-antd/i18n';
 import en_US from 'ng-zorro-antd/i18n/languages/en_US';
-import { NzListModule } from 'ng-zorro-antd/list';
+import { TriListModule } from 'ng-zorro-antd/list';
 
 import { NZ_EMPTY_COMPONENT_NAME } from './config';
-import { NzEmbedEmptyComponent } from './embed-empty.component';
-import { NzEmptyComponent } from './empty.component';
-import { NzEmptyModule } from './empty.module';
+import { TriEmbedEmptyComponent } from './embed-empty.component';
+import { TriEmptyComponent } from './empty.component';
+import { TriEmptyModule } from './empty.module';
 
 describe('nz-empty', () => {
   describe('basic', () => {
-    let fixture: ComponentFixture<NzEmptyTestBasicComponent>;
-    let testComponent: NzEmptyTestBasicComponent;
+    let fixture: ComponentFixture<TriEmptyTestBasicComponent>;
+    let testComponent: TriEmptyTestBasicComponent;
     let emptyComponent: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzEmptyTestBasicComponent);
+      fixture = TestBed.createComponent(TriEmptyTestBasicComponent);
       testComponent = fixture.debugElement.componentInstance;
-      emptyComponent = fixture.debugElement.query(By.directive(NzEmptyComponent));
+      emptyComponent = fixture.debugElement.query(By.directive(TriEmptyComponent));
 
       fixture.detectChanges();
     });
@@ -110,7 +110,7 @@ describe('nz-empty', () => {
       const contentEl = emptyComponent.nativeElement.lastElementChild;
       expect(contentEl.innerText.trim()).toBe('暂无数据');
 
-      TestBed.inject(NzI18nService).setLocale(en_US);
+      TestBed.inject(TriI18nService).setLocale(en_US);
       fixture.detectChanges();
       expect(contentEl.innerText.trim()).toBe('No Data');
     });
@@ -120,14 +120,14 @@ describe('nz-empty', () => {
    * Config default empty content via `NzEmptyService`'s `setDefaultEmptyContent` method.
    */
   describe('embed', () => {
-    let fixture: ComponentFixture<NzEmptyTestServiceComponent>;
-    let testComponent: NzEmptyTestServiceComponent;
+    let fixture: ComponentFixture<TriEmptyTestServiceComponent>;
+    let testComponent: TriEmptyTestServiceComponent;
     let embedComponent: DebugElement;
     let emptyComponent: DebugElement;
 
     describe('service method', () => {
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzEmptyTestServiceComponent);
+        fixture = TestBed.createComponent(TriEmptyTestServiceComponent);
         testComponent = fixture.debugElement.componentInstance;
       });
 
@@ -137,8 +137,8 @@ describe('nz-empty', () => {
           tick();
           fixture.detectChanges();
 
-          embedComponent = fixture.debugElement.query(By.directive(NzEmbedEmptyComponent));
-          emptyComponent = fixture.debugElement.query(By.directive(NzEmptyComponent));
+          embedComponent = fixture.debugElement.query(By.directive(TriEmbedEmptyComponent));
+          emptyComponent = fixture.debugElement.query(By.directive(TriEmptyComponent));
         };
 
         refresh();
@@ -174,8 +174,8 @@ describe('nz-empty', () => {
           tick();
           fixture.detectChanges();
 
-          embedComponent = fixture.debugElement.query(By.directive(NzEmbedEmptyComponent));
-          emptyComponent = fixture.debugElement.query(By.directive(NzEmptyComponent));
+          embedComponent = fixture.debugElement.query(By.directive(TriEmbedEmptyComponent));
+          emptyComponent = fixture.debugElement.query(By.directive(TriEmptyComponent));
         };
 
         // String.
@@ -231,13 +231,13 @@ describe('nz-empty', () => {
               provide: NZ_CONFIG,
               useValue: {
                 empty: {
-                  nzDefaultEmptyContent: NzEmptyTestCustomComponent
+                  nzDefaultEmptyContent: TriEmptyTestCustomComponent
                 }
               }
             }
           ]
         });
-        fixture = TestBed.createComponent(NzEmptyTestServiceComponent);
+        fixture = TestBed.createComponent(TriEmptyTestServiceComponent);
         testComponent = fixture.debugElement.componentInstance;
       });
 
@@ -247,8 +247,8 @@ describe('nz-empty', () => {
           tick(100);
           fixture.detectChanges();
 
-          embedComponent = fixture.debugElement.query(By.directive(NzEmbedEmptyComponent));
-          emptyComponent = fixture.debugElement.query(By.directive(NzEmptyComponent));
+          embedComponent = fixture.debugElement.query(By.directive(TriEmbedEmptyComponent));
+          emptyComponent = fixture.debugElement.query(By.directive(TriEmptyComponent));
         };
 
         refresh();
@@ -266,16 +266,16 @@ describe('nz-empty', () => {
 });
 
 @Component({
-  imports: [NzEmptyModule],
+  imports: [TriEmptyModule],
   template: `
-    <nz-empty [nzNotFoundImage]="image" [nzNotFoundContent]="content" [nzNotFoundFooter]="footer">
+    <tri-empty [notFoundImage]="image" [notFoundContent]="content" [notFoundFooter]="footer">
       <ng-template #imageTpl>Image</ng-template>
       <ng-template #contentTpl>Content</ng-template>
       <ng-template #footerTpl>Footer</ng-template>
-    </nz-empty>
+    </tri-empty>
   `
 })
-export class NzEmptyTestBasicComponent {
+export class TriEmptyTestBasicComponent {
   @ViewChild('imageTpl', { static: false }) imageTpl!: TemplateRef<void>;
   @ViewChild('contentTpl', { static: false }) contentTpl!: TemplateRef<void>;
   @ViewChild('footerTpl', { static: false }) footerTpl!: TemplateRef<void>;
@@ -286,20 +286,20 @@ export class NzEmptyTestBasicComponent {
 }
 
 @Component({
-  imports: [NzListModule],
+  imports: [TriListModule],
   template: `
-    <nz-list [nzDataSource]="[]" [nzNoResult]="noResult"></nz-list>
+    <tri-list [dataSource]="[]" [noResult]="noResult"></tri-list>
     <ng-template #tpl let-component>
       <div>I am in template {{ component }}</div>
     </ng-template>
   `
 })
-export class NzEmptyTestServiceComponent {
+export class TriEmptyTestServiceComponent {
   @ViewChild('tpl', { static: false }) template!: TemplateRef<string>;
 
   noResult!: string;
 
-  constructor(public configService: NzConfigService) {}
+  constructor(public configService: TriConfigService) {}
 
   reset(): void {
     this.configService.set('empty', { nzDefaultEmptyContent: undefined });
@@ -311,9 +311,9 @@ export class NzEmptyTestServiceComponent {
 }
 
 @Component({
-  selector: 'nz-empty-test-custom',
+  selector: '',
   template: `<div>I'm in component {{ name }}</div>`
 })
-export class NzEmptyTestCustomComponent {
+export class TriEmptyTestCustomComponent {
   name = inject(NZ_EMPTY_COMPONENT_NAME);
 }

@@ -1,47 +1,47 @@
 import { Component } from '@angular/core';
 
-import { NzListModule } from 'ng-zorro-antd/list';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { TriListModule } from 'ng-zorro-antd/list';
+import { TriMessageService } from 'ng-zorro-antd/message';
+import { TriTypographyModule } from 'ng-zorro-antd/typography';
 
 @Component({
-  selector: 'nz-demo-list-simple',
-  imports: [NzListModule, NzTypographyModule],
+  selector: '',
+  imports: [TriListModule, TriTypographyModule],
   template: `
     <h3>Default Size</h3>
-    <nz-list nzBordered nzHeader="Header" nzFooter="Footer">
+    <tri-list bordered header="Header" footer="Footer">
       @for (item of data; track item) {
-        <nz-list-item>
-          <span nz-typography><mark>[ITEM]</mark></span>
+        <tri-list-item>
+          <span tri-typography><mark>[ITEM]</mark></span>
           {{ item }}
-        </nz-list-item>
+        </tri-list-item>
       }
-    </nz-list>
+    </tri-list>
 
     <h3>Small Size</h3>
-    <nz-list nzBordered nzSize="small">
-      <nz-list-header>Header</nz-list-header>
+    <tri-list bordered size="small">
+      <tri-list-header>Header</tri-list-header>
       @for (item of data; track item) {
-        <nz-list-item>{{ item }}</nz-list-item>
+        <tri-list-item>{{ item }}</tri-list-item>
       }
 
-      <nz-list-footer>Footer</nz-list-footer>
-    </nz-list>
+      <tri-list-footer>Footer</tri-list-footer>
+    </tri-list>
 
     <h3>Large Size</h3>
-    <ul nz-list [nzDataSource]="data" nzBordered nzSize="large">
-      <nz-list-header>Header</nz-list-header>
+    <ul tri-list [dataSource]="data" bordered size="large">
+      <tri-list-header>Header</tri-list-header>
       @for (item of data; track item) {
-        <li nz-list-item nzNoFlex>
-          <ul nz-list-item-actions>
-            <nz-list-item-action>
+        <li tri-list-item noFlex>
+          <ul tri-list-item-actions>
+            <tri-list-item-action>
               <a (click)="msg.info('edit')">edit</a>
-            </nz-list-item-action>
+            </tri-list-item-action>
           </ul>
           {{ item }}
         </li>
       }
-      <nz-list-footer>Footer</nz-list-footer>
+      <tri-list-footer>Footer</tri-list-footer>
     </ul>
   `,
   styles: [
@@ -58,7 +58,7 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
     `
   ]
 })
-export class NzDemoListSimpleComponent {
+export class TriDemoListSimpleComponent {
   data = [
     'Racing car sprays burning fuel into crowd.',
     'Japanese princess to wed commoner.',
@@ -67,5 +67,5 @@ export class NzDemoListSimpleComponent {
     'Los Angeles battles huge wildfires.'
   ];
 
-  constructor(public msg: NzMessageService) {}
+  constructor(public msg: TriMessageService) {}
 }

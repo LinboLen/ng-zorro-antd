@@ -29,27 +29,27 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Subject, asapScheduler } from 'rxjs';
 import { delay, distinctUntilChanged, filter } from 'rxjs/operators';
 
-import { NzConfigService, PopConfirmConfig, PopoverConfig } from 'ng-zorro-antd/core/config';
-import { NzNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriConfigService, PopConfirmConfig, PopoverConfig } from 'ng-zorro-antd/core/config';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
 import { DEFAULT_TOOLTIP_POSITIONS, POSITION_MAP, POSITION_TYPE, getPlacementName } from 'ng-zorro-antd/core/overlay';
-import { NgClassInterface, NgStyleInterface, NzSafeAny, NzTSType } from 'ng-zorro-antd/core/types';
+import { NgClassInterface, NgStyleInterface, TriSafeAny, TriTSType } from 'ng-zorro-antd/core/types';
 import { isNotNil, toBoolean } from 'ng-zorro-antd/core/util';
 
 export interface PropertyMapping {
   [key: string]: [string, () => unknown];
 }
 
-export type NzTooltipTrigger = 'click' | 'focus' | 'hover' | null;
+export type TriTooltipTrigger = 'click' | 'focus' | 'hover' | null;
 
 @Directive()
-export abstract class NzTooltipBaseDirective implements AfterViewInit, OnChanges {
+export abstract class TriTooltipBaseDirective implements AfterViewInit, OnChanges {
   config?: Required<PopoverConfig | PopConfirmConfig>;
   abstract arrowPointAtCenter?: boolean;
-  abstract directiveTitle?: NzTSType | null;
-  abstract directiveContent?: NzTSType | null;
-  abstract title?: NzTSType | null;
-  abstract content?: NzTSType | null;
-  abstract trigger?: NzTooltipTrigger;
+  abstract directiveTitle?: TriTSType | null;
+  abstract directiveContent?: TriTSType | null;
+  abstract title?: TriTSType | null;
+  abstract content?: TriTSType | null;
+  abstract trigger?: TriTooltipTrigger;
   abstract placement?: string | string[];
   abstract origin?: ElementRef<HTMLElement>;
   abstract visible?: boolean;
@@ -64,15 +64,15 @@ export abstract class NzTooltipBaseDirective implements AfterViewInit, OnChanges
   /**
    * This true title that would be used in other parts on this component.
    */
-  protected get _title(): NzTSType | null {
+  protected get _title(): TriTSType | null {
     return this.title || this.directiveTitle || null;
   }
 
-  protected get _content(): NzTSType | null {
+  protected get _content(): TriTSType | null {
     return this.content || this.directiveContent || null;
   }
 
-  protected get _trigger(): NzTooltipTrigger {
+  protected get _trigger(): TriTooltipTrigger {
     return typeof this.trigger !== 'undefined' ? this.trigger : 'hover';
   }
 
@@ -113,7 +113,7 @@ export abstract class NzTooltipBaseDirective implements AfterViewInit, OnChanges
     };
   }
 
-  component?: NzTooltipBaseComponent;
+  component?: TriTooltipBaseComponent;
 
   protected readonly destroy$ = new Subject<void>();
   protected readonly triggerDisposables: VoidFunction[] = [];
@@ -123,12 +123,12 @@ export abstract class NzTooltipBaseDirective implements AfterViewInit, OnChanges
   elementRef = inject(ElementRef);
   protected hostView = inject(ViewContainerRef);
   protected renderer = inject(Renderer2);
-  protected noAnimation = inject(NzNoAnimationDirective, { host: true, optional: true });
-  protected nzConfigService = inject(NzConfigService);
+  protected noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
+  protected configService = inject(TriConfigService);
   protected destroyRef = inject(DestroyRef);
   protected platformId = inject(PLATFORM_ID);
 
-  constructor(protected componentType: Type<NzTooltipBaseComponent>) {
+  constructor(protected componentType: Type<TriTooltipBaseComponent>) {
     this.destroyRef.onDestroy(() => {
       // Clear toggling timer. Issue #3875 #4317 #4386
       this.clearTogglingTimer();
@@ -178,7 +178,7 @@ export abstract class NzTooltipBaseDirective implements AfterViewInit, OnChanges
   protected createComponent(): void {
     const componentRef = this.hostView.createComponent(this.componentType);
 
-    this.component = componentRef.instance as NzTooltipBaseComponent;
+    this.component = componentRef.instance as TriTooltipBaseComponent;
 
     // Remove the component's DOM because it should be in the overlay container.
     this.renderer.removeChild(
@@ -189,7 +189,7 @@ export abstract class NzTooltipBaseDirective implements AfterViewInit, OnChanges
 
     this.initProperties();
 
-    const visibleChange$ = this.component.nzVisibleChange.pipe(distinctUntilChanged());
+    const visibleChange$ = this.component.visibleChange.pipe(distinctUntilChanged());
 
     visibleChange$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((visible: boolean) => {
       this.internalVisible = visible;
@@ -283,7 +283,7 @@ export abstract class NzTooltipBaseDirective implements AfterViewInit, OnChanges
     };
 
     (keys || Object.keys(mappingProperties).filter(key => !key.startsWith('directive'))).forEach(
-      (property: NzSafeAny) => {
+      (property: TriSafeAny) => {
         if (mappingProperties[property]) {
           const [name, valueFn] = mappingProperties[property];
           this.updateComponentValue(name, valueFn());
@@ -298,7 +298,7 @@ export abstract class NzTooltipBaseDirective implements AfterViewInit, OnChanges
     this.updatePropertiesByKeys();
   }
 
-  private updateComponentValue(key: string, value: NzSafeAny): void {
+  private updateComponentValue(key: string, value: TriSafeAny): void {
     if (typeof value !== 'undefined') {
       // @ts-ignore
       this.component[key] = value;
@@ -334,60 +334,60 @@ export abstract class NzTooltipBaseDirective implements AfterViewInit, OnChanges
 }
 
 @Directive()
-export abstract class NzTooltipBaseComponent implements OnInit {
+export abstract class TriTooltipBaseComponent implements OnInit {
   @ViewChild('overlay', { static: false }) overlay!: CdkConnectedOverlay;
 
-  noAnimation = inject(NzNoAnimationDirective, { host: true, optional: true });
+  noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
   protected directionality = inject(Directionality);
   protected cdr = inject(ChangeDetectorRef);
   protected elementRef = inject(ElementRef);
   protected destroyRef = inject(DestroyRef);
 
-  nzTitle: NzTSType | null = null;
-  nzContent: NzTSType | null = null;
-  nzArrowPointAtCenter: boolean = false;
-  nzOverlayClassName!: string;
-  nzOverlayStyle: NgStyleInterface = {};
-  nzOverlayClickable: boolean = true;
-  nzBackdrop = false;
-  nzMouseEnterDelay?: number;
-  nzMouseLeaveDelay?: number;
+  title: TriTSType | null = null;
+  content: TriTSType | null = null;
+  arrowPointAtCenter: boolean = false;
+  overlayClassName!: string;
+  overlayStyle: NgStyleInterface = {};
+  overlayClickable: boolean = true;
+  backdrop = false;
+  mouseEnterDelay?: number;
+  mouseLeaveDelay?: number;
   cdkConnectedOverlayPush?: boolean = true;
 
-  nzVisibleChange = new Subject<boolean>();
+  visibleChange = new Subject<boolean>();
 
-  set nzVisible(value: boolean) {
+  set visible(value: boolean) {
     const visible = toBoolean(value);
     if (this._visible !== visible) {
       this._visible = visible;
-      this.nzVisibleChange.next(visible);
+      this.visibleChange.next(visible);
     }
   }
 
-  get nzVisible(): boolean {
+  get visible(): boolean {
     return this._visible;
   }
 
   _visible = false;
 
-  set nzTrigger(value: NzTooltipTrigger) {
+  set trigger(value: TriTooltipTrigger) {
     this._trigger = value;
   }
 
-  get nzTrigger(): NzTooltipTrigger {
+  get trigger(): TriTooltipTrigger {
     return this._trigger;
   }
 
-  protected _trigger: NzTooltipTrigger = 'hover';
+  protected _trigger: TriTooltipTrigger = 'hover';
 
-  set nzPlacement(value: POSITION_TYPE[]) {
+  set placement(value: POSITION_TYPE[]) {
     const preferredPosition = value.map(placement => POSITION_MAP[placement]);
     this._positions = [...preferredPosition, ...DEFAULT_TOOLTIP_POSITIONS];
   }
 
   preferredPlacement: string = 'top';
 
-  origin!: ElementRef<NzSafeAny>;
+  origin!: ElementRef<TriSafeAny>;
 
   public dir: Direction = 'ltr';
 
@@ -399,7 +399,7 @@ export abstract class NzTooltipBaseComponent implements OnInit {
 
   constructor() {
     this.destroyRef.onDestroy(() => {
-      this.nzVisibleChange.complete();
+      this.visibleChange.complete();
     });
   }
 
@@ -413,13 +413,13 @@ export abstract class NzTooltipBaseComponent implements OnInit {
   }
 
   show(): void {
-    if (this.nzVisible) {
+    if (this.visible) {
       return;
     }
 
     if (!this.isEmpty()) {
-      this.nzVisible = true;
-      this.nzVisibleChange.next(true);
+      this.visible = true;
+      this.visibleChange.next(true);
       this.cdr.detectChanges();
     }
 
@@ -430,12 +430,12 @@ export abstract class NzTooltipBaseComponent implements OnInit {
   }
 
   hide(): void {
-    if (!this.nzVisible) {
+    if (!this.visible) {
       return;
     }
 
-    this.nzVisible = false;
-    this.nzVisibleChange.next(false);
+    this.visible = false;
+    this.visibleChange.next(false);
     this.cdr.detectChanges();
   }
 
@@ -472,11 +472,11 @@ export abstract class NzTooltipBaseComponent implements OnInit {
   }
 
   onClickOutside(event: MouseEvent): void {
-    if (!this.nzOverlayClickable) {
+    if (!this.overlayClickable) {
       return;
     }
     const target = _getEventTarget(event);
-    if (!this.origin.nativeElement.contains(target) && this.nzTrigger !== null) {
+    if (!this.origin.nativeElement.contains(target) && this.trigger !== null) {
       this.hide();
     }
   }
@@ -492,7 +492,7 @@ export abstract class NzTooltipBaseComponent implements OnInit {
 
   protected updateStyles(): void {
     this._classMap = {
-      ...this.transformClassListToMap(this.nzOverlayClassName),
+      ...this.transformClassListToMap(this.overlayClassName),
       [`${this._prefix}-placement-${this.preferredPlacement}`]: true
     };
   }

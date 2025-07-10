@@ -8,18 +8,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import {
-  NzAlign,
-  NzCustomGap,
-  NzFlex,
-  NzFlexBasis,
-  NzFlexGrow,
-  NzFlexShrink,
-  NzGap,
-  NzJustify,
-  NzWrap
+  TriAlign,
+  TriCustomGap,
+  TriFlex,
+  TriFlexBasis,
+  TriFlexGrow,
+  TriFlexShrink,
+  TriGap,
+  TriJustify,
+  TriWrap
 } from 'ng-zorro-antd/flex';
-import { NzFlexModule } from 'ng-zorro-antd/flex/flex.module';
-import { NzFlexDirective } from 'ng-zorro-antd/flex/nz-flex.directive';
+import { TriFlexModule } from 'ng-zorro-antd/flex/flex.module';
+import { TriFlexDirective } from 'ng-zorro-antd/flex/nz-flex.directive';
 
 describe('flex', () => {
   let fixture: ComponentFixture<TestFlexComponent>;
@@ -28,7 +28,7 @@ describe('flex', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestFlexComponent);
-    element = fixture.debugElement.query(By.directive(NzFlexDirective)).nativeElement;
+    element = fixture.debugElement.query(By.directive(TriFlexDirective)).nativeElement;
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -47,7 +47,7 @@ describe('flex', () => {
   });
 
   it('should have correct justification value', () => {
-    const listOfJustifications: NzJustify[] = [
+    const listOfJustifications: TriJustify[] = [
       'flex-start',
       'center',
       'flex-end',
@@ -69,7 +69,7 @@ describe('flex', () => {
   });
 
   it('should have correct alignment value', () => {
-    const listOfAlignments: NzAlign[] = ['flex-start', 'center', 'flex-end', 'start', 'end', 'stretch', 'normal'];
+    const listOfAlignments: TriAlign[] = ['flex-start', 'center', 'flex-end', 'start', 'end', 'stretch', 'normal'];
     listOfAlignments.forEach(alignment => {
       component.align = alignment;
       fixture.detectChanges();
@@ -78,7 +78,7 @@ describe('flex', () => {
   });
 
   it('should have correct gap value', () => {
-    const listOfGaps: NzGap[] = ['small', 'middle', 'large', 10, 20, 30, 40];
+    const listOfGaps: TriGap[] = ['small', 'middle', 'large', 10, 20, 30, 40];
     listOfGaps.forEach(gap => {
       component.gap = gap;
       fixture.detectChanges();
@@ -106,7 +106,7 @@ describe('flex', () => {
   });
 
   it('should have correct wrap value', () => {
-    const listOfWraps: NzWrap[] = ['wrap', 'nowrap', 'wrap-reverse'];
+    const listOfWraps: TriWrap[] = ['wrap', 'nowrap', 'wrap-reverse'];
     listOfWraps.forEach(wrap => {
       component.wrap = wrap;
       fixture.detectChanges();
@@ -115,7 +115,7 @@ describe('flex', () => {
   });
 
   it('should have correct flex value', () => {
-    const listOfFlexes: NzFlex[] = ['0 0 auto', '1 1 100%', '0 1 50px'];
+    const listOfFlexes: TriFlex[] = ['0 0 auto', '1 1 100%', '0 1 50px'];
     listOfFlexes.forEach(flex => {
       component.flex = flex;
       fixture.detectChanges();
@@ -153,16 +153,16 @@ describe('flex', () => {
 });
 
 @Component({
-  imports: [NzFlexModule],
+  imports: [TriFlexModule],
   template: `
     <div
-      nz-flex
-      [nzVertical]="isVertical"
-      [nzJustify]="justify"
-      [nzAlign]="align"
-      [nzGap]="gap"
-      [nzWrap]="wrap"
-      [nzFlex]="flex"
+      tri-flex
+      [vertical]="isVertical"
+      [justify]="justify"
+      [align]="align"
+      [gap]="gap"
+      [wrap]="wrap"
+      [flex]="flex"
     >
       <div></div>
       <div></div>
@@ -172,9 +172,9 @@ describe('flex', () => {
 })
 export class TestFlexComponent {
   isVertical = false;
-  justify: NzJustify = 'normal';
-  align: NzAlign = 'normal';
-  gap: 'small' | 'middle' | 'large' | NzCustomGap = 0;
+  justify: TriJustify = 'normal';
+  align: TriAlign = 'normal';
+  gap: 'small' | 'middle' | 'large' | TriCustomGap = 0;
   wrap: 'wrap' | 'nowrap' | 'wrap-reverse' = 'nowrap';
-  flex: `${NzFlexShrink} ${NzFlexGrow} ${NzFlexBasis}` | 'unset' = 'unset';
+  flex: `${TriFlexShrink} ${TriFlexGrow} ${TriFlexBasis}` | 'unset' = 'unset';
 }

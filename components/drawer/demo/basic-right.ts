@@ -1,29 +1,29 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriDrawerModule } from 'ng-zorro-antd/drawer';
 
 @Component({
-  selector: 'nz-demo-drawer-basic-right',
-  imports: [NzButtonModule, NzDrawerModule],
+  selector: '',
+  imports: [TriButtonModule, TriDrawerModule],
   template: `
-    <button nz-button nzType="primary" (click)="open()">Open</button>
-    <nz-drawer
-      [nzClosable]="false"
-      [nzVisible]="visible"
-      nzPlacement="right"
-      nzTitle="Basic Drawer"
-      (nzOnClose)="close()"
+    <button tri-button type="primary" (click)="open()">Open</button>
+    <tri-drawer
+      [closable]="false"
+      [visible]="visible"
+      placement="right"
+      title="Basic Drawer"
+      (onClose)="close()"
     >
-      <ng-container *nzDrawerContent>
+      <ng-container *drawerContent>
         <p>Some contents...</p>
         <p>Some contents...</p>
         <p>Some contents...</p>
       </ng-container>
-    </nz-drawer>
+    </tri-drawer>
   `
 })
-export class NzDemoDrawerBasicRightComponent {
+export class TriDemoDrawerBasicRightComponent {
   visible = false;
 
   open(): void {

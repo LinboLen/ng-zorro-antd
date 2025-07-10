@@ -12,10 +12,10 @@ import { TabTemplateContext } from './interfaces';
  * Fix https://github.com/angular/angular/issues/8563
  */
 @Directive({
-  selector: 'ng-template[nzTabLink]',
-  exportAs: 'nzTabLinkTemplate'
+  selector: '',
+  exportAs: 'triTabLinkTemplate'
 })
-export class NzTabLinkTemplateDirective {
+export class TriTabLinkTemplateDirective {
   templateRef: TemplateRef<TabTemplateContext> = inject(TemplateRef, { host: true });
 }
 
@@ -23,10 +23,10 @@ export class NzTabLinkTemplateDirective {
  * This component is for catching `routerLink` directive.
  */
 @Directive({
-  selector: 'a[nz-tab-link]',
-  exportAs: 'nzTabLink'
+  selector: '',
+  exportAs: 'triTabLink'
 })
-export class NzTabLinkDirective {
+export class TriTabLinkDirective {
   elementRef = inject(ElementRef<HTMLAnchorElement>);
   routerLink = inject(RouterLink, { self: true, optional: true });
 }

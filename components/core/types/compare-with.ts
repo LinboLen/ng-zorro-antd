@@ -3,6 +3,6 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { NzSafeAny } from './any';
+import { TriSafeAny } from './any';
 
-export type CompareWith = (o1: NzSafeAny, o2: NzSafeAny) => boolean;
+export type CompareWith = (o1: TriSafeAny, o2: TriSafeAny) => boolean;

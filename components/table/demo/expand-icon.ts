@@ -1,45 +1,45 @@
 import { Component } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzTableModule } from 'ng-zorro-antd/table';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriTableModule } from 'ng-zorro-antd/table';
 
 @Component({
-  selector: 'nz-demo-table-expand-icon',
-  imports: [NzIconModule, NzTableModule],
+  selector: '',
+  imports: [TriIconModule, TriTableModule],
   template: `
-    <nz-table #nzTable [nzData]="listOfData" nzTableLayout="fixed">
+    <tri-table #nzTable [data]="listOfData" tableLayout="fixed">
       <thead>
         <tr>
-          <th nzWidth="60px"></th>
+          <th width="60px"></th>
           <th>Name</th>
           <th>Age</th>
           <th>Address</th>
         </tr>
       </thead>
       <tbody>
-        @for (data of nzTable.data; track data) {
+        @for (data of table.data; track data) {
           <tr>
-            <td [nzExpand]="expandSet.has(data.id)" [nzExpandIcon]="expandIcon"></td>
+            <td [expand]="expandSet.has(data.id)" [expandIcon]="expandIcon"></td>
             <td>{{ data.name }}</td>
             <td>{{ data.age }}</td>
             <td>{{ data.address }}</td>
           </tr>
-          <tr [nzExpand]="expandSet.has(data.id)">
+          <tr [expand]="expandSet.has(data.id)">
             <span>{{ data.description }}</span>
           </tr>
           <ng-template #expandIcon>
             @if (!expandSet.has(data.id)) {
-              <nz-icon nzType="plus-circle" nzTheme="outline" (click)="onExpandChange(data.id, true)" />
+              <tri-icon type="plus-circle" theme="outline" (click)="onExpandChange(data.id, true)" />
             } @else {
-              <nz-icon nzType="minus-circle" nzTheme="outline" (click)="onExpandChange(data.id, false)" />
+              <tri-icon type="minus-circle" theme="outline" (click)="onExpandChange(data.id, false)" />
             }
           </ng-template>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `
 })
-export class NzDemoTableExpandIconComponent {
+export class TriDemoTableExpandIconComponent {
   expandSet = new Set<number>();
   onExpandChange(id: number, checked: boolean): void {
     if (checked) {

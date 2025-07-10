@@ -1,39 +1,39 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDrawerModule, NzDrawerPlacement } from 'ng-zorro-antd/drawer';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriDrawerModule, TriDrawerPlacement } from 'ng-zorro-antd/drawer';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: 'nz-demo-drawer-placement',
-  imports: [FormsModule, NzButtonModule, NzDrawerModule, NzRadioModule],
+  selector: '',
+  imports: [FormsModule, TriButtonModule, TriDrawerModule, TriRadioModule],
   template: `
-    <nz-radio-group [(ngModel)]="placement">
-      <label nz-radio nzValue="top">top</label>
-      <label nz-radio nzValue="right">right</label>
-      <label nz-radio nzValue="bottom">bottom</label>
-      <label nz-radio nzValue="left">left</label>
-    </nz-radio-group>
-    <button nz-button nzType="primary" (click)="open()">Open</button>
-    <nz-drawer
-      [nzClosable]="false"
-      [nzVisible]="visible"
-      [nzPlacement]="placement"
-      nzTitle="Basic Drawer"
-      (nzOnClose)="close()"
+    <tri-radio-group [(ngModel)]="placement">
+      <label tri-radio value="top">top</label>
+      <label tri-radio value="right">right</label>
+      <label tri-radio value="bottom">bottom</label>
+      <label tri-radio value="left">left</label>
+    </tri-radio-group>
+    <button tri-button type="primary" (click)="open()">Open</button>
+    <tri-drawer
+      [closable]="false"
+      [visible]="visible"
+      [placement]="placement"
+      title="Basic Drawer"
+      (onClose)="close()"
     >
-      <ng-container *nzDrawerContent>
+      <ng-container *drawerContent>
         <p>Some contents...</p>
         <p>Some contents...</p>
         <p>Some contents...</p>
       </ng-container>
-    </nz-drawer>
+    </tri-drawer>
   `
 })
-export class NzDemoDrawerPlacementComponent {
+export class TriDemoDrawerPlacementComponent {
   visible = false;
-  placement: NzDrawerPlacement = 'left';
+  placement: TriDrawerPlacement = 'left';
   open(): void {
     this.visible = true;
   }

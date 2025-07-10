@@ -5,12 +5,12 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzCheckboxGroupComponent } from './checkbox-group.component';
-import { NzCheckboxWrapperComponent } from './checkbox-wrapper.component';
-import { NzCheckboxComponent } from './checkbox.component';
+import { TriCheckboxGroupComponent } from './checkbox-group.component';
+import { TriCheckboxWrapperComponent } from './checkbox-wrapper.component';
+import { TriCheckboxComponent } from './checkbox.component';
 
 @NgModule({
-  imports: [NzCheckboxComponent, NzCheckboxGroupComponent, NzCheckboxWrapperComponent],
-  exports: [NzCheckboxComponent, NzCheckboxGroupComponent, NzCheckboxWrapperComponent]
+  imports: [TriCheckboxComponent, TriCheckboxGroupComponent, TriCheckboxWrapperComponent],
+  exports: [TriCheckboxComponent, TriCheckboxGroupComponent, TriCheckboxWrapperComponent]
 })
-export class NzCheckboxModule {}
+export class TriCheckboxModule {}

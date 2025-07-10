@@ -1,29 +1,29 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: 'nz-demo-input-status',
-  imports: [FormsModule, NzIconModule, NzInputModule, NzSpaceModule],
+  selector: '',
+  imports: [FormsModule, TriIconModule, TriInputModule, TriSpaceModule],
   template: `
-    <nz-space nzDirection="vertical" style="width: 100%">
-      <input *nzSpaceItem nz-input placeholder="Error" [(ngModel)]="value" nzStatus="error" />
-      <input *nzSpaceItem nz-input placeholder="Warning" [(ngModel)]="value" nzStatus="warning" />
-      <nz-input-group *nzSpaceItem [nzPrefix]="prefixTemplateClock" nzStatus="error">
-        <input type="text" nz-input placeholder="Error with prefix" />
-      </nz-input-group>
-      <nz-input-group *nzSpaceItem [nzPrefix]="prefixTemplateClock" nzStatus="warning">
-        <input type="text" nz-input placeholder="Warning with prefix" />
-      </nz-input-group>
+    <tri-space direction="vertical" style="width: 100%">
+      <input *spaceItem tri-input placeholder="Error" [(ngModel)]="value" status="error" />
+      <input *spaceItem tri-input placeholder="Warning" [(ngModel)]="value" status="warning" />
+      <tri-input-group *spaceItem [prefix]="prefixTemplateClock" status="error">
+        <input type="text" tri-input placeholder="Error with prefix" />
+      </tri-input-group>
+      <tri-input-group *spaceItem [prefix]="prefixTemplateClock" status="warning">
+        <input type="text" tri-input placeholder="Warning with prefix" />
+      </tri-input-group>
       <ng-template #prefixTemplateClock>
-        <nz-icon nzType="clock-circle" nzTheme="outline" />
+        <tri-icon type="clock-circle" theme="outline" />
       </ng-template>
-    </nz-space>
+    </tri-space>
   `
 })
-export class NzDemoInputStatusComponent {
+export class TriDemoInputStatusComponent {
   value?: string;
 }

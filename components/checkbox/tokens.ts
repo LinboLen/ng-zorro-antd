@@ -5,6 +5,6 @@
 
 import { InjectionToken } from '@angular/core';
 
-import type { NzCheckboxGroupComponent } from './checkbox-group.component';
+import type { TriCheckboxGroupComponent } from './checkbox-group.component';
 
-export const NZ_CHECKBOX_GROUP = new InjectionToken<NzCheckboxGroupComponent>('NZ_CHECKBOX_GROUP');
+export const NZ_CHECKBOX_GROUP = new InjectionToken<TriCheckboxGroupComponent>('NZ_CHECKBOX_GROUP');

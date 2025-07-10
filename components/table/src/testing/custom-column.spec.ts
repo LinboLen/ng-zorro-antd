@@ -7,19 +7,19 @@ import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzCustomColumn, NzTableComponent, NzTableModule } from 'ng-zorro-antd/table';
+import { TriDividerModule } from 'ng-zorro-antd/divider';
+import { TriCustomColumn, TriTableComponent, TriTableModule } from 'ng-zorro-antd/table';
 
 describe('nz-table-custom-column', () => {
-  let fixture: ComponentFixture<NzCustomColumnTestTableComponent>;
-  let testComponent: NzCustomColumnTestTableComponent;
+  let fixture: ComponentFixture<TriCustomColumnTestTableComponent>;
+  let testComponent: TriCustomColumnTestTableComponent;
   let resultEl: DebugElement;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NzCustomColumnTestTableComponent);
+    fixture = TestBed.createComponent(TriCustomColumnTestTableComponent);
     fixture.detectChanges();
     testComponent = fixture.componentInstance;
-    resultEl = fixture.debugElement.query(By.directive(NzTableComponent));
+    resultEl = fixture.debugElement.query(By.directive(TriTableComponent));
   });
 
   it('custom-column basic', () => {
@@ -73,37 +73,37 @@ interface Person {
 }
 
 @Component({
-  imports: [NzDividerModule, NzTableModule],
+  imports: [TriDividerModule, TriTableModule],
   template: `
-    <nz-table #basicTable [nzData]="listOfData" [nzCustomColumn]="customColumn">
+    <tri-table #basicTable [data]="listOfData" [customColumn]="customColumn">
       <thead>
         <tr>
-          <th nzCellControl="name">Name</th>
-          <th nzCellControl="gender">Gender</th>
-          <th nzCellControl="age">Age</th>
-          <th nzCellControl="address">Address</th>
-          <th nzCellControl="action">Action</th>
+          <th cellControl="name">Name</th>
+          <th cellControl="gender">Gender</th>
+          <th cellControl="age">Age</th>
+          <th cellControl="address">Address</th>
+          <th cellControl="action">Action</th>
         </tr>
       </thead>
       <tbody>
         @for (data of basicTable.data; track data) {
           <tr>
-            <td nzCellControl="name">{{ data.name }}</td>
-            <td nzCellControl="gender">{{ data.gender }}</td>
-            <td nzCellControl="age">{{ data.age }}</td>
-            <td nzCellControl="address">{{ data.address }}</td>
-            <td nzCellControl="action">
+            <td cellControl="name">{{ data.name }}</td>
+            <td cellControl="gender">{{ data.gender }}</td>
+            <td cellControl="age">{{ data.age }}</td>
+            <td cellControl="address">{{ data.address }}</td>
+            <td cellControl="action">
               <a>Action</a>
-              <nz-divider nzType="vertical"></nz-divider>
+              <tri-divider type="vertical"></tri-divider>
               <a>Delete</a>
             </td>
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `
 })
-export class NzCustomColumnTestTableComponent {
+export class TriCustomColumnTestTableComponent {
   listOfData: Person[] = [
     {
       key: '1',
@@ -128,7 +128,7 @@ export class NzCustomColumnTestTableComponent {
     }
   ];
 
-  customColumn: NzCustomColumn[] = [
+  customColumn: TriCustomColumn[] = [
     {
       value: 'name',
       default: true,

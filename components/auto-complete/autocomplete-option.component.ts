@@ -21,55 +21,55 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular, scrollIntoView } from 'ng-zorro-antd/core/util';
 
-import { NzAutocompleteOptgroupComponent } from './autocomplete-optgroup.component';
+import { TriAutocompleteOptgroupComponent } from './autocomplete-optgroup.component';
 
-export class NzOptionSelectionChange {
+export class TriOptionSelectionChange {
   constructor(
-    public source: NzAutocompleteOptionComponent,
+    public source: TriAutocompleteOptionComponent,
     public isUserInput: boolean = false
   ) {}
 }
 
 @Component({
-  selector: 'nz-auto-option',
-  exportAs: 'nzAutoOption',
+  selector: '',
+  exportAs: 'triAutoOption',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
-    <div class="ant-select-item-option-content">
+    <div class="tri-select-item-option-content">
       <ng-content></ng-content>
     </div>
   `,
   host: {
     role: 'menuitem',
-    class: 'ant-select-item ant-select-item-option',
-    '[class.ant-select-item-option-grouped]': 'nzAutocompleteOptgroupComponent',
-    '[class.ant-select-item-option-selected]': 'selected',
-    '[class.ant-select-item-option-active]': 'active',
-    '[class.ant-select-item-option-disabled]': 'nzDisabled',
+    class: 'tri-select-item ant-select-item-option',
+    '[class.tri-select-item-option-grouped]': 'autocompleteOptgroupComponent',
+    '[class.tri-select-item-option-selected]': 'selected',
+    '[class.tri-select-item-option-active]': 'active',
+    '[class.tri-select-item-option-disabled]': 'disabled',
     '[attr.aria-selected]': 'selected.toString()',
     '[attr.aria-disabled]': 'nzDisabled.toString()',
     '(click)': 'selectViaInteraction()'
   }
 })
-export class NzAutocompleteOptionComponent implements OnInit {
+export class TriAutocompleteOptionComponent implements OnInit {
   private ngZone = inject(NgZone);
   private changeDetectorRef = inject(ChangeDetectorRef);
   private element = inject(ElementRef<HTMLElement>);
   private destroyRef = inject(DestroyRef);
 
-  @Input() nzValue: NzSafeAny;
-  @Input() nzLabel?: string;
-  @Input({ transform: booleanAttribute }) nzDisabled = false;
-  @Output() readonly selectionChange = new EventEmitter<NzOptionSelectionChange>();
-  @Output() readonly mouseEntered = new EventEmitter<NzAutocompleteOptionComponent>();
+  @Input() value: TriSafeAny;
+  @Input() label?: string;
+  @Input({ transform: booleanAttribute }) disabled = false;
+  @Output() readonly selectionChange = new EventEmitter<TriOptionSelectionChange>();
+  @Output() readonly mouseEntered = new EventEmitter<TriAutocompleteOptionComponent>();
 
   active = false;
   selected = false;
-  nzAutocompleteOptgroupComponent = inject(NzAutocompleteOptgroupComponent, { optional: true });
+  autocompleteOptgroupComponent = inject(TriAutocompleteOptgroupComponent, { optional: true });
 
   ngOnInit(): void {
     fromEventOutsideAngular(this.element.nativeElement, 'mouseenter')
@@ -102,7 +102,7 @@ export class NzAutocompleteOptionComponent implements OnInit {
 
   /** Git display label */
   getLabel(): string {
-    return this.nzLabel || this.nzValue.toString();
+    return this.label || this.value.toString();
   }
 
   /** Set active (only styles) */
@@ -126,7 +126,7 @@ export class NzAutocompleteOptionComponent implements OnInit {
   }
 
   selectViaInteraction(): void {
-    if (!this.nzDisabled) {
+    if (!this.disabled) {
       this.selected = !this.selected;
       if (this.selected) {
         this.setActiveStyles();
@@ -139,6 +139,6 @@ export class NzAutocompleteOptionComponent implements OnInit {
   }
 
   private emitSelectionChangeEvent(isUserInput: boolean = false): void {
-    this.selectionChange.emit(new NzOptionSelectionChange(this, isUserInput));
+    this.selectionChange.emit(new TriOptionSelectionChange(this, isUserInput));
   }
 }

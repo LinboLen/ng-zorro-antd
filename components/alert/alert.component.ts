@@ -23,74 +23,74 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { slideAlertMotion } from 'ng-zorro-antd/core/animation';
-import { NzConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'alert';
-export type NzAlertType = 'success' | 'info' | 'warning' | 'error';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'alert';
+export type TriAlertType = 'success' | 'info' | 'warning' | 'error';
 
 @Component({
-  selector: 'nz-alert',
-  exportAs: 'nzAlert',
+  selector: '',
+  exportAs: 'triAlert',
   animations: [slideAlertMotion],
-  imports: [NzIconModule, NzOutletModule],
+  imports: [TriIconModule, TriOutletModule],
   template: `
     @if (!closed) {
       <div
-        class="ant-alert"
-        [class.ant-alert-rtl]="dir === 'rtl'"
-        [class.ant-alert-success]="nzType === 'success'"
-        [class.ant-alert-info]="nzType === 'info'"
-        [class.ant-alert-warning]="nzType === 'warning'"
-        [class.ant-alert-error]="nzType === 'error'"
-        [class.ant-alert-no-icon]="!nzShowIcon"
-        [class.ant-alert-banner]="nzBanner"
-        [class.ant-alert-closable]="nzCloseable"
-        [class.ant-alert-with-description]="!!nzDescription"
-        [@.disabled]="nzNoAnimation"
+        class="tri-alert"
+        [class.tri-alert-rtl]="dir === 'rtl'"
+        [class.tri-alert-success]="type === 'success'"
+        [class.tri-alert-info]="type === 'info'"
+        [class.tri-alert-warning]="type === 'warning'"
+        [class.tri-alert-error]="type === 'error'"
+        [class.tri-alert-no-icon]="!showIcon"
+        [class.tri-alert-banner]="banner"
+        [class.tri-alert-closable]="closeable"
+        [class.tri-alert-with-description]="!!description"
+        [@.disabled]="noAnimation"
         [@slideAlertMotion]
         (@slideAlertMotion.done)="onFadeAnimationDone()"
       >
-        @if (nzShowIcon) {
-          <div class="ant-alert-icon">
-            @if (nzIcon) {
-              <ng-container *nzStringTemplateOutlet="nzIcon"></ng-container>
+        @if (showIcon) {
+          <div class="tri-alert-icon">
+            @if (icon) {
+              <ng-container *stringTemplateOutlet="icon"></ng-container>
             } @else {
-              <nz-icon [nzType]="nzIconType || inferredIconType" [nzTheme]="iconTheme" />
+              <tri-icon [type]="iconType || inferredIconType" [theme]="iconTheme" />
             }
           </div>
         }
 
-        @if (nzMessage || nzDescription) {
-          <div class="ant-alert-content">
-            @if (nzMessage) {
-              <span class="ant-alert-message">
-                <ng-container *nzStringTemplateOutlet="nzMessage">{{ nzMessage }}</ng-container>
+        @if (message || description) {
+          <div class="tri-alert-content">
+            @if (message) {
+              <span class="tri-alert-message">
+                <ng-container *stringTemplateOutlet="message">{{ message }}</ng-container>
               </span>
             }
-            @if (nzDescription) {
-              <span class="ant-alert-description">
-                <ng-container *nzStringTemplateOutlet="nzDescription">{{ nzDescription }}</ng-container>
+            @if (description) {
+              <span class="tri-alert-description">
+                <ng-container *stringTemplateOutlet="description">{{ description }}</ng-container>
               </span>
             }
           </div>
         }
 
-        @if (nzAction) {
-          <div class="ant-alert-action">
-            <ng-container *nzStringTemplateOutlet="nzAction">{{ nzAction }}</ng-container>
+        @if (action) {
+          <div class="tri-alert-action">
+            <ng-container *stringTemplateOutlet="action">{{ action }}</ng-container>
           </div>
         }
 
-        @if (nzCloseable || nzCloseText) {
-          <button type="button" tabindex="0" class="ant-alert-close-icon" (click)="closeAlert()">
-            @if (nzCloseText) {
-              <ng-container *nzStringTemplateOutlet="nzCloseText">
-                <span class="ant-alert-close-text">{{ nzCloseText }}</span>
+        @if (closeable || closeText) {
+          <button type="button" tabindex="0" class="tri-alert-close-icon" (click)="closeAlert()">
+            @if (closeText) {
+              <ng-container *stringTemplateOutlet="closeText">
+                <span class="tri-alert-close-text">{{ closeText }}</span>
               </ng-container>
             } @else {
-              <nz-icon nzType="close" />
+              <tri-icon type="close" />
             }
           </button>
         }
@@ -100,24 +100,24 @@ export type NzAlertType = 'success' | 'info' | 'warning' | 'error';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class NzAlertComponent implements OnChanges, OnInit {
+export class TriAlertComponent implements OnChanges, OnInit {
   private cdr = inject(ChangeDetectorRef);
   private directionality = inject(Directionality);
   private readonly destroyRef = inject(DestroyRef);
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
 
-  @Input() nzAction: string | TemplateRef<void> | null = null;
-  @Input() nzCloseText: string | TemplateRef<void> | null = null;
-  @Input() nzIconType: string | null = null;
-  @Input() nzMessage: string | TemplateRef<void> | null = null;
-  @Input() nzDescription: string | TemplateRef<void> | null = null;
-  @Input() nzType: 'success' | 'info' | 'warning' | 'error' = 'info';
-  @Input({ transform: booleanAttribute }) @WithConfig() nzCloseable: boolean = false;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzShowIcon: boolean = false;
-  @Input({ transform: booleanAttribute }) nzBanner = false;
-  @Input({ transform: booleanAttribute }) nzNoAnimation = false;
-  @Input() nzIcon: string | TemplateRef<void> | null = null;
-  @Output() readonly nzOnClose = new EventEmitter<boolean>();
+  @Input() action: string | TemplateRef<void> | null = null;
+  @Input() closeText: string | TemplateRef<void> | null = null;
+  @Input() iconType: string | null = null;
+  @Input() message: string | TemplateRef<void> | null = null;
+  @Input() description: string | TemplateRef<void> | null = null;
+  @Input() type: 'success' | 'info' | 'warning' | 'error' = 'info';
+  @Input({ transform: booleanAttribute }) @WithConfig() closeable: boolean = false;
+  @Input({ transform: booleanAttribute }) @WithConfig() showIcon: boolean = false;
+  @Input({ transform: booleanAttribute }) banner = false;
+  @Input({ transform: booleanAttribute }) noAnimation = false;
+  @Input() icon: string | TemplateRef<void> | null = null;
+  @Output() readonly onClose = new EventEmitter<boolean>();
   closed = false;
   iconTheme: 'outline' | 'fill' = 'fill';
   inferredIconType: string = 'info-circle';
@@ -144,7 +144,7 @@ export class NzAlertComponent implements OnChanges, OnInit {
 
   onFadeAnimationDone(): void {
     if (this.closed) {
-      this.nzOnClose.emit(true);
+      this.onClose.emit(true);
     }
   }
 
@@ -155,7 +155,7 @@ export class NzAlertComponent implements OnChanges, OnInit {
     }
     if (nzType) {
       this.isTypeSet = true;
-      switch (this.nzType) {
+      switch (this.type) {
         case 'error':
           this.inferredIconType = 'close-circle';
           break;
@@ -171,14 +171,14 @@ export class NzAlertComponent implements OnChanges, OnInit {
       }
     }
     if (nzDescription) {
-      this.iconTheme = this.nzDescription ? 'outline' : 'fill';
+      this.iconTheme = this.description ? 'outline' : 'fill';
     }
     if (nzBanner) {
       if (!this.isTypeSet) {
-        this.nzType = 'warning';
+        this.type = 'warning';
       }
       if (!this.isShowIconSet) {
-        this.nzShowIcon = true;
+        this.showIcon = true;
       }
     }
   }

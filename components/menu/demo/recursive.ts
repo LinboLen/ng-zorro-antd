@@ -1,37 +1,37 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { Component } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriMenuModule } from 'ng-zorro-antd/menu';
 
 @Component({
-  selector: 'nz-demo-menu-recursive',
-  imports: [NgTemplateOutlet, NzIconModule, NzMenuModule],
+  selector: '',
+  imports: [NgTemplateOutlet, TriIconModule, TriMenuModule],
   template: `
-    <ul nz-menu nzMode="inline" style="width: 240px;">
+    <ul tri-menu mode="inline" style="width: 240px;">
       <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menus }"></ng-container>
       <ng-template #menuTpl let-menus>
         @for (menu of menus; track menu) {
           @if (!menu.children) {
             <li
-              nz-menu-item
-              [nzPaddingLeft]="menu.level * 24"
-              [nzDisabled]="menu.disabled"
-              [nzSelected]="menu.selected"
+              tri-menu-item
+              [paddingLeft]="menu.level * 24"
+              [disabled]="menu.disabled"
+              [selected]="menu.selected"
             >
               @if (menu.icon) {
-                <nz-icon [nzType]="menu.icon" />
+                <tri-icon [type]="menu.icon" />
               }
               <span>{{ menu.title }}</span>
             </li>
           } @else {
             <li
-              nz-submenu
-              [nzPaddingLeft]="menu.level * 24"
-              [nzOpen]="menu.open"
-              [nzTitle]="menu.title"
-              [nzIcon]="menu.icon"
-              [nzDisabled]="menu.disabled"
+              tri-submenu
+              [paddingLeft]="menu.level * 24"
+              [open]="menu.open"
+              [title]="menu.title"
+              [icon]="menu.icon"
+              [disabled]="menu.disabled"
             >
               <ul>
                 <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menu.children }" />
@@ -43,7 +43,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
     </ul>
   `
 })
-export class NzDemoMenuRecursiveComponent {
+export class TriDemoMenuRecursiveComponent {
   mode = false;
   dark = false;
   menus = [

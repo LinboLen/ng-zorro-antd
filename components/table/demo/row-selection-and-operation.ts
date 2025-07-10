@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzTableModule } from 'ng-zorro-antd/table';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriTableModule } from 'ng-zorro-antd/table';
 
 export interface Data {
   id: number;
@@ -12,35 +12,35 @@ export interface Data {
 }
 
 @Component({
-  selector: 'nz-demo-table-row-selection-and-operation',
-  imports: [NzButtonModule, NzTableModule],
+  selector: '',
+  imports: [TriButtonModule, TriTableModule],
   template: `
     <div class="send-request">
       <button
-        nz-button
-        nzType="primary"
+        tri-button
+        type="primary"
         [disabled]="setOfCheckedId.size === 0"
-        [nzLoading]="loading"
+        [loading]="loading"
         (click)="sendRequest()"
       >
         Send Request
       </button>
       <span>Selected {{ setOfCheckedId.size }} items</span>
     </div>
-    <nz-table
+    <tri-table
       #rowSelectionTable
-      nzShowPagination
-      nzShowSizeChanger
-      [nzData]="listOfData"
-      (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+      showPagination
+      showSizeChanger
+      [data]="listOfData"
+      (currentPageDataChange)="onCurrentPageDataChange($event)"
     >
       <thead>
         <tr>
           <th
-            [nzChecked]="checked"
-            [nzIndeterminate]="indeterminate"
-            nzLabel="Select all"
-            (nzCheckedChange)="onAllChecked($event)"
+            [checked]="checked"
+            [indeterminate]="indeterminate"
+            label="Select all"
+            (checkedChange)="onAllChecked($event)"
           ></th>
           <th>Name</th>
           <th>Age</th>
@@ -51,10 +51,10 @@ export interface Data {
         @for (data of rowSelectionTable.data; track data) {
           <tr>
             <td
-              [nzChecked]="setOfCheckedId.has(data.id)"
-              [nzDisabled]="data.disabled"
-              [nzLabel]="data.name"
-              (nzCheckedChange)="onItemChecked(data.id, $event)"
+              [checked]="setOfCheckedId.has(data.id)"
+              [disabled]="data.disabled"
+              [label]="data.name"
+              (checkedChange)="onItemChecked(data.id, $event)"
             ></td>
             <td>{{ data.name }}</td>
             <td>{{ data.age }}</td>
@@ -62,7 +62,7 @@ export interface Data {
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `,
   styles: [
     `
@@ -76,7 +76,7 @@ export interface Data {
     `
   ]
 })
-export class NzDemoTableRowSelectionAndOperationComponent implements OnInit {
+export class TriDemoTableRowSelectionAndOperationComponent implements OnInit {
   checked = false;
   loading = false;
   indeterminate = false;

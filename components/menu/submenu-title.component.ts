@@ -19,62 +19,62 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
-import { NzMenuModeType, NzSubmenuTrigger } from './menu.types';
+import { TriMenuModeType, TriSubmenuTrigger } from './menu.types';
 
 @Component({
-  selector: '[nz-submenu-title]',
-  exportAs: 'nzSubmenuTitle',
+  selector: '',
+  exportAs: 'triSubmenuTitle',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    @if (nzIcon) {
-      <nz-icon [nzType]="nzIcon" />
+    @if (icon) {
+      <tri-icon [type]="icon" />
     }
-    <ng-container *nzStringTemplateOutlet="nzTitle">
-      <span class="ant-menu-title-content">{{ nzTitle }}</span>
+    <ng-container *stringTemplateOutlet="title">
+      <span class="tri-menu-title-content">{{ title }}</span>
     </ng-container>
     <ng-content />
     @if (isMenuInsideDropDown) {
-      <span class="ant-dropdown-menu-submenu-expand-icon">
+      <span class="tri-dropdown-menu-submenu-expand-icon">
         @switch (dir) {
           @case ('rtl') {
-            <nz-icon nzType="left" class="ant-dropdown-menu-submenu-arrow-icon" />
+            <tri-icon type="left" class="tri-dropdown-menu-submenu-arrow-icon" />
           }
           @default {
-            <nz-icon nzType="right" class="ant-dropdown-menu-submenu-arrow-icon" />
+            <tri-icon type="right" class="tri-dropdown-menu-submenu-arrow-icon" />
           }
         }
       </span>
     } @else {
-      <span class="ant-menu-submenu-arrow"></span>
+      <span class="tri-menu-submenu-arrow"></span>
     }
   `,
   host: {
-    '[class.ant-dropdown-menu-submenu-title]': 'isMenuInsideDropDown',
-    '[class.ant-menu-submenu-title]': '!isMenuInsideDropDown',
+    '[class.tri-dropdown-menu-submenu-title]': 'isMenuInsideDropDown',
+    '[class.tri-menu-submenu-title]': '!isMenuInsideDropDown',
     '[style.paddingLeft.px]': `dir === 'rtl' ? null : paddingLeft `,
     '[style.paddingRight.px]': `dir === 'rtl' ? paddingLeft : null`,
     '(click)': 'clickTitle()',
     '(mouseenter)': 'setMouseState(true)',
     '(mouseleave)': 'setMouseState(false)'
   },
-  imports: [NzIconModule, NzOutletModule]
+  imports: [TriIconModule, TriOutletModule]
 })
-export class NzSubMenuTitleComponent implements OnInit {
+export class TriSubMenuTitleComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly directionality = inject(Directionality);
 
-  @Input() nzIcon: string | null = null;
-  @Input() nzTitle: string | TemplateRef<void> | null = null;
+  @Input() icon: string | null = null;
+  @Input() title: string | TemplateRef<void> | null = null;
   @Input() isMenuInsideDropDown = false;
-  @Input() nzDisabled = false;
+  @Input() disabled = false;
   @Input() paddingLeft: number | null = null;
-  @Input() mode: NzMenuModeType = 'vertical';
-  @Input() nzTriggerSubMenuAction: NzSubmenuTrigger = 'hover';
+  @Input() mode: TriMenuModeType = 'vertical';
+  @Input() triggerSubMenuAction: TriSubmenuTrigger = 'hover';
   @Output() readonly toggleSubMenu = new EventEmitter();
   @Output() readonly subMenuMouseState = new EventEmitter<boolean>();
 
@@ -89,13 +89,13 @@ export class NzSubMenuTitleComponent implements OnInit {
   }
 
   setMouseState(state: boolean): void {
-    if (!this.nzDisabled && this.nzTriggerSubMenuAction === 'hover') {
+    if (!this.disabled && this.triggerSubMenuAction === 'hover') {
       this.subMenuMouseState.next(state);
     }
   }
 
   clickTitle(): void {
-    if ((this.mode === 'inline' || this.nzTriggerSubMenuAction === 'click') && !this.nzDisabled) {
+    if ((this.mode === 'inline' || this.triggerSubMenuAction === 'click') && !this.disabled) {
       this.subMenuMouseState.next(true);
       this.toggleSubMenu.emit();
     }

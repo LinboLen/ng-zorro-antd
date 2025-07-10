@@ -1,28 +1,28 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriMessageService } from 'ng-zorro-antd/message';
+import { TriPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 @Component({
-  selector: 'nz-demo-popconfirm-promise',
-  imports: [NzButtonModule, NzPopconfirmModule],
+  selector: '',
+  imports: [TriButtonModule, TriPopconfirmModule],
   template: `
     <button
-      nz-button
-      nzType="primary"
-      nz-popconfirm
-      nzPopconfirmTitle="Title"
-      [nzBeforeConfirm]="beforeConfirm"
-      (nzOnConfirm)="confirm()"
-      (nzOnCancel)="cancel()"
+      tri-button
+      type="primary"
+      tri-popconfirm
+      popconfirmTitle="Title"
+      [beforeConfirm]="beforeConfirm"
+      (onConfirm)="confirm()"
+      (onCancel)="cancel()"
     >
       Open Popconfirm with Promise
     </button>
   `
 })
-export class NzDemoPopconfirmPromiseComponent {
-  constructor(private nzMessageService: NzMessageService) {}
+export class TriDemoPopconfirmPromiseComponent {
+  constructor(private nzMessageService: TriMessageService) {}
 
   cancel(): void {
     this.nzMessageService.info('click cancel');

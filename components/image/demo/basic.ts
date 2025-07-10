@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 
-import { NzImageModule } from 'ng-zorro-antd/image';
+import { TriImageModule } from 'ng-zorro-antd/image';
 
 @Component({
-  selector: 'nz-demo-image-basic',
-  imports: [NzImageModule],
+  selector: '',
+  imports: [TriImageModule],
   template: `
     <img
-      nz-image
+      tri-image
       width="200px"
       height="200px"
-      nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+      src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
       alt=""
     />
   `
 })
-export class NzDemoImageBasicComponent {}
+export class TriDemoImageBasicComponent {}

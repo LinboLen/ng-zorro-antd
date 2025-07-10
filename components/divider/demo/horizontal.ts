@@ -1,33 +1,33 @@
 import { Component } from '@angular/core';
 
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriDividerModule } from 'ng-zorro-antd/divider';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-demo-divider-horizontal',
-  imports: [NzDividerModule, NzIconModule],
+  selector: '',
+  imports: [TriDividerModule, TriIconModule],
   template: `
     <div>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae
         sunt a te dicta? Refert tamen, quo modo.
       </p>
-      <nz-divider></nz-divider>
+      <tri-divider></tri-divider>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae
         sunt a te dicta? Refert tamen, quo modo.
       </p>
-      <nz-divider nzText="With Text"></nz-divider>
+      <tri-divider text="With Text"></tri-divider>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae
         sunt a te dicta? Refert tamen, quo modo.
       </p>
-      <nz-divider nzDashed [nzText]="text">
+      <tri-divider dashed [text]="text">
         <ng-template #text>
-          <nz-icon nzType="plus" />
+          <tri-icon type="plus" />
           Add
         </ng-template>
-      </nz-divider>
+      </tri-divider>
 
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae
@@ -36,4 +36,4 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     </div>
   `
 })
-export class NzDemoDividerHorizontalComponent {}
+export class TriDemoDividerHorizontalComponent {}

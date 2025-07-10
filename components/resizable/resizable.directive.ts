@@ -25,84 +25,84 @@ import { filter } from 'rxjs/operators';
 import { ensureInBounds, fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 
 import { getEventWithPoint } from './resizable-utils';
-import { NzResizableService } from './resizable.service';
-import { NzResizeDirection, NzResizeHandleMouseDownEvent } from './resize-handle.component';
+import { TriResizableService } from './resizable.service';
+import { TriResizeDirection, TriResizeHandleMouseDownEvent } from './resize-handle.component';
 
-export interface NzResizeEvent {
+export interface TriResizeEvent {
   width?: number;
   height?: number;
   col?: number;
   mouseEvent?: MouseEvent | TouchEvent;
-  direction?: NzResizeDirection;
+  direction?: TriResizeDirection;
 }
 
 @Directive({
-  selector: '[nz-resizable]',
-  exportAs: 'nzResizable',
-  providers: [NzResizableService],
+  selector: '',
+  exportAs: 'triResizable',
+  providers: [TriResizableService],
   host: {
     class: 'nz-resizable',
     '[class.nz-resizable-resizing]': 'resizing',
     '[class.nz-resizable-disabled]': 'nzDisabled'
   }
 })
-export class NzResizableDirective implements AfterViewInit, OnDestroy {
+export class TriResizableDirective implements AfterViewInit, OnDestroy {
   private readonly elementRef = inject(ElementRef<HTMLElement>);
   private readonly renderer = inject(Renderer2);
-  private readonly nzResizableService = inject(NzResizableService);
+  private readonly resizableService = inject(TriResizableService);
   private readonly platform = inject(Platform);
   private readonly ngZone = inject(NgZone);
   private readonly destroyRef = inject(DestroyRef);
 
-  @Input() nzBounds: 'window' | 'parent' | ElementRef<HTMLElement> = 'parent';
-  @Input() nzMaxHeight?: number;
-  @Input() nzMaxWidth?: number;
-  @Input({ transform: numberAttribute }) nzMinHeight: number = 40;
-  @Input({ transform: numberAttribute }) nzMinWidth: number = 40;
-  @Input({ transform: numberAttribute }) nzGridColumnCount: number = -1;
-  @Input({ transform: numberAttribute }) nzMaxColumn: number = -1;
-  @Input({ transform: numberAttribute }) nzMinColumn: number = -1;
-  @Input({ transform: booleanAttribute }) nzLockAspectRatio: boolean = false;
-  @Input({ transform: booleanAttribute }) nzPreview: boolean = false;
-  @Input({ transform: booleanAttribute }) nzDisabled: boolean = false;
-  @Output() readonly nzResize = new EventEmitter<NzResizeEvent>();
-  @Output() readonly nzResizeEnd = new EventEmitter<NzResizeEvent>();
-  @Output() readonly nzResizeStart = new EventEmitter<NzResizeEvent>();
+  @Input() bounds: 'window' | 'parent' | ElementRef<HTMLElement> = 'parent';
+  @Input() maxHeight?: number;
+  @Input() maxWidth?: number;
+  @Input({ transform: numberAttribute }) minHeight: number = 40;
+  @Input({ transform: numberAttribute }) minWidth: number = 40;
+  @Input({ transform: numberAttribute }) gridColumnCount: number = -1;
+  @Input({ transform: numberAttribute }) maxColumn: number = -1;
+  @Input({ transform: numberAttribute }) minColumn: number = -1;
+  @Input({ transform: booleanAttribute }) lockAspectRatio: boolean = false;
+  @Input({ transform: booleanAttribute }) preview: boolean = false;
+  @Input({ transform: booleanAttribute }) disabled: boolean = false;
+  @Output() readonly resize = new EventEmitter<TriResizeEvent>();
+  @Output() readonly resizeEnd = new EventEmitter<TriResizeEvent>();
+  @Output() readonly resizeStart = new EventEmitter<TriResizeEvent>();
 
   resizing = false;
   private elRect!: DOMRect;
-  private currentHandleEvent: NzResizeHandleMouseDownEvent | null = null;
+  private currentHandleEvent: TriResizeHandleMouseDownEvent | null = null;
   private ghostElement: HTMLDivElement | null = null;
   private el!: HTMLElement;
-  private sizeCache: NzResizeEvent | null = null;
+  private sizeCache: TriResizeEvent | null = null;
 
   constructor() {
-    this.nzResizableService.handleMouseDownOutsideAngular$.pipe(takeUntilDestroyed()).subscribe(event => {
-      if (this.nzDisabled) {
+    this.resizableService.handleMouseDownOutsideAngular$.pipe(takeUntilDestroyed()).subscribe(event => {
+      if (this.disabled) {
         return;
       }
       this.resizing = true;
-      this.nzResizableService.startResizing(event.mouseEvent);
+      this.resizableService.startResizing(event.mouseEvent);
       this.currentHandleEvent = event;
-      if (this.nzResizeStart.observers.length) {
-        this.ngZone.run(() => this.nzResizeStart.emit({ mouseEvent: event.mouseEvent, direction: event.direction }));
+      if (this.resizeStart.observers.length) {
+        this.ngZone.run(() => this.resizeStart.emit({ mouseEvent: event.mouseEvent, direction: event.direction }));
       }
       this.elRect = this.el.getBoundingClientRect();
     });
 
-    this.nzResizableService.documentMouseUpOutsideAngular$
+    this.resizableService.documentMouseUpOutsideAngular$
       .pipe(takeUntilDestroyed(), filter(Boolean))
       .subscribe(event => {
         if (this.resizing) {
           this.resizing = false;
-          this.nzResizableService.documentMouseUpOutsideAngular$.next(null);
+          this.resizableService.documentMouseUpOutsideAngular$.next(null);
           this.endResize(event);
         }
       });
 
-    this.nzResizableService.documentMouseMoveOutsideAngular$.pipe(takeUntilDestroyed()).subscribe(event => {
+    this.resizableService.documentMouseMoveOutsideAngular$.pipe(takeUntilDestroyed()).subscribe(event => {
       if (this.resizing) {
-        this.resize(event);
+        this._resize(event);
       }
     });
   }
@@ -114,64 +114,64 @@ export class NzResizableDirective implements AfterViewInit, OnDestroy {
     }
   }
 
-  calcSize(width: number, height: number, ratio: number): NzResizeEvent {
+  calcSize(width: number, height: number, ratio: number): TriResizeEvent {
     let newWidth: number;
     let newHeight: number;
     let maxWidth: number;
     let maxHeight: number;
     let col = 0;
     let spanWidth = 0;
-    let minWidth = this.nzMinWidth;
+    let minWidth = this.minWidth;
     let boundWidth = Infinity;
     let boundHeight = Infinity;
-    if (this.nzBounds === 'parent') {
+    if (this.bounds === 'parent') {
       const parent = this.renderer.parentNode(this.el);
       if (parent instanceof HTMLElement) {
         const parentRect = parent.getBoundingClientRect();
         boundWidth = parentRect.width;
         boundHeight = parentRect.height;
       }
-    } else if (this.nzBounds === 'window') {
+    } else if (this.bounds === 'window') {
       if (typeof window !== 'undefined') {
         boundWidth = window.innerWidth;
         boundHeight = window.innerHeight;
       }
-    } else if (this.nzBounds && this.nzBounds.nativeElement && this.nzBounds.nativeElement instanceof HTMLElement) {
-      const boundsRect = this.nzBounds.nativeElement.getBoundingClientRect();
+    } else if (this.bounds && this.bounds.nativeElement && this.bounds.nativeElement instanceof HTMLElement) {
+      const boundsRect = this.bounds.nativeElement.getBoundingClientRect();
       boundWidth = boundsRect.width;
       boundHeight = boundsRect.height;
     }
 
-    maxWidth = ensureInBounds(this.nzMaxWidth!, boundWidth);
+    maxWidth = ensureInBounds(this.maxWidth!, boundWidth);
     // eslint-disable-next-line prefer-const
-    maxHeight = ensureInBounds(this.nzMaxHeight!, boundHeight);
+    maxHeight = ensureInBounds(this.maxHeight!, boundHeight);
 
-    if (this.nzGridColumnCount !== -1) {
-      spanWidth = maxWidth / this.nzGridColumnCount;
-      minWidth = this.nzMinColumn !== -1 ? spanWidth * this.nzMinColumn : minWidth;
-      maxWidth = this.nzMaxColumn !== -1 ? spanWidth * this.nzMaxColumn : maxWidth;
+    if (this.gridColumnCount !== -1) {
+      spanWidth = maxWidth / this.gridColumnCount;
+      minWidth = this.minColumn !== -1 ? spanWidth * this.minColumn : minWidth;
+      maxWidth = this.maxColumn !== -1 ? spanWidth * this.maxColumn : maxWidth;
     }
 
     if (ratio !== -1) {
       if (/(left|right)/i.test(this.currentHandleEvent!.direction)) {
         newWidth = Math.min(Math.max(width, minWidth), maxWidth);
-        newHeight = Math.min(Math.max(newWidth / ratio, this.nzMinHeight), maxHeight);
-        if (newHeight >= maxHeight || newHeight <= this.nzMinHeight) {
+        newHeight = Math.min(Math.max(newWidth / ratio, this.minHeight), maxHeight);
+        if (newHeight >= maxHeight || newHeight <= this.minHeight) {
           newWidth = Math.min(Math.max(newHeight * ratio, minWidth), maxWidth);
         }
       } else {
-        newHeight = Math.min(Math.max(height, this.nzMinHeight), maxHeight);
+        newHeight = Math.min(Math.max(height, this.minHeight), maxHeight);
         newWidth = Math.min(Math.max(newHeight * ratio, minWidth), maxWidth);
         if (newWidth >= maxWidth || newWidth <= minWidth) {
-          newHeight = Math.min(Math.max(newWidth / ratio, this.nzMinHeight), maxHeight);
+          newHeight = Math.min(Math.max(newWidth / ratio, this.minHeight), maxHeight);
         }
       }
     } else {
       newWidth = Math.min(Math.max(width, minWidth), maxWidth);
-      newHeight = Math.min(Math.max(height, this.nzMinHeight), maxHeight);
+      newHeight = Math.min(Math.max(height, this.minHeight), maxHeight);
     }
 
-    if (this.nzGridColumnCount !== -1) {
+    if (this.gridColumnCount !== -1) {
       col = Math.round(newWidth / spanWidth);
       newWidth = col * spanWidth;
     }
@@ -183,13 +183,13 @@ export class NzResizableDirective implements AfterViewInit, OnDestroy {
     };
   }
 
-  resize(event: MouseEvent | TouchEvent): void {
+  _resize(event: MouseEvent | TouchEvent): void {
     const elRect = this.elRect;
     const resizeEvent = getEventWithPoint(event);
     const handleEvent = getEventWithPoint(this.currentHandleEvent!.mouseEvent);
     let width = elRect.width;
     let height = elRect.height;
-    const ratio = this.nzLockAspectRatio ? width / height : -1;
+    const ratio = this.lockAspectRatio ? width / height : -1;
     switch (this.currentHandleEvent!.direction) {
       case 'bottomRight':
         width = resizeEvent.clientX - elRect.left;
@@ -223,16 +223,16 @@ export class NzResizableDirective implements AfterViewInit, OnDestroy {
     this.sizeCache = { ...size };
     // Re-enter the Angular zone and run the change detection only if there are any `nzResize` listeners,
     // e.g.: `<div nz-resizable (nzResize)="..."></div>`.
-    if (this.nzResize.observers.length) {
+    if (this.resize.observers.length) {
       this.ngZone.run(() => {
-        this.nzResize.emit({
+        this.resize.emit({
           ...size,
           mouseEvent: event,
           direction: this.currentHandleEvent!.direction
         });
       });
     }
-    if (this.nzPreview) {
+    if (this.preview) {
       this.previewResize(size);
     }
   }
@@ -247,9 +247,9 @@ export class NzResizableDirective implements AfterViewInit, OnDestroy {
         };
     // Re-enter the Angular zone and run the change detection only if there are any `nzResizeEnd` listeners,
     // e.g.: `<div nz-resizable (nzResizeEnd)="..."></div>`.
-    if (this.nzResizeEnd.observers.length) {
+    if (this.resizeEnd.observers.length) {
       this.ngZone.run(() => {
-        this.nzResizeEnd.emit({
+        this.resizeEnd.emit({
           ...size,
           mouseEvent: event,
           direction: this.currentHandleEvent!.direction
@@ -260,7 +260,7 @@ export class NzResizableDirective implements AfterViewInit, OnDestroy {
     this.currentHandleEvent = null;
   }
 
-  previewResize({ width, height }: NzResizeEvent): void {
+  previewResize({ width, height }: TriResizeEvent): void {
     this.createGhostElement();
     this.renderer.setStyle(this.ghostElement, 'width', `${width}px`);
     this.renderer.setStyle(this.ghostElement, 'height', `${height}px`);
@@ -291,13 +291,13 @@ export class NzResizableDirective implements AfterViewInit, OnDestroy {
     fromEventOutsideAngular(this.el, 'mouseenter')
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
-        this.nzResizableService.mouseEnteredOutsideAngular$.next(true);
+        this.resizableService.mouseEnteredOutsideAngular$.next(true);
       });
 
     fromEventOutsideAngular(this.el, 'mouseleave')
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
-        this.nzResizableService.mouseEnteredOutsideAngular$.next(false);
+        this.resizableService.mouseEnteredOutsideAngular$.next(false);
       });
   }
 

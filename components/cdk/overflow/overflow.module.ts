@@ -5,13 +5,13 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzOverflowContainerComponent } from './overflow-container.component';
-import { NzOverflowItemDirective } from './overflow-item.directive';
-import { NzOverflowRestDirective } from './overflow-rest.directive';
-import { NzOverflowSuffixDirective } from './overflow-suffix.directive';
+import { TriOverflowContainerComponent } from './overflow-container.component';
+import { TriOverflowItemDirective } from './overflow-item.directive';
+import { TriOverflowRestDirective } from './overflow-rest.directive';
+import { TriOverflowSuffixDirective } from './overflow-suffix.directive';
 
 @NgModule({
-  imports: [NzOverflowContainerComponent, NzOverflowItemDirective, NzOverflowRestDirective, NzOverflowSuffixDirective],
-  exports: [NzOverflowContainerComponent, NzOverflowItemDirective, NzOverflowRestDirective, NzOverflowSuffixDirective]
+  imports: [TriOverflowContainerComponent, TriOverflowItemDirective, TriOverflowRestDirective, TriOverflowSuffixDirective],
+  exports: [TriOverflowContainerComponent, TriOverflowItemDirective, TriOverflowRestDirective, TriOverflowSuffixDirective]
 })
-export class NzOverflowModule {}
+export class TriOverflowModule {}

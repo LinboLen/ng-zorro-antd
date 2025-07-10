@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzStringTemplateOutletDirective } from './string-template-outlet.directive';
+import { TriStringTemplateOutletDirective } from './string-template-outlet.directive';
 
 @NgModule({
-  imports: [NzStringTemplateOutletDirective],
-  exports: [NzStringTemplateOutletDirective]
+  imports: [TriStringTemplateOutletDirective],
+  exports: [TriStringTemplateOutletDirective]
 })
-export class NzOutletModule {}
+export class TriOutletModule {}

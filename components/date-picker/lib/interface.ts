@@ -5,7 +5,7 @@
 
 import { TemplateRef } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface PanelSelector {
   className: string;
@@ -15,7 +15,7 @@ export interface PanelSelector {
 }
 
 export interface DateCell {
-  trackByIndex: NzSafeAny;
+  trackByIndex: TriSafeAny;
   value: Date;
   content: TemplateRef<Date> | string;
   onClick(): void;
@@ -43,7 +43,7 @@ export interface DateCell {
 }
 
 export interface DateBodyRow {
-  trackByIndex: NzSafeAny;
+  trackByIndex: TriSafeAny;
   dateCells: DateCell[];
   isActive?: boolean; // Is the week that current setting date stays in
   weekNum?: number; // Is the week that show number

@@ -3,23 +3,23 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export type NzSkeletonParagraphWidth = number | string | Array<number | string>;
-export type NzSkeletonButtonShape = 'square' | 'circle' | 'round' | 'default';
-export type NzSkeletonAvatarShape = 'square' | 'circle';
-export type NzSkeletonInputSize = 'large' | 'small' | 'default';
-export type NzSkeletonButtonSize = NzSkeletonInputSize;
-export type NzSkeletonAvatarSize = NzSkeletonInputSize | number;
+export type TriSkeletonParagraphWidth = number | string | Array<number | string>;
+export type TriSkeletonButtonShape = 'square' | 'circle' | 'round' | 'default';
+export type TriSkeletonAvatarShape = 'square' | 'circle';
+export type TriSkeletonInputSize = 'large' | 'small' | 'default';
+export type TriSkeletonButtonSize = TriSkeletonInputSize;
+export type TriSkeletonAvatarSize = TriSkeletonInputSize | number;
 
-export interface NzSkeletonAvatar {
-  size?: NzSkeletonAvatarSize;
-  shape?: NzSkeletonAvatarShape;
+export interface TriSkeletonAvatar {
+  size?: TriSkeletonAvatarSize;
+  shape?: TriSkeletonAvatarShape;
 }
 
-export interface NzSkeletonTitle {
+export interface TriSkeletonTitle {
   width?: number | string;
 }
 
-export interface NzSkeletonParagraph {
+export interface TriSkeletonParagraph {
   rows?: number;
-  width?: NzSkeletonParagraphWidth;
+  width?: TriSkeletonParagraphWidth;
 }

@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 
-import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
+import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
 
 @Component({
-  selector: 'nz-demo-time-picker-status',
-  imports: [NzTimePickerModule],
+  selector: '',
+  imports: [TriTimePickerModule],
   template: `
-    <nz-time-picker nzStatus="error"></nz-time-picker>
+    <tri-time-picker status="error"></tri-time-picker>
     <br />
     <br />
-    <nz-time-picker nzStatus="warning">></nz-time-picker>
+    <tri-time-picker status="warning">></tri-time-picker>
   `
 })
-export class NzDemoTimePickerStatusComponent {}
+export class TriDemoTimePickerStatusComponent {}

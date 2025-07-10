@@ -8,21 +8,21 @@ import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzStatisticValueType } from 'ng-zorro-antd/statistic/typings';
+import { TriStatisticValueType } from 'ng-zorro-antd/statistic/typings';
 
-import { NzStatisticNumberComponent } from './statistic-number.component';
-import { NzStatisticModule } from './statistic.module';
+import { TriStatisticNumberComponent } from './statistic-number.component';
+import { TriStatisticModule } from './statistic.module';
 
 describe('nz-number', () => {
-  let fixture: ComponentFixture<NzTestNumberComponent>;
-  let testComponent: NzTestNumberComponent;
+  let fixture: ComponentFixture<TriTestNumberComponent>;
+  let testComponent: TriTestNumberComponent;
   let numberEl: DebugElement;
 
   describe('basic', () => {
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestNumberComponent);
+      fixture = TestBed.createComponent(TriTestNumberComponent);
       testComponent = fixture.componentInstance;
-      numberEl = fixture.debugElement.query(By.directive(NzStatisticNumberComponent));
+      numberEl = fixture.debugElement.query(By.directive(TriStatisticNumberComponent));
     });
 
     it('should have correct class', () => {
@@ -50,15 +50,15 @@ describe('nz-number', () => {
 });
 
 @Component({
-  imports: [DecimalPipe, NzStatisticModule],
+  imports: [DecimalPipe, TriStatisticModule],
   template: `
-    <nz-statistic-number [nzValue]="(value | number)!" [nzValueTemplate]="template"></nz-statistic-number>
+    <tri-statistic-number [value]="(value | number)!" [valueTemplate]="template"></tri-statistic-number>
     <ng-template #tpl let-value>It's {{ value }}</ng-template>
   `
 })
-export class NzTestNumberComponent {
-  @ViewChild('tpl', { static: true }) tpl?: TemplateRef<{ $implicit: NzStatisticValueType }>;
+export class TriTestNumberComponent {
+  @ViewChild('tpl', { static: true }) tpl?: TemplateRef<{ $implicit: TriStatisticValueType }>;
 
   value = 1;
-  template?: TemplateRef<{ $implicit: NzStatisticValueType }>;
+  template?: TemplateRef<{ $implicit: TriStatisticValueType }>;
 }

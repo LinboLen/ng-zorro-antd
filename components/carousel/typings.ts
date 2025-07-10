@@ -6,14 +6,14 @@
 import { Direction } from '@angular/cdk/bidi';
 import { InjectionToken, NgZone, QueryList } from '@angular/core';
 
-import { NzCarouselContentDirective } from './carousel-content.directive';
-import { NzCarouselBaseStrategy } from './strategies/base-strategy';
+import { TriCarouselContentDirective } from './carousel-content.directive';
+import { TriCarouselBaseStrategy } from './strategies/base-strategy';
 
-export type NzCarouselEffects = 'fade' | 'scrollx' | string;
-export type NzCarouselDotPosition = 'top' | 'bottom' | 'left' | 'right' | string;
+export type TriCarouselEffects = 'fade' | 'scrollx' | string;
+export type TriCarouselDotPosition = 'top' | 'bottom' | 'left' | 'right' | string;
 
-export interface NzCarouselComponentAsSource {
-  carouselContents: QueryList<NzCarouselContentDirective>;
+export interface TriCarouselComponentAsSource {
+  carouselContents: QueryList<TriCarouselContentDirective>;
   el: HTMLElement;
   nzTransitionSpeed: number;
   vertical: boolean;
@@ -24,12 +24,12 @@ export interface NzCarouselComponentAsSource {
   ngZone: NgZone;
 }
 
-export interface NzCarouselStrategyRegistryItem {
+export interface TriCarouselStrategyRegistryItem {
   name: string;
-  strategy: NzCarouselBaseStrategy;
+  strategy: TriCarouselBaseStrategy;
 }
 
-export const NZ_CAROUSEL_CUSTOM_STRATEGIES = new InjectionToken<NzCarouselStrategyRegistryItem[]>(
+export const NZ_CAROUSEL_CUSTOM_STRATEGIES = new InjectionToken<TriCarouselStrategyRegistryItem[]>(
   'nz-carousel-custom-strategies'
 );
 

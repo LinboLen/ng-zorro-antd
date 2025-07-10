@@ -1,22 +1,22 @@
 import { Component } from '@angular/core';
 
-import { NzFormatEmitEvent, NzTreeModule, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
+import { TriFormatEmitEvent, TriTreeModule, TriTreeNodeOptions } from 'ng-zorro-antd/tree';
 
 @Component({
-  selector: 'nz-demo-tree-dynamic',
-  imports: [NzTreeModule],
+  selector: '',
+  imports: [TriTreeModule],
   template: `
-    <nz-tree [nzData]="nodes" nzAsyncData (nzClick)="nzEvent($event)" (nzExpandChange)="nzEvent($event)"></nz-tree>
+    <tri-tree [data]="nodes" asyncData (click)="event($event)" (expandChange)="event($event)"></tri-tree>
   `
 })
-export class NzDemoTreeDynamicComponent {
+export class TriDemoTreeDynamicComponent {
   readonly nodes = [
     { title: 'Expand to load', key: '0' },
     { title: 'Expand to load', key: '1' },
     { title: 'Tree Node', key: '2', isLeaf: true }
   ];
 
-  nzEvent(event: NzFormatEmitEvent): void {
+  event(event: TriFormatEmitEvent): void {
     // load child async
     if (event.eventName === 'expand') {
       const node = event.node;
@@ -28,7 +28,7 @@ export class NzDemoTreeDynamicComponent {
     }
   }
 
-  loadNode(): Promise<NzTreeNodeOptions[]> {
+  loadNode(): Promise<TriTreeNodeOptions[]> {
     return new Promise(resolve => {
       setTimeout(
         () =>

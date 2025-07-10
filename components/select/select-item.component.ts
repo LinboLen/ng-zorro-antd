@@ -15,26 +15,26 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-select-item',
+  selector: '',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <ng-container *nzStringTemplateOutlet="contentTemplateOutlet; context: templateOutletContext">
+    <ng-container *stringTemplateOutlet="contentTemplateOutlet; stringTemplateOutletContext: templateOutletContext">
       @if (displayLabelInHtml) {
-        <div [class.ant-select-selection-item-content]="deletable" [innerHTML]="label"></div>
+        <div [class.tri-select-selection-item-content]="deletable" [innerHTML]="label"></div>
       } @else {
-        <div [class.ant-select-selection-item-content]="deletable">{{ label }}</div>
+        <div [class.tri-select-selection-item-content]="deletable">{{ label }}</div>
       }
     </ng-container>
     @if (deletable && !disabled) {
-      <span class="ant-select-selection-item-remove" (click)="onDelete($event)">
+      <span class="tri-select-selection-item-remove" (click)="onDelete($event)">
         @if (!removeIcon) {
-          <nz-icon nzType="close" />
+          <tri-icon type="close" />
         } @else {
           <ng-template [ngTemplateOutlet]="removeIcon"></ng-template>
         }
@@ -42,13 +42,13 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     }
   `,
   host: {
-    class: 'ant-select-selection-item',
+    class: 'tri-select-selection-item',
     '[attr.title]': 'label',
-    '[class.ant-select-selection-item-disabled]': 'disabled'
+    '[class.tri-select-selection-item-disabled]': 'disabled'
   },
-  imports: [NgTemplateOutlet, NzOutletModule, NzIconModule]
+  imports: [NgTemplateOutlet, TriOutletModule, TriIconModule]
 })
-export class NzSelectItemComponent {
+export class TriSelectItemComponent {
   @Input({ transform: booleanAttribute }) disabled = false;
   @Input() label: string | number | null | undefined = null;
   /**
@@ -57,12 +57,12 @@ export class NzSelectItemComponent {
    */
   @Input({ transform: booleanAttribute }) displayLabelInHtml = false;
   @Input({ transform: booleanAttribute }) deletable = false;
-  @Input() removeIcon: TemplateRef<NzSafeAny> | null = null;
-  @Input() contentTemplateOutletContext: NzSafeAny | null = null;
-  @Input() contentTemplateOutlet: string | TemplateRef<NzSafeAny> | null = null;
+  @Input() removeIcon: TemplateRef<TriSafeAny> | null = null;
+  @Input() contentTemplateOutletContext: TriSafeAny | null = null;
+  @Input() contentTemplateOutlet: string | TemplateRef<TriSafeAny> | null = null;
   @Output() readonly delete = new EventEmitter<MouseEvent>();
 
-  protected get templateOutletContext(): NzSafeAny {
+  protected get templateOutletContext(): TriSafeAny {
     return {
       $implicit: this.contentTemplateOutletContext,
       ...this.contentTemplateOutletContext

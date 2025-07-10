@@ -16,27 +16,27 @@ import {
 } from '@angular/core';
 
 import { zoomBadgeMotion } from 'ng-zorro-antd/core/animation';
-import { NzNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
-import { NzSafeAny, NzSizeDSType } from 'ng-zorro-antd/core/types';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriSafeAny, TriSizeDSType } from 'ng-zorro-antd/core/types';
 
 @Component({
-  selector: 'nz-badge-sup',
-  exportAs: 'nzBadgeSup',
+  selector: '',
+  exportAs: 'triBadgeSup',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [zoomBadgeMotion],
-  imports: [NzNoAnimationDirective],
+  imports: [TriNoAnimationDirective],
   template: `
-    @if (count <= nzOverflowCount) {
+    @if (count <= overflowCount) {
       @for (n of maxNumberArray; track n; let i = $index) {
         <span
-          [nzNoAnimation]="noAnimation"
-          class="ant-scroll-number-only"
+          [noAnimation]="noAnimation"
+          class="tri-scroll-number-only"
           [style.transform]="'translateY(' + -countArray[i] * 100 + '%)'"
         >
-          @if (!nzDot && countArray[i] !== undefined) {
+          @if (!dot && countArray[i] !== undefined) {
             @for (p of countSingleArray; track p) {
-              <p class="ant-scroll-number-only-unit" [class.current]="p === countArray[i]">
+              <p class="tri-scroll-number-only-unit" [class.current]="p === countArray[i]">
                 {{ p }}
               </p>
             }
@@ -44,40 +44,40 @@ import { NzSafeAny, NzSizeDSType } from 'ng-zorro-antd/core/types';
         </span>
       }
     } @else {
-      {{ nzOverflowCount }}+
+      {{ overflowCount }}+
     }
   `,
   host: {
-    class: 'ant-scroll-number',
+    class: 'tri-scroll-number',
     '[@.disabled]': `disableAnimation`,
     '[@zoomBadgeMotion]': '',
     '[attr.title]': `nzTitle === null ? '' : nzTitle || nzCount`,
     '[style]': `nzStyle`,
     '[style.right.px]': `nzOffset && nzOffset[0] ? -nzOffset[0] : null`,
     '[style.margin-top.px]': `nzOffset && nzOffset[1] ? nzOffset[1] : null`,
-    '[class.ant-badge-count]': `!nzDot`,
-    '[class.ant-badge-count-sm]': `nzSize === 'small'`,
-    '[class.ant-badge-dot]': `nzDot`,
-    '[class.ant-badge-multiple-words]': `countArray.length >= 2`
+    '[class.tri-badge-count]': `!dot`,
+    '[class.tri-badge-count-sm]': `size === 'small'`,
+    '[class.tri-badge-dot]': `dot`,
+    '[class.tri-badge-multiple-words]': `countArray.length >= 2`
   }
 })
-export class NzBadgeSupComponent implements OnInit, OnChanges {
-  @Input() nzOffset?: [number, number];
-  @Input() nzTitle?: string | null | undefined;
-  @Input() nzStyle: Record<string, string> | null = null;
-  @Input() nzDot = false;
-  @Input({ transform: numberAttribute }) nzOverflowCount: number = 99;
+export class TriBadgeSupComponent implements OnInit, OnChanges {
+  @Input() offset?: [number, number];
+  @Input() title?: string | null | undefined;
+  @Input() style: Record<string, string> | null = null;
+  @Input() dot = false;
+  @Input({ transform: numberAttribute }) overflowCount: number = 99;
   @Input() disableAnimation = false;
-  @Input() nzCount?: number | TemplateRef<NzSafeAny>;
+  @Input() count?: number | TemplateRef<TriSafeAny>;
   @Input() noAnimation = false;
-  @Input() nzSize: NzSizeDSType = 'default';
+  @Input() size: TriSizeDSType = 'default';
   maxNumberArray: string[] = [];
   countArray: number[] = [];
-  count: number = 0;
+  _count: number = 0;
   countSingleArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   generateMaxNumberArray(): void {
-    this.maxNumberArray = this.nzOverflowCount
+    this.maxNumberArray = this.overflowCount
       .toString()
       .split('')
       .map((value: string, index: number) => `${value}-${index}`);
@@ -90,8 +90,8 @@ export class NzBadgeSupComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     const { nzOverflowCount, nzCount } = changes;
     if (nzCount && typeof nzCount.currentValue === 'number') {
-      this.count = Math.max(0, nzCount.currentValue);
-      this.countArray = this.count
+      this._count = Math.max(0, nzCount.currentValue);
+      this.countArray = this._count
         .toString()
         .split('')
         .map(item => +item);

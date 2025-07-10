@@ -2,49 +2,49 @@ import { Component } from '@angular/core';
 
 import { formatDistance } from 'date-fns';
 
-import { NzAvatarModule } from 'ng-zorro-antd/avatar';
-import { NzCommentModule } from 'ng-zorro-antd/comment';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriAvatarModule } from 'ng-zorro-antd/avatar';
+import { TriCommentModule } from 'ng-zorro-antd/comment';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
-  selector: 'nz-demo-comment-basic',
-  imports: [NzAvatarModule, NzCommentModule, NzIconModule, NzToolTipModule],
+  selector: '',
+  imports: [TriAvatarModule, TriCommentModule, TriIconModule, TriToolTipModule],
   template: `
-    <nz-comment nzAuthor="Han Solo" [nzDatetime]="time">
-      <nz-avatar
-        nz-comment-avatar
-        nzIcon="user"
-        nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-      ></nz-avatar>
-      <nz-comment-content>
+    <tri-comment author="Han Solo" [datetime]="time">
+      <tri-avatar
+        tri-comment-avatar
+        icon="user"
+        src="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+      ></tri-avatar>
+      <tri-comment-content>
         <p>
           We supply a series of design principles, practical patterns and high quality design resources(Sketch and
           Axure), to help people create their product prototypes beautifully and efficiently.
         </p>
-      </nz-comment-content>
-      <nz-comment-action>
-        <nz-icon
-          nz-tooltip
-          nzTooltipTitle="Like"
-          nzType="like"
-          [nzTheme]="likes > 0 ? 'twotone' : 'outline'"
+      </tri-comment-content>
+      <tri-comment-action>
+        <tri-icon
+          tri-tooltip
+          tooltipTitle="Like"
+          type="like"
+          [theme]="likes > 0 ? 'twotone' : 'outline'"
           (click)="like()"
         />
         <span class="count like">{{ likes }}</span>
-      </nz-comment-action>
-      <nz-comment-action>
-        <nz-icon
-          nz-tooltip
-          nzTooltipTitle="Dislike"
-          nzType="dislike"
-          [nzTheme]="dislikes > 0 ? 'twotone' : 'outline'"
+      </tri-comment-action>
+      <tri-comment-action>
+        <tri-icon
+          tri-tooltip
+          tooltipTitle="Dislike"
+          type="dislike"
+          [theme]="dislikes > 0 ? 'twotone' : 'outline'"
           (click)="dislike()"
         />
         <span class="count dislike">{{ dislikes }}</span>
-      </nz-comment-action>
-      <nz-comment-action>Reply to</nz-comment-action>
-    </nz-comment>
+      </tri-comment-action>
+      <tri-comment-action>Reply to</tri-comment-action>
+    </tri-comment>
   `,
   styles: [
     `
@@ -59,7 +59,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     `
   ]
 })
-export class NzDemoCommentBasicComponent {
+export class TriDemoCommentBasicComponent {
   likes = 0;
   dislikes = 0;
   time = formatDistance(new Date(), new Date());

@@ -16,14 +16,14 @@ import {
   inject
 } from '@angular/core';
 
-import { NzHighlightPipe } from 'ng-zorro-antd/core/highlight';
-import { NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/core/tree';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriHighlightPipe } from 'ng-zorro-antd/core/highlight';
+import { TriTreeNode, TriTreeNodeOptions } from 'ng-zorro-antd/core/tree';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
-import { NzTreeDropIndicatorComponent } from './tree-drop-indicator.component';
+import { TriTreeDropIndicatorComponent } from './tree-drop-indicator.component';
 
 @Component({
-  selector: 'nz-tree-node-title',
+  selector: '',
   template: `
     <ng-template
       [ngTemplateOutlet]="treeTemplate"
@@ -32,26 +32,26 @@ import { NzTreeDropIndicatorComponent } from './tree-drop-indicator.component';
     @if (!treeTemplate) {
       @if (icon && showIcon) {
         <span
-          [class.ant-tree-icon__open]="isSwitcherOpen"
-          [class.ant-tree-icon__close]="isSwitcherClose"
-          [class.ant-tree-icon_loading]="isLoading"
-          [class.ant-select-tree-iconEle]="selectMode"
-          [class.ant-tree-iconEle]="!selectMode"
+          [class.tri-tree-icon__open]="isSwitcherOpen"
+          [class.tri-tree-icon__close]="isSwitcherClose"
+          [class.tri-tree-icon_loading]="isLoading"
+          [class.tri-select-tree-iconEle]="selectMode"
+          [class.tri-tree-iconEle]="!selectMode"
         >
           <span
-            [class.ant-select-tree-iconEle]="selectMode"
-            [class.ant-select-tree-icon__customize]="selectMode"
-            [class.ant-tree-iconEle]="!selectMode"
-            [class.ant-tree-icon__customize]="!selectMode"
+            [class.tri-select-tree-iconEle]="selectMode"
+            [class.tri-select-tree-icon__customize]="selectMode"
+            [class.tri-tree-iconEle]="!selectMode"
+            [class.tri-tree-icon__customize]="!selectMode"
           >
-            <nz-icon [nzType]="icon" />
+            <tri-icon [type]="icon" />
           </span>
         </span>
       }
-      <span class="ant-tree-title" [innerHTML]="title | nzHighlight: matchedValue : 'i' : 'font-highlight'"></span>
+      <span class="tri-tree-title" [innerHTML]="title | nzHighlight: matchedValue : 'i' : 'font-highlight'"></span>
     }
     @if (showIndicator) {
-      <nz-tree-drop-indicator [dropPosition]="dragPosition" [level]="context.level"></nz-tree-drop-indicator>
+      <tri-tree-drop-indicator [dropPosition]="dragPosition" [level]="context.level"></tri-tree-drop-indicator>
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -60,26 +60,26 @@ import { NzTreeDropIndicatorComponent } from './tree-drop-indicator.component';
     '[attr.draggable]': 'canDraggable',
     '[attr.aria-grabbed]': 'canDraggable',
     '[class.draggable]': 'canDraggable',
-    '[class.ant-select-tree-node-content-wrapper]': `selectMode`,
-    '[class.ant-select-tree-node-content-wrapper-open]': `selectMode && isSwitcherOpen`,
-    '[class.ant-select-tree-node-content-wrapper-close]': `selectMode && isSwitcherClose`,
-    '[class.ant-select-tree-node-selected]': `selectMode && isSelected`,
-    '[class.ant-tree-node-content-wrapper]': `!selectMode`,
-    '[class.ant-tree-node-content-wrapper-open]': `!selectMode && isSwitcherOpen`,
-    '[class.ant-tree-node-content-wrapper-close]': `!selectMode && isSwitcherClose`,
-    '[class.ant-tree-node-selected]': `!selectMode && isSelected`
+    '[class.tri-select-tree-node-content-wrapper]': `selectMode`,
+    '[class.tri-select-tree-node-content-wrapper-open]': `selectMode && isSwitcherOpen`,
+    '[class.tri-select-tree-node-content-wrapper-close]': `selectMode && isSwitcherClose`,
+    '[class.tri-select-tree-node-selected]': `selectMode && isSelected`,
+    '[class.tri-tree-node-content-wrapper]': `!selectMode`,
+    '[class.tri-tree-node-content-wrapper-open]': `!selectMode && isSwitcherOpen`,
+    '[class.tri-tree-node-content-wrapper-close]': `!selectMode && isSwitcherClose`,
+    '[class.tri-tree-node-selected]': `!selectMode && isSelected`
   },
-  imports: [NgTemplateOutlet, NzIconModule, NzHighlightPipe, NzTreeDropIndicatorComponent]
+  imports: [NgTemplateOutlet, TriIconModule, TriHighlightPipe, TriTreeDropIndicatorComponent]
 })
-export class NzTreeNodeTitleComponent implements OnChanges {
+export class TriTreeNodeTitleComponent implements OnChanges {
   private cdr = inject(ChangeDetectorRef);
 
   @Input() searchValue!: string;
-  @Input() treeTemplate: TemplateRef<{ $implicit: NzTreeNode; origin: NzTreeNodeOptions }> | null = null;
+  @Input() treeTemplate: TemplateRef<{ $implicit: TriTreeNode; origin: TriTreeNodeOptions }> | null = null;
   @Input({ transform: booleanAttribute }) draggable!: boolean;
   @Input({ transform: booleanAttribute }) showIcon!: boolean;
   @Input() selectMode = false;
-  @Input() context!: NzTreeNode;
+  @Input() context!: TriTreeNode;
   @Input() icon!: string;
   @Input() title!: string;
   @Input({ transform: booleanAttribute }) isLoading!: boolean;

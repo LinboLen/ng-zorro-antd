@@ -1,24 +1,24 @@
 import { Component } from '@angular/core';
 
-import { NzResizableModule, NzResizeDirection, NzResizeEvent } from 'ng-zorro-antd/resizable';
+import { TriResizableModule, TriResizeDirection, TriResizeEvent } from 'ng-zorro-antd/resizable';
 
 @Component({
-  selector: 'nz-demo-resizable-basic',
-  imports: [NzResizableModule],
+  selector: '',
+  imports: [TriResizableModule],
   template: `
     <div
       class="box"
-      nz-resizable
-      [nzMaxWidth]="600"
-      [nzMinWidth]="80"
-      [nzMaxHeight]="200"
-      [nzMinHeight]="80"
-      [nzDisabled]="disabled"
+      tri-resizable
+      [maxWidth]="600"
+      [minWidth]="80"
+      [maxHeight]="200"
+      [minHeight]="80"
+      [disabled]="disabled"
       [style.height.px]="height"
       [style.width.px]="width"
-      (nzResize)="onResize($event)"
+      (resize)="onResize($event)"
     >
-      <nz-resize-handles></nz-resize-handles>
+      <tri-resize-handles></tri-resize-handles>
       content
     </div>
   `,
@@ -38,14 +38,14 @@ import { NzResizableModule, NzResizeDirection, NzResizeEvent } from 'ng-zorro-an
     `
   ]
 })
-export class NzDemoResizableBasicComponent {
+export class TriDemoResizableBasicComponent {
   width = 400;
   height = 200;
   id = -1;
   disabled = false;
-  resizeDirection: NzResizeDirection | null = null;
+  resizeDirection: TriResizeDirection | null = null;
 
-  onResize({ width, height, direction }: NzResizeEvent): void {
+  onResize({ width, height, direction }: TriResizeEvent): void {
     cancelAnimationFrame(this.id);
     this.id = requestAnimationFrame(() => {
       this.width = width!;

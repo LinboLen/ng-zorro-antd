@@ -24,13 +24,13 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { NzConfigService, onConfigChangeEventForComponent } from 'ng-zorro-antd/core/config';
+import { TriConfigService, onConfigChangeEventForComponent } from 'ng-zorro-antd/core/config';
 import { requestAnimationFrame } from 'ng-zorro-antd/core/polyfill';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular, getElementOffset, isNotNil } from 'ng-zorro-antd/core/util';
 
 import { FADE_CLASS_NAME_MAP, MODAL_MASK_CLASS_NAME, NZ_CONFIG_MODULE_NAME, ZOOM_CLASS_NAME_MAP } from './modal-config';
-import { NzModalRef } from './modal-ref';
+import { TriModalRef } from './modal-ref';
 import { ModalOptions } from './modal-types';
 import { getValueWithConfig } from './utils';
 
@@ -48,7 +48,7 @@ export class BaseModalContainerComponent extends BasePortalOutlet {
   protected focusTrapFactory: FocusTrapFactory = inject(FocusTrapFactory);
   protected render: Renderer2 = inject(Renderer2);
   protected overlayRef: OverlayRef = inject(OverlayRef);
-  protected nzConfigService: NzConfigService = inject(NzConfigService);
+  protected configService: TriConfigService = inject(TriConfigService);
   protected animationType = inject(ANIMATION_MODULE_TYPE, { optional: true });
   protected destroyRef = inject(DestroyRef);
 
@@ -61,7 +61,7 @@ export class BaseModalContainerComponent extends BasePortalOutlet {
   okTriggered = new EventEmitter<void>();
 
   state: 'void' | 'enter' | 'exit' = 'enter';
-  modalRef!: NzModalRef;
+  modalRef!: TriModalRef;
   isStringContent: boolean = false;
   dir: Direction = 'ltr';
   private elementFocusedBeforeModalWasOpened: HTMLElement | null = null;
@@ -70,21 +70,21 @@ export class BaseModalContainerComponent extends BasePortalOutlet {
   private oldMaskStyle: Record<string, string> | null = null;
 
   get showMask(): boolean {
-    const defaultConfig: NzSafeAny = this.nzConfigService.getConfigForComponent(NZ_CONFIG_MODULE_NAME) || {};
+    const defaultConfig: TriSafeAny = this.configService.getConfigForComponent(NZ_CONFIG_MODULE_NAME) || {};
 
-    return !!getValueWithConfig<boolean>(this.config.nzMask, defaultConfig.nzMask, true);
+    return !!getValueWithConfig<boolean>(this.config.mask, defaultConfig.nzMask, true);
   }
 
   get maskClosable(): boolean {
-    const defaultConfig: NzSafeAny = this.nzConfigService.getConfigForComponent(NZ_CONFIG_MODULE_NAME) || {};
+    const defaultConfig: TriSafeAny = this.configService.getConfigForComponent(NZ_CONFIG_MODULE_NAME) || {};
 
-    return !!getValueWithConfig<boolean>(this.config.nzMaskClosable, defaultConfig.nzMaskClosable, true);
+    return !!getValueWithConfig<boolean>(this.config.maskClosable, defaultConfig.nzMaskClosable, true);
   }
 
   constructor() {
     super();
     this.dir = this.overlayRef.getDirection();
-    this.isStringContent = typeof this.config.nzContent === 'string';
+    this.isStringContent = typeof this.config.content === 'string';
 
     onConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME, () => this.updateMaskClassname());
 
@@ -135,7 +135,7 @@ export class BaseModalContainerComponent extends BasePortalOutlet {
   }
 
   private animationDisabled(): boolean {
-    return this.config.nzNoAnimation || this.animationType === 'NoopAnimations';
+    return this.config.noAnimation || this.animationType === 'NoopAnimations';
   }
 
   private setModalTransformOrigin(): void {
@@ -166,7 +166,7 @@ export class BaseModalContainerComponent extends BasePortalOutlet {
   private trapFocus(): void {
     const element = this.host.nativeElement;
 
-    if (this.config.nzAutofocus) {
+    if (this.config.autofocus) {
       this.focusTrap.focusInitialElementWhenReady();
     } else {
       const activeElement = this.document.activeElement;
@@ -256,8 +256,8 @@ export class BaseModalContainerComponent extends BasePortalOutlet {
   private setZIndexForBackdrop(): void {
     const backdropElement = this.overlayRef.backdropElement;
     if (backdropElement) {
-      if (isNotNil(this.config.nzZIndex)) {
-        this.render.setStyle(backdropElement, 'z-index', this.config.nzZIndex);
+      if (isNotNil(this.config.zIndex)) {
+        this.render.setStyle(backdropElement, 'z-index', this.config.zIndex);
       }
     }
   }
@@ -275,8 +275,8 @@ export class BaseModalContainerComponent extends BasePortalOutlet {
 
       this.setZIndexForBackdrop();
 
-      if (typeof this.config.nzMaskStyle === 'object' && Object.keys(this.config.nzMaskStyle).length) {
-        const styles: Record<string, string> = { ...this.config.nzMaskStyle };
+      if (typeof this.config.maskStyle === 'object' && Object.keys(this.config.maskStyle).length) {
+        const styles: Record<string, string> = { ...this.config.maskStyle };
         Object.keys(styles).forEach(key => {
           this.render.setStyle(backdropElement, key, styles[key]);
         });

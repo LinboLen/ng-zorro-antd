@@ -11,7 +11,7 @@ import { Observable, Observer, Subject } from 'rxjs';
  * Factory that creates a new ResizeObserver and allows us to stub it out in unit tests.
  */
 @Injectable({ providedIn: 'root' })
-export class NzResizeObserverFactory {
+export class TriResizeObserverFactory {
   create(callback: ResizeObserverCallback): ResizeObserver | null {
     return typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(callback);
   }
@@ -19,8 +19,8 @@ export class NzResizeObserverFactory {
 
 /** An injectable service that allows watching elements for changes to their content. */
 @Injectable({ providedIn: 'root' })
-export class NzResizeObserver {
-  private nzResizeObserverFactory = inject(NzResizeObserverFactory);
+export class TriResizeObserver {
+  private resizeObserverFactory = inject(TriResizeObserverFactory);
   private destroyRef = inject(DestroyRef);
   /** Keeps track of the existing ResizeObservers so they can be reused. */
   private observedElements = new Map<
@@ -57,7 +57,7 @@ export class NzResizeObserver {
   private observeElement(element: Element): Subject<ResizeObserverEntry[]> {
     if (!this.observedElements.has(element)) {
       const stream = new Subject<ResizeObserverEntry[]>();
-      const observer = this.nzResizeObserverFactory.create((mutations: ResizeObserverEntry[]) =>
+      const observer = this.resizeObserverFactory.create((mutations: ResizeObserverEntry[]) =>
         stream.next(mutations)
       );
       if (observer) {

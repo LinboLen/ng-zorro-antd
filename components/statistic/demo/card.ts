@@ -1,43 +1,43 @@
 import { DecimalPipe } from '@angular/common';
 import { Component } from '@angular/core';
 
-import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzStatisticModule } from 'ng-zorro-antd/statistic';
+import { TriCardModule } from 'ng-zorro-antd/card';
+import { TriGridModule } from 'ng-zorro-antd/grid';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriStatisticModule } from 'ng-zorro-antd/statistic';
 
 @Component({
-  selector: 'nz-demo-statistic-card',
-  imports: [DecimalPipe, NzCardModule, NzGridModule, NzIconModule, NzStatisticModule],
+  selector: '',
+  imports: [DecimalPipe, TriCardModule, TriGridModule, TriIconModule, TriStatisticModule],
   template: `
     <div style="background: #ECECEC; padding: 30px;">
-      <nz-row [nzGutter]="16">
-        <nz-col [nzSpan]="12">
-          <nz-card>
-            <nz-statistic
-              [nzValue]="(11.28 | number: '1.0-2')!"
-              nzTitle="Active"
-              [nzPrefix]="prefixTplOne"
-              nzSuffix="%"
-              [nzValueStyle]="{ color: '#3F8600' }"
-            ></nz-statistic>
-            <ng-template #prefixTplOne><nz-icon nzType="arrow-up" /></ng-template>
-          </nz-card>
-        </nz-col>
-        <nz-col [nzSpan]="12">
-          <nz-card>
-            <nz-statistic
-              [nzValue]="(9.3 | number: '1.0-2')!"
-              nzTitle="Idle"
-              [nzPrefix]="prefixTplTwo"
-              nzSuffix="%"
-              [nzValueStyle]="{ color: '#CF1322' }"
-            ></nz-statistic>
-            <ng-template #prefixTplTwo><nz-icon nzType="arrow-down" /></ng-template>
-          </nz-card>
-        </nz-col>
-      </nz-row>
+      <tri-row [gutter]="16">
+        <tri-col [span]="12">
+          <tri-card>
+            <tri-statistic
+              [value]="(11.28 | number: '1.0-2')!"
+              title="Active"
+              [prefix]="prefixTplOne"
+              suffix="%"
+              [valueStyle]="{ color: '#3F8600' }"
+            ></tri-statistic>
+            <ng-template #prefixTplOne><tri-icon type="arrow-up" /></ng-template>
+          </tri-card>
+        </tri-col>
+        <tri-col [span]="12">
+          <tri-card>
+            <tri-statistic
+              [value]="(9.3 | number: '1.0-2')!"
+              title="Idle"
+              [prefix]="prefixTplTwo"
+              suffix="%"
+              [valueStyle]="{ color: '#CF1322' }"
+            ></tri-statistic>
+            <ng-template #prefixTplTwo><tri-icon type="arrow-down" /></ng-template>
+          </tri-card>
+        </tri-col>
+      </tri-row>
     </div>
   `
 })
-export class NzDemoStatisticCardComponent {}
+export class TriDemoStatisticCardComponent {}

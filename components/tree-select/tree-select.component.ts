@@ -42,38 +42,38 @@ import { Subject, combineLatest, merge, of as observableOf } from 'rxjs';
 import { distinctUntilChanged, filter, map, startWith, tap, withLatestFrom } from 'rxjs/operators';
 
 import { slideMotion } from 'ng-zorro-antd/core/animation';
-import { NzConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
-import { NzFormItemFeedbackIconComponent, NzFormNoStatusService, NzFormStatusService } from 'ng-zorro-antd/core/form';
-import { NzNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
-import { NzOverlayModule, POSITION_MAP } from 'ng-zorro-antd/core/overlay';
+import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriOverlayModule, POSITION_MAP } from 'ng-zorro-antd/core/overlay';
 import { requestAnimationFrame } from 'ng-zorro-antd/core/polyfill';
 import {
-  NzFormatEmitEvent,
-  NzTreeBase,
+  TriFormatEmitEvent,
+  TriTreeBase,
   NzTreeHigherOrderServiceToken,
-  NzTreeNode,
-  NzTreeNodeOptions
+  TriTreeNode,
+  TriTreeNodeOptions
 } from 'ng-zorro-antd/core/tree';
 import {
   NgClassInterface,
   NgStyleInterface,
-  NzSizeLDSType,
-  NzStatus,
-  NzValidateStatus,
-  NzVariant,
+  TriSizeLDSType,
+  TriStatus,
+  TriValidateStatus,
+  TriVariant,
   OnChangeType,
   OnTouchedType
 } from 'ng-zorro-antd/core/types';
 import { getStatusClassNames, isNotNil } from 'ng-zorro-antd/core/util';
-import { NzEmptyModule } from 'ng-zorro-antd/empty';
-import { NzSelectModule, NzSelectSearchComponent } from 'ng-zorro-antd/select';
-import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, NzSpaceCompactItemDirective } from 'ng-zorro-antd/space';
-import { NzTreeComponent, NzTreeModule } from 'ng-zorro-antd/tree';
+import { TriEmptyModule } from 'ng-zorro-antd/empty';
+import { TriSelectModule, TriSelectSearchComponent } from 'ng-zorro-antd/select';
+import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
+import { TriTreeComponent, TriTreeModule } from 'ng-zorro-antd/tree';
 
-import { NzTreeSelectService } from './tree-select.service';
+import { TriTreeSelectService } from './tree-select.service';
 
-export type NzPlacementType = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' | '';
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'treeSelect';
+export type TriPlacementType = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' | '';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'treeSelect';
 const TREE_SELECT_DEFAULT_CLASS = 'ant-select-dropdown ant-select-tree-dropdown';
 const listOfPositions = [
   POSITION_MAP.bottomLeft,
@@ -83,31 +83,31 @@ const listOfPositions = [
 ];
 
 @Component({
-  selector: 'nz-tree-select',
-  exportAs: 'nzTreeSelect',
+  selector: '',
+  exportAs: 'triTreeSelect',
   imports: [
-    NzOverlayModule,
+    TriOverlayModule,
     CdkConnectedOverlay,
-    NzNoAnimationDirective,
-    NzTreeModule,
-    NzEmptyModule,
+    TriNoAnimationDirective,
+    TriTreeModule,
+    TriEmptyModule,
     CdkOverlayOrigin,
     SlicePipe,
-    NzSelectModule,
-    NzFormItemFeedbackIconComponent
+    TriSelectModule,
+    TriFormItemFeedbackIconComponent
   ],
   animations: [slideMotion],
   template: `
     <ng-template
       cdkConnectedOverlay
-      nzConnectedOverlay
-      [cdkConnectedOverlayHasBackdrop]="nzBackdrop"
+      connectedOverlay
+      [cdkConnectedOverlayHasBackdrop]="backdrop"
       [cdkConnectedOverlayOrigin]="cdkOverlayOrigin"
-      [cdkConnectedOverlayPositions]="nzPlacement ? positions : []"
-      [cdkConnectedOverlayOpen]="nzOpen"
+      [cdkConnectedOverlayPositions]="placement ? positions : []"
+      [cdkConnectedOverlayOpen]="open"
       [cdkConnectedOverlayTransformOriginOn]="'.ant-select-tree-dropdown'"
-      [cdkConnectedOverlayMinWidth]="$any(nzDropdownMatchSelectWidth ? null : triggerWidth)"
-      [cdkConnectedOverlayWidth]="$any(nzDropdownMatchSelectWidth ? triggerWidth : null)"
+      [cdkConnectedOverlayMinWidth]="$any(dropdownMatchSelectWidth ? null : triggerWidth)"
+      [cdkConnectedOverlayWidth]="$any(dropdownMatchSelectWidth ? triggerWidth : null)"
       (overlayOutsideClick)="onClickOutside($event)"
       (detach)="closeDropDown()"
       (positionChange)="onPositionChange($event)"
@@ -116,151 +116,151 @@ const listOfPositions = [
         [@slideMotion]="'enter'"
         [class]="dropdownClassName"
         [@.disabled]="!!noAnimation?.nzNoAnimation"
-        [nzNoAnimation]="noAnimation?.nzNoAnimation"
-        [class.ant-select-dropdown-placement-bottomLeft]="dropdownPosition === 'bottom'"
-        [class.ant-select-dropdown-placement-topLeft]="dropdownPosition === 'top'"
-        [class.ant-tree-select-dropdown-rtl]="dir === 'rtl'"
+        [noAnimation]="noAnimation?.nzNoAnimation"
+        [class.tri-select-dropdown-placement-bottomLeft]="dropdownPosition === 'bottom'"
+        [class.tri-select-dropdown-placement-topLeft]="dropdownPosition === 'top'"
+        [class.tri-tree-select-dropdown-rtl]="dir === 'rtl'"
         [dir]="dir"
-        [style]="nzDropdownStyle"
+        [style]="dropdownStyle"
       >
-        <nz-tree
+        <tri-tree
           #treeRef
           [hidden]="isNotFound"
-          nzNoAnimation
-          nzSelectMode
-          nzBlockNode
-          [nzData]="nzNodes"
-          [nzMultiple]="nzMultiple"
-          [nzSearchValue]="inputValue"
-          [nzHideUnMatched]="nzHideUnMatched"
-          [nzShowIcon]="nzShowIcon"
-          [nzCheckable]="nzCheckable"
-          [nzAsyncData]="nzAsyncData"
-          [nzShowExpand]="nzShowExpand"
-          [nzShowLine]="nzShowLine"
-          [nzExpandedIcon]="nzExpandedIcon"
-          [nzExpandAll]="nzDefaultExpandAll"
-          [nzExpandedKeys]="expandedKeys"
-          [nzCheckedKeys]="nzCheckable ? value : []"
-          [nzSelectedKeys]="!nzCheckable ? value : []"
-          [nzTreeTemplate]="treeTemplate"
-          [nzCheckStrictly]="nzCheckStrictly"
-          [nzVirtualItemSize]="nzVirtualItemSize"
-          [nzVirtualMaxBufferPx]="nzVirtualMaxBufferPx"
-          [nzVirtualMinBufferPx]="nzVirtualMinBufferPx"
-          [nzVirtualHeight]="nzVirtualHeight"
-          (nzExpandChange)="onExpandedKeysChange($event)"
-          (nzClick)="nzTreeClick.emit($event)"
-          (nzCheckedKeysChange)="updateSelectedNodes()"
-          (nzSelectedKeysChange)="updateSelectedNodes()"
-          (nzCheckboxChange)="nzTreeCheckboxChange.emit($event)"
-          (nzSearchValueChange)="setSearchValues($event)"
-        ></nz-tree>
-        @if (nzNodes.length === 0 || isNotFound) {
-          <span class="ant-select-not-found">
-            <nz-embed-empty [nzComponentName]="'tree-select'" [specificContent]="nzNotFoundContent"></nz-embed-empty>
+          noAnimation
+          selectMode
+          blockNode
+          [data]="nodes"
+          [multiple]="multiple"
+          [searchValue]="inputValue"
+          [hideUnMatched]="hideUnMatched"
+          [showIcon]="showIcon"
+          [checkable]="checkable"
+          [asyncData]="asyncData"
+          [showExpand]="showExpand"
+          [showLine]="showLine"
+          [expandedIcon]="expandedIcon"
+          [expandAll]="defaultExpandAll"
+          [expandedKeys]="expandedKeys"
+          [checkedKeys]="checkable ? value : []"
+          [selectedKeys]="!checkable ? value : []"
+          [treeTemplate]="treeTemplate"
+          [checkStrictly]="checkStrictly"
+          [virtualItemSize]="virtualItemSize"
+          [virtualMaxBufferPx]="virtualMaxBufferPx"
+          [virtualMinBufferPx]="virtualMinBufferPx"
+          [virtualHeight]="virtualHeight"
+          (expandChange)="onExpandedKeysChange($event)"
+          (click)="treeClick.emit($event)"
+          (checkedKeysChange)="updateSelectedNodes()"
+          (selectedKeysChange)="updateSelectedNodes()"
+          (checkboxChange)="treeCheckboxChange.emit($event)"
+          (searchValueChange)="setSearchValues($event)"
+        ></tri-tree>
+        @if (nodes.length === 0 || isNotFound) {
+          <span class="tri-select-not-found">
+            <tri-embed-empty [componentName]="'tree-select'" [specificContent]="notFoundContent"></tri-embed-empty>
           </span>
         }
       </div>
     </ng-template>
 
-    <div cdkOverlayOrigin class="ant-select-selector">
+    <div cdkOverlayOrigin class="tri-select-selector">
       @if (isMultiple) {
-        @for (node of selectedNodes | slice: 0 : nzMaxTagCount; track node.key) {
-          <nz-select-item
+        @for (node of selectedNodes | slice: 0 : maxTagCount; track node.key) {
+          <tri-select-item
             deletable
-            [disabled]="node.isDisabled || nzDisabled"
-            [label]="nzDisplayWith(node)"
+            [disabled]="node.isDisabled || disabled"
+            [label]="displayWith(node)"
             displayLabelInHtml
             (delete)="removeSelected(node, true)"
-          ></nz-select-item>
+          ></tri-select-item>
         }
-        @if (selectedNodes.length > nzMaxTagCount) {
-          <nz-select-item
-            [contentTemplateOutlet]="nzMaxTagPlaceholder"
-            [contentTemplateOutletContext]="selectedNodes | slice: nzMaxTagCount"
-            [label]="'+ ' + (selectedNodes.length - nzMaxTagCount) + ' ...'"
-          ></nz-select-item>
+        @if (selectedNodes.length > maxTagCount) {
+          <tri-select-item
+            [contentTemplateOutlet]="maxTagPlaceholder"
+            [contentTemplateOutletContext]="selectedNodes | slice: maxTagCount"
+            [label]="'+ ' + (selectedNodes.length - maxTagCount) + ' ...'"
+          ></tri-select-item>
         }
       }
 
-      <nz-select-search
-        [nzId]="nzId"
-        [showInput]="nzShowSearch"
+      <tri-select-search
+        [id]="id"
+        [showInput]="showSearch"
         (keydown)="onKeyDownInput($event)"
         (isComposingChange)="isComposingChange($event)"
         (valueChange)="setInputValue($event)"
         [value]="inputValue"
         [mirrorSync]="isMultiple"
-        [disabled]="nzDisabled"
-        [focusTrigger]="nzOpen"
-      ></nz-select-search>
+        [disabled]="disabled"
+        [focusTrigger]="open"
+      ></tri-select-search>
 
-      @if (nzPlaceHolder && selectedNodes.length === 0) {
-        <nz-select-placeholder
-          [placeholder]="nzPlaceHolder"
+      @if (placeHolder && selectedNodes.length === 0) {
+        <tri-select-placeholder
+          [placeholder]="placeHolder"
           [style.display]="placeHolderDisplay"
-        ></nz-select-placeholder>
+        ></tri-select-placeholder>
       }
 
       @if (!isMultiple && selectedNodes.length === 1 && !isComposing && inputValue === '') {
-        <nz-select-item [label]="nzDisplayWith(selectedNodes[0])" displayLabelInHtml></nz-select-item>
+        <tri-select-item [label]="displayWith(selectedNodes[0])" displayLabelInHtml></tri-select-item>
       }
 
       @if (!isMultiple) {
-        <nz-select-arrow></nz-select-arrow>
+        <tri-select-arrow></tri-select-arrow>
       }
       @if (!isMultiple || (hasFeedback && !!status)) {
-        <nz-select-arrow [showArrow]="!isMultiple" [feedbackIcon]="feedbackIconTpl">
+        <tri-select-arrow [showArrow]="!isMultiple" [feedbackIcon]="feedbackIconTpl">
           <ng-template #feedbackIconTpl>
             @if (hasFeedback && !!status) {
-              <nz-form-item-feedback-icon [status]="status"></nz-form-item-feedback-icon>
+              <tri-form-item-feedback-icon [status]="status"></tri-form-item-feedback-icon>
             }
           </ng-template>
-        </nz-select-arrow>
+        </tri-select-arrow>
       }
-      @if (nzAllowClear && !nzDisabled && selectedNodes.length) {
-        <nz-select-clear (clear)="onClearSelection()"></nz-select-clear>
+      @if (allowClear && !disabled && selectedNodes.length) {
+        <tri-select-clear (clear)="onClearSelection()"></tri-select-clear>
       }
     </div>
   `,
   providers: [
-    NzTreeSelectService,
+    TriTreeSelectService,
     { provide: NZ_SPACE_COMPACT_ITEM_TYPE, useValue: 'select' },
     {
       provide: NzTreeHigherOrderServiceToken,
-      useExisting: NzTreeSelectService
+      useExisting: TriTreeSelectService
     },
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NzTreeSelectComponent),
+      useExisting: forwardRef(() => TriTreeSelectComponent),
       multi: true
     }
   ],
   host: {
-    class: 'ant-select ant-tree-select',
-    '[class.ant-select-in-form-item]': '!!nzFormStatusService',
-    '[class.ant-select-rtl]': 'dir==="rtl"',
-    '[class.ant-select-lg]': 'finalSize() === "large"',
-    '[class.ant-select-sm]': 'finalSize() === "small"',
-    '[class.ant-select-disabled]': 'nzDisabled',
-    '[class.ant-select-single]': '!isMultiple',
-    '[class.ant-select-show-arrow]': '!isMultiple',
-    '[class.ant-select-show-search]': '!isMultiple',
-    '[class.ant-select-borderless]': 'nzVariant === "borderless"',
-    '[class.ant-select-filled]': 'nzVariant === "filled"',
-    '[class.ant-select-underlined]': 'nzVariant === "underlined"',
-    '[class.ant-select-multiple]': 'isMultiple',
-    '[class.ant-select-allow-clear]': 'nzAllowClear',
-    '[class.ant-select-open]': 'nzOpen',
-    '[class.ant-select-focused]': 'nzOpen || focused',
+    class: 'tri-select ant-tree-select',
+    '[class.tri-select-in-form-item]': '!!formStatusService',
+    '[class.tri-select-rtl]': 'dir==="rtl"',
+    '[class.tri-select-lg]': 'finalSize() === "large"',
+    '[class.tri-select-sm]': 'finalSize() === "small"',
+    '[class.tri-select-disabled]': 'disabled',
+    '[class.tri-select-single]': '!isMultiple',
+    '[class.tri-select-show-arrow]': '!isMultiple',
+    '[class.tri-select-show-search]': '!isMultiple',
+    '[class.tri-select-borderless]': 'variant === "borderless"',
+    '[class.tri-select-filled]': 'variant === "filled"',
+    '[class.tri-select-underlined]': 'variant === "underlined"',
+    '[class.tri-select-multiple]': 'isMultiple',
+    '[class.tri-select-allow-clear]': 'allowClear',
+    '[class.tri-select-open]': 'open',
+    '[class.tri-select-focused]': 'open || focused',
     '(click)': 'trigger()',
     '(keydown)': 'onKeydown($event)'
   },
-  hostDirectives: [NzSpaceCompactItemDirective]
+  hostDirectives: [TriSpaceCompactItemDirective]
 })
-export class NzTreeSelectComponent extends NzTreeBase implements ControlValueAccessor, OnInit, OnChanges {
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+export class TriTreeSelectComponent extends TriTreeBase implements ControlValueAccessor, OnInit, OnChanges {
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
 
   private renderer = inject(Renderer2);
   private cdr = inject(ChangeDetectorRef);
@@ -269,82 +269,82 @@ export class NzTreeSelectComponent extends NzTreeBase implements ControlValueAcc
   private focusMonitor = inject(FocusMonitor);
   private destroyRef = inject(DestroyRef);
 
-  @Input() nzId: string | null = null;
-  @Input({ transform: booleanAttribute }) nzAllowClear: boolean = true;
-  @Input({ transform: booleanAttribute }) nzShowExpand: boolean = true;
-  @Input({ transform: booleanAttribute }) nzShowLine: boolean = false;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzDropdownMatchSelectWidth: boolean = true;
-  @Input({ transform: booleanAttribute }) nzCheckable: boolean = false;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzHideUnMatched: boolean = false;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzShowIcon: boolean = false;
-  @Input({ transform: booleanAttribute }) nzShowSearch: boolean = false;
-  @Input({ transform: booleanAttribute }) nzDisabled = false;
-  @Input({ transform: booleanAttribute }) nzAsyncData = false;
-  @Input({ transform: booleanAttribute }) nzMultiple = false;
-  @Input({ transform: booleanAttribute }) nzDefaultExpandAll = false;
-  @Input({ transform: booleanAttribute }) nzCheckStrictly = false;
-  @Input() nzVirtualItemSize = 28;
-  @Input() nzVirtualMaxBufferPx = 500;
-  @Input() nzVirtualMinBufferPx = 28;
-  @Input() nzVirtualHeight: string | null = null;
-  @Input() nzExpandedIcon?: TemplateRef<{ $implicit: NzTreeNode; origin: NzTreeNodeOptions }>;
-  @Input() nzNotFoundContent?: string | TemplateRef<void>;
-  @Input() nzNodes: NzTreeNodeOptions[] | NzTreeNode[] = [];
-  @Input() nzOpen = false;
-  @Input() @WithConfig() nzSize: NzSizeLDSType = 'default';
-  @Input() @WithConfig() nzVariant: NzVariant = 'outlined';
-  @Input() nzPlaceHolder = '';
-  @Input() nzDropdownStyle: NgStyleInterface | null = null;
-  @Input() nzDropdownClassName?: string;
-  @Input() @WithConfig() nzBackdrop = false;
-  @Input() nzStatus: NzStatus = '';
-  @Input() nzPlacement: NzPlacementType = '';
+  @Input() id: string | null = null;
+  @Input({ transform: booleanAttribute }) allowClear: boolean = true;
+  @Input({ transform: booleanAttribute }) showExpand: boolean = true;
+  @Input({ transform: booleanAttribute }) showLine: boolean = false;
+  @Input({ transform: booleanAttribute }) @WithConfig() dropdownMatchSelectWidth: boolean = true;
+  @Input({ transform: booleanAttribute }) checkable: boolean = false;
+  @Input({ transform: booleanAttribute }) @WithConfig() hideUnMatched: boolean = false;
+  @Input({ transform: booleanAttribute }) @WithConfig() showIcon: boolean = false;
+  @Input({ transform: booleanAttribute }) showSearch: boolean = false;
+  @Input({ transform: booleanAttribute }) disabled = false;
+  @Input({ transform: booleanAttribute }) asyncData = false;
+  @Input({ transform: booleanAttribute }) multiple = false;
+  @Input({ transform: booleanAttribute }) defaultExpandAll = false;
+  @Input({ transform: booleanAttribute }) checkStrictly = false;
+  @Input() virtualItemSize = 28;
+  @Input() virtualMaxBufferPx = 500;
+  @Input() virtualMinBufferPx = 28;
+  @Input() virtualHeight: string | null = null;
+  @Input() expandedIcon?: TemplateRef<{ $implicit: TriTreeNode; origin: TriTreeNodeOptions }>;
+  @Input() notFoundContent?: string | TemplateRef<void>;
+  @Input() nodes: TriTreeNodeOptions[] | TriTreeNode[] = [];
+  @Input() open = false;
+  @Input() @WithConfig() size: TriSizeLDSType = 'default';
+  @Input() @WithConfig() variant: TriVariant = 'outlined';
+  @Input() placeHolder = '';
+  @Input() dropdownStyle: NgStyleInterface | null = null;
+  @Input() dropdownClassName?: string;
+  @Input() @WithConfig() backdrop = false;
+  @Input() status: TriStatus = '';
+  @Input() placement: TriPlacementType = '';
   @Input()
-  set nzExpandedKeys(value: string[]) {
-    this.expandedKeys = value;
+  set expandedKeys(value: string[]) {
+    this._expandedKeys = value;
   }
-  get nzExpandedKeys(): string[] {
-    return this.expandedKeys;
+  get expandedKeys(): string[] {
+    return this._expandedKeys;
   }
 
-  @Input() nzDisplayWith: (node: NzTreeNode) => string | undefined = (node: NzTreeNode) => node.title;
-  @Input({ transform: numberAttribute }) nzMaxTagCount!: number;
-  @Input() nzMaxTagPlaceholder: TemplateRef<{ $implicit: NzTreeNode[] }> | null = null;
-  @Output() readonly nzOpenChange = new EventEmitter<boolean>();
-  @Output() readonly nzCleared = new EventEmitter<void>();
-  @Output() readonly nzRemoved = new EventEmitter<NzTreeNode>();
-  @Output() readonly nzExpandChange = new EventEmitter<NzFormatEmitEvent>();
-  @Output() readonly nzTreeClick = new EventEmitter<NzFormatEmitEvent>();
-  @Output() readonly nzTreeCheckboxChange = new EventEmitter<NzFormatEmitEvent>();
+  @Input() displayWith: (node: TriTreeNode) => string | undefined = (node: TriTreeNode) => node.title;
+  @Input({ transform: numberAttribute }) maxTagCount!: number;
+  @Input() maxTagPlaceholder: TemplateRef<{ $implicit: TriTreeNode[] }> | null = null;
+  @Output() readonly openChange = new EventEmitter<boolean>();
+  @Output() readonly cleared = new EventEmitter<void>();
+  @Output() readonly removed = new EventEmitter<TriTreeNode>();
+  @Output() readonly expandChange = new EventEmitter<TriFormatEmitEvent>();
+  @Output() readonly treeClick = new EventEmitter<TriFormatEmitEvent>();
+  @Output() readonly treeCheckboxChange = new EventEmitter<TriFormatEmitEvent>();
 
-  @ViewChild(NzSelectSearchComponent, { static: false }) nzSelectSearchComponent!: NzSelectSearchComponent;
-  @ViewChild('treeRef', { static: false }) treeRef!: NzTreeComponent;
+  @ViewChild(TriSelectSearchComponent, { static: false }) selectSearchComponent!: TriSelectSearchComponent;
+  @ViewChild('treeRef', { static: false }) treeRef!: TriTreeComponent;
   @ViewChild(CdkOverlayOrigin, { static: true }) cdkOverlayOrigin!: CdkOverlayOrigin;
   @ViewChild(CdkConnectedOverlay, { static: false }) cdkConnectedOverlay!: CdkConnectedOverlay;
 
-  @Input() nzTreeTemplate!: TemplateRef<{ $implicit: NzTreeNode; origin: NzTreeNodeOptions }>;
-  @ContentChild('nzTreeTemplate', { static: true }) nzTreeTemplateChild!: TemplateRef<{
-    $implicit: NzTreeNode;
-    origin: NzTreeNodeOptions;
+  @Input() treeTemplate!: TemplateRef<{ $implicit: TriTreeNode; origin: TriTreeNodeOptions }>;
+  @ContentChild('nzTreeTemplate', { static: true }) treeTemplateChild!: TemplateRef<{
+    $implicit: TriTreeNode;
+    origin: TriTreeNodeOptions;
   }>;
-  get treeTemplate(): TemplateRef<{ $implicit: NzTreeNode; origin: NzTreeNodeOptions }> {
-    return this.nzTreeTemplate || this.nzTreeTemplateChild;
+  get _treeTemplate(): TemplateRef<{ $implicit: TriTreeNode; origin: TriTreeNodeOptions }> {
+    return this.treeTemplate || this.treeTemplateChild;
   }
 
   prefixCls: string = 'ant-select';
   statusCls: NgClassInterface = {};
-  status: NzValidateStatus = '';
+  _status: TriValidateStatus = '';
   hasFeedback: boolean = false;
 
-  dropdownClassName = TREE_SELECT_DEFAULT_CLASS;
+  _dropdownClassName = TREE_SELECT_DEFAULT_CLASS;
   triggerWidth?: number;
   isComposing = false;
   isNotFound = false;
   focused = false;
   inputValue = '';
   dropdownPosition: 'top' | 'center' | 'bottom' = 'bottom';
-  selectedNodes: NzTreeNode[] = [];
-  expandedKeys: string[] = [];
+  selectedNodes: TriTreeNode[] = [];
+  _expandedKeys: string[] = [];
   value: string[] = [];
   dir: Direction = 'ltr';
   positions: ConnectionPositionPair[] = [];
@@ -353,10 +353,10 @@ export class NzTreeSelectComponent extends NzTreeBase implements ControlValueAcc
     if (this.compactSize) {
       return this.compactSize();
     }
-    return this.size();
+    return this.#size();
   });
 
-  private size = signal<NzSizeLDSType>(this.nzSize);
+  #size = signal<TriSizeLDSType>(this.size);
   private compactSize = inject(NZ_SPACE_COMPACT_SIZE, { optional: true });
   private isNzDisableFirstChange: boolean = true;
   private isComposingChange$ = new Subject<boolean>();
@@ -370,35 +370,35 @@ export class NzTreeSelectComponent extends NzTreeBase implements ControlValueAcc
   }
 
   get isMultiple(): boolean {
-    return this.nzMultiple || this.nzCheckable;
+    return this.multiple || this.checkable;
   }
 
-  noAnimation = inject(NzNoAnimationDirective, { host: true, optional: true });
-  nzFormStatusService = inject(NzFormStatusService, { optional: true });
-  private nzFormNoStatusService = inject(NzFormNoStatusService, { optional: true });
+  noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
+  formStatusService = inject(TriFormStatusService, { optional: true });
+  private formNoStatusService = inject(TriFormNoStatusService, { optional: true });
 
   constructor() {
-    super(inject(NzTreeSelectService));
+    super(inject(TriTreeSelectService));
 
     this.destroyRef.onDestroy(() => {
       this.closeDropDown();
     });
 
     onConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME, () => {
-      this.size.set(this.nzSize);
+      this.#size.set(this.size);
       this.cdr.markForCheck();
     });
   }
 
   ngOnInit(): void {
-    this.size.set(this.nzSize);
+    this.#size.set(this.size);
 
-    this.nzFormStatusService?.formStatusChanges
+    this.formStatusService?.formStatusChanges
       .pipe(
         distinctUntilChanged((pre, cur) => {
           return pre.status === cur.status && pre.hasFeedback === cur.hasFeedback;
         }),
-        withLatestFrom(this.nzFormNoStatusService ? this.nzFormNoStatusService.noFormStatus : observableOf(false)),
+        withLatestFrom(this.formNoStatusService ? this.formNoStatusService.noFormStatus : observableOf(false)),
         map(([{ status, hasFeedback }, noStatus]) => ({ status: noStatus ? '' : status, hasFeedback })),
         takeUntilDestroyed(this.destroyRef)
       )
@@ -447,14 +447,14 @@ export class NzTreeSelectComponent extends NzTreeBase implements ControlValueAcc
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.nzDisabled = (this.isNzDisableFirstChange && this.nzDisabled) || isDisabled;
+    this.disabled = (this.isNzDisableFirstChange && this.disabled) || isDisabled;
     this.closeDropDown();
     this.isNzDisableFirstChange = false;
   }
 
-  private setStatusStyles(status: NzValidateStatus, hasFeedback: boolean): void {
+  private setStatusStyles(status: TriValidateStatus, hasFeedback: boolean): void {
     // set inner status
-    this.status = status;
+    this._status = status;
     this.hasFeedback = hasFeedback;
     this.cdr.markForCheck();
     // render status if nzStatus is set
@@ -473,20 +473,20 @@ export class NzTreeSelectComponent extends NzTreeBase implements ControlValueAcc
       this.updateSelectedNodes(true);
     }
     if (nzDropdownClassName) {
-      const className = this.nzDropdownClassName && this.nzDropdownClassName.trim();
-      this.dropdownClassName = className ? `${TREE_SELECT_DEFAULT_CLASS} ${className}` : TREE_SELECT_DEFAULT_CLASS;
+      const className = this.dropdownClassName && this.dropdownClassName.trim();
+      this._dropdownClassName = className ? `${TREE_SELECT_DEFAULT_CLASS} ${className}` : TREE_SELECT_DEFAULT_CLASS;
     }
     if (nzStatus) {
-      this.setStatusStyles(this.nzStatus, this.hasFeedback);
+      this.setStatusStyles(this.status, this.hasFeedback);
     }
 
-    if (nzPlacement && this.nzPlacement) {
-      if (POSITION_MAP[this.nzPlacement]) {
-        this.positions = [POSITION_MAP[this.nzPlacement]];
+    if (nzPlacement && this.placement) {
+      if (POSITION_MAP[this.placement]) {
+        this.positions = [POSITION_MAP[this.placement]];
       }
     }
     if (nzSize) {
-      this.size.set(nzSize.currentValue);
+      this.#size.set(nzSize.currentValue);
     }
   }
 
@@ -517,7 +517,7 @@ export class NzTreeSelectComponent extends NzTreeBase implements ControlValueAcc
   }
 
   onKeydown(event: KeyboardEvent): void {
-    if (this.nzDisabled) {
+    if (this.disabled) {
       return;
     }
     switch (event.keyCode) {
@@ -530,14 +530,14 @@ export class NzTreeSelectComponent extends NzTreeBase implements ControlValueAcc
         this.closeDropDown();
         break;
       default:
-        if (!this.nzOpen) {
+        if (!this.open) {
           this.openDropdown();
         }
     }
   }
 
   trigger(): void {
-    if (this.nzDisabled || (!this.nzDisabled && this.nzOpen)) {
+    if (this.disabled || (!this.disabled && this.open)) {
       this.closeDropDown();
     } else {
       this.openDropdown();
@@ -545,11 +545,11 @@ export class NzTreeSelectComponent extends NzTreeBase implements ControlValueAcc
   }
 
   openDropdown(): void {
-    if (!this.nzDisabled) {
-      this.nzOpen = true;
-      this.nzOpenChange.emit(this.nzOpen);
+    if (!this.disabled) {
+      this.open = true;
+      this.openChange.emit(this.open);
       this.updateCdkConnectedOverlayStatus();
-      if (this.nzShowSearch || this.isMultiple) {
+      if (this.showSearch || this.isMultiple) {
         this.focusOnInput();
       }
     }
@@ -559,10 +559,10 @@ export class NzTreeSelectComponent extends NzTreeBase implements ControlValueAcc
     Promise.resolve().then(() => {
       this.onTouched();
     });
-    this.nzOpen = false;
+    this.open = false;
     this.inputValue = '';
     this.isNotFound = false;
-    this.nzOpenChange.emit(this.nzOpen);
+    this.openChange.emit(this.open);
     this.cdr.markForCheck();
   }
 
@@ -580,66 +580,66 @@ export class NzTreeSelectComponent extends NzTreeBase implements ControlValueAcc
     }
   }
 
-  onExpandedKeysChange(value: NzFormatEmitEvent): void {
-    this.nzExpandChange.emit(value);
-    this.expandedKeys = [...value.keys!];
+  onExpandedKeysChange(value: TriFormatEmitEvent): void {
+    this.expandChange.emit(value);
+    this._expandedKeys = [...value.keys!];
   }
 
   setInputValue(value: string): void {
     this.searchValueChange$.next(value);
   }
 
-  removeSelected(node: NzTreeNode, emit: boolean = true): void {
+  removeSelected(node: TriTreeNode, emit: boolean = true): void {
     node.isSelected = false;
     node.isChecked = false;
-    if (this.nzCheckable) {
-      this.nzTreeService.conduct(node, this.nzCheckStrictly);
+    if (this.checkable) {
+      this.nzTreeService.conduct(node, this.checkStrictly);
     } else {
-      this.nzTreeService.setSelectedNodeList(node, this.nzMultiple);
+      this.nzTreeService.setSelectedNodeList(node, this.multiple);
     }
 
     if (emit) {
-      this.nzRemoved.emit(node);
+      this.removed.emit(node);
     }
   }
 
   focusOnInput(): void {
-    if (this.nzSelectSearchComponent) {
-      this.nzSelectSearchComponent.focus();
+    if (this.selectSearchComponent) {
+      this.selectSearchComponent.focus();
     }
   }
 
   subscribeSelectionChange(): void {
     merge(
-      this.nzTreeClick.pipe(
-        tap((event: NzFormatEmitEvent) => {
+      this.treeClick.pipe(
+        tap((event: TriFormatEmitEvent) => {
           const node = event.node!;
-          if (this.nzCheckable && !node.isDisabled && !node.isDisableCheckbox) {
+          if (this.checkable && !node.isDisabled && !node.isDisableCheckbox) {
             node.isChecked = !node.isChecked;
             node.isHalfChecked = false;
-            if (!this.nzCheckStrictly) {
+            if (!this.checkStrictly) {
               this.nzTreeService.conduct(node);
             }
           }
-          if (this.nzCheckable) {
+          if (this.checkable) {
             node.isSelected = false;
           }
         }),
-        filter((event: NzFormatEmitEvent) => {
+        filter((event: TriFormatEmitEvent) => {
           const node = event.node!;
-          return this.nzCheckable ? !node.isDisabled && !node.isDisableCheckbox : !node.isDisabled && node.isSelectable;
+          return this.checkable ? !node.isDisabled && !node.isDisableCheckbox : !node.isDisabled && node.isSelectable;
         })
       ),
-      this.nzCheckable ? this.nzTreeCheckboxChange.asObservable() : observableOf(),
-      this.nzCleared,
-      this.nzRemoved
+      this.checkable ? this.treeCheckboxChange.asObservable() : observableOf(),
+      this.cleared,
+      this.removed
     )
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
         this.updateSelectedNodes();
         const value = this.selectedNodes.map(node => node.key!);
         this.value = [...value];
-        if (this.nzShowSearch || this.isMultiple) {
+        if (this.showSearch || this.isMultiple) {
           this.inputValue = '';
           this.isNotFound = false;
         }
@@ -656,18 +656,18 @@ export class NzTreeSelectComponent extends NzTreeBase implements ControlValueAcc
 
   updateSelectedNodes(init: boolean = false): void {
     if (init) {
-      const nodes = this.coerceTreeNodes(this.nzNodes);
+      const nodes = this.coerceTreeNodes(this.nodes);
       this.nzTreeService.isMultiple = this.isMultiple;
-      this.nzTreeService.isCheckStrictly = this.nzCheckStrictly;
+      this.nzTreeService.isCheckStrictly = this.checkStrictly;
       this.nzTreeService.initTree(nodes);
-      if (this.nzCheckable) {
-        this.nzTreeService.conductCheck(this.value, this.nzCheckStrictly);
+      if (this.checkable) {
+        this.nzTreeService.conductCheck(this.value, this.checkStrictly);
       } else {
         this.nzTreeService.conductSelectedKeys(this.value, this.isMultiple);
       }
     }
 
-    this.selectedNodes = [...(this.nzCheckable ? this.getCheckedNodeList() : this.getSelectedNodeList())].sort(
+    this.selectedNodes = [...(this.checkable ? this.getCheckedNodeList() : this.getSelectedNodeList())].sort(
       (a, b) => {
         const indexA = this.value.indexOf(a.key);
         const indexB = this.value.indexOf(b.key);
@@ -699,7 +699,7 @@ export class NzTreeSelectComponent extends NzTreeBase implements ControlValueAcc
     this.selectedNodes.forEach(node => {
       this.removeSelected(node, false);
     });
-    this.nzCleared.emit();
+    this.cleared.emit();
   }
 
   onClickOutside(event: MouseEvent): void {
@@ -709,14 +709,14 @@ export class NzTreeSelectComponent extends NzTreeBase implements ControlValueAcc
     }
   }
 
-  setSearchValues($event: NzFormatEmitEvent): void {
+  setSearchValues($event: TriFormatEmitEvent): void {
     Promise.resolve().then(() => {
-      this.isNotFound = (this.nzShowSearch || this.isMultiple) && !!this.inputValue && $event.matchedKeys!.length === 0;
+      this.isNotFound = (this.showSearch || this.isMultiple) && !!this.inputValue && $event.matchedKeys!.length === 0;
     });
   }
 
   updateCdkConnectedOverlayStatus(): void {
-    if (!this.nzPlacement || !listOfPositions.includes(POSITION_MAP[this.nzPlacement])) {
+    if (!this.placement || !listOfPositions.includes(POSITION_MAP[this.placement])) {
       this.triggerWidth = this.cdkOverlayOrigin.elementRef.nativeElement.getBoundingClientRect().width;
     }
   }

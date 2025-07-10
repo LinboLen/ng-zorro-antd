@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
-  selector: 'nz-demo-switch-disabled',
-  imports: [FormsModule, NzButtonModule, NzSwitchModule],
+  selector: '',
+  imports: [FormsModule, TriButtonModule, TriSwitchModule],
   template: `
-    <nz-switch [(ngModel)]="switchValue" [nzDisabled]="isDisabled"></nz-switch>
+    <tri-switch [(ngModel)]="switchValue" [disabled]="isDisabled"></tri-switch>
     <br />
     <br />
-    <button nz-button nzType="primary" (click)="isDisabled = !isDisabled">Toggle disabled</button>
+    <button tri-button type="primary" (click)="isDisabled = !isDisabled">Toggle disabled</button>
   `
 })
-export class NzDemoSwitchDisabledComponent {
+export class TriDemoSwitchDisabledComponent {
   switchValue = false;
   isDisabled = true;
 }

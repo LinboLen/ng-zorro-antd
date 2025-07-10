@@ -6,30 +6,30 @@
 import { NgModule } from '@angular/core';
 
 import {
-  NzSkeletonElementAvatarComponent,
-  NzSkeletonElementButtonComponent,
-  NzSkeletonElementDirective,
-  NzSkeletonElementImageComponent,
-  NzSkeletonElementInputComponent
+  TriSkeletonElementAvatarComponent,
+  TriSkeletonElementButtonComponent,
+  TriSkeletonElementDirective,
+  TriSkeletonElementImageComponent,
+  TriSkeletonElementInputComponent
 } from './skeleton-element.component';
-import { NzSkeletonComponent } from './skeleton.component';
+import { TriSkeletonComponent } from './skeleton.component';
 
 @NgModule({
   imports: [
-    NzSkeletonElementDirective,
-    NzSkeletonComponent,
-    NzSkeletonElementButtonComponent,
-    NzSkeletonElementAvatarComponent,
-    NzSkeletonElementImageComponent,
-    NzSkeletonElementInputComponent
+    TriSkeletonElementDirective,
+    TriSkeletonComponent,
+    TriSkeletonElementButtonComponent,
+    TriSkeletonElementAvatarComponent,
+    TriSkeletonElementImageComponent,
+    TriSkeletonElementInputComponent
   ],
   exports: [
-    NzSkeletonElementDirective,
-    NzSkeletonComponent,
-    NzSkeletonElementButtonComponent,
-    NzSkeletonElementAvatarComponent,
-    NzSkeletonElementImageComponent,
-    NzSkeletonElementInputComponent
+    TriSkeletonElementDirective,
+    TriSkeletonComponent,
+    TriSkeletonElementButtonComponent,
+    TriSkeletonElementAvatarComponent,
+    TriSkeletonElementImageComponent,
+    TriSkeletonElementInputComponent
   ]
 })
-export class NzSkeletonModule {}
+export class TriSkeletonModule {}

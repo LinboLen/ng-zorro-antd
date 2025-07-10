@@ -1,25 +1,25 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { MentionOnSearchTypes, NzMentionModule } from 'ng-zorro-antd/mention';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { MentionOnSearchTypes, TriMentionModule } from 'ng-zorro-antd/mention';
 
 @Component({
-  selector: 'nz-demo-mention-prefix',
-  imports: [FormsModule, NzInputModule, NzMentionModule],
+  selector: '',
+  imports: [FormsModule, TriInputModule, TriMentionModule],
   template: `
-    <nz-mention [nzSuggestions]="suggestions" (nzOnSearchChange)="onSearchChange($event)" [nzPrefix]="['#', '@']">
+    <tri-mention [suggestions]="suggestions" (onSearchChange)="onSearchChange($event)" [prefix]="['#', '@']">
       <textarea
         rows="1"
         placeholder="input @ to mention people, # to mention tag"
-        nzMentionTrigger
-        nz-input
+        mentionTrigger
+        tri-input
         [(ngModel)]="inputValue"
       ></textarea>
-    </nz-mention>
+    </tri-mention>
   `
 })
-export class NzDemoMentionPrefixComponent {
+export class TriDemoMentionPrefixComponent {
   inputValue?: string;
   suggestions: string[] = [];
   users = ['afc163', 'benjycui', 'yiminghe', 'RaoHai', '中文', 'にほんご'];

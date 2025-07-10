@@ -1,26 +1,26 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { NzSelectModule, NzSelectPlacementType } from 'ng-zorro-antd/select';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
+import { TriSelectModule, TriSelectPlacementType } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: 'nz-demo-select-placement',
-  imports: [FormsModule, NzRadioModule, NzSelectModule],
+  selector: '',
+  imports: [FormsModule, TriRadioModule, TriSelectModule],
   template: `
-    <nz-radio-group [(ngModel)]="placement">
-      <label nz-radio-button nzValue="topLeft">topLeft</label>
-      <label nz-radio-button nzValue="topRight">topRight</label>
-      <label nz-radio-button nzValue="bottomLeft">bottomLeft</label>
-      <label nz-radio-button nzValue="bottomRight">bottomRight</label>
-    </nz-radio-group>
+    <tri-radio-group [(ngModel)]="placement">
+      <label tri-radio-button value="topLeft">topLeft</label>
+      <label tri-radio-button value="topRight">topRight</label>
+      <label tri-radio-button value="bottomLeft">bottomLeft</label>
+      <label tri-radio-button value="bottomRight">bottomRight</label>
+    </tri-radio-group>
     <br />
     <br />
-    <nz-select [(ngModel)]="selectedValue" [nzDropdownMatchSelectWidth]="false" [nzPlacement]="placement">
-      <nz-option nzValue="HangZhou" nzLabel="HangZhou #310000"></nz-option>
-      <nz-option nzValue="NingBo" nzLabel="NingBo #315000"></nz-option>
-      <nz-option nzValue="WenZhou" nzLabel="WenZhou #325000"></nz-option>
-    </nz-select>
+    <tri-select [(ngModel)]="selectedValue" [dropdownMatchSelectWidth]="false" [placement]="placement">
+      <tri-option value="HangZhou" label="HangZhou #310000"></tri-option>
+      <tri-option value="NingBo" label="NingBo #315000"></tri-option>
+      <tri-option value="WenZhou" label="WenZhou #325000"></tri-option>
+    </tri-select>
   `,
   styles: [
     `
@@ -30,7 +30,7 @@ import { NzSelectModule, NzSelectPlacementType } from 'ng-zorro-antd/select';
     `
   ]
 })
-export class NzDemoSelectPlacementComponent {
-  placement: NzSelectPlacementType = 'topLeft';
+export class TriDemoSelectPlacementComponent {
+  placement: TriSelectPlacementType = 'topLeft';
   selectedValue = 'HangZhou';
 }

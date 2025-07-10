@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 
-import { NzGridModule } from 'ng-zorro-antd/grid';
+import { TriGridModule } from 'ng-zorro-antd/grid';
 
 @Component({
-  selector: 'nz-demo-grid-flex-order',
-  imports: [NzGridModule],
+  selector: '',
+  imports: [TriGridModule],
   template: `
     <div>
-      <div nz-row>
-        <div nz-col nzSpan="6" nzOrder="4">1 col-order-4</div>
-        <div nz-col nzSpan="6" nzOrder="3">2 col-order-3</div>
-        <div nz-col nzSpan="6" nzOrder="2">3 col-order-2</div>
-        <div nz-col nzSpan="6" nzOrder="1">4 col-order-1</div>
+      <div tri-row>
+        <div tri-col span="6" order="4">1 col-order-4</div>
+        <div tri-col span="6" order="3">2 col-order-3</div>
+        <div tri-col span="6" order="2">3 col-order-2</div>
+        <div tri-col span="6" order="1">4 col-order-1</div>
       </div>
     </div>
   `,
@@ -23,4 +23,4 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
     `
   ]
 })
-export class NzDemoGridFlexOrderComponent {}
+export class TriDemoGridFlexOrderComponent {}

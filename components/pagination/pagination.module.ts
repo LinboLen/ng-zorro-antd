@@ -5,20 +5,20 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzPaginationDefaultComponent } from './pagination-default.component';
-import { NzPaginationItemComponent } from './pagination-item.component';
-import { NzPaginationOptionsComponent } from './pagination-options.component';
-import { NzPaginationSimpleComponent } from './pagination-simple.component';
-import { NzPaginationComponent } from './pagination.component';
+import { TriPaginationDefaultComponent } from './pagination-default.component';
+import { TriPaginationItemComponent } from './pagination-item.component';
+import { TriPaginationOptionsComponent } from './pagination-options.component';
+import { TriPaginationSimpleComponent } from './pagination-simple.component';
+import { TriPaginationComponent } from './pagination.component';
 
 @NgModule({
   imports: [
-    NzPaginationComponent,
-    NzPaginationSimpleComponent,
-    NzPaginationOptionsComponent,
-    NzPaginationItemComponent,
-    NzPaginationDefaultComponent
+    TriPaginationComponent,
+    TriPaginationSimpleComponent,
+    TriPaginationOptionsComponent,
+    TriPaginationItemComponent,
+    TriPaginationDefaultComponent
   ],
-  exports: [NzPaginationComponent]
+  exports: [TriPaginationComponent]
 })
-export class NzPaginationModule {}
+export class TriPaginationModule {}

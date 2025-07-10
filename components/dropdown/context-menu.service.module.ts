@@ -6,4 +6,4 @@
 import { NgModule } from '@angular/core';
 
 @NgModule()
-export class NzContextMenuServiceModule {}
+export class TriContextMenuServiceModule {}

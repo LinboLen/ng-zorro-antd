@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
 
 const defaultOptions = ['Daily', 'Weekly', 'Monthly'];
 
 @Component({
-  selector: 'nz-demo-segmented-dynamic',
-  imports: [NzButtonModule, NzSegmentedModule],
+  selector: '',
+  imports: [TriButtonModule, TriSegmentedModule],
   template: `
-    <nz-segmented [nzOptions]="options"></nz-segmented>
+    <tri-segmented [options]="options"></tri-segmented>
     <br />
-    <button nz-button nzType="primary" [disabled]="moreLoaded" (click)="handleLoadMore()"> Load more options </button>
+    <button tri-button type="primary" [disabled]="moreLoaded" (click)="handleLoadMore()"> Load more options </button>
   `,
   styles: [
     `
@@ -21,7 +21,7 @@ const defaultOptions = ['Daily', 'Weekly', 'Monthly'];
     `
   ]
 })
-export class NzDemoSegmentedDynamicComponent {
+export class TriDemoSegmentedDynamicComponent {
   options = [...defaultOptions];
 
   moreLoaded = false;

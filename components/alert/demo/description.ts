@@ -1,31 +1,31 @@
 import { Component } from '@angular/core';
 
-import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { TriAlertModule } from 'ng-zorro-antd/alert';
 
 @Component({
-  selector: 'nz-demo-alert-description',
-  imports: [NzAlertModule],
+  selector: '',
+  imports: [TriAlertModule],
   template: `
-    <nz-alert
-      nzType="success"
-      nzMessage="Success Text"
-      nzDescription="Success Description Success Description Success Description"
-    ></nz-alert>
-    <nz-alert
-      nzType="info"
-      nzMessage="Info Text"
-      nzDescription="Info Description Info Description Info Description Info Description"
-    ></nz-alert>
-    <nz-alert
-      nzType="warning"
-      nzMessage="Warning Text"
-      nzDescription="Warning Description Warning Description Warning Description Warning Description"
-    ></nz-alert>
-    <nz-alert
-      nzType="error"
-      nzMessage="Error Text"
-      nzDescription="Error Description Error Description Error Description Error Description"
-    ></nz-alert>
+    <tri-alert
+      type="success"
+      message="Success Text"
+      description="Success Description Success Description Success Description"
+    ></tri-alert>
+    <tri-alert
+      type="info"
+      message="Info Text"
+      description="Info Description Info Description Info Description Info Description"
+    ></tri-alert>
+    <tri-alert
+      type="warning"
+      message="Warning Text"
+      description="Warning Description Warning Description Warning Description Warning Description"
+    ></tri-alert>
+    <tri-alert
+      type="error"
+      message="Error Text"
+      description="Error Description Error Description Error Description Error Description"
+    ></tri-alert>
   `,
   styles: [
     `
@@ -35,4 +35,4 @@ import { NzAlertModule } from 'ng-zorro-antd/alert';
     `
   ]
 })
-export class NzDemoAlertDescriptionComponent {}
+export class TriDemoAlertDescriptionComponent {}

@@ -7,14 +7,14 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzGraphDataDef } from '../interface';
-import { NzGraphBaseSource } from './base-graph-source';
+import { TriGraphDataDef } from '../interface';
+import { TriGraphBaseSource } from './base-graph-source';
 
-export class NzGraphData implements NzGraphBaseSource<NzGraphDataDef, string> {
-  private _data = new BehaviorSubject<NzGraphDataDef>({} as NzGraphDataDef);
-  dataSource!: NzGraphDataDef;
+export class TriGraphData implements TriGraphBaseSource<TriGraphDataDef, string> {
+  private _data = new BehaviorSubject<TriGraphDataDef>({} as TriGraphDataDef);
+  dataSource!: TriGraphDataDef;
   /** A selection model with multi-selection to track expansion status. */
   expansionModel: SelectionModel<string> = new SelectionModel<string>(true);
 
@@ -51,13 +51,13 @@ export class NzGraphData implements NzGraphBaseSource<NzGraphDataDef, string> {
     this.expansionModel.select(...Object.keys(this._data.value.compound || {}));
   }
 
-  setData(data: NzGraphDataDef): void {
+  setData(data: TriGraphDataDef): void {
     this.expansionModel?.clear();
     this.dataSource = data;
     this._data.next(data);
   }
 
-  constructor(source?: NzGraphDataDef) {
+  constructor(source?: TriGraphDataDef) {
     if (source) {
       this.expansionModel?.clear();
       this.dataSource = source;
@@ -65,7 +65,7 @@ export class NzGraphData implements NzGraphBaseSource<NzGraphDataDef, string> {
     }
   }
 
-  connect(): Observable<NzGraphDataDef> {
+  connect(): Observable<TriGraphDataDef> {
     const changes = [this._data, this.expansionModel.changed];
     return merge(...changes).pipe(map(() => this._data.value));
   }
@@ -74,7 +74,7 @@ export class NzGraphData implements NzGraphBaseSource<NzGraphDataDef, string> {
     // do nothing for now
   }
 
-  private findParents(data: NzSafeAny, key: string, parents: string[] = []): string[] {
+  private findParents(data: TriSafeAny, key: string, parents: string[] = []): string[] {
     const parent = Object.keys(data)
       .filter(d => d !== key)
       .find(d => data[d].includes(key));
@@ -85,7 +85,7 @@ export class NzGraphData implements NzGraphBaseSource<NzGraphDataDef, string> {
     }
   }
 
-  private findChildren(data: NzSafeAny, key: string, children: string[] = []): string[] {
+  private findChildren(data: TriSafeAny, key: string, children: string[] = []): string[] {
     const groupIds = Object.keys(data);
     const child = (data[key] || []).filter((c: string) => groupIds.includes(c));
     if (child && child.length > 0) {

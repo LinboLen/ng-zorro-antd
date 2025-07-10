@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
-import { NzTableModule } from 'ng-zorro-antd/table';
+import { TriTableModule } from 'ng-zorro-antd/table';
 
 @Component({
-  selector: 'nz-demo-table-colspan-rowspan',
-  imports: [NzTableModule],
+  selector: '',
+  imports: [TriTableModule],
   template: `
-    <nz-table #colSpanTable [nzData]="listOfData" nzBordered>
+    <tri-table #colSpanTable [data]="listOfData" bordered>
       <thead>
         <tr>
           <th>Name</th>
@@ -44,10 +44,10 @@ import { NzTableModule } from 'ng-zorro-antd/table';
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `
 })
-export class NzDemoTableColspanRowspanComponent {
+export class TriDemoTableColspanRowspanComponent {
   listOfData = [
     {
       key: '1',

@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
-  selector: 'nz-demo-notification-with-icon',
-  imports: [NzButtonModule],
+  selector: '',
+  imports: [TriButtonModule],
   template: `
-    <button nz-button (click)="createNotification('success')">Success</button>
-    <button nz-button (click)="createNotification('info')">Info</button>
-    <button nz-button (click)="createNotification('warning')">Warning</button>
-    <button nz-button (click)="createNotification('error')">Error</button>
+    <button tri-button (click)="createNotification('success')">Success</button>
+    <button tri-button (click)="createNotification('info')">Info</button>
+    <button tri-button (click)="createNotification('warning')">Warning</button>
+    <button tri-button (click)="createNotification('error')">Error</button>
   `,
   styles: [
     `
@@ -20,8 +20,8 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
     `
   ]
 })
-export class NzDemoNotificationWithIconComponent {
-  constructor(private notification: NzNotificationService) {}
+export class TriDemoNotificationWithIconComponent {
+  constructor(private notification: TriNotificationService) {}
 
   createNotification(type: string): void {
     this.notification.create(

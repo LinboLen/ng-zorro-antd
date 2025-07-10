@@ -1,25 +1,25 @@
 import { Component } from '@angular/core';
 
-import { NzFormatEmitEvent, NzTreeModule } from 'ng-zorro-antd/tree';
+import { TriFormatEmitEvent, TriTreeModule } from 'ng-zorro-antd/tree';
 
 @Component({
-  selector: 'nz-demo-tree-basic-controlled',
-  imports: [NzTreeModule],
+  selector: '',
+  imports: [TriTreeModule],
   template: `
-    <nz-tree
-      [nzData]="nodes"
-      nzCheckable
-      nzMultiple
-      [nzCheckedKeys]="defaultCheckedKeys"
-      [nzExpandedKeys]="defaultExpandedKeys"
-      [nzSelectedKeys]="defaultSelectedKeys"
-      (nzClick)="nzEvent($event)"
-      (nzExpandChange)="nzEvent($event)"
-      (nzCheckboxChange)="nzEvent($event)"
-    ></nz-tree>
+    <tri-tree
+      [data]="nodes"
+      checkable
+      multiple
+      [checkedKeys]="defaultCheckedKeys"
+      [expandedKeys]="defaultExpandedKeys"
+      [selectedKeys]="defaultSelectedKeys"
+      (click)="event($event)"
+      (expandChange)="event($event)"
+      (checkboxChange)="event($event)"
+    ></tri-tree>
   `
 })
-export class NzDemoTreeBasicControlledComponent {
+export class TriDemoTreeBasicControlledComponent {
   defaultCheckedKeys = ['0-0-0'];
   defaultSelectedKeys = ['0-0-0'];
   defaultExpandedKeys = ['0-0', '0-0-0', '0-0-1'];
@@ -71,7 +71,7 @@ export class NzDemoTreeBasicControlledComponent {
     }
   ];
 
-  nzEvent(event: NzFormatEmitEvent): void {
+  event(event: TriFormatEmitEvent): void {
     console.log(event);
   }
 }

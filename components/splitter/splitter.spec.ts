@@ -11,8 +11,8 @@ import { Subject } from 'rxjs';
 
 import { dispatchMouseEvent, dispatchTouchEvent, MockNgZone } from 'ng-zorro-antd/core/testing';
 
-import { NzSplitterModule } from './splitter.module';
-import { NzSplitterCollapsible } from './typings';
+import { TriSplitterModule } from './splitter.module';
+import { TriSplitterCollapsible } from './typings';
 
 interface PanelProps {
   defaultSize?: number | string;
@@ -20,32 +20,32 @@ interface PanelProps {
   max?: number | string;
   size?: number | string;
   resizable?: boolean;
-  collapsible?: NzSplitterCollapsible;
+  collapsible?: TriSplitterCollapsible;
 }
 
 @Component({
-  imports: [BidiModule, NzSplitterModule],
+  imports: [BidiModule, TriSplitterModule],
   template: `
-    <nz-splitter
-      [nzLazy]="lazy"
-      [nzLayout]="vertical ? 'vertical' : 'horizontal'"
-      (nzResizeStart)="onResizeStart($event)"
-      (nzResize)="onResize($event)"
-      (nzResizeEnd)="onResizeEnd($event)"
+    <tri-splitter
+      [lazy]="lazy"
+      [layout]="vertical ? 'vertical' : 'horizontal'"
+      (resizeStart)="onResizeStart($event)"
+      (resize)="onResize($event)"
+      (resizeEnd)="onResizeEnd($event)"
     >
       @for (panel of panels; track $index) {
-        <nz-splitter-panel
-          [nzDefaultSize]="panel.defaultSize"
-          [nzMin]="panel.min"
-          [nzMax]="panel.max"
-          [nzSize]="panel.size"
-          [nzResizable]="panel.resizable ?? true"
-          [nzCollapsible]="panel.collapsible ?? false"
+        <tri-splitter-panel
+          [defaultSize]="panel.defaultSize"
+          [min]="panel.min"
+          [max]="panel.max"
+          [size]="panel.size"
+          [resizable]="panel.resizable ?? true"
+          [collapsible]="panel.collapsible ?? false"
         >
           {{ $index }}
-        </nz-splitter-panel>
+        </tri-splitter-panel>
       }
-    </nz-splitter>
+    </tri-splitter>
   `,
   styles: `
     @import '../style/testing.less';
@@ -57,7 +57,7 @@ interface PanelProps {
     }
   `
 })
-class NzSplitterTestComponent {
+class TriSplitterTestComponent {
   vertical = false;
   lazy = false;
   panels: PanelProps[] = [{}, {}];
@@ -73,8 +73,8 @@ class MockDirectionality {
 
 /* -------------------------- Test Cases -------------------------- */
 describe('nz-splitter', () => {
-  let fixture: ComponentFixture<NzSplitterTestComponent>;
-  let component: NzSplitterTestComponent;
+  let fixture: ComponentFixture<TriSplitterTestComponent>;
+  let component: TriSplitterTestComponent;
   let container: DebugElement;
   let document: Document;
 
@@ -128,7 +128,7 @@ describe('nz-splitter', () => {
           }
         ]
       });
-      fixture = TestBed.createComponent(NzSplitterTestComponent);
+      fixture = TestBed.createComponent(TriSplitterTestComponent);
       document = TestBed.inject(DOCUMENT);
       container = fixture.debugElement;
       component = fixture.componentInstance;
@@ -606,7 +606,7 @@ describe('nz-splitter', () => {
           }
         ]
       });
-      fixture = TestBed.createComponent(NzSplitterTestComponent);
+      fixture = TestBed.createComponent(TriSplitterTestComponent);
       container = fixture.debugElement;
       component = fixture.componentInstance;
 

@@ -1,27 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzTransferModule, TransferItem } from 'ng-zorro-antd/transfer';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriTransferModule, TransferItem } from 'ng-zorro-antd/transfer';
 
 @Component({
-  selector: 'nz-demo-transfer-custom-item',
-  imports: [NzIconModule, NzTransferModule],
+  selector: '',
+  imports: [TriIconModule, TriTransferModule],
   template: `
-    <nz-transfer
-      [nzDataSource]="list"
-      [nzListStyle]="{ 'width.px': 300, 'height.px': 300 }"
-      [nzRender]="render"
-      (nzSelectChange)="select($event)"
-      (nzChange)="change($event)"
+    <tri-transfer
+      [dataSource]="list"
+      [listStyle]="{ 'width.px': 300, 'height.px': 300 }"
+      [render]="render"
+      (selectChange)="select($event)"
+      (change)="change($event)"
     >
       <ng-template #render let-item>
-        <nz-icon nzType="{{ item.icon }}" />
+        <tri-icon type="{{ item.icon }}" />
         {{ item.title }}
       </ng-template>
-    </nz-transfer>
+    </tri-transfer>
   `
 })
-export class NzDemoTransferCustomItemComponent implements OnInit {
+export class TriDemoTransferCustomItemComponent implements OnInit {
   list: Array<TransferItem & { description: string; icon: string }> = [];
 
   ngOnInit(): void {

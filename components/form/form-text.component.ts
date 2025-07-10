@@ -6,13 +6,13 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'nz-form-text',
-  exportAs: 'nzFormText',
+  selector: '',
+  exportAs: 'triFormText',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `<ng-content></ng-content>`,
   host: {
-    class: 'ant-form-text'
+    class: 'tri-form-text'
   }
 })
-export class NzFormTextComponent {}
+export class TriFormTextComponent {}

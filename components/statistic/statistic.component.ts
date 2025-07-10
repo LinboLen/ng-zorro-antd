@@ -18,54 +18,54 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { NgStyleInterface } from 'ng-zorro-antd/core/types';
-import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { TriSkeletonModule } from 'ng-zorro-antd/skeleton';
 
-import { NzStatisticNumberComponent } from './statistic-number.component';
-import { NzStatisticValueType } from './typings';
+import { TriStatisticNumberComponent } from './statistic-number.component';
+import { TriStatisticValueType } from './typings';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-statistic',
-  exportAs: 'nzStatistic',
+  selector: '',
+  exportAs: 'triStatistic',
   template: `
-    <div class="ant-statistic-title">
-      <ng-container *nzStringTemplateOutlet="nzTitle">{{ nzTitle }}</ng-container>
+    <div class="tri-statistic-title">
+      <ng-container *stringTemplateOutlet="title">{{ title }}</ng-container>
     </div>
-    @if (nzLoading) {
-      <nz-skeleton class="ant-statistic-skeleton" [nzParagraph]="false" />
+    @if (loading) {
+      <tri-skeleton class="tri-statistic-skeleton" [paragraph]="false" />
     } @else {
-      <div class="ant-statistic-content" [style]="nzValueStyle">
-        @if (nzPrefix) {
-          <span class="ant-statistic-content-prefix">
-            <ng-container *nzStringTemplateOutlet="nzPrefix">{{ nzPrefix }}</ng-container>
+      <div class="tri-statistic-content" [style]="valueStyle">
+        @if (prefix) {
+          <span class="tri-statistic-content-prefix">
+            <ng-container *stringTemplateOutlet="prefix">{{ prefix }}</ng-container>
           </span>
         }
-        <nz-statistic-number [nzValue]="nzValue" [nzValueTemplate]="nzValueTemplate"></nz-statistic-number>
-        @if (nzSuffix) {
-          <span class="ant-statistic-content-suffix">
-            <ng-container *nzStringTemplateOutlet="nzSuffix">{{ nzSuffix }}</ng-container>
+        <tri-statistic-number [value]="value" [valueTemplate]="valueTemplate"></tri-statistic-number>
+        @if (suffix) {
+          <span class="tri-statistic-content-suffix">
+            <ng-container *stringTemplateOutlet="suffix">{{ suffix }}</ng-container>
           </span>
         }
       </div>
     }
   `,
   host: {
-    class: 'ant-statistic',
-    '[class.ant-statistic-rtl]': `dir === 'rtl'`
+    class: 'tri-statistic',
+    '[class.tri-statistic-rtl]': `dir === 'rtl'`
   },
-  imports: [NzSkeletonModule, NzStatisticNumberComponent, NzOutletModule]
+  imports: [TriSkeletonModule, TriStatisticNumberComponent, TriOutletModule]
 })
-export class NzStatisticComponent implements OnInit {
-  @Input() nzPrefix?: string | TemplateRef<void>;
-  @Input() nzSuffix?: string | TemplateRef<void>;
-  @Input() nzTitle?: string | TemplateRef<void>;
-  @Input() nzValue?: NzStatisticValueType;
-  @Input() nzValueStyle: NgStyleInterface = {};
-  @Input() nzValueTemplate?: TemplateRef<{ $implicit: NzStatisticValueType }>;
-  @Input({ transform: booleanAttribute }) nzLoading: boolean = false;
+export class TriStatisticComponent implements OnInit {
+  @Input() prefix?: string | TemplateRef<void>;
+  @Input() suffix?: string | TemplateRef<void>;
+  @Input() title?: string | TemplateRef<void>;
+  @Input() value?: TriStatisticValueType;
+  @Input() valueStyle: NgStyleInterface = {};
+  @Input() valueTemplate?: TemplateRef<{ $implicit: TriStatisticValueType }>;
+  @Input({ transform: booleanAttribute }) loading: boolean = false;
   dir: Direction = 'ltr';
 
   protected cdr = inject(ChangeDetectorRef);

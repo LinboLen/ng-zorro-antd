@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { NzTableModule, NzTableQueryParams } from 'ng-zorro-antd/table';
+import { TriTableModule, TriTableQueryParams } from 'ng-zorro-antd/table';
 
 interface RandomUser {
   gender: string;
@@ -16,24 +16,24 @@ interface RandomUser {
 }
 
 @Component({
-  selector: 'nz-demo-table-ajax',
-  imports: [NzTableModule],
+  selector: '',
+  imports: [TriTableModule],
   template: `
-    <nz-table
-      nzShowSizeChanger
-      [nzData]="listOfRandomUser"
-      [nzFrontPagination]="false"
-      [nzLoading]="loading"
-      [nzTotal]="total"
-      [nzPageSize]="pageSize"
-      [nzPageIndex]="pageIndex"
-      (nzQueryParams)="onQueryParamsChange($event)"
+    <tri-table
+      showSizeChanger
+      [data]="listOfRandomUser"
+      [frontPagination]="false"
+      [loading]="loading"
+      [total]="total"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      (queryParams)="onQueryParamsChange($event)"
     >
       <thead>
         <tr>
-          <th nzColumnKey="name" [nzSortFn]="true">Name</th>
-          <th nzColumnKey="gender" [nzFilters]="filterGender" [nzFilterFn]="true">Gender</th>
-          <th nzColumnKey="email" [nzSortFn]="true">Email</th>
+          <th columnKey="name" [sortFn]="true">Name</th>
+          <th columnKey="gender" [filters]="filterGender" [filterFn]="true">Gender</th>
+          <th columnKey="email" [sortFn]="true">Email</th>
         </tr>
       </thead>
       <tbody>
@@ -45,10 +45,10 @@ interface RandomUser {
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `
 })
-export class NzDemoTableAjaxComponent implements OnInit {
+export class TriDemoTableAjaxComponent implements OnInit {
   total = 1;
   listOfRandomUser: RandomUser[] = [];
   loading = true;
@@ -74,7 +74,7 @@ export class NzDemoTableAjaxComponent implements OnInit {
     });
   }
 
-  onQueryParamsChange(params: NzTableQueryParams): void {
+  onQueryParamsChange(params: TriTableQueryParams): void {
     console.log(params);
     const { pageSize, pageIndex, sort, filter } = params;
     const currentSort = sort.find(item => item.value !== null);

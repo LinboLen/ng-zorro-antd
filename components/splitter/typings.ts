@@ -3,10 +3,10 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export type NzSplitterLayout = 'horizontal' | 'vertical';
-export type NzSplitterCollapsible = boolean | NzSplitterCollapseOption;
+export type TriSplitterLayout = 'horizontal' | 'vertical';
+export type TriSplitterCollapsible = boolean | TriSplitterCollapseOption;
 
-export interface NzSplitterCollapseOption {
+export interface TriSplitterCollapseOption {
   start?: boolean;
   end?: boolean;
 }

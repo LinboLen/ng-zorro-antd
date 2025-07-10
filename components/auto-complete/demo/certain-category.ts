@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { TriAutocompleteModule } from 'ng-zorro-antd/auto-complete';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriInputModule } from 'ng-zorro-antd/input';
 
 interface AutocompleteOptionGroups {
   title: string;
@@ -12,26 +12,26 @@ interface AutocompleteOptionGroups {
 }
 
 @Component({
-  selector: 'nz-demo-auto-complete-certain-category',
-  imports: [FormsModule, NzAutocompleteModule, NzIconModule, NzInputModule],
+  selector: '',
+  imports: [FormsModule, TriAutocompleteModule, TriIconModule, TriInputModule],
   encapsulation: ViewEncapsulation.None,
   template: `
     <div class="example-input">
-      <nz-input-group nzSize="large" [nzSuffix]="suffixIcon">
+      <tri-input-group size="large" [suffix]="suffixIcon">
         <input
           placeholder="input here"
-          nz-input
+          tri-input
           [(ngModel)]="inputValue"
           (ngModelChange)="onChange($event)"
-          [nzAutocomplete]="auto"
+          [autocomplete]="auto"
         />
-      </nz-input-group>
+      </tri-input-group>
       <ng-template #suffixIcon>
-        <nz-icon nzType="search" />
+        <tri-icon type="search" />
       </ng-template>
-      <nz-autocomplete #auto>
+      <tri-autocomplete #auto>
         @for (group of optionGroups; track group.title) {
-          <nz-auto-optgroup [nzLabel]="groupTitle">
+          <tri-auto-optgroup [label]="groupTitle">
             <ng-template #groupTitle>
               <span>
                 {{ group.title }}
@@ -39,14 +39,14 @@ interface AutocompleteOptionGroups {
               </span>
             </ng-template>
             @for (option of group.children; track option.title) {
-              <nz-auto-option [nzLabel]="option.title" [nzValue]="option.title">
+              <tri-auto-option [label]="option.title" [value]="option.title">
                 {{ option.title }}
                 <span class="certain-search-item-count">{{ option.count }} 人 关注</span>
-              </nz-auto-option>
+              </tri-auto-option>
             }
-          </nz-auto-optgroup>
+          </tri-auto-optgroup>
         }
-      </nz-autocomplete>
+      </tri-autocomplete>
     </div>
   `,
   styles: [
@@ -63,7 +63,7 @@ interface AutocompleteOptionGroups {
     `
   ]
 })
-export class NzDemoAutoCompleteCertainCategoryComponent implements OnInit {
+export class TriDemoAutoCompleteCertainCategoryComponent implements OnInit {
   inputValue?: string;
   optionGroups: AutocompleteOptionGroups[] = [];
 

@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriModalModule, TriModalService } from 'ng-zorro-antd/modal';
 
 @Component({
-  selector: 'nz-demo-modal-confirm',
-  imports: [NzButtonModule, NzModalModule],
+  selector: '',
+  imports: [TriButtonModule, TriModalModule],
   template: `
-    <button nz-button nzType="primary" (click)="showConfirm()">Confirm</button>
-    <button nz-button nzType="dashed" (click)="showDeleteConfirm()">Delete</button>
+    <button tri-button type="primary" (click)="showConfirm()">Confirm</button>
+    <button tri-button type="dashed" (click)="showDeleteConfirm()">Delete</button>
   `,
   styles: [
     `
@@ -18,27 +18,27 @@ import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
     `
   ]
 })
-export class NzDemoModalConfirmComponent {
-  constructor(private modal: NzModalService) {}
+export class TriDemoModalConfirmComponent {
+  constructor(private modal: TriModalService) {}
 
   showConfirm(): void {
     this.modal.confirm({
-      nzTitle: '<i>Do you Want to delete these items?</i>',
-      nzContent: '<b>Some descriptions</b>',
-      nzOnOk: () => console.log('OK')
+      title: '<i>Do you Want to delete these items?</i>',
+      content: '<b>Some descriptions</b>',
+      onOk: () => console.log('OK')
     });
   }
 
   showDeleteConfirm(): void {
     this.modal.confirm({
-      nzTitle: 'Are you sure delete this task?',
-      nzContent: '<b style="color: red;">Some descriptions</b>',
-      nzOkText: 'Yes',
-      nzOkType: 'primary',
-      nzOkDanger: true,
-      nzOnOk: () => console.log('OK'),
-      nzCancelText: 'No',
-      nzOnCancel: () => console.log('Cancel')
+      title: 'Are you sure delete this task?',
+      content: '<b style="color: red;">Some descriptions</b>',
+      okText: 'Yes',
+      okType: 'primary',
+      okDanger: true,
+      onOk: () => console.log('OK'),
+      cancelText: 'No',
+      onCancel: () => console.log('Cancel')
     });
   }
 }

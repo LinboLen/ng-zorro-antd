@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 
-import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { TriBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 
 @Component({
-  selector: 'nz-demo-breadcrumb-basic',
-  imports: [NzBreadCrumbModule],
+  selector: '',
+  imports: [TriBreadCrumbModule],
   template: `
-    <nz-breadcrumb>
-      <nz-breadcrumb-item>Home</nz-breadcrumb-item>
-      <nz-breadcrumb-item>
+    <tri-breadcrumb>
+      <tri-breadcrumb-item>Home</tri-breadcrumb-item>
+      <tri-breadcrumb-item>
         <a>Application List</a>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item>An Application</nz-breadcrumb-item>
-    </nz-breadcrumb>
+      </tri-breadcrumb-item>
+      <tri-breadcrumb-item>An Application</tri-breadcrumb-item>
+    </tri-breadcrumb>
   `
 })
-export class NzDemoBreadcrumbBasicComponent {}
+export class TriDemoBreadcrumbBasicComponent {}

@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, Component, inject, ViewEncapsulation } from '@
 
 import { DateHelperService } from 'ng-zorro-antd/i18n';
 
-import { NzDateMode } from '../standard-types';
+import { TriDateMode } from '../standard-types';
 import { AbstractPanelHeader } from './abstract-panel-header';
 import { PanelSelector } from './interface';
 import { transCompatFormat } from './util';
@@ -15,13 +15,13 @@ import { transCompatFormat } from './util';
 @Component({
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'date-header', // eslint-disable-line @angular-eslint/component-selector
+  selector: '', // eslint-disable-line @angular-eslint/component-selector
   templateUrl: './abstract-panel-header.html'
 })
 export class DateHeaderComponent extends AbstractPanelHeader {
   private readonly dateHelper = inject(DateHelperService);
 
-  override mode: NzDateMode = 'date';
+  override mode: TriDateMode = 'date';
 
   getSelectors(): PanelSelector[] {
     return [

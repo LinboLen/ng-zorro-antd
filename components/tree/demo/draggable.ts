@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 
-import { NzFormatEmitEvent, NzTreeModule } from 'ng-zorro-antd/tree';
+import { TriFormatEmitEvent, TriTreeModule } from 'ng-zorro-antd/tree';
 
 @Component({
-  selector: 'nz-demo-tree-draggable',
-  imports: [NzTreeModule],
-  template: `<nz-tree [nzData]="nodes" nzDraggable nzBlockNode (nzOnDrop)="nzEvent($event)"></nz-tree>`
+  selector: '',
+  imports: [TriTreeModule],
+  template: `<tri-tree [data]="nodes" draggable blockNode (onDrop)="event($event)"></tri-tree>`
 })
-export class NzDemoTreeDraggableComponent {
+export class TriDemoTreeDraggableComponent {
   readonly nodes = [
     {
       title: '0-0',
@@ -70,7 +70,7 @@ export class NzDemoTreeDraggableComponent {
     }
   ];
 
-  nzEvent(event: NzFormatEmitEvent): void {
+  event(event: TriFormatEmitEvent): void {
     console.log(event);
   }
 }

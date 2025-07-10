@@ -34,95 +34,95 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/f
 import { merge, Subject } from 'rxjs';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
-import { NzFormItemFeedbackIconComponent, NzFormNoStatusService, NzFormStatusService } from 'ng-zorro-antd/core/form';
-import { NzDestroyService } from 'ng-zorro-antd/core/services';
+import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
+import { TriDestroyService } from 'ng-zorro-antd/core/services';
 import {
   NgClassInterface,
-  NzSizeLDSType,
-  NzStatus,
-  NzValidateStatus,
+  TriSizeLDSType,
+  TriStatus,
+  TriValidateStatus,
   OnChangeType,
   OnTouchedType
 } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular, getStatusClassNames, isNotNil } from 'ng-zorro-antd/core/util';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, NzSpaceCompactItemDirective } from 'ng-zorro-antd/space';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
 /**
  * @deprecated Will be removed in v21. It is recommended to use the new version `<nz-input-number>`.
  */
 @Component({
-  selector: 'nz-input-number',
-  exportAs: 'nzInputNumber',
+  selector: '',
+  exportAs: 'triInputNumber',
   template: `
-    <div class="ant-input-number-handler-wrap">
+    <div class="tri-input-number-handler-wrap">
       <span
         #upHandler
         unselectable="unselectable"
-        class="ant-input-number-handler ant-input-number-handler-up"
+        class="tri-input-number-handler tri-input-number-handler-up"
         (mousedown)="up($event)"
-        [class.ant-input-number-handler-up-disabled]="disabledUp"
+        [class.tri-input-number-handler-up-disabled]="disabledUp"
       >
-        <nz-icon nzType="up" class="ant-input-number-handler-up-inner" />
+        <tri-icon type="up" class="tri-input-number-handler-up-inner" />
       </span>
       <span
         #downHandler
         unselectable="unselectable"
-        class="ant-input-number-handler ant-input-number-handler-down"
+        class="tri-input-number-handler tri-input-number-handler-down"
         (mousedown)="down($event)"
-        [class.ant-input-number-handler-down-disabled]="disabledDown"
+        [class.tri-input-number-handler-down-disabled]="disabledDown"
       >
-        <nz-icon nzType="down" class="ant-input-number-handler-down-inner" />
+        <tri-icon type="down" class="tri-input-number-handler-down-inner" />
       </span>
     </div>
-    <div class="ant-input-number-input-wrap">
+    <div class="tri-input-number-input-wrap">
       <input
         #inputElement
         autocomplete="off"
-        class="ant-input-number-input"
-        [attr.id]="nzId"
-        [attr.autofocus]="nzAutoFocus ? 'autofocus' : null"
-        [disabled]="nzDisabled"
-        [attr.min]="nzMin"
-        [attr.max]="nzMax"
-        [placeholder]="nzPlaceHolder"
-        [attr.step]="nzStep"
-        [readOnly]="nzReadOnly"
-        [attr.inputmode]="nzInputMode"
+        class="tri-input-number-input"
+        [attr.id]="id"
+        [attr.autofocus]="autoFocus ? 'autofocus' : null"
+        [disabled]="disabled"
+        [attr.min]="min"
+        [attr.max]="max"
+        [placeholder]="placeHolder"
+        [attr.step]="step"
+        [readOnly]="readOnly"
+        [attr.inputmode]="inputMode"
         [ngModel]="displayValue"
         (ngModelChange)="onModelChange($event)"
       />
     </div>
-    @if (hasFeedback && !!status && !nzFormNoStatusService) {
-      <nz-form-item-feedback-icon class="ant-input-number-suffix" [status]="status" />
+    @if (hasFeedback && !!status && !formNoStatusService) {
+      <tri-form-item-feedback-icon class="tri-input-number-suffix" [status]="status" />
     }
   `,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NzInputNumberLegacyComponent),
+      useExisting: forwardRef(() => TriInputNumberLegacyComponent),
       multi: true
     },
     { provide: NZ_SPACE_COMPACT_ITEM_TYPE, useValue: 'input-number' },
-    NzDestroyService
+    TriDestroyService
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
-    class: 'ant-input-number',
-    '[class.ant-input-number-in-form-item]': '!!nzFormStatusService',
-    '[class.ant-input-number-focused]': 'isFocused',
-    '[class.ant-input-number-lg]': `finalSize() === 'large'`,
-    '[class.ant-input-number-sm]': `finalSize() === 'small'`,
-    '[class.ant-input-number-disabled]': 'nzDisabled',
-    '[class.ant-input-number-readonly]': 'nzReadOnly',
-    '[class.ant-input-number-rtl]': `dir === 'rtl'`,
-    '[class.ant-input-number-borderless]': `nzBorderless`
+    class: 'tri-input-number',
+    '[class.tri-input-number-in-form-item]': '!!formStatusService',
+    '[class.tri-input-number-focused]': 'isFocused',
+    '[class.tri-input-number-lg]': `finalSize() === 'large'`,
+    '[class.tri-input-number-sm]': `finalSize() === 'small'`,
+    '[class.tri-input-number-disabled]': 'disabled',
+    '[class.tri-input-number-readonly]': 'readOnly',
+    '[class.tri-input-number-rtl]': `dir === 'rtl'`,
+    '[class.tri-input-number-borderless]': `borderless`
   },
-  imports: [NzIconModule, FormsModule, NzFormItemFeedbackIconComponent],
-  hostDirectives: [NzSpaceCompactItemDirective]
+  imports: [TriIconModule, FormsModule, TriFormItemFeedbackIconComponent],
+  hostDirectives: [TriSpaceCompactItemDirective]
 })
-export class NzInputNumberLegacyComponent implements ControlValueAccessor, AfterViewInit, OnChanges, OnInit, OnDestroy {
+export class TriInputNumberLegacyComponent implements ControlValueAccessor, AfterViewInit, OnChanges, OnInit, OnDestroy {
   displayValue?: string | number;
   isFocused = false;
   disabled$ = new Subject<boolean>();
@@ -131,49 +131,49 @@ export class NzInputNumberLegacyComponent implements ControlValueAccessor, After
   dir: Direction = 'ltr';
   // status
   prefixCls: string = 'ant-input-number';
-  status: NzValidateStatus = '';
+  _status: TriValidateStatus = '';
   statusCls: NgClassInterface = {};
   hasFeedback: boolean = false;
   onChange: OnChangeType = () => {};
   onTouched: OnTouchedType = () => {};
 
-  @Output() readonly nzBlur = new EventEmitter();
-  @Output() readonly nzFocus = new EventEmitter();
+  @Output() readonly blur = new EventEmitter();
+  @Output() readonly focus = new EventEmitter();
   /** The native `<span class="ant-input-number-handler-up"></span>` element. */
   @ViewChild('upHandler', { static: true }) upHandler!: ElementRef<HTMLElement>;
   /** The native `<span class="ant-input-number-handler-down"></span>` element. */
   @ViewChild('downHandler', { static: true }) downHandler!: ElementRef<HTMLElement>;
   /** The native `<input class="ant-input-number-input" />` element. */
   @ViewChild('inputElement', { static: true }) inputElement!: ElementRef<HTMLInputElement>;
-  @Input() nzSize: NzSizeLDSType = 'default';
-  @Input({ transform: numberAttribute }) nzMin: number = -Infinity;
-  @Input({ transform: numberAttribute }) nzMax: number = Infinity;
-  @Input() nzParser = (value: string): string =>
+  @Input() size: TriSizeLDSType = 'default';
+  @Input({ transform: numberAttribute }) min: number = -Infinity;
+  @Input({ transform: numberAttribute }) max: number = Infinity;
+  @Input() parser = (value: string): string =>
     value
       .trim()
       .replace(/。/g, '.')
       .replace(/[^\w.-]+/g, '');
-  @Input() nzPrecision?: number;
-  @Input() nzPrecisionMode: 'cut' | 'toFixed' | ((value: number | string, precision?: number) => number) = 'toFixed';
-  @Input() nzPlaceHolder = '';
-  @Input() nzStatus: NzStatus = '';
-  @Input({ transform: numberAttribute }) nzStep = 1;
-  @Input() nzInputMode: string = 'decimal';
-  @Input() nzId: string | null = null;
-  @Input({ transform: booleanAttribute }) nzDisabled = false;
-  @Input({ transform: booleanAttribute }) nzReadOnly = false;
-  @Input({ transform: booleanAttribute }) nzAutoFocus = false;
-  @Input({ transform: booleanAttribute }) nzBorderless: boolean = false;
-  @Input() nzFormatter: (value: number) => string | number = value => value;
+  @Input() precision?: number;
+  @Input() precisionMode: 'cut' | 'toFixed' | ((value: number | string, precision?: number) => number) = 'toFixed';
+  @Input() placeHolder = '';
+  @Input() status: TriStatus = '';
+  @Input({ transform: numberAttribute }) step = 1;
+  @Input() inputMode: string = 'decimal';
+  @Input() id: string | null = null;
+  @Input({ transform: booleanAttribute }) disabled = false;
+  @Input({ transform: booleanAttribute }) readOnly = false;
+  @Input({ transform: booleanAttribute }) autoFocus = false;
+  @Input({ transform: booleanAttribute }) borderless: boolean = false;
+  @Input() formatter: (value: number) => string | number = value => value;
 
   protected finalSize = computed(() => {
     if (this.compactSize) {
       return this.compactSize();
     }
-    return this.size();
+    return this.#size();
   });
 
-  private size = signal<NzSizeLDSType>(this.nzSize);
+  #size = signal<TriSizeLDSType>(this.size);
   private compactSize = inject(NZ_SPACE_COMPACT_SIZE, { optional: true });
   private autoStepTimer?: ReturnType<typeof setTimeout>;
   private parsedValue?: string | number;
@@ -181,7 +181,7 @@ export class NzInputNumberLegacyComponent implements ControlValueAccessor, After
   private isNzDisableFirstChange: boolean = true;
 
   onModelChange(value: string): void {
-    this.parsedValue = this.nzParser(value);
+    this.parsedValue = this.parser(value);
     this.inputElement.nativeElement.value = `${this.parsedValue}`;
     const validValue = this.getCurrentValidValue(this.parsedValue);
     this.setValue(validValue);
@@ -215,11 +215,11 @@ export class NzInputNumberLegacyComponent implements ControlValueAccessor, After
     if (isNaN(val)) {
       return value;
     }
-    if (val < this.nzMin) {
-      val = this.nzMin;
+    if (val < this.min) {
+      val = this.min;
     }
-    if (val > this.nzMax) {
-      val = this.nzMax;
+    if (val > this.max) {
+      val = this.max;
     }
     return val;
   }
@@ -229,15 +229,15 @@ export class NzInputNumberLegacyComponent implements ControlValueAccessor, After
       return num as number;
     }
     const numStr = String(num);
-    if (numStr.indexOf('.') >= 0 && isNotNil(this.nzPrecision)) {
-      if (typeof this.nzPrecisionMode === 'function') {
-        return this.nzPrecisionMode(num, this.nzPrecision);
-      } else if (this.nzPrecisionMode === 'cut') {
+    if (numStr.indexOf('.') >= 0 && isNotNil(this.precision)) {
+      if (typeof this.precisionMode === 'function') {
+        return this.precisionMode(num, this.precision);
+      } else if (this.precisionMode === 'cut') {
         const numSplit = numStr.split('.');
-        numSplit[1] = numSplit[1].slice(0, this.nzPrecision);
+        numSplit[1] = numSplit[1].slice(0, this.precision);
         return Number(numSplit.join('.'));
       }
-      return Number(Number(num).toFixed(this.nzPrecision));
+      return Number(Number(num).toFixed(this.precision));
     }
     return Number(num);
   }
@@ -254,16 +254,16 @@ export class NzInputNumberLegacyComponent implements ControlValueAccessor, After
 
   down(e: MouseEvent | KeyboardEvent, ratio?: number): void {
     if (!this.isFocused) {
-      this.focus();
+      this._focus();
     }
-    this.step('down', e, ratio);
+    this._step('down', e, ratio);
   }
 
   up(e: MouseEvent | KeyboardEvent, ratio?: number): void {
     if (!this.isFocused) {
-      this.focus();
+      this._focus();
     }
-    this.step('up', e, ratio);
+    this._step('up', e, ratio);
   }
 
   getPrecision(value: number): number {
@@ -284,11 +284,11 @@ export class NzInputNumberLegacyComponent implements ControlValueAccessor, After
   // if this.props.precision is undefined
   // https://github.com/react-component/input-number/issues/39
   getMaxPrecision(currentValue: string | number, ratio: number): number {
-    if (isNotNil(this.nzPrecision)) {
-      return this.nzPrecision;
+    if (isNotNil(this.precision)) {
+      return this.precision;
     }
     const ratioPrecision = this.getPrecision(ratio);
-    const stepPrecision = this.getPrecision(this.nzStep);
+    const stepPrecision = this.getPrecision(this.step);
     const currentValuePrecision = this.getPrecision(currentValue as number);
     if (!currentValue) {
       return ratioPrecision + stepPrecision;
@@ -306,9 +306,9 @@ export class NzInputNumberLegacyComponent implements ControlValueAccessor, After
     const precision = Math.abs(this.getMaxPrecision(val, rat));
     let result;
     if (typeof val === 'number') {
-      result = ((precisionFactor * val + precisionFactor * this.nzStep * rat) / precisionFactor).toFixed(precision);
+      result = ((precisionFactor * val + precisionFactor * this.step * rat) / precisionFactor).toFixed(precision);
     } else {
-      result = this.nzMin === -Infinity ? this.nzStep : this.nzMin;
+      result = this.min === -Infinity ? this.step : this.min;
     }
     return this.toNumber(result);
   }
@@ -318,17 +318,17 @@ export class NzInputNumberLegacyComponent implements ControlValueAccessor, After
     const precision = Math.abs(this.getMaxPrecision(val, rat));
     let result;
     if (typeof val === 'number') {
-      result = ((precisionFactor * val - precisionFactor * this.nzStep * rat) / precisionFactor).toFixed(precision);
+      result = ((precisionFactor * val - precisionFactor * this.step * rat) / precisionFactor).toFixed(precision);
     } else {
-      result = this.nzMin === -Infinity ? -this.nzStep : this.nzMin;
+      result = this.min === -Infinity ? -this.step : this.min;
     }
     return this.toNumber(result);
   }
 
-  step<T extends keyof NzInputNumberLegacyComponent>(type: T, e: MouseEvent | KeyboardEvent, ratio: number = 1): void {
+  _step<T extends keyof TriInputNumberLegacyComponent>(type: T, e: MouseEvent | KeyboardEvent, ratio: number = 1): void {
     this.stop();
     e.preventDefault();
-    if (this.nzDisabled) {
+    if (this.disabled) {
       return;
     }
     const value = this.getCurrentValidValue(this.parsedValue!) || 0;
@@ -338,11 +338,11 @@ export class NzInputNumberLegacyComponent implements ControlValueAccessor, After
     } else if (type === 'down') {
       val = this.downStep(value, ratio);
     }
-    const outOfRange = val > this.nzMax || val < this.nzMin;
-    if (val > this.nzMax) {
-      val = this.nzMax;
-    } else if (val < this.nzMin) {
-      val = this.nzMin;
+    const outOfRange = val > this.max || val < this.min;
+    if (val > this.max) {
+      val = this.max;
+    } else if (val < this.min) {
+      val = this.min;
     }
     this.setValue(val);
     this.updateDisplayValue(val);
@@ -370,17 +370,17 @@ export class NzInputNumberLegacyComponent implements ControlValueAccessor, After
     this.disabledUp = this.disabledDown = false;
     if (value || value === 0) {
       const val = Number(value);
-      if (val >= this.nzMax) {
+      if (val >= this.max) {
         this.disabledUp = true;
       }
-      if (val <= this.nzMin) {
+      if (val <= this.min) {
         this.disabledDown = true;
       }
     }
   }
 
   updateDisplayValue(value: number): void {
-    const displayValue = isNotNil(this.nzFormatter(value)) ? this.nzFormatter(value) : '';
+    const displayValue = isNotNil(this.formatter(value)) ? this.formatter(value) : '';
     this.displayValue = displayValue;
     this.inputElement.nativeElement.value = `${displayValue}`;
   }
@@ -401,22 +401,22 @@ export class NzInputNumberLegacyComponent implements ControlValueAccessor, After
   }
 
   setDisabledState(disabled: boolean): void {
-    this.nzDisabled = (this.isNzDisableFirstChange && this.nzDisabled) || disabled;
+    this.disabled = (this.isNzDisableFirstChange && this.disabled) || disabled;
     this.isNzDisableFirstChange = false;
-    this.disabled$.next(this.nzDisabled);
+    this.disabled$.next(this.disabled);
     this.cdr.markForCheck();
   }
 
-  focus(): void {
+  _focus(): void {
     this.focusMonitor.focusVia(this.inputElement, 'keyboard');
   }
 
-  blur(): void {
+  _blur(): void {
     this.inputElement.nativeElement.blur();
   }
 
-  nzFormStatusService = inject(NzFormStatusService, { optional: true });
-  nzFormNoStatusService = inject(NzFormNoStatusService, { optional: true });
+  formStatusService = inject(TriFormStatusService, { optional: true });
+  formNoStatusService = inject(TriFormNoStatusService, { optional: true });
 
   constructor(
     private ngZone: NgZone,
@@ -425,11 +425,11 @@ export class NzInputNumberLegacyComponent implements ControlValueAccessor, After
     private focusMonitor: FocusMonitor,
     private renderer: Renderer2,
     private directionality: Directionality,
-    private destroy$: NzDestroyService
+    private destroy$: TriDestroyService
   ) {}
 
   ngOnInit(): void {
-    this.nzFormStatusService?.formStatusChanges
+    this.formStatusService?.formStatusChanges
       .pipe(
         distinctUntilChanged((pre, cur) => {
           return pre.status === cur.status && pre.hasFeedback === cur.hasFeedback;
@@ -447,11 +447,11 @@ export class NzInputNumberLegacyComponent implements ControlValueAccessor, After
         if (!focusOrigin) {
           this.isFocused = false;
           this.updateDisplayValue(this.value!);
-          this.nzBlur.emit();
+          this.blur.emit();
           Promise.resolve().then(() => this.onTouched());
         } else {
           this.isFocused = true;
-          this.nzFocus.emit();
+          this.focus.emit();
         }
       });
 
@@ -499,19 +499,19 @@ export class NzInputNumberLegacyComponent implements ControlValueAccessor, After
       this.updateDisplayValue(validValue);
     }
     if (nzDisabled) {
-      this.disabled$.next(this.nzDisabled);
+      this.disabled$.next(this.disabled);
     }
     if (nzStatus) {
-      this.setStatusStyles(this.nzStatus, this.hasFeedback);
+      this.setStatusStyles(this.status, this.hasFeedback);
     }
     if (nzSize) {
-      this.size.set(nzSize.currentValue);
+      this.#size.set(nzSize.currentValue);
     }
   }
 
   ngAfterViewInit(): void {
-    if (this.nzAutoFocus) {
-      this.focus();
+    if (this.autoFocus) {
+      this._focus();
     }
   }
 
@@ -530,9 +530,9 @@ export class NzInputNumberLegacyComponent implements ControlValueAccessor, After
       .subscribe(() => this.stop());
   }
 
-  private setStatusStyles(status: NzValidateStatus, hasFeedback: boolean): void {
+  private setStatusStyles(status: TriValidateStatus, hasFeedback: boolean): void {
     // set inner status
-    this.status = status;
+    this._status = status;
     this.hasFeedback = hasFeedback;
     this.cdr.markForCheck();
     // render status if nzStatus is set

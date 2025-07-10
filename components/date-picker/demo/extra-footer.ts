@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 @Component({
-  selector: 'nz-demo-date-picker-extra-footer',
-  imports: [NzDatePickerModule],
+  selector: '',
+  imports: [TriDatePickerModule],
   template: `
-    <nz-date-picker [nzRenderExtraFooter]="footerRender"></nz-date-picker>
+    <tri-date-picker [renderExtraFooter]="footerRender"></tri-date-picker>
     <br />
-    <nz-date-picker [nzRenderExtraFooter]="plainFooter" nzShowTime></nz-date-picker>
-    <nz-range-picker [nzRenderExtraFooter]="footerRender"></nz-range-picker>
-    <nz-range-picker [nzRenderExtraFooter]="plainFooter" nzShowTime></nz-range-picker>
-    <nz-date-picker nzMode="month" [nzRenderExtraFooter]="footerRender"></nz-date-picker>
+    <tri-date-picker [renderExtraFooter]="plainFooter" showTime></tri-date-picker>
+    <tri-range-picker [renderExtraFooter]="footerRender"></tri-range-picker>
+    <tri-range-picker [renderExtraFooter]="plainFooter" showTime></tri-range-picker>
+    <tri-date-picker mode="month" [renderExtraFooter]="footerRender"></tri-date-picker>
   `,
   styles: [
     `
@@ -22,7 +22,7 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
     `
   ]
 })
-export class NzDemoDatePickerExtraFooterComponent {
+export class TriDemoDatePickerExtraFooterComponent {
   plainFooter = 'plain extra footer';
   footerRender = (): string => 'extra footer';
 }

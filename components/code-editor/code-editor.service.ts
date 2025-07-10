@@ -7,18 +7,18 @@ import { DOCUMENT, inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, ReplaySubject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
-import { CodeEditorConfig, NzConfigService, onConfigChangeEventForComponent } from 'ng-zorro-antd/core/config';
+import { CodeEditorConfig, TriConfigService, onConfigChangeEventForComponent } from 'ng-zorro-antd/core/config';
 import { PREFIX, warn } from 'ng-zorro-antd/core/logger';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { JoinedEditorOptions, NzCodeEditorLoadingStatus } from './typings';
+import { JoinedEditorOptions, TriCodeEditorLoadingStatus } from './typings';
 
-declare const monaco: NzSafeAny;
+declare const monaco: TriSafeAny;
 
 const NZ_CONFIG_MODULE_NAME = 'codeEditor';
 
-function tryTriggerFunc(fn?: (...args: NzSafeAny[]) => NzSafeAny): (...args: NzSafeAny) => void {
-  return (...args: NzSafeAny[]) => {
+function tryTriggerFunc(fn?: (...args: TriSafeAny[]) => TriSafeAny): (...args: TriSafeAny) => void {
+  return (...args: TriSafeAny[]) => {
     if (fn) {
       fn(...args);
     }
@@ -33,13 +33,13 @@ function tryTriggerFunc(fn?: (...args: NzSafeAny[]) => NzSafeAny): (...args: NzS
 // We can't make the `NzCodeEditorService` to be a platform provider (`@Injectable({ providedIn: 'platform' })`)
 // since it depends on other root providers.
 const loaded$ = new ReplaySubject<boolean>(1);
-let loadingStatus: NzCodeEditorLoadingStatus = NzCodeEditorLoadingStatus.UNLOAD;
+let loadingStatus: TriCodeEditorLoadingStatus = NzCodeEditorLoadingStatus.UNLOAD;
 
 @Injectable({
   providedIn: 'root'
 })
-export class NzCodeEditorService {
-  private readonly nzConfigService = inject(NzConfigService);
+export class TriCodeEditorService {
+  private readonly configService = inject(TriConfigService);
   private document: Document = inject(DOCUMENT);
   private firstEditorInitialized = false;
   private option: JoinedEditorOptions = {};
@@ -48,7 +48,7 @@ export class NzCodeEditorService {
   option$ = new BehaviorSubject<JoinedEditorOptions>(this.option);
 
   constructor() {
-    const globalConfig = this.nzConfigService.getConfigForComponent(NZ_CONFIG_MODULE_NAME);
+    const globalConfig = this.configService.getConfigForComponent(NZ_CONFIG_MODULE_NAME);
 
     this.config = { ...globalConfig };
     if (this.config.monacoEnvironment) {
@@ -57,7 +57,7 @@ export class NzCodeEditorService {
     this.option = this.config.defaultEditorOption || {};
 
     onConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME, () => {
-      const newGlobalConfig: NzSafeAny = this.nzConfigService.getConfigForComponent(NZ_CONFIG_MODULE_NAME);
+      const newGlobalConfig: TriSafeAny = this.configService.getConfigForComponent(NZ_CONFIG_MODULE_NAME);
       if (newGlobalConfig) {
         this._updateDefaultOption(newGlobalConfig.defaultEditorOption);
       }
@@ -111,7 +111,7 @@ export class NzCodeEditorService {
 
     const assetsRoot = this.config.assetsRoot;
     const vs = assetsRoot ? `${assetsRoot}/vs` : 'assets/vs';
-    const windowAsAny = window as NzSafeAny;
+    const windowAsAny = window as TriSafeAny;
     const loadScript = this.document.createElement('script');
 
     loadScript.type = 'text/javascript';

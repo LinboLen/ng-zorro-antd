@@ -5,28 +5,28 @@
 
 import { booleanAttribute, ChangeDetectionStrategy, Component, ElementRef, inject, input, signal } from '@angular/core';
 
-import { NzSizeLDSType } from 'ng-zorro-antd/core/types';
+import { TriSizeLDSType } from 'ng-zorro-antd/core/types';
 
 import { NZ_SPACE_COMPACT_ITEMS, NZ_SPACE_COMPACT_SIZE } from './space-compact.token';
 
 @Component({
-  selector: 'nz-space-compact',
-  exportAs: 'nzSpaceCompact',
+  selector: '',
+  exportAs: 'triSpaceCompact',
   template: `<ng-content></ng-content>`,
   host: {
-    class: 'ant-space-compact',
-    '[class.ant-space-compact-block]': `nzBlock()`,
-    '[class.ant-space-compact-vertical]': `nzDirection() === 'vertical'`
+    class: 'tri-space-compact',
+    '[class.tri-space-compact-block]': `block()`,
+    '[class.tri-space-compact-vertical]': `direction() === 'vertical'`
   },
   providers: [
-    { provide: NZ_SPACE_COMPACT_SIZE, useFactory: () => inject(NzSpaceCompactComponent).nzSize },
+    { provide: NZ_SPACE_COMPACT_SIZE, useFactory: () => inject(TriSpaceCompactComponent).size },
     { provide: NZ_SPACE_COMPACT_ITEMS, useFactory: () => signal([]) }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NzSpaceCompactComponent {
-  readonly nzBlock = input(false, { transform: booleanAttribute });
-  readonly nzDirection = input<'vertical' | 'horizontal'>('horizontal');
-  readonly nzSize = input<NzSizeLDSType>('default');
+export class TriSpaceCompactComponent {
+  readonly block = input(false, { transform: booleanAttribute });
+  readonly direction = input<'vertical' | 'horizontal'>('horizontal');
+  readonly size = input<TriSizeLDSType>('default');
   readonly elementRef: ElementRef<HTMLElement> = inject(ElementRef);
 }

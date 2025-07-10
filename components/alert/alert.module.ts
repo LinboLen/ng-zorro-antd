@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzAlertComponent } from './alert.component';
+import { TriAlertComponent } from './alert.component';
 
 @NgModule({
-  exports: [NzAlertComponent],
-  imports: [NzAlertComponent]
+  exports: [TriAlertComponent],
+  imports: [TriAlertComponent]
 })
-export class NzAlertModule {}
+export class TriAlertModule {}

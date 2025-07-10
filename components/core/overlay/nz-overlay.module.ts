@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzConnectedOverlayDirective } from './nz-connected-overlay';
+import { TriConnectedOverlayDirective } from './nz-connected-overlay';
 
 @NgModule({
-  imports: [NzConnectedOverlayDirective],
-  exports: [NzConnectedOverlayDirective]
+  imports: [TriConnectedOverlayDirective],
+  exports: [TriConnectedOverlayDirective]
 })
-export class NzOverlayModule {}
+export class TriOverlayModule {}

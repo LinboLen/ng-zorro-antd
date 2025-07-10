@@ -3,23 +3,23 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzTreeNodeBaseComponent } from './nz-tree-base.definitions';
-import { NzTreeBaseService } from './nz-tree-base.service';
+import { TriTreeNodeBaseComponent } from './nz-tree-base.definitions';
+import { TriTreeBaseService } from './nz-tree-base.service';
 
-export type NzTreeNodeKey = string | number;
+export type TriTreeNodeKey = string | number;
 
 export interface FlattenNode {
   parent: FlattenNode | null;
   children: FlattenNode[];
   pos: string;
-  data: NzTreeNode;
+  data: TriTreeNode;
   isStart: boolean[];
   isEnd: boolean[];
 }
 
-export interface NzTreeNodeOptions {
+export interface TriTreeNodeOptions {
   title: string;
   key: string;
   icon?: string;
@@ -30,20 +30,20 @@ export interface NzTreeNodeOptions {
   disabled?: boolean;
   disableCheckbox?: boolean;
   expanded?: boolean;
-  children?: NzTreeNodeOptions[];
+  children?: TriTreeNodeOptions[];
 
-  [key: string]: NzSafeAny;
+  [key: string]: TriSafeAny;
 }
 
-export class NzTreeNode {
+export class TriTreeNode {
   private _title: string = '';
   key!: string;
   level: number = 0;
-  origin!: NzTreeNodeOptions;
+  origin!: TriTreeNodeOptions;
   // Parent Node
-  parentNode: NzTreeNode | null = null;
+  parentNode: TriTreeNode | null = null;
   private _icon: string = '';
-  private _children: NzTreeNode[] = [];
+  private _children: TriTreeNode[] = [];
   private _isLeaf: boolean = false;
   private _isChecked: boolean = false;
   private _isSelectable: boolean = false;
@@ -56,14 +56,14 @@ export class NzTreeNode {
   canHide: boolean = false;
   isMatched: boolean = false;
 
-  service: NzTreeBaseService | null = null;
-  component!: NzTreeNodeBaseComponent;
+  service: TriTreeBaseService | null = null;
+  component!: TriTreeNodeBaseComponent;
 
   /** New added in Tree for easy data access */
   isStart?: boolean[];
   isEnd?: boolean[];
 
-  get treeService(): NzTreeBaseService | null {
+  get treeService(): TriTreeBaseService | null {
     return this.service || (this.parentNode && this.parentNode.treeService);
   }
 
@@ -75,11 +75,11 @@ export class NzTreeNode {
    * @param service base nzTreeService
    */
   constructor(
-    option: NzTreeNodeOptions | NzTreeNode,
-    parent: NzTreeNode | null = null,
-    service: NzTreeBaseService | null = null
+    option: TriTreeNodeOptions | TriTreeNode,
+    parent: TriTreeNode | null = null,
+    service: TriTreeBaseService | null = null
   ) {
-    if (option instanceof NzTreeNode) {
+    if (option instanceof TriTreeNode) {
       return option;
     }
     this.service = service || null;
@@ -132,7 +132,7 @@ export class NzTreeNode {
         ) {
           nodeOptions.checked = option.checked;
         }
-        this._children.push(new NzTreeNode(nodeOptions, this));
+        this._children.push(new TriTreeNode(nodeOptions, this));
       });
     }
   }
@@ -160,11 +160,11 @@ export class NzTreeNode {
     this.update();
   }
 
-  get children(): NzTreeNode[] {
+  get children(): TriTreeNode[] {
     return this._children;
   }
 
-  set children(value: NzTreeNode[]) {
+  set children(value: TriTreeNode[]) {
     this._children = value;
     this.update();
   }
@@ -273,21 +273,21 @@ export class NzTreeNode {
     this.afterValueChange('isExpanded');
   }
 
-  public getParentNode(): NzTreeNode | null {
+  public getParentNode(): TriTreeNode | null {
     return this.parentNode;
   }
 
-  public getChildren(): NzTreeNode[] {
+  public getChildren(): TriTreeNode[] {
     return this.children;
   }
 
   /**
    * Support appending child nodes by position. Leaf node cannot be appended.
    */
-  public addChildren(children: NzSafeAny[], childPos: number = -1): void {
+  public addChildren(children: TriSafeAny[], childPos: number = -1): void {
     if (!this.isLeaf) {
       children.forEach(node => {
-        const refreshLevel = (n: NzTreeNode): void => {
+        const refreshLevel = (n: TriTreeNode): void => {
           n.getChildren().forEach(c => {
             c.level = c.getParentNode()!.level + 1;
             // flush origin
@@ -296,10 +296,10 @@ export class NzTreeNode {
           });
         };
         let child = node;
-        if (child instanceof NzTreeNode) {
+        if (child instanceof TriTreeNode) {
           child.parentNode = this;
         } else {
-          child = new NzTreeNode(node, this);
+          child = new TriTreeNode(node, this);
         }
         child.level = this.level + 1;
         child.origin.level = child.level;

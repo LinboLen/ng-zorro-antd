@@ -1,25 +1,25 @@
 import { Component } from '@angular/core';
 
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { TriMessageService } from 'ng-zorro-antd/message';
+import { TriPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 @Component({
-  selector: 'nz-demo-popconfirm-basic',
-  imports: [NzPopconfirmModule],
+  selector: '',
+  imports: [TriPopconfirmModule],
   template: `
     <a
-      nz-popconfirm
-      nzPopconfirmTitle="Are you sure delete this task?"
-      nzPopconfirmPlacement="bottom"
-      (nzOnConfirm)="confirm()"
-      (nzOnCancel)="cancel()"
+      tri-popconfirm
+      popconfirmTitle="Are you sure delete this task?"
+      popconfirmPlacement="bottom"
+      (onConfirm)="confirm()"
+      (onCancel)="cancel()"
     >
       Delete
     </a>
   `
 })
-export class NzDemoPopconfirmBasicComponent {
-  constructor(private nzMessageService: NzMessageService) {}
+export class TriDemoPopconfirmBasicComponent {
+  constructor(private nzMessageService: TriMessageService) {}
 
   cancel(): void {
     this.nzMessageService.info('click cancel');

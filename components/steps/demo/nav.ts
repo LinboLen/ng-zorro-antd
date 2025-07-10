@@ -1,43 +1,43 @@
 import { Component } from '@angular/core';
 
-import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { TriStepsModule } from 'ng-zorro-antd/steps';
 
 @Component({
-  selector: 'nz-demo-steps-nav',
-  imports: [NzStepsModule],
+  selector: '',
+  imports: [TriStepsModule],
   template: `
-    <nz-steps nzType="navigation" nzSize="small" [nzCurrent]="index" (nzIndexChange)="onIndexChange($event)">
-      <nz-step
-        nzTitle="Step 1"
-        nzSubtitle="00:00:05"
-        nzStatus="finish"
-        nzDescription="This is a description."
-      ></nz-step>
-      <nz-step
-        nzTitle="Step 2"
-        nzSubtitle="00:01:02"
-        nzStatus="process"
-        nzDescription="This is a description."
-      ></nz-step>
-      <nz-step
-        nzTitle="Step 3"
-        nzSubtitle="waiting for long long time"
-        nzStatus="wait"
-        nzDescription="This is a description."
-      ></nz-step>
-    </nz-steps>
-    <nz-steps nzType="navigation" [nzCurrent]="index" (nzIndexChange)="onIndexChange($event)">
-      <nz-step nzTitle="Step 1" nzStatus="finish"></nz-step>
-      <nz-step nzTitle="Step 2" nzStatus="process"></nz-step>
-      <nz-step nzTitle="Step 3" nzStatus="wait"></nz-step>
-      <nz-step nzTitle="Step 4" nzStatus="wait"></nz-step>
-    </nz-steps>
-    <nz-steps nzType="navigation" nzSize="small" [nzCurrent]="index" (nzIndexChange)="onIndexChange($event)">
-      <nz-step nzTitle="finish 1" nzStatus="finish"></nz-step>
-      <nz-step nzTitle="finish 2" nzStatus="finish"></nz-step>
-      <nz-step nzTitle="current process" nzStatus="process"></nz-step>
-      <nz-step nzTitle="wait" nzStatus="wait" nzDisabled></nz-step>
-    </nz-steps>
+    <tri-steps type="navigation" size="small" [current]="index" (indexChange)="onIndexChange($event)">
+      <tri-step
+        title="Step 1"
+        subtitle="00:00:05"
+        status="finish"
+        description="This is a description."
+      ></tri-step>
+      <tri-step
+        title="Step 2"
+        subtitle="00:01:02"
+        status="process"
+        description="This is a description."
+      ></tri-step>
+      <tri-step
+        title="Step 3"
+        subtitle="waiting for long long time"
+        status="wait"
+        description="This is a description."
+      ></tri-step>
+    </tri-steps>
+    <tri-steps type="navigation" [current]="index" (indexChange)="onIndexChange($event)">
+      <tri-step title="Step 1" status="finish"></tri-step>
+      <tri-step title="Step 2" status="process"></tri-step>
+      <tri-step title="Step 3" status="wait"></tri-step>
+      <tri-step title="Step 4" status="wait"></tri-step>
+    </tri-steps>
+    <tri-steps type="navigation" size="small" [current]="index" (indexChange)="onIndexChange($event)">
+      <tri-step title="finish 1" status="finish"></tri-step>
+      <tri-step title="finish 2" status="finish"></tri-step>
+      <tri-step title="current process" status="process"></tri-step>
+      <tri-step title="wait" status="wait" disabled></tri-step>
+    </tri-steps>
   `,
   styles: [
     `
@@ -48,7 +48,7 @@ import { NzStepsModule } from 'ng-zorro-antd/steps';
     `
   ]
 })
-export class NzDemoStepsNavComponent {
+export class TriDemoStepsNavComponent {
   index = 0;
 
   onIndexChange(event: number): void {

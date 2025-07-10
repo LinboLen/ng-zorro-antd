@@ -5,42 +5,42 @@
 
 import { Injectable } from '@angular/core';
 
-import { NzMNService } from './base';
-import { NzMessageContainerComponent } from './message-container.component';
-import { NzMessageContentType, NzMessageData, NzMessageDataOptions, NzMessageRef, NzMessageType } from './typings';
+import { TriMNService } from './base';
+import { TriMessageContainerComponent } from './message-container.component';
+import { TriMessageContentType, TriMessageData, TriMessageDataOptions, TriMessageRef, TriMessageType } from './typings';
 
 @Injectable({
   providedIn: 'root'
 })
-export class NzMessageService extends NzMNService<NzMessageContainerComponent> {
+export class TriMessageService extends TriMNService<TriMessageContainerComponent> {
   protected componentPrefix = 'message-';
 
-  success(content: NzMessageContentType, options?: NzMessageDataOptions): NzMessageRef {
+  success(content: TriMessageContentType, options?: TriMessageDataOptions): TriMessageRef {
     return this.createInstance({ type: 'success', content }, options);
   }
 
-  error(content: NzMessageContentType, options?: NzMessageDataOptions): NzMessageRef {
+  error(content: TriMessageContentType, options?: TriMessageDataOptions): TriMessageRef {
     return this.createInstance({ type: 'error', content }, options);
   }
 
-  info(content: NzMessageContentType, options?: NzMessageDataOptions): NzMessageRef {
+  info(content: TriMessageContentType, options?: TriMessageDataOptions): TriMessageRef {
     return this.createInstance({ type: 'info', content }, options);
   }
 
-  warning(content: NzMessageContentType, options?: NzMessageDataOptions): NzMessageRef {
+  warning(content: TriMessageContentType, options?: TriMessageDataOptions): TriMessageRef {
     return this.createInstance({ type: 'warning', content }, options);
   }
 
-  loading(content: NzMessageContentType, options?: NzMessageDataOptions): NzMessageRef {
+  loading(content: TriMessageContentType, options?: TriMessageDataOptions): TriMessageRef {
     return this.createInstance({ type: 'loading', content }, options);
   }
 
-  create(type: NzMessageType | string, content: NzMessageContentType, options?: NzMessageDataOptions): NzMessageRef {
+  create(type: TriMessageType | string, content: TriMessageContentType, options?: TriMessageDataOptions): TriMessageRef {
     return this.createInstance({ type, content }, options);
   }
 
-  private createInstance(message: NzMessageData, options?: NzMessageDataOptions): NzMessageRef {
-    this.container = this.withContainer(NzMessageContainerComponent);
+  private createInstance(message: TriMessageData, options?: TriMessageDataOptions): TriMessageRef {
+    this.container = this.withContainer(TriMessageContainerComponent);
 
     return this.container.create({
       ...message,

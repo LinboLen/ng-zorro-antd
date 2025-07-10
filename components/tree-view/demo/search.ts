@@ -4,11 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { auditTime, map } from 'rxjs/operators';
 
-import { NzHighlightPipe } from 'ng-zorro-antd/core/highlight';
-import { NzNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzTreeFlatDataSource, NzTreeFlattener, NzTreeViewModule } from 'ng-zorro-antd/tree-view';
+import { TriHighlightPipe } from 'ng-zorro-antd/core/highlight';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriTreeFlatDataSource, TriTreeFlattener, TriTreeViewModule } from 'ng-zorro-antd/tree-view';
 
 interface TreeNode {
   name: string;
@@ -73,29 +73,29 @@ function filterTreeData(data: TreeNode[], value: string): FilteredTreeResult {
 }
 
 @Component({
-  selector: 'nz-demo-tree-view-search',
-  imports: [FormsModule, NzInputModule, NzIconModule, NzTreeViewModule, NzNoAnimationDirective, NzHighlightPipe],
+  selector: '',
+  imports: [FormsModule, TriInputModule, TriIconModule, TriTreeViewModule, TriNoAnimationDirective, TriHighlightPipe],
   template: `
-    <nz-input-group [nzSuffix]="suffixIcon">
-      <input type="text" nz-input placeholder="Search" ngModel (ngModelChange)="searchValue$.next($event)" />
-    </nz-input-group>
+    <tri-input-group [suffix]="suffixIcon">
+      <input type="text" tri-input placeholder="Search" ngModel (ngModelChange)="searchValue$.next($event)" />
+    </tri-input-group>
     <ng-template #suffixIcon>
-      <nz-icon nzType="search" />
+      <tri-icon type="search" />
     </ng-template>
 
-    <nz-tree-view [nzTreeControl]="treeControl" [nzDataSource]="dataSource" nzNoAnimation>
-      <nz-tree-node *nzTreeNodeDef="let node" nzTreeNodePadding>
-        <nz-tree-node-toggle nzTreeNodeNoopToggle></nz-tree-node-toggle>
+    <tri-tree-view [treeControl]="treeControl" [dataSource]="dataSource" noAnimation>
+      <tri-tree-node *treeNodeDef="let node" treeNodePadding>
+        <tri-tree-node-toggle treeNodeNoopToggle></tri-tree-node-toggle>
         <span [innerHTML]="node.name | nzHighlight: searchValue : 'i' : 'highlight'"></span>
-      </nz-tree-node>
+      </tri-tree-node>
 
-      <nz-tree-node *nzTreeNodeDef="let node; when: hasChild" nzTreeNodePadding>
-        <nz-tree-node-toggle>
-          <nz-icon nzType="caret-down" nzTreeNodeToggleRotateIcon />
-        </nz-tree-node-toggle>
+      <tri-tree-node *treeNodeDef="let node; treeNodeDefWhen: hasChild" treeNodePadding>
+        <tri-tree-node-toggle>
+          <tri-icon type="caret-down" treeNodeToggleRotateIcon />
+        </tri-tree-node-toggle>
         <span [innerHTML]="node.name | nzHighlight: searchValue : 'i' : 'highlight'"></span>
-      </nz-tree-node>
-    </nz-tree-view>
+      </tri-tree-node>
+    </tri-tree-view>
   `,
   styles: [
     `
@@ -109,7 +109,7 @@ function filterTreeData(data: TreeNode[], value: string): FilteredTreeResult {
     `
   ]
 })
-export class NzDemoTreeViewSearchComponent {
+export class TriDemoTreeViewSearchComponent {
   flatNodeMap = new Map<FlatNode, TreeNode>();
   nestedNodeMap = new Map<TreeNode, FlatNode>();
   expandedNodes: TreeNode[] = [];
@@ -140,14 +140,14 @@ export class NzDemoTreeViewSearchComponent {
     }
   );
 
-  treeFlattener = new NzTreeFlattener<TreeNode, FlatNode, TreeNode>(
+  treeFlattener = new TriTreeFlattener<TreeNode, FlatNode, TreeNode>(
     this.transformer,
     node => node.level,
     node => node.expandable,
     node => node.children
   );
 
-  dataSource = new NzTreeFlatDataSource(this.treeControl, this.treeFlattener);
+  dataSource = new TriTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   filteredData$ = combineLatest([
     this.originData$,

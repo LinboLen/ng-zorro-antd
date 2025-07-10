@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 
-import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
-import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
+import { TriTreeNodeOptions } from 'ng-zorro-antd/tree';
+import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
-function dig(path = '0', level = 3): NzTreeNodeOptions[] {
-  const list: NzTreeNodeOptions[] = [];
+function dig(path = '0', level = 3): TriTreeNodeOptions[] {
+  const list: TriTreeNodeOptions[] = [];
   for (let i = 0; i < 10; i += 1) {
     const key = `${path}-${i}`;
-    const treeNode: NzTreeNodeOptions = {
+    const treeNode: TriTreeNodeOptions = {
       title: key,
       key,
       expanded: true,
@@ -27,19 +27,19 @@ function dig(path = '0', level = 3): NzTreeNodeOptions[] {
 }
 
 @Component({
-  selector: 'nz-demo-tree-select-virtual-scroll',
-  imports: [NzTreeSelectModule],
+  selector: '',
+  imports: [TriTreeSelectModule],
   template: `
-    <nz-tree-select
+    <tri-tree-select
       style="width: 250px"
-      [nzNodes]="nodes"
-      nzShowSearch
-      nzPlaceHolder="Please select"
-      nzVirtualHeight="300px"
-      nzHideUnMatched="true"
-    ></nz-tree-select>
+      [nodes]="nodes"
+      showSearch
+      placeHolder="Please select"
+      virtualHeight="300px"
+      hideUnMatched="true"
+    ></tri-tree-select>
   `
 })
-export class NzDemoTreeSelectVirtualScrollComponent {
-  nodes: NzTreeNodeOptions[] = dig();
+export class TriDemoTreeSelectVirtualScrollComponent {
+  nodes: TriTreeNodeOptions[] = dig();
 }

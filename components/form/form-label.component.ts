@@ -17,110 +17,110 @@ import { filter } from 'rxjs/operators';
 
 import { ThemeType } from '@ant-design/icons-angular';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzTSType } from 'ng-zorro-antd/core/types';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriTSType } from 'ng-zorro-antd/core/types';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriTooltipDirective } from 'ng-zorro-antd/tooltip';
 
-import { DefaultTooltipIcon, NzFormDirective, NzLabelAlignType } from './form.directive';
+import { DefaultTooltipIcon, TriFormDirective, TriLabelAlignType } from './form.directive';
 
-export interface NzFormTooltipIcon {
-  type: NzTSType;
+export interface TriFormTooltipIcon {
+  type: TriTSType;
   theme: ThemeType;
 }
 
-function toTooltipIcon(value: string | NzFormTooltipIcon): Required<NzFormTooltipIcon> {
+function toTooltipIcon(value: string | TriFormTooltipIcon): Required<TriFormTooltipIcon> {
   const icon = typeof value === 'string' ? { type: value } : value;
   return { ...DefaultTooltipIcon, ...icon };
 }
 
 @Component({
-  selector: 'nz-form-label',
-  exportAs: 'nzFormLabel',
+  selector: '',
+  exportAs: 'triFormLabel',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <label [attr.for]="nzFor" [class.ant-form-item-no-colon]="nzNoColon" [class.ant-form-item-required]="nzRequired">
+    <label [attr.for]="for" [class.tri-form-item-no-colon]="noColon" [class.tri-form-item-required]="required">
       <ng-content></ng-content>
-      @if (nzTooltipTitle) {
-        <span class="ant-form-item-tooltip" nz-tooltip [nzTooltipTitle]="nzTooltipTitle">
-          <ng-container *nzStringTemplateOutlet="tooltipIcon.type; let tooltipIconType">
-            <nz-icon [nzType]="tooltipIconType" [nzTheme]="tooltipIcon.theme" />
+      @if (tooltipTitle) {
+        <span class="tri-form-item-tooltip" tri-tooltip [tooltipTitle]="tooltipTitle">
+          <ng-container *stringTemplateOutlet="tooltipIcon.type; let tooltipIconType">
+            <tri-icon [type]="tooltipIconType" [theme]="tooltipIcon.theme" />
           </ng-container>
         </span>
       }
     </label>
   `,
   host: {
-    class: 'ant-form-item-label',
-    '[class.ant-form-item-label-left]': `nzLabelAlign === 'left'`,
-    '[class.ant-form-item-label-wrap]': `nzLabelWrap`
+    class: 'tri-form-item-label',
+    '[class.tri-form-item-label-left]': `labelAlign === 'left'`,
+    '[class.tri-form-item-label-wrap]': `labelWrap`
   },
-  imports: [NzOutletModule, NzTooltipDirective, NzIconModule]
+  imports: [TriOutletModule, TriTooltipDirective, TriIconModule]
 })
-export class NzFormLabelComponent {
+export class TriFormLabelComponent {
   private cdr = inject(ChangeDetectorRef);
 
-  @Input() nzFor?: string;
-  @Input({ transform: booleanAttribute }) nzRequired = false;
+  @Input() for?: string;
+  @Input({ transform: booleanAttribute }) required = false;
   @Input({ transform: booleanAttribute })
-  set nzNoColon(value: boolean) {
-    this.noColon = value;
+  set noColon(value: boolean) {
+    this.#noColon = value;
   }
-  get nzNoColon(): boolean {
-    return this.noColon !== 'default' ? this.noColon : !!this.nzFormDirective?.nzNoColon;
+  get noColon(): boolean {
+    return this.#noColon !== 'default' ? this.#noColon : !!this.formDirective?.noColon;
   }
 
-  private noColon: boolean | 'default' = 'default';
+  #noColon: boolean | 'default' = 'default';
 
-  @Input() nzTooltipTitle?: NzTSType;
+  @Input() tooltipTitle?: TriTSType;
   @Input()
-  set nzTooltipIcon(value: string | NzFormTooltipIcon) {
+  set tooltipIcon(value: string | TriFormTooltipIcon) {
     this._tooltipIcon = toTooltipIcon(value);
   }
   // due to 'get' and 'set' accessor must have the same type, so it was renamed to `tooltipIcon`
-  get tooltipIcon(): NzFormTooltipIcon {
+  get _tooltipIcon(): TriFormTooltipIcon {
     return this._tooltipIcon !== 'default'
       ? this._tooltipIcon
-      : toTooltipIcon(this.nzFormDirective?.nzTooltipIcon || DefaultTooltipIcon);
+      : toTooltipIcon(this.formDirective?.tooltipIcon || DefaultTooltipIcon);
   }
-  private _tooltipIcon: NzFormTooltipIcon | 'default' = 'default';
+  private _tooltipIcon: TriFormTooltipIcon | 'default' = 'default';
 
   @Input()
-  set nzLabelAlign(value: NzLabelAlignType) {
-    this.labelAlign = value;
+  set labelAlign(value: TriLabelAlignType) {
+    this.#labelAlign = value;
   }
 
-  get nzLabelAlign(): NzLabelAlignType {
-    return this.labelAlign !== 'default' ? this.labelAlign : this.nzFormDirective?.nzLabelAlign || 'right';
+  get labelAlign(): TriLabelAlignType {
+    return this.#labelAlign !== 'default' ? this.#labelAlign : this.formDirective?.labelAlign || 'right';
   }
 
-  private labelAlign: NzLabelAlignType | 'default' = 'default';
+  #labelAlign: TriLabelAlignType | 'default' = 'default';
 
   @Input({ transform: booleanAttribute })
-  set nzLabelWrap(value: boolean) {
-    this.labelWrap = value;
+  set labelWrap(value: boolean) {
+    this.#labelWrap = value;
   }
 
-  get nzLabelWrap(): boolean {
-    return this.labelWrap !== 'default' ? this.labelWrap : !!this.nzFormDirective?.nzLabelWrap;
+  get labelWrap(): boolean {
+    return this.#labelWrap !== 'default' ? this.#labelWrap : !!this.formDirective?.labelWrap;
   }
 
-  private labelWrap: boolean | 'default' = 'default';
+  #labelWrap: boolean | 'default' = 'default';
 
-  private nzFormDirective = inject(NzFormDirective, { skipSelf: true, optional: true });
+  private formDirective = inject(TriFormDirective, { skipSelf: true, optional: true });
 
   constructor() {
-    if (this.nzFormDirective) {
-      this.nzFormDirective
+    if (this.formDirective) {
+      this.formDirective
         .getInputObservable('nzNoColon')
         .pipe(
-          filter(() => this.noColon === 'default'),
+          filter(() => this.#noColon === 'default'),
           takeUntilDestroyed()
         )
         .subscribe(() => this.cdr.markForCheck());
 
-      this.nzFormDirective
+      this.formDirective
         .getInputObservable('nzTooltipIcon')
         .pipe(
           filter(() => this._tooltipIcon === 'default'),
@@ -128,18 +128,18 @@ export class NzFormLabelComponent {
         )
         .subscribe(() => this.cdr.markForCheck());
 
-      this.nzFormDirective
+      this.formDirective
         .getInputObservable('nzLabelAlign')
         .pipe(
-          filter(() => this.labelAlign === 'default'),
+          filter(() => this.#labelAlign === 'default'),
           takeUntilDestroyed()
         )
         .subscribe(() => this.cdr.markForCheck());
 
-      this.nzFormDirective
+      this.formDirective
         .getInputObservable('nzLabelWrap')
         .pipe(
-          filter(() => this.labelWrap === 'default'),
+          filter(() => this.#labelWrap === 'default'),
           takeUntilDestroyed()
         )
         .subscribe(() => this.cdr.markForCheck());

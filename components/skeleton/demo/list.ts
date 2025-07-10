@@ -1,51 +1,51 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzListModule } from 'ng-zorro-antd/list';
-import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
-import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriListModule } from 'ng-zorro-antd/list';
+import { TriSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { TriSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
-  selector: 'nz-demo-skeleton-list',
-  imports: [FormsModule, NzIconModule, NzListModule, NzSkeletonModule, NzSwitchModule],
+  selector: '',
+  imports: [FormsModule, TriIconModule, TriListModule, TriSkeletonModule, TriSwitchModule],
   template: `
-    <nz-switch [(ngModel)]="loading"></nz-switch>
-    <nz-list [nzDataSource]="listData" [nzRenderItem]="item" nzItemLayout="vertical">
+    <tri-switch [(ngModel)]="loading"></tri-switch>
+    <tri-list [dataSource]="listData" [renderItem]="item" itemLayout="vertical">
       <ng-template #item let-item>
-        <nz-list-item
-          [nzContent]="loading ? ' ' : item.content"
-          [nzActions]="loading ? [] : [starAction, likeAction, msgAction]"
-          [nzExtra]="loading ? null : extra"
+        <tri-list-item
+          [content]="loading ? ' ' : item.content"
+          [actions]="loading ? [] : [starAction, likeAction, msgAction]"
+          [extra]="loading ? null : extra"
         >
-          <nz-skeleton [nzLoading]="loading" [nzActive]="true" [nzAvatar]="true">
+          <tri-skeleton [loading]="loading" [active]="true" [avatar]="true">
             <ng-template #starAction>
-              <nz-icon nzType="star-o" style="margin-right: 8px;" />
+              <tri-icon type="star-o" style="margin-right: 8px;" />
               156
             </ng-template>
             <ng-template #likeAction>
-              <nz-icon nzType="like-o" style="margin-right: 8px;" />
+              <tri-icon type="like-o" style="margin-right: 8px;" />
               156
             </ng-template>
             <ng-template #msgAction>
-              <nz-icon nzType="message" style="margin-right: 8px;" />
+              <tri-icon type="message" style="margin-right: 8px;" />
               2
             </ng-template>
-            <nz-list-item-meta [nzAvatar]="item.avatar" [nzTitle]="nzTitle" [nzDescription]="item.description">
+            <tri-list-item-meta [avatar]="item.avatar" [title]="title" [description]="item.description">
               <ng-template #nzTitle>
                 <a href="{{ item.href }}">{{ item.title }}</a>
               </ng-template>
-            </nz-list-item-meta>
+            </tri-list-item-meta>
             <ng-template #extra>
               <img width="272" alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />
             </ng-template>
-          </nz-skeleton>
-        </nz-list-item>
+          </tri-skeleton>
+        </tri-list-item>
       </ng-template>
-    </nz-list>
+    </tri-list>
   `
 })
-export class NzDemoSkeletonListComponent {
+export class TriDemoSkeletonListComponent {
   loading = true;
   listData = new Array(3).fill({}).map((_i, index) => ({
     href: 'https://ng.ant.design',

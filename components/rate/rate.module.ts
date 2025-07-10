@@ -5,11 +5,11 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzRateItemComponent } from './rate-item.component';
-import { NzRateComponent } from './rate.component';
+import { TriRateItemComponent } from './rate-item.component';
+import { TriRateComponent } from './rate.component';
 
 @NgModule({
-  imports: [NzRateComponent, NzRateItemComponent],
-  exports: [NzRateComponent]
+  imports: [TriRateComponent, TriRateItemComponent],
+  exports: [TriRateComponent]
 })
-export class NzRateModule {}
+export class TriRateModule {}

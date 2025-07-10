@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzMessageService } from 'ng-zorro-antd/message';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriMessageService } from 'ng-zorro-antd/message';
 
 @Component({
-  selector: 'nz-demo-message-duration',
-  imports: [NzButtonModule],
-  template: `<button nz-button nzType="default" (click)="createBasicMessage()">Customized display duration</button>`
+  selector: '',
+  imports: [TriButtonModule],
+  template: `<button tri-button type="default" (click)="createBasicMessage()">Customized display duration</button>`
 })
-export class NzDemoMessageDurationComponent {
+export class TriDemoMessageDurationComponent {
   createBasicMessage(): void {
     this.message.success('This is a prompt message for success, and it will disappear in 10 seconds', {
       nzDuration: 10000
     });
   }
 
-  constructor(private message: NzMessageService) {}
+  constructor(private message: TriMessageService) {}
 }

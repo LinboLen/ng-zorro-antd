@@ -6,21 +6,21 @@
 import { inject, Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml, SafeResourceUrl, SafeStyle, SafeUrl } from '@angular/platform-browser';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 type DomSanitizerType = 'html' | 'style' | 'url' | 'resourceUrl';
 
 @Pipe({
   name: 'nzSanitizer'
 })
-export class NzSanitizerPipe implements PipeTransform {
+export class TriSanitizerPipe implements PipeTransform {
   protected sanitizer = inject(DomSanitizer);
 
-  transform(value: NzSafeAny, type: 'html'): SafeHtml;
-  transform(value: NzSafeAny, type: 'style'): SafeStyle;
-  transform(value: NzSafeAny, type: 'url'): SafeUrl;
-  transform(value: NzSafeAny, type: 'resourceUrl'): SafeResourceUrl;
-  transform(value: NzSafeAny, type: DomSanitizerType = 'html'): SafeHtml | SafeStyle | SafeUrl | SafeResourceUrl {
+  transform(value: TriSafeAny, type: 'html'): SafeHtml;
+  transform(value: TriSafeAny, type: 'style'): SafeStyle;
+  transform(value: TriSafeAny, type: 'url'): SafeUrl;
+  transform(value: TriSafeAny, type: 'resourceUrl'): SafeResourceUrl;
+  transform(value: TriSafeAny, type: DomSanitizerType = 'html'): SafeHtml | SafeStyle | SafeUrl | SafeResourceUrl {
     switch (type) {
       case 'html':
         return this.sanitizer.bypassSecurityTrustHtml(value);

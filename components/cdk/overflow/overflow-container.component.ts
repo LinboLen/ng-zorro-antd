@@ -20,37 +20,37 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject, combineLatest, Observable, ReplaySubject, Subject } from 'rxjs';
 import { filter, map, pairwise, startWith, switchMap, withLatestFrom } from 'rxjs/operators';
 
-import { NzResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
+import { TriResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
 
-import { NzOverflowItemDirective } from './overflow-item.directive';
-import { NzOverflowRestDirective } from './overflow-rest.directive';
-import { NzOverflowSuffixDirective } from './overflow-suffix.directive';
+import { TriOverflowItemDirective } from './overflow-item.directive';
+import { TriOverflowRestDirective } from './overflow-rest.directive';
+import { TriOverflowSuffixDirective } from './overflow-suffix.directive';
 
 @Component({
-  selector: 'nz-overflow-container',
+  selector: '',
   template: `
     <ng-content></ng-content>
     <ng-content select="[appOverflowRest]"></ng-content>
     <ng-content select="[appOverflowSuffix]"></ng-content>
   `,
-  providers: [NzResizeObserver],
+  providers: [TriResizeObserver],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NzOverflowContainerComponent implements OnInit, AfterContentInit {
-  private nzResizeObserver = inject(NzResizeObserver);
+export class TriOverflowContainerComponent implements OnInit, AfterContentInit {
+  private resizeObserver = inject(TriResizeObserver);
   private elementRef = inject(ElementRef);
   private cdr = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
 
   contentInit$ = new Subject<void>();
-  @ContentChildren(NzOverflowItemDirective)
-  overflowItems: QueryList<NzOverflowItemDirective> | undefined = undefined;
-  @ContentChild(NzOverflowSuffixDirective)
-  overflowSuffix: NzOverflowSuffixDirective | undefined = undefined;
-  @ContentChild(NzOverflowRestDirective) overflowRest: NzOverflowRestDirective | undefined = undefined;
-  overflowItems$ = new ReplaySubject<QueryList<NzOverflowItemDirective>>(1);
+  @ContentChildren(TriOverflowItemDirective)
+  overflowItems: QueryList<TriOverflowItemDirective> | undefined = undefined;
+  @ContentChild(TriOverflowSuffixDirective)
+  overflowSuffix: TriOverflowSuffixDirective | undefined = undefined;
+  @ContentChild(TriOverflowRestDirective) overflowRest: TriOverflowRestDirective | undefined = undefined;
+  overflowItems$ = new ReplaySubject<QueryList<TriOverflowItemDirective>>(1);
 
-  containerWidth$ = this.nzResizeObserver
+  containerWidth$ = this.resizeObserver
     .observe(this.elementRef.nativeElement)
     .pipe(map(([item]) => item.target.clientWidth || 0));
   restWidth$ = new BehaviorSubject<number>(0);

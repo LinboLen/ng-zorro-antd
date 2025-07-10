@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NzTableModule } from 'ng-zorro-antd/table';
+import { TriTableModule } from 'ng-zorro-antd/table';
 
 interface ItemData {
   name: string;
@@ -9,14 +9,14 @@ interface ItemData {
 }
 
 @Component({
-  selector: 'nz-demo-table-fixed-columns-header',
-  imports: [NzTableModule],
+  selector: '',
+  imports: [TriTableModule],
   template: `
-    <nz-table #fixedTable [nzData]="listOfData" [nzScroll]="{ x: '1150px', y: '240px' }">
+    <tri-table #fixedTable [data]="listOfData" [scroll]="{ x: '1150px', y: '240px' }">
       <thead>
         <tr>
-          <th nzLeft>Full Name</th>
-          <th nzLeft>Age</th>
+          <th left>Full Name</th>
+          <th left>Age</th>
           <th>Column 1</th>
           <th>Column 2</th>
           <th>Column 3</th>
@@ -25,14 +25,14 @@ interface ItemData {
           <th>Column 6</th>
           <th>Column 7</th>
           <th>Column 8</th>
-          <th nzRight>Action</th>
+          <th right>Action</th>
         </tr>
       </thead>
       <tbody>
         @for (data of fixedTable.data; track data) {
           <tr>
-            <td nzLeft>{{ data.name }}</td>
-            <td nzLeft>{{ data.age }}</td>
+            <td left>{{ data.name }}</td>
+            <td left>{{ data.age }}</td>
             <td>{{ data.address }}</td>
             <td>{{ data.address }}</td>
             <td>{{ data.address }}</td>
@@ -41,16 +41,16 @@ interface ItemData {
             <td>{{ data.address }}</td>
             <td>{{ data.address }}</td>
             <td>{{ data.address }}</td>
-            <td nzRight>
+            <td right>
               <a>action</a>
             </td>
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `
 })
-export class NzDemoTableFixedColumnsHeaderComponent implements OnInit {
+export class TriDemoTableFixedColumnsHeaderComponent implements OnInit {
   listOfData: ItemData[] = [];
 
   ngOnInit(): void {

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzCascaderModule, NzCascaderOption } from 'ng-zorro-antd/cascader';
+import { TriCascaderModule, TriCascaderOption } from 'ng-zorro-antd/cascader';
 
-const options: NzCascaderOption[] = [
+const options: TriCascaderOption[] = [
   {
     value: 'zhejiang',
     label: 'Zhejiang',
@@ -49,16 +49,16 @@ const options: NzCascaderOption[] = [
 ];
 
 @Component({
-  selector: 'nz-demo-cascader-custom-render',
-  imports: [FormsModule, NzCascaderModule],
+  selector: '',
+  imports: [FormsModule, TriCascaderModule],
   template: `
-    <nz-cascader
+    <tri-cascader
       style="width: 100%;"
-      [nzLabelRender]="renderTpl"
-      [nzOptions]="nzOptions"
+      [labelRender]="renderTpl"
+      [options]="options"
       [(ngModel)]="values"
       (ngModelChange)="onChanges($event)"
-    ></nz-cascader>
+    ></tri-cascader>
 
     <ng-template #renderTpl let-labels="labels" let-selectedOptions="selectedOptions">
       @for (label of labels; track label) {
@@ -77,15 +77,15 @@ const options: NzCascaderOption[] = [
     </ng-template>
   `
 })
-export class NzDemoCascaderCustomRenderComponent {
-  nzOptions: NzCascaderOption[] = options;
+export class TriDemoCascaderCustomRenderComponent {
+  options: TriCascaderOption[] = options;
   values: string[] | null = null;
 
   onChanges(values: string[]): void {
     console.log(values, this.values);
   }
 
-  handleAreaClick(e: Event, label: string, option: NzCascaderOption): void {
+  handleAreaClick(e: Event, label: string, option: TriCascaderOption): void {
     e.preventDefault();
     e.stopPropagation();
     console.log('clicked "', label, '"', option);

@@ -19,19 +19,19 @@ import { Subject } from 'rxjs';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-descriptions-item',
+  selector: '',
   template: `
     <ng-template>
       <ng-content></ng-content>
     </ng-template>
   `,
-  exportAs: 'nzDescriptionsItem'
+  exportAs: 'triDescriptionsItem'
 })
-export class NzDescriptionsItemComponent implements OnChanges, OnDestroy {
+export class TriDescriptionsItemComponent implements OnChanges, OnDestroy {
   @ViewChild(TemplateRef, { static: true }) content!: TemplateRef<void>;
 
-  @Input({ transform: numberAttribute }) nzSpan = 1;
-  @Input() nzTitle: string | TemplateRef<void> = '';
+  @Input({ transform: numberAttribute }) span = 1;
+  @Input() title: string | TemplateRef<void> = '';
 
   readonly inputChange$ = new Subject<void>();
 

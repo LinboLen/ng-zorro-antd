@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface MeasureResult {
   finished: boolean;
@@ -90,7 +90,7 @@ export function measure(
   // clean up css overflow
   ellipsisContainer.style.textOverflow = 'clip';
   ellipsisContainer.style.whiteSpace = 'normal';
-  (ellipsisContainer.style as NzSafeAny).webkitLineClamp = 'none';
+  (ellipsisContainer.style as TriSafeAny).webkitLineClamp = 'none';
 
   const contentList = mergeChildren(contentNodes);
   const container = document.createElement('div');

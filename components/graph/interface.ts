@@ -14,53 +14,53 @@ import {
   LayoutConfig
 } from 'dagre-compound';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 export enum NzGraphEdgeType {
   LINE = 'line',
   CURVE = 'curve'
 }
 
-export interface NzGraphDataDef extends HierarchyGraphDef {
-  nodes: NzGraphNodeDef[];
-  edges: NzGraphEdgeDef[];
+export interface TriGraphDataDef extends HierarchyGraphDef {
+  nodes: TriGraphNodeDef[];
+  edges: TriGraphEdgeDef[];
 }
 
-export interface NzGraphNodeDef extends HierarchyGraphNodeDef {
+export interface TriGraphNodeDef extends HierarchyGraphNodeDef {
   label?: string;
 }
 
-export interface NzGraphEdgeDef extends HierarchyGraphEdgeDef {
+export interface TriGraphEdgeDef extends HierarchyGraphEdgeDef {
   label?: string;
 }
 
-export interface NzGraphOption extends HierarchyGraphOption {}
-export declare type NzRankDirection = 'TB' | 'BT' | 'LR' | 'RL';
+export interface TriGraphOption extends HierarchyGraphOption {}
+export declare type TriRankDirection = 'TB' | 'BT' | 'LR' | 'RL';
 
-export interface NzGraphGroupNode extends HierarchyGraphNodeInfo {
-  nodes: Array<NzGraphNode | NzGraphGroupNode>;
-  edges: NzGraphEdge[];
-  [key: string]: NzSafeAny;
+export interface TriGraphGroupNode extends HierarchyGraphNodeInfo {
+  nodes: Array<TriGraphNode | TriGraphGroupNode>;
+  edges: TriGraphEdge[];
+  [key: string]: TriSafeAny;
 }
 
-export interface NzGraphNode extends HierarchyBaseNodeInfo {
-  id: NzSafeAny;
+export interface TriGraphNode extends HierarchyBaseNodeInfo {
+  id: TriSafeAny;
   // TODO
-  name: NzSafeAny;
+  name: TriSafeAny;
   label?: string;
-  [key: string]: NzSafeAny;
+  [key: string]: TriSafeAny;
 }
 
-export interface NzGraphEdge extends HierarchyBaseEdgeInfo {
-  id: NzSafeAny;
-  v: NzSafeAny;
-  w: NzSafeAny;
+export interface TriGraphEdge extends HierarchyBaseEdgeInfo {
+  id: TriSafeAny;
+  v: TriSafeAny;
+  w: TriSafeAny;
   label?: string;
 }
 
-export interface NzLayoutSetting extends LayoutConfig {}
+export interface TriLayoutSetting extends LayoutConfig {}
 
-export interface NzGraphBaseLayout {
+export interface TriGraphBaseLayout {
   layout: {
     nodeSep: number;
     rankSep: number;
@@ -93,16 +93,16 @@ export function nzTypeDefinition<T>(): (item: unknown) => T {
   return item => item as T;
 }
 
-export type NzDeepPartial<T> = {
+export type TriDeepPartial<T> = {
   [P in keyof T]?: T[P] extends Array<infer U>
-    ? Array<NzDeepPartial<U>>
+    ? Array<TriDeepPartial<U>>
     : T[P] extends ReadonlyArray<infer U>
-      ? ReadonlyArray<NzDeepPartial<U>>
-      : NzDeepPartial<T[P]>;
+      ? ReadonlyArray<TriDeepPartial<U>>
+      : TriDeepPartial<T[P]>;
 };
 
-export type NzGraphLayoutConfig = NzDeepPartial<NzGraphBaseLayout>;
-export const NZ_GRAPH_LAYOUT_SETTING: NzLayoutSetting = {
+export type TriGraphLayoutConfig = TriDeepPartial<TriGraphBaseLayout>;
+export const NZ_GRAPH_LAYOUT_SETTING: TriLayoutSetting = {
   graph: {
     meta: {
       nodeSep: 50,
@@ -142,7 +142,7 @@ export const NZ_GRAPH_LAYOUT_SETTING: NzLayoutSetting = {
 
 // Zoom interface
 
-export interface NzZoomTransform {
+export interface TriZoomTransform {
   x: number;
   y: number;
   k: number;

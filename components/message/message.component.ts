@@ -14,47 +14,47 @@ import {
 } from '@angular/core';
 
 import { moveUpMotion } from 'ng-zorro-antd/core/animation';
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
-import { NzMNComponent } from './base';
-import { NzMessageData } from './typings';
+import { TriMNComponent } from './base';
+import { TriMessageData } from './typings';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-message',
-  exportAs: 'nzMessage',
+  selector: '',
+  exportAs: 'triMessage',
   animations: [moveUpMotion],
   template: `
     <div
-      class="ant-message-notice"
+      class="tri-message-notice"
       [@moveUpMotion]="instance.state"
       (@moveUpMotion.done)="animationStateChanged.next($event)"
       (mouseenter)="onEnter()"
       (mouseleave)="onLeave()"
     >
-      <div class="ant-message-notice-content">
-        <div class="ant-message-custom-content" [class]="'ant-message-' + instance.type">
+      <div class="tri-message-notice-content">
+        <div class="tri-message-custom-content" [class]="'ant-message-' + instance.type">
           @switch (instance.type) {
             @case ('success') {
-              <nz-icon nzType="check-circle" />
+              <tri-icon type="check-circle" />
             }
             @case ('info') {
-              <nz-icon nzType="info-circle" />
+              <tri-icon type="info-circle" />
             }
             @case ('warning') {
-              <nz-icon nzType="exclamation-circle" />
+              <tri-icon type="exclamation-circle" />
             }
             @case ('error') {
-              <nz-icon nzType="close-circle" />
+              <tri-icon type="close-circle" />
             }
             @case ('loading') {
-              <nz-icon nzType="loading" />
+              <tri-icon type="loading" />
             }
           }
           <ng-container
-            *nzStringTemplateOutlet="instance.content; context: { $implicit: this, data: instance.options?.nzData }"
+            *stringTemplateOutlet="instance.content; stringTemplateOutletContext: { $implicit: this, data: instance.options?.nzData }"
           >
             <span [innerHTML]="instance.content"></span>
           </ng-container>
@@ -62,10 +62,10 @@ import { NzMessageData } from './typings';
       </div>
     </div>
   `,
-  imports: [NzIconModule, NzOutletModule]
+  imports: [TriIconModule, TriOutletModule]
 })
-export class NzMessageComponent extends NzMNComponent implements OnInit {
-  @Input() override instance!: Required<NzMessageData>;
+export class TriMessageComponent extends TriMNComponent implements OnInit {
+  @Input() override instance!: Required<TriMessageData>;
   @Output() override readonly destroyed = new EventEmitter<{ id: string; userAction: boolean }>();
   index?: number;
 }

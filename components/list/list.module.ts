@@ -6,43 +6,43 @@
 import { NgModule } from '@angular/core';
 
 import {
-  NzListEmptyComponent,
-  NzListFooterComponent,
-  NzListGridDirective,
-  NzListHeaderComponent,
-  NzListLoadMoreDirective,
-  NzListPaginationComponent
+  TriListEmptyComponent,
+  TriListFooterComponent,
+  TriListGridDirective,
+  TriListHeaderComponent,
+  TriListLoadMoreDirective,
+  TriListPaginationComponent
 } from './list-cell';
-import { NzListItemActionComponent, NzListItemActionsComponent, NzListItemExtraComponent } from './list-item-cell';
+import { TriListItemActionComponent, TriListItemActionsComponent, TriListItemExtraComponent } from './list-item-cell';
 import {
-  NzListItemMetaAvatarComponent,
-  NzListItemMetaDescriptionComponent,
-  NzListItemMetaTitleComponent
+  TriListItemMetaAvatarComponent,
+  TriListItemMetaDescriptionComponent,
+  TriListItemMetaTitleComponent
 } from './list-item-meta-cell';
-import { NzListItemMetaComponent } from './list-item-meta.component';
-import { NzListItemComponent } from './list-item.component';
-import { NzListComponent } from './list.component';
+import { TriListItemMetaComponent } from './list-item-meta.component';
+import { TriListItemComponent } from './list-item.component';
+import { TriListComponent } from './list.component';
 
 const DIRECTIVES = [
-  NzListComponent,
-  NzListHeaderComponent,
-  NzListFooterComponent,
-  NzListPaginationComponent,
-  NzListEmptyComponent,
-  NzListItemComponent,
-  NzListItemMetaComponent,
-  NzListItemMetaTitleComponent,
-  NzListItemMetaDescriptionComponent,
-  NzListItemMetaAvatarComponent,
-  NzListItemActionsComponent,
-  NzListItemActionComponent,
-  NzListItemExtraComponent,
-  NzListLoadMoreDirective,
-  NzListGridDirective
+  TriListComponent,
+  TriListHeaderComponent,
+  TriListFooterComponent,
+  TriListPaginationComponent,
+  TriListEmptyComponent,
+  TriListItemComponent,
+  TriListItemMetaComponent,
+  TriListItemMetaTitleComponent,
+  TriListItemMetaDescriptionComponent,
+  TriListItemMetaAvatarComponent,
+  TriListItemActionsComponent,
+  TriListItemActionComponent,
+  TriListItemExtraComponent,
+  TriListLoadMoreDirective,
+  TriListGridDirective
 ];
 
 @NgModule({
   imports: [DIRECTIVES],
   exports: [DIRECTIVES]
 })
-export class NzListModule {}
+export class TriListModule {}

@@ -23,14 +23,14 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-option-item',
+  selector: '',
   template: `
-    <div class="ant-select-item-option-content">
+    <div class="tri-select-item-option-content">
       @if (customContent) {
         <ng-template [ngTemplateOutlet]="template"></ng-template>
       } @else {
@@ -38,9 +38,9 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
       }
     </div>
     @if (showState && selected) {
-      <div class="ant-select-item-option-state" unselectable="on">
+      <div class="tri-select-item-option-state" unselectable="on">
         @if (!icon) {
-          <nz-icon nzType="check" class="ant-select-selected-icon" />
+          <tri-icon type="check" class="tri-select-selected-icon" />
         } @else {
           <ng-template [ngTemplateOutlet]="icon"></ng-template>
         }
@@ -50,16 +50,16 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
-    class: 'ant-select-item ant-select-item-option',
+    class: 'tri-select-item ant-select-item-option',
     '[attr.title]': 'title',
-    '[class.ant-select-item-option-grouped]': 'grouped',
-    '[class.ant-select-item-option-selected]': 'selected && !disabled',
-    '[class.ant-select-item-option-disabled]': 'disabled',
-    '[class.ant-select-item-option-active]': 'activated && !disabled'
+    '[class.tri-select-item-option-grouped]': 'grouped',
+    '[class.tri-select-item-option-selected]': 'selected && !disabled',
+    '[class.tri-select-item-option-disabled]': 'disabled',
+    '[class.tri-select-item-option-active]': 'activated && !disabled'
   },
-  imports: [NgTemplateOutlet, NzIconModule]
+  imports: [NgTemplateOutlet, TriIconModule]
 })
-export class NzOptionItemComponent implements OnChanges, OnInit {
+export class TriOptionItemComponent implements OnChanges, OnInit {
   private readonly el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
   private readonly ngZone = inject(NgZone);
   private readonly destroyRef = inject(DestroyRef);
@@ -68,18 +68,18 @@ export class NzOptionItemComponent implements OnChanges, OnInit {
   activated = false;
   @Input() grouped = false;
   @Input({ transform: booleanAttribute }) customContent = false;
-  @Input() template: TemplateRef<NzSafeAny> | null = null;
+  @Input() template: TemplateRef<TriSafeAny> | null = null;
   @Input() disabled = false;
   @Input() showState = false;
   @Input() title?: string | number | null;
   @Input() label: string | number | null = null;
-  @Input() value: NzSafeAny | null = null;
-  @Input() activatedValue: NzSafeAny | null = null;
-  @Input() listOfSelectedValue: NzSafeAny[] = [];
-  @Input() icon: TemplateRef<NzSafeAny> | null = null;
-  @Input() compareWith!: (o1: NzSafeAny, o2: NzSafeAny) => boolean;
-  @Output() readonly itemClick = new EventEmitter<NzSafeAny>();
-  @Output() readonly itemHover = new EventEmitter<NzSafeAny>();
+  @Input() value: TriSafeAny | null = null;
+  @Input() activatedValue: TriSafeAny | null = null;
+  @Input() listOfSelectedValue: TriSafeAny[] = [];
+  @Input() icon: TemplateRef<TriSafeAny> | null = null;
+  @Input() compareWith!: (o1: TriSafeAny, o2: TriSafeAny) => boolean;
+  @Output() readonly itemClick = new EventEmitter<TriSafeAny>();
+  @Output() readonly itemHover = new EventEmitter<TriSafeAny>();
 
   ngOnChanges(changes: SimpleChanges): void {
     const { value, activatedValue, listOfSelectedValue } = changes;

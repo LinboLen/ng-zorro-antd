@@ -1,27 +1,27 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzSelectModule } from 'ng-zorro-antd/select';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: 'nz-demo-select-custom-content',
-  imports: [FormsModule, NzIconModule, NzSelectModule],
+  selector: '',
+  imports: [FormsModule, TriIconModule, TriSelectModule],
   template: `
-    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select OS" [(ngModel)]="selectedValue">
-      <nz-option nzCustomContent nzLabel="Windows" nzValue="windows">
-        <nz-icon nzType="windows" />
+    <tri-select showSearch allowClear placeHolder="Select OS" [(ngModel)]="selectedValue">
+      <tri-option customContent label="Windows" value="windows">
+        <tri-icon type="windows" />
         Windows
-      </nz-option>
-      <nz-option nzCustomContent nzLabel="Mac" nzValue="mac">
-        <nz-icon nzType="apple" />
+      </tri-option>
+      <tri-option customContent label="Mac" value="mac">
+        <tri-icon type="apple" />
         Mac
-      </nz-option>
-      <nz-option nzCustomContent nzLabel="Android" nzValue="android">
-        <nz-icon nzType="android" />
+      </tri-option>
+      <tri-option customContent label="Android" value="android">
+        <tri-icon type="android" />
         Android
-      </nz-option>
-    </nz-select>
+      </tri-option>
+    </tri-select>
   `,
   styles: [
     `
@@ -31,6 +31,6 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     `
   ]
 })
-export class NzDemoSelectCustomContentComponent {
+export class TriDemoSelectCustomContentComponent {
   selectedValue = null;
 }

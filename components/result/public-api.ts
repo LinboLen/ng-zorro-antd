@@ -8,6 +8,6 @@ export * from './result.component';
 export * from './result-cells';
 
 // Making these partial components not visible to users but comprehensible to ng-packagr.
-export { NzResultNotFoundComponent as ɵNzResultNotFoundComponent } from './partial/not-found';
-export { NzResultServerErrorComponent as ɵNzResultServerErrorComponent } from './partial/server-error.component';
-export { NzResultUnauthorizedComponent as ɵNzResultUnauthorizedComponent } from './partial/unauthorized';
+export { TriResultNotFoundComponent as ɵNzResultNotFoundComponent } from './partial/not-found';
+export { TriResultServerErrorComponent as ɵNzResultServerErrorComponent } from './partial/server-error.component';
+export { TriResultUnauthorizedComponent as ɵNzResultUnauthorizedComponent } from './partial/unauthorized';

@@ -1,36 +1,36 @@
 import { Component } from '@angular/core';
 
-import { NzFlexDirective } from 'ng-zorro-antd/flex';
-import { NzInputOtpComponent } from 'ng-zorro-antd/input';
-import { NzTypographyComponent } from 'ng-zorro-antd/typography';
+import { TriFlexDirective } from 'ng-zorro-antd/flex';
+import { TriInputOtpComponent } from 'ng-zorro-antd/input';
+import { TriTypographyComponent } from 'ng-zorro-antd/typography';
 
 @Component({
-  selector: 'nz-demo-input-otp',
+  selector: '',
   template: `
-    <nz-flex nzVertical [nzGap]="16">
-      <nz-flex nzVertical>
-        <h5 nz-typography>With Formatter (Uppercase)</h5>
-        <nz-input-otp [nzFormatter]="formatter"></nz-input-otp>
-      </nz-flex>
+    <tri-flex vertical [gap]="16">
+      <tri-flex vertical>
+        <h5 tri-typography>With Formatter (Uppercase)</h5>
+        <tri-input-otp [formatter]="formatter"></tri-input-otp>
+      </tri-flex>
 
-      <nz-flex nzVertical>
-        <h5 nz-typography>With Disabled</h5>
-        <nz-input-otp [disabled]="true"></nz-input-otp>
-      </nz-flex>
+      <tri-flex vertical>
+        <h5 tri-typography>With Disabled</h5>
+        <tri-input-otp [disabled]="true"></tri-input-otp>
+      </tri-flex>
 
-      <nz-flex nzVertical>
-        <h5 nz-typography>With Length (8)</h5>
-        <nz-input-otp [nzLength]="8"></nz-input-otp>
-      </nz-flex>
+      <tri-flex vertical>
+        <h5 tri-typography>With Length (8)</h5>
+        <tri-input-otp [length]="8"></tri-input-otp>
+      </tri-flex>
 
-      <nz-flex nzVertical>
-        <h5 nz-typography>With custom display character</h5>
-        <nz-input-otp [nzMask]="'🔒'"></nz-input-otp>
-      </nz-flex>
-    </nz-flex>
+      <tri-flex vertical>
+        <h5 tri-typography>With custom display character</h5>
+        <tri-input-otp [mask]="'🔒'"></tri-input-otp>
+      </tri-flex>
+    </tri-flex>
   `,
-  imports: [NzFlexDirective, NzTypographyComponent, NzInputOtpComponent]
+  imports: [TriFlexDirective, TriTypographyComponent, TriInputOtpComponent]
 })
-export class NzDemoInputOtpComponent {
+export class TriDemoInputOtpComponent {
   formatter: (value: string) => string = value => value.toUpperCase();
 }

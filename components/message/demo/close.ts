@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { concatMap } from 'rxjs/operators';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzMessageService } from 'ng-zorro-antd/message';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriMessageService } from 'ng-zorro-antd/message';
 
 @Component({
-  selector: 'nz-demo-message-close',
-  imports: [NzButtonModule],
-  template: `<button nz-button nzType="default" (click)="startShowMessages()">Display a sequence of messages</button>`
+  selector: '',
+  imports: [TriButtonModule],
+  template: `<button tri-button type="default" (click)="startShowMessages()">Display a sequence of messages</button>`
 })
-export class NzDemoMessageCloseComponent {
-  constructor(private message: NzMessageService) {}
+export class TriDemoMessageCloseComponent {
+  constructor(private message: TriMessageService) {}
 
   startShowMessages(): void {
     this.message

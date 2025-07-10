@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { NzCollapseModule } from 'ng-zorro-antd/collapse';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriCollapseModule } from 'ng-zorro-antd/collapse';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 interface Panel {
   active: boolean;
@@ -11,29 +11,29 @@ interface Panel {
 }
 
 @Component({
-  selector: 'nz-demo-collapse-custom',
-  imports: [NzIconModule, NzCollapseModule],
+  selector: '',
+  imports: [TriIconModule, TriCollapseModule],
   template: `
-    <nz-collapse [nzBordered]="false">
+    <tri-collapse [bordered]="false">
       @for (panel of panels; track panel) {
-        <nz-collapse-panel
+        <tri-collapse-panel
           #p
-          [nzHeader]="panel.name"
-          [nzActive]="panel.active"
+          [header]="panel.name"
+          [active]="panel.active"
           [style]="customStyle"
-          [nzExpandedIcon]="!$first ? panel.icon || expandedIcon : undefined"
+          [expandedIcon]="!$first ? panel.icon || expandedIcon : undefined"
         >
           <p>{{ panel.name }} content</p>
           <ng-template #expandedIcon let-active>
             {{ active }}
-            <nz-icon nzType="caret-right" class="ant-collapse-arrow" [nzRotate]="p.nzActive ? 90 : -90" />
+            <tri-icon type="caret-right" class="tri-collapse-arrow" [rotate]="active ? 90 : -90" />
           </ng-template>
-        </nz-collapse-panel>
+        </tri-collapse-panel>
       }
-    </nz-collapse>
+    </tri-collapse>
   `
 })
-export class NzDemoCollapseCustomComponent {
+export class TriDemoCollapseCustomComponent {
   readonly panels: Panel[] = [
     {
       active: true,

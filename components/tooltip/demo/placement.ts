@@ -1,33 +1,33 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
-  selector: 'nz-demo-tooltip-placement',
-  imports: [NzButtonModule, NzToolTipModule],
+  selector: '',
+  imports: [TriButtonModule, TriToolTipModule],
   template: `
     <div style="margin-left:60px;">
-      <button nzTooltipTitle="prompt text" [nzTooltipPlacement]="['topLeft', 'leftTop']" nz-button nz-tooltip>
+      <button tooltipTitle="prompt text" [tooltipPlacement]="['topLeft', 'leftTop']" tri-button tri-tooltip>
         TL
       </button>
-      <button nzTooltipTitle="prompt text" nzTooltipPlacement="top" nz-button nz-tooltip>Top</button>
-      <button nzTooltipTitle="prompt text" nzTooltipPlacement="topRight" nz-button nz-tooltip>TR</button>
+      <button tooltipTitle="prompt text" tooltipPlacement="top" tri-button tri-tooltip>Top</button>
+      <button tooltipTitle="prompt text" tooltipPlacement="topRight" tri-button tri-tooltip>TR</button>
     </div>
     <div style="float:left;width: 60px;">
-      <button nzTooltipTitle="prompt text" nzTooltipPlacement="leftTop" nz-button nz-tooltip>LT</button>
-      <button nzTooltipTitle="prompt text" nzTooltipPlacement="left" nz-button nz-tooltip>Left</button>
-      <button nzTooltipTitle="prompt text" nzTooltipPlacement="leftBottom" nz-button nz-tooltip>LB</button>
+      <button tooltipTitle="prompt text" tooltipPlacement="leftTop" tri-button tri-tooltip>LT</button>
+      <button tooltipTitle="prompt text" tooltipPlacement="left" tri-button tri-tooltip>Left</button>
+      <button tooltipTitle="prompt text" tooltipPlacement="leftBottom" tri-button tri-tooltip>LB</button>
     </div>
     <div style="margin-left:270px;width: 60px;">
-      <button nzTooltipTitle="prompt text" nzTooltipPlacement="rightTop" nz-button nz-tooltip>RT</button>
-      <button nzTooltipTitle="prompt text" nzTooltipPlacement="right" nz-button nz-tooltip>Right</button>
-      <button nzTooltipTitle="prompt text" nzTooltipPlacement="rightBottom" nz-button nz-tooltip>RB</button>
+      <button tooltipTitle="prompt text" tooltipPlacement="rightTop" tri-button tri-tooltip>RT</button>
+      <button tooltipTitle="prompt text" tooltipPlacement="right" tri-button tri-tooltip>Right</button>
+      <button tooltipTitle="prompt text" tooltipPlacement="rightBottom" tri-button tri-tooltip>RB</button>
     </div>
     <div style="margin-left:60px;clear: both;">
-      <button nzTooltipTitle="prompt text" nzTooltipPlacement="bottomLeft" nz-button nz-tooltip>BL</button>
-      <button nzTooltipTitle="prompt text" nzTooltipPlacement="bottom" nz-button nz-tooltip>Bottom</button>
-      <button nzTooltipTitle="prompt text" nzTooltipPlacement="bottomRight" nz-button nz-tooltip>BR</button>
+      <button tooltipTitle="prompt text" tooltipPlacement="bottomLeft" tri-button tri-tooltip>BL</button>
+      <button tooltipTitle="prompt text" tooltipPlacement="bottom" tri-button tri-tooltip>Bottom</button>
+      <button tooltipTitle="prompt text" tooltipPlacement="bottomRight" tri-button tri-tooltip>BR</button>
     </div>
   `,
   styles: [
@@ -42,4 +42,4 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     `
   ]
 })
-export class NzDemoTooltipPlacementComponent {}
+export class TriDemoTooltipPlacementComponent {}

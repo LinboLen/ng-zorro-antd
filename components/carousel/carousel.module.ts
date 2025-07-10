@@ -5,11 +5,11 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzCarouselContentDirective } from './carousel-content.directive';
-import { NzCarouselComponent } from './carousel.component';
+import { TriCarouselContentDirective } from './carousel-content.directive';
+import { TriCarouselComponent } from './carousel.component';
 
 @NgModule({
-  imports: [NzCarouselComponent, NzCarouselContentDirective],
-  exports: [NzCarouselComponent, NzCarouselContentDirective]
+  imports: [TriCarouselComponent, TriCarouselContentDirective],
+  exports: [TriCarouselComponent, TriCarouselContentDirective]
 })
-export class NzCarouselModule {}
+export class TriCarouselModule {}

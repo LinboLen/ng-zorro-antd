@@ -9,13 +9,13 @@ import { ComponentFixture, TestBed, fakeAsync, flush, waitForAsync } from '@angu
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { NzSizeLDSType, NzStatus, NzVariant } from 'ng-zorro-antd/core/types';
+import { TriSizeLDSType, TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
-import { NzInputGroupComponent } from 'ng-zorro-antd/input/input-group.component';
+import { TriInputGroupComponent } from 'ng-zorro-antd/input/input-group.component';
 
-import { NzFormControlStatusType, NzFormModule } from '../form';
-import { NzInputDirective } from './input.directive';
-import { NzInputModule } from './input.module';
+import { TriFormControlStatusType, TriFormModule } from '../form';
+import { TriInputDirective } from './input.directive';
+import { TriInputModule } from './input.module';
 
 describe('input', () => {
   beforeEach(waitForAsync(() => {
@@ -25,15 +25,15 @@ describe('input', () => {
   }));
   describe('single input', () => {
     describe('input with input element', () => {
-      let fixture: ComponentFixture<NzTestInputWithInputComponent>;
-      let testComponent: NzTestInputWithInputComponent;
+      let fixture: ComponentFixture<TriTestInputWithInputComponent>;
+      let testComponent: TriTestInputWithInputComponent;
       let inputElement: DebugElement;
 
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestInputWithInputComponent);
+        fixture = TestBed.createComponent(TriTestInputWithInputComponent);
         testComponent = fixture.debugElement.componentInstance;
         fixture.detectChanges();
-        inputElement = fixture.debugElement.query(By.directive(NzInputDirective));
+        inputElement = fixture.debugElement.query(By.directive(TriInputDirective));
       });
       it('should className correct', () => {
         fixture.detectChanges();
@@ -94,13 +94,13 @@ describe('input', () => {
     });
 
     describe('input with textarea element', () => {
-      let fixture: ComponentFixture<NzTestInputWithInputComponent>;
+      let fixture: ComponentFixture<TriTestInputWithInputComponent>;
       let inputElement: DebugElement;
 
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestInputWithInputComponent);
+        fixture = TestBed.createComponent(TriTestInputWithInputComponent);
         fixture.detectChanges();
-        inputElement = fixture.debugElement.query(By.directive(NzInputDirective));
+        inputElement = fixture.debugElement.query(By.directive(TriInputDirective));
       });
 
       it('should className correct', () => {
@@ -112,15 +112,15 @@ describe('input', () => {
 
   describe('input form', () => {
     describe('input with form', () => {
-      let fixture: ComponentFixture<NzTestInputFormComponent>;
-      let testComponent: NzTestInputFormComponent;
+      let fixture: ComponentFixture<TriTestInputFormComponent>;
+      let testComponent: TriTestInputFormComponent;
       let inputElement: DebugElement;
 
       beforeEach(() => {
-        fixture = TestBed.createComponent(NzTestInputFormComponent);
+        fixture = TestBed.createComponent(TriTestInputFormComponent);
         testComponent = fixture.debugElement.componentInstance;
         fixture.detectChanges();
-        inputElement = fixture.debugElement.query(By.directive(NzInputDirective));
+        inputElement = fixture.debugElement.query(By.directive(TriInputDirective));
       });
       it('should set disabled work', fakeAsync(() => {
         flush();
@@ -134,15 +134,15 @@ describe('input', () => {
   });
 
   describe('input RTL', () => {
-    let fixture: ComponentFixture<NzTestInputWithDirComponent>;
+    let fixture: ComponentFixture<TriTestInputWithDirComponent>;
     let inputElement: DebugElement;
     let inputGroupElement: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestInputWithDirComponent);
+      fixture = TestBed.createComponent(TriTestInputWithDirComponent);
       fixture.detectChanges();
-      inputElement = fixture.debugElement.query(By.directive(NzInputDirective));
-      inputGroupElement = fixture.debugElement.query(By.directive(NzInputGroupComponent));
+      inputElement = fixture.debugElement.query(By.directive(TriInputDirective));
+      inputGroupElement = fixture.debugElement.query(By.directive(TriInputGroupComponent));
     });
 
     it('should className correct on dir change', () => {
@@ -157,13 +157,13 @@ describe('input', () => {
   });
 
   describe('input with status', () => {
-    let fixture: ComponentFixture<NzTestInputWithStatusComponent>;
+    let fixture: ComponentFixture<TriTestInputWithStatusComponent>;
     let inputElement: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestInputWithStatusComponent);
+      fixture = TestBed.createComponent(TriTestInputWithStatusComponent);
       fixture.detectChanges();
-      inputElement = fixture.debugElement.query(By.directive(NzInputDirective));
+      inputElement = fixture.debugElement.query(By.directive(TriInputDirective));
     });
 
     it('should className correct', () => {
@@ -181,13 +181,13 @@ describe('input', () => {
   });
 
   describe('input in form', () => {
-    let fixture: ComponentFixture<NzTestInputInFormComponent>;
+    let fixture: ComponentFixture<TriTestInputInFormComponent>;
     let inputElement: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestInputInFormComponent);
+      fixture = TestBed.createComponent(TriTestInputInFormComponent);
       fixture.detectChanges();
-      inputElement = fixture.debugElement.query(By.directive(NzInputDirective));
+      inputElement = fixture.debugElement.query(By.directive(TriInputDirective));
     });
 
     it('should className correct', () => {
@@ -219,54 +219,54 @@ describe('input', () => {
 });
 
 @Component({
-  imports: [BidiModule, NzInputModule],
+  imports: [BidiModule, TriInputModule],
   template: `
     <div [dir]="dir">
-      <input nz-input />
-      <nz-input-group nzAddOnAfterIcon="setting">
-        <input type="text" nz-input />
-      </nz-input-group>
+      <input tri-input />
+      <tri-input-group addOnAfterIcon="setting">
+        <input type="text" tri-input />
+      </tri-input-group>
     </div>
   `
 })
-export class NzTestInputWithDirComponent {
+export class TriTestInputWithDirComponent {
   dir: Direction = 'ltr';
 }
 
 @Component({
-  imports: [NzInputModule],
+  imports: [TriInputModule],
   template: `<input
-    nz-input
-    [nzSize]="size"
+    tri-input
+    [size]="size"
     [disabled]="disabled"
-    [nzBorderless]="borderless"
-    [nzVariant]="variant"
-    [nzStepperless]="stepperless"
+    [borderless]="borderless"
+    [variant]="variant"
+    [stepperless]="stepperless"
   />`
 })
-export class NzTestInputWithInputComponent {
-  size: NzSizeLDSType = 'default';
+export class TriTestInputWithInputComponent {
+  size: TriSizeLDSType = 'default';
   disabled = false;
   stepperless = true;
   borderless = false;
-  variant: NzVariant = 'outlined';
+  variant: TriVariant = 'outlined';
 }
 
 @Component({
-  imports: [NzInputModule],
-  template: `<textarea nz-input></textarea>`
+  imports: [TriInputModule],
+  template: `<textarea tri-input></textarea>`
 })
-export class NzTestInputWithTextAreaComponent {}
+export class TriTestInputWithTextAreaComponent {}
 
 @Component({
-  imports: [ReactiveFormsModule, NzInputModule],
+  imports: [ReactiveFormsModule, TriInputModule],
   template: `
     <form>
-      <input nz-input [formControl]="formControl" />
+      <input tri-input [formControl]="formControl" />
     </form>
   `
 })
-export class NzTestInputFormComponent {
+export class TriTestInputFormComponent {
   formControl = new FormControl('abc');
 
   disable(): void {
@@ -276,26 +276,26 @@ export class NzTestInputFormComponent {
 
 // status
 @Component({
-  imports: [NzInputModule],
-  template: `<input nz-input [nzStatus]="status" />`
+  imports: [TriInputModule],
+  template: `<input tri-input [status]="status" />`
 })
-export class NzTestInputWithStatusComponent {
-  status: NzStatus = 'error';
+export class TriTestInputWithStatusComponent {
+  status: TriStatus = 'error';
 }
 
 @Component({
-  imports: [NzFormModule, NzInputModule],
+  imports: [TriFormModule, TriInputModule],
   template: `
-    <form nz-form>
-      <nz-form-item>
-        <nz-form-control [nzHasFeedback]="feedback" [nzValidateStatus]="status">
-          <input nz-input />
-        </nz-form-control>
-      </nz-form-item>
+    <form tri-form>
+      <tri-form-item>
+        <tri-form-control [hasFeedback]="feedback" [validateStatus]="status">
+          <input tri-input />
+        </tri-form-control>
+      </tri-form-item>
     </form>
   `
 })
-export class NzTestInputInFormComponent {
-  status: NzFormControlStatusType = 'error';
+export class TriTestInputInFormComponent {
+  status: TriFormControlStatusType = 'error';
   feedback = true;
 }

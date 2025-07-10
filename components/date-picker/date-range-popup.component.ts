@@ -35,7 +35,7 @@ import {
 } from 'ng-zorro-antd/core/time';
 import { FunctionProp } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
-import { NzCalendarI18nInterface } from 'ng-zorro-antd/i18n';
+import { TriCalendarI18nInterface } from 'ng-zorro-antd/i18n';
 
 import { CalendarFooterComponent } from './calendar-footer.component';
 import { DatePickerService } from './date-picker.service';
@@ -45,8 +45,8 @@ import {
   DisabledDateFn,
   DisabledTimeFn,
   DisabledTimePartial,
-  NzDateMode,
-  NzPanelChangeType,
+  TriDateMode,
+  TriPanelChangeType,
   PresetRanges,
   RangePartType,
   SupportTimeOptions
@@ -57,7 +57,7 @@ import { getTimeConfig, isAllowedDate, PREFIX_CLASS } from './util';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'date-range-popup',
+  selector: '',
   template: `
     @if (isRange) {
       <div class="{{ prefixCls }}-range-wrapper {{ prefixCls }}-date-range-wrapper">
@@ -80,7 +80,7 @@ import { getTimeConfig, isAllowedDate, PREFIX_CLASS } from './util';
           hasTimePicker ? prefixCls + '-time' : ''
         }} {{ isRange ? prefixCls + '-range' : '' }}"
       >
-        <div class="{{ prefixCls }}-panel" [class.ant-picker-panel-rtl]="dir === 'rtl'" tabindex="-1">
+        <div class="{{ prefixCls }}-panel" [class.tri-picker-panel-rtl]="dir === 'rtl'" tabindex="-1">
           <!-- Single ONLY -->
           <ng-container *ngTemplateOutlet="tplInnerPopup" />
           <ng-container *ngTemplateOutlet="tplFooter" />
@@ -89,7 +89,7 @@ import { getTimeConfig, isAllowedDate, PREFIX_CLASS } from './util';
     }
 
     <ng-template #tplInnerPopup let-partType="partType">
-      <div class="{{ prefixCls }}-panel" [class.ant-picker-panel-rtl]="dir === 'rtl'">
+      <div class="{{ prefixCls }}-panel" [class.tri-picker-panel-rtl]="dir === 'rtl'">
         <!-- TODO(@wenqi73) [selectedValue] [hoverValue] types-->
         <inner-popup
           [showWeek]="showWeek"
@@ -141,7 +141,7 @@ import { getTimeConfig, isAllowedDate, PREFIX_CLASS } from './util';
           (mouseenter)="onHoverPresetRange(ranges![name])"
           (mouseleave)="onPresetRangeMouseLeave()"
         >
-          <span class="ant-tag ant-tag-blue">{{ name }}</span>
+          <span class="tri-tag tri-tag-blue">{{ name }}</span>
         </li>
       }
     </ng-template>
@@ -157,7 +157,7 @@ export class DateRangePopupComponent implements OnInit, OnChanges {
   @Input({ transform: booleanAttribute }) isRange!: boolean;
   @Input({ transform: booleanAttribute }) inline: boolean = false;
   @Input({ transform: booleanAttribute }) showWeek!: boolean;
-  @Input() locale!: NzCalendarI18nInterface | undefined;
+  @Input() locale!: TriCalendarI18nInterface | undefined;
   @Input() disabledDate?: DisabledDateFn;
   @Input() disabledTime?: DisabledTimeFn; // This will lead to rebuild time options
   @Input({ transform: booleanAttribute }) showToday!: boolean;
@@ -166,17 +166,17 @@ export class DateRangePopupComponent implements OnInit, OnChanges {
   @Input() extraFooter?: TemplateRef<void> | string;
   @Input() ranges?: PresetRanges;
   @Input() dateRender?: string | TemplateRef<Date> | FunctionProp<TemplateRef<Date> | string>;
-  @Input() panelMode!: NzDateMode | NzDateMode[];
+  @Input() panelMode!: TriDateMode | TriDateMode[];
   @Input() defaultPickerValue!: CompatibleDate | undefined | null;
   @Input() dir: Direction = 'ltr';
   @Input() format?: string;
 
-  @Output() readonly panelModeChange = new EventEmitter<NzPanelChangeType>();
+  @Output() readonly panelModeChange = new EventEmitter<TriPanelChangeType>();
   @Output() readonly calendarChange = new EventEmitter<CompatibleValue>();
   @Output() readonly resultOk = new EventEmitter<void>(); // Emitted when done with date selecting
 
   prefixCls: string = PREFIX_CLASS;
-  endPanelMode: NzDateMode | NzDateMode[] = 'date';
+  endPanelMode: TriDateMode | TriDateMode[] = 'date';
   timeOptions: SupportTimeOptions | SupportTimeOptions[] | null = null;
   hoverValue: SingleValue[] = []; // Range ONLY
   checkedPartArr: boolean[] = [false, false];
@@ -262,21 +262,21 @@ export class DateRangePopupComponent implements OnInit, OnChanges {
     }
   }
 
-  onPanelModeChange(panelChangeEvent: NzPanelChangeType, partType?: RangePartType): void {
+  onPanelModeChange(panelChangeEvent: TriPanelChangeType, partType?: RangePartType): void {
     if (this.isRange) {
       const index = this.datePickerService.getActiveIndex(partType);
       if (index === 0) {
-        this.panelMode = [panelChangeEvent.mode, this.panelMode[1]] as [NzDateMode, NzDateMode];
+        this.panelMode = [panelChangeEvent.mode, this.panelMode[1]] as [TriDateMode, TriDateMode];
       } else {
-        this.panelMode = [this.panelMode[0], panelChangeEvent.mode] as [NzDateMode, NzDateMode];
+        this.panelMode = [this.panelMode[0], panelChangeEvent.mode] as [TriDateMode, TriDateMode];
       }
       this.panelModeChange.emit({
-        mode: this.panelMode as [NzDateMode, NzDateMode],
+        mode: this.panelMode as [TriDateMode, TriDateMode],
         date: (this.datePickerService.activeDate as SingleValue[]).map(d => d!.nativeDate) as [Date, Date]
       });
     } else {
-      this.panelMode = panelChangeEvent.mode as NzDateMode;
-      this.panelModeChange.emit({ mode: this.panelMode as NzDateMode, date: panelChangeEvent.date as Date });
+      this.panelMode = panelChangeEvent.mode as TriDateMode;
+      this.panelModeChange.emit({ mode: this.panelMode as TriDateMode, date: panelChangeEvent.date as Date });
     }
   }
 
@@ -376,11 +376,11 @@ export class DateRangePopupComponent implements OnInit, OnChanges {
     return part === 'left' ? 'right' : 'left';
   }
 
-  getPanelMode(panelMode: NzDateMode | NzDateMode[], partType?: RangePartType): NzDateMode {
+  getPanelMode(panelMode: TriDateMode | TriDateMode[], partType?: RangePartType): TriDateMode {
     if (this.isRange) {
-      return panelMode[this.datePickerService.getActiveIndex(partType)] as NzDateMode;
+      return panelMode[this.datePickerService.getActiveIndex(partType)] as TriDateMode;
     } else {
-      return panelMode as NzDateMode;
+      return panelMode as TriDateMode;
     }
   }
 

@@ -9,18 +9,18 @@ import { Subject, Subscription } from 'rxjs';
 
 import { createMouseEvent, createTouchEvent, dispatchMouseEvent, dispatchTouchEvent } from 'ng-zorro-antd/core/testing';
 
-import { NzDragService } from './drag';
+import { TriDragService } from './drag';
 
 @Component({
   template: ''
 })
-export class NzTestDragServiceComponent {
-  public nzDragService = inject(NzDragService);
+export class TriTestDragServiceComponent {
+  public dragService = inject(TriDragService);
   drag$ = new Subject<void>();
   complete$ = new Subject<void>();
 
   drag(event: MouseEvent | TouchEvent): void {
-    this.nzDragService.requestDraggingSequence(event).subscribe({
+    this.dragService.requestDraggingSequence(event).subscribe({
       next: () => this.drag$.next(),
       complete: () => this.complete$.next()
     });
@@ -28,8 +28,8 @@ export class NzTestDragServiceComponent {
 }
 
 describe('drag service', () => {
-  let fixture: ComponentFixture<NzTestDragServiceComponent>;
-  let component: NzTestDragServiceComponent;
+  let fixture: ComponentFixture<TriTestDragServiceComponent>;
+  let component: TriTestDragServiceComponent;
 
   let completed = false;
   let dragged = false;
@@ -38,7 +38,7 @@ describe('drag service', () => {
 
   describe('basics', () => {
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestDragServiceComponent);
+      fixture = TestBed.createComponent(TriTestDragServiceComponent);
       component = fixture.debugElement.componentInstance;
     });
 

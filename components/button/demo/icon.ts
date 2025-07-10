@@ -1,36 +1,36 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-demo-button-icon',
-  imports: [NzButtonModule, NzIconModule],
+  selector: '',
+  imports: [TriButtonModule, TriIconModule],
   template: `
-    <button nz-button nzType="primary" nzShape="circle">
-      <nz-icon nzType="search" />
+    <button tri-button type="primary" shape="circle">
+      <tri-icon type="search" />
     </button>
-    <button nz-button nzType="primary" nzShape="circle">A</button>
-    <button nz-button nzType="primary">
-      <nz-icon nzType="search" />
+    <button tri-button type="primary" shape="circle">A</button>
+    <button tri-button type="primary">
+      <tri-icon type="search" />
       Search
     </button>
-    <button nz-button nzType="default" nzShape="circle">
-      <nz-icon nzType="search" />
+    <button tri-button type="default" shape="circle">
+      <tri-icon type="search" />
     </button>
-    <button nz-button nzType="default">
-      <nz-icon nzType="search" />
+    <button tri-button type="default">
+      <tri-icon type="search" />
       Search
     </button>
     <br />
-    <button nz-button nzType="default" nzShape="circle"><nz-icon nzType="search" /></button>
-    <button nz-button nzType="default">
-      <nz-icon nzType="search" />
+    <button tri-button type="default" shape="circle"><tri-icon type="search" /></button>
+    <button tri-button type="default">
+      <tri-icon type="search" />
       Search
     </button>
-    <button nz-button nzType="dashed" nzShape="circle"><nz-icon nzType="search" /></button>
-    <button nz-button nzType="dashed">
-      <nz-icon nzType="search" />
+    <button tri-button type="dashed" shape="circle"><tri-icon type="search" /></button>
+    <button tri-button type="dashed">
+      <tri-icon type="search" />
       Search
     </button>
   `,
@@ -43,4 +43,4 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     `
   ]
 })
-export class NzDemoButtonIconComponent {}
+export class TriDemoButtonIconComponent {}

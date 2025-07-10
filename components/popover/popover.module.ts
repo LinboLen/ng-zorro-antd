@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzPopoverComponent, NzPopoverDirective } from './popover';
+import { TriPopoverComponent, TriPopoverDirective } from './popover';
 
 @NgModule({
-  imports: [NzPopoverDirective, NzPopoverComponent],
-  exports: [NzPopoverDirective, NzPopoverComponent]
+  imports: [TriPopoverDirective, TriPopoverComponent],
+  exports: [TriPopoverDirective, TriPopoverComponent]
 })
-export class NzPopoverModule {}
+export class TriPopoverModule {}

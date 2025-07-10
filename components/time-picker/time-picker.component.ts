@@ -38,125 +38,125 @@ import { distinctUntilChanged, map, withLatestFrom } from 'rxjs/operators';
 import { isValid } from 'date-fns';
 
 import { slideMotion } from 'ng-zorro-antd/core/animation';
-import { NzConfigKey, NzConfigService, WithConfig } from 'ng-zorro-antd/core/config';
-import { NzFormItemFeedbackIconComponent, NzFormNoStatusService, NzFormStatusService } from 'ng-zorro-antd/core/form';
+import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
 import { warn } from 'ng-zorro-antd/core/logger';
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzOverlayModule } from 'ng-zorro-antd/core/overlay';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriOverlayModule } from 'ng-zorro-antd/core/overlay';
 import {
   NgClassInterface,
-  NzSafeAny,
-  NzSizeLDSType,
-  NzStatus,
-  NzValidateStatus,
-  NzVariant
+  TriSafeAny,
+  TriSizeLDSType,
+  TriStatus,
+  TriValidateStatus,
+  TriVariant
 } from 'ng-zorro-antd/core/types';
 import { getStatusClassNames, isNil } from 'ng-zorro-antd/core/util';
-import { DateHelperService, NzI18nService } from 'ng-zorro-antd/i18n';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, NzSpaceCompactItemDirective } from 'ng-zorro-antd/space';
+import { DateHelperService, TriI18nService } from 'ng-zorro-antd/i18n';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
-import { NzTimePickerPanelComponent } from './time-picker-panel.component';
+import { TriTimePickerPanelComponent } from './time-picker-panel.component';
 
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'timePicker';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'timePicker';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'nz-time-picker',
-  exportAs: 'nzTimePicker',
+  selector: '',
+  exportAs: 'triTimePicker',
   template: `
-    <div class="ant-picker-input">
+    <div class="tri-picker-input">
       <input
         #inputElement
-        [attr.id]="nzId"
+        [attr.id]="id"
         type="text"
         [size]="inputSize"
         autocomplete="off"
-        [placeholder]="nzPlaceHolder || (i18nPlaceHolder$ | async)"
+        [placeholder]="placeHolder || (i18nPlaceHolder$ | async)"
         [(ngModel)]="inputValue"
-        [disabled]="nzDisabled"
-        [readOnly]="nzInputReadOnly"
+        [disabled]="disabled"
+        [readOnly]="inputReadOnly"
         (focus)="onFocus(true)"
         (blur)="onFocus(false)"
         (keyup.enter)="onKeyupEnter()"
         (keyup.escape)="onKeyupEsc()"
         (ngModelChange)="onInputChange($event)"
       />
-      <span class="ant-picker-suffix">
-        <ng-container *nzStringTemplateOutlet="nzSuffixIcon; let suffixIcon">
-          <nz-icon [nzType]="suffixIcon" />
+      <span class="tri-picker-suffix">
+        <ng-container *stringTemplateOutlet="suffixIcon; let suffixIcon">
+          <tri-icon [type]="suffixIcon" />
         </ng-container>
         @if (hasFeedback && !!status) {
-          <nz-form-item-feedback-icon [status]="status"></nz-form-item-feedback-icon>
+          <tri-form-item-feedback-icon [status]="status"></tri-form-item-feedback-icon>
         }
       </span>
-      @if (nzAllowEmpty && !nzDisabled && value) {
-        <span class="ant-picker-clear" (click)="onClickClearBtn($event)">
-          <nz-icon nzType="close-circle" nzTheme="fill" [attr.aria-label]="nzClearText" [attr.title]="nzClearText" />
+      @if (allowEmpty && !disabled && value) {
+        <span class="tri-picker-clear" (click)="onClickClearBtn($event)">
+          <tri-icon type="close-circle" theme="fill" [attr.aria-label]="clearText" [attr.title]="clearText" />
         </span>
       }
     </div>
 
     <ng-template
       cdkConnectedOverlay
-      nzConnectedOverlay
-      [cdkConnectedOverlayHasBackdrop]="nzBackdrop"
+      connectedOverlay
+      [cdkConnectedOverlayHasBackdrop]="backdrop"
       [cdkConnectedOverlayPositions]="overlayPositions"
       [cdkConnectedOverlayOrigin]="origin"
-      [cdkConnectedOverlayOpen]="nzOpen"
+      [cdkConnectedOverlayOpen]="open"
       [cdkConnectedOverlayTransformOriginOn]="'.ant-picker-dropdown'"
       (detach)="close()"
       (overlayOutsideClick)="onClickOutside($event)"
     >
-      <div [@slideMotion]="'enter'" class="ant-picker-dropdown" style="position: relative">
-        <div class="ant-picker-panel-container">
-          <div tabindex="-1" class="ant-picker-panel">
-            <nz-time-picker-panel
-              [class]="nzPopupClassName"
-              [format]="nzFormat"
-              [nzHourStep]="nzHourStep"
-              [nzMinuteStep]="nzMinuteStep"
-              [nzSecondStep]="nzSecondStep"
-              [nzDisabledHours]="nzDisabledHours"
-              [nzDisabledMinutes]="nzDisabledMinutes"
-              [nzDisabledSeconds]="nzDisabledSeconds"
-              [nzPlaceHolder]="nzPlaceHolder || (i18nPlaceHolder$ | async)"
-              [nzHideDisabledOptions]="nzHideDisabledOptions"
-              [nzUse12Hours]="nzUse12Hours"
-              [nzDefaultOpenValue]="nzDefaultOpenValue"
-              [nzAddOn]="nzAddOn"
-              [nzClearText]="nzClearText"
-              [nzNowText]="nzNowText"
-              [nzOkText]="nzOkText"
-              [nzAllowEmpty]="nzAllowEmpty"
+      <div [@slideMotion]="'enter'" class="tri-picker-dropdown" style="position: relative">
+        <div class="tri-picker-panel-container">
+          <div tabindex="-1" class="tri-picker-panel">
+            <tri-time-picker-panel
+              [class]="popupClassName"
+              [format]="format"
+              [hourStep]="hourStep"
+              [minuteStep]="minuteStep"
+              [secondStep]="secondStep"
+              [disabledHours]="disabledHours"
+              [disabledMinutes]="disabledMinutes"
+              [disabledSeconds]="disabledSeconds"
+              [placeHolder]="placeHolder || (i18nPlaceHolder$ | async)"
+              [hideDisabledOptions]="hideDisabledOptions"
+              [use12Hours]="use12Hours"
+              [defaultOpenValue]="defaultOpenValue"
+              [addOn]="addOn"
+              [clearText]="clearText"
+              [nowText]="nowText"
+              [okText]="okText"
+              [allowEmpty]="allowEmpty"
               [(ngModel)]="value"
               (ngModelChange)="onPanelValueChange($event)"
               (closePanel)="closePanel()"
-            ></nz-time-picker-panel>
+            ></tri-time-picker-panel>
           </div>
         </div>
       </div>
     </ng-template>
   `,
   host: {
-    class: 'ant-picker',
-    '[class.ant-picker-large]': `finalSize() === 'large'`,
-    '[class.ant-picker-small]': `finalSize() === 'small'`,
-    '[class.ant-picker-disabled]': `nzDisabled`,
-    '[class.ant-picker-focused]': `focused`,
-    '[class.ant-picker-rtl]': `dir === 'rtl'`,
-    '[class.ant-picker-borderless]': `nzVariant === 'borderless' || (nzVariant === 'outlined' && nzBorderless)`,
-    '[class.ant-picker-filled]': `nzVariant === 'filled'`,
-    '[class.ant-picker-underlined]': `nzVariant === 'underlined'`,
+    class: 'tri-picker',
+    '[class.tri-picker-large]': `finalSize() === 'large'`,
+    '[class.tri-picker-small]': `finalSize() === 'small'`,
+    '[class.tri-picker-disabled]': `disabled`,
+    '[class.tri-picker-focused]': `focused`,
+    '[class.tri-picker-rtl]': `dir === 'rtl'`,
+    '[class.tri-picker-borderless]': `variant === 'borderless' || (variant === 'outlined' && borderless)`,
+    '[class.tri-picker-filled]': `variant === 'filled'`,
+    '[class.tri-picker-underlined]': `variant === 'underlined'`,
     '(click)': 'open()'
   },
-  hostDirectives: [NzSpaceCompactItemDirective],
+  hostDirectives: [TriSpaceCompactItemDirective],
   animations: [slideMotion],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NzTimePickerComponent),
+      useExisting: forwardRef(() => TriTimePickerComponent),
       multi: true
     },
     {
@@ -167,19 +167,19 @@ const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'timePicker';
   imports: [
     AsyncPipe,
     FormsModule,
-    NzOutletModule,
-    NzIconModule,
-    NzFormItemFeedbackIconComponent,
-    NzTimePickerPanelComponent,
-    NzOverlayModule,
+    TriOutletModule,
+    TriIconModule,
+    TriFormItemFeedbackIconComponent,
+    TriTimePickerPanelComponent,
+    TriOverlayModule,
     OverlayModule
   ]
 })
-export class NzTimePickerComponent implements ControlValueAccessor, OnInit, AfterViewInit, OnChanges {
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+export class TriTimePickerComponent implements ControlValueAccessor, OnInit, AfterViewInit, OnChanges {
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
 
-  public nzConfigService = inject(NzConfigService);
-  protected i18n = inject(NzI18nService);
+  public configService = inject(TriConfigService);
+  protected i18n = inject(TriI18nService);
   private elementRef = inject(ElementRef);
   private renderer = inject(Renderer2);
   private cdr = inject(ChangeDetectorRef);
@@ -232,7 +232,7 @@ export class NzTimePickerComponent implements ControlValueAccessor, OnInit, Afte
   // status
   prefixCls: string = 'ant-picker';
   statusCls: NgClassInterface = {};
-  status: NzValidateStatus = '';
+  _status: TriValidateStatus = '';
   hasFeedback: boolean = false;
 
   get origin(): ElementRef {
@@ -240,40 +240,40 @@ export class NzTimePickerComponent implements ControlValueAccessor, OnInit, Afte
   }
 
   @ViewChild('inputElement', { static: true }) inputRef!: ElementRef<HTMLInputElement>;
-  @Input() nzId: string | null = null;
-  @Input() nzSize: NzSizeLDSType = 'default';
-  @Input() nzStatus: NzStatus = '';
-  @Input() @WithConfig() nzVariant: NzVariant = 'outlined';
-  @Input() @WithConfig() nzHourStep: number = 1;
-  @Input() @WithConfig() nzMinuteStep: number = 1;
-  @Input() @WithConfig() nzSecondStep: number = 1;
-  @Input() @WithConfig() nzClearText: string = 'clear';
-  @Input() @WithConfig() nzNowText: string = '';
-  @Input() @WithConfig() nzOkText: string = '';
-  @Input() @WithConfig() nzPopupClassName: string = '';
-  @Input() nzPlaceHolder = '';
-  @Input() nzAddOn?: TemplateRef<void>;
-  @Input() nzDefaultOpenValue?: Date;
-  @Input() nzDisabledHours?: () => number[];
-  @Input() nzDisabledMinutes?: (hour: number) => number[];
-  @Input() nzDisabledSeconds?: (hour: number, minute: number) => number[];
-  @Input() @WithConfig() nzFormat: string = 'HH:mm:ss';
-  @Input() nzOpen = false;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzUse12Hours: boolean = false;
-  @Input() @WithConfig() nzSuffixIcon: string | TemplateRef<NzSafeAny> = 'clock-circle';
+  @Input() id: string | null = null;
+  @Input() size: TriSizeLDSType = 'default';
+  @Input() status: TriStatus = '';
+  @Input() @WithConfig() variant: TriVariant = 'outlined';
+  @Input() @WithConfig() hourStep: number = 1;
+  @Input() @WithConfig() minuteStep: number = 1;
+  @Input() @WithConfig() secondStep: number = 1;
+  @Input() @WithConfig() clearText: string = 'clear';
+  @Input() @WithConfig() nowText: string = '';
+  @Input() @WithConfig() okText: string = '';
+  @Input() @WithConfig() popupClassName: string = '';
+  @Input() placeHolder = '';
+  @Input() addOn?: TemplateRef<void>;
+  @Input() defaultOpenValue?: Date;
+  @Input() disabledHours?: () => number[];
+  @Input() disabledMinutes?: (hour: number) => number[];
+  @Input() disabledSeconds?: (hour: number, minute: number) => number[];
+  @Input() @WithConfig() format: string = 'HH:mm:ss';
+  @Input() open = false;
+  @Input({ transform: booleanAttribute }) @WithConfig() use12Hours: boolean = false;
+  @Input() @WithConfig() suffixIcon: string | TemplateRef<TriSafeAny> = 'clock-circle';
 
-  @Output() readonly nzOpenChange = new EventEmitter<boolean>();
+  @Output() readonly openChange = new EventEmitter<boolean>();
 
-  @Input({ transform: booleanAttribute }) nzHideDisabledOptions = false;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzAllowEmpty: boolean = true;
-  @Input({ transform: booleanAttribute }) nzDisabled = false;
-  @Input({ transform: booleanAttribute }) nzAutoFocus = false;
-  @Input() @WithConfig() nzBackdrop = false;
+  @Input({ transform: booleanAttribute }) hideDisabledOptions = false;
+  @Input({ transform: booleanAttribute }) @WithConfig() allowEmpty: boolean = true;
+  @Input({ transform: booleanAttribute }) disabled = false;
+  @Input({ transform: booleanAttribute }) autoFocus = false;
+  @Input() @WithConfig() backdrop = false;
   /**
    * @deprecated Will be removed in v21. It is recommended to use `nzVariant` instead.
    */
-  @Input({ transform: booleanAttribute }) nzBorderless: boolean = false;
-  @Input({ transform: booleanAttribute }) nzInputReadOnly: boolean = false;
+  @Input({ transform: booleanAttribute }) borderless: boolean = false;
+  @Input({ transform: booleanAttribute }) inputReadOnly: boolean = false;
 
   emitValue(value: Date | null): void {
     this.setValue(value, true);
@@ -292,28 +292,28 @@ export class NzTimePickerComponent implements ControlValueAccessor, OnInit, Afte
       this.preValue = isValid(value) ? new Date(value!) : null;
     }
     this.value = isValid(value) ? new Date(value!) : null;
-    this.inputValue = this.dateHelper.format(value, this.nzFormat);
+    this.inputValue = this.dateHelper.format(value, this.format);
     this.cdr.markForCheck();
   }
 
-  open(): void {
-    if (this.nzDisabled || this.nzOpen) {
+  _open(): void {
+    if (this.disabled || this.open) {
       return;
     }
     this.focus();
-    this.nzOpen = true;
-    this.nzOpenChange.emit(this.nzOpen);
+    this.open = true;
+    this.openChange.emit(this.open);
   }
 
   close(): void {
-    this.nzOpen = false;
+    this.open = false;
     this.cdr.markForCheck();
-    this.nzOpenChange.emit(this.nzOpen);
+    this.openChange.emit(this.open);
   }
 
   updateAutoFocus(): void {
-    if (this.isInit && !this.nzDisabled) {
-      if (this.nzAutoFocus) {
+    if (this.isInit && !this.disabled) {
+      if (this.autoFocus) {
         this.renderer.setAttribute(this.inputRef.nativeElement, 'autofocus', 'autofocus');
       } else {
         this.renderer.removeAttribute(this.inputRef.nativeElement, 'autofocus');
@@ -362,16 +362,16 @@ export class NzTimePickerComponent implements ControlValueAccessor, OnInit, Afte
   }
 
   onKeyupEnter(): void {
-    if (this.nzOpen && isValid(this.value)) {
+    if (this.open && isValid(this.value)) {
       this.setCurrentValueAndClose();
-    } else if (!this.nzOpen) {
-      this.open();
+    } else if (!this.open) {
+      this._open();
     }
   }
 
   onInputChange(str: string): void {
     if (!this.platform.TRIDENT && document.activeElement === this.inputRef.nativeElement) {
-      this.open();
+      this._open();
       this.parseTimeString(str);
     }
   }
@@ -394,19 +394,19 @@ export class NzTimePickerComponent implements ControlValueAccessor, OnInit, Afte
     if (this.compactSize) {
       return this.compactSize();
     }
-    return this.size();
+    return this.#size();
   });
 
-  private size = signal<NzSizeLDSType>(this.nzSize);
+  #size = signal<TriSizeLDSType>(this.size);
   private compactSize = inject(NZ_SPACE_COMPACT_SIZE, { optional: true });
-  private nzFormStatusService = inject(NzFormStatusService, { optional: true });
-  private nzFormNoStatusService = inject(NzFormNoStatusService, { optional: true });
+  private formStatusService = inject(TriFormStatusService, { optional: true });
+  private formNoStatusService = inject(TriFormNoStatusService, { optional: true });
 
   ngOnInit(): void {
-    this.nzFormStatusService?.formStatusChanges
+    this.formStatusService?.formStatusChanges
       .pipe(
         distinctUntilChanged((pre, cur) => pre.status === cur.status && pre.hasFeedback === cur.hasFeedback),
-        withLatestFrom(this.nzFormNoStatusService ? this.nzFormNoStatusService.noFormStatus : of(false)),
+        withLatestFrom(this.formNoStatusService ? this.formNoStatusService.noFormStatus : of(false)),
         map(([{ status, hasFeedback }, noStatus]) => ({ status: noStatus ? '' : status, hasFeedback })),
         takeUntilDestroyed(this.destroyRef)
       )
@@ -414,7 +414,7 @@ export class NzTimePickerComponent implements ControlValueAccessor, OnInit, Afte
         this.setStatusStyles(status, hasFeedback);
       });
 
-    this.inputSize = Math.max(8, this.nzFormat.length) + 2;
+    this.inputSize = Math.max(8, this.format.length) + 2;
     this.i18nPlaceHolder$ = this.i18n.localeChange.pipe(map(nzLocale => nzLocale.TimePicker.placeholder));
 
     this.dir = this.directionality.value;
@@ -425,7 +425,7 @@ export class NzTimePickerComponent implements ControlValueAccessor, OnInit, Afte
 
   ngOnChanges({ nzUse12Hours, nzFormat, nzDisabled, nzAutoFocus, nzStatus, nzSize }: SimpleChanges): void {
     if (nzUse12Hours && !nzUse12Hours.previousValue && nzUse12Hours.currentValue && !nzFormat) {
-      this.nzFormat = 'h:mm:ss a';
+      this.format = 'h:mm:ss a';
     }
     if (nzDisabled) {
       const value = nzDisabled.currentValue;
@@ -440,15 +440,15 @@ export class NzTimePickerComponent implements ControlValueAccessor, OnInit, Afte
       this.updateAutoFocus();
     }
     if (nzStatus) {
-      this.setStatusStyles(this.nzStatus, this.hasFeedback);
+      this.setStatusStyles(this.status, this.hasFeedback);
     }
     if (nzSize) {
-      this.size.set(nzSize.currentValue);
+      this.#size.set(nzSize.currentValue);
     }
   }
 
   parseTimeString(str: string): void {
-    const value = this.dateHelper.parseTime(str, this.nzFormat) || null;
+    const value = this.dateHelper.parseTime(str, this.format) || null;
     if (isValid(value)) {
       this.value = value;
       this.cdr.markForCheck();
@@ -484,7 +484,7 @@ export class NzTimePickerComponent implements ControlValueAccessor, OnInit, Afte
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.nzDisabled = (this.isNzDisableFirstChange && this.nzDisabled) || isDisabled;
+    this.disabled = (this.isNzDisableFirstChange && this.disabled) || isDisabled;
     this.isNzDisableFirstChange = false;
     this.cdr.markForCheck();
   }
@@ -494,9 +494,9 @@ export class NzTimePickerComponent implements ControlValueAccessor, OnInit, Afte
       return true;
     }
 
-    const disabledHours = this.nzDisabledHours?.();
-    const disabledMinutes = this.nzDisabledMinutes?.(value.getHours());
-    const disabledSeconds = this.nzDisabledSeconds?.(value.getHours(), value.getMinutes());
+    const disabledHours = this.disabledHours?.();
+    const disabledMinutes = this.disabledMinutes?.(value.getHours());
+    const disabledSeconds = this.disabledSeconds?.(value.getHours(), value.getMinutes());
 
     return !(
       disabledHours?.includes(value.getHours()) ||
@@ -505,9 +505,9 @@ export class NzTimePickerComponent implements ControlValueAccessor, OnInit, Afte
     );
   }
 
-  private setStatusStyles(status: NzValidateStatus, hasFeedback: boolean): void {
+  private setStatusStyles(status: TriValidateStatus, hasFeedback: boolean): void {
     // set inner status
-    this.status = status;
+    this._status = status;
     this.hasFeedback = hasFeedback;
     this.cdr.markForCheck();
     // render status if nzStatus is set

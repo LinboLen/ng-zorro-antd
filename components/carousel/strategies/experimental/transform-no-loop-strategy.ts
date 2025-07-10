@@ -7,18 +7,18 @@ import { Platform } from '@angular/cdk/platform';
 import { ChangeDetectorRef, QueryList, Renderer2 } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
-import { NzCarouselContentDirective } from '../../carousel-content.directive';
-import { NzCarouselComponentAsSource, PointerVector } from '../../typings';
-import { NzCarouselBaseStrategy } from '../base-strategy';
+import { TriCarouselContentDirective } from '../../carousel-content.directive';
+import { TriCarouselComponentAsSource, PointerVector } from '../../typings';
+import { TriCarouselBaseStrategy } from '../base-strategy';
 
-interface NzCarouselTransformOnLoopStrategyOptions {
+interface TriCarouselTransformOnLoopStrategyOptions {
   direction: 'left' | 'right';
 }
 
 /**
  * this strategy is very much like NzCarouselTransformStrategy, but it doesn't loop between the first and the last one
  */
-export class NzCarouselTransformNoLoopStrategy extends NzCarouselBaseStrategy<NzCarouselTransformOnLoopStrategyOptions> {
+export class TriCarouselTransformNoLoopStrategy extends TriCarouselBaseStrategy<TriCarouselTransformOnLoopStrategyOptions> {
   private isTransitioning = false;
 
   private get vertical(): boolean {
@@ -26,11 +26,11 @@ export class NzCarouselTransformNoLoopStrategy extends NzCarouselBaseStrategy<Nz
   }
 
   constructor(
-    carouselComponent: NzCarouselComponentAsSource,
+    carouselComponent: TriCarouselComponentAsSource,
     cdr: ChangeDetectorRef,
     renderer: Renderer2,
     platform: Platform,
-    options?: NzCarouselTransformOnLoopStrategyOptions
+    options?: TriCarouselTransformOnLoopStrategyOptions
   ) {
     super(carouselComponent, cdr, renderer, platform, options);
   }
@@ -41,7 +41,7 @@ export class NzCarouselTransformNoLoopStrategy extends NzCarouselBaseStrategy<Nz
     super.dispose();
   }
 
-  override withCarouselContents(contents: QueryList<NzCarouselContentDirective> | null): void {
+  override withCarouselContents(contents: QueryList<TriCarouselContentDirective> | null): void {
     super.withCarouselContents(contents);
 
     const carousel = this.carouselComponent!;
@@ -71,7 +71,7 @@ export class NzCarouselTransformNoLoopStrategy extends NzCarouselBaseStrategy<Nz
           );
         }
 
-        this.contents.forEach((content: NzCarouselContentDirective) => {
+        this.contents.forEach((content: TriCarouselContentDirective) => {
           this.renderer.setStyle(content.el, 'position', 'relative');
           this.renderer.setStyle(content.el, 'width', `${this.unitWidth}px`);
           this.renderer.setStyle(content.el, 'height', `${this.unitHeight}px`);

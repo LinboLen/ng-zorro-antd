@@ -1,23 +1,23 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: 'nz-demo-radio-disable',
-  imports: [FormsModule, NzButtonModule, NzRadioModule],
+  selector: '',
+  imports: [FormsModule, TriButtonModule, TriRadioModule],
   template: `
     <div>
-      <label nz-radio [nzDisabled]="disabled">Disabled</label>
+      <label tri-radio [disabled]="disabled">Disabled</label>
       <br />
-      <label nz-radio [nzDisabled]="disabled" [ngModel]="true">Disabled</label>
+      <label tri-radio [disabled]="disabled" [ngModel]="true">Disabled</label>
       <br />
       <br />
-      <button nz-button nzType="primary" (click)="disabled = !disabled">Toggle disabled</button>
+      <button tri-button type="primary" (click)="disabled = !disabled">Toggle disabled</button>
     </div>
   `
 })
-export class NzDemoRadioDisableComponent {
+export class TriDemoRadioDisableComponent {
   disabled = true;
 }

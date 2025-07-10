@@ -1,39 +1,39 @@
 import { Component } from '@angular/core';
 
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
-import { NzCalendarModule } from 'ng-zorro-antd/calendar';
+import { TriBadgeModule } from 'ng-zorro-antd/badge';
+import { TriCalendarModule } from 'ng-zorro-antd/calendar';
 
 @Component({
-  selector: 'nz-demo-calendar-notice-calendar',
-  imports: [NzBadgeModule, NzCalendarModule],
+  selector: '',
+  imports: [TriBadgeModule, TriCalendarModule],
   template: `
-    <nz-calendar>
-      <ul *nzDateCell="let date" class="events">
+    <tri-calendar>
+      <ul *dateCell="let date" class="events">
         @switch (date.getDate()) {
           @case (8) {
             @for (item of listDataMap.eight; track $index) {
               <li>
-                <nz-badge [nzStatus]="item.type" [nzText]="item.content"></nz-badge>
+                <tri-badge [status]="item.type" [text]="item.content"></tri-badge>
               </li>
             }
           }
           @case (10) {
             @for (item of listDataMap.ten; track $index) {
               <li>
-                <nz-badge [nzStatus]="item.type" [nzText]="item.content"></nz-badge>
+                <tri-badge [status]="item.type" [text]="item.content"></tri-badge>
               </li>
             }
           }
           @case (11) {
             @for (item of listDataMap.eleven; track $index) {
               <li>
-                <nz-badge [nzStatus]="item.type" [nzText]="item.content"></nz-badge>
+                <tri-badge [status]="item.type" [text]="item.content"></tri-badge>
               </li>
             }
           }
         }
       </ul>
-      <ng-container *nzMonthCell="let month">
+      <ng-container *monthCell="let month">
         @if (getMonthData(month); as monthData) {
           <div class="notes-month">
             <section>{{ monthData }}</section>
@@ -41,7 +41,7 @@ import { NzCalendarModule } from 'ng-zorro-antd/calendar';
           </div>
         }
       </ng-container>
-    </nz-calendar>
+    </tri-calendar>
   `,
   styles: [
     `
@@ -61,7 +61,7 @@ import { NzCalendarModule } from 'ng-zorro-antd/calendar';
     `
   ]
 })
-export class NzDemoCalendarNoticeCalendarComponent {
+export class TriDemoCalendarNoticeCalendarComponent {
   readonly listDataMap = {
     eight: [
       { type: 'warning', content: 'This is warning event.' },

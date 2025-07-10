@@ -6,8 +6,8 @@
 import { ChangeDetectionStrategy, Component, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'nz-card-tab',
-  exportAs: 'nzCardTab',
+  selector: '',
+  exportAs: 'triCardTab',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
@@ -16,6 +16,6 @@ import { ChangeDetectionStrategy, Component, TemplateRef, ViewChild, ViewEncapsu
     </ng-template>
   `
 })
-export class NzCardTabComponent {
+export class TriCardTabComponent {
   @ViewChild(TemplateRef, { static: true }) template!: TemplateRef<void>;
 }

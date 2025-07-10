@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzInputNumberLegacyModule } from 'ng-zorro-antd/input-number-legacy';
+import { TriInputNumberLegacyModule } from 'ng-zorro-antd/input-number-legacy';
 
 @Component({
-  selector: 'nz-demo-input-number-legacy-digit',
-  imports: [FormsModule, NzInputNumberLegacyModule],
+  selector: '',
+  imports: [FormsModule, TriInputNumberLegacyModule],
   template: `
-    <nz-input-number
+    <tri-input-number
       [(ngModel)]="value"
-      [nzMin]="1"
-      [nzMax]="10"
-      [nzStep]="0.1"
-      [nzPlaceHolder]="'Digital'"
-    ></nz-input-number>
+      [min]="1"
+      [max]="10"
+      [step]="0.1"
+      [placeHolder]="'Digital'"
+    ></tri-input-number>
   `
 })
-export class NzDemoInputNumberLegacyDigitComponent {
+export class TriDemoInputNumberLegacyDigitComponent {
   value = 0;
 }

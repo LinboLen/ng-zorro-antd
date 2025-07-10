@@ -6,31 +6,31 @@
 import { ComponentRef, TemplateRef } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzDrawerPlacement } from './drawer-options';
+import { TriDrawerPlacement } from './drawer-options';
 
-export abstract class NzDrawerRef<T = NzSafeAny, R = NzSafeAny> {
-  abstract afterClose: Observable<R | undefined>;
-  abstract afterOpen: Observable<void>;
+export abstract class TriDrawerRef<T = TriSafeAny, R = TriSafeAny> {
+  abstract _afterClose: Observable<R | undefined>;
+  abstract _afterOpen: Observable<void>;
   abstract close(result?: R): void;
   abstract open(): void;
   abstract getContentComponent(): T | null;
   abstract getContentComponentRef(): Readonly<ComponentRef<T>> | null;
 
-  abstract nzClosable?: boolean;
-  abstract nzNoAnimation?: boolean;
-  abstract nzMaskClosable?: boolean;
-  abstract nzKeyboard?: boolean;
-  abstract nzMask?: boolean;
-  abstract nzTitle?: string | TemplateRef<{}>;
-  abstract nzPlacement?: NzDrawerPlacement;
-  abstract nzMaskStyle?: object;
-  abstract nzBodyStyle?: object;
-  abstract nzWrapClassName?: string;
-  abstract nzWidth?: number | string;
-  abstract nzHeight?: number | string;
-  abstract nzZIndex?: number | string;
-  abstract nzOffsetX?: number | string;
-  abstract nzOffsetY?: number | string;
+  abstract closable?: boolean;
+  abstract noAnimation?: boolean;
+  abstract maskClosable?: boolean;
+  abstract keyboard?: boolean;
+  abstract mask?: boolean;
+  abstract title?: string | TemplateRef<{}>;
+  abstract placement?: TriDrawerPlacement;
+  abstract maskStyle?: object;
+  abstract bodyStyle?: object;
+  abstract wrapClassName?: string;
+  abstract width?: number | string;
+  abstract height?: number | string;
+  abstract zIndex?: number | string;
+  abstract offsetX?: number | string;
+  abstract offsetY?: number | string;
 }

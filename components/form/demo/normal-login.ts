@@ -1,41 +1,41 @@
 import { Component, inject } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { TriFormModule } from 'ng-zorro-antd/form';
+import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: 'nz-demo-form-normal-login',
-  imports: [ReactiveFormsModule, NzButtonModule, NzCheckboxModule, NzFormModule, NzInputModule],
+  selector: '',
+  imports: [ReactiveFormsModule, TriButtonModule, TriCheckboxModule, TriFormModule, TriInputModule],
   template: `
-    <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
-      <nz-form-item>
-        <nz-form-control nzErrorTip="Please input your username!">
-          <nz-input-group nzPrefixIcon="user">
-            <input type="text" nz-input formControlName="username" placeholder="Username" />
-          </nz-input-group>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-control nzErrorTip="Please input your Password!">
-          <nz-input-group nzPrefixIcon="lock">
-            <input type="password" nz-input formControlName="password" placeholder="Password" />
-          </nz-input-group>
-        </nz-form-control>
-      </nz-form-item>
-      <div nz-row class="login-form-margin">
-        <div nz-col [nzSpan]="12">
-          <label nz-checkbox formControlName="remember">
+    <form tri-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+      <tri-form-item>
+        <tri-form-control errorTip="Please input your username!">
+          <tri-input-group prefixIcon="user">
+            <input type="text" tri-input formControlName="username" placeholder="Username" />
+          </tri-input-group>
+        </tri-form-control>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-control errorTip="Please input your Password!">
+          <tri-input-group prefixIcon="lock">
+            <input type="password" tri-input formControlName="password" placeholder="Password" />
+          </tri-input-group>
+        </tri-form-control>
+      </tri-form-item>
+      <div tri-row class="login-form-margin">
+        <div tri-col [span]="12">
+          <label tri-checkbox formControlName="remember">
             <span>Remember me</span>
           </label>
         </div>
-        <div nz-col [nzSpan]="12">
+        <div tri-col [span]="12">
           <a class="login-form-forgot">Forgot password</a>
         </div>
       </div>
-      <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Log in</button>
+      <button tri-button class="login-form-button login-form-margin" [type]="'primary'">Log in</button>
       Or
       <a>register now!</a>
     </form>
@@ -60,7 +60,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     `
   ]
 })
-export class NzDemoFormNormalLoginComponent {
+export class TriDemoFormNormalLoginComponent {
   private fb = inject(NonNullableFormBuilder);
   validateForm = this.fb.group({
     username: this.fb.control('', [Validators.required]),

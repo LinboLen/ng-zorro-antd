@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzTableModule } from 'ng-zorro-antd/table';
+import { TriBadgeModule } from 'ng-zorro-antd/badge';
+import { TriDividerModule } from 'ng-zorro-antd/divider';
+import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriTableModule } from 'ng-zorro-antd/table';
 
 interface ParentItemData {
   key: number;
@@ -25,10 +25,10 @@ interface ChildrenItemData {
 }
 
 @Component({
-  selector: 'nz-demo-table-nested-table',
-  imports: [NzBadgeModule, NzDividerModule, NzDropDownModule, NzIconModule, NzTableModule],
+  selector: '',
+  imports: [TriBadgeModule, TriDividerModule, TriDropDownModule, TriIconModule, TriTableModule],
   template: `
-    <nz-table #nestedTable [nzData]="listOfParentData" [nzPageSize]="10">
+    <tri-table #nestedTable [data]="listOfParentData" [pageSize]="10">
       <thead>
         <tr>
           <th></th>
@@ -44,7 +44,7 @@ interface ChildrenItemData {
       <tbody>
         @for (data of nestedTable.data; track data) {
           <tr>
-            <td [(nzExpand)]="data.expand"></td>
+            <td [(expandChange)]="data.expand"></td>
             <td>{{ data.name }}</td>
             <td>{{ data.platform }}</td>
             <td>{{ data.version }}</td>
@@ -55,8 +55,8 @@ interface ChildrenItemData {
               <a>Publish</a>
             </td>
           </tr>
-          <tr [nzExpand]="data.expand">
-            <nz-table #innerTable [nzData]="listOfChildrenData" nzSize="middle" [nzShowPagination]="false">
+          <tr [expand]="data.expand">
+            <tri-table #innerTable [data]="listOfChildrenData" size="middle" [showPagination]="false">
               <thead>
                 <tr>
                   <th>Date</th>
@@ -72,42 +72,42 @@ interface ChildrenItemData {
                     <td>{{ data.date }}</td>
                     <td>{{ data.name }}</td>
                     <td>
-                      <nz-badge [nzStatus]="'success'" [nzText]="'Finished'"></nz-badge>
+                      <tri-badge [status]="'success'" [text]="'Finished'"></tri-badge>
                     </td>
                     <td>{{ data.upgradeNum }}</td>
                     <td>
                       <span class="table-operation">
-                        <a nz-dropdown class="operation" [nzDropdownMenu]="menu">
+                        <a tri-dropdown class="operation" [dropdownMenu]="menu">
                           Pause
-                          <nz-icon nzType="down" />
+                          <tri-icon type="down" />
                         </a>
-                        <nz-dropdown-menu #menu="nzDropdownMenu">
-                          <ul nz-menu>
-                            <li nz-menu-item>
+                        <tri-dropdown-menu #menu="nzDropdownMenu">
+                          <ul tri-menu>
+                            <li tri-menu-item>
                               <a>Action 1</a>
                             </li>
-                            <li nz-menu-item>
+                            <li tri-menu-item>
                               <a>Action 2</a>
                             </li>
                           </ul>
-                        </nz-dropdown-menu>
-                        <nz-divider nzType="vertical"></nz-divider>
+                        </tri-dropdown-menu>
+                        <tri-divider type="vertical"></tri-divider>
                         <a class="operation">Stop</a>
-                        <nz-divider nzType="vertical"></nz-divider>
+                        <tri-divider type="vertical"></tri-divider>
                         <a>More</a>
                       </span>
                     </td>
                   </tr>
                 }
               </tbody>
-            </nz-table>
+            </tri-table>
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `
 })
-export class NzDemoTableNestedTableComponent implements OnInit {
+export class TriDemoTableNestedTableComponent implements OnInit {
   listOfParentData: ParentItemData[] = [];
   listOfChildrenData: ChildrenItemData[] = [];
 

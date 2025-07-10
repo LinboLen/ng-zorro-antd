@@ -9,14 +9,14 @@ import { Subject } from 'rxjs';
 import { isNil } from 'ng-zorro-antd/core/util';
 
 @Directive({
-  selector: 'th'
+  selector: ''
 })
-export class NzThMeasureDirective implements OnChanges {
+export class TriThMeasureDirective implements OnChanges {
   private renderer = inject(Renderer2);
   private el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
 
   changes$ = new Subject<void>();
-  @Input() nzWidth: string | null = null;
+  @Input() width: string | null = null;
   @Input() colspan: string | number | null = null;
   @Input() colSpan: string | number | null = null;
   @Input() rowspan: string | number | null = null;

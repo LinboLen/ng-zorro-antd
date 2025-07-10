@@ -2,10 +2,10 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzTreeFlatDataSource, NzTreeFlattener, NzTreeViewModule } from 'ng-zorro-antd/tree-view';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriTreeFlatDataSource, TriTreeFlattener, TriTreeViewModule } from 'ng-zorro-antd/tree-view';
 
 interface TreeNode {
   name: string;
@@ -48,43 +48,43 @@ interface FlatNode {
 }
 
 @Component({
-  selector: 'nz-demo-tree-view-editable',
-  imports: [NzButtonModule, NzInputModule, NzIconModule, NzTreeViewModule],
+  selector: '',
+  imports: [TriButtonModule, TriInputModule, TriIconModule, TriTreeViewModule],
   template: `
-    <nz-tree-view [nzTreeControl]="treeControl" [nzDataSource]="dataSource" [trackBy]="trackBy">
-      <nz-tree-node *nzTreeNodeDef="let node" nzTreeNodeIndentLine>
-        <nz-tree-node-option
-          [nzDisabled]="node.disabled"
-          [nzSelected]="selectListSelection.isSelected(node)"
-          (nzClick)="selectListSelection.toggle(node)"
+    <tri-tree-view [treeControl]="treeControl" [dataSource]="dataSource" [trackBy]="trackBy">
+      <tri-tree-node *treeNodeDef="let node" treeNodeIndentLine>
+        <tri-tree-node-option
+          [disabled]="node.disabled"
+          [selected]="selectListSelection.isSelected(node)"
+          (click)="selectListSelection.toggle(node)"
         >
           {{ node.name }}
-        </nz-tree-node-option>
-        <button nz-button nzType="text" nzSize="small" (click)="delete(node)">
-          <nz-icon nzType="minus" nzTheme="outline" />
+        </tri-tree-node-option>
+        <button tri-button type="text" size="small" (click)="delete(node)">
+          <tri-icon type="minus" theme="outline" />
         </button>
-      </nz-tree-node>
+      </tri-tree-node>
 
-      <nz-tree-node *nzTreeNodeDef="let node; when: hasNoContent" nzTreeNodeIndentLine>
-        <input nz-input placeholder="Input node name" nzSize="small" #inputElement />
+      <tri-tree-node *treeNodeDef="let node; treeNodeDefWhen: hasNoContent" treeNodeIndentLine>
+        <input tri-input placeholder="Input node name" size="small" #inputElement />
         &nbsp;
-        <button nz-button nzSize="small" (click)="saveNode(node, inputElement.value)">Add</button>
-      </nz-tree-node>
+        <button tri-button size="small" (click)="saveNode(node, inputElement.value)">Add</button>
+      </tri-tree-node>
 
-      <nz-tree-node *nzTreeNodeDef="let node; when: hasChild" nzTreeNodeIndentLine>
-        <nz-tree-node-toggle>
-          <nz-icon nzType="caret-down" nzTreeNodeToggleRotateIcon />
-        </nz-tree-node-toggle>
+      <tri-tree-node *treeNodeDef="let node; treeNodeDefWhen: hasChild" treeNodeIndentLine>
+        <tri-tree-node-toggle>
+          <tri-icon type="caret-down" treeNodeToggleRotateIcon />
+        </tri-tree-node-toggle>
         {{ node.name }}
-        <button nz-button nzType="text" nzSize="small" (click)="addNewNode(node)">
-          <nz-icon nzType="plus" nzTheme="outline" />
+        <button tri-button type="text" size="small" (click)="addNewNode(node)">
+          <tri-icon type="plus" theme="outline" />
         </button>
-      </nz-tree-node>
-    </nz-tree-view>
+      </tri-tree-node>
+    </tri-tree-view>
   `,
   styles: [``]
 })
-export class NzDemoTreeViewEditableComponent {
+export class TriDemoTreeViewEditableComponent {
   private transformer = (node: TreeNode, level: number): FlatNode => {
     const existingNode = this.nestedNodeMap.get(node);
     const flatNode =
@@ -111,14 +111,14 @@ export class NzDemoTreeViewEditableComponent {
     node => node.level,
     node => node.expandable
   );
-  treeFlattener = new NzTreeFlattener(
+  treeFlattener = new TriTreeFlattener(
     this.transformer,
     node => node.level,
     node => node.expandable,
     node => node.children
   );
 
-  dataSource = new NzTreeFlatDataSource(this.treeControl, this.treeFlattener);
+  dataSource = new TriTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   constructor() {
     this.dataSource.setData(this.treeData);

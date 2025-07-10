@@ -1,99 +1,99 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzFlexDirective } from 'ng-zorro-antd/flex';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
-import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
+import { TriFlexDirective } from 'ng-zorro-antd/flex';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
+import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
 @Component({
-  selector: 'nz-demo-tree-select-variant',
-  imports: [FormsModule, NzTreeSelectModule, NzFlexDirective, NzSpaceModule],
+  selector: '',
+  imports: [FormsModule, TriTreeSelectModule, TriFlexDirective, TriSpaceModule],
   template: `
-    <div nz-flex nzGap="large">
-      <nz-space nzDirection="vertical" style="flex: 1">
-        <nz-tree-select
-          *nzSpaceItem
+    <div tri-flex gap="large">
+      <tri-space direction="vertical" style="flex: 1">
+        <tri-tree-select
+          *spaceItem
           style="width: 100%"
-          [nzNodes]="nodes"
-          nzVariant="outlined"
+          [nodes]="nodes"
+          variant="outlined"
           [ngModel]="defaultValue"
-          [nzDefaultExpandAll]="true"
-        ></nz-tree-select>
-        <nz-tree-select
-          *nzSpaceItem
+          [defaultExpandAll]="true"
+        ></tri-tree-select>
+        <tri-tree-select
+          *spaceItem
           style="width: 100%"
-          [nzNodes]="nodes"
-          nzVariant="filled"
+          [nodes]="nodes"
+          variant="filled"
           [ngModel]="defaultValue"
-          [nzDefaultExpandAll]="true"
-        ></nz-tree-select>
-        <nz-tree-select
-          *nzSpaceItem
+          [defaultExpandAll]="true"
+        ></tri-tree-select>
+        <tri-tree-select
+          *spaceItem
           style="width: 100%"
-          [nzNodes]="nodes"
-          nzVariant="borderless"
+          [nodes]="nodes"
+          variant="borderless"
           [ngModel]="defaultValue"
-          [nzDefaultExpandAll]="true"
-        ></nz-tree-select>
-        <nz-tree-select
-          *nzSpaceItem
+          [defaultExpandAll]="true"
+        ></tri-tree-select>
+        <tri-tree-select
+          *spaceItem
           style="width: 100%"
-          [nzNodes]="nodes"
-          nzVariant="underlined"
+          [nodes]="nodes"
+          variant="underlined"
           [ngModel]="defaultValue"
-          [nzDefaultExpandAll]="true"
-        ></nz-tree-select>
-      </nz-space>
-      <nz-space nzDirection="vertical" style="flex: 1">
-        <nz-tree-select
-          *nzSpaceItem
+          [defaultExpandAll]="true"
+        ></tri-tree-select>
+      </tri-space>
+      <tri-space direction="vertical" style="flex: 1">
+        <tri-tree-select
+          *spaceItem
           style="width: 100%"
-          nzVariant="outlined"
-          [nzNodes]="nodes"
-          [nzMaxTagCount]="3"
-          [nzAllowClear]="true"
-          [nzMultiple]="true"
+          variant="outlined"
+          [nodes]="nodes"
+          [maxTagCount]="3"
+          [allowClear]="true"
+          [multiple]="true"
           [ngModel]="defaultValue"
-          [nzDefaultExpandAll]="true"
-        ></nz-tree-select>
-        <nz-tree-select
-          *nzSpaceItem
+          [defaultExpandAll]="true"
+        ></tri-tree-select>
+        <tri-tree-select
+          *spaceItem
           style="width: 100%"
-          nzVariant="filled"
-          [nzNodes]="nodes"
-          [nzMaxTagCount]="3"
-          [nzAllowClear]="true"
-          [nzMultiple]="true"
+          variant="filled"
+          [nodes]="nodes"
+          [maxTagCount]="3"
+          [allowClear]="true"
+          [multiple]="true"
           [ngModel]="defaultValue"
-          [nzDefaultExpandAll]="true"
-        ></nz-tree-select>
-        <nz-tree-select
-          *nzSpaceItem
+          [defaultExpandAll]="true"
+        ></tri-tree-select>
+        <tri-tree-select
+          *spaceItem
           style="width: 100%"
-          nzVariant="borderless"
-          [nzNodes]="nodes"
-          [nzMaxTagCount]="3"
-          [nzAllowClear]="true"
-          [nzMultiple]="true"
+          variant="borderless"
+          [nodes]="nodes"
+          [maxTagCount]="3"
+          [allowClear]="true"
+          [multiple]="true"
           [ngModel]="defaultValue"
-          [nzDefaultExpandAll]="true"
-        ></nz-tree-select>
-        <nz-tree-select
-          *nzSpaceItem
+          [defaultExpandAll]="true"
+        ></tri-tree-select>
+        <tri-tree-select
+          *spaceItem
           style="width: 100%"
-          nzVariant="underlined"
-          [nzNodes]="nodes"
-          [nzMaxTagCount]="3"
-          [nzAllowClear]="true"
-          [nzMultiple]="true"
+          variant="underlined"
+          [nodes]="nodes"
+          [maxTagCount]="3"
+          [allowClear]="true"
+          [multiple]="true"
           [ngModel]="defaultValue"
-          [nzDefaultExpandAll]="true"
-        ></nz-tree-select>
-      </nz-space>
+          [defaultExpandAll]="true"
+        ></tri-tree-select>
+      </tri-space>
     </div>
   `
 })
-export class NzDemoTreeSelectVariantComponent {
+export class TriDemoTreeSelectVariantComponent {
   readonly defaultValue = '100';
   readonly nodes = [
     {

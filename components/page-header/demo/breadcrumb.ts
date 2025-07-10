@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
 
-import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
-import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { TriBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { TriPageHeaderModule } from 'ng-zorro-antd/page-header';
 
 @Component({
-  selector: 'nz-demo-page-header-breadcrumb',
-  imports: [NzBreadCrumbModule, NzPageHeaderModule],
+  selector: '',
+  imports: [TriBreadCrumbModule, TriPageHeaderModule],
   template: `
-    <nz-page-header nzTitle="Title" nzSubtitle="This is a subtitle">
-      <nz-breadcrumb nz-page-header-breadcrumb>
-        <nz-breadcrumb-item>First-level Menu</nz-breadcrumb-item>
-        <nz-breadcrumb-item>
+    <tri-page-header title="Title" subtitle="This is a subtitle">
+      <tri-breadcrumb tri-page-header-breadcrumb>
+        <tri-breadcrumb-item>First-level Menu</tri-breadcrumb-item>
+        <tri-breadcrumb-item>
           <a>Second-level Menu</a>
-        </nz-breadcrumb-item>
-        <nz-breadcrumb-item>Third-level Menu</nz-breadcrumb-item>
-      </nz-breadcrumb>
-    </nz-page-header>
+        </tri-breadcrumb-item>
+        <tri-breadcrumb-item>Third-level Menu</tri-breadcrumb-item>
+      </tri-breadcrumb>
+    </tri-page-header>
   `
 })
-export class NzDemoPageHeaderBreadcrumbComponent {}
+export class TriDemoPageHeaderBreadcrumbComponent {}

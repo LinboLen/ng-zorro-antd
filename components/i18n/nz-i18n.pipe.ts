@@ -5,13 +5,13 @@
 
 import { inject, Pipe, PipeTransform } from '@angular/core';
 
-import { NzI18nService } from './nz-i18n.service';
+import { TriI18nService } from './nz-i18n.service';
 
 @Pipe({
   name: 'nzI18n'
 })
-export class NzI18nPipe implements PipeTransform {
-  private _locale = inject(NzI18nService);
+export class TriI18nPipe implements PipeTransform {
+  private _locale = inject(TriI18nService);
 
   transform(path: string, keyValue?: object): string {
     return this._locale.translate(path, keyValue);

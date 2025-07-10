@@ -5,45 +5,45 @@
 
 import { Observable } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-export type NzTabPosition = 'top' | 'bottom' | 'left' | 'right';
-export type NzTabType = 'line' | 'card' | 'editable-card';
-export type NzTabsCanDeactivateFn = (
+export type TriTabPosition = 'top' | 'bottom' | 'left' | 'right';
+export type TriTabType = 'line' | 'card' | 'editable-card';
+export type TriTabsCanDeactivateFn = (
   fromIndex: number,
   toIndex: number
 ) => Observable<boolean> | Promise<boolean> | boolean;
-export type NzTabPositionMode = 'horizontal' | 'vertical';
+export type TriTabPositionMode = 'horizontal' | 'vertical';
 
-export interface NzAnimatedInterface {
+export interface TriAnimatedInterface {
   inkBar: boolean;
   tabPane: boolean;
 }
 
-export class NzTabChangeEvent {
+export class TriTabChangeEvent {
   index?: number;
-  tab: NzSafeAny;
+  tab: TriSafeAny;
 }
 
-export interface NzTabScrollListOffset {
+export interface TriTabScrollListOffset {
   x: number;
   y: number;
 }
 
-export type NzTabScrollListOffsetEvent = NzTabScrollListOffset & { event: Event };
+export type TriTabScrollListOffsetEvent = TriTabScrollListOffset & { event: Event };
 
-interface NzTabWheelScrollEvent {
+interface TriTabWheelScrollEvent {
   type: 'wheel';
   event: WheelEvent;
 }
 
-interface NzTabTouchScrollEvent {
+interface TriTabTouchScrollEvent {
   type: 'touchstart' | 'touchmove' | 'touchend';
   event: TouchEvent;
 }
 
-export type NzTabScrollEvent = NzTabTouchScrollEvent | NzTabWheelScrollEvent;
-export type NzTabScrollEventHandlerFun<T extends NzTabScrollEvent['event']> = (event: T) => void;
+export type TriTabScrollEvent = TriTabTouchScrollEvent | TriTabWheelScrollEvent;
+export type TriTabScrollEventHandlerFun<T extends TriTabScrollEvent['event']> = (event: T) => void;
 
 export interface TabTemplateContext {
   visible: boolean;

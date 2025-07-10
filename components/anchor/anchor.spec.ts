@@ -8,11 +8,11 @@ import { Component, DebugElement, DOCUMENT, ElementRef, ViewChild } from '@angul
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzScrollService } from 'ng-zorro-antd/core/services';
-import { NzDirectionVHType, NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriScrollService } from 'ng-zorro-antd/core/services';
+import { TriDirectionVHType, TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzAnchorComponent } from './anchor.component';
-import { NzAnchorModule } from './anchor.module';
+import { TriAnchorComponent } from './anchor.component';
+import { TriAnchorModule } from './anchor.module';
 
 const throttleTime = 51;
 
@@ -21,7 +21,7 @@ describe('anchor', () => {
   let dl: DebugElement;
   let context: TestComponent;
   let page: PageObject;
-  let srv: NzScrollService;
+  let srv: TriScrollService;
   beforeEach(() => {
     fixture = TestBed.createComponent(TestComponent);
     dl = fixture.debugElement;
@@ -30,7 +30,7 @@ describe('anchor', () => {
     page = new PageObject();
     spyOn(context, '_scroll');
     spyOn(context, '_change');
-    srv = TestBed.inject(NzScrollService);
+    srv = TestBed.inject(TriScrollService);
   });
   afterEach(() => fixture.destroy());
 
@@ -58,7 +58,7 @@ describe('anchor', () => {
     });
 
     it('should be activated when scrolling to the anchor - horizontal', (done: () => void) => {
-      context.nzDirection = 'horizontal';
+      context.direction = 'horizontal';
       fixture.detectChanges();
       expect(context._scroll).not.toHaveBeenCalled();
       page.scrollTo();
@@ -71,7 +71,7 @@ describe('anchor', () => {
     });
 
     it('should clean activated when leaving all anchor', fakeAsync(() => {
-      spyOn(context.comp, 'clearActive' as NzSafeAny);
+      spyOn(context.comp, 'clearActive' as TriSafeAny);
       page.scrollTo();
       tick(throttleTime);
       fixture.detectChanges();
@@ -127,7 +127,7 @@ describe('anchor', () => {
       it(`is [false]`, () => {
         let linkList = dl.queryAll(By.css('nz-affix'));
         expect(linkList.length).toBe(1);
-        context.nzAffix = false;
+        context.affix = false;
         fixture.detectChanges();
         linkList = dl.queryAll(By.css('nz-affix'));
         expect(linkList.length).toBe(0);
@@ -143,7 +143,7 @@ describe('anchor', () => {
 
     describe('[nzCurrentAnchor]', () => {
       it('customize the anchor highlight', () => {
-        context.nzCurrentAnchor = '#basic';
+        context.currentAnchor = '#basic';
         fixture.detectChanges();
         const linkList = dl.queryAll(By.css('.ant-anchor-link'));
         expect(linkList.length).toBeGreaterThan(0);
@@ -155,17 +155,17 @@ describe('anchor', () => {
 
     describe('[nzShowInkInFixed]', () => {
       beforeEach(() => {
-        context.nzAffix = false;
+        context.affix = false;
         fixture.detectChanges();
       });
       it('should be show ink when [false]', () => {
-        context.nzShowInkInFixed = false;
+        context.showInkInFixed = false;
         fixture.detectChanges();
         scrollTo();
         expect(dl.query(By.css('.ant-anchor-fixed')) == null).toBe(false);
       });
       it('should be hide ink when [true]', () => {
-        context.nzShowInkInFixed = true;
+        context.showInkInFixed = true;
         fixture.detectChanges();
         scrollTo();
         expect(dl.query(By.css('.ant-anchor-fixed')) == null).toBe(true);
@@ -175,7 +175,7 @@ describe('anchor', () => {
     describe('[nzContainer]', () => {
       it('with window', () => {
         spyOn(window, 'addEventListener');
-        context.nzContainer = window;
+        context.container = window;
         fixture.detectChanges();
         expect(window.addEventListener).toHaveBeenCalled();
       });
@@ -183,7 +183,7 @@ describe('anchor', () => {
         spyOn(context, '_click');
         const el = document.querySelector('#target')!;
         spyOn(el, 'addEventListener');
-        context.nzContainer = '#target';
+        context.container = '#target';
         fixture.detectChanges();
         expect(el.addEventListener).toHaveBeenCalled();
         page.to('#basic-target');
@@ -242,7 +242,7 @@ describe('anchor', () => {
     });
 
     it(`should have correct class name in horizontal mode`, () => {
-      context.nzDirection = 'horizontal';
+      context.direction = 'horizontal';
       fixture.detectChanges();
       const wrapperEl = dl.query(By.css('.ant-anchor-wrapper'));
       expect(wrapperEl.nativeElement.classList).toContain('ant-anchor-wrapper-horizontal');
@@ -252,11 +252,11 @@ describe('anchor', () => {
   describe('**boundary**', () => {
     it('#getOffsetTop', (done: () => void) => {
       const el1 = document.getElementById('何时使用')!;
-      spyOn(el1, 'getClientRects').and.returnValue([] as NzSafeAny);
+      spyOn(el1, 'getClientRects').and.returnValue([] as TriSafeAny);
       const el2 = document.getElementById('parallel1')!;
       spyOn(el2, 'getBoundingClientRect').and.returnValue({
         top: 0
-      } as NzSafeAny);
+      } as TriSafeAny);
       expect(context._scroll).not.toHaveBeenCalled();
       page.scrollTo();
       setTimeout(() => {
@@ -287,43 +287,43 @@ describe('anchor', () => {
 });
 
 @Component({
-  imports: [NzAnchorModule],
+  imports: [TriAnchorModule],
   template: `
-    <nz-anchor
-      [nzAffix]="nzAffix"
-      [nzBounds]="nzBounds"
-      [nzShowInkInFixed]="nzShowInkInFixed"
-      [nzOffsetTop]="nzOffsetTop"
-      [nzTargetOffset]="nzTargetOffset"
-      [nzContainer]="nzContainer"
-      [nzCurrentAnchor]="nzCurrentAnchor"
-      [nzDirection]="nzDirection"
-      (nzClick)="_click()"
-      (nzScroll)="_scroll()"
-      (nzChange)="_change()"
+    <tri-anchor
+      [affix]="affix"
+      [bounds]="bounds"
+      [showInkInFixed]="showInkInFixed"
+      [offsetTop]="offsetTop"
+      [targetOffset]="targetOffset"
+      [container]="container"
+      [currentAnchor]="currentAnchor"
+      [direction]="direction"
+      (click)="_click()"
+      (scroll)="_scroll()"
+      (change)="_change()"
     >
-      <nz-link nzHref="#何时使用" nzTitle="何时使用"></nz-link>
-      <nz-link nzHref="#basic" nzTitle="Basic demo"></nz-link>
-      <nz-link nzHref="#API-AnchorLink">
+      <tri-link href="#何时使用" title="何时使用"></tri-link>
+      <tri-link href="#basic" title="Basic demo"></tri-link>
+      <tri-link href="#API-AnchorLink">
         <ng-template #nzTemplate>
           <span class="nzTemplate-title">tpl</span>
         </ng-template>
-      </nz-link>
-      <nz-link nzHref="#API" nzTitle="API">
-        <nz-link nzHref="#API-Anchor" nzTitle="nz-anchor"></nz-link>
-        <nz-link nzHref="#API-AnchorLink" [nzTitle]="title">
+      </tri-link>
+      <tri-link href="#API" title="API">
+        <tri-link href="#API-Anchor" title="nz-anchor"></tri-link>
+        <tri-link href="#API-AnchorLink" [title]="title">
           <ng-template #title>
             <span class="nzTitle-title">tpl-title</span>
           </ng-template>
-        </nz-link>
-      </nz-link>
-      <nz-link nzHref="#invalid" nzTitle="invalid"></nz-link>
-      <nz-link nzHref="invalidLink" nzTitle="invalidLink"></nz-link>
-      <nz-link nzHref="http://www.example.com/#id" nzTitle="complete" class="mock-complete"></nz-link>
-      <nz-link nzHref="#parallel1" nzTitle="parallel1"></nz-link>
-      <nz-link nzHref="#parallel2" nzTitle="parallel2"></nz-link>
-      <nz-link nzHref="#basic-target" nzTitle="basic-target"></nz-link>
-    </nz-anchor>
+        </tri-link>
+      </tri-link>
+      <tri-link href="#invalid" title="invalid"></tri-link>
+      <tri-link href="invalidLink" title="invalidLink"></tri-link>
+      <tri-link href="http://www.example.com/#id" title="complete" class="mock-complete"></tri-link>
+      <tri-link href="#parallel1" title="parallel1"></tri-link>
+      <tri-link href="#parallel2" title="parallel2"></tri-link>
+      <tri-link href="#basic-target" title="basic-target"></tri-link>
+    </tri-anchor>
     <h2 id="何时使用"></h2>
     <div style="height: 1000px"></div>
     <h2 id="basic"></h2>
@@ -352,41 +352,41 @@ describe('anchor', () => {
   `
 })
 export class TestComponent {
-  @ViewChild(NzAnchorComponent, { static: false }) comp!: NzAnchorComponent;
-  nzAffix = true;
-  nzBounds = 5;
-  nzOffsetTop = 0;
-  nzTargetOffset?: number;
-  nzShowInkInFixed = false;
-  nzContainer: NzSafeAny = null;
-  nzCurrentAnchor?: string;
-  nzDirection: NzDirectionVHType = 'vertical';
+  @ViewChild(TriAnchorComponent, { static: false }) comp!: TriAnchorComponent;
+  affix = true;
+  bounds = 5;
+  offsetTop = 0;
+  targetOffset?: number;
+  showInkInFixed = false;
+  container: TriSafeAny = null;
+  currentAnchor?: string;
+  direction: TriDirectionVHType = 'vertical';
   _click(): void {}
   _change(): void {}
   _scroll(): void {}
 }
 
 describe('NzAnchor', () => {
-  let component: NzAnchorComponent;
-  let fixture: ComponentFixture<NzAnchorComponent>;
+  let component: TriAnchorComponent;
+  let fixture: ComponentFixture<TriAnchorComponent>;
   let mockPlatform: Platform;
-  let scrollService: NzScrollService;
+  let scrollService: TriScrollService;
   let mockDocument: Document;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        NzAnchorComponent,
+        TriAnchorComponent,
         { provide: DOCUMENT, useValue: document },
-        NzScrollService,
+        TriScrollService,
         { provide: ElementRef, useValue: new ElementRef(document.createElement('div')) }
       ]
     });
 
-    fixture = TestBed.createComponent(NzAnchorComponent);
+    fixture = TestBed.createComponent(TriAnchorComponent);
     component = fixture.componentInstance;
     mockPlatform = TestBed.inject(Platform);
-    scrollService = TestBed.inject(NzScrollService);
+    scrollService = TestBed.inject(TriScrollService);
     mockDocument = TestBed.inject(DOCUMENT);
   });
 
@@ -398,30 +398,30 @@ describe('NzAnchor', () => {
   });
 
   it('should calculate the correct offsetTop in handleScroll method', () => {
-    component.nzTargetOffset = 50;
-    component.nzOffsetTop = 20;
-    component.nzBounds = 5;
+    component.targetOffset = 50;
+    component.offsetTop = 20;
+    component.bounds = 5;
 
     component.handleScroll();
 
-    expect(component.nzTargetOffset).toBe(50);
-    expect(component.nzOffsetTop).toBe(20);
+    expect(component.targetOffset).toBe(50);
+    expect(component.offsetTop).toBe(20);
   });
 
   it('should calculate target scroll top correctly and call scrollTo', fakeAsync(() => {
     const mockElement = document.createElement('div');
     spyOn(mockDocument, 'querySelector').and.returnValue(mockElement);
     spyOn(scrollService, 'getScroll').and.returnValue(100);
-    spyOn<NzSafeAny>(component, 'getContainer').and.returnValue(window);
+    spyOn<TriSafeAny>(component, 'getContainer').and.returnValue(window);
 
-    component.nzTargetOffset = undefined;
-    component.nzOffsetTop = undefined;
+    component.targetOffset = undefined;
+    component.offsetTop = undefined;
 
     const mockLinkComponent = {
       nzHref: '#test',
       setActive: jasmine.createSpy('setActive'),
       getLinkTitleElement: () => document.createElement('a')
-    } as NzSafeAny;
+    } as TriSafeAny;
 
     const scrollToSpy = spyOn(scrollService, 'scrollTo').and.callThrough();
 

@@ -22,10 +22,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable, combineLatest } from 'rxjs';
 import { debounceTime, map, startWith, switchMap } from 'rxjs/operators';
 
-import { NzResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
+import { TriResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
 
 @Component({
-  selector: 'tr[nz-table-measure-row]',
+  selector: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
@@ -34,11 +34,11 @@ import { NzResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
     }
   `,
   host: {
-    class: 'ant-table-measure-now'
+    class: 'tri-table-measure-now'
   }
 })
-export class NzTrMeasureComponent implements AfterViewInit {
-  private nzResizeObserver = inject(NzResizeObserver);
+export class TriTrMeasureComponent implements AfterViewInit {
+  private resizeObserver = inject(TriResizeObserver);
   private ngZone = inject(NgZone);
   private destroyRef = inject(DestroyRef);
 
@@ -54,7 +54,7 @@ export class NzTrMeasureComponent implements AfterViewInit {
           list =>
             combineLatest(
               list.toArray().map((item: ElementRef) =>
-                this.nzResizeObserver.observe(item).pipe(
+                this.resizeObserver.observe(item).pipe(
                   map(([entry]) => {
                     const { width } = entry.target.getBoundingClientRect();
                     return Math.floor(width);

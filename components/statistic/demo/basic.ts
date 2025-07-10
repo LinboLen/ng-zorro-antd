@@ -1,26 +1,26 @@
 import { DecimalPipe } from '@angular/common';
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzStatisticModule } from 'ng-zorro-antd/statistic';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriGridModule } from 'ng-zorro-antd/grid';
+import { TriStatisticModule } from 'ng-zorro-antd/statistic';
 
 @Component({
-  selector: 'nz-demo-statistic-basic',
-  imports: [DecimalPipe, NzButtonModule, NzGridModule, NzStatisticModule],
+  selector: '',
+  imports: [DecimalPipe, TriButtonModule, TriGridModule, TriStatisticModule],
   template: `
-    <nz-row [nzGutter]="16">
-      <nz-col [nzSpan]="12">
-        <nz-statistic [nzValue]="(1949101 | number)!" nzTitle="Active Users"></nz-statistic>
-      </nz-col>
-      <nz-col [nzSpan]="12">
-        <nz-statistic [nzValue]="(2019.111 | number: '1.0-2')!" nzTitle="Account Balance (CNY)"></nz-statistic>
-        <button nz-button nzType="primary" [style.margin-top.px]="16">Recharge</button>
-      </nz-col>
-      <nz-col [nzSpan]="12">
-        <nz-statistic [nzValue]="(112893 | number: '1.0-2')!" nzTitle="Active Users" nzLoading></nz-statistic>
-      </nz-col>
-    </nz-row>
+    <tri-row [gutter]="16">
+      <tri-col [span]="12">
+        <tri-statistic [value]="(1949101 | number)!" title="Active Users"></tri-statistic>
+      </tri-col>
+      <tri-col [span]="12">
+        <tri-statistic [value]="(2019.111 | number: '1.0-2')!" title="Account Balance (CNY)"></tri-statistic>
+        <button tri-button type="primary" [style.margin-top.px]="16">Recharge</button>
+      </tri-col>
+      <tri-col [span]="12">
+        <tri-statistic [value]="(112893 | number: '1.0-2')!" title="Active Users" loading></tri-statistic>
+      </tri-col>
+    </tri-row>
   `
 })
-export class NzDemoStatisticBasicComponent {}
+export class TriDemoStatisticBasicComponent {}

@@ -7,23 +7,23 @@ import { CdkTreeNodeToggle } from '@angular/cdk/tree';
 import { booleanAttribute, Directive, forwardRef, Input } from '@angular/core';
 
 @Directive({
-  selector: 'nz-tree-node-toggle[nzTreeNodeNoopToggle], [nzTreeNodeNoopToggle]',
+  selector: '',
   host: {
-    class: 'ant-tree-switcher ant-tree-switcher-noop'
+    class: 'tri-tree-switcher ant-tree-switcher-noop'
   }
 })
-export class NzTreeNodeNoopToggleDirective {}
+export class TriTreeNodeNoopToggleDirective {}
 
 @Directive({
-  selector: 'nz-tree-node-toggle:not([nzTreeNodeNoopToggle]), [nzTreeNodeToggle]',
-  providers: [{ provide: CdkTreeNodeToggle, useExisting: forwardRef(() => NzTreeNodeToggleDirective) }],
+  selector: '',
+  providers: [{ provide: CdkTreeNodeToggle, useExisting: forwardRef(() => TriTreeNodeToggleDirective) }],
   host: {
-    class: 'ant-tree-switcher',
-    '[class.ant-tree-switcher_open]': 'isExpanded',
-    '[class.ant-tree-switcher_close]': '!isExpanded'
+    class: 'tri-tree-switcher',
+    '[class.tri-tree-switcher_open]': 'isExpanded',
+    '[class.tri-tree-switcher_close]': '!isExpanded'
   }
 })
-export class NzTreeNodeToggleDirective<T> extends CdkTreeNodeToggle<T> {
+export class TriTreeNodeToggleDirective<T> extends CdkTreeNodeToggle<T> {
   @Input({ alias: 'nzTreeNodeToggleRecursive', transform: booleanAttribute }) override recursive = false;
 
   get isExpanded(): boolean {
@@ -32,17 +32,17 @@ export class NzTreeNodeToggleDirective<T> extends CdkTreeNodeToggle<T> {
 }
 
 @Directive({
-  selector: '[nzTreeNodeToggleRotateIcon]',
+  selector: '',
   host: {
-    class: 'ant-tree-switcher-icon'
+    class: 'tri-tree-switcher-icon'
   }
 })
-export class NzTreeNodeToggleRotateIconDirective {}
+export class TriTreeNodeToggleRotateIconDirective {}
 
 @Directive({
-  selector: '[nzTreeNodeToggleActiveIcon]',
+  selector: '',
   host: {
-    class: 'ant-tree-switcher-loading-icon'
+    class: 'tri-tree-switcher-loading-icon'
   }
 })
-export class NzTreeNodeToggleActiveIconDirective {}
+export class TriTreeNodeToggleActiveIconDirective {}

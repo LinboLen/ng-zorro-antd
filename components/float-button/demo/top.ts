@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 
-import { NzFloatButtonModule } from 'ng-zorro-antd/float-button';
+import { TriFloatButtonModule } from 'ng-zorro-antd/float-button';
 
 @Component({
-  selector: 'nz-demo-float-button-top',
-  imports: [NzFloatButtonModule],
+  selector: '',
+  imports: [TriFloatButtonModule],
   template: `
-    <nz-float-button-top></nz-float-button-top>
+    <tri-float-button-top></tri-float-button-top>
     Scroll down to see the back to top button on the bottom right
   `
 })
-export class NzDemoFloatButtonTopComponent {}
+export class TriDemoFloatButtonTopComponent {}

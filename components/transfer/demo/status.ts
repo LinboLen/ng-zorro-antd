@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 
-import { NzTransferModule } from 'ng-zorro-antd/transfer';
+import { TriTransferModule } from 'ng-zorro-antd/transfer';
 
 @Component({
-  selector: 'nz-demo-transfer-status',
-  imports: [NzTransferModule],
+  selector: '',
+  imports: [TriTransferModule],
   template: `
-    <nz-transfer [nzDataSource]="[]" nzStatus="error"></nz-transfer>
+    <tri-transfer [dataSource]="[]" status="error"></tri-transfer>
     <br />
-    <nz-transfer [nzDataSource]="[]" nzStatus="warning" nzShowSearch></nz-transfer>
+    <tri-transfer [dataSource]="[]" status="warning" showSearch></tri-transfer>
   `
 })
-export class NzDemoTransferStatusComponent {}
+export class TriDemoTransferStatusComponent {}

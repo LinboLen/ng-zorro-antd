@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
-import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { TriPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 @Component({
-  selector: 'nz-demo-popconfirm-hide-arrow',
-  imports: [NzPopconfirmModule],
-  template: `<a nz-popconfirm nzPopconfirmTitle="Are you sure?" [nzPopconfirmShowArrow]="false">Delete</a>`
+  selector: '',
+  imports: [TriPopconfirmModule],
+  template: `<a tri-popconfirm popconfirmTitle="Are you sure?" [popconfirmShowArrow]="false">Delete</a>`
 })
-export class NzDemoPopconfirmHideArrowComponent {}
+export class TriDemoPopconfirmHideArrowComponent {}

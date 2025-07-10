@@ -23,63 +23,63 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzDirectionVHType, NzSafeAny, NzSizeLDSType } from 'ng-zorro-antd/core/types';
-import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriDirectionVHType, TriSafeAny, TriSizeLDSType } from 'ng-zorro-antd/core/types';
+import { TriGridModule } from 'ng-zorro-antd/grid';
+import { TriSpinModule } from 'ng-zorro-antd/spin';
 
-import { NzListGrid } from './interface';
+import { TriListGrid } from './interface';
 import {
-  NzListEmptyComponent,
-  NzListFooterComponent,
-  NzListHeaderComponent,
-  NzListLoadMoreDirective,
-  NzListPaginationComponent
+  TriListEmptyComponent,
+  TriListFooterComponent,
+  TriListHeaderComponent,
+  TriListLoadMoreDirective,
+  TriListPaginationComponent
 } from './list-cell';
 
 @Component({
-  selector: 'nz-list, [nz-list]',
-  exportAs: 'nzList',
+  selector: '',
+  exportAs: 'triList',
   template: `
-    @if (nzHeader) {
-      <nz-list-header>
-        <ng-container *nzStringTemplateOutlet="nzHeader">{{ nzHeader }}</ng-container>
-      </nz-list-header>
+    @if (header) {
+      <tri-list-header>
+        <ng-container *stringTemplateOutlet="header">{{ header }}</ng-container>
+      </tri-list-header>
     }
 
     <ng-content select="nz-list-header" />
 
-    <nz-spin [nzSpinning]="nzLoading">
+    <tri-spin [spinning]="loading">
       <ng-container>
-        @if (nzLoading && nzDataSource && nzDataSource.length === 0) {
+        @if (loading && dataSource && dataSource.length === 0) {
           <div [style.min-height.px]="53"></div>
         }
-        @if (nzGrid && nzDataSource) {
-          <div nz-row [nzGutter]="nzGrid.gutter || null">
-            @for (item of nzDataSource; track item; let index = $index) {
+        @if (grid && dataSource) {
+          <div tri-row [gutter]="grid.gutter || null">
+            @for (item of dataSource; track item; let index = $index) {
               <div
-                nz-col
-                [nzSpan]="nzGrid.span || null"
-                [nzXs]="nzGrid.xs || null"
-                [nzSm]="nzGrid.sm || null"
-                [nzMd]="nzGrid.md || null"
-                [nzLg]="nzGrid.lg || null"
-                [nzXl]="nzGrid.xl || null"
-                [nzXXl]="nzGrid.xxl || null"
+                tri-col
+                [span]="grid.span || null"
+                [xs]="grid.xs || null"
+                [sm]="grid.sm || null"
+                [md]="grid.md || null"
+                [lg]="grid.lg || null"
+                [xl]="grid.xl || null"
+                [xXl]="grid.xxl || null"
               >
                 <ng-template
-                  [ngTemplateOutlet]="nzRenderItem"
+                  [ngTemplateOutlet]="renderItem"
                   [ngTemplateOutletContext]="{ $implicit: item, index: index }"
                 />
               </div>
             }
           </div>
         } @else {
-          <div class="ant-list-items">
-            @for (item of nzDataSource; track item; let index = $index) {
+          <div class="tri-list-items">
+            @for (item of dataSource; track item; let index = $index) {
               <ng-container>
                 <ng-template
-                  [ngTemplateOutlet]="nzRenderItem"
+                  [ngTemplateOutlet]="renderItem"
                   [ngTemplateOutletContext]="{ $implicit: item, index: index }"
                 />
               </ng-container>
@@ -88,27 +88,27 @@ import {
           </div>
         }
 
-        @if (!nzLoading && nzDataSource && nzDataSource.length === 0) {
-          <nz-list-empty [nzNoResult]="nzNoResult" />
+        @if (!loading && dataSource && dataSource.length === 0) {
+          <tri-list-empty [noResult]="noResult" />
         }
       </ng-container>
-    </nz-spin>
+    </tri-spin>
 
-    @if (nzFooter) {
-      <nz-list-footer>
-        <ng-container *nzStringTemplateOutlet="nzFooter">{{ nzFooter }}</ng-container>
-      </nz-list-footer>
+    @if (footer) {
+      <tri-list-footer>
+        <ng-container *stringTemplateOutlet="footer">{{ footer }}</ng-container>
+      </tri-list-footer>
     }
 
     <ng-content select="nz-list-footer, [nz-list-footer]" />
 
-    <ng-template [ngTemplateOutlet]="nzLoadMore"></ng-template>
+    <ng-template [ngTemplateOutlet]="loadMore"></ng-template>
     <ng-content select="nz-list-load-more, [nz-list-load-more]" />
 
-    @if (nzPagination) {
-      <nz-list-pagination>
-        <ng-template [ngTemplateOutlet]="nzPagination" />
-      </nz-list-pagination>
+    @if (pagination) {
+      <tri-list-pagination>
+        <ng-template [ngTemplateOutlet]="pagination" />
+      </tri-list-pagination>
     }
 
     <ng-content select="nz-list-pagination, [nz-list-pagination]" />
@@ -116,54 +116,54 @@ import {
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'ant-list',
-    '[class.ant-list-rtl]': `dir === 'rtl'`,
-    '[class.ant-list-vertical]': 'nzItemLayout === "vertical"',
-    '[class.ant-list-lg]': 'nzSize === "large"',
-    '[class.ant-list-sm]': 'nzSize === "small"',
-    '[class.ant-list-split]': 'nzSplit',
-    '[class.ant-list-bordered]': 'nzBordered',
-    '[class.ant-list-loading]': 'nzLoading',
-    '[class.ant-list-something-after-last-item]': 'hasSomethingAfterLastItem'
+    class: 'tri-list',
+    '[class.tri-list-rtl]': `dir === 'rtl'`,
+    '[class.tri-list-vertical]': 'itemLayout === "vertical"',
+    '[class.tri-list-lg]': 'size === "large"',
+    '[class.tri-list-sm]': 'size === "small"',
+    '[class.tri-list-split]': 'split',
+    '[class.tri-list-bordered]': 'bordered',
+    '[class.tri-list-loading]': 'loading',
+    '[class.tri-list-something-after-last-item]': 'hasSomethingAfterLastItem'
   },
   imports: [
     NgTemplateOutlet,
-    NzListHeaderComponent,
-    NzOutletModule,
-    NzSpinModule,
-    NzGridModule,
-    NzListEmptyComponent,
-    NzListFooterComponent,
-    NzListPaginationComponent
+    TriListHeaderComponent,
+    TriOutletModule,
+    TriSpinModule,
+    TriGridModule,
+    TriListEmptyComponent,
+    TriListFooterComponent,
+    TriListPaginationComponent
   ]
 })
-export class NzListComponent implements AfterContentInit, OnChanges, OnInit {
+export class TriListComponent implements AfterContentInit, OnChanges, OnInit {
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
 
-  @Input() nzDataSource?: NzSafeAny[];
-  @Input({ transform: booleanAttribute }) nzBordered = false;
-  @Input() nzGrid?: NzListGrid | '' | null | undefined = '';
-  @Input() nzHeader?: string | TemplateRef<void>;
-  @Input() nzFooter?: string | TemplateRef<void>;
-  @Input() nzItemLayout: NzDirectionVHType = 'horizontal';
-  @Input() nzRenderItem: TemplateRef<{ $implicit: NzSafeAny; index: number }> | null = null;
-  @Input({ transform: booleanAttribute }) nzLoading = false;
-  @Input() nzLoadMore: TemplateRef<void> | null = null;
-  @Input() nzPagination?: TemplateRef<void>;
-  @Input() nzSize: NzSizeLDSType = 'default';
-  @Input({ transform: booleanAttribute }) nzSplit = true;
-  @Input() nzNoResult?: string | TemplateRef<void>;
+  @Input() dataSource?: TriSafeAny[];
+  @Input({ transform: booleanAttribute }) bordered = false;
+  @Input() grid?: TriListGrid | '' | null | undefined = '';
+  @Input() header?: string | TemplateRef<void>;
+  @Input() footer?: string | TemplateRef<void>;
+  @Input() itemLayout: TriDirectionVHType = 'horizontal';
+  @Input() renderItem: TemplateRef<{ $implicit: TriSafeAny; index: number }> | null = null;
+  @Input({ transform: booleanAttribute }) loading = false;
+  @Input() loadMore: TemplateRef<void> | null = null;
+  @Input() pagination?: TemplateRef<void>;
+  @Input() size: TriSizeLDSType = 'default';
+  @Input({ transform: booleanAttribute }) split = true;
+  @Input() noResult?: string | TemplateRef<void>;
 
-  @ContentChild(NzListFooterComponent) nzListFooterComponent!: NzListFooterComponent;
-  @ContentChild(NzListPaginationComponent) nzListPaginationComponent!: NzListPaginationComponent;
-  @ContentChild(NzListLoadMoreDirective) nzListLoadMoreDirective!: NzListLoadMoreDirective;
+  @ContentChild(TriListFooterComponent) listFooterComponent!: TriListFooterComponent;
+  @ContentChild(TriListPaginationComponent) listPaginationComponent!: TriListPaginationComponent;
+  @ContentChild(TriListLoadMoreDirective) listLoadMoreDirective!: TriListLoadMoreDirective;
 
   hasSomethingAfterLastItem = false;
   dir: Direction = 'ltr';
-  private itemLayoutNotifySource = new BehaviorSubject<NzDirectionVHType>(this.nzItemLayout);
+  private itemLayoutNotifySource = new BehaviorSubject<TriDirectionVHType>(this.itemLayout);
 
-  get itemLayoutNotify$(): Observable<NzDirectionVHType> {
+  get itemLayoutNotify$(): Observable<TriDirectionVHType> {
     return this.itemLayoutNotifySource.asObservable();
   }
 
@@ -180,17 +180,17 @@ export class NzListComponent implements AfterContentInit, OnChanges, OnInit {
 
   getSomethingAfterLastItem(): boolean {
     return !!(
-      this.nzLoadMore ||
-      this.nzPagination ||
-      this.nzFooter ||
-      this.nzListFooterComponent ||
-      this.nzListPaginationComponent ||
-      this.nzListLoadMoreDirective
+      this.loadMore ||
+      this.pagination ||
+      this.footer ||
+      this.listFooterComponent ||
+      this.listPaginationComponent ||
+      this.listLoadMoreDirective
     );
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.nzItemLayout) {
-      this.itemLayoutNotifySource.next(this.nzItemLayout);
+      this.itemLayoutNotifySource.next(this.itemLayout);
     }
   }
 

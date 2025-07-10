@@ -8,9 +8,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
-import { NzThAddOnComponent, NzTableModule } from 'ng-zorro-antd/table';
+import { TriThAddOnComponent, TriTableModule } from 'ng-zorro-antd/table';
 
 describe('nz-th', () => {
   beforeEach(() => {
@@ -20,15 +20,15 @@ describe('nz-th', () => {
   });
 
   describe('nz-th addon in nz-table', () => {
-    let fixture: ComponentFixture<NzThTestNzTableComponent>;
-    let testComponent: NzThTestNzTableComponent;
+    let fixture: ComponentFixture<TriThTestNzTableComponent>;
+    let testComponent: TriThTestNzTableComponent;
     let th: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzThTestNzTableComponent);
+      fixture = TestBed.createComponent(TriThTestNzTableComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      th = fixture.debugElement.query(By.directive(NzThAddOnComponent));
+      th = fixture.debugElement.query(By.directive(TriThAddOnComponent));
     });
 
     it('should showSort work', () => {
@@ -99,8 +99,8 @@ describe('nz-th', () => {
     it('should be throw error when use specific class name', () => {
       expect(() => {
         TestBed.configureTestingModule({
-          declarations: [NzTestDisableThComponent]
-        }).createComponent(NzTestDisableThComponent);
+          declarations: [TriTestDisableThComponent]
+        }).createComponent(TriTestDisableThComponent);
       }).toThrow();
     });
 
@@ -122,26 +122,26 @@ describe('nz-th', () => {
 });
 
 @Component({
-  imports: [NzTableModule],
+  imports: [TriTableModule],
   template: `
     @if (!destroy) {
-      <nz-table>
+      <tri-table>
         <th
-          [nzLeft]="left"
-          [nzRight]="right"
-          [nzWidth]="width"
-          [(nzSortOrder)]="sort"
-          (nzSortOrderChange)="sortChange($event)"
-          [nzFilters]="filters"
-          (nzFilterChange)="filterChange($event)"
-          [nzFilterMultiple]="filterMultiple"
+          [left]="left"
+          [right]="right"
+          [width]="width"
+          [(sortOrderChange)]="sort"
+          (sortOrderChange)="sortChange($event)"
+          [filters]="filters"
+          (filterChange)="filterChange($event)"
+          [filterMultiple]="filterMultiple"
         ></th>
-      </nz-table>
+      </tri-table>
     }
   `
 })
-export class NzThTestNzTableComponent {
-  @ViewChild(NzThAddOnComponent, { static: false }) nzThComponent!: NzThAddOnComponent<NzSafeAny>;
+export class TriThTestNzTableComponent {
+  @ViewChild(TriThAddOnComponent, { static: false }) thComponent!: TriThAddOnComponent<TriSafeAny>;
   destroy = false;
   left: string | boolean = false;
   right: string | boolean = false;
@@ -163,18 +163,18 @@ interface ItemData {
 }
 
 @Component({
-  imports: [NzTableModule],
+  imports: [TriTableModule],
   template: `
-    <nz-table #filterTable [nzData]="displayData">
-      <thead (nzSortOrderChange)="sort($any($event))">
+    <tri-table #filterTable [data]="displayData">
+      <thead (sortOrderChange)="sort($any($event))">
         <tr>
-          <th nzColumnKey="name" [nzFilters]="nameList" (nzFilterChange)="filter($event, searchAddress)">Name</th>
-          <th nzColumnKey="age">Age</th>
+          <th columnKey="name" [filters]="nameList" (filterChange)="filter($event, searchAddress)">Name</th>
+          <th columnKey="age">Age</th>
           <th
-            nzColumnKey="address"
-            [nzFilterMultiple]="false"
-            [nzFilters]="addressList"
-            (nzFilterChange)="filter(listOfSearchName, $event)"
+            columnKey="address"
+            [filterMultiple]="false"
+            [filters]="addressList"
+            (filterChange)="filter(listOfSearchName, $event)"
           >
             Address
           </th>
@@ -189,10 +189,10 @@ interface ItemData {
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `
 })
-export class NzThTestTableDefaultFilterComponent {
+export class TriThTestTableDefaultFilterComponent {
   nameList = [
     { text: 'Joe', value: 'Joe', byDefault: true },
     { text: 'Jim', value: 'Jim' }
@@ -229,7 +229,7 @@ export class NzThTestTableDefaultFilterComponent {
   ];
   displayData: ItemData[] = [];
 
-  @ViewChild(NzThAddOnComponent, { static: false }) nzThComponent!: NzThAddOnComponent<ItemData>;
+  @ViewChild(TriThAddOnComponent, { static: false }) thComponent!: TriThAddOnComponent<ItemData>;
 
   sort(sort: { key: keyof ItemData; value: string }): void {
     this.sortName = sort.key;
@@ -267,7 +267,7 @@ export class NzThTestTableDefaultFilterComponent {
 }
 
 @Component({
-  imports: [NzTableModule],
+  imports: [TriTableModule],
   template: `<th class="nz-disable-th"></th>`
 })
-export class NzTestDisableThComponent {}
+export class TriTestDisableThComponent {}

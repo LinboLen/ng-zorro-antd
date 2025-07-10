@@ -8,24 +8,24 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, inject, TestBed, waitForAsync } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzModalFooterDirective } from './modal-footer.directive';
-import { NzModalRef } from './modal-ref';
-import { NzModalComponent } from './modal.component';
-import { NzModalModule } from './modal.module';
-import { NzModalService } from './modal.service';
+import { TriModalFooterDirective } from './modal-footer.directive';
+import { TriModalRef } from './modal-ref';
+import { TriModalComponent } from './modal.component';
+import { TriModalModule } from './modal.module';
+import { TriModalService } from './modal.service';
 
 describe('modal footer directive', () => {
   let overlayContainer: OverlayContainer;
   let fixture: ComponentFixture<TestDirectiveFooterComponent>;
   let testComponent: TestDirectiveFooterComponent;
-  let modalService: NzModalService;
+  let modalService: TriModalService;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      providers: [NzModalService, provideNoopAnimations()]
+      providers: [TriModalService, provideNoopAnimations()]
     });
   }));
 
@@ -35,7 +35,7 @@ describe('modal footer directive', () => {
     fixture.detectChanges();
   });
 
-  beforeEach(inject([OverlayContainer, NzModalService], (oc: OverlayContainer, m: NzModalService) => {
+  beforeEach(inject([OverlayContainer, TriModalService], (oc: OverlayContainer, m: TriModalService) => {
     overlayContainer = oc;
     modalService = m;
   }));
@@ -48,8 +48,8 @@ describe('modal footer directive', () => {
     testComponent.showModal();
     fixture.detectChanges();
     expect(testComponent.isVisible).toBe(true);
-    const modalRef = testComponent.nzModalComponent.getModalRef();
-    expect(modalRef!.getConfig().nzFooter).toEqual(testComponent.nzModalFooterDirective);
+    const modalRef = testComponent.modalComponent.getModalRef();
+    expect(modalRef!.getConfig().footer).toEqual(testComponent.modalFooterDirective);
 
     testComponent.handleCancel();
     fixture.detectChanges();
@@ -62,42 +62,42 @@ describe('modal footer directive', () => {
     expect(initOpenedComponent.isVisible).toBe(true);
     flush();
     initOpenedComponentFixture.detectChanges();
-    const modalRef = initOpenedComponent.nzModalComponent.getModalRef();
+    const modalRef = initOpenedComponent.modalComponent.getModalRef();
 
-    expect(modalRef!.getConfig().nzFooter).toEqual(initOpenedComponent.nzModalFooterDirective);
+    expect(modalRef!.getConfig().footer).toEqual(initOpenedComponent.modalFooterDirective);
 
     initOpenedComponentFixture.detectChanges();
   }));
 
   it('should work with service', () => {
-    const modalRef = modalService.create({ nzContent: TestDirectiveFooterInServiceComponent, nzFooter: null });
+    const modalRef = modalService.create({ content: TestDirectiveFooterInServiceComponent, footer: null });
     fixture.detectChanges();
 
     expect(modalRef.componentInstance!.nzModalRef).toBe(modalRef);
-    expect(modalRef.componentInstance!.nzModalFooterDirective).toEqual(
-      modalRef.getConfig().nzFooter as TemplateRef<{}>
+    expect(modalRef.componentInstance!.modalFooterDirective).toEqual(
+      modalRef.getConfig().footer as TemplateRef<{}>
     );
   });
 });
 
 @Component({
-  imports: [NzModalModule, NzButtonModule],
+  imports: [TriModalModule, TriButtonModule],
   template: `
-    <nz-modal [(nzVisible)]="isVisible" nzTitle="Custom Modal Title" (nzOnCancel)="handleCancel()">
+    <tri-modal [(visibleChange)]="isVisible" title="Custom Modal Title" (onCancel)="handleCancel()">
       <div>
         <p>Modal Content</p>
       </div>
-      <div *nzModalFooter>
-        <button id="btn-template" nz-button nzType="default" (click)="handleCancel()">Custom Callback</button>
+      <div *modalFooter>
+        <button id="btn-template" tri-button type="default" (click)="handleCancel()">Custom Callback</button>
       </div>
-    </nz-modal>
+    </tri-modal>
   `
 })
 class TestDirectiveFooterComponent {
   isVisible = false;
-  @ViewChild(NzModalComponent) nzModalComponent!: NzModalComponent;
-  @ViewChild(NzModalFooterDirective, { static: true, read: TemplateRef })
-  nzModalFooterDirective!: TemplateRef<NzSafeAny>;
+  @ViewChild(TriModalComponent) modalComponent!: TriModalComponent;
+  @ViewChild(TriModalFooterDirective, { static: true, read: TemplateRef })
+  modalFooterDirective!: TemplateRef<TriSafeAny>;
 
   handleCancel(): void {
     this.isVisible = false;
@@ -109,38 +109,38 @@ class TestDirectiveFooterComponent {
 }
 
 @Component({
-  imports: [NzModalModule, NzButtonModule],
+  imports: [TriModalModule, TriButtonModule],
   template: `
-    <nz-modal [(nzVisible)]="isVisible" nzTitle="Custom Modal Title">
+    <tri-modal [(visibleChange)]="isVisible" title="Custom Modal Title">
       <div>
         <p>Modal Content</p>
       </div>
-      <div *nzModalFooter>
-        <button id="btn-template" nz-button nzType="default">Custom Callback</button>
+      <div *modalFooter>
+        <button id="btn-template" tri-button type="default">Custom Callback</button>
       </div>
-    </nz-modal>
+    </tri-modal>
   `
 })
 class TestDirectiveFooterWithInitOpenedComponent {
   isVisible = true;
-  @ViewChild(NzModalComponent) nzModalComponent!: NzModalComponent;
-  @ViewChild(NzModalFooterDirective, { static: true, read: TemplateRef })
-  nzModalFooterDirective!: TemplateRef<NzSafeAny>;
+  @ViewChild(TriModalComponent) modalComponent!: TriModalComponent;
+  @ViewChild(TriModalFooterDirective, { static: true, read: TemplateRef })
+  modalFooterDirective!: TemplateRef<TriSafeAny>;
 }
 
 @Component({
-  imports: [NzModalModule, NzButtonModule],
+  imports: [TriModalModule, TriButtonModule],
   template: `
-    <div *nzModalFooter>
-      <button id="btn-template" nz-button nzType="default" (click)="handleCancel()">Custom Callback</button>
+    <div *modalFooter>
+      <button id="btn-template" tri-button type="default" (click)="handleCancel()">Custom Callback</button>
     </div>
   `
 })
 class TestDirectiveFooterInServiceComponent {
-  @ViewChild(NzModalFooterDirective, { static: true, read: TemplateRef })
-  nzModalFooterDirective!: TemplateRef<NzSafeAny>;
+  @ViewChild(TriModalFooterDirective, { static: true, read: TemplateRef })
+  modalFooterDirective!: TemplateRef<TriSafeAny>;
 
-  constructor(public nzModalRef: NzModalRef) {}
+  constructor(public nzModalRef: TriModalRef) {}
 
   handleCancel(): void {
     this.nzModalRef.close();

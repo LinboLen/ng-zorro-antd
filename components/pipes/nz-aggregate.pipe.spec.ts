@@ -3,13 +3,13 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { NzAggregatePipe } from './nz-aggregate.pipe';
+import { TriAggregatePipe } from './nz-aggregate.pipe';
 
 describe('NzAggregatePipe', () => {
-  let nzAggregatePipe: NzAggregatePipe;
+  let nzAggregatePipe: TriAggregatePipe;
 
   beforeEach(() => {
-    nzAggregatePipe = new NzAggregatePipe();
+    nzAggregatePipe = new TriAggregatePipe();
   });
   it('Should return 4', () => {
     expect(nzAggregatePipe.transform([1, 2, 3, 4], 'max')).toEqual(4);

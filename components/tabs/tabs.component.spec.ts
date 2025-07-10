@@ -14,15 +14,15 @@ import { provideRouter, Router, RouterLink, RouterOutlet, Routes } from '@angula
 import { Observable } from 'rxjs';
 
 import { dispatchFakeEvent, dispatchKeyboardEvent } from 'ng-zorro-antd/core/testing';
-import { NzSafeAny, NzSizeLDSType } from 'ng-zorro-antd/core/types';
+import { TriSafeAny, TriSizeLDSType } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
-import { NzTabPosition, NzTabType } from 'ng-zorro-antd/tabs/interfaces';
-import { NzTabNavBarComponent } from 'ng-zorro-antd/tabs/tab-nav-bar.component';
+import { TriTabPosition, TriTabType } from 'ng-zorro-antd/tabs/interfaces';
+import { TriTabNavBarComponent } from 'ng-zorro-antd/tabs/tab-nav-bar.component';
 
-import { NzTabNavOperationComponent } from './tab-nav-operation.component';
-import { NzTabComponent } from './tab.component';
-import { NzTabsComponent } from './tabs.component';
-import { NzTabsModule } from './tabs.module';
+import { TriTabNavOperationComponent } from './tab-nav-operation.component';
+import { TriTabComponent } from './tab.component';
+import { TriTabsComponent } from './tabs.component';
+import { TriTabsModule } from './tabs.module';
 
 describe('NzTabs', () => {
   beforeEach(fakeAsync(() => {
@@ -81,22 +81,22 @@ describe('NzTabs', () => {
 
     it('should update tab positions when selected index is changed', () => {
       fixture.detectChanges();
-      const component: NzTabsComponent = fixture.debugElement.query(By.css('nz-tabs'))!.componentInstance;
-      const tabs: NzTabComponent[] = component.tabs.toArray();
+      const component: TriTabsComponent = fixture.debugElement.query(By.css('nz-tabs'))!.componentInstance;
+      const tabs: TriTabComponent[] = component.tabs.toArray();
 
       expect(tabs[0].position).toBeLessThan(0);
       expect(tabs[1].position).toBe(0);
       expect(tabs[2].position).toBeGreaterThan(0);
 
       // Move to third tab
-      component.nzSelectedIndex = 2;
+      component.selectedIndex = 2;
       fixture.detectChanges();
       expect(tabs[0].position).toBeLessThan(0);
       expect(tabs[1].position).toBeLessThan(0);
       expect(tabs[2].position).toBe(0);
 
       // Move to the first tab
-      component.nzSelectedIndex = 0;
+      component.selectedIndex = 0;
       fixture.detectChanges();
       expect(tabs[0].position).toBe(0);
       expect(tabs[1].position).toBeGreaterThan(0);
@@ -105,17 +105,17 @@ describe('NzTabs', () => {
 
     it('should clamp the selected index to the size of the number of tabs', () => {
       fixture.detectChanges();
-      const component: NzTabsComponent = fixture.debugElement.query(By.css('nz-tabs'))!.componentInstance;
+      const component: TriTabsComponent = fixture.debugElement.query(By.css('nz-tabs'))!.componentInstance;
 
       // Set the index to be negative, expect the first tab selected
       fixture.componentInstance.selectedIndex = -1;
       fixture.detectChanges();
-      expect(component.nzSelectedIndex).toBe(0);
+      expect(component.selectedIndex).toBe(0);
 
       // Set the index beyond the size of the tabs, expect the last tab selected
       fixture.componentInstance.selectedIndex = 3;
       fixture.detectChanges();
-      expect(component.nzSelectedIndex).toBe(2);
+      expect(component.selectedIndex).toBe(2);
     });
 
     it('should not crash when setting the selected index to NaN', () => {
@@ -208,7 +208,7 @@ describe('NzTabs', () => {
     }));
 
     it('should clean up the tabs QueryList on destroy', () => {
-      const component: NzTabsComponent = fixture.debugElement.query(By.css('nz-tabs'))!.componentInstance;
+      const component: TriTabsComponent = fixture.debugElement.query(By.css('nz-tabs'))!.componentInstance;
       const spy = jasmine.createSpy('complete spy');
       const subscription = component.tabs.changes.subscribe({ complete: spy });
 
@@ -404,14 +404,14 @@ describe('NzTabs', () => {
     it('should set the disabled flag on tab', () => {
       const tabs = fixture.componentInstance.tabs.toArray();
       let labels = fixture.debugElement.queryAll(By.css('.ant-tabs-tab-disabled'));
-      expect(tabs[0].nzDisabled).toBe(false);
-      expect(tabs[1].nzDisabled).toBe(false);
+      expect(tabs[0].disabled).toBe(false);
+      expect(tabs[1].disabled).toBe(false);
       expect(labels.length).toBe(1);
 
       fixture.componentInstance.disabled = true;
       fixture.detectChanges();
 
-      expect(tabs[1].nzDisabled).toBe(true);
+      expect(tabs[1].disabled).toBe(true);
       labels = fixture.debugElement.queryAll(By.css('.ant-tabs-tab-disabled'));
       expect(labels.length).toBe(2);
     });
@@ -473,9 +473,9 @@ describe('NzTabs', () => {
     }));
 
     it('should be able to add a new tab, select it, and have correct origin position', fakeAsync(() => {
-      const component: NzTabsComponent = fixture.debugElement.query(By.css('nz-tabs'))!.componentInstance;
+      const component: TriTabsComponent = fixture.debugElement.query(By.css('nz-tabs'))!.componentInstance;
 
-      let tabs: NzTabComponent[] = component.tabs.toArray();
+      let tabs: TriTabComponent[] = component.tabs.toArray();
       expect(tabs[0].origin).toBe(null);
       expect(tabs[1].origin).toBe(0);
       expect(tabs[2].origin).toBe(null);
@@ -503,7 +503,7 @@ describe('NzTabs', () => {
     }));
 
     it('should update selected index if the last tab removed while selected', fakeAsync(() => {
-      const component: NzTabsComponent = fixture.debugElement.query(By.css('nz-tabs'))!.componentInstance;
+      const component: TriTabsComponent = fixture.debugElement.query(By.css('nz-tabs'))!.componentInstance;
 
       const numberOfTabs = component.tabs.length;
       fixture.componentInstance.selectedIndex = numberOfTabs - 1;
@@ -515,13 +515,13 @@ describe('NzTabs', () => {
       fixture.detectChanges();
       flush();
 
-      expect(component.nzSelectedIndex).toBe(numberOfTabs - 2);
+      expect(component.selectedIndex).toBe(numberOfTabs - 2);
       expect(fixture.componentInstance.selectedIndex).toBe(numberOfTabs - 2);
     }));
 
     it('should maintain the selected tab if a new tab is added', () => {
       fixture.detectChanges();
-      const component: NzTabsComponent = fixture.debugElement.query(By.css('nz-tabs'))!.componentInstance;
+      const component: TriTabsComponent = fixture.debugElement.query(By.css('nz-tabs'))!.componentInstance;
 
       fixture.componentInstance.selectedIndex = 1;
       fixture.detectChanges();
@@ -530,7 +530,7 @@ describe('NzTabs', () => {
       fixture.componentInstance.tabs.unshift({ title: 'New tab', content: 'at the start' });
       fixture.detectChanges();
 
-      expect(component.nzSelectedIndex).toBe(2);
+      expect(component.selectedIndex).toBe(2);
       expect(component.tabs.toArray()[2].isActive).toBe(true);
     });
 
@@ -539,7 +539,7 @@ describe('NzTabs', () => {
       fixture.componentInstance.selectedIndex = 1;
       fixture.detectChanges();
 
-      const component: NzTabsComponent = fixture.debugElement.query(By.css('nz-tabs'))!.componentInstance;
+      const component: TriTabsComponent = fixture.debugElement.query(By.css('nz-tabs'))!.componentInstance;
 
       // Remove the first tab that is right before the selected one.
       fixture.componentInstance.tabs.splice(0, 1);
@@ -547,13 +547,13 @@ describe('NzTabs', () => {
 
       // Since the first tab has been removed and the second one was selected before, the selected
       // tab moved one position to the right. Meaning that the tab is now the first tab.
-      expect(component.nzSelectedIndex).toBe(0);
+      expect(component.selectedIndex).toBe(0);
       expect(component.tabs.toArray()[0].isActive).toBe(true);
     });
 
     it('should be able to select a new tab after creation', fakeAsync(() => {
       fixture.detectChanges();
-      const component: NzTabsComponent = fixture.debugElement.query(By.css('nz-tabs'))!.componentInstance;
+      const component: TriTabsComponent = fixture.debugElement.query(By.css('nz-tabs'))!.componentInstance;
 
       fixture.componentInstance.tabs.push({ title: 'Last tab', content: 'at the end' });
       fixture.componentInstance.selectedIndex = 3;
@@ -561,7 +561,7 @@ describe('NzTabs', () => {
       fixture.detectChanges();
       flush();
 
-      expect(component.nzSelectedIndex).toBe(3);
+      expect(component.selectedIndex).toBe(3);
       expect(component.tabs.toArray()[3].isActive).toBe(true);
     }));
 
@@ -615,8 +615,8 @@ describe('NzTabs', () => {
       const groups = fixture.componentInstance.tabSets.toArray();
 
       expect(groups.length).toBe(2);
-      expect(groups[0].tabs.map((tab: NzTabComponent) => tab.nzTitle)).toEqual(['Tab 0', 'Tab 1']);
-      expect(groups[1].tabs.map((tab: NzTabComponent) => tab.nzTitle)).toEqual(['Inner Tab 0', 'Inner Tab 1']);
+      expect(groups[0].tabs.map((tab: TriTabComponent) => tab.title)).toEqual(['Tab 0', 'Tab 1']);
+      expect(groups[1].tabs.map((tab: TriTabComponent) => tab.title)).toEqual(['Inner Tab 0', 'Inner Tab 1']);
     });
 
     it('should pick up indirect descendant tabs', () => {
@@ -624,7 +624,7 @@ describe('NzTabs', () => {
       fixture.detectChanges();
 
       const tabs = fixture.componentInstance.tabSet.tabs;
-      expect(tabs.map((tab: NzTabComponent) => tab.nzTitle)).toEqual(['Tab 0', 'Tab 1']);
+      expect(tabs.map((tab: TriTabComponent) => tab.title)).toEqual(['Tab 0', 'Tab 1']);
     });
   });
 
@@ -713,7 +713,7 @@ describe('NzTabs', () => {
       const tabsList = element.querySelector('.ant-tabs-nav-list')! as HTMLElement;
       const translateX = getTranslate(tabsList.style.transform).x;
       const navOperation = fixture.debugElement.query(By.css('nz-tab-nav-operation'))!
-        .componentInstance as NzTabNavOperationComponent;
+        .componentInstance as TriTabNavOperationComponent;
 
       navOperation.onSelect(navOperation.items[5]);
 
@@ -727,8 +727,8 @@ describe('NzTabs', () => {
     }));
 
     it('should set transformX when scroll(mock)', fakeAsync(() => {
-      const tabNavBarComponent = fixture.debugElement.query(By.directive(NzTabNavBarComponent))!
-        .componentInstance as NzTabNavBarComponent;
+      const tabNavBarComponent = fixture.debugElement.query(By.directive(TriTabNavBarComponent))!
+        .componentInstance as TriTabNavBarComponent;
       const tabsList = element.querySelector('.ant-tabs-nav-list')! as HTMLElement;
       let translateX = getTranslate(tabsList.style.transform).x;
 
@@ -755,8 +755,8 @@ describe('NzTabs', () => {
       fixture.componentInstance.position = 'left';
       fixture.detectChanges();
 
-      const tabNavBarComponent = fixture.debugElement.query(By.directive(NzTabNavBarComponent))!
-        .componentInstance as NzTabNavBarComponent;
+      const tabNavBarComponent = fixture.debugElement.query(By.directive(TriTabNavBarComponent))!
+        .componentInstance as TriTabNavBarComponent;
       const tabsList = element.querySelector('.ant-tabs-nav-list')! as HTMLElement;
       let translateY = getTranslate(tabsList.style.transform).y;
 
@@ -779,11 +779,11 @@ describe('NzTabs', () => {
     }));
   });
 
-  function checkSelectedIndex(expectedIndex: number, fixture: ComponentFixture<NzSafeAny>): void {
+  function checkSelectedIndex(expectedIndex: number, fixture: ComponentFixture<TriSafeAny>): void {
     fixture.detectChanges();
-    const tabComponent: NzTabsComponent = fixture.debugElement.query(By.css('nz-tabs'))!.componentInstance;
+    const tabComponent: TriTabsComponent = fixture.debugElement.query(By.css('nz-tabs'))!.componentInstance;
 
-    expect(tabComponent.nzSelectedIndex).toBe(expectedIndex);
+    expect(tabComponent.selectedIndex).toBe(expectedIndex);
 
     const tabElement = fixture.debugElement.query(
       By.css(`.ant-tabs-tab:nth-of-type(${expectedIndex + 1})`)
@@ -809,7 +809,7 @@ describe('NzTabs', () => {
       fixture = TestBed.createComponent(RouterTabsTestComponent);
       fixture.detectChanges();
 
-      tabs = fixture.debugElement.query(By.directive(NzTabsComponent));
+      tabs = fixture.debugElement.query(By.directive(TriTabsComponent));
     });
 
     it('should change router and emit handleSelection once when click', fakeAsync(() => {
@@ -820,7 +820,7 @@ describe('NzTabs', () => {
         spyOn(component, 'handleSelection');
         fixture.detectChanges();
 
-        expect((tabs.componentInstance as NzTabsComponent).nzSelectedIndex).toBe(0);
+        expect((tabs.componentInstance as TriTabsComponent).selectedIndex).toBe(0);
         expect(component.handleSelection).toHaveBeenCalledTimes(0);
 
         // select the second tab
@@ -829,7 +829,7 @@ describe('NzTabs', () => {
         fixture.detectChanges();
         flush();
 
-        expect((tabs.componentInstance as NzTabsComponent).nzSelectedIndex).toBe(1);
+        expect((tabs.componentInstance as TriTabsComponent).selectedIndex).toBe(1);
         expect(component.handleSelection).toHaveBeenCalledTimes(1);
       });
     }));
@@ -954,26 +954,26 @@ describe('NzTabs', () => {
 });
 
 @Component({
-  imports: [NzTabsModule],
+  imports: [TriTabsModule],
   template: `
-    <nz-tabs
-      [(nzSelectedIndex)]="selectedIndex"
-      (nzSelectedIndexChange)="handleSelection($event)"
-      (nzClose)="handleClose($event)"
-      (nzAdd)="handleAdd()"
-      [nzTabPosition]="position"
-      [nzType]="type"
-      [nzSize]="size"
-      [nzTabBarGutter]="tabBarGutter"
-      [nzTabBarStyle]="tabBarStyle"
-      [nzCentered]="centered"
-      [nzCanDeactivate]="canDeactivate"
-      [nzTabBarExtraContent]="extraTemplate"
+    <tri-tabs
+      [(selectedIndexChange)]="selectedIndex"
+      (selectedIndexChange)="handleSelection($event)"
+      (close)="handleClose($event)"
+      (add)="handleAdd()"
+      [tabPosition]="position"
+      [type]="type"
+      [size]="size"
+      [tabBarGutter]="tabBarGutter"
+      [tabBarStyle]="tabBarStyle"
+      [centered]="centered"
+      [canDeactivate]="canDeactivate"
+      [tabBarExtraContent]="extraTemplate"
     >
-      <nz-tab nzTitle="Tab 0" nzClosable>Content of Tab Pane 0</nz-tab>
-      <nz-tab nzTitle="Tab 1" nzClosable>Content of Tab Pane 1</nz-tab>
-      <nz-tab nzTitle="Tab 2">Content of Tab Pane 2</nz-tab>
-    </nz-tabs>
+      <tri-tab title="Tab 0" closable>Content of Tab Pane 0</tri-tab>
+      <tri-tab title="Tab 1" closable>Content of Tab Pane 1</tri-tab>
+      <tri-tab title="Tab 2">Content of Tab Pane 2</tri-tab>
+    </tri-tabs>
     <ng-template #extraTemplate>
       <input type="text" class="extra-input" />
     </ng-template>
@@ -981,9 +981,9 @@ describe('NzTabs', () => {
 })
 class SimpleTabsTestComponent {
   selectedIndex = 1;
-  position: NzTabPosition = 'top';
-  size: NzSizeLDSType = 'default';
-  type: NzTabType = 'line';
+  position: TriTabPosition = 'top';
+  size: TriSizeLDSType = 'default';
+  type: TriTabType = 'line';
   tabBarGutter?: number;
   tabBarStyle: Record<string, string> | null = {};
   centered = false;
@@ -997,13 +997,13 @@ class SimpleTabsTestComponent {
 }
 
 @Component({
-  imports: [NzTabsModule],
+  imports: [TriTabsModule],
   template: `
-    <nz-tabs [(nzSelectedIndex)]="selectedIndex" [nzDestroyInactiveTabPane]="destroyInactiveTabPane">
-      <nz-tab nzTitle="Tab 0" [nzForceRender]="forceRender">Content of Tab Pane 0</nz-tab>
-      <nz-tab nzTitle="Tab 1" [nzForceRender]="forceRender">Content of Tab Pane 1</nz-tab>
-      <nz-tab nzTitle="Tab 2" [nzForceRender]="forceRender">Content of Tab Pane 2</nz-tab>
-    </nz-tabs>
+    <tri-tabs [(selectedIndexChange)]="selectedIndex" [destroyInactiveTabPane]="destroyInactiveTabPane">
+      <tri-tab title="Tab 0" [forceRender]="forceRender">Content of Tab Pane 0</tri-tab>
+      <tri-tab title="Tab 1" [forceRender]="forceRender">Content of Tab Pane 1</tri-tab>
+      <tri-tab title="Tab 2" [forceRender]="forceRender">Content of Tab Pane 2</tri-tab>
+    </tri-tabs>
   `
 })
 class SimpleTabsRenderingComponent {
@@ -1013,16 +1013,16 @@ class SimpleTabsRenderingComponent {
 }
 
 @Component({
-  imports: [NzTabsModule],
+  imports: [TriTabsModule],
   template: `
-    <nz-tabs nzType="editable-card" [(nzSelectedIndex)]="selectedIndex" [nzAddIcon]="addTemplate">
-      <nz-tab nzTitle="Tab 0">Content of Tab Pane 0</nz-tab>
-      <nz-tab nzClosable [nzTitle]="titleTemplate" [nzCloseIcon]="closeIconTemplate">
-        <ng-template nz-tab>
+    <tri-tabs type="editable-card" [(selectedIndexChange)]="selectedIndex" [addIcon]="addTemplate">
+      <tri-tab title="Tab 0">Content of Tab Pane 0</tri-tab>
+      <tri-tab closable [title]="titleTemplate" [closeIcon]="closeIconTemplate">
+        <ng-template tri-tab>
           <span class="content">Template Content of Tab Pane 1</span>
         </ng-template>
-      </nz-tab>
-    </nz-tabs>
+      </tri-tab>
+    </tri-tabs>
 
     <ng-template #titleTemplate>
       <span class="title">Template Title</span>
@@ -1040,41 +1040,41 @@ class TemplateTabsTestComponent {
 }
 
 @Component({
-  imports: [NzTabsModule],
+  imports: [TriTabsModule],
   template: `
-    <nz-tabs
-      nzType="editable-card"
-      [(nzSelectedIndex)]="selectedIndex"
-      (nzSelectedIndexChange)="handleSelection($event)"
+    <tri-tabs
+      type="editable-card"
+      [(selectedIndexChange)]="selectedIndex"
+      (selectedIndexChange)="handleSelection($event)"
     >
-      <nz-tab nzTitle="Tab 0">Content of Tab Pane 0</nz-tab>
-      <nz-tab nzTitle="Tab 1" nzClosable [nzDisabled]="disabled">Content of Tab Pane 1</nz-tab>
-      <nz-tab nzTitle="Tab 2" nzDisabled>Content of Tab Pane 2</nz-tab>
-    </nz-tabs>
+      <tri-tab title="Tab 0">Content of Tab Pane 0</tri-tab>
+      <tri-tab title="Tab 1" closable [disabled]="disabled">Content of Tab Pane 1</tri-tab>
+      <tri-tab title="Tab 2" disabled>Content of Tab Pane 2</tri-tab>
+    </tri-tabs>
   `
 })
 class DisableTabsTestComponent {
   selectedIndex = 1;
   disabled = false;
-  @ViewChildren(NzTabComponent) tabs!: QueryList<NzTabComponent>;
+  @ViewChildren(TriTabComponent) tabs!: QueryList<TriTabComponent>;
 
   handleSelection(_event: number): void {}
 }
 
 @Component({
-  imports: [NzTabsModule],
+  imports: [TriTabsModule],
   template: `
-    <nz-tabs
-      [(nzSelectedIndex)]="selectedIndex"
-      [nzType]="'editable-card'"
-      (nzSelectedIndexChange)="handleSelection($event)"
+    <tri-tabs
+      [(selectedIndexChange)]="selectedIndex"
+      [type]="'editable-card'"
+      (selectedIndexChange)="handleSelection($event)"
     >
       @for (tab of tabs; track tab) {
-        <nz-tab [nzTitle]="tab.title">
+        <tri-tab [title]="tab.title">
           {{ tab.content }}
-        </nz-tab>
+        </tri-tab>
       }
-    </nz-tabs>
+    </tri-tabs>
   `
 })
 class DynamicTabsTestComponent {
@@ -1089,22 +1089,22 @@ class DynamicTabsTestComponent {
 }
 
 @Component({
-  imports: [NzTabsModule],
+  imports: [TriTabsModule],
   template: `
     <div style="width: 200px; height: 200px">
-      <nz-tabs
+      <tri-tabs
         style="width: 200px; height: 200px"
-        [(nzSelectedIndex)]="selectedIndex"
-        (nzSelectedIndexChange)="handleSelection($event)"
-        [nzTabPosition]="position"
+        [(selectedIndexChange)]="selectedIndex"
+        (selectedIndexChange)="handleSelection($event)"
+        [tabPosition]="position"
       >
         @for (_tab of tabs; track i; let i = $index) {
-          <nz-tab [nzTitle]="titleTemplate">
+          <tri-tab [title]="titleTemplate">
             <ng-template #titleTemplate let-visible="visible">Title in {{ visible ? 'tabs' : 'menu' }}</ng-template>
             Content of Tab Pane {{ i }}
-          </nz-tab>
+          </tri-tab>
         }
-      </nz-tabs>
+      </tri-tabs>
     </div>
   `,
   encapsulation: ViewEncapsulation.None,
@@ -1116,23 +1116,23 @@ class DynamicTabsTestComponent {
 })
 class ScrollableTabsTestComponent {
   selectedIndex = 0;
-  position: NzTabPosition = 'top';
-  tabs: NzSafeAny[] = Array(30).fill(null);
-  @ViewChild(NzTabsComponent, { static: true }) tabSet!: NzTabsComponent;
+  position: TriTabPosition = 'top';
+  tabs: TriSafeAny[] = Array(30).fill(null);
+  @ViewChild(TriTabsComponent, { static: true }) tabSet!: TriTabsComponent;
 
   handleSelection(_event: number): void {}
 }
 
 @Component({
-  imports: [AsyncPipe, NzTabsModule],
+  imports: [AsyncPipe, TriTabsModule],
   template: `
-    <nz-tabs>
+    <tri-tabs>
       @for (tab of tabs | async; track tab) {
-        <nz-tab [nzTitle]="tab.title">
+        <tri-tab [title]="tab.title">
           {{ tab.content }}
-        </nz-tab>
+        </tri-tab>
       }
-    </nz-tabs>
+    </tri-tabs>
   `
 })
 class AsyncTabsTestComponent implements OnInit {
@@ -1152,58 +1152,58 @@ class AsyncTabsTestComponent implements OnInit {
 }
 
 @Component({
-  imports: [NzTabsModule],
+  imports: [TriTabsModule],
   template: `
-    <nz-tabs>
-      <nz-tab nzTitle="Tab 0">Content of Tab Pane 0</nz-tab>
-      <nz-tab nzTitle="Tab 1">
+    <tri-tabs>
+      <tri-tab title="Tab 0">Content of Tab Pane 0</tri-tab>
+      <tri-tab title="Tab 1">
         Content of Tab Pane 1
-        <nz-tabs>
-          <nz-tab nzTitle="Inner Tab 0">Inner Content of Tab Pane 0</nz-tab>
-          <nz-tab nzTitle="Inner Tab 1">Inner Content of Tab Pane 1</nz-tab>
-        </nz-tabs>
-      </nz-tab>
-    </nz-tabs>
+        <tri-tabs>
+          <tri-tab title="Inner Tab 0">Inner Content of Tab Pane 0</tri-tab>
+          <tri-tab title="Inner Tab 1">Inner Content of Tab Pane 1</tri-tab>
+        </tri-tabs>
+      </tri-tab>
+    </tri-tabs>
   `
 })
 class NestedTabsTestComponent {
-  @ViewChildren(NzTabsComponent) tabSets!: QueryList<NzTabsComponent>;
+  @ViewChildren(TriTabsComponent) tabSets!: QueryList<TriTabsComponent>;
 }
 
 @Component({
-  imports: [NzTabsModule],
+  imports: [TriTabsModule],
   template: `
-    <nz-tabs>
+    <tri-tabs>
       @if (true) {
         <ng-container>
-          <nz-tab nzTitle="Tab 0">Tab one content</nz-tab>
+          <tri-tab title="Tab 0">Tab one content</tri-tab>
           @if (true) {
             <ng-container>
-              <nz-tab nzTitle="Tab 1">Tab two content</nz-tab>
+              <tri-tab title="Tab 1">Tab two content</tri-tab>
             </ng-container>
           }
         </ng-container>
       }
-    </nz-tabs>
+    </tri-tabs>
   `
 })
 class TabSetWithIndirectDescendantTabsTestComponent {
-  @ViewChild(NzTabsComponent, { static: true }) tabSet!: NzTabsComponent;
+  @ViewChild(TriTabsComponent, { static: true }) tabSet!: TriTabsComponent;
 }
 
 @Component({
-  imports: [RouterLink, RouterOutlet, NzTabsModule],
+  imports: [RouterLink, RouterOutlet, TriTabsModule],
   template: `
-    <nz-tabs nzLinkRouter (nzSelectedIndexChange)="handleSelection($event)">
-      <nz-tab nzTitle="default">
-        <a *nzTabLink nz-tab-link [routerLink]="['.']">One</a>
+    <tri-tabs linkRouter (selectedIndexChange)="handleSelection($event)">
+      <tri-tab title="default">
+        <a *tabLink tri-tab-link [routerLink]="['.']">One</a>
         One
-      </nz-tab>
-      <nz-tab nzTitle="two">
-        <a *nzTabLink nz-tab-link [routerLink]="['.', 'two']">Two</a>
+      </tri-tab>
+      <tri-tab title="two">
+        <a *tabLink tri-tab-link [routerLink]="['.', 'two']">Two</a>
         Two
-      </nz-tab>
-    </nz-tabs>
+      </tri-tab>
+    </tri-tabs>
     <router-outlet></router-outlet>
   `
 })
@@ -1213,17 +1213,17 @@ export class RouterTabsTestComponent {
 
 @Component({
   template: `
-    <nz-tabs nzLinkRouter [(nzSelectedIndex)]="selectedIdx" [nzLinkExact]="false">
+    <tri-tabs linkRouter [(selectedIndexChange)]="selectedIdx" [linkExact]="false">
       @for (tab of tabs; track tab.title) {
-        <nz-tab>
-          <a *nzTabLink nz-tab-link [routerLink]="tab.route">{{ tab.title }}</a>
+        <tri-tab>
+          <a *tabLink tri-tab-link [routerLink]="tab.route">{{ tab.title }}</a>
           {{ tab.title }}
-        </nz-tab>
+        </tri-tab>
       }
-    </nz-tabs>
+    </tri-tabs>
     <router-outlet></router-outlet>
   `,
-  imports: [RouterLink, RouterOutlet, NzTabsModule],
+  imports: [RouterLink, RouterOutlet, TriTabsModule],
   standalone: true
 })
 export class DynamicRouterTabsTestComponent {
@@ -1273,16 +1273,16 @@ function getTranslate(transformValue: string): { x: number; y: number } {
 }
 
 @Component({
-  imports: [NzTabsModule],
+  imports: [TriTabsModule],
   template: `
-    <nz-tabs [(nzSelectedIndex)]="selectedIndex">
-      <button *nzTabBarExtraContent="'start'">Start Extra Action</button>
-      <button *nzTabBarExtraContent="'end'">End Extra Action</button>
+    <tri-tabs [(selectedIndexChange)]="selectedIndex">
+      <button *tabBarExtraContent="'start'">Start Extra Action</button>
+      <button *tabBarExtraContent="'end'">End Extra Action</button>
 
-      <nz-tab nzTitle="Tab 0">Content of Tab Pane 0</nz-tab>
-      <nz-tab nzTitle="Tab 1">Content of Tab Pane 1</nz-tab>
-      <nz-tab nzTitle="Tab 2">Content of Tab Pane 2</nz-tab>
-    </nz-tabs>
+      <tri-tab title="Tab 0">Content of Tab Pane 0</tri-tab>
+      <tri-tab title="Tab 1">Content of Tab Pane 1</tri-tab>
+      <tri-tab title="Tab 2">Content of Tab Pane 2</tri-tab>
+    </tri-tabs>
   `
 })
 class SimpleTabsWithExtraContentComponent {

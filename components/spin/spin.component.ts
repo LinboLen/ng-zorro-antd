@@ -24,65 +24,65 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject, Observable, of, ReplaySubject } from 'rxjs';
 import { distinctUntilChanged, startWith, switchMap } from 'rxjs/operators';
 
-import { NzConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
-import { NzSafeAny, NzSizeLDSType } from 'ng-zorro-antd/core/types';
+import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriSafeAny, TriSizeLDSType } from 'ng-zorro-antd/core/types';
 
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'spin';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'spin';
 
 @Component({
-  selector: 'nz-spin',
-  exportAs: 'nzSpin',
+  selector: '',
+  exportAs: 'triSpin',
   encapsulation: ViewEncapsulation.None,
   template: `
     <ng-template #defaultTemplate>
-      <span class="ant-spin-dot ant-spin-dot-spin">
-        <i class="ant-spin-dot-item"></i>
-        <i class="ant-spin-dot-item"></i>
-        <i class="ant-spin-dot-item"></i>
-        <i class="ant-spin-dot-item"></i>
+      <span class="tri-spin-dot tri-spin-dot-spin">
+        <i class="tri-spin-dot-item"></i>
+        <i class="tri-spin-dot-item"></i>
+        <i class="tri-spin-dot-item"></i>
+        <i class="tri-spin-dot-item"></i>
       </span>
     </ng-template>
     @if (isLoading()) {
       <div>
         <div
-          class="ant-spin ant-spin-spinning"
-          [class.ant-spin-rtl]="dir === 'rtl'"
-          [class.ant-spin-lg]="nzSize === 'large'"
-          [class.ant-spin-sm]="nzSize === 'small'"
-          [class.ant-spin-show-text]="nzTip"
+          class="tri-spin tri-spin-spinning"
+          [class.tri-spin-rtl]="dir === 'rtl'"
+          [class.tri-spin-lg]="size === 'large'"
+          [class.tri-spin-sm]="size === 'small'"
+          [class.tri-spin-show-text]="tip"
         >
-          <ng-template [ngTemplateOutlet]="nzIndicator || defaultTemplate"></ng-template>
-          @if (nzTip) {
-            <div class="ant-spin-text">{{ nzTip }}</div>
+          <ng-template [ngTemplateOutlet]="indicator || defaultTemplate"></ng-template>
+          @if (tip) {
+            <div class="tri-spin-text">{{ tip }}</div>
           }
         </div>
       </div>
     }
-    @if (!nzSimple) {
-      <div class="ant-spin-container" [class.ant-spin-blur]="isLoading()">
+    @if (!simple) {
+      <div class="tri-spin-container" [class.tri-spin-blur]="isLoading()">
         <ng-content></ng-content>
       </div>
     }
   `,
   host: {
-    '[class.ant-spin-nested-loading]': '!nzSimple'
+    '[class.tri-spin-nested-loading]': '!simple'
   },
   imports: [NgTemplateOutlet]
 })
-export class NzSpinComponent implements OnChanges, OnInit {
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+export class TriSpinComponent implements OnChanges, OnInit {
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
 
   private cdr = inject(ChangeDetectorRef);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
 
-  @Input() @WithConfig() nzIndicator: TemplateRef<NzSafeAny> | null = null;
-  @Input() nzSize: NzSizeLDSType = 'default';
-  @Input() nzTip: string | null = null;
-  @Input({ transform: numberAttribute }) nzDelay = 0;
-  @Input({ transform: booleanAttribute }) nzSimple = false;
-  @Input({ transform: booleanAttribute }) nzSpinning = true;
-  private spinning$ = new BehaviorSubject(this.nzSpinning);
+  @Input() @WithConfig() indicator: TemplateRef<TriSafeAny> | null = null;
+  @Input() size: TriSizeLDSType = 'default';
+  @Input() tip: string | null = null;
+  @Input({ transform: numberAttribute }) delay = 0;
+  @Input({ transform: booleanAttribute }) simple = false;
+  @Input({ transform: booleanAttribute }) spinning = true;
+  private spinning$ = new BehaviorSubject(this.spinning);
   private delay$ = new ReplaySubject<number>(1);
 
   readonly isLoading = signal(false);
@@ -96,7 +96,7 @@ export class NzSpinComponent implements OnChanges, OnInit {
   ngOnInit(): void {
     this.delay$
       .pipe(
-        startWith(this.nzDelay),
+        startWith(this.delay),
         distinctUntilChanged(),
         switchMap(delay =>
           // This construct is used to reduce RxJS dependencies.
@@ -132,10 +132,10 @@ export class NzSpinComponent implements OnChanges, OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     const { nzSpinning, nzDelay } = changes;
     if (nzSpinning) {
-      this.spinning$.next(this.nzSpinning);
+      this.spinning$.next(this.spinning);
     }
     if (nzDelay) {
-      this.delay$.next(this.nzDelay);
+      this.delay$.next(this.delay);
     }
   }
 }

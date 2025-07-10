@@ -18,16 +18,16 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
-import { NzResultNotFoundComponent } from './partial/not-found';
-import { NzResultServerErrorComponent } from './partial/server-error.component';
-import { NzResultUnauthorizedComponent } from './partial/unauthorized';
+import { TriResultNotFoundComponent } from './partial/not-found';
+import { TriResultServerErrorComponent } from './partial/server-error.component';
+import { TriResultUnauthorizedComponent } from './partial/unauthorized';
 
-export type NzResultIconType = 'success' | 'error' | 'info' | 'warning';
-export type NzExceptionStatusType = '404' | '500' | '403';
-export type NzResultStatusType = NzExceptionStatusType | NzResultIconType;
+export type TriResultIconType = 'success' | 'error' | 'info' | 'warning';
+export type TriExceptionStatusType = '404' | '500' | '403';
+export type TriResultStatusType = TriExceptionStatusType | TriResultIconType;
 
 const IconMap = {
   success: 'check-circle',
@@ -38,86 +38,86 @@ const IconMap = {
 const ExceptionStatus = ['404', '500', '403'];
 
 @Component({
-  selector: 'nz-result',
-  exportAs: 'nzResult',
+  selector: '',
+  exportAs: 'triResult',
   template: `
-    <div class="ant-result-icon">
+    <div class="tri-result-icon">
       @if (!isException) {
         @if (icon) {
-          <ng-container *nzStringTemplateOutlet="icon; let icon">
-            <nz-icon [nzType]="icon" nzTheme="fill" />
+          <ng-container *stringTemplateOutlet="icon; let icon">
+            <tri-icon [type]="icon" theme="fill" />
           </ng-container>
         } @else {
           <ng-content select="[nz-result-icon]"></ng-content>
         }
       } @else {
-        @switch (nzStatus) {
+        @switch (status) {
           @case ('404') {
-            <nz-result-not-found />
+            <tri-result-not-found />
           }
           @case ('500') {
-            <nz-result-server-error />
+            <tri-result-server-error />
           }
           @case ('403') {
-            <nz-result-unauthorized />
+            <tri-result-unauthorized />
           }
         }
       }
     </div>
-    @if (nzTitle) {
-      <div class="ant-result-title" *nzStringTemplateOutlet="nzTitle">
-        {{ nzTitle }}
+    @if (title) {
+      <div class="tri-result-title" *stringTemplateOutlet="title">
+        {{ title }}
       </div>
     } @else {
       <ng-content select="div[nz-result-title]"></ng-content>
     }
 
-    @if (nzSubTitle) {
-      <div class="ant-result-subtitle" *nzStringTemplateOutlet="nzSubTitle">
-        {{ nzSubTitle }}
+    @if (subTitle) {
+      <div class="tri-result-subtitle" *stringTemplateOutlet="subTitle">
+        {{ subTitle }}
       </div>
     } @else {
       <ng-content select="div[nz-result-subtitle]"></ng-content>
     }
     <ng-content select="nz-result-content, [nz-result-content]"></ng-content>
-    @if (nzExtra) {
-      <div class="ant-result-extra" *nzStringTemplateOutlet="nzExtra">
-        {{ nzExtra }}
+    @if (extra) {
+      <div class="tri-result-extra" *stringTemplateOutlet="extra">
+        {{ extra }}
       </div>
     } @else {
       <ng-content select="div[nz-result-extra]"></ng-content>
     }
   `,
   host: {
-    class: 'ant-result',
-    '[class.ant-result-success]': `nzStatus === 'success'`,
-    '[class.ant-result-error]': `nzStatus === 'error'`,
-    '[class.ant-result-info]': `nzStatus === 'info'`,
-    '[class.ant-result-warning]': `nzStatus === 'warning'`,
-    '[class.ant-result-rtl]': `dir === 'rtl'`
+    class: 'tri-result',
+    '[class.tri-result-success]': `status === 'success'`,
+    '[class.tri-result-error]': `status === 'error'`,
+    '[class.tri-result-info]': `status === 'info'`,
+    '[class.tri-result-warning]': `status === 'warning'`,
+    '[class.tri-result-rtl]': `dir === 'rtl'`
   },
   imports: [
-    NzOutletModule,
-    NzIconModule,
-    NzResultNotFoundComponent,
-    NzResultServerErrorComponent,
-    NzResultUnauthorizedComponent
+    TriOutletModule,
+    TriIconModule,
+    TriResultNotFoundComponent,
+    TriResultServerErrorComponent,
+    TriResultUnauthorizedComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class NzResultComponent implements OnChanges, OnInit {
+export class TriResultComponent implements OnChanges, OnInit {
   private cdr = inject(ChangeDetectorRef);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
 
-  @Input() nzIcon?: string | TemplateRef<void>;
-  @Input() nzTitle?: string | TemplateRef<void>;
-  @Input() nzStatus: NzResultStatusType = 'info';
-  @Input() nzSubTitle?: string | TemplateRef<void>;
-  @Input() nzExtra?: string | TemplateRef<void>;
+  @Input() icon?: string | TemplateRef<void>;
+  @Input() title?: string | TemplateRef<void>;
+  @Input() status: TriResultStatusType = 'info';
+  @Input() subTitle?: string | TemplateRef<void>;
+  @Input() extra?: string | TemplateRef<void>;
 
-  icon?: string | TemplateRef<void>;
+  _icon?: string | TemplateRef<void>;
   isException = false;
   dir: Direction = 'ltr';
 
@@ -135,15 +135,15 @@ export class NzResultComponent implements OnChanges, OnInit {
   }
 
   private setStatusIcon(): void {
-    const icon = this.nzIcon;
+    const icon = this.icon;
 
-    this.isException = ExceptionStatus.indexOf(this.nzStatus) !== -1;
-    this.icon = icon
+    this.isException = ExceptionStatus.indexOf(this.status) !== -1;
+    this._icon = icon
       ? typeof icon === 'string'
-        ? IconMap[icon as NzResultIconType] || icon
+        ? IconMap[icon as TriResultIconType] || icon
         : icon
       : this.isException
         ? undefined
-        : IconMap[this.nzStatus as NzResultIconType];
+        : IconMap[this.status as TriResultIconType];
   }
 }

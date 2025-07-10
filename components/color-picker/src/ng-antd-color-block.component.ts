@@ -9,14 +9,14 @@ import { defaultColor } from './util/util';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'ng-antd-color-block',
+  selector: '',
   template: `
-    <div class="ant-color-picker-color-block" (click)="nzOnClick.emit(true)">
-      <div class="ant-color-picker-color-block-inner" [style.background-color]="color"></div>
+    <div class="tri-color-picker-color-block" (click)="onClick.emit(true)">
+      <div class="tri-color-picker-color-block-inner" [style.background-color]="color"></div>
     </div>
   `
 })
 export class NgAntdColorBlockComponent {
   @Input() color: string = defaultColor.toHsbString();
-  @Output() readonly nzOnClick = new EventEmitter<boolean>();
+  @Output() readonly onClick = new EventEmitter<boolean>();
 }

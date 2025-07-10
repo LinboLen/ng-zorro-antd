@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriPopoverModule } from 'ng-zorro-antd/popover';
 
 @Component({
-  selector: 'nz-demo-popover-trigger-type',
-  imports: [NzButtonModule, NzPopoverModule],
+  selector: '',
+  imports: [TriButtonModule, TriPopoverModule],
   template: `
     <ng-template #contentTemplate>
       <div>
@@ -13,13 +13,13 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
         <p>Content</p>
       </div>
     </ng-template>
-    <button nz-button nz-popover nzPopoverTitle="Title" [nzPopoverContent]="contentTemplate" nzPopoverTrigger="click">
+    <button tri-button tri-popover popoverTitle="Title" [popoverContent]="contentTemplate" popoverTrigger="click">
       Click me
     </button>
-    <button nz-button nz-popover nzPopoverTitle="Title" [nzPopoverContent]="contentTemplate" nzPopoverTrigger="hover">
+    <button tri-button tri-popover popoverTitle="Title" [popoverContent]="contentTemplate" popoverTrigger="hover">
       Hover me
     </button>
-    <button nz-button nz-popover nzPopoverTitle="Title" [nzPopoverContent]="contentTemplate" nzPopoverTrigger="focus">
+    <button tri-button tri-popover popoverTitle="Title" [popoverContent]="contentTemplate" popoverTrigger="focus">
       Focus me
     </button>
   `,
@@ -31,4 +31,4 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
     `
   ]
 })
-export class NzDemoPopoverTriggerTypeComponent {}
+export class TriDemoPopoverTriggerTypeComponent {}

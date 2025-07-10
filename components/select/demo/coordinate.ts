@@ -1,22 +1,22 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzSelectModule } from 'ng-zorro-antd/select';
+import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: 'nz-demo-select-coordinate',
-  imports: [FormsModule, NzSelectModule],
+  selector: '',
+  imports: [FormsModule, TriSelectModule],
   template: `
-    <nz-select [(ngModel)]="selectedProvince" (ngModelChange)="provinceChange($event)">
+    <tri-select [(ngModel)]="selectedProvince" (ngModelChange)="provinceChange($event)">
       @for (p of provinceData; track p) {
-        <nz-option [nzValue]="p" [nzLabel]="p"></nz-option>
+        <tri-option [value]="p" [label]="p"></tri-option>
       }
-    </nz-select>
-    <nz-select [(ngModel)]="selectedCity">
+    </tri-select>
+    <tri-select [(ngModel)]="selectedCity">
       @for (c of cityData[selectedProvince]; track c) {
-        <nz-option [nzValue]="c" [nzLabel]="c"></nz-option>
+        <tri-option [value]="c" [label]="c"></tri-option>
       }
-    </nz-select>
+    </tri-select>
   `,
   styles: [
     `
@@ -27,7 +27,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     `
   ]
 })
-export class NzDemoSelectCoordinateComponent {
+export class TriDemoSelectCoordinateComponent {
   selectedProvince = 'Zhejiang';
   selectedCity = 'Hangzhou';
   provinceData = ['Zhejiang', 'Jiangsu'];

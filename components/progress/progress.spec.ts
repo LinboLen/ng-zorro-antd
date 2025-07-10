@@ -8,27 +8,27 @@ import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzProgressComponent } from './progress.component';
-import { NzProgressModule } from './progress.module';
+import { TriProgressComponent } from './progress.component';
+import { TriProgressModule } from './progress.module';
 import {
-  NzProgressFormatter,
-  NzProgressGapPositionType,
-  NzProgressStatusType,
-  NzProgressStrokeColorType,
-  NzProgressStrokeLinecapType
+  TriProgressFormatter,
+  TriProgressGapPositionType,
+  TriProgressStatusType,
+  TriProgressStrokeColorType,
+  TriProgressStrokeLinecapType
 } from './typings';
 
 describe('progress', () => {
   describe('progress line', () => {
-    let fixture: ComponentFixture<NzTestProgressLineComponent>;
-    let testComponent: NzTestProgressLineComponent;
+    let fixture: ComponentFixture<TriTestProgressLineComponent>;
+    let testComponent: TriTestProgressLineComponent;
     let progress: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestProgressLineComponent);
+      fixture = TestBed.createComponent(TriTestProgressLineComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      progress = fixture.debugElement.query(By.directive(NzProgressComponent));
+      progress = fixture.debugElement.query(By.directive(TriProgressComponent));
     });
 
     it('should className correct', () => {
@@ -96,7 +96,7 @@ describe('progress', () => {
     it('should status work', () => {
       fixture.detectChanges();
       expect(progress.nativeElement.firstElementChild!.classList).toContain('ant-progress-status-normal');
-      const listOfStatus: NzProgressStatusType[] = ['success', 'exception', 'active', 'normal'];
+      const listOfStatus: TriProgressStatusType[] = ['success', 'exception', 'active', 'normal'];
       testComponent.percent = 100;
       listOfStatus.forEach(status => {
         testComponent.status = status;
@@ -193,15 +193,15 @@ describe('progress', () => {
   });
 
   describe('progress dashboard', () => {
-    let fixture: ComponentFixture<NzTestProgressDashBoardComponent>;
-    let testComponent: NzTestProgressDashBoardComponent;
+    let fixture: ComponentFixture<TriTestProgressDashBoardComponent>;
+    let testComponent: TriTestProgressDashBoardComponent;
     let progress: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestProgressDashBoardComponent);
+      fixture = TestBed.createComponent(TriTestProgressDashBoardComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      progress = fixture.debugElement.query(By.directive(NzProgressComponent));
+      progress = fixture.debugElement.query(By.directive(TriProgressComponent));
     });
 
     it('should className correct', () => {
@@ -294,15 +294,15 @@ describe('progress', () => {
   });
 
   describe('progress circle', () => {
-    let fixture: ComponentFixture<NzTestProgressCircleComponent>;
-    let testComponent: NzTestProgressCircleComponent;
+    let fixture: ComponentFixture<TriTestProgressCircleComponent>;
+    let testComponent: TriTestProgressCircleComponent;
     let progress: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestProgressCircleComponent);
+      fixture = TestBed.createComponent(TriTestProgressCircleComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      progress = fixture.debugElement.query(By.directive(NzProgressComponent));
+      progress = fixture.debugElement.query(By.directive(TriProgressComponent));
     });
 
     it('should className correct', () => {
@@ -387,13 +387,13 @@ describe('progress', () => {
   });
 
   describe('progress circle with successPercent', () => {
-    let fixture: ComponentFixture<NzTestProgressCircleSuccessComponent>;
+    let fixture: ComponentFixture<TriTestProgressCircleSuccessComponent>;
     let progress: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestProgressCircleSuccessComponent);
+      fixture = TestBed.createComponent(TriTestProgressCircleSuccessComponent);
       fixture.detectChanges();
-      progress = fixture.debugElement.query(By.directive(NzProgressComponent));
+      progress = fixture.debugElement.query(By.directive(TriProgressComponent));
     });
 
     it('should success percent work', () => {
@@ -405,13 +405,13 @@ describe('progress', () => {
   });
 
   describe('RTL', () => {
-    let fixture: ComponentFixture<NzTestProgressRtlComponent>;
+    let fixture: ComponentFixture<TriTestProgressRtlComponent>;
     let progress: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestProgressRtlComponent);
+      fixture = TestBed.createComponent(TriTestProgressRtlComponent);
       fixture.detectChanges();
-      progress = fixture.debugElement.query(By.directive(NzProgressComponent));
+      progress = fixture.debugElement.query(By.directive(TriProgressComponent));
     });
 
     it('should className correct', () => {
@@ -427,97 +427,97 @@ describe('progress', () => {
 });
 
 @Component({
-  imports: [NzProgressModule],
+  imports: [TriProgressModule],
   template: `
-    <nz-progress
-      [nzSize]="size"
-      [nzSuccessPercent]="successPercent"
-      [nzFormat]="formatter"
-      [nzStatus]="status"
-      [nzShowInfo]="showInfo"
-      [nzStrokeWidth]="strokeWidth"
-      [nzPercent]="percent"
-      [nzStrokeColor]="strokeColor"
-      [nzStrokeLinecap]="strokeLinecap"
-      [nzSteps]="steps"
-    ></nz-progress>
+    <tri-progress
+      [size]="size"
+      [successPercent]="successPercent"
+      [format]="formatter"
+      [status]="status"
+      [showInfo]="showInfo"
+      [strokeWidth]="strokeWidth"
+      [percent]="percent"
+      [strokeColor]="strokeColor"
+      [strokeLinecap]="strokeLinecap"
+      [steps]="steps"
+    ></tri-progress>
     <ng-template #formatterTemplate let-percent>{{ percent }} / 100</ng-template>
   `
 })
-export class NzTestProgressLineComponent {
+export class TriTestProgressLineComponent {
   @ViewChild('formatterTemplate') formatterTemplate!: TemplateRef<{ $implicit: number }>;
   size!: 'default' | 'small';
-  status?: NzProgressStatusType;
-  formatter?: NzProgressFormatter;
+  status?: TriProgressStatusType;
+  formatter?: TriProgressFormatter;
   strokeWidth?: number;
   percent = 0;
   successPercent = 0;
   showInfo = true;
-  strokeLinecap: NzProgressStrokeLinecapType = 'round';
+  strokeLinecap: TriProgressStrokeLinecapType = 'round';
   steps?: number;
-  strokeColor?: NzProgressStrokeColorType;
+  strokeColor?: TriProgressStrokeColorType;
 }
 
 @Component({
-  imports: [NzProgressModule],
+  imports: [TriProgressModule],
   template: `
-    <nz-progress
-      nzType="dashboard"
-      [nzWidth]="width"
-      [nzFormat]="format"
-      [nzStatus]="status"
-      [nzShowInfo]="showInfo"
-      [nzStrokeWidth]="strokeWidth"
-      [nzPercent]="percent"
-      [nzStrokeLinecap]="strokeLinecap"
-    ></nz-progress>
+    <tri-progress
+      type="dashboard"
+      [width]="width"
+      [format]="format"
+      [status]="status"
+      [showInfo]="showInfo"
+      [strokeWidth]="strokeWidth"
+      [percent]="percent"
+      [strokeLinecap]="strokeLinecap"
+    ></tri-progress>
   `
 })
-export class NzTestProgressDashBoardComponent {
-  status?: NzProgressStatusType;
-  format?: NzProgressFormatter;
+export class TriTestProgressDashBoardComponent {
+  status?: TriProgressStatusType;
+  format?: TriProgressFormatter;
   strokeWidth?: number;
   percent = 0;
   showInfo = true;
   width = 132;
-  strokeLinecap: NzProgressStrokeLinecapType = 'round';
+  strokeLinecap: TriProgressStrokeLinecapType = 'round';
 }
 
 @Component({
-  imports: [NzProgressModule],
+  imports: [TriProgressModule],
   template: `
-    <nz-progress
-      nzType="circle"
-      [nzPercent]="75"
-      [nzGapDegree]="gapDegree"
-      [nzGapPosition]="gapPosition"
-      [nzStrokeColor]="strokeColor"
-      [nzStrokeLinecap]="strokeLinecap"
-    ></nz-progress>
+    <tri-progress
+      type="circle"
+      [percent]="75"
+      [gapDegree]="gapDegree"
+      [gapPosition]="gapPosition"
+      [strokeColor]="strokeColor"
+      [strokeLinecap]="strokeLinecap"
+    ></tri-progress>
   `
 })
-export class NzTestProgressCircleComponent {
+export class TriTestProgressCircleComponent {
   gapDegree?: number;
-  gapPosition!: NzProgressGapPositionType;
-  strokeLinecap: NzProgressStrokeLinecapType = 'round';
-  strokeColor?: NzProgressStrokeColorType;
+  gapPosition!: TriProgressGapPositionType;
+  strokeLinecap: TriProgressStrokeLinecapType = 'round';
+  strokeColor?: TriProgressStrokeColorType;
 }
 
 @Component({
-  imports: [NzProgressModule],
-  template: `<nz-progress nzType="circle" [nzPercent]="75" [nzSuccessPercent]="60"></nz-progress>`
+  imports: [TriProgressModule],
+  template: `<tri-progress type="circle" [percent]="75" [successPercent]="60"></tri-progress>`
 })
-export class NzTestProgressCircleSuccessComponent {}
+export class TriTestProgressCircleSuccessComponent {}
 
 @Component({
-  imports: [BidiModule, NzProgressModule],
+  imports: [BidiModule, TriProgressModule],
   template: `
     <div [dir]="direction">
-      <nz-progress nzType="circle" [nzPercent]="75" [nzSuccessPercent]="60"></nz-progress>
+      <tri-progress type="circle" [percent]="75" [successPercent]="60"></tri-progress>
     </div>
   `
 })
-export class NzTestProgressRtlComponent {
+export class TriTestProgressRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 }

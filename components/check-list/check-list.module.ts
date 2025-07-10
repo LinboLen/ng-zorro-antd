@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzCheckListComponent } from './check-list.component';
+import { TriCheckListComponent } from './check-list.component';
 
 @NgModule({
-  imports: [NzCheckListComponent],
-  exports: [NzCheckListComponent]
+  imports: [TriCheckListComponent],
+  exports: [TriCheckListComponent]
 })
-export class NzCheckListModule {}
+export class TriCheckListModule {}

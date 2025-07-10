@@ -6,13 +6,13 @@
 import { BidiModule } from '@angular/cdk/bidi';
 import { NgModule } from '@angular/core';
 
-import { NzCardGridDirective } from './card-grid.directive';
-import { NzCardMetaComponent } from './card-meta.component';
-import { NzCardTabComponent } from './card-tab.component';
-import { NzCardComponent } from './card.component';
+import { TriCardGridDirective } from './card-grid.directive';
+import { TriCardMetaComponent } from './card-meta.component';
+import { TriCardTabComponent } from './card-tab.component';
+import { TriCardComponent } from './card.component';
 
 @NgModule({
-  imports: [NzCardComponent, NzCardGridDirective, NzCardMetaComponent, NzCardTabComponent],
-  exports: [BidiModule, NzCardComponent, NzCardGridDirective, NzCardMetaComponent, NzCardTabComponent]
+  imports: [TriCardComponent, TriCardGridDirective, TriCardMetaComponent, TriCardTabComponent],
+  exports: [BidiModule, TriCardComponent, TriCardGridDirective, TriCardMetaComponent, TriCardTabComponent]
 })
-export class NzCardModule {}
+export class TriCardModule {}

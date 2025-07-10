@@ -10,10 +10,10 @@ import { ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick, waitF
 import { By } from '@angular/platform-browser';
 import { Subject, Subscription } from 'rxjs';
 
-import { NzScrollService } from 'ng-zorro-antd/core/services';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriScrollService } from 'ng-zorro-antd/core/services';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzAffixComponent } from './affix.component';
+import { TriAffixComponent } from './affix.component';
 
 interface Offset {
   top: number;
@@ -28,11 +28,11 @@ interface Scroll {
 }
 
 describe('affix', () => {
-  let scrollService: NzScrollService;
+  let scrollService: TriScrollService;
   let fixture: ComponentFixture<TestAffixComponent>;
   let context: TestAffixComponent;
   let debugElement: DebugElement;
-  let component: NzAffixComponent;
+  let component: TriAffixComponent;
   let componentObject: NzAffixPageObject;
   const defaultOffsetTop = 0;
   const scrollEvent: Event = new Event('scroll');
@@ -53,16 +53,16 @@ describe('affix', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: NzScrollService,
-          useClass: NzScrollService
+          provide: TriScrollService,
+          useClass: TriScrollService
         }
       ]
     });
 
     fixture = TestBed.createComponent(TestAffixComponent);
     context = fixture.componentInstance;
-    component = context.nzAffixComponent;
-    scrollService = TestBed.inject(NzScrollService);
+    component = context.affixComponent;
+    scrollService = TestBed.inject(TriScrollService);
     componentObject = new NzAffixPageObject();
     debugElement = fixture.debugElement;
     componentObject.wrap().id = 'wrap';
@@ -345,7 +345,7 @@ describe('affix', () => {
   describe('(nzChange)', () => {
     let changeValue: boolean;
     beforeEach(() => {
-      component.nzChange.subscribe((returnValue: boolean) => {
+      component.change.subscribe((returnValue: boolean) => {
         changeValue = returnValue;
       });
     });
@@ -477,7 +477,7 @@ describe('affix-extra', () => {
   });
 
   it('#getOffset', () => {
-    const ret = fixture.componentInstance.nzAffixComponent.getOffset(
+    const ret = fixture.componentInstance.affixComponent.getOffset(
       fixture.debugElement.query(By.css('#affix')).nativeElement,
       window
     );
@@ -539,28 +539,28 @@ describe('affix RTL', () => {
 });
 
 @Component({
-  imports: [NzAffixComponent],
+  imports: [TriAffixComponent],
   template: `
-    <nz-affix id="affix" [nzTarget]="fakeTarget" [nzOffsetTop]="newOffset" [nzOffsetBottom]="newOffsetBottom">
+    <tri-affix id="affix" [target]="fakeTarget" [offsetTop]="newOffset" [offsetBottom]="newOffsetBottom">
       <button id="content">Affix Button</button>
-    </nz-affix>
+    </tri-affix>
     <div id="target"></div>
   `
 })
 class TestAffixComponent {
-  @ViewChild(NzAffixComponent, { static: true }) nzAffixComponent!: NzAffixComponent;
+  @ViewChild(TriAffixComponent, { static: true }) affixComponent!: TriAffixComponent;
   fakeTarget?: string | Element | Window;
   newOffset!: number;
   newOffsetBottom!: number;
 }
 
 @Component({
-  imports: [NzAffixComponent, BidiModule],
+  imports: [TriAffixComponent, BidiModule],
   template: `
     <div [dir]="direction">
-      <nz-affix id="affix" [nzTarget]="fakeTarget" [nzOffsetTop]="newOffset" [nzOffsetBottom]="newOffsetBottom">
+      <tri-affix id="affix" [target]="fakeTarget" [offsetTop]="newOffset" [offsetBottom]="newOffsetBottom">
         <button id="content">Affix Button</button>
-      </nz-affix>
+      </tri-affix>
       <div id="target"></div>
     </div>
   `
@@ -569,7 +569,7 @@ export class TestAffixRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 
-  @ViewChild(NzAffixComponent, { static: true }) nzAffixComponent!: NzAffixComponent;
+  @ViewChild(TriAffixComponent, { static: true }) affixComponent!: TriAffixComponent;
   fakeTarget?: string | Element | Window;
   newOffset!: number;
   newOffsetBottom!: number;
@@ -581,8 +581,8 @@ class MockDirectionality {
 }
 
 describe('NzAffixComponent', () => {
-  let component: NzAffixComponent;
-  let fixture: ComponentFixture<NzAffixComponent>;
+  let component: TriAffixComponent;
+  let fixture: ComponentFixture<TriAffixComponent>;
   let mockRenderer: Renderer2;
   let mockPlatform: Platform;
   let mockDirectionality: MockDirectionality;
@@ -590,8 +590,8 @@ describe('NzAffixComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        NzAffixComponent,
-        NzScrollService,
+        TriAffixComponent,
+        TriScrollService,
         { provide: Renderer2, useValue: jasmine.createSpyObj('Renderer2', ['setStyle', 'addClass', 'removeClass']) },
         { provide: ElementRef, useValue: new ElementRef(document.createElement('div')) },
         { provide: DOCUMENT, useValue: document },
@@ -600,7 +600,7 @@ describe('NzAffixComponent', () => {
       ]
     });
 
-    fixture = TestBed.createComponent(NzAffixComponent);
+    fixture = TestBed.createComponent(TriAffixComponent);
     component = fixture.componentInstance;
     mockRenderer = TestBed.inject(Renderer2);
     mockPlatform = TestBed.inject(Platform);
@@ -615,7 +615,7 @@ describe('NzAffixComponent', () => {
     mockDirectionality.value = 'ltr';
     component.ngOnInit();
 
-    spyOn<NzSafeAny>(component, 'registerListeners');
+    spyOn<TriSafeAny>(component, 'registerListeners');
     spyOn(component, 'updatePosition');
     spyOn(component['cdr'], 'detectChanges');
 
@@ -628,7 +628,7 @@ describe('NzAffixComponent', () => {
   });
 
   it('should register listeners if platform is browser', () => {
-    spyOn(component as NzSafeAny, 'removeListeners').and.callThrough();
+    spyOn(component as TriSafeAny, 'removeListeners').and.callThrough();
     spyOn(mockRenderer, 'setStyle');
 
     component.ngOnInit();
@@ -649,14 +649,14 @@ describe('NzAffixComponent', () => {
   });
 
   it('should remove listeners on destroy', () => {
-    spyOn(component as NzSafeAny, 'removeListeners').and.callThrough();
+    spyOn(component as TriSafeAny, 'removeListeners').and.callThrough();
     fixture.destroy();
     expect(component['removeListeners']).toHaveBeenCalled();
   });
 
   it('should update position correctly', () => {
-    spyOn<NzSafeAny>(component, 'setAffixStyle').and.callThrough();
-    spyOn<NzSafeAny>(component, 'setPlaceholderStyle').and.callThrough();
+    spyOn<TriSafeAny>(component, 'setAffixStyle').and.callThrough();
+    spyOn<TriSafeAny>(component, 'setPlaceholderStyle').and.callThrough();
 
     const event = new Event('scroll');
     component.updatePosition(event);
@@ -696,7 +696,7 @@ describe('NzAffixComponent', () => {
 
   it('should not perform position updates if platform is not browser', () => {
     mockPlatform.isBrowser = false;
-    spyOn<NzSafeAny>(component, 'getOffset');
+    spyOn<TriSafeAny>(component, 'getOffset');
 
     component.updatePosition(new Event('scroll'));
 
@@ -711,9 +711,9 @@ describe('NzAffixComponent', () => {
       width: 100,
       height: 50
     });
-    spyOn<NzSafeAny>(component, 'setAffixStyle').and.callThrough();
-    component.nzOffsetTop = 10;
-    component.nzOffsetBottom = 10;
+    spyOn<TriSafeAny>(component, 'setAffixStyle').and.callThrough();
+    component.offsetTop = 10;
+    component.offsetBottom = 10;
 
     component.updatePosition(new Event('resize'));
 
@@ -724,14 +724,14 @@ describe('NzAffixComponent', () => {
   });
 
   it('should update the affix style with the correct width on resize', () => {
-    spyOn<NzSafeAny>(component, 'setAffixStyle').and.callThrough();
+    spyOn<TriSafeAny>(component, 'setAffixStyle').and.callThrough();
 
     const scrollTop = 40;
     spyOn(component['scrollSrv'], 'getScroll').and.returnValue(scrollTop);
     const elemOffset = { top: 200, left: 0, width: 200, height: 50 };
     spyOn(component, 'getOffset').and.returnValue(elemOffset);
-    component['nzOffsetTop'] = 150;
-    component['nzOffsetBottom'] = 50;
+    component['offsetTop'] = 150;
+    component['offsetBottom'] = 50;
     spyOnProperty(component['placeholderNode'], 'offsetWidth').and.returnValue(120);
 
     component['affixStyle'] = {

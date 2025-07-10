@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 
-import { NzSliderModule } from 'ng-zorro-antd/slider';
+import { TriSliderModule } from 'ng-zorro-antd/slider';
 
 @Component({
-  selector: 'nz-demo-slider-tooltip',
-  imports: [NzSliderModule],
+  selector: '',
+  imports: [TriSliderModule],
   template: `
-    <nz-slider nzTooltipVisible="always"></nz-slider>
-    <nz-slider nzTooltipVisible="never"></nz-slider>
+    <tri-slider tooltipVisible="always"></tri-slider>
+    <tri-slider tooltipVisible="never"></tri-slider>
   `
 })
-export class NzDemoSliderTooltipComponent {}
+export class TriDemoSliderTooltipComponent {}

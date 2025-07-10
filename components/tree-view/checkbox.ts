@@ -22,34 +22,34 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 
 @Component({
-  selector: 'nz-tree-node-checkbox:not([builtin])',
-  template: `<span class="ant-tree-checkbox-inner"></span>`,
+  selector: '',
+  template: `<span class="tri-tree-checkbox-inner"></span>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'ant-tree-checkbox',
-    '[class.ant-tree-checkbox-checked]': `nzChecked`,
-    '[class.ant-tree-checkbox-indeterminate]': `nzIndeterminate`,
-    '[class.ant-tree-checkbox-disabled]': `nzDisabled`
+    class: 'tri-tree-checkbox',
+    '[class.tri-tree-checkbox-checked]': `checked`,
+    '[class.tri-tree-checkbox-indeterminate]': `indeterminate`,
+    '[class.tri-tree-checkbox-disabled]': `disabled`
   }
 })
-export class NzTreeNodeCheckboxComponent implements OnInit {
+export class TriTreeNodeCheckboxComponent implements OnInit {
   private ngZone = inject(NgZone);
   private ref = inject(ChangeDetectorRef);
   private el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
   private destroyRef = inject(DestroyRef);
 
-  @Input({ transform: booleanAttribute }) nzChecked?: boolean;
-  @Input({ transform: booleanAttribute }) nzIndeterminate?: boolean;
-  @Input({ transform: booleanAttribute }) nzDisabled?: boolean;
-  @Output() readonly nzClick = new EventEmitter<MouseEvent>();
+  @Input({ transform: booleanAttribute }) checked?: boolean;
+  @Input({ transform: booleanAttribute }) indeterminate?: boolean;
+  @Input({ transform: booleanAttribute }) disabled?: boolean;
+  @Output() readonly click = new EventEmitter<MouseEvent>();
 
   ngOnInit(): void {
     fromEventOutsideAngular<MouseEvent>(this.el, 'click')
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(event => {
-        if (!this.nzDisabled && this.nzClick.observers.length) {
+        if (!this.disabled && this.click.observers.length) {
           this.ngZone.run(() => {
-            this.nzClick.emit(event);
+            this.click.emit(event);
             this.ref.markForCheck();
           });
         }

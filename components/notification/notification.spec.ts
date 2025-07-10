@@ -8,29 +8,29 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, inject, TestBed, tick } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { NzConfigService, provideNzConfig } from 'ng-zorro-antd/core/config';
+import { TriConfigService, provideNzConfig } from 'ng-zorro-antd/core/config';
 import { dispatchMouseEvent } from 'ng-zorro-antd/core/testing';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
-import { NzNotificationComponent } from './notification.component';
-import { NzNotificationService } from './notification.service';
+import { TriNotificationComponent } from './notification.component';
+import { TriNotificationService } from './notification.service';
 
 @Component({
   template: `<ng-template let-data="data">{{ 'test template content' }}{{ data }}</ng-template>`
 })
-export class NzTestNotificationComponent {
+export class TriTestNotificationComponent {
   @ViewChild(TemplateRef, { static: true }) demoTemplateRef!: TemplateRef<{
-    $implicit: NzNotificationComponent;
+    $implicit: TriNotificationComponent;
     data: string;
   }>;
 }
 
 describe('NzNotification', () => {
-  let notificationService: NzNotificationService;
+  let notificationService: TriNotificationService;
   let overlayContainer: OverlayContainer;
   let overlayContainerElement: HTMLElement;
-  let fixture: ComponentFixture<NzTestNotificationComponent>;
-  let configService: NzConfigService;
+  let fixture: ComponentFixture<TriTestNotificationComponent>;
+  let configService: TriConfigService;
 
   function waitForNotificationToggling(): void {
     fixture.detectChanges();
@@ -44,16 +44,16 @@ describe('NzNotification', () => {
         provideNzConfig({ notification: { nzMaxStack: 2 } }),
         provideNzIconsTesting(),
         provideNoopAnimations(),
-        NzNotificationService
+        TriNotificationService
       ]
     });
 
-    fixture = TestBed.createComponent(NzTestNotificationComponent);
+    fixture = TestBed.createComponent(TriTestNotificationComponent);
   }));
 
   beforeEach(inject(
-    [NzNotificationService, OverlayContainer, NzConfigService],
-    (n: NzNotificationService, oc: OverlayContainer, c: NzConfigService) => {
+    [TriNotificationService, OverlayContainer, TriConfigService],
+    (n: TriNotificationService, oc: OverlayContainer, c: TriConfigService) => {
       notificationService = n;
       overlayContainer = oc;
       configService = c;

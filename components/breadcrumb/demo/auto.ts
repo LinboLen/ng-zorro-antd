@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 
-import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { TriBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 
 @Component({
-  selector: 'nz-demo-breadcrumb-auto',
-  imports: [NzBreadCrumbModule],
+  selector: '',
+  imports: [TriBreadCrumbModule],
   template: `
-    <nz-breadcrumb [nzAutoGenerate]="true">
+    <tri-breadcrumb [autoGenerate]="true">
       Please refer to StackBlitz demo at https://stackblitz.com/edit/ng-zorro-breadcrumb-auto
-    </nz-breadcrumb>
+    </tri-breadcrumb>
   `
 })
-export class NzDemoBreadcrumbAutoComponent {}
+export class TriDemoBreadcrumbAutoComponent {}

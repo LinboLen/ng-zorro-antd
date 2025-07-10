@@ -12,7 +12,7 @@ export type AggregateMethod = 'sum' | 'max' | 'min' | 'avg';
 @Pipe({
   name: 'nzAggregate'
 })
-export class NzAggregatePipe implements PipeTransform {
+export class TriAggregatePipe implements PipeTransform {
   transform(value: number[], method: AggregateMethod): undefined | number {
     if (!Array.isArray(value)) {
       return value;

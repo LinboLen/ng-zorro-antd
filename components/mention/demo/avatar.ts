@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzAvatarModule } from 'ng-zorro-antd/avatar';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzMentionModule } from 'ng-zorro-antd/mention';
+import { TriAvatarModule } from 'ng-zorro-antd/avatar';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriMentionModule } from 'ng-zorro-antd/mention';
 
 @Component({
-  selector: 'nz-demo-mention-avatar',
-  imports: [FormsModule, NzAvatarModule, NzInputModule, NzMentionModule],
+  selector: '',
+  imports: [FormsModule, TriAvatarModule, TriInputModule, TriMentionModule],
   template: `
-    <nz-mention [nzSuggestions]="webFrameworks" [nzValueWith]="valueWith" (nzOnSelect)="onSelect($event)">
-      <textarea rows="1" nz-input nzMentionTrigger [(ngModel)]="inputValue"></textarea>
-      <ng-container *nzMentionSuggestion="let framework">
-        <nz-avatar nzSize="small" [nzText]="framework.name" [nzSrc]="framework.icon"></nz-avatar>
+    <tri-mention [suggestions]="webFrameworks" [valueWith]="valueWith" (onSelect)="onSelect($event)">
+      <textarea rows="1" tri-input mentionTrigger [(ngModel)]="inputValue"></textarea>
+      <ng-container *mentionSuggestion="let framework">
+        <tri-avatar size="small" [text]="framework.name" [src]="framework.icon"></tri-avatar>
         <span>{{ framework.name }} - {{ framework.type }}</span>
       </ng-container>
-    </nz-mention>
+    </tri-mention>
   `,
   styles: [
     `
@@ -28,7 +28,7 @@ import { NzMentionModule } from 'ng-zorro-antd/mention';
     `
   ]
 })
-export class NzDemoMentionAvatarComponent {
+export class TriDemoMentionAvatarComponent {
   inputValue?: string;
   webFrameworks = [
     { name: 'React', type: 'JavaScript', icon: 'https://zos.alipayobjects.com/rmsportal/LFIeMPzdLcLnEUe.svg' },

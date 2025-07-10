@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 @Component({
-  selector: 'nz-demo-date-picker-format',
-  imports: [NzDatePickerModule],
+  selector: '',
+  imports: [TriDatePickerModule],
   template: `
-    <nz-date-picker [nzFormat]="dateFormat"></nz-date-picker>
+    <tri-date-picker [format]="dateFormat"></tri-date-picker>
     <br />
-    <nz-date-picker nzMode="month" [nzFormat]="monthFormat"></nz-date-picker>
+    <tri-date-picker mode="month" [format]="monthFormat"></tri-date-picker>
     <br />
-    <nz-date-picker nzMode="quarter" [nzFormat]="quarterFormat"></nz-date-picker>
+    <tri-date-picker mode="quarter" [format]="quarterFormat"></tri-date-picker>
     <br />
-    <nz-range-picker [nzFormat]="dateFormat"></nz-range-picker>
+    <tri-range-picker [format]="dateFormat"></tri-range-picker>
   `,
   styles: [
     `
@@ -23,7 +23,7 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
     `
   ]
 })
-export class NzDemoDatePickerFormatComponent {
+export class TriDemoDatePickerFormatComponent {
   dateFormat = 'yyyy/MM/dd';
   monthFormat = 'yyyy/MM';
   quarterFormat = 'yyyy/[Q]Q';

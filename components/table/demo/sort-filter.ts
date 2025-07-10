@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 import {
-  NzTableFilterFn,
-  NzTableFilterList,
-  NzTableModule,
-  NzTableSortFn,
-  NzTableSortOrder
+  TriTableFilterFn,
+  TriTableFilterList,
+  TriTableModule,
+  TriTableSortFn,
+  TriTableSortOrder
 } from 'ng-zorro-antd/table';
 
 interface ItemData {
@@ -16,29 +16,29 @@ interface ItemData {
 
 interface ColumnItem {
   name: string;
-  sortOrder: NzTableSortOrder | null;
-  sortFn: NzTableSortFn<ItemData> | null;
-  listOfFilter: NzTableFilterList;
-  filterFn: NzTableFilterFn<ItemData> | null;
+  sortOrder: TriTableSortOrder | null;
+  sortFn: TriTableSortFn<ItemData> | null;
+  listOfFilter: TriTableFilterList;
+  filterFn: TriTableFilterFn<ItemData> | null;
   filterMultiple: boolean;
-  sortDirections: NzTableSortOrder[];
+  sortDirections: TriTableSortOrder[];
 }
 
 @Component({
-  selector: 'nz-demo-table-sort-filter',
-  imports: [NzTableModule],
+  selector: '',
+  imports: [TriTableModule],
   template: `
-    <nz-table #filterTable [nzData]="listOfData" nzTableLayout="fixed">
+    <tri-table #filterTable [data]="listOfData" tableLayout="fixed">
       <thead>
         <tr>
           @for (column of listOfColumns; track column) {
             <th
-              [nzSortOrder]="column.sortOrder"
-              [nzSortFn]="column.sortFn"
-              [nzSortDirections]="column.sortDirections"
-              [nzFilterMultiple]="column.filterMultiple"
-              [nzFilters]="column.listOfFilter"
-              [nzFilterFn]="column.filterFn"
+              [sortOrder]="column.sortOrder"
+              [sortFn]="column.sortFn"
+              [sortDirections]="column.sortDirections"
+              [filterMultiple]="column.filterMultiple"
+              [filters]="column.listOfFilter"
+              [filterFn]="column.filterFn"
             >
               {{ column.name }}
             </th>
@@ -54,10 +54,10 @@ interface ColumnItem {
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `
 })
-export class NzDemoTableSortFilterComponent {
+export class TriDemoTableSortFilterComponent {
   listOfColumns: ColumnItem[] = [
     {
       name: 'Name',

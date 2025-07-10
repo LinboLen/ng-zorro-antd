@@ -3,12 +3,12 @@ import { FormsModule } from '@angular/forms';
 
 import { formatDistance } from 'date-fns';
 
-import { NzAvatarModule } from 'ng-zorro-antd/avatar';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzCommentModule } from 'ng-zorro-antd/comment';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzListModule } from 'ng-zorro-antd/list';
+import { TriAvatarModule } from 'ng-zorro-antd/avatar';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriCommentModule } from 'ng-zorro-antd/comment';
+import { TriFormModule } from 'ng-zorro-antd/form';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriListModule } from 'ng-zorro-antd/list';
 
 interface User {
   author: string;
@@ -22,38 +22,38 @@ interface Data extends User {
 }
 
 @Component({
-  selector: 'nz-demo-comment-editor',
-  imports: [FormsModule, NzAvatarModule, NzButtonModule, NzCommentModule, NzFormModule, NzInputModule, NzListModule],
+  selector: '',
+  imports: [FormsModule, TriAvatarModule, TriButtonModule, TriCommentModule, TriFormModule, TriInputModule, TriListModule],
   template: `
     @if (data.length) {
-      <nz-list [nzDataSource]="data" [nzRenderItem]="item" nzItemLayout="horizontal">
+      <tri-list [dataSource]="data" [renderItem]="item" itemLayout="horizontal">
         <ng-template #item let-item>
-          <nz-comment [nzAuthor]="item.author" [nzDatetime]="item.displayTime">
-            <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="item.avatar"></nz-avatar>
-            <nz-comment-content>
+          <tri-comment [author]="item.author" [datetime]="item.displayTime">
+            <tri-avatar tri-comment-avatar icon="user" [src]="item.avatar"></tri-avatar>
+            <tri-comment-content>
               <p>{{ item.content }}</p>
-            </nz-comment-content>
-          </nz-comment>
+            </tri-comment-content>
+          </tri-comment>
         </ng-template>
-      </nz-list>
+      </tri-list>
     }
 
-    <nz-comment>
-      <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="user.avatar"></nz-avatar>
-      <nz-comment-content>
-        <nz-form-item>
-          <textarea [(ngModel)]="inputValue" nz-input rows="4"></textarea>
-        </nz-form-item>
-        <nz-form-item>
-          <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!inputValue" (click)="handleSubmit()">
+    <tri-comment>
+      <tri-avatar tri-comment-avatar icon="user" [src]="user.avatar"></tri-avatar>
+      <tri-comment-content>
+        <tri-form-item>
+          <textarea [(ngModel)]="inputValue" tri-input rows="4"></textarea>
+        </tri-form-item>
+        <tri-form-item>
+          <button tri-button type="primary" [loading]="submitting" [disabled]="!inputValue" (click)="handleSubmit()">
             Add Comment
           </button>
-        </nz-form-item>
-      </nz-comment-content>
-    </nz-comment>
+        </tri-form-item>
+      </tri-comment-content>
+    </tri-comment>
   `
 })
-export class NzDemoCommentEditorComponent {
+export class TriDemoCommentEditorComponent {
   data: Data[] = [];
   submitting = false;
   user: User = {

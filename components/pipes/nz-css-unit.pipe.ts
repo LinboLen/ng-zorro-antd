@@ -8,7 +8,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({
   name: 'nzToCssUnit'
 })
-export class NzToCssUnitPipe implements PipeTransform {
+export class TriToCssUnitPipe implements PipeTransform {
   transform(value: number | string, defaultUnit: string = 'px'): string {
     return typeof value === 'number' ? `${value}${defaultUnit}` : value;
   }

@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzRateModule } from 'ng-zorro-antd/rate';
+import { TriRateModule } from 'ng-zorro-antd/rate';
 
 @Component({
-  selector: 'nz-demo-rate-text',
-  imports: [FormsModule, NzRateModule],
+  selector: '',
+  imports: [FormsModule, TriRateModule],
   template: `
-    <nz-rate [(ngModel)]="value" [nzTooltips]="tooltips"></nz-rate>
+    <tri-rate [(ngModel)]="value" [tooltips]="tooltips"></tri-rate>
     @if (value) {
-      <span class="ant-rate-text">{{ value ? tooltips[value - 1] : '' }}</span>
+      <span class="tri-rate-text">{{ value ? tooltips[value - 1] : '' }}</span>
     }
   `
 })
-export class NzDemoRateTextComponent {
+export class TriDemoRateTextComponent {
   readonly tooltips = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
   value = 3;
 }

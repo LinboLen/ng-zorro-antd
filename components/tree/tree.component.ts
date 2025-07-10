@@ -30,56 +30,56 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { treeCollapseMotion } from 'ng-zorro-antd/core/animation';
-import { NzConfigKey, NzConfigService, WithConfig } from 'ng-zorro-antd/core/config';
-import { NzNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
 import {
-  NzFormatBeforeDropEvent,
-  NzFormatEmitEvent,
-  NzTreeBase,
-  NzTreeBaseService,
+  TriFormatBeforeDropEvent,
+  TriFormatEmitEvent,
+  TriTreeBase,
+  TriTreeBaseService,
   NzTreeHigherOrderServiceToken,
-  NzTreeNode,
-  NzTreeNodeKey,
-  NzTreeNodeOptions,
+  TriTreeNode,
+  TriTreeNodeKey,
+  TriTreeNodeOptions,
   flattenTreeData
 } from 'ng-zorro-antd/core/tree';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzTreeNodeBuiltinComponent } from './tree-node.component';
-import { NzTreeService } from './tree.service';
+import { TriTreeNodeBuiltinComponent } from './tree-node.component';
+import { TriTreeService } from './tree.service';
 
-export function NzTreeServiceFactory(): NzTreeBaseService {
+export function NzTreeServiceFactory(): TriTreeBaseService {
   const higherOrderService = inject(NzTreeHigherOrderServiceToken, { skipSelf: true, optional: true });
-  const treeService = inject(NzTreeService);
+  const treeService = inject(TriTreeService);
   return higherOrderService ?? treeService;
 }
 
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'tree';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'tree';
 
 @Component({
-  selector: 'nz-tree',
-  exportAs: 'nzTree',
+  selector: '',
+  exportAs: 'triTree',
   animations: [treeCollapseMotion],
   template: `
     <div>
       <input [style]="HIDDEN_STYLE" />
     </div>
-    <div class="ant-tree-treenode" [style]="HIDDEN_NODE_STYLE">
-      <div class="ant-tree-indent">
-        <div class="ant-tree-indent-unit"></div>
+    <div class="tri-tree-treenode" [style]="HIDDEN_NODE_STYLE">
+      <div class="tri-tree-indent">
+        <div class="tri-tree-indent-unit"></div>
       </div>
     </div>
-    <div class="ant-tree-list" [class.ant-select-tree-list]="nzSelectMode" style="position: relative">
-      @if (nzVirtualHeight) {
+    <div class="tri-tree-list" [class.tri-select-tree-list]="selectMode" style="position: relative">
+      @if (virtualHeight) {
         <cdk-virtual-scroll-viewport
-          [class.ant-select-tree-list-holder-inner]="nzSelectMode"
-          [class.ant-tree-list-holder-inner]="!nzSelectMode"
-          [itemSize]="nzVirtualItemSize"
-          [minBufferPx]="nzVirtualMinBufferPx"
-          [maxBufferPx]="nzVirtualMaxBufferPx"
-          [style.height]="nzVirtualHeight"
+          [class.tri-select-tree-list-holder-inner]="selectMode"
+          [class.tri-tree-list-holder-inner]="!selectMode"
+          [itemSize]="virtualItemSize"
+          [minBufferPx]="virtualMinBufferPx"
+          [maxBufferPx]="virtualMaxBufferPx"
+          [style.height]="virtualHeight"
         >
-          <ng-container *cdkVirtualFor="let node of nzFlattenNodes; trackBy: trackByFlattenNode">
+          <ng-container *cdkVirtualFor="let node of flattenNodes; trackBy: trackByFlattenNode">
             <ng-template
               [ngTemplateOutlet]="nodeTemplate"
               [ngTemplateOutletContext]="{ $implicit: node }"
@@ -88,13 +88,13 @@ const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'tree';
         </cdk-virtual-scroll-viewport>
       } @else {
         <div
-          [class.ant-select-tree-list-holder-inner]="nzSelectMode"
-          [class.ant-tree-list-holder-inner]="!nzSelectMode"
+          [class.tri-select-tree-list-holder-inner]="selectMode"
+          [class.tri-tree-list-holder-inner]="!selectMode"
           [@.disabled]="beforeInit || !!noAnimation?.nzNoAnimation"
-          [nzNoAnimation]="noAnimation?.nzNoAnimation"
-          [@treeCollapseMotion]="nzFlattenNodes.length"
+          [noAnimation]="noAnimation?.nzNoAnimation"
+          [@treeCollapseMotion]="flattenNodes.length"
         >
-          @for (node of nzFlattenNodes; track trackByFlattenNode($index, node)) {
+          @for (node of flattenNodes; track trackByFlattenNode($index, node)) {
             <ng-template
               [ngTemplateOutlet]="nodeTemplate"
               [ngTemplateOutletContext]="{ $implicit: node }"
@@ -104,7 +104,7 @@ const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'tree';
       }
     </div>
     <ng-template #nodeTemplate let-treeNode>
-      <nz-tree-node
+      <tri-tree-node
         builtin
         [icon]="treeNode.icon"
         [title]="treeNode.title"
@@ -121,56 +121,56 @@ const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'tree';
         [isDisableCheckbox]="treeNode.isDisableCheckbox"
         [isSelectable]="treeNode.isSelectable"
         [canHide]="treeNode.canHide"
-        [nzTreeNode]="treeNode"
-        [nzSelectMode]="nzSelectMode"
-        [nzShowLine]="nzShowLine"
-        [nzExpandedIcon]="nzExpandedIcon"
-        [nzDraggable]="nzDraggable"
-        [nzCheckable]="nzCheckable"
-        [nzShowExpand]="nzShowExpand"
-        [nzAsyncData]="nzAsyncData"
-        [nzSearchValue]="nzSearchValue"
-        [nzHideUnMatched]="nzHideUnMatched"
-        [nzBeforeDrop]="nzBeforeDrop"
-        [nzShowIcon]="nzShowIcon"
-        [nzTreeTemplate]="nzTreeTemplate || nzTreeTemplateChild"
-        (nzExpandChange)="eventTriggerChanged($event)"
-        (nzClick)="eventTriggerChanged($event)"
-        (nzDblClick)="eventTriggerChanged($event)"
-        (nzContextMenu)="eventTriggerChanged($event)"
-        (nzCheckboxChange)="eventTriggerChanged($event)"
-        (nzOnDragStart)="eventTriggerChanged($event)"
-        (nzOnDragEnter)="eventTriggerChanged($event)"
-        (nzOnDragOver)="eventTriggerChanged($event)"
-        (nzOnDragLeave)="eventTriggerChanged($event)"
-        (nzOnDragEnd)="eventTriggerChanged($event)"
-        (nzOnDrop)="eventTriggerChanged($event)"
-      ></nz-tree-node>
+        [treeNode]="treeNode"
+        [selectMode]="selectMode"
+        [showLine]="showLine"
+        [expandedIcon]="expandedIcon"
+        [draggable]="draggable"
+        [checkable]="checkable"
+        [showExpand]="showExpand"
+        [asyncData]="asyncData"
+        [searchValue]="searchValue"
+        [hideUnMatched]="hideUnMatched"
+        [beforeDrop]="beforeDrop"
+        [showIcon]="showIcon"
+        [treeTemplate]="treeTemplate || treeTemplateChild"
+        (expandChange)="eventTriggerChanged($event)"
+        (click)="eventTriggerChanged($event)"
+        (dblClick)="eventTriggerChanged($event)"
+        (contextMenu)="eventTriggerChanged($event)"
+        (checkboxChange)="eventTriggerChanged($event)"
+        (onDragStart)="eventTriggerChanged($event)"
+        (onDragEnter)="eventTriggerChanged($event)"
+        (onDragOver)="eventTriggerChanged($event)"
+        (onDragLeave)="eventTriggerChanged($event)"
+        (onDragEnd)="eventTriggerChanged($event)"
+        (onDrop)="eventTriggerChanged($event)"
+      ></tri-tree-node>
     </ng-template>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
-    NzTreeService,
+    TriTreeService,
     {
-      provide: NzTreeBaseService,
+      provide: TriTreeBaseService,
       useFactory: NzTreeServiceFactory
     },
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NzTreeComponent),
+      useExisting: forwardRef(() => TriTreeComponent),
       multi: true
     }
   ],
   host: {
-    '[class.ant-select-tree]': `nzSelectMode`,
-    '[class.ant-select-tree-show-line]': `nzSelectMode && nzShowLine`,
-    '[class.ant-select-tree-icon-hide]': `nzSelectMode && !nzShowIcon`,
-    '[class.ant-select-tree-block-node]': `nzSelectMode && nzBlockNode`,
-    '[class.ant-tree]': `!nzSelectMode`,
-    '[class.ant-tree-rtl]': `dir === 'rtl'`,
-    '[class.ant-tree-show-line]': `!nzSelectMode && nzShowLine`,
-    '[class.ant-tree-icon-hide]': `!nzSelectMode && !nzShowIcon`,
-    '[class.ant-tree-block-node]': `!nzSelectMode && nzBlockNode`,
+    '[class.tri-select-tree]': `selectMode`,
+    '[class.tri-select-tree-show-line]': `selectMode && showLine`,
+    '[class.tri-select-tree-icon-hide]': `selectMode && !showIcon`,
+    '[class.tri-select-tree-block-node]': `selectMode && blockNode`,
+    '[class.tri-tree]': `!selectMode`,
+    '[class.tri-tree-rtl]': `dir === 'rtl'`,
+    '[class.tri-tree-show-line]': `!selectMode && showLine`,
+    '[class.tri-tree-icon-hide]': `!selectMode && !showIcon`,
+    '[class.tri-tree-block-node]': `!selectMode && blockNode`,
     '[class.draggable-tree]': `nzDraggable`
   },
   imports: [
@@ -178,69 +178,69 @@ const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'tree';
     CdkFixedSizeVirtualScroll,
     CdkVirtualForOf,
     NgTemplateOutlet,
-    NzNoAnimationDirective,
-    NzTreeNodeBuiltinComponent
+    TriNoAnimationDirective,
+    TriTreeNodeBuiltinComponent
   ]
 })
-export class NzTreeComponent extends NzTreeBase implements OnInit, ControlValueAccessor, OnChanges, AfterViewInit {
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+export class TriTreeComponent extends TriTreeBase implements OnInit, ControlValueAccessor, OnChanges, AfterViewInit {
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
 
-  noAnimation = inject(NzNoAnimationDirective, { host: true, optional: true });
-  nzConfigService = inject(NzConfigService);
+  noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
+  configService = inject(TriConfigService);
   private cdr = inject(ChangeDetectorRef);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
 
-  @Input({ transform: booleanAttribute }) @WithConfig() nzShowIcon: boolean = false;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzHideUnMatched: boolean = false;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzBlockNode: boolean = false;
-  @Input({ transform: booleanAttribute }) nzExpandAll = false;
-  @Input({ transform: booleanAttribute }) nzSelectMode = false;
-  @Input({ transform: booleanAttribute }) nzCheckStrictly = false;
-  @Input({ transform: booleanAttribute }) nzShowExpand: boolean = true;
-  @Input({ transform: booleanAttribute }) nzShowLine = false;
-  @Input({ transform: booleanAttribute }) nzCheckable = false;
-  @Input({ transform: booleanAttribute }) nzAsyncData = false;
-  @Input({ transform: booleanAttribute }) nzDraggable: boolean = false;
-  @Input({ transform: booleanAttribute }) nzMultiple = false;
-  @Input() nzExpandedIcon?: TemplateRef<{ $implicit: NzTreeNode; origin: NzTreeNodeOptions }>;
-  @Input() nzVirtualItemSize = 28;
-  @Input() nzVirtualMaxBufferPx = 500;
-  @Input() nzVirtualMinBufferPx = 28;
-  @Input() nzVirtualHeight: string | null = null;
-  @Input() nzTreeTemplate?: TemplateRef<{ $implicit: NzTreeNode; origin: NzTreeNodeOptions }>;
-  @Input() nzBeforeDrop?: (confirm: NzFormatBeforeDropEvent) => Observable<boolean>;
-  @Input() nzData: NzTreeNodeOptions[] | NzTreeNode[] = [];
-  @Input() nzExpandedKeys: NzTreeNodeKey[] = [];
-  @Input() nzSelectedKeys: NzTreeNodeKey[] = [];
-  @Input() nzCheckedKeys: NzTreeNodeKey[] = [];
-  @Input() nzSearchValue: string = '';
-  @Input() nzSearchFunc?: (node: NzTreeNodeOptions) => boolean;
-  @ContentChild('nzTreeTemplate', { static: true }) nzTreeTemplateChild!: TemplateRef<{
-    $implicit: NzTreeNode;
-    origin: NzTreeNodeOptions;
+  @Input({ transform: booleanAttribute }) @WithConfig() showIcon: boolean = false;
+  @Input({ transform: booleanAttribute }) @WithConfig() hideUnMatched: boolean = false;
+  @Input({ transform: booleanAttribute }) @WithConfig() blockNode: boolean = false;
+  @Input({ transform: booleanAttribute }) expandAll = false;
+  @Input({ transform: booleanAttribute }) selectMode = false;
+  @Input({ transform: booleanAttribute }) checkStrictly = false;
+  @Input({ transform: booleanAttribute }) showExpand: boolean = true;
+  @Input({ transform: booleanAttribute }) showLine = false;
+  @Input({ transform: booleanAttribute }) checkable = false;
+  @Input({ transform: booleanAttribute }) asyncData = false;
+  @Input({ transform: booleanAttribute }) draggable: boolean = false;
+  @Input({ transform: booleanAttribute }) multiple = false;
+  @Input() expandedIcon?: TemplateRef<{ $implicit: TriTreeNode; origin: TriTreeNodeOptions }>;
+  @Input() virtualItemSize = 28;
+  @Input() virtualMaxBufferPx = 500;
+  @Input() virtualMinBufferPx = 28;
+  @Input() virtualHeight: string | null = null;
+  @Input() treeTemplate?: TemplateRef<{ $implicit: TriTreeNode; origin: TriTreeNodeOptions }>;
+  @Input() beforeDrop?: (confirm: TriFormatBeforeDropEvent) => Observable<boolean>;
+  @Input() data: TriTreeNodeOptions[] | TriTreeNode[] = [];
+  @Input() expandedKeys: TriTreeNodeKey[] = [];
+  @Input() selectedKeys: TriTreeNodeKey[] = [];
+  @Input() checkedKeys: TriTreeNodeKey[] = [];
+  @Input() searchValue: string = '';
+  @Input() searchFunc?: (node: TriTreeNodeOptions) => boolean;
+  @ContentChild('nzTreeTemplate', { static: true }) treeTemplateChild!: TemplateRef<{
+    $implicit: TriTreeNode;
+    origin: TriTreeNodeOptions;
   }>;
   @ViewChild(CdkVirtualScrollViewport, { read: CdkVirtualScrollViewport })
   cdkVirtualScrollViewport!: CdkVirtualScrollViewport;
-  nzFlattenNodes: NzTreeNode[] = [];
+  flattenNodes: TriTreeNode[] = [];
   beforeInit = true;
   dir: Direction = 'ltr';
 
-  @Output() readonly nzExpandedKeysChange: EventEmitter<string[]> = new EventEmitter<string[]>();
-  @Output() readonly nzSelectedKeysChange: EventEmitter<string[]> = new EventEmitter<string[]>();
-  @Output() readonly nzCheckedKeysChange: EventEmitter<NzTreeNodeKey[]> = new EventEmitter<NzTreeNodeKey[]>();
-  @Output() readonly nzSearchValueChange = new EventEmitter<NzFormatEmitEvent>();
-  @Output() readonly nzClick = new EventEmitter<NzFormatEmitEvent>();
-  @Output() readonly nzDblClick = new EventEmitter<NzFormatEmitEvent>();
-  @Output() readonly nzContextMenu = new EventEmitter<NzFormatEmitEvent>();
-  @Output() readonly nzCheckboxChange = new EventEmitter<NzFormatEmitEvent>();
-  @Output() readonly nzExpandChange = new EventEmitter<NzFormatEmitEvent>();
-  @Output() readonly nzOnDragStart = new EventEmitter<NzFormatEmitEvent>();
-  @Output() readonly nzOnDragEnter = new EventEmitter<NzFormatEmitEvent>();
-  @Output() readonly nzOnDragOver = new EventEmitter<NzFormatEmitEvent>();
-  @Output() readonly nzOnDragLeave = new EventEmitter<NzFormatEmitEvent>();
-  @Output() readonly nzOnDrop = new EventEmitter<NzFormatEmitEvent>();
-  @Output() readonly nzOnDragEnd = new EventEmitter<NzFormatEmitEvent>();
+  @Output() readonly expandedKeysChange: EventEmitter<string[]> = new EventEmitter<string[]>();
+  @Output() readonly selectedKeysChange: EventEmitter<string[]> = new EventEmitter<string[]>();
+  @Output() readonly checkedKeysChange: EventEmitter<TriTreeNodeKey[]> = new EventEmitter<TriTreeNodeKey[]>();
+  @Output() readonly searchValueChange = new EventEmitter<TriFormatEmitEvent>();
+  @Output() readonly click = new EventEmitter<TriFormatEmitEvent>();
+  @Output() readonly dblClick = new EventEmitter<TriFormatEmitEvent>();
+  @Output() readonly contextMenu = new EventEmitter<TriFormatEmitEvent>();
+  @Output() readonly checkboxChange = new EventEmitter<TriFormatEmitEvent>();
+  @Output() readonly expandChange = new EventEmitter<TriFormatEmitEvent>();
+  @Output() readonly onDragStart = new EventEmitter<TriFormatEmitEvent>();
+  @Output() readonly onDragEnter = new EventEmitter<TriFormatEmitEvent>();
+  @Output() readonly onDragOver = new EventEmitter<TriFormatEmitEvent>();
+  @Output() readonly onDragLeave = new EventEmitter<TriFormatEmitEvent>();
+  @Output() readonly onDrop = new EventEmitter<TriFormatEmitEvent>();
+  @Output() readonly onDragEnd = new EventEmitter<TriFormatEmitEvent>();
 
   HIDDEN_STYLE = {
     width: 0,
@@ -261,14 +261,14 @@ export class NzTreeComponent extends NzTreeBase implements OnInit, ControlValueA
     overflow: 'hidden'
   };
 
-  onChange: (value: NzTreeNode[]) => void = () => null;
+  onChange: (value: TriTreeNode[]) => void = () => null;
   onTouched: () => void = () => null;
 
-  writeValue(value: NzTreeNode[]): void {
+  writeValue(value: TriTreeNode[]): void {
     this.handleNzData(value);
   }
 
-  registerOnChange(fn: (_: NzTreeNode[]) => void): void {
+  registerOnChange(fn: (_: TriTreeNode[]) => void): void {
     this.onChange = fn;
   }
 
@@ -297,23 +297,23 @@ export class NzTreeComponent extends NzTreeBase implements OnInit, ControlValueA
 
     if (nzExpandAll) {
       useDefaultExpandedKeys = true;
-      expandAll = this.nzExpandAll;
+      expandAll = this.expandAll;
     }
 
     if (nzMultiple) {
-      this.nzTreeService.isMultiple = this.nzMultiple;
+      this.nzTreeService.isMultiple = this.multiple;
     }
 
     if (nzCheckStrictly) {
-      this.nzTreeService.isCheckStrictly = this.nzCheckStrictly;
+      this.nzTreeService.isCheckStrictly = this.checkStrictly;
     }
 
     if (nzData) {
-      this.handleNzData(this.nzData);
+      this.handleNzData(this.data);
     }
 
     if (nzCheckedKeys) {
-      this.handleCheckedKeys(this.nzCheckedKeys);
+      this.handleCheckedKeys(this.checkedKeys);
     }
 
     if (nzCheckStrictly) {
@@ -322,28 +322,28 @@ export class NzTreeComponent extends NzTreeBase implements OnInit, ControlValueA
 
     if (nzExpandedKeys || nzExpandAll) {
       useDefaultExpandedKeys = true;
-      this.handleExpandedKeys(expandAll || this.nzExpandedKeys);
+      this.handleExpandedKeys(expandAll || this.expandedKeys);
     }
 
     if (nzSelectedKeys) {
-      this.handleSelectedKeys(this.nzSelectedKeys, this.nzMultiple);
+      this.handleSelectedKeys(this.selectedKeys, this.multiple);
     }
 
     if (nzSearchValue) {
-      if (!(nzSearchValue.firstChange && !this.nzSearchValue)) {
+      if (!(nzSearchValue.firstChange && !this.searchValue)) {
         useDefaultExpandedKeys = false;
-        this.handleSearchValue(nzSearchValue.currentValue, this.nzSearchFunc);
-        this.nzSearchValueChange.emit(this.nzTreeService.formatEvent('search', null, null));
+        this.handleSearchValue(nzSearchValue.currentValue, this.searchFunc);
+        this.searchValueChange.emit(this.nzTreeService.formatEvent('search', null, null));
       }
     }
 
     // flatten data
     const currentExpandedKeys = this.getExpandedNodeList().map(v => v.key);
-    const newExpandedKeys = useDefaultExpandedKeys ? expandAll || this.nzExpandedKeys : currentExpandedKeys;
+    const newExpandedKeys = useDefaultExpandedKeys ? expandAll || this.expandedKeys : currentExpandedKeys;
     this.handleFlattenNodes(this.nzTreeService.rootNodes, newExpandedKeys);
   }
 
-  trackByFlattenNode(_: number, node: NzTreeNode): string {
+  trackByFlattenNode(_: number, node: TriTreeNode): string {
     return node.key;
   }
   // Deal with properties
@@ -352,32 +352,32 @@ export class NzTreeComponent extends NzTreeBase implements OnInit, ControlValueA
    *
    * @param value
    */
-  handleNzData(value: NzSafeAny[]): void {
+  handleNzData(value: TriSafeAny[]): void {
     if (Array.isArray(value)) {
       const data = this.coerceTreeNodes(value);
       this.nzTreeService.initTree(data);
     }
   }
 
-  handleFlattenNodes(data: NzTreeNode[], expandKeys: NzTreeNodeKey[] | true = []): void {
+  handleFlattenNodes(data: TriTreeNode[], expandKeys: TriTreeNodeKey[] | true = []): void {
     this.nzTreeService.flattenTreeData(data, expandKeys);
   }
 
-  handleCheckedKeys(keys: NzTreeNodeKey[] | null): void {
-    this.nzTreeService.conductCheck(keys, this.nzCheckStrictly);
+  handleCheckedKeys(keys: TriTreeNodeKey[] | null): void {
+    this.nzTreeService.conductCheck(keys, this.checkStrictly);
   }
 
-  handleExpandedKeys(keys: NzTreeNodeKey[] | true = []): void {
+  handleExpandedKeys(keys: TriTreeNodeKey[] | true = []): void {
     this.nzTreeService.conductExpandedKeys(keys);
   }
 
-  handleSelectedKeys(keys: NzTreeNodeKey[], isMulti: boolean): void {
+  handleSelectedKeys(keys: TriTreeNodeKey[], isMulti: boolean): void {
     this.nzTreeService.conductSelectedKeys(keys, isMulti);
   }
 
-  handleSearchValue(value: string, searchFunc?: (node: NzTreeNodeOptions) => boolean): void {
+  handleSearchValue(value: string, searchFunc?: (node: TriTreeNodeOptions) => boolean): void {
     const dataList = flattenTreeData(this.nzTreeService.rootNodes, true).map(v => v.data);
-    const checkIfMatched = (node: NzTreeNode): boolean => {
+    const checkIfMatched = (node: TriTreeNode): boolean => {
       if (searchFunc) {
         return searchFunc(node.origin);
       }
@@ -403,33 +403,33 @@ export class NzTreeComponent extends NzTreeBase implements OnInit, ControlValueA
    * @param event
    * handle each event
    */
-  eventTriggerChanged(event: NzFormatEmitEvent): void {
+  eventTriggerChanged(event: TriFormatEmitEvent): void {
     const node = event.node!;
     switch (event.eventName) {
       case 'expand':
         this.renderTree();
-        this.nzExpandChange.emit(event);
+        this.expandChange.emit(event);
         break;
       case 'click':
-        this.nzClick.emit(event);
+        this.click.emit(event);
         break;
       case 'dblclick':
-        this.nzDblClick.emit(event);
+        this.dblClick.emit(event);
         break;
       case 'contextmenu':
-        this.nzContextMenu.emit(event);
+        this.contextMenu.emit(event);
         break;
       case 'check': {
         // Render checked state with nodes' property `isChecked`
         this.nzTreeService.setCheckedNodeList(node);
-        if (!this.nzCheckStrictly) {
+        if (!this.checkStrictly) {
           this.nzTreeService.conduct(node);
         }
         // Cause check method will rerender list, so we need recover it and next the new event to user
         const eventNext = this.nzTreeService.formatEvent('check', node, event.event!);
-        this.nzCheckboxChange.emit(eventNext);
+        this.checkboxChange.emit(eventNext);
         const checkedKeys = this.nzTreeService.getCheckedNodeKeys();
-        this.nzCheckedKeysChange.emit(checkedKeys);
+        this.checkedKeysChange.emit(checkedKeys);
         break;
       }
       case 'dragstart':
@@ -438,7 +438,7 @@ export class NzTreeComponent extends NzTreeBase implements OnInit, ControlValueA
           node.setExpanded(!node.isExpanded);
           this.renderTree();
         }
-        this.nzOnDragStart.emit(event);
+        this.onDragStart.emit(event);
         break;
       case 'dragenter': {
         const selectedNode = this.nzTreeService.getSelectedNode();
@@ -446,21 +446,21 @@ export class NzTreeComponent extends NzTreeBase implements OnInit, ControlValueA
           node.setExpanded(true);
           this.renderTree();
         }
-        this.nzOnDragEnter.emit(event);
+        this.onDragEnter.emit(event);
         break;
       }
       case 'dragover':
-        this.nzOnDragOver.emit(event);
+        this.onDragOver.emit(event);
         break;
       case 'dragleave':
-        this.nzOnDragLeave.emit(event);
+        this.onDragLeave.emit(event);
         break;
       case 'dragend':
-        this.nzOnDragEnd.emit(event);
+        this.onDragEnd.emit(event);
         break;
       case 'drop':
         this.renderTree();
-        this.nzOnDrop.emit(event);
+        this.onDrop.emit(event);
         break;
     }
   }
@@ -477,13 +477,13 @@ export class NzTreeComponent extends NzTreeBase implements OnInit, ControlValueA
   }
 
   constructor() {
-    super(inject(NzTreeBaseService));
+    super(inject(TriTreeBaseService));
   }
 
   ngOnInit(): void {
     this.nzTreeService.flattenNodes$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => {
-      this.nzFlattenNodes =
-        !!this.nzVirtualHeight && this.nzHideUnMatched && this.nzSearchValue?.length > 0
+      this.flattenNodes =
+        !!this.virtualHeight && this.hideUnMatched && this.searchValue?.length > 0
           ? data.filter(d => !d.canHide)
           : data;
       this.cdr.markForCheck();

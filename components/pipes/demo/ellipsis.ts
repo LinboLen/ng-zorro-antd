@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzEllipsisPipe } from 'ng-zorro-antd/pipes';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriEllipsisPipe } from 'ng-zorro-antd/pipes';
 
 @Component({
-  selector: 'nz-demo-pipes-ellipsis',
-  imports: [FormsModule, NzInputModule, NzEllipsisPipe],
+  selector: '',
+  imports: [FormsModule, TriInputModule, TriEllipsisPipe],
   template: `
-    <input type="text" nz-input [(ngModel)]="str" />
+    <input type="text" tri-input [(ngModel)]="str" />
     <br />
     <p>{{ str | nzEllipsis: 36 : '...' }}</p>
   `,
@@ -20,6 +20,6 @@ import { NzEllipsisPipe } from 'ng-zorro-antd/pipes';
     `
   ]
 })
-export class NzDemoPipesEllipsisComponent {
+export class TriDemoPipesEllipsisComponent {
   str = 'Ant Design, a design language for background applications';
 }

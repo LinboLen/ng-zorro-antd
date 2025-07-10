@@ -1,32 +1,32 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzModalModule } from 'ng-zorro-antd/modal';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriModalModule } from 'ng-zorro-antd/modal';
 
 @Component({
-  selector: 'nz-demo-modal-draggable',
-  imports: [NzButtonModule, NzModalModule],
+  selector: '',
+  imports: [TriButtonModule, TriModalModule],
   template: `
-    <button nz-button nzType="default" (click)="showModal()">
+    <button tri-button type="default" (click)="showModal()">
       <span>Open Draggable Modal</span>
     </button>
 
-    <nz-modal
-      nzDraggable
-      nzCentered
-      [(nzVisible)]="isVisible"
-      nzTitle="Draggable Modal"
-      (nzOnCancel)="handleCancel()"
-      (nzOnOk)="handleOk()"
+    <tri-modal
+      draggable
+      centered
+      [(visibleChange)]="isVisible"
+      title="Draggable Modal"
+      (onCancel)="handleCancel()"
+      (onOk)="handleOk()"
     >
-      <ng-container *nzModalContent>
+      <ng-container *modalContent>
         <p>Just don't learn physics at school and your life will be full of magic and miracles.</p>
         <p>Day before yesterday I saw a rabbit, and yesterday a deer, and today, you.</p>
       </ng-container>
-    </nz-modal>
+    </tri-modal>
   `
 })
-export class NzDemoModalDraggableComponent {
+export class TriDemoModalDraggableComponent {
   isVisible = false;
 
   showModal(): void {

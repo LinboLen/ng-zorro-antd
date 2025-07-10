@@ -3,13 +3,13 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { NzHighlightPipe } from './highlight.pipe';
+import { TriHighlightPipe } from './highlight.pipe';
 
 describe('NzHighlightPipe', () => {
-  let pipe: NzHighlightPipe;
+  let pipe: TriHighlightPipe;
 
   beforeEach(() => {
-    pipe = new NzHighlightPipe();
+    pipe = new TriHighlightPipe();
   });
 
   it('should return highlight tag', () => {

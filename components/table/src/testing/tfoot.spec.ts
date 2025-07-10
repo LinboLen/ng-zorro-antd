@@ -6,8 +6,8 @@
 import { Component, ElementRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NzTableModule } from '../table.module';
-import { NzTableSummaryFixedType } from '../table.types';
+import { TriTableModule } from '../table.module';
+import { TriTableSummaryFixedType } from '../table.types';
 
 describe('tfoot', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -54,9 +54,9 @@ describe('tfoot', () => {
 });
 
 @Component({
-  imports: [NzTableModule],
+  imports: [TriTableModule],
   template: `
-    <nz-table [nzScroll]="{ x: scrollX, y: scrollY }">
+    <tri-table [scroll]="{ x: scrollX, y: scrollY }">
       <thead>
         <th></th>
         <th></th>
@@ -67,16 +67,16 @@ describe('tfoot', () => {
           <td>2</td>
         </tr>
       </tbody>
-      <tfoot nzSummary [nzFixed]="fixed">
+      <tfoot summary [fixed]="fixed">
         <td colspan="2">summary</td>
       </tfoot>
-    </nz-table>
+    </tri-table>
   `
 })
 export class TestComponent {
   scrollX: string | null = null;
   scrollY: string | null = null;
-  fixed: NzTableSummaryFixedType | boolean = false;
+  fixed: TriTableSummaryFixedType | boolean = false;
 
   constructor(public elementRef: ElementRef) {}
 }

@@ -5,39 +5,39 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzTabAddButtonComponent } from './tab-add-button.component';
-import { NzTabBarExtraContentDirective } from './tab-bar-extra-content.directive';
-import { NzTabBodyComponent } from './tab-body.component';
-import { NzTabCloseButtonComponent } from './tab-close-button.component';
-import { NzTabLinkDirective, NzTabLinkTemplateDirective } from './tab-link.directive';
-import { NzTabNavBarComponent } from './tab-nav-bar.component';
-import { NzTabNavItemDirective } from './tab-nav-item.directive';
-import { NzTabNavOperationComponent } from './tab-nav-operation.component';
-import { NzTabScrollListDirective } from './tab-scroll-list.directive';
-import { NzTabComponent } from './tab.component';
-import { NzTabDirective } from './tab.directive';
-import { NzTabsInkBarDirective } from './tabs-ink-bar.directive';
-import { NzTabsComponent } from './tabs.component';
+import { TriTabAddButtonComponent } from './tab-add-button.component';
+import { TriTabBarExtraContentDirective } from './tab-bar-extra-content.directive';
+import { TriTabBodyComponent } from './tab-body.component';
+import { TriTabCloseButtonComponent } from './tab-close-button.component';
+import { TriTabLinkDirective, TriTabLinkTemplateDirective } from './tab-link.directive';
+import { TriTabNavBarComponent } from './tab-nav-bar.component';
+import { TriTabNavItemDirective } from './tab-nav-item.directive';
+import { TriTabNavOperationComponent } from './tab-nav-operation.component';
+import { TriTabScrollListDirective } from './tab-scroll-list.directive';
+import { TriTabComponent } from './tab.component';
+import { TriTabDirective } from './tab.directive';
+import { TriTabsInkBarDirective } from './tabs-ink-bar.directive';
+import { TriTabsComponent } from './tabs.component';
 
 const DIRECTIVES = [
-  NzTabsComponent,
-  NzTabComponent,
-  NzTabNavBarComponent,
-  NzTabNavItemDirective,
-  NzTabsInkBarDirective,
-  NzTabScrollListDirective,
-  NzTabNavOperationComponent,
-  NzTabAddButtonComponent,
-  NzTabCloseButtonComponent,
-  NzTabDirective,
-  NzTabBodyComponent,
-  NzTabLinkDirective,
-  NzTabLinkTemplateDirective,
-  NzTabBarExtraContentDirective
+  TriTabsComponent,
+  TriTabComponent,
+  TriTabNavBarComponent,
+  TriTabNavItemDirective,
+  TriTabsInkBarDirective,
+  TriTabScrollListDirective,
+  TriTabNavOperationComponent,
+  TriTabAddButtonComponent,
+  TriTabCloseButtonComponent,
+  TriTabDirective,
+  TriTabBodyComponent,
+  TriTabLinkDirective,
+  TriTabLinkTemplateDirective,
+  TriTabBarExtraContentDirective
 ];
 
 @NgModule({
   imports: [DIRECTIVES],
   exports: [DIRECTIVES]
 })
-export class NzTabsModule {}
+export class TriTabsModule {}

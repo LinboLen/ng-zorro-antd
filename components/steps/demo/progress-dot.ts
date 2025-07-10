@@ -1,25 +1,25 @@
 import { Component } from '@angular/core';
 
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { TriDividerModule } from 'ng-zorro-antd/divider';
+import { TriStepsModule } from 'ng-zorro-antd/steps';
 
 @Component({
-  selector: 'nz-demo-steps-progress-dot',
-  imports: [NzDividerModule, NzStepsModule],
+  selector: '',
+  imports: [TriDividerModule, TriStepsModule],
   template: `
-    <nz-steps [nzCurrent]="1" nzProgressDot>
-      <nz-step nzTitle="Finished" nzDescription="This is a description."></nz-step>
-      <nz-step nzTitle="In Progress" nzDescription="This is a description."></nz-step>
-      <nz-step nzTitle="Waiting" nzDescription="This is a description."></nz-step>
-    </nz-steps>
-    <nz-divider></nz-divider>
-    <nz-steps [nzCurrent]="1" nzProgressDot nzDirection="vertical">
-      <nz-step nzTitle="Finished" nzDescription="This is a description. This is a description."></nz-step>
-      <nz-step nzTitle="Finished" nzDescription="This is a description. This is a description."></nz-step>
-      <nz-step nzTitle="In Progress" nzDescription="This is a description. This is a description."></nz-step>
-      <nz-step nzTitle="Waiting" nzDescription="This is a description."></nz-step>
-      <nz-step nzTitle="Waiting" nzDescription="This is a description."></nz-step>
-    </nz-steps>
+    <tri-steps [current]="1" progressDot>
+      <tri-step title="Finished" description="This is a description."></tri-step>
+      <tri-step title="In Progress" description="This is a description."></tri-step>
+      <tri-step title="Waiting" description="This is a description."></tri-step>
+    </tri-steps>
+    <tri-divider></tri-divider>
+    <tri-steps [current]="1" progressDot direction="vertical">
+      <tri-step title="Finished" description="This is a description. This is a description."></tri-step>
+      <tri-step title="Finished" description="This is a description. This is a description."></tri-step>
+      <tri-step title="In Progress" description="This is a description. This is a description."></tri-step>
+      <tri-step title="Waiting" description="This is a description."></tri-step>
+      <tri-step title="Waiting" description="This is a description."></tri-step>
+    </tri-steps>
   `
 })
-export class NzDemoStepsProgressDotComponent {}
+export class TriDemoStepsProgressDotComponent {}

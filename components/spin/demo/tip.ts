@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 
-import { NzAlertModule } from 'ng-zorro-antd/alert';
-import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { TriAlertModule } from 'ng-zorro-antd/alert';
+import { TriSpinModule } from 'ng-zorro-antd/spin';
 
 @Component({
-  selector: 'nz-demo-spin-tip',
-  imports: [NzAlertModule, NzSpinModule],
+  selector: '',
+  imports: [TriAlertModule, TriSpinModule],
   template: `
-    <nz-spin nzTip="Loading...">
-      <nz-alert
-        nzType="info"
-        nzMessage="Alert message title"
-        nzDescription="Further details about the context of this alert."
-      ></nz-alert>
-    </nz-spin>
+    <tri-spin tip="Loading...">
+      <tri-alert
+        type="info"
+        message="Alert message title"
+        description="Further details about the context of this alert."
+      ></tri-alert>
+    </tri-spin>
   `
 })
-export class NzDemoSpinTipComponent {}
+export class TriDemoSpinTipComponent {}

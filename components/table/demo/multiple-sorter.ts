@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NzTableModule } from 'ng-zorro-antd/table';
+import { TriTableModule } from 'ng-zorro-antd/table';
 
 interface ItemData {
   name: string;
@@ -10,14 +10,14 @@ interface ItemData {
 }
 
 @Component({
-  selector: 'nz-demo-table-multiple-sorter',
-  imports: [NzTableModule],
+  selector: '',
+  imports: [TriTableModule],
   template: `
-    <nz-table #sortTable [nzData]="listOfData" nzTableLayout="fixed">
+    <tri-table #sortTable [data]="listOfData" tableLayout="fixed">
       <thead>
         <tr>
           @for (column of listOfColumn; track column) {
-            <th [nzSortFn]="column.compare" [nzSortPriority]="column.priority">
+            <th [sortFn]="column.compare" [sortPriority]="column.priority">
               {{ column.title }}
             </th>
           }
@@ -33,10 +33,10 @@ interface ItemData {
           </tr>
         }
       </tbody>
-    </nz-table>
+    </tri-table>
   `
 })
-export class NzDemoTableMultipleSorterComponent {
+export class TriDemoTableMultipleSorterComponent {
   listOfColumn = [
     {
       title: 'Name',

@@ -3,6 +3,6 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export { NzResizeObserverModule } from './resize-observer.module';
-export { NzResizeObserverDirective } from './resize-observer.directive';
-export { NzResizeObserver, NzResizeObserverFactory } from './resize-observer.service';
+export { TriResizeObserverModule } from './resize-observer.module';
+export { TriResizeObserverDirective } from './resize-observer.directive';
+export { TriResizeObserver, TriResizeObserverFactory } from './resize-observer.service';

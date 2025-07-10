@@ -26,13 +26,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject, EMPTY, Subject, combineLatest, fromEvent, merge } from 'rxjs';
 import { auditTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
 
-import { NzConfigKey, NzConfigService, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
 import { POSITION_MAP } from 'ng-zorro-antd/core/overlay';
 import { IndexableObject } from 'ng-zorro-antd/core/types';
 
-import { NzDropdownMenuComponent, NzPlacementType } from './dropdown-menu.component';
+import { TriDropdownMenuComponent, TriPlacementType } from './dropdown-menu.component';
 
-const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'dropDown';
+const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'dropDown';
 
 const listOfPositions = [
   POSITION_MAP.bottomLeft,
@@ -42,19 +42,19 @@ const listOfPositions = [
 ];
 
 @Directive({
-  selector: '[nz-dropdown]',
-  exportAs: 'nzDropdown',
+  selector: '',
+  exportAs: 'triDropdown',
   host: {
-    class: 'ant-dropdown-trigger'
+    class: 'tri-dropdown-trigger'
   }
 })
-export class NzDropDownDirective implements AfterViewInit, OnChanges {
-  public readonly nzConfigService = inject(NzConfigService);
+export class TriDropDownDirective implements AfterViewInit, OnChanges {
+  public readonly configService = inject(TriConfigService);
   private renderer = inject(Renderer2);
   private viewContainerRef = inject(ViewContainerRef);
   private platform = inject(Platform);
   private destroyRef = inject(DestroyRef);
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
   public elementRef = inject(ElementRef);
   private overlay = inject(Overlay);
 
@@ -67,19 +67,19 @@ export class NzDropDownDirective implements AfterViewInit, OnChanges {
     .withLockedPosition()
     .withTransformOriginOn('.ant-dropdown');
   private inputVisible$ = new BehaviorSubject<boolean>(false);
-  private nzTrigger$ = new BehaviorSubject<'click' | 'hover'>('hover');
+  private trigger$ = new BehaviorSubject<'click' | 'hover'>('hover');
   private overlayClose$ = new Subject<boolean>();
-  @Input() nzDropdownMenu: NzDropdownMenuComponent | null = null;
-  @Input() nzTrigger: 'click' | 'hover' = 'hover';
-  @Input() nzMatchWidthElement: ElementRef | null = null;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzBackdrop = false;
-  @Input({ transform: booleanAttribute }) nzClickHide = true;
-  @Input({ transform: booleanAttribute }) nzDisabled = false;
-  @Input({ transform: booleanAttribute }) nzVisible = false;
-  @Input() nzOverlayClassName: string = '';
-  @Input() nzOverlayStyle: IndexableObject = {};
-  @Input() nzPlacement: NzPlacementType = 'bottomLeft';
-  @Output() readonly nzVisibleChange = new EventEmitter<boolean>();
+  @Input() dropdownMenu: TriDropdownMenuComponent | null = null;
+  @Input() trigger: 'click' | 'hover' = 'hover';
+  @Input() matchWidthElement: ElementRef | null = null;
+  @Input({ transform: booleanAttribute }) @WithConfig() backdrop = false;
+  @Input({ transform: booleanAttribute }) clickHide = true;
+  @Input({ transform: booleanAttribute }) disabled = false;
+  @Input({ transform: booleanAttribute }) visible = false;
+  @Input() overlayClassName: string = '';
+  @Input() overlayStyle: IndexableObject = {};
+  @Input() placement: TriPlacementType = 'bottomLeft';
+  @Output() readonly visibleChange = new EventEmitter<boolean>();
 
   constructor() {
     this.destroyRef.onDestroy(() => {
@@ -88,14 +88,14 @@ export class NzDropDownDirective implements AfterViewInit, OnChanges {
     });
   }
 
-  setDropdownMenuValue<T extends keyof NzDropdownMenuComponent>(key: T, value: NzDropdownMenuComponent[T]): void {
-    if (this.nzDropdownMenu) {
-      this.nzDropdownMenu.setValue(key, value);
+  setDropdownMenuValue<T extends keyof TriDropdownMenuComponent>(key: T, value: TriDropdownMenuComponent[T]): void {
+    if (this.dropdownMenu) {
+      this.dropdownMenu.setValue(key, value);
     }
   }
 
   ngAfterViewInit(): void {
-    if (this.nzDropdownMenu) {
+    if (this.dropdownMenu) {
       const nativeElement: HTMLElement = this.elementRef.nativeElement;
       /** host mouse state **/
       const hostMouseState$ = merge(
@@ -103,13 +103,13 @@ export class NzDropDownDirective implements AfterViewInit, OnChanges {
         fromEvent(nativeElement, 'mouseleave').pipe(map(() => false))
       );
       /** menu mouse state **/
-      const menuMouseState$ = this.nzDropdownMenu.mouseState$;
+      const menuMouseState$ = this.dropdownMenu.mouseState$;
       /** merged mouse state **/
       const mergedMouseState$ = merge(menuMouseState$, hostMouseState$);
       /** host click state **/
-      const hostClickState$ = fromEvent(nativeElement, 'click').pipe(map(() => !this.nzVisible));
+      const hostClickState$ = fromEvent(nativeElement, 'click').pipe(map(() => !this.visible));
       /** visible state switch by nzTrigger **/
-      const visibleStateByTrigger$ = this.nzTrigger$.pipe(
+      const visibleStateByTrigger$ = this.trigger$.pipe(
         switchMap(trigger => {
           if (trigger === 'hover') {
             return mergedMouseState$;
@@ -120,15 +120,15 @@ export class NzDropDownDirective implements AfterViewInit, OnChanges {
           }
         })
       );
-      const descendantMenuItemClick$ = this.nzDropdownMenu.descendantMenuItemClick$.pipe(
-        filter(() => this.nzClickHide),
+      const descendantMenuItemClick$ = this.dropdownMenu.descendantMenuItemClick$.pipe(
+        filter(() => this.clickHide),
         map(() => false)
       );
       const domTriggerVisible$ = merge(visibleStateByTrigger$, descendantMenuItemClick$, this.overlayClose$).pipe(
-        filter(() => !this.nzDisabled)
+        filter(() => !this.disabled)
       );
       const visible$ = merge(this.inputVisible$, domTriggerVisible$);
-      combineLatest([visible$, this.nzDropdownMenu.isChildSubMenuOpen$])
+      combineLatest([visible$, this.dropdownMenu.isChildSubMenuOpen$])
         .pipe(
           map(([visible, sub]) => visible || sub),
           auditTime(150),
@@ -137,12 +137,12 @@ export class NzDropDownDirective implements AfterViewInit, OnChanges {
           takeUntilDestroyed(this.destroyRef)
         )
         .subscribe((visible: boolean) => {
-          const element = this.nzMatchWidthElement ? this.nzMatchWidthElement.nativeElement : nativeElement;
+          const element = this.matchWidthElement ? this.matchWidthElement.nativeElement : nativeElement;
           const triggerWidth = element.getBoundingClientRect().width;
-          if (this.nzVisible !== visible) {
-            this.nzVisibleChange.emit(visible);
+          if (this.visible !== visible) {
+            this.visibleChange.emit(visible);
           }
-          this.nzVisible = visible;
+          this.visible = visible;
           if (visible) {
             /** set up overlayRef **/
             if (!this.overlayRef) {
@@ -151,7 +151,7 @@ export class NzDropDownDirective implements AfterViewInit, OnChanges {
                 positionStrategy: this.positionStrategy,
                 minWidth: triggerWidth,
                 disposeOnNavigation: true,
-                hasBackdrop: this.nzBackdrop && this.nzTrigger === 'click',
+                hasBackdrop: this.backdrop && this.trigger === 'click',
                 scrollStrategy: this.overlay.scrollStrategies.reposition()
               });
               merge(
@@ -172,10 +172,10 @@ export class NzDropDownDirective implements AfterViewInit, OnChanges {
               overlayConfig.minWidth = triggerWidth;
             }
             /** open dropdown with animation **/
-            this.positionStrategy.withPositions([POSITION_MAP[this.nzPlacement], ...listOfPositions]);
+            this.positionStrategy.withPositions([POSITION_MAP[this.placement], ...listOfPositions]);
             /** reset portal if needed **/
-            if (!this.portal || this.portal.templateRef !== this.nzDropdownMenu!.templateRef) {
-              this.portal = new TemplatePortal(this.nzDropdownMenu!.templateRef, this.viewContainerRef);
+            if (!this.portal || this.portal.templateRef !== this.dropdownMenu!.templateRef) {
+              this.portal = new TemplatePortal(this.dropdownMenu!.templateRef, this.viewContainerRef);
             }
             this.overlayRef.attach(this.portal);
           } else {
@@ -186,7 +186,7 @@ export class NzDropDownDirective implements AfterViewInit, OnChanges {
           }
         });
 
-      this.nzDropdownMenu!.animationStateChange$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(event => {
+      this.dropdownMenu!.animationStateChange$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(event => {
         if (event.toState === 'void') {
           if (this.overlayRef) {
             this.overlayRef.dispose();
@@ -200,14 +200,14 @@ export class NzDropDownDirective implements AfterViewInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     const { nzVisible, nzDisabled, nzOverlayClassName, nzOverlayStyle, nzTrigger } = changes;
     if (nzTrigger) {
-      this.nzTrigger$.next(this.nzTrigger);
+      this.trigger$.next(this.trigger);
     }
     if (nzVisible) {
-      this.inputVisible$.next(this.nzVisible);
+      this.inputVisible$.next(this.visible);
     }
     if (nzDisabled) {
       const nativeElement = this.elementRef.nativeElement;
-      if (this.nzDisabled) {
+      if (this.disabled) {
         this.renderer.setAttribute(nativeElement, 'disabled', '');
         this.inputVisible$.next(false);
       } else {
@@ -215,10 +215,10 @@ export class NzDropDownDirective implements AfterViewInit, OnChanges {
       }
     }
     if (nzOverlayClassName) {
-      this.setDropdownMenuValue('nzOverlayClassName', this.nzOverlayClassName);
+      this.setDropdownMenuValue('nzOverlayClassName', this.overlayClassName);
     }
     if (nzOverlayStyle) {
-      this.setDropdownMenuValue('nzOverlayStyle', this.nzOverlayStyle);
+      this.setDropdownMenuValue('nzOverlayStyle', this.overlayStyle);
     }
   }
 }

@@ -2,25 +2,25 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzSelectModule } from 'ng-zorro-antd/select';
+import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: 'nz-demo-select-search-box',
-  imports: [FormsModule, NzSelectModule],
+  selector: '',
+  imports: [FormsModule, TriSelectModule],
   template: `
-    <nz-select
-      nzShowSearch
-      nzServerSearch
-      nzPlaceHolder="input search text"
+    <tri-select
+      showSearch
+      serverSearch
+      placeHolder="input search text"
       [(ngModel)]="selectedValue"
-      [nzShowArrow]="false"
-      [nzFilterOption]="nzFilterOption"
-      (nzOnSearch)="search($event)"
+      [showArrow]="false"
+      [filterOption]="filterOption"
+      (onSearch)="search($event)"
     >
       @for (item of listOfOption; track item) {
-        <nz-option [nzLabel]="item" [nzValue]="item"></nz-option>
+        <tri-option [label]="item" [value]="item"></tri-option>
       }
-    </nz-select>
+    </tri-select>
   `,
   styles: [
     `
@@ -30,10 +30,10 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     `
   ]
 })
-export class NzDemoSelectSearchBoxComponent {
+export class TriDemoSelectSearchBoxComponent {
   selectedValue: string | null = null;
   listOfOption: string[] = [];
-  readonly nzFilterOption = (): boolean => true;
+  readonly filterOption = (): boolean => true;
 
   constructor(private http: HttpClient) {}
 

@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 
-import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: 'nz-demo-tabs-card',
-  imports: [NzTabsModule],
+  selector: '',
+  imports: [TriTabsModule],
   template: `
-    <nz-tabs nzType="card">
+    <tri-tabs type="card">
       @for (tab of tabs; track tab) {
-        <nz-tab [nzTitle]="'Tab' + tab">Content of Tab Pane {{ tab }}</nz-tab>
+        <tri-tab [title]="'Tab' + tab">Content of Tab Pane {{ tab }}</tri-tab>
       }
-    </nz-tabs>
+    </tri-tabs>
   `
 })
-export class NzDemoTabsCardComponent {
+export class TriDemoTabsCardComponent {
   tabs = [1, 2, 3];
 }

@@ -5,14 +5,14 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzMentionSuggestionDirective } from './mention-suggestions';
-import { NzMentionTriggerDirective } from './mention-trigger';
-import { NzMentionComponent } from './mention.component';
+import { TriMentionSuggestionDirective } from './mention-suggestions';
+import { TriMentionTriggerDirective } from './mention-trigger';
+import { TriMentionComponent } from './mention.component';
 
-const COMPONENTS = [NzMentionComponent, NzMentionTriggerDirective, NzMentionSuggestionDirective];
+const COMPONENTS = [TriMentionComponent, TriMentionTriggerDirective, TriMentionSuggestionDirective];
 
 @NgModule({
   imports: [...COMPONENTS],
   exports: [...COMPONENTS]
 })
-export class NzMentionModule {}
+export class TriMentionModule {}

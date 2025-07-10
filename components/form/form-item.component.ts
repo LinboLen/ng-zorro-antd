@@ -5,29 +5,29 @@
 
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, ViewEncapsulation } from '@angular/core';
 
-export type NzFormControlStatusType = 'success' | 'error' | 'warning' | 'validating' | '';
+export type TriFormControlStatusType = 'success' | 'error' | 'warning' | 'validating' | '';
 
 /** should add nz-row directive to host, track https://github.com/angular/angular/issues/8785 **/
 @Component({
-  selector: 'nz-form-item',
-  exportAs: 'nzFormItem',
+  selector: '',
+  exportAs: 'triFormItem',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
-    class: 'ant-form-item',
-    '[class.ant-form-item-has-success]': 'status === "success"',
-    '[class.ant-form-item-has-warning]': 'status === "warning"',
-    '[class.ant-form-item-has-error]': 'status === "error"',
-    '[class.ant-form-item-is-validating]': 'status === "validating"',
-    '[class.ant-form-item-has-feedback]': 'hasFeedback && status',
-    '[class.ant-form-item-with-help]': 'withHelpClass'
+    class: 'tri-form-item',
+    '[class.tri-form-item-has-success]': 'status === "success"',
+    '[class.tri-form-item-has-warning]': 'status === "warning"',
+    '[class.tri-form-item-has-error]': 'status === "error"',
+    '[class.tri-form-item-is-validating]': 'status === "validating"',
+    '[class.tri-form-item-has-feedback]': 'hasFeedback && status',
+    '[class.tri-form-item-with-help]': 'withHelpClass'
   },
   template: `<ng-content></ng-content>`
 })
-export class NzFormItemComponent {
+export class TriFormItemComponent {
   private cdr = inject(ChangeDetectorRef);
 
-  status: NzFormControlStatusType = '';
+  status: TriFormControlStatusType = '';
   hasFeedback = false;
   withHelpClass = false;
 
@@ -36,7 +36,7 @@ export class NzFormItemComponent {
     this.cdr.markForCheck();
   }
 
-  setStatus(status: NzFormControlStatusType): void {
+  setStatus(status: TriFormControlStatusType): void {
     this.status = status;
     this.cdr.markForCheck();
   }

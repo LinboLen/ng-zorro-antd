@@ -6,9 +6,9 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 
-import { NzValidateStatus } from 'ng-zorro-antd/core/types';
+import { TriValidateStatus } from 'ng-zorro-antd/core/types';
 
 @Injectable()
-export class NzFormStatusService {
-  formStatusChanges = new ReplaySubject<{ status: NzValidateStatus; hasFeedback: boolean }>(1);
+export class TriFormStatusService {
+  formStatusChanges = new ReplaySubject<{ status: TriValidateStatus; hasFeedback: boolean }>(1);
 }

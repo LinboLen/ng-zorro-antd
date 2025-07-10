@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 
-import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { TriSpinModule } from 'ng-zorro-antd/spin';
 
 @Component({
-  selector: 'nz-demo-spin-size',
-  imports: [NzSpinModule],
+  selector: '',
+  imports: [TriSpinModule],
   template: `
-    <nz-spin nzSimple nzSize="small"></nz-spin>
-    <nz-spin nzSimple></nz-spin>
-    <nz-spin nzSimple nzSize="large"></nz-spin>
+    <tri-spin simple size="small"></tri-spin>
+    <tri-spin simple></tri-spin>
+    <tri-spin simple size="large"></tri-spin>
   `,
   styles: [
     `
@@ -19,4 +19,4 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
     `
   ]
 })
-export class NzDemoSpinSizeComponent {}
+export class TriDemoSpinSizeComponent {}

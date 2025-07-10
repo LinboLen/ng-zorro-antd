@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
-import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { TriSkeletonModule } from 'ng-zorro-antd/skeleton';
 
 @Component({
-  selector: 'nz-demo-skeleton-active',
-  imports: [NzSkeletonModule],
-  template: `<nz-skeleton [nzActive]="true"></nz-skeleton>`
+  selector: '',
+  imports: [TriSkeletonModule],
+  template: `<tri-skeleton [active]="true"></tri-skeleton>`
 })
-export class NzDemoSkeletonActiveComponent {}
+export class TriDemoSkeletonActiveComponent {}

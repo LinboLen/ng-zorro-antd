@@ -8,12 +8,12 @@ import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core
 import { By } from '@angular/platform-browser';
 
 import { createFakeEvent } from 'ng-zorro-antd/core/testing';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
-import { NzAvatarGroupComponent } from './avatar-group.component';
-import { NzAvatarComponent } from './avatar.component';
-import { NzAvatarModule } from './avatar.module';
+import { TriAvatarGroupComponent } from './avatar-group.component';
+import { TriAvatarComponent } from './avatar.component';
+import { TriAvatarModule } from './avatar.module';
 
 const imageBase64 =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==';
@@ -38,7 +38,7 @@ describe('avatar group', () => {
 
   it('should avatar group work', () => {
     fixture.detectChanges();
-    const avatarGroup = fixture.debugElement.query(By.directive(NzAvatarGroupComponent));
+    const avatarGroup = fixture.debugElement.query(By.directive(TriAvatarGroupComponent));
     expect(avatarGroup.nativeElement.classList).toContain('ant-avatar-group');
   });
 });
@@ -72,13 +72,13 @@ describe('avatar', () => {
       expect(getType(dl)).toBe('image');
       expect(context.comp.hasSrc).toBe(true);
       // Manually dispatch error.
-      context.nzSrc = '';
+      context.src = '';
       context.comp.imgError(event);
       tick();
       fixture.detectChanges();
       expect(getType(dl)).toBe('icon');
       expect(context.comp.hasSrc).toBe(false);
-      context.nzSrc = imageBase64;
+      context.src = imageBase64;
       tick();
       fixture.detectChanges();
       expect(context.comp.hasSrc).toBe(true);
@@ -91,13 +91,13 @@ describe('avatar', () => {
       expect(getType(dl)).toBe('image');
       expect(context.comp.hasSrc).toBe(true);
       // Manually dispatch error.
-      context.nzSrc = 'Invalid image src';
+      context.src = 'Invalid image src';
       context.comp.imgError(event);
       tick();
       fixture.detectChanges();
       expect(getType(dl)).toBe('image');
       expect(context.comp.hasSrc).toBe(true);
-      context.nzSrc = imageBase64;
+      context.src = imageBase64;
       tick();
       fixture.detectChanges();
       expect(context.comp.hasSrc).toBe(true);
@@ -105,44 +105,44 @@ describe('avatar', () => {
       tick();
     }));
     it('#nzSrcSet', () => {
-      context.nzSrcSet = '1.png';
+      context.srcSet = '1.png';
       fixture.detectChanges();
       const el = getImageElement();
-      expect(el.srcset).toBe(context.nzSrcSet);
+      expect(el.srcset).toBe(context.srcSet);
     });
     it('#nzAlt', () => {
-      context.nzAlt = 'alt';
+      context.alt = 'alt';
       fixture.detectChanges();
       const el = getImageElement();
-      expect(el.alt).toBe(context.nzAlt);
+      expect(el.alt).toBe(context.alt);
     });
   });
 
   it('#nzIcon', () => {
-    context.nzSrc = null;
-    context.nzText = null;
+    context.src = null;
+    context.text = null;
     fixture.detectChanges();
     expect(getType(dl)).toBe('icon');
   });
 
   describe('#nzText', () => {
     beforeEach(() => {
-      context.nzSrc = null;
-      context.nzIcon = null;
+      context.src = null;
+      context.icon = null;
       fixture.detectChanges();
     });
     it('property', () => {
       expect(getType(dl)).toBe('text');
     });
     it('should be normal font-size', fakeAsync(() => {
-      context.nzText = 'a';
+      context.text = 'a';
       fixture.detectChanges();
       tick();
       const scale = getScaleFromCSSTransform(dl.nativeElement.querySelector('.ant-avatar-string')!.style.transform!);
       expect(scale).toBe(1);
     }));
     it('should be auto set font-size', fakeAsync(() => {
-      context.nzText = 'LongUsername';
+      context.text = 'LongUsername';
       fixture.detectChanges();
       tick();
       context.comp['calcStringSize']();
@@ -154,8 +154,8 @@ describe('avatar', () => {
       let firstScale: number;
       let avatarText: HTMLElement;
       beforeEach(fakeAsync(() => {
-        context.nzGap = 4;
-        context.nzText = 'Username';
+        context.gap = 4;
+        context.text = 'Username';
         fixture.detectChanges();
         tick();
         avatarText = dl.nativeElement.querySelector('.ant-avatar-string')!;
@@ -164,14 +164,14 @@ describe('avatar', () => {
       }));
 
       it('should be set gap', fakeAsync(() => {
-        context.nzGap = 8;
+        context.gap = 8;
         fixture.detectChanges();
         tick();
 
         let scale = getScaleFromCSSTransform(avatarText.style.transform);
         expect(scale).toBeLessThan(firstScale);
 
-        context.nzGap = 2;
+        context.gap = 2;
         fixture.detectChanges();
         tick();
 
@@ -180,14 +180,14 @@ describe('avatar', () => {
       }));
 
       it('Should be set to default when the limit is exceeded', fakeAsync(() => {
-        context.nzGap = 1000;
+        context.gap = 1000;
         fixture.detectChanges();
         tick();
 
         let scale = getScaleFromCSSTransform(avatarText.style.transform);
         expect(scale).toEqual(firstScale);
 
-        context.nzGap = -1000;
+        context.gap = -1000;
         fixture.detectChanges();
         tick();
 
@@ -200,7 +200,7 @@ describe('avatar', () => {
   describe('#nzShape', () => {
     for (const type of ['square', 'circle']) {
       it(type, () => {
-        context.nzShape = type;
+        context.shape = type;
         fixture.detectChanges();
         expect(dl.query(By.css(`.ant-avatar-${type}`)) !== null).toBe(true);
       });
@@ -213,16 +213,16 @@ describe('avatar', () => {
       { size: 'small', cls: 'sm' }
     ]) {
       it(item.size, () => {
-        context.nzSize = item.size;
+        context.size = item.size;
         fixture.detectChanges();
         expect(dl.query(By.css(`.ant-avatar-${item.cls}`)) !== null).toBe(true);
       });
     }
 
     it('custom size', () => {
-      context.nzSize = 64;
-      context.nzIcon = null;
-      context.nzSrc = null;
+      context.size = 64;
+      context.icon = null;
+      context.src = null;
       fixture.detectChanges();
       const size = `${64}px`;
       const hostStyle = dl.nativeElement.querySelector('nz-avatar').style;
@@ -231,17 +231,17 @@ describe('avatar', () => {
       expect(hostStyle.lineHeight === size).toBe(true);
       expect(hostStyle.fontSize === ``).toBe(true);
 
-      context.nzIcon = 'user';
+      context.icon = 'user';
       fixture.detectChanges();
-      expect(hostStyle.fontSize === `${context.nzSize / 2}px`).toBe(true);
+      expect(hostStyle.fontSize === `${context.size / 2}px`).toBe(true);
     });
 
     it('should set `lineHeight` on the text element considering `nzSize`', fakeAsync(() => {
       const size = 64;
-      context.nzIcon = null;
-      context.nzSrc = null;
-      context.nzSize = size;
-      context.nzText = 'LongUsername';
+      context.icon = null;
+      context.src = null;
+      context.size = size;
+      context.text = 'LongUsername';
       fixture.detectChanges();
       flush();
       const textEl = document.querySelector<HTMLElement>('.ant-avatar-string')!;
@@ -253,16 +253,16 @@ describe('avatar', () => {
 
     it('should have 0 for avatarWidth if element.width is falsy`', fakeAsync(() => {
       const size = 64;
-      context.nzIcon = null;
-      context.nzSrc = null;
-      context.nzSize = size;
-      context.nzText = 'LongUsername';
+      context.icon = null;
+      context.src = null;
+      context.size = size;
+      context.text = 'LongUsername';
       context.comp.hasText = true;
 
       fixture.detectChanges();
       flush();
       const textEl = document.querySelector<HTMLElement>('.ant-avatar-string')!;
-      (context.comp as NzSafeAny)['el'] = {
+      (context.comp as TriSafeAny)['el'] = {
         getBoundingClientRect: function () {
           return {
             width: null
@@ -289,7 +289,7 @@ describe('avatar', () => {
     });
 
     it('should allow providing a binding for the `loading` attribute', () => {
-      context.nzLoading = 'lazy';
+      context.loading = 'lazy';
       fixture.detectChanges();
       expect(getImageElement().loading).toEqual('lazy');
     });
@@ -301,7 +301,7 @@ describe('avatar', () => {
     });
 
     it('should allow providing a binding for the `fetchpriority` attribute', () => {
-      context.nzFetchPriority = 'high';
+      context.fetchPriority = 'high';
       fixture.detectChanges();
       expect(getImageElement().fetchPriority).toEqual('high');
     });
@@ -322,7 +322,7 @@ describe('avatar', () => {
     it('should be show text when image loaded error and icon not exists', fakeAsync(() => {
       const event = createFakeEvent('error');
       expect(getType(dl)).toBe('image');
-      context.nzIcon = null;
+      context.icon = null;
       fixture.detectChanges();
       context.comp.imgError(event);
       tick();
@@ -332,8 +332,8 @@ describe('avatar', () => {
     it('should be show empty when image loaded error and icon & text not exists', fakeAsync(() => {
       const event = createFakeEvent('error');
       expect(getType(dl)).toBe('image');
-      context.nzIcon = null;
-      context.nzText = null;
+      context.icon = null;
+      context.text = null;
       fixture.detectChanges();
       context.comp.imgError(event);
       tick();
@@ -348,21 +348,21 @@ function getScaleFromCSSTransform(transform: string): number {
 }
 
 @Component({
-  imports: [NzAvatarModule],
+  imports: [TriAvatarModule],
   template: `
-    <nz-avatar
+    <tri-avatar
       #comp
-      [nzShape]="nzShape"
-      [nzSize]="nzSize"
-      [nzIcon]="nzIcon"
-      [nzText]="nzText"
-      [nzGap]="nzGap"
-      [nzSrc]="nzSrc"
-      [nzSrcSet]="nzSrcSet"
-      [nzAlt]="nzAlt"
-      [nzLoading]="nzLoading"
-      [nzFetchPriority]="nzFetchPriority"
-    ></nz-avatar>
+      [shape]="shape"
+      [size]="size"
+      [icon]="icon"
+      [text]="text"
+      [gap]="gap"
+      [src]="src"
+      [srcSet]="srcSet"
+      [alt]="alt"
+      [loading]="loading"
+      [fetchPriority]="fetchPriority"
+    ></tri-avatar>
   `,
   styles: `
     @import '../style/testing.less';
@@ -370,21 +370,21 @@ function getScaleFromCSSTransform(transform: string): number {
   `
 })
 class TestAvatarComponent {
-  @ViewChild('comp', { static: false }) comp!: NzAvatarComponent;
-  nzShape = 'square';
-  nzSize: string | number = 'large';
-  nzGap = 4;
-  nzIcon: string | null = 'user';
-  nzText: string | null = 'A';
-  nzSrc: string | null = imageBase64;
-  nzSrcSet?: string;
-  nzAlt?: string;
-  nzLoading?: 'eager' | 'lazy';
-  nzFetchPriority?: 'high' | 'low' | 'auto';
+  @ViewChild('comp', { static: false }) comp!: TriAvatarComponent;
+  shape = 'square';
+  size: string | number = 'large';
+  gap = 4;
+  icon: string | null = 'user';
+  text: string | null = 'A';
+  src: string | null = imageBase64;
+  srcSet?: string;
+  alt?: string;
+  loading?: 'eager' | 'lazy';
+  fetchPriority?: 'high' | 'low' | 'auto';
 }
 
 @Component({
-  imports: [NzAvatarModule],
-  template: `<nz-avatar-group></nz-avatar-group>`
+  imports: [TriAvatarModule],
+  template: `<tri-avatar-group></tri-avatar-group>`
 })
 class TestAvatarGroupComponent {}

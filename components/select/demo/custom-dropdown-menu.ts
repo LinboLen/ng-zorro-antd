@@ -1,25 +1,25 @@
 import { Component } from '@angular/core';
 
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzSelectModule } from 'ng-zorro-antd/select';
+import { TriDividerModule } from 'ng-zorro-antd/divider';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: 'nz-demo-select-custom-dropdown-menu',
-  imports: [NzDividerModule, NzIconModule, NzInputModule, NzSelectModule],
+  selector: '',
+  imports: [TriDividerModule, TriIconModule, TriInputModule, TriSelectModule],
   template: `
-    <nz-select nzShowSearch nzAllowClear [nzDropdownRender]="renderTemplate" nzPlaceHolder="custom dropdown render">
+    <tri-select showSearch allowClear [dropdownRender]="renderTemplate" placeHolder="custom dropdown render">
       @for (item of listOfItem; track item) {
-        <nz-option [nzLabel]="item" [nzValue]="item"></nz-option>
+        <tri-option [label]="item" [value]="item"></tri-option>
       }
-    </nz-select>
+    </tri-select>
     <ng-template #renderTemplate>
-      <nz-divider></nz-divider>
+      <tri-divider></tri-divider>
       <div class="container">
-        <input type="text" nz-input #inputElement />
+        <input type="text" tri-input #inputElement />
         <a class="add-item" (click)="addItem(inputElement)">
-          <nz-icon nzType="plus" />
+          <tri-icon type="plus" />
           Add item
         </a>
       </div>
@@ -46,7 +46,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     `
   ]
 })
-export class NzDemoSelectCustomDropdownMenuComponent {
+export class TriDemoSelectCustomDropdownMenuComponent {
   listOfItem = ['jack', 'lucy'];
   index = 0;
 

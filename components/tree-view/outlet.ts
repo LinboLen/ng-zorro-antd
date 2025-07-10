@@ -7,12 +7,12 @@ import { CdkTreeNodeOutlet } from '@angular/cdk/tree';
 import { Directive, forwardRef } from '@angular/core';
 
 @Directive({
-  selector: '[nzTreeNodeOutlet]',
+  selector: '',
   providers: [
     {
       provide: CdkTreeNodeOutlet,
-      useExisting: forwardRef(() => NzTreeNodeOutletDirective)
+      useExisting: forwardRef(() => TriTreeNodeOutletDirective)
     }
   ]
 })
-export class NzTreeNodeOutletDirective extends CdkTreeNodeOutlet {}
+export class TriTreeNodeOutletDirective extends CdkTreeNodeOutlet {}

@@ -32,24 +32,24 @@ const BaseSize = 2;
 const FontGap = 3;
 
 @Component({
-  selector: 'nz-water-mark',
-  exportAs: 'nzWaterMark',
+  selector: '',
+  exportAs: 'triWaterMark',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<ng-content></ng-content>`,
   host: {
-    class: 'ant-water-mark'
+    class: 'tri-water-mark'
   }
 })
-export class NzWaterMarkComponent implements OnInit, OnChanges {
-  @Input({ transform: numberAttribute }) nzWidth: number = 120;
-  @Input({ transform: numberAttribute }) nzHeight: number = 64;
-  @Input({ transform: numberAttribute }) nzRotate: number = -22;
-  @Input({ transform: numberAttribute }) nzZIndex: number = 9;
-  @Input() nzImage: string = '';
-  @Input() nzContent: string | string[] = '';
-  @Input() nzFont: FontType = {};
-  @Input() nzGap: [number, number] = [100, 100];
-  @Input() nzOffset: [number, number] = [this.nzGap[0] / 2, this.nzGap[1] / 2];
+export class TriWaterMarkComponent implements OnInit, OnChanges {
+  @Input({ transform: numberAttribute }) width: number = 120;
+  @Input({ transform: numberAttribute }) height: number = 64;
+  @Input({ transform: numberAttribute }) rotate: number = -22;
+  @Input({ transform: numberAttribute }) zIndex: number = 9;
+  @Input() image: string = '';
+  @Input() content: string | string[] = '';
+  @Input() font: FontType = {};
+  @Input() gap: [number, number] = [100, 100];
+  @Input() offset: [number, number] = [this.gap[0] / 2, this.gap[1] / 2];
 
   private isServer = isPlatformServer(inject(PLATFORM_ID));
 
@@ -124,13 +124,13 @@ export class NzWaterMarkComponent implements OnInit, OnChanges {
       fontStyle: 'normal'
     };
 
-    this.nzFont = { ...font, ...this.nzFont };
+    this.font = { ...font, ...this.font };
     this.cdr.markForCheck();
   }
 
   getMarkStyle(): MarkStyleType {
     const markStyle: MarkStyleType = {
-      zIndex: this.nzZIndex,
+      zIndex: this.zIndex,
       position: 'absolute',
       left: 0,
       top: 0,
@@ -142,8 +142,8 @@ export class NzWaterMarkComponent implements OnInit, OnChanges {
     };
 
     /** Calculate the style of the nzOffset */
-    let positionLeft = (this.nzOffset?.[0] ?? this.nzGap[0] / 2) - this.nzGap[0] / 2;
-    let positionTop = (this.nzOffset?.[1] ?? this.nzGap[1] / 2) - this.nzGap[1] / 2;
+    let positionLeft = (this.offset?.[0] ?? this.gap[0] / 2) - this.gap[0] / 2;
+    let positionTop = (this.offset?.[1] ?? this.gap[1] / 2) - this.gap[1] / 2;
     if (positionLeft > 0) {
       markStyle.left = `${positionLeft}px`;
       markStyle.width = `calc(100% - ${positionLeft}px)`;
@@ -172,7 +172,7 @@ export class NzWaterMarkComponent implements OnInit, OnChanges {
       getStyleStr({
         ...this.getMarkStyle(),
         backgroundImage: `url('${base64Url}')`,
-        backgroundSize: `${(this.nzGap[0] + markWidth) * BaseSize}px`
+        backgroundSize: `${(this.gap[0] + markWidth) * BaseSize}px`
       })
     );
     this.el.append(this.waterMarkElement);
@@ -188,25 +188,25 @@ export class NzWaterMarkComponent implements OnInit, OnChanges {
   getMarkSize(ctx: CanvasRenderingContext2D): [number, number] {
     let defaultWidth = 120;
     let defaultHeight = 64;
-    if (!this.nzImage && ctx.measureText) {
-      ctx.font = `${Number(this.nzFont.fontSize)}px ${this.nzFont.fontFamily}`;
-      const contents = Array.isArray(this.nzContent) ? this.nzContent : [this.nzContent];
+    if (!this.image && ctx.measureText) {
+      ctx.font = `${Number(this.font.fontSize)}px ${this.font.fontFamily}`;
+      const contents = Array.isArray(this.content) ? this.content : [this.content];
       const widths = contents.map(item => ctx.measureText(item!).width);
       defaultWidth = Math.ceil(Math.max(...widths));
-      defaultHeight = Number(this.nzFont.fontSize) * contents.length + (contents.length - 1) * FontGap;
+      defaultHeight = Number(this.font.fontSize) * contents.length + (contents.length - 1) * FontGap;
     }
-    return [this.nzWidth ?? defaultWidth, this.nzHeight ?? defaultHeight];
+    return [this.width ?? defaultWidth, this.height ?? defaultHeight];
   }
 
   fillTexts(ctx: CanvasRenderingContext2D, drawX: number, drawY: number, drawWidth: number, drawHeight: number): void {
     const ratio = getPixelRatio();
-    const mergedFontSize = Number(this.nzFont.fontSize) * ratio;
-    ctx.font = `${this.nzFont.fontStyle} normal ${this.nzFont.fontWeight} ${mergedFontSize}px/${drawHeight}px ${this.nzFont.fontFamily}`;
-    if (this.nzFont.color) ctx.fillStyle = this.nzFont.color;
+    const mergedFontSize = Number(this.font.fontSize) * ratio;
+    ctx.font = `${this.font.fontStyle} normal ${this.font.fontWeight} ${mergedFontSize}px/${drawHeight}px ${this.font.fontFamily}`;
+    if (this.font.color) ctx.fillStyle = this.font.color;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
     ctx.translate(drawWidth / 2, 0);
-    const contents = Array.isArray(this.nzContent) ? this.nzContent : [this.nzContent];
+    const contents = Array.isArray(this.content) ? this.content : [this.content];
     contents?.forEach((item, index) => {
       ctx.fillText(item ?? '', drawX, drawY + index * (mergedFontSize + FontGap * ratio));
     });
@@ -229,7 +229,7 @@ export class NzWaterMarkComponent implements OnInit, OnChanges {
 
     /** Fill the interleaved text after rotation */
     ctx.restore();
-    rotateWatermark(ctx, alternateRotateX, alternateRotateY, this.nzRotate);
+    rotateWatermark(ctx, alternateRotateX, alternateRotateY, this.rotate);
     this.fillTexts(ctx, alternateDrawX, alternateDrawY, drawWidth, drawHeight);
     this.appendWatermark(canvas.toDataURL(), markWidth);
   }
@@ -239,7 +239,7 @@ export class NzWaterMarkComponent implements OnInit, OnChanges {
       return;
     }
 
-    if (!this.nzContent && !this.nzImage) {
+    if (!this.content && !this.image) {
       return;
     }
     const canvas: HTMLCanvasElement = this.document.createElement('canvas');
@@ -252,17 +252,17 @@ export class NzWaterMarkComponent implements OnInit, OnChanges {
       this.getFont();
       const ratio = getPixelRatio();
       const [markWidth, markHeight] = this.getMarkSize(ctx);
-      const canvasWidth = (this.nzGap[0] + markWidth) * ratio;
-      const canvasHeight = (this.nzGap[1] + markHeight) * ratio;
+      const canvasWidth = (this.gap[0] + markWidth) * ratio;
+      const canvasHeight = (this.gap[1] + markHeight) * ratio;
       canvas.setAttribute('width', `${canvasWidth * BaseSize}px`);
       canvas.setAttribute('height', `${canvasHeight * BaseSize}px`);
 
-      const drawX = (this.nzGap[0] * ratio) / 2;
-      const drawY = (this.nzGap[1] * ratio) / 2;
+      const drawX = (this.gap[0] * ratio) / 2;
+      const drawY = (this.gap[1] * ratio) / 2;
       const drawWidth = markWidth * ratio;
       const drawHeight = markHeight * ratio;
-      const rotateX = (drawWidth + this.nzGap[0] * ratio) / 2;
-      const rotateY = (drawHeight + this.nzGap[1] * ratio) / 2;
+      const rotateX = (drawWidth + this.gap[0] * ratio) / 2;
+      const rotateY = (drawHeight + this.gap[1] * ratio) / 2;
 
       /** Alternate drawing parameters */
       const alternateDrawX = drawX + canvasWidth;
@@ -271,9 +271,9 @@ export class NzWaterMarkComponent implements OnInit, OnChanges {
       const alternateRotateY = rotateY + canvasHeight;
 
       ctx.save();
-      rotateWatermark(ctx, rotateX, rotateY, this.nzRotate);
+      rotateWatermark(ctx, rotateX, rotateY, this.rotate);
 
-      if (this.nzImage) {
+      if (this.image) {
         const img = new Image();
 
         const onLoad = (): void => {
@@ -283,7 +283,7 @@ export class NzWaterMarkComponent implements OnInit, OnChanges {
 
           /** Draw interleaved pictures after rotation */
           ctx.restore();
-          rotateWatermark(ctx, alternateRotateX, alternateRotateY, this.nzRotate);
+          rotateWatermark(ctx, alternateRotateX, alternateRotateY, this.rotate);
           ctx.drawImage(img, alternateDrawX, alternateDrawY, drawWidth, drawHeight);
           this.appendWatermark(canvas.toDataURL(), markWidth);
         };
@@ -316,7 +316,7 @@ export class NzWaterMarkComponent implements OnInit, OnChanges {
 
         img.crossOrigin = 'anonymous';
         img.referrerPolicy = 'no-referrer';
-        img.src = this.nzImage;
+        img.src = this.image;
       } else {
         this.drawText(
           canvas,

@@ -1,22 +1,22 @@
 import { Component } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzResizableModule, NzResizeEvent } from 'ng-zorro-antd/resizable';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
 
 @Component({
-  selector: 'nz-demo-resizable-customize',
-  imports: [NzIconModule, NzResizableModule],
+  selector: '',
+  imports: [TriIconModule, TriResizableModule],
   template: `
-    <div class="box" nz-resizable (nzResize)="onResize($event)" [style.height.px]="height" [style.width.px]="width">
+    <div class="box" tri-resizable (resize)="onResize($event)" [style.height.px]="height" [style.width.px]="width">
       content
-      <nz-resize-handle nzDirection="bottomRight">
-        <nz-icon class="bottom-right" nzType="caret-up" nzTheme="outline" [nzRotate]="135" />
-      </nz-resize-handle>
-      <nz-resize-handle nzDirection="right">
+      <tri-resize-handle direction="bottomRight">
+        <tri-icon class="bottom-right" type="caret-up" theme="outline" [rotate]="135" />
+      </tri-resize-handle>
+      <tri-resize-handle direction="right">
         <div class="right-wrap">
-          <nz-icon class="right" nzType="more" nzTheme="outline" />
+          <tri-icon class="right" type="more" theme="outline" />
         </div>
-      </nz-resize-handle>
+      </tri-resize-handle>
     </div>
   `,
   styles: [
@@ -58,12 +58,12 @@ import { NzResizableModule, NzResizeEvent } from 'ng-zorro-antd/resizable';
     `
   ]
 })
-export class NzDemoResizableCustomizeComponent {
+export class TriDemoResizableCustomizeComponent {
   width = 400;
   height = 200;
   id = -1;
 
-  onResize({ width, height }: NzResizeEvent): void {
+  onResize({ width, height }: TriResizeEvent): void {
     cancelAnimationFrame(this.id);
     this.id = requestAnimationFrame(() => {
       this.width = width!;

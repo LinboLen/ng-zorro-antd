@@ -3,13 +3,13 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { NzEllipsisPipe } from './nz-ellipsis.pipe';
+import { TriEllipsisPipe } from './nz-ellipsis.pipe';
 
 describe('NzEllipsisPipe', () => {
-  let pipe: NzEllipsisPipe;
+  let pipe: TriEllipsisPipe;
 
   beforeEach(() => {
-    pipe = new NzEllipsisPipe();
+    pipe = new TriEllipsisPipe();
   });
 
   it('Should truncate', () => {

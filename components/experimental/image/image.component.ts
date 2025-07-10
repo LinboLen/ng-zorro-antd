@@ -19,63 +19,63 @@ import {
   DestroyRef
 } from '@angular/core';
 
-import { NzConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
 import { warn } from 'ng-zorro-antd/core/logger';
 import { ImagePreloadService, PreloadDisposeHandle } from 'ng-zorro-antd/core/services';
-import { NzImageDirective } from 'ng-zorro-antd/image';
+import { TriImageDirective } from 'ng-zorro-antd/image';
 
 import { defaultImageSrcLoader } from './image-loader';
-import { NzImageSrcLoader } from './typings';
+import { TriImageSrcLoader } from './typings';
 import { isFixedSize } from './utils';
 
-export const NZ_CONFIG_MODULE_NAME: NzConfigKey = 'imageExperimental';
+export const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'imageExperimental';
 const sizeBreakpoints = [16, 32, 48, 64, 96, 128, 256, 384, 640, 750, 828, 1080, 1200, 1920, 2048, 3840];
 
 @Component({
-  selector: 'nz-image',
-  exportAs: 'nzImage',
+  selector: '',
+  exportAs: 'triImage',
   template: `
     <img
       #imageRef
-      nz-image
-      [nzSrc]="src"
-      [nzSrcset]="srcset"
-      [nzDisablePreview]="nzDisablePreview"
-      [nzFallback]="nzFallback"
-      [nzPlaceholder]="nzPlaceholder"
+      tri-image
+      [src]="src"
+      [srcset]="srcset"
+      [disablePreview]="disablePreview"
+      [fallback]="fallback"
+      [placeholder]="placeholder"
       [attr.width]="width"
       [attr.height]="height"
       [attr.srcset]="srcset"
-      [attr.alt]="nzAlt || null"
+      [attr.alt]="alt || null"
     />
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  imports: [NzImageDirective]
+  imports: [TriImageDirective]
 })
-export class NzImageViewComponent implements OnInit, OnChanges {
+export class TriImageViewComponent implements OnInit, OnChanges {
   private cdr = inject(ChangeDetectorRef);
   private imagePreloadService = inject(ImagePreloadService);
   private destroyRef = inject(DestroyRef);
 
-  readonly _nzModuleName: NzConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
 
-  @Input() nzSrc: string = '';
-  @Input() nzAlt: string = '';
-  @Input() nzWidth: string | number = 'auto';
-  @Input() nzHeight: string | number = 'auto';
-  @Input() @WithConfig() nzSrcLoader: NzImageSrcLoader = defaultImageSrcLoader;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzAutoSrcset: boolean = false;
-  @Input({ transform: booleanAttribute }) nzPriority: boolean = false;
-  @Input() @WithConfig() nzFallback: string | null = null;
-  @Input() @WithConfig() nzPlaceholder: string | null = null;
-  @Input({ transform: booleanAttribute }) @WithConfig() nzDisablePreview: boolean = false;
+  @Input() src: string = '';
+  @Input() alt: string = '';
+  @Input() width: string | number = 'auto';
+  @Input() height: string | number = 'auto';
+  @Input() @WithConfig() srcLoader: TriImageSrcLoader = defaultImageSrcLoader;
+  @Input({ transform: booleanAttribute }) @WithConfig() autoSrcset: boolean = false;
+  @Input({ transform: booleanAttribute }) priority: boolean = false;
+  @Input() @WithConfig() fallback: string | null = null;
+  @Input() @WithConfig() placeholder: string | null = null;
+  @Input({ transform: booleanAttribute }) @WithConfig() disablePreview: boolean = false;
   @ViewChild('imageRef') imageRef!: ElementRef<HTMLImageElement>;
 
-  src = '';
+  _src = '';
 
-  width: string | number = 'auto';
-  height: string | number = 'auto';
+  _width: string | number = 'auto';
+  _height: string | number = 'auto';
   srcset = '';
 
   private reloadDisposeHandler: PreloadDisposeHandle = () => void 0;
@@ -92,7 +92,7 @@ export class NzImageViewComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    if (this.nzPriority) {
+    if (this.priority) {
       this.preload();
     }
   }
@@ -107,24 +107,24 @@ export class NzImageViewComponent implements OnInit, OnChanges {
 
   private preload(): void {
     this.reloadDisposeHandler = this.imagePreloadService.addPreload({
-      src: this.src,
+      src: this._src,
       srcset: this.srcset
     });
   }
 
   private optimizable(): boolean {
-    if (this.nzAutoSrcset) {
-      if (!isFixedSize(this.nzWidth) || !isFixedSize(this.nzHeight)) {
+    if (this.autoSrcset) {
+      if (!isFixedSize(this.width) || !isFixedSize(this.height)) {
         warn(
           `When using "nzAutoSrcset" you should use a fixed size width and height, for more information please refer to CLS (https://web.dev/cls/) performance metrics`
         );
         return false;
       }
-      if (this.nzSrc.endsWith('.svg')) {
+      if (this.src.endsWith('.svg')) {
         warn(`SVG does not need to be optimized`);
         return false;
       }
-      if (this.nzSrc.startsWith('data:')) {
+      if (this.src.startsWith('data:')) {
         warn(`Data URLs cannot be optimized`);
         return false;
       }
@@ -136,28 +136,28 @@ export class NzImageViewComponent implements OnInit, OnChanges {
   private composeImageAttrs(): void {
     const loader = this.getLoader();
     if (!this.optimizable()) {
-      this.src = loader({ src: this.nzSrc });
-      this.width = this.nzWidth;
-      this.height = this.nzHeight;
+      this._src = loader({ src: this.src });
+      this._width = this.width;
+      this._height = this.height;
       return;
     }
-    this.width = typeof this.nzWidth === 'number' ? this.nzWidth : parseInt(this.nzWidth, 10);
-    this.height = typeof this.nzHeight === 'number' ? this.nzHeight : parseInt(this.nzHeight, 10);
-    const widths = this.convertWidths(this.width, sizeBreakpoints);
-    this.src = loader({ src: this.nzSrc, width: widths[0] });
+    this._width = typeof this.width === 'number' ? this.width : parseInt(this.width, 10);
+    this._height = typeof this.height === 'number' ? this.height : parseInt(this.height, 10);
+    const widths = this.convertWidths(this._width, sizeBreakpoints);
+    this._src = loader({ src: this.src, width: widths[0] });
     this.srcset = widths
       .map(
         (w, i) =>
           `${loader({
-            src: this.nzSrc,
+            src: this.src,
             width: w
           })} ${i + 1}x`
       )
       .join(', ');
   }
 
-  private getLoader(): NzImageSrcLoader {
-    return this.nzSrcLoader || defaultImageSrcLoader;
+  private getLoader(): TriImageSrcLoader {
+    return this.srcLoader || defaultImageSrcLoader;
   }
 
   private convertWidths(width: number, optimizeSizes: number[]): number[] {

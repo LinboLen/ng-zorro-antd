@@ -1,31 +1,31 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzFormatEmitEvent, NzTreeModule } from 'ng-zorro-antd/tree';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriFormatEmitEvent, TriTreeModule } from 'ng-zorro-antd/tree';
 
 @Component({
-  selector: 'nz-demo-tree-search',
-  imports: [FormsModule, NzIconModule, NzInputModule, NzTreeModule],
+  selector: '',
+  imports: [FormsModule, TriIconModule, TriInputModule, TriTreeModule],
   template: `
-    <nz-input-group [nzSuffix]="suffixIcon">
-      <input type="text" nz-input placeholder="Search" [(ngModel)]="searchValue" />
-    </nz-input-group>
+    <tri-input-group [suffix]="suffixIcon">
+      <input type="text" tri-input placeholder="Search" [(ngModel)]="searchValue" />
+    </tri-input-group>
     <ng-template #suffixIcon>
-      <nz-icon nzType="search" />
+      <tri-icon type="search" />
     </ng-template>
     <br />
-    <nz-tree
-      [nzData]="nodes"
-      [nzSearchValue]="searchValue"
-      (nzClick)="nzEvent($event)"
-      (nzExpandChange)="nzEvent($event)"
-      (nzSearchValueChange)="nzEvent($event)"
-    ></nz-tree>
+    <tri-tree
+      [data]="nodes"
+      [searchValue]="searchValue"
+      (click)="event($event)"
+      (expandChange)="event($event)"
+      (searchValueChange)="event($event)"
+    ></tri-tree>
   `
 })
-export class NzDemoTreeSearchComponent {
+export class TriDemoTreeSearchComponent {
   searchValue = '';
 
   readonly nodes = [
@@ -74,7 +74,7 @@ export class NzDemoTreeSearchComponent {
     }
   ];
 
-  nzEvent(event: NzFormatEmitEvent): void {
+  event(event: TriFormatEmitEvent): void {
     console.log(event);
   }
 }

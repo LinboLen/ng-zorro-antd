@@ -1,27 +1,27 @@
 import { Component } from '@angular/core';
 
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
-import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { TriBadgeModule } from 'ng-zorro-antd/badge';
+import { TriDescriptionsModule } from 'ng-zorro-antd/descriptions';
 
 @Component({
-  selector: 'nz-demo-descriptions-vertical-border',
-  imports: [NzBadgeModule, NzDescriptionsModule],
+  selector: '',
+  imports: [TriBadgeModule, TriDescriptionsModule],
   template: `
-    <nz-descriptions nzTitle="User Info" nzBordered nzLayout="vertical">
-      <nz-descriptions-item nzTitle="Product">Cloud Database</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Billing Mode">Prepaid</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Automatic Renewal">YES</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Order Time">2018-04-24 18:00:00</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Usage Time" [nzSpan]="2">
+    <tri-descriptions title="User Info" bordered layout="vertical">
+      <tri-descriptions-item title="Product">Cloud Database</tri-descriptions-item>
+      <tri-descriptions-item title="Billing Mode">Prepaid</tri-descriptions-item>
+      <tri-descriptions-item title="Automatic Renewal">YES</tri-descriptions-item>
+      <tri-descriptions-item title="Order Time">2018-04-24 18:00:00</tri-descriptions-item>
+      <tri-descriptions-item title="Usage Time" [span]="2">
         2018-04-24 18:00:00 To 2019-04-24 18:00:00
-      </nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Status" [nzSpan]="3">
-        <nz-badge nzStatus="processing" nzText="Running"></nz-badge>
-      </nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Negotiated Amount">$80.00</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Discount">$20.00</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Official Receipts">$60.00</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Config Info">
+      </tri-descriptions-item>
+      <tri-descriptions-item title="Status" [span]="3">
+        <tri-badge status="processing" text="Running"></tri-badge>
+      </tri-descriptions-item>
+      <tri-descriptions-item title="Negotiated Amount">$80.00</tri-descriptions-item>
+      <tri-descriptions-item title="Discount">$20.00</tri-descriptions-item>
+      <tri-descriptions-item title="Official Receipts">$60.00</tri-descriptions-item>
+      <tri-descriptions-item title="Config Info">
         Data disk type: MongoDB
         <br />
         Database version: 3.4
@@ -34,8 +34,8 @@ import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
         <br />
         Region: East China 1
         <br />
-      </nz-descriptions-item>
-    </nz-descriptions>
+      </tri-descriptions-item>
+    </tri-descriptions>
   `
 })
-export class NzDemoDescriptionsVerticalBorderComponent {}
+export class TriDemoDescriptionsVerticalBorderComponent {}

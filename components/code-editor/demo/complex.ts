@@ -1,34 +1,34 @@
 import { Component, DOCUMENT, inject, Renderer2, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzCodeEditorComponent, NzCodeEditorModule } from 'ng-zorro-antd/code-editor';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzSwitchModule } from 'ng-zorro-antd/switch';
-import { NzTooltipDirective, NzToolTipModule } from 'ng-zorro-antd/tooltip';
-import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { TriCodeEditorComponent, TriCodeEditorModule } from 'ng-zorro-antd/code-editor';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriSwitchModule } from 'ng-zorro-antd/switch';
+import { TriTooltipDirective, TriToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriTypographyModule } from 'ng-zorro-antd/typography';
 
 @Component({
-  selector: 'nz-demo-code-editor-complex',
-  imports: [FormsModule, NzCodeEditorModule, NzIconModule, NzTypographyModule, NzSwitchModule, NzToolTipModule],
+  selector: '',
+  imports: [FormsModule, TriCodeEditorModule, TriIconModule, TriTypographyModule, TriSwitchModule, TriToolTipModule],
   template: `
-    <p nz-paragraph style="margin-bottom: 8px;">
+    <p tri-paragraph style="margin-bottom: 8px;">
       Loading
-      <nz-switch [(ngModel)]="loading"></nz-switch>
+      <tri-switch [(ngModel)]="loading"></tri-switch>
     </p>
-    <nz-code-editor
+    <tri-code-editor
       class="editor"
       [class.full-screen]="fullScreen"
       [ngModel]="code"
-      [nzLoading]="loading"
-      [nzToolkit]="toolkit"
-      [nzEditorOption]="{ language: 'javascript' }"
-    ></nz-code-editor>
+      [loading]="loading"
+      [toolkit]="toolkit"
+      [editorOption]="{ language: 'javascript' }"
+    ></tri-code-editor>
     <ng-template #toolkit>
-      <nz-icon
+      <tri-icon
         [class.active]="fullScreen"
-        nz-tooltip
-        nzTooltipTitle="Toggle Fullscreen"
-        [nzType]="fullScreen ? 'fullscreen-exit' : 'fullscreen'"
+        tri-tooltip
+        tooltipTitle="Toggle Fullscreen"
+        [type]="fullScreen ? 'fullscreen-exit' : 'fullscreen'"
         (click)="toggleFullScreen()"
       />
     </ng-template>
@@ -51,9 +51,9 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
     `
   ]
 })
-export class NzDemoCodeEditorComplexComponent {
-  @ViewChild(NzCodeEditorComponent, { static: false }) editorComponent?: NzCodeEditorComponent;
-  @ViewChild(NzTooltipDirective, { static: false }) tooltip?: NzTooltipDirective;
+export class TriDemoCodeEditorComplexComponent {
+  @ViewChild(TriCodeEditorComponent, { static: false }) editorComponent?: TriCodeEditorComponent;
+  @ViewChild(TriTooltipDirective, { static: false }) tooltip?: TriTooltipDirective;
 
   loading = true;
   fullScreen = false;

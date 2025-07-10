@@ -8,23 +8,23 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject, Observable, Subject, combineLatest, merge } from 'rxjs';
 import { auditTime, distinctUntilChanged, filter, map, mergeMap } from 'rxjs/operators';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 import { MenuService } from './menu.service';
 import { NzIsMenuInsideDropDownToken } from './menu.token';
-import { NzMenuModeType } from './menu.types';
+import { TriMenuModeType } from './menu.types';
 
 @Injectable()
-export class NzSubmenuService {
-  public readonly nzMenuService = inject(MenuService);
-  private readonly nzHostSubmenuService = inject(NzSubmenuService, { optional: true, skipSelf: true });
+export class TriSubmenuService {
+  public readonly menuService = inject(MenuService);
+  private readonly hostSubmenuService = inject(TriSubmenuService, { optional: true, skipSelf: true });
 
-  mode$: Observable<NzMenuModeType> = this.nzMenuService.mode$.pipe(
+  mode$: Observable<TriMenuModeType> = this.menuService.mode$.pipe(
     map(mode => {
       if (mode === 'inline') {
         return 'inline';
         /** if inside another submenu, set the mode to vertical **/
-      } else if (mode === 'vertical' || this.nzHostSubmenuService) {
+      } else if (mode === 'vertical' || this.hostSubmenuService) {
         return 'vertical';
       } else {
         return 'horizontal';
@@ -37,11 +37,11 @@ export class NzSubmenuService {
   private isChildSubMenuOpen$ = new BehaviorSubject<boolean>(false);
   /** submenu title & overlay mouse enter status **/
   private isMouseEnterTitleOrOverlay$ = new Subject<boolean>();
-  private childMenuItemClick$ = new Subject<NzSafeAny>();
+  private childMenuItemClick$ = new Subject<TriSafeAny>();
   /**
    * menu item inside submenu clicked
    */
-  onChildMenuItemClick(menu: NzSafeAny): void {
+  onChildMenuItemClick(menu: TriSafeAny): void {
     this.childMenuItemClick$.next(menu);
   }
   setOpenStateWithoutDebounce(value: boolean): void {
@@ -52,8 +52,8 @@ export class NzSubmenuService {
   }
 
   constructor() {
-    if (this.nzHostSubmenuService) {
-      this.level = this.nzHostSubmenuService.level + 1;
+    if (this.hostSubmenuService) {
+      this.level = this.hostSubmenuService.level + 1;
     }
 
     /** close if menu item clicked **/
@@ -70,11 +70,11 @@ export class NzSubmenuService {
     );
     isSubMenuOpenWithDebounce$.pipe(distinctUntilChanged(), takeUntilDestroyed()).subscribe(data => {
       this.setOpenStateWithoutDebounce(data);
-      if (this.nzHostSubmenuService) {
+      if (this.hostSubmenuService) {
         /** set parent submenu's child submenu open status **/
-        this.nzHostSubmenuService.isChildSubMenuOpen$.next(data);
+        this.hostSubmenuService.isChildSubMenuOpen$.next(data);
       } else {
-        this.nzMenuService.isChildSubMenuOpen$.next(data);
+        this.menuService.isChildSubMenuOpen$.next(data);
       }
     });
   }

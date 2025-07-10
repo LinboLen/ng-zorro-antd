@@ -1,49 +1,49 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { NzFlexModule } from 'ng-zorro-antd/flex';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriFlexModule } from 'ng-zorro-antd/flex';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: 'nz-demo-dropdown-dropdown-button',
-  imports: [NzButtonModule, NzDropDownModule, NzFlexModule, NzIconModule, NzSpaceModule],
+  selector: '',
+  imports: [TriButtonModule, TriDropDownModule, TriFlexModule, TriIconModule, TriSpaceModule],
   template: `
-    <div nz-flex nzGap="small" nzWrap="wrap">
-      <nz-space-compact>
-        <button nz-button (click)="log()">DropDown</button>
-        <button nz-button nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomRight">
-          <nz-icon nzType="ellipsis" />
+    <div tri-flex gap="small" wrap="wrap">
+      <tri-space-compact>
+        <button tri-button (click)="log()">DropDown</button>
+        <button tri-button tri-dropdown [dropdownMenu]="menu" placement="bottomRight">
+          <tri-icon type="ellipsis" />
         </button>
-      </nz-space-compact>
-      <nz-space-compact>
-        <button nz-button (click)="log()">DropDown</button>
-        <button nz-button nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomRight">
-          <nz-icon nzType="user" />
+      </tri-space-compact>
+      <tri-space-compact>
+        <button tri-button (click)="log()">DropDown</button>
+        <button tri-button tri-dropdown [dropdownMenu]="menu" placement="bottomRight">
+          <tri-icon type="user" />
         </button>
-      </nz-space-compact>
-      <nz-space-compact>
-        <button nz-button disabled>DropDown</button>
-        <button nz-button disabled nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomRight">
-          <nz-icon nzType="ellipsis" />
+      </tri-space-compact>
+      <tri-space-compact>
+        <button tri-button disabled>DropDown</button>
+        <button tri-button disabled tri-dropdown [dropdownMenu]="menu" placement="bottomRight">
+          <tri-icon type="ellipsis" />
         </button>
-      </nz-space-compact>
-      <button nz-button nz-dropdown [nzDropdownMenu]="menu">
+      </tri-space-compact>
+      <button tri-button tri-dropdown [dropdownMenu]="menu">
         Button
-        <nz-icon nzType="down" />
+        <tri-icon type="down" />
       </button>
     </div>
-    <nz-dropdown-menu #menu="nzDropdownMenu">
-      <ul nz-menu>
-        <li nz-menu-item>menu 1st menu item</li>
-        <li nz-menu-item>menu 2nd menu item</li>
-        <li nz-menu-item>menu 3rd menu item</li>
+    <tri-dropdown-menu #menu="nzDropdownMenu">
+      <ul tri-menu>
+        <li tri-menu-item>menu 1st menu item</li>
+        <li tri-menu-item>menu 2nd menu item</li>
+        <li tri-menu-item>menu 3rd menu item</li>
       </ul>
-    </nz-dropdown-menu>
+    </tri-dropdown-menu>
   `
 })
-export class NzDemoDropdownDropdownButtonComponent {
+export class TriDemoDropdownDropdownButtonComponent {
   log(): void {
     console.log('click dropdown button');
   }

@@ -3,11 +3,11 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { NgClassInterface, NzValidateStatus } from 'ng-zorro-antd/core/types';
+import { NgClassInterface, TriValidateStatus } from 'ng-zorro-antd/core/types';
 
 export function getStatusClassNames(
   prefixCls: string,
-  status?: NzValidateStatus,
+  status?: TriValidateStatus,
   hasFeedback?: boolean
 ): NgClassInterface {
   return {

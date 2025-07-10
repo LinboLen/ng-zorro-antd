@@ -15,9 +15,9 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CandyDate } from 'ng-zorro-antd/core/time';
 import { NZ_DATE_CONFIG } from 'ng-zorro-antd/i18n/date-config';
 
-import { NzCalendarHeaderComponent as CalendarHeader } from './calendar-header.component';
-import { NzCalendarComponent as Calendar, NzCalendarMode } from './calendar.component';
-import { NzCalendarModule } from './calendar.module';
+import { TriCalendarHeaderComponent as CalendarHeader } from './calendar-header.component';
+import { TriCalendarComponent as Calendar, TriCalendarMode } from './calendar.component';
+import { TriCalendarModule } from './calendar.module';
 
 registerLocaleData(zh);
 
@@ -30,11 +30,11 @@ describe('Calendar', () => {
   }));
 
   describe('mode', () => {
-    let fixture: ComponentFixture<NzTestCalendarModeComponent>;
-    let component: NzTestCalendarModeComponent;
+    let fixture: ComponentFixture<TriTestCalendarModeComponent>;
+    let component: TriTestCalendarModeComponent;
 
     beforeEach(waitForAsync(() => {
-      fixture = TestBed.createComponent(NzTestCalendarModeComponent);
+      fixture = TestBed.createComponent(TriTestCalendarModeComponent);
       component = fixture.componentInstance;
     }));
 
@@ -93,11 +93,11 @@ describe('Calendar', () => {
   });
 
   describe('value', () => {
-    let fixture: ComponentFixture<NzTestCalendarValueComponent>;
-    let component: NzTestCalendarValueComponent;
+    let fixture: ComponentFixture<TriTestCalendarValueComponent>;
+    let component: TriTestCalendarValueComponent;
 
     beforeEach(waitForAsync(() => {
-      fixture = TestBed.createComponent(NzTestCalendarValueComponent);
+      fixture = TestBed.createComponent(TriTestCalendarValueComponent);
       component = fixture.componentInstance;
     }));
 
@@ -224,11 +224,11 @@ describe('Calendar', () => {
   });
 
   describe('fullscreen', () => {
-    let fixture: ComponentFixture<NzTestCalendarFullscreenComponent>;
-    let component: NzTestCalendarFullscreenComponent;
+    let fixture: ComponentFixture<TriTestCalendarFullscreenComponent>;
+    let component: TriTestCalendarFullscreenComponent;
 
     beforeEach(waitForAsync(() => {
-      fixture = TestBed.createComponent(NzTestCalendarFullscreenComponent);
+      fixture = TestBed.createComponent(TriTestCalendarFullscreenComponent);
       component = fixture.componentInstance;
     }));
 
@@ -259,15 +259,15 @@ describe('Calendar', () => {
 
       const calendar = fixture.debugElement.queryAll(By.directive(Calendar))[1].injector.get(Calendar);
 
-      expect(calendar.nzFullscreen).toBe(false);
+      expect(calendar.fullscreen).toBe(false);
     });
   });
 
   describe('dateCell', () => {
-    let fixture: ComponentFixture<NzTestCalendarDateCellComponent>;
+    let fixture: ComponentFixture<TriTestCalendarDateCellComponent>;
 
     beforeEach(waitForAsync(() => {
-      fixture = TestBed.createComponent(NzTestCalendarDateCellComponent);
+      fixture = TestBed.createComponent(TriTestCalendarDateCellComponent);
     }));
 
     it('should work when passed via property', () => {
@@ -290,10 +290,10 @@ describe('Calendar', () => {
   });
 
   describe('dateFullCell', () => {
-    let fixture: ComponentFixture<NzTestCalendarDateFullCellComponent>;
+    let fixture: ComponentFixture<TriTestCalendarDateFullCellComponent>;
 
     beforeEach(waitForAsync(() => {
-      fixture = TestBed.createComponent(NzTestCalendarDateFullCellComponent);
+      fixture = TestBed.createComponent(TriTestCalendarDateFullCellComponent);
     }));
 
     it('should work when passed via property', () => {
@@ -315,10 +315,10 @@ describe('Calendar', () => {
   });
 
   describe('monthCell', () => {
-    let fixture: ComponentFixture<NzTestCalendarMonthCellComponent>;
+    let fixture: ComponentFixture<TriTestCalendarMonthCellComponent>;
 
     beforeEach(waitForAsync(() => {
-      fixture = TestBed.createComponent(NzTestCalendarMonthCellComponent);
+      fixture = TestBed.createComponent(TriTestCalendarMonthCellComponent);
     }));
 
     it('should work when passed via property', () => {
@@ -339,10 +339,10 @@ describe('Calendar', () => {
   });
 
   describe('monthFullCell', () => {
-    let fixture: ComponentFixture<NzTestCalendarMonthFullCellComponent>;
+    let fixture: ComponentFixture<TriTestCalendarMonthFullCellComponent>;
 
     beforeEach(waitForAsync(() => {
-      fixture = TestBed.createComponent(NzTestCalendarMonthFullCellComponent);
+      fixture = TestBed.createComponent(TriTestCalendarMonthFullCellComponent);
     }));
 
     it('should work when passed via property', () => {
@@ -363,11 +363,11 @@ describe('Calendar', () => {
   });
 
   describe('changes', () => {
-    let fixture: ComponentFixture<NzTestCalendarChangesComponent>;
-    let component: NzTestCalendarChangesComponent;
+    let fixture: ComponentFixture<TriTestCalendarChangesComponent>;
+    let component: TriTestCalendarChangesComponent;
 
     beforeEach(waitForAsync(() => {
-      fixture = TestBed.createComponent(NzTestCalendarChangesComponent);
+      fixture = TestBed.createComponent(TriTestCalendarChangesComponent);
       component = fixture.componentInstance;
     }));
 
@@ -402,11 +402,11 @@ describe('Calendar', () => {
   });
 
   describe('RTL', () => {
-    let fixture: ComponentFixture<NzTestCalendarRtlComponent>;
+    let fixture: ComponentFixture<TriTestCalendarRtlComponent>;
     let componentElement: HTMLElement;
 
     beforeEach(waitForAsync(() => {
-      fixture = TestBed.createComponent(NzTestCalendarRtlComponent);
+      fixture = TestBed.createComponent(TriTestCalendarRtlComponent);
       componentElement = fixture.debugElement.query(By.directive(Calendar)).nativeElement;
       fixture.detectChanges();
     }));
@@ -421,104 +421,104 @@ describe('Calendar', () => {
 });
 
 @Component({
-  imports: [NzCalendarModule],
+  imports: [TriCalendarModule],
   template: `
-    <nz-calendar></nz-calendar>
-    <nz-calendar [(nzMode)]="mode"></nz-calendar>
+    <tri-calendar></tri-calendar>
+    <tri-calendar [(modeChange)]="mode"></tri-calendar>
   `
 })
-class NzTestCalendarModeComponent {
+class TriTestCalendarModeComponent {
   mode: 'month' | 'year' = 'month';
 }
 
 @Component({
-  imports: [FormsModule, NzCalendarModule],
+  imports: [FormsModule, TriCalendarModule],
   template: `
-    <nz-calendar></nz-calendar>
-    <nz-calendar [(nzValue)]="date0"></nz-calendar>
-    <nz-calendar [(ngModel)]="date1"></nz-calendar>
-    <nz-calendar [(nzValue)]="date2" [(nzMode)]="mode"></nz-calendar>
+    <tri-calendar></tri-calendar>
+    <tri-calendar [(valueChange)]="date0"></tri-calendar>
+    <tri-calendar [(ngModel)]="date1"></tri-calendar>
+    <tri-calendar [(valueChange)]="date2" [(modeChange)]="mode"></tri-calendar>
   `
 })
-class NzTestCalendarValueComponent {
+class TriTestCalendarValueComponent {
   date0 = new Date(2001, 1, 3);
   date1 = new Date(2001, 1, 3);
   date2 = new Date();
-  mode: NzCalendarMode = 'year';
+  mode: TriCalendarMode = 'year';
 }
 
 @Component({
-  imports: [NzCalendarModule],
+  imports: [TriCalendarModule],
   template: `
-    <nz-calendar></nz-calendar>
-    <nz-calendar [nzFullscreen]="fullscreen"></nz-calendar>
+    <tri-calendar></tri-calendar>
+    <tri-calendar [fullscreen]="fullscreen"></tri-calendar>
   `
 })
-class NzTestCalendarFullscreenComponent {
+class TriTestCalendarFullscreenComponent {
   fullscreen = true;
   card = false;
 }
 
 @Component({
-  imports: [NzCalendarModule],
+  imports: [TriCalendarModule],
   template: `
-    <nz-calendar [nzDateCell]="tpl"></nz-calendar>
+    <tri-calendar [dateCell]="tpl"></tri-calendar>
     <ng-template #tpl>Foo</ng-template>
-    <nz-calendar>
-      <ng-container *nzDateCell>Bar</ng-container>
-    </nz-calendar>
+    <tri-calendar>
+      <ng-container *dateCell>Bar</ng-container>
+    </tri-calendar>
   `
 })
-class NzTestCalendarDateCellComponent {}
+class TriTestCalendarDateCellComponent {}
 
 @Component({
-  imports: [NzCalendarModule],
+  imports: [TriCalendarModule],
   template: `
-    <nz-calendar [nzDateFullCell]="tpl"></nz-calendar>
+    <tri-calendar [dateFullCell]="tpl"></tri-calendar>
     <ng-template #tpl>Foo</ng-template>
-    <nz-calendar>
-      <ng-container *nzDateFullCell>Bar</ng-container>
-    </nz-calendar>
+    <tri-calendar>
+      <ng-container *dateFullCell>Bar</ng-container>
+    </tri-calendar>
   `
 })
-class NzTestCalendarDateFullCellComponent {}
+class TriTestCalendarDateFullCellComponent {}
 
 @Component({
-  imports: [NzCalendarModule],
+  imports: [TriCalendarModule],
   template: `
-    <nz-calendar nzMode="year" [nzMonthCell]="tpl"></nz-calendar>
+    <tri-calendar mode="year" [monthCell]="tpl"></tri-calendar>
     <ng-template #tpl>Foo</ng-template>
-    <nz-calendar nzMode="year">
-      <ng-container *nzMonthCell>Bar</ng-container>
-    </nz-calendar>
+    <tri-calendar mode="year">
+      <ng-container *monthCell>Bar</ng-container>
+    </tri-calendar>
   `
 })
-class NzTestCalendarMonthCellComponent {}
+class TriTestCalendarMonthCellComponent {}
 
 @Component({
-  imports: [NzCalendarModule],
+  imports: [TriCalendarModule],
   template: `
-    <nz-calendar nzMode="year" [nzMonthFullCell]="tpl"></nz-calendar>
+    <tri-calendar mode="year" [monthFullCell]="tpl"></tri-calendar>
     <ng-template #tpl>Foo</ng-template>
-    <nz-calendar nzMode="year">
-      <ng-container *nzMonthFullCell>Bar</ng-container>
-    </nz-calendar>
+    <tri-calendar mode="year">
+      <ng-container *monthFullCell>Bar</ng-container>
+    </tri-calendar>
   `
 })
-class NzTestCalendarMonthFullCellComponent {}
+class TriTestCalendarMonthFullCellComponent {}
 
 @Component({
-  imports: [FormsModule, NzCalendarModule],
+  imports: [FormsModule, TriCalendarModule],
   template: `
-    <nz-calendar
-      [(nzMode)]="mode"
+    <tri-calendar
+      [(modeChange)]="mode"
       [(ngModel)]="date0"
-      (nzPanelChange)="panelChange($event)"
-      (nzSelectChange)="selectChange($event)"
-    ></nz-calendar>
+      (panelChange)="panelChange($event)"
+      (selectChange)="selectChange($event)"
+    ></tri-calendar>
   `
 })
-class NzTestCalendarChangesComponent {
+class TriTestCalendarChangesComponent {
   mode: 'month' | 'year' = 'month';
   date0 = new Date(2014, 3, 14);
   panelChange = jasmine.createSpy('panelChange callback');
@@ -526,14 +526,14 @@ class NzTestCalendarChangesComponent {
 }
 
 @Component({
-  imports: [BidiModule, NzCalendarModule],
+  imports: [BidiModule, TriCalendarModule],
   template: `
     <div [dir]="direction">
-      <nz-calendar></nz-calendar>
+      <tri-calendar></tri-calendar>
     </div>
   `
 })
-export class NzTestCalendarRtlComponent {
+export class TriTestCalendarRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 }

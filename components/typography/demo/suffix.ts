@@ -1,28 +1,28 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzSliderModule } from 'ng-zorro-antd/slider';
-import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { TriSliderModule } from 'ng-zorro-antd/slider';
+import { TriTypographyModule } from 'ng-zorro-antd/typography';
 
 @Component({
-  selector: 'nz-demo-typography-suffix',
-  imports: [FormsModule, NzSliderModule, NzTypographyModule],
+  selector: '',
+  imports: [FormsModule, TriSliderModule, TriTypographyModule],
   template: `
-    <nz-slider [(ngModel)]="rows" [nzMax]="10" [nzMin]="1"></nz-slider>
+    <tri-slider [(ngModel)]="rows" [max]="10" [min]="1"></tri-slider>
     <p
-      nz-typography
-      nzEllipsis
-      nzExpandable
+      tri-typography
+      ellipsis
+      expandable
       [attr.title]="content + suffix"
-      [nzEllipsisRows]="rows"
-      [nzSuffix]="suffix"
-      (nzOnEllipsis)="onEllipsisChange($event)"
+      [ellipsisRows]="rows"
+      [suffix]="suffix"
+      (onEllipsis)="onEllipsisChange($event)"
     >
       {{ content }}
     </p>
   `
 })
-export class NzDemoTypographySuffixComponent {
+export class TriDemoTypographySuffixComponent {
   content =
     'To be, or not to be, that is a question: Whether it is nobler in the mind to suffer. The slings and arrows of ' +
     'outrageous fortune Or to take arms against a sea of troubles, And by opposing end them? To die: to sleep; ' +

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzSelectModule } from 'ng-zorro-antd/select';
+import { TriSelectModule } from 'ng-zorro-antd/select';
 
 function alphabet(): string[] {
   const children: string[] = [];
@@ -12,20 +12,20 @@ function alphabet(): string[] {
 }
 
 @Component({
-  selector: 'nz-demo-select-multiple',
-  imports: [FormsModule, NzSelectModule],
+  selector: '',
+  imports: [FormsModule, TriSelectModule],
   template: `
-    <nz-select
-      [nzMaxTagCount]="3"
-      [nzMaxTagPlaceholder]="tagPlaceHolder"
-      nzMode="multiple"
-      nzPlaceHolder="Please select"
+    <tri-select
+      [maxTagCount]="3"
+      [maxTagPlaceholder]="tagPlaceHolder"
+      mode="multiple"
+      placeHolder="Please select"
       [(ngModel)]="listOfSelectedValue"
     >
       @for (item of listOfOption; track item) {
-        <nz-option [nzLabel]="item" [nzValue]="item"></nz-option>
+        <tri-option [label]="item" [value]="item"></tri-option>
       }
-    </nz-select>
+    </tri-select>
     <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
   `,
   styles: [
@@ -36,7 +36,7 @@ function alphabet(): string[] {
     `
   ]
 })
-export class NzDemoSelectMultipleComponent {
+export class TriDemoSelectMultipleComponent {
   readonly listOfOption: string[] = alphabet();
   listOfSelectedValue = ['a10', 'c12'];
 }

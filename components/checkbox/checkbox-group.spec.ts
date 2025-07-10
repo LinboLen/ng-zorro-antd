@@ -7,8 +7,8 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
-import { NzCheckboxOption } from './checkbox-group.component';
-import { NzCheckboxModule } from './checkbox.module';
+import { TriCheckboxOption } from './checkbox-group.component';
+import { TriCheckboxModule } from './checkbox.module';
 
 describe('checkbox group', () => {
   let component: CheckboxGroupTestComponent;
@@ -25,7 +25,7 @@ describe('checkbox group', () => {
   it('should be render option elements', () => {
     let elements = getOptionElements();
     for (let index = 0; index < elements.length; index++) {
-      expect(elements[index].textContent?.trim()).toBe((component.options[index] as NzCheckboxOption).label);
+      expect(elements[index].textContent?.trim()).toBe((component.options[index] as TriCheckboxOption).label);
     }
     component.options = [1, 2, 3];
     fixture.detectChanges();
@@ -163,19 +163,19 @@ describe('checkbox group with custom layout', () => {
 });
 
 @Component({
-  imports: [NzCheckboxModule, FormsModule],
+  imports: [TriCheckboxModule, FormsModule],
   template: `
-    <nz-checkbox-group
-      [nzOptions]="options"
-      [nzName]="name"
-      [nzDisabled]="disabled"
+    <tri-checkbox-group
+      [options]="options"
+      [name]="name"
+      [disabled]="disabled"
       [(ngModel)]="value"
       [disabled]="controlDisabled"
     />
   `
 })
 class CheckboxGroupTestComponent {
-  options: string[] | number[] | NzCheckboxOption[] = [
+  options: string[] | number[] | TriCheckboxOption[] = [
     { label: 'A', value: 'A' },
     { label: 'B', value: 'B' },
     { label: 'C', value: 'C' }
@@ -187,13 +187,13 @@ class CheckboxGroupTestComponent {
 }
 
 @Component({
-  imports: [NzCheckboxModule, FormsModule],
+  imports: [TriCheckboxModule, FormsModule],
   template: `
-    <nz-checkbox-group [nzDisabled]="disabled" [(ngModel)]="value">
-      <label nz-checkbox nzValue="A">A</label>
-      <label nz-checkbox nzValue="B">B</label>
-      <label nz-checkbox nzValue="C">C</label>
-    </nz-checkbox-group>
+    <tri-checkbox-group [disabled]="disabled" [(ngModel)]="value">
+      <label tri-checkbox value="A">A</label>
+      <label tri-checkbox value="B">B</label>
+      <label tri-checkbox value="C">C</label>
+    </tri-checkbox-group>
   `
 })
 class CheckboxGroupWithCustomLayoutTestComponent {

@@ -1,31 +1,31 @@
 import { Component } from '@angular/core';
 
-import { NzContextMenuService, NzDropdownMenuComponent, NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriContextMenuService, TriDropdownMenuComponent, TriDropDownModule } from 'ng-zorro-antd/dropdown';
 
 @Component({
-  selector: 'nz-demo-dropdown-context-menu',
-  imports: [NzDropDownModule],
+  selector: '',
+  imports: [TriDropDownModule],
   template: `
     <div class="context-area" (contextmenu)="contextMenu($event, menu)">Right Click on here</div>
-    <nz-dropdown-menu #menu="nzDropdownMenu">
-      <ul nz-menu>
-        <li nz-menu-item>1st menu item</li>
-        <li nz-menu-item>2nd menu item</li>
-        <li nz-menu-item nzDisabled>disabled menu item</li>
-        <li nz-submenu nzTitle="sub menu">
+    <tri-dropdown-menu #menu="nzDropdownMenu">
+      <ul tri-menu>
+        <li tri-menu-item>1st menu item</li>
+        <li tri-menu-item>2nd menu item</li>
+        <li tri-menu-item disabled>disabled menu item</li>
+        <li tri-submenu title="sub menu">
           <ul>
-            <li nz-menu-item>3rd menu item</li>
-            <li nz-menu-item>4th menu item</li>
+            <li tri-menu-item>3rd menu item</li>
+            <li tri-menu-item>4th menu item</li>
           </ul>
         </li>
-        <li nz-submenu nzDisabled nzTitle="disabled sub menu">
+        <li tri-submenu disabled title="disabled sub menu">
           <ul>
-            <li nz-menu-item>3rd menu item</li>
-            <li nz-menu-item>4th menu item</li>
+            <li tri-menu-item>3rd menu item</li>
+            <li tri-menu-item>4th menu item</li>
           </ul>
         </li>
       </ul>
-    </nz-dropdown-menu>
+    </tri-dropdown-menu>
   `,
   styles: [
     `
@@ -39,10 +39,10 @@ import { NzContextMenuService, NzDropdownMenuComponent, NzDropDownModule } from 
     `
   ]
 })
-export class NzDemoDropdownContextMenuComponent {
-  contextMenu($event: MouseEvent, menu: NzDropdownMenuComponent): void {
+export class TriDemoDropdownContextMenuComponent {
+  contextMenu($event: MouseEvent, menu: TriDropdownMenuComponent): void {
     this.nzContextMenuService.create($event, menu);
   }
 
-  constructor(private nzContextMenuService: NzContextMenuService) {}
+  constructor(private nzContextMenuService: TriContextMenuService) {}
 }

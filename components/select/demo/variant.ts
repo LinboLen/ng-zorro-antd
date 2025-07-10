@@ -1,45 +1,45 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzFlexDirective } from 'ng-zorro-antd/flex';
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { TriFlexDirective } from 'ng-zorro-antd/flex';
+import { TriSelectModule } from 'ng-zorro-antd/select';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: 'nz-demo-select-variant',
-  imports: [FormsModule, NzSelectModule, NzSpaceModule, NzFlexDirective],
+  selector: '',
+  imports: [FormsModule, TriSelectModule, TriSpaceModule, TriFlexDirective],
   template: `
-    <div nz-flex nzGap="large">
-      <nz-space nzDirection="vertical" style="flex: 1">
-        <nz-select *nzSpaceItem ngModel="lucy" [nzOptions]="options"></nz-select>
-        <nz-select *nzSpaceItem ngModel="lucy" nzVariant="filled" [nzOptions]="options"></nz-select>
-        <nz-select *nzSpaceItem ngModel="lucy" nzVariant="borderless" [nzOptions]="options"></nz-select>
-        <nz-select *nzSpaceItem ngModel="lucy" nzVariant="underlined" [nzOptions]="options"></nz-select>
-      </nz-space>
-      <nz-space nzDirection="vertical" style="flex: 1">
-        <nz-select *nzSpaceItem nzMode="multiple" [ngModel]="['lucy']" [nzOptions]="options"></nz-select>
-        <nz-select
-          *nzSpaceItem
-          nzMode="multiple"
+    <div tri-flex gap="large">
+      <tri-space direction="vertical" style="flex: 1">
+        <tri-select *spaceItem ngModel="lucy" [options]="options"></tri-select>
+        <tri-select *spaceItem ngModel="lucy" variant="filled" [options]="options"></tri-select>
+        <tri-select *spaceItem ngModel="lucy" variant="borderless" [options]="options"></tri-select>
+        <tri-select *spaceItem ngModel="lucy" variant="underlined" [options]="options"></tri-select>
+      </tri-space>
+      <tri-space direction="vertical" style="flex: 1">
+        <tri-select *spaceItem mode="multiple" [ngModel]="['lucy']" [options]="options"></tri-select>
+        <tri-select
+          *spaceItem
+          mode="multiple"
           [ngModel]="['lucy']"
-          nzVariant="filled"
-          [nzOptions]="options"
-        ></nz-select>
-        <nz-select
-          *nzSpaceItem
-          nzMode="multiple"
+          variant="filled"
+          [options]="options"
+        ></tri-select>
+        <tri-select
+          *spaceItem
+          mode="multiple"
           [ngModel]="['lucy']"
-          nzVariant="borderless"
-          [nzOptions]="options"
-        ></nz-select>
-        <nz-select
-          *nzSpaceItem
-          nzMode="multiple"
+          variant="borderless"
+          [options]="options"
+        ></tri-select>
+        <tri-select
+          *spaceItem
+          mode="multiple"
           [ngModel]="['lucy']"
-          nzVariant="underlined"
-          [nzOptions]="options"
-        ></nz-select>
-      </nz-space>
+          variant="underlined"
+          [options]="options"
+        ></tri-select>
+      </tri-space>
     </div>
   `,
   styles: `
@@ -52,7 +52,7 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
     }
   `
 })
-export class NzDemoSelectVariantComponent {
+export class TriDemoSelectVariantComponent {
   options = [
     { label: 'Jack', value: 'jack' },
     { label: 'Lucy', value: 'lucy' },

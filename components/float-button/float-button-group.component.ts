@@ -22,71 +22,71 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { fadeMotion } from 'ng-zorro-antd/core/animation';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
-import { NzFloatButtonTopComponent } from './float-button-top.component';
-import { NzFloatButtonComponent } from './float-button.component';
+import { TriFloatButtonTopComponent } from './float-button-top.component';
+import { TriFloatButtonComponent } from './float-button.component';
 
 @Component({
-  selector: 'nz-float-button-group',
-  exportAs: 'nzFloatButtonGroup',
-  imports: [NzFloatButtonComponent, NzIconModule],
+  selector: '',
+  exportAs: 'triFloatButtonGroup',
+  imports: [TriFloatButtonComponent, TriIconModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeMotion],
   template: `
-    @if (!nzTrigger || isOpen || nzOpen === true) {
-      <div [class.ant-float-btn-group-wrap]="!!nzTrigger" @fadeMotion><ng-content></ng-content></div>
+    @if (!trigger || isOpen || open === true) {
+      <div [class.tri-float-btn-group-wrap]="!!trigger" @fadeMotion><ng-content></ng-content></div>
     }
-    @if (!!nzTrigger) {
-      @if (!isOpen && !nzOpen) {
-        <nz-float-button
-          [nzType]="nzType"
-          [nzIcon]="nzIcon"
-          [nzShape]="nzShape"
-          [nzDescription]="nzDescription"
-          (nzOnClick)="clickOpenMenu()"
+    @if (!!trigger) {
+      @if (!isOpen && !open) {
+        <tri-float-button
+          [type]="type"
+          [icon]="icon"
+          [shape]="shape"
+          [description]="description"
+          (onClick)="clickOpenMenu()"
           (mouseover)="hoverOpenMenu()"
-        ></nz-float-button>
+        ></tri-float-button>
       } @else {
-        <nz-float-button
-          [nzType]="nzType"
-          [nzIcon]="close"
-          [nzShape]="nzShape"
-          (nzOnClick)="clickCloseMenu()"
-        ></nz-float-button>
+        <tri-float-button
+          [type]="type"
+          [icon]="close"
+          [shape]="shape"
+          (onClick)="clickCloseMenu()"
+        ></tri-float-button>
       }
     }
     <ng-template #close>
-      <nz-icon nzType="close" nzTheme="outline" />
+      <tri-icon type="close" theme="outline" />
     </ng-template>
   `,
   host: {
-    class: 'ant-float-btn-group',
+    class: 'tri-float-btn-group',
     '(mouseleave)': 'hoverCloseMenu()',
-    '[class.ant-float-btn-group-circle]': `nzShape === 'circle'`,
-    '[class.ant-float-btn-group-circle-shadow]': `nzShape === 'circle'`,
-    '[class.ant-float-btn-group-square]': `nzShape === 'square'`,
-    '[class.ant-float-btn-group-square-shadow]': `nzShape === 'square' && !nzTrigger`,
-    '[class.ant-float-btn-group-rtl]': `dir === 'rtl'`
+    '[class.tri-float-btn-group-circle]': `shape === 'circle'`,
+    '[class.tri-float-btn-group-circle-shadow]': `shape === 'circle'`,
+    '[class.tri-float-btn-group-square]': `shape === 'square'`,
+    '[class.tri-float-btn-group-square-shadow]': `shape === 'square' && !trigger`,
+    '[class.tri-float-btn-group-rtl]': `dir === 'rtl'`
   }
 })
-export class NzFloatButtonGroupComponent implements OnInit, AfterContentInit {
+export class TriFloatButtonGroupComponent implements OnInit, AfterContentInit {
   private directionality = inject(Directionality);
   private cdr = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
 
-  @ContentChildren(NzFloatButtonComponent) nzFloatButtonComponent!: QueryList<NzFloatButtonComponent>;
-  @ContentChildren(NzFloatButtonTopComponent) nzFloatButtonTopComponents!: QueryList<NzFloatButtonTopComponent>;
-  @Input() nzHref: string | null = null;
-  @Input() nzTarget: string | null = null;
-  @Input() nzType: 'default' | 'primary' = 'default';
-  @Input() nzIcon: TemplateRef<void> | null = null;
-  @Input() nzDescription: TemplateRef<void> | null = null;
+  @ContentChildren(TriFloatButtonComponent) floatButtonComponent!: QueryList<TriFloatButtonComponent>;
+  @ContentChildren(TriFloatButtonTopComponent) floatButtonTopComponents!: QueryList<TriFloatButtonTopComponent>;
+  @Input() href: string | null = null;
+  @Input() target: string | null = null;
+  @Input() type: 'default' | 'primary' = 'default';
+  @Input() icon: TemplateRef<void> | null = null;
+  @Input() description: TemplateRef<void> | null = null;
 
-  @Input() nzShape: 'circle' | 'square' = 'circle';
-  @Input() nzTrigger: 'click' | 'hover' | null = null;
-  @Input() nzOpen: boolean | null = null;
-  @Output() readonly nzOnOpenChange = new EventEmitter<boolean>();
+  @Input() shape: 'circle' | 'square' = 'circle';
+  @Input() trigger: 'click' | 'hover' | null = null;
+  @Input() open: boolean | null = null;
+  @Output() readonly onOpenChange = new EventEmitter<boolean>();
   isOpen: boolean = false;
   dir: Direction = 'ltr';
 
@@ -100,52 +100,52 @@ export class NzFloatButtonGroupComponent implements OnInit, AfterContentInit {
   }
 
   ngAfterContentInit(): void {
-    if (this.nzFloatButtonComponent) {
-      this.nzFloatButtonComponent.forEach(item => {
-        item.nzShape = this.nzShape;
+    if (this.floatButtonComponent) {
+      this.floatButtonComponent.forEach(item => {
+        item.shape = this.shape;
       });
     }
-    if (this.nzFloatButtonTopComponents) {
-      this.nzFloatButtonTopComponents.forEach(item => {
-        item.nzShape = this.nzShape;
+    if (this.floatButtonTopComponents) {
+      this.floatButtonTopComponents.forEach(item => {
+        item.shape = this.shape;
         item.detectChanges();
       });
     }
   }
 
   clickOpenMenu(): void {
-    if (this.nzTrigger !== 'click' || this.nzOpen !== null) {
+    if (this.trigger !== 'click' || this.open !== null) {
       return;
     }
     this.isOpen = true;
-    this.nzOnOpenChange.emit(true);
+    this.onOpenChange.emit(true);
     this.cdr.markForCheck();
   }
 
   hoverOpenMenu(): void {
-    if (this.nzTrigger !== 'hover' || this.nzOpen !== null) {
+    if (this.trigger !== 'hover' || this.open !== null) {
       return;
     }
     this.isOpen = true;
-    this.nzOnOpenChange.emit(true);
+    this.onOpenChange.emit(true);
     this.cdr.markForCheck();
   }
 
   clickCloseMenu(): void {
-    if (this.nzTrigger !== 'click') {
+    if (this.trigger !== 'click') {
       return;
     }
     this.isOpen = false;
-    this.nzOnOpenChange.emit(false);
+    this.onOpenChange.emit(false);
     this.cdr.markForCheck();
   }
 
   hoverCloseMenu(): void {
-    if (this.nzTrigger !== 'hover' || typeof this.nzOpen === 'boolean') {
+    if (this.trigger !== 'hover' || typeof this.open === 'boolean') {
       return;
     }
     this.isOpen = false;
-    this.nzOnOpenChange.emit(false);
+    this.onOpenChange.emit(false);
     this.cdr.markForCheck();
   }
 }

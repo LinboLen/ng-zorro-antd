@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzCascaderModule, NzCascaderOption } from 'ng-zorro-antd/cascader';
+import { TriCascaderModule, TriCascaderOption } from 'ng-zorro-antd/cascader';
 
-const options: NzCascaderOption[] = [
+const options: TriCascaderOption[] = [
   {
     label: 'Ant Design',
     value: 'antd',
@@ -29,20 +29,20 @@ const options: NzCascaderOption[] = [
 ];
 
 @Component({
-  selector: 'nz-demo-cascader-custom-template',
-  imports: [FormsModule, NzCascaderModule],
+  selector: '',
+  imports: [FormsModule, TriCascaderModule],
   template: `
-    <nz-cascader
-      [nzOptionRender]="renderTpl"
-      [nzOptions]="nzOptions"
+    <tri-cascader
+      [optionRender]="renderTpl"
+      [options]="options"
       [(ngModel)]="values"
       (ngModelChange)="onChanges($event)"
-    ></nz-cascader>
+    ></tri-cascader>
     <ng-template #renderTpl let-option let-index="index">{{ index + 1 }}. {{ option.label }}</ng-template>
   `
 })
-export class NzDemoCascaderCustomTemplateComponent {
-  nzOptions = options;
+export class TriDemoCascaderCustomTemplateComponent {
+  options = options;
   values: string[] | null = null;
 
   onChanges(values: string): void {

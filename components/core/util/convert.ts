@@ -7,7 +7,7 @@ import { coerceBooleanProperty, coerceCssPixelValue, coerceNumberProperty } from
 import { numberAttribute } from '@angular/core';
 
 import { warn } from 'ng-zorro-antd/core/logger';
-import { FunctionProp, NzSafeAny } from 'ng-zorro-antd/core/types';
+import { FunctionProp, TriSafeAny } from 'ng-zorro-antd/core/types';
 
 export function toBoolean(value: unknown): boolean {
   return coerceBooleanProperty(value);
@@ -40,19 +40,19 @@ export function toCssPixel(value: number | string): string {
 /**
  * Get the function-property type's value
  */
-export function valueFunctionProp<T>(prop: FunctionProp<T> | T, ...args: NzSafeAny[]): T {
+export function valueFunctionProp<T>(prop: FunctionProp<T> | T, ...args: TriSafeAny[]): T {
   return typeof prop === 'function' ? (prop as FunctionProp<T>)(...args) : prop;
 }
 
 function propDecoratorFactory<T, D>(
   name: string,
   fallback: (v: T) => D
-): (target: NzSafeAny, propName: string) => void {
+): (target: TriSafeAny, propName: string) => void {
   function propDecorator(
-    target: NzSafeAny,
+    target: TriSafeAny,
     propName: string,
-    originalDescriptor?: TypedPropertyDescriptor<NzSafeAny>
-  ): NzSafeAny {
+    originalDescriptor?: TypedPropertyDescriptor<TriSafeAny>
+  ): TriSafeAny {
     const privatePropName = `$$__zorroPropDecorator__${propName}`;
 
     if (Object.prototype.hasOwnProperty.call(target, privatePropName)) {
@@ -100,20 +100,20 @@ function propDecoratorFactory<T, D>(
  * // __visible = false;
  * ```
  */
-export function InputBoolean(): NzSafeAny {
+export function InputBoolean(): TriSafeAny {
   return propDecoratorFactory('InputBoolean', toBoolean);
 }
 
 /**
  * @deprecated Use input transform instead: `@Input({ transform })`
  */
-export function InputCssPixel(): NzSafeAny {
+export function InputCssPixel(): TriSafeAny {
   return propDecoratorFactory('InputCssPixel', toCssPixel);
 }
 
 /**
  * @deprecated Use input transform instead: `@Input({ transform })`
  */
-export function InputNumber(fallbackValue?: NzSafeAny): NzSafeAny {
+export function InputNumber(fallbackValue?: TriSafeAny): TriSafeAny {
   return propDecoratorFactory('InputNumber', (value: string | number) => toNumber(value, fallbackValue));
 }

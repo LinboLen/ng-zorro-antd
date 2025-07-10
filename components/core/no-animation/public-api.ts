@@ -3,5 +3,5 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export { NzNoAnimationModule } from './nz-no-animation.module';
-export { NzNoAnimationDirective } from './nz-no-animation.directive';
+export { TriNoAnimationModule } from './nz-no-animation.module';
+export { TriNoAnimationDirective } from './nz-no-animation.directive';

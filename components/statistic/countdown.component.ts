@@ -18,37 +18,37 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { NzPipesModule } from 'ng-zorro-antd/core/pipe';
+import { TriPipesModule } from 'ng-zorro-antd/core/pipe';
 
-import { NzStatisticComponent } from './statistic.component';
+import { TriStatisticComponent } from './statistic.component';
 
 const REFRESH_INTERVAL = 1000 / 30;
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: 'nz-countdown',
-  exportAs: 'nzCountdown',
+  selector: '',
+  exportAs: 'triCountdown',
   template: `
-    <nz-statistic
-      [nzValue]="diff"
-      [nzValueStyle]="nzValueStyle"
-      [nzValueTemplate]="nzValueTemplate || countDownTpl"
-      [nzTitle]="nzTitle"
-      [nzPrefix]="nzPrefix"
-      [nzSuffix]="nzSuffix"
-    ></nz-statistic>
+    <tri-statistic
+      [value]="diff"
+      [valueStyle]="valueStyle"
+      [valueTemplate]="valueTemplate || countDownTpl"
+      [title]="title"
+      [prefix]="prefix"
+      [suffix]="suffix"
+    ></tri-statistic>
 
     <ng-template #countDownTpl>{{ diff | nzTimeRange: nzFormat }}</ng-template>
   `,
-  imports: [NzStatisticComponent, NzPipesModule]
+  imports: [TriStatisticComponent, TriPipesModule]
 })
-export class NzCountdownComponent extends NzStatisticComponent implements OnInit, OnChanges {
+export class TriCountdownComponent extends TriStatisticComponent implements OnInit, OnChanges {
   private ngZone = inject(NgZone);
   private platform = inject(Platform);
 
-  @Input() nzFormat: string = 'HH:mm:ss';
-  @Output() readonly nzCountdownFinish = new EventEmitter<void>();
+  @Input() format: string = 'HH:mm:ss';
+  @Output() readonly countdownFinish = new EventEmitter<void>();
 
   diff!: number;
 
@@ -114,8 +114,8 @@ export class NzCountdownComponent extends NzStatisticComponent implements OnInit
     if (this.diff === 0) {
       this.stopTimer();
 
-      if (this.nzCountdownFinish.observers.length) {
-        this.ngZone.run(() => this.nzCountdownFinish.emit());
+      if (this.countdownFinish.observers.length) {
+        this.ngZone.run(() => this.countdownFinish.emit());
       }
     }
   }

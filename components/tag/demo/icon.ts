@@ -1,28 +1,28 @@
 import { Component } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzTagModule } from 'ng-zorro-antd/tag';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriTagModule } from 'ng-zorro-antd/tag';
 
 @Component({
-  selector: 'nz-demo-tag-icon',
-  imports: [NzIconModule, NzTagModule],
+  selector: '',
+  imports: [TriIconModule, TriTagModule],
   template: `
-    <nz-tag nzColor="#55acee">
-      <nz-icon nzType="twitter" />
+    <tri-tag color="#55acee">
+      <tri-icon type="twitter" />
       <span>Twitter</span>
-    </nz-tag>
-    <nz-tag nzColor="#cd201f">
-      <nz-icon nzType="youtube" />
+    </tri-tag>
+    <tri-tag color="#cd201f">
+      <tri-icon type="youtube" />
       <span>Youtube</span>
-    </nz-tag>
-    <nz-tag nzColor="#3b5999">
-      <nz-icon nzType="facebook" />
+    </tri-tag>
+    <tri-tag color="#3b5999">
+      <tri-icon type="facebook" />
       <span>Facebook</span>
-    </nz-tag>
-    <nz-tag nzColor="#55acee">
-      <nz-icon nzType="linkedin" />
+    </tri-tag>
+    <tri-tag color="#55acee">
+      <tri-icon type="linkedin" />
       <span>LinkedIn</span>
-    </nz-tag>
+    </tri-tag>
   `
 })
-export class NzDemoTagIconComponent {}
+export class TriDemoTagIconComponent {}

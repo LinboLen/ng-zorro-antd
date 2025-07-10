@@ -1,31 +1,31 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: 'nz-demo-input-password-input',
-  imports: [FormsModule, NzInputModule, NzIconModule],
+  selector: '',
+  imports: [FormsModule, TriInputModule, TriIconModule],
   template: `
-    <nz-input-group [nzSuffix]="suffixTemplate">
+    <tri-input-group [suffix]="suffixTemplate">
       <input
         [type]="passwordVisible ? 'text' : 'password'"
-        nz-input
+        tri-input
         placeholder="input password"
         [(ngModel)]="password"
       />
-    </nz-input-group>
+    </tri-input-group>
     <ng-template #suffixTemplate>
-      <nz-icon
-        class="ant-input-password-icon"
-        [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+      <tri-icon
+        class="tri-input-password-icon"
+        [type]="passwordVisible ? 'eye-invisible' : 'eye'"
         (click)="passwordVisible = !passwordVisible"
       />
     </ng-template>
   `
 })
-export class NzDemoInputPasswordInputComponent {
+export class TriDemoInputPasswordInputComponent {
   passwordVisible = false;
   password?: string;
 }

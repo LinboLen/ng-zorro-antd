@@ -8,9 +8,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { NzFormModule } from 'ng-zorro-antd/form/form.module';
+import { TriFormModule } from 'ng-zorro-antd/form/form.module';
 
-import { NzFormDirective, NzFormLayoutType } from './form.directive';
+import { TriFormDirective, TriFormLayoutType } from './form.directive';
 
 const testBedOptions = {
   imports: [NoopAnimationsModule]
@@ -18,14 +18,14 @@ const testBedOptions = {
 
 describe('nz-form', () => {
   describe('default', () => {
-    let fixture: ComponentFixture<NzTestFormDirectiveComponent>;
-    let testComponent: NzTestFormDirectiveComponent;
+    let fixture: ComponentFixture<TriTestFormDirectiveComponent>;
+    let testComponent: TriTestFormDirectiveComponent;
     let form: DebugElement;
     beforeEach(() => {
       TestBed.configureTestingModule(testBedOptions);
-      fixture = TestBed.createComponent(NzTestFormDirectiveComponent);
+      fixture = TestBed.createComponent(TriTestFormDirectiveComponent);
       testComponent = fixture.componentInstance;
-      form = fixture.debugElement.query(By.directive(NzFormDirective));
+      form = fixture.debugElement.query(By.directive(TriFormDirective));
     });
     it('should className correct', () => {
       fixture.detectChanges();
@@ -51,14 +51,14 @@ describe('nz-form', () => {
   });
 
   describe('label integrate', () => {
-    let fixture: ComponentFixture<NzTestFormLabelIntegrateComponent>;
-    let testComponent: NzTestFormLabelIntegrateComponent;
+    let fixture: ComponentFixture<TriTestFormLabelIntegrateComponent>;
+    let testComponent: TriTestFormLabelIntegrateComponent;
     let form: DebugElement;
     beforeEach(() => {
       TestBed.configureTestingModule(testBedOptions);
-      fixture = TestBed.createComponent(NzTestFormLabelIntegrateComponent);
+      fixture = TestBed.createComponent(TriTestFormLabelIntegrateComponent);
       testComponent = fixture.componentInstance;
-      form = fixture.debugElement.query(By.directive(NzFormDirective));
+      form = fixture.debugElement.query(By.directive(TriFormDirective));
     });
 
     afterEach(() => {
@@ -121,32 +121,32 @@ describe('nz-form', () => {
 });
 
 @Component({
-  imports: [NzFormModule],
-  template: `<form nz-form [nzLayout]="layout"></form>`
+  imports: [TriFormModule],
+  template: `<form tri-form [layout]="layout"></form>`
 })
-export class NzTestFormDirectiveComponent {
-  layout: NzFormLayoutType = 'horizontal';
+export class TriTestFormDirectiveComponent {
+  layout: TriFormLayoutType = 'horizontal';
 }
 
 @Component({
-  imports: [NzFormModule],
+  imports: [TriFormModule],
   template: `
-    <form nz-form [nzNoColon]="defaultNoColon">
-      <nz-form-item>
-        <nz-form-label>Label</nz-form-label>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>Label</nz-form-label>
-      </nz-form-item>
+    <form tri-form [noColon]="defaultNoColon">
+      <tri-form-item>
+        <tri-form-label>Label</tri-form-label>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label>Label</tri-form-label>
+      </tri-form-item>
       @if (testPriority) {
-        <nz-form-item>
-          <nz-form-label [nzNoColon]="noColon">TEST_PRIORITY</nz-form-label>
-        </nz-form-item>
+        <tri-form-item>
+          <tri-form-label [noColon]="noColon">TEST_PRIORITY</tri-form-label>
+        </tri-form-item>
       }
     </form>
   `
 })
-export class NzTestFormLabelIntegrateComponent {
+export class TriTestFormLabelIntegrateComponent {
   defaultNoColon = false;
   testPriority = false;
   noColon = false;

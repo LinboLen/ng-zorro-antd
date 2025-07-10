@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: 'nz-demo-input-basic',
-  imports: [FormsModule, NzInputModule],
+  selector: '',
+  imports: [FormsModule, TriInputModule],
   template: `
-    <input nz-input placeholder="Basic usage" [(ngModel)]="value" type="number" />
+    <input tri-input placeholder="Basic usage" [(ngModel)]="value" type="number" />
     <br />
     <br />
-    <input nz-input placeholder="Basic usage" [(ngModel)]="value" [disabled]="true" />
+    <input tri-input placeholder="Basic usage" [(ngModel)]="value" [disabled]="true" />
   `
 })
-export class NzDemoInputBasicComponent {
+export class TriDemoInputBasicComponent {
   value?: string;
 }

@@ -9,13 +9,13 @@ import { By } from '@angular/platform-browser';
 
 import { dispatchMouseEvent } from 'ng-zorro-antd/core/testing';
 
-import { NzHashCodeComponent } from './hash-code.component';
-import { NzHashCodeModule } from './hash-code.module';
-import { NzModeType } from './typings';
+import { TriHashCodeComponent } from './hash-code.component';
+import { TriHashCodeModule } from './hash-code.module';
+import { TriModeType } from './typings';
 
 describe('nz-hash-code', () => {
-  let fixture: ComponentFixture<NzTestHashCodeBasicComponent>;
-  let testComponent: NzTestHashCodeBasicComponent;
+  let fixture: ComponentFixture<TriTestHashCodeBasicComponent>;
+  let testComponent: TriTestHashCodeBasicComponent;
   let resultEl: DebugElement;
 
   function waitingForTooltipToggling(): void {
@@ -25,10 +25,10 @@ describe('nz-hash-code', () => {
   }
 
   beforeEach(fakeAsync(() => {
-    fixture = TestBed.createComponent(NzTestHashCodeBasicComponent);
+    fixture = TestBed.createComponent(TriTestHashCodeBasicComponent);
     fixture.detectChanges();
     testComponent = fixture.componentInstance;
-    resultEl = fixture.debugElement.query(By.directive(NzHashCodeComponent));
+    resultEl = fixture.debugElement.query(By.directive(TriHashCodeComponent));
   }));
 
   it('basic', () => {
@@ -91,24 +91,24 @@ describe('nz-hash-code', () => {
 });
 
 @Component({
-  imports: [NzHashCodeModule],
+  imports: [TriHashCodeModule],
   template: `
-    <nz-hash-code
-      [nzValue]="value"
-      [nzTitle]="title"
-      [nzLogo]="logo"
-      [nzMode]="mode"
-      [nzType]="type"
-      (nzOnCopy)="onCopy($event)"
+    <tri-hash-code
+      [value]="value"
+      [title]="title"
+      [logo]="logo"
+      [mode]="mode"
+      [type]="type"
+      (onCopy)="onCopy($event)"
     >
-    </nz-hash-code>
+    </tri-hash-code>
   `
 })
-export class NzTestHashCodeBasicComponent {
+export class TriTestHashCodeBasicComponent {
   value = 'dfb5fe9ef7b99b2b1db102114a6d7d445d992f40a5d575f801c148990199a068';
   title = 'HashCode';
   logo = 'Antd';
-  mode: NzModeType = 'double';
+  mode: TriModeType = 'double';
   type: 'default' | 'primary' = 'default';
   copyValue = '';
 

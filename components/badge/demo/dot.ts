@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
 
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriBadgeModule } from 'ng-zorro-antd/badge';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-demo-badge-dot',
-  imports: [NzBadgeModule, NzIconModule],
+  selector: '',
+  imports: [TriBadgeModule, TriIconModule],
   template: `
-    <nz-badge nzDot>
-      <nz-icon nzType="notification" />
-    </nz-badge>
-    <nz-badge nzDot [nzShowDot]="false">
-      <nz-icon nzType="notification" />
-    </nz-badge>
-    <nz-badge nzDot>
+    <tri-badge dot>
+      <tri-icon type="notification" />
+    </tri-badge>
+    <tri-badge dot [showDot]="false">
+      <tri-icon type="notification" />
+    </tri-badge>
+    <tri-badge dot>
       <a>Link something</a>
-    </nz-badge>
+    </tri-badge>
   `,
   styles: [
     `
@@ -32,4 +32,4 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     `
   ]
 })
-export class NzDemoBadgeDotComponent {}
+export class TriDemoBadgeDotComponent {}

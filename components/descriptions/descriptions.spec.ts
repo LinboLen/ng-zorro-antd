@@ -8,21 +8,21 @@ import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzDescriptionsComponent } from './descriptions.component';
-import { NzDescriptionsModule } from './descriptions.module';
+import { TriDescriptionsComponent } from './descriptions.component';
+import { TriDescriptionsModule } from './descriptions.module';
 
 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
 declare const viewport: any;
 
 describe('nz descriptions', () => {
   describe('with different spans', () => {
-    let testComponent: NzTestDescriptionsComponent;
+    let testComponent: TriTestDescriptionsComponent;
     let componentElement: HTMLElement;
-    let fixture: ComponentFixture<NzTestDescriptionsComponent>;
+    let fixture: ComponentFixture<TriTestDescriptionsComponent>;
     let rows;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestDescriptionsComponent);
+      fixture = TestBed.createComponent(TriTestDescriptionsComponent);
       testComponent = fixture.componentInstance;
       componentElement = fixture.debugElement.nativeElement;
       fixture.detectChanges();
@@ -124,12 +124,12 @@ describe('nz descriptions', () => {
   });
 
   describe('RTL', () => {
-    let fixture: ComponentFixture<NzTestDescriptionsRtlComponent>;
+    let fixture: ComponentFixture<TriTestDescriptionsRtlComponent>;
     let componentElement: HTMLElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestDescriptionsRtlComponent);
-      componentElement = fixture.debugElement.query(By.directive(NzDescriptionsComponent)).nativeElement;
+      fixture = TestBed.createComponent(TriTestDescriptionsRtlComponent);
+      componentElement = fixture.debugElement.query(By.directive(TriDescriptionsComponent)).nativeElement;
       fixture.detectChanges();
     });
 
@@ -143,33 +143,33 @@ describe('nz descriptions', () => {
 });
 
 @Component({
-  imports: [NzDescriptionsModule],
-  selector: 'nz-test-descriptions',
+  imports: [TriDescriptionsModule],
+  selector: '',
   template: `
-    <nz-descriptions [nzTitle]="title" [nzBordered]="bordered" [nzColumn]="column">
+    <tri-descriptions [title]="title" [bordered]="bordered" [column]="column">
       @for (col of colspanArray; track i; let i = $index) {
-        <nz-descriptions-item [nzTitle]="itemTitle + i" [nzSpan]="col" />
+        <tri-descriptions-item [title]="itemTitle + i" [span]="col" />
       }
-    </nz-descriptions>
+    </tri-descriptions>
   `
 })
-export class NzTestDescriptionsComponent {
+export class TriTestDescriptionsComponent {
   bordered = false;
   colspanArray: number[] = [1, 1, 1];
-  column: NzDescriptionsComponent['nzColumn'] = 3;
+  column: TriDescriptionsComponent['nzColumn'] = 3;
   title = 'Title';
   itemTitle = 'Item Title ';
 }
 
 @Component({
-  imports: [BidiModule, NzTestDescriptionsComponent],
+  imports: [BidiModule, TriTestDescriptionsComponent],
   template: `
     <div [dir]="direction">
-      <nz-test-descriptions></nz-test-descriptions>
+      <tri-test-descriptions></tri-test-descriptions>
     </div>
   `
 })
-export class NzTestDescriptionsRtlComponent {
+export class TriTestDescriptionsRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 }

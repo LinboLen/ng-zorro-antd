@@ -5,11 +5,11 @@
 
 import { NgModule } from '@angular/core';
 
-import { NzRadioGroupComponent } from './radio-group.component';
-import { NzRadioComponent } from './radio.component';
+import { TriRadioGroupComponent } from './radio-group.component';
+import { TriRadioComponent } from './radio.component';
 
 @NgModule({
-  imports: [NzRadioComponent, NzRadioGroupComponent],
-  exports: [NzRadioComponent, NzRadioGroupComponent]
+  imports: [TriRadioComponent, TriRadioGroupComponent],
+  exports: [TriRadioComponent, TriRadioGroupComponent]
 })
-export class NzRadioModule {}
+export class TriRadioModule {}

@@ -5,25 +5,25 @@
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { NzSizeLDSType } from 'ng-zorro-antd/core/types';
+import { TriSizeLDSType } from 'ng-zorro-antd/core/types';
 
 import { NgAntdColorPickerModule } from './src/ng-antd-color-picker.module';
 import { defaultColor } from './src/util/util';
 
 @Component({
-  selector: 'nz-color-block',
-  exportAs: 'nzColorBlock',
+  selector: '',
+  exportAs: 'triColorBlock',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgAntdColorPickerModule],
-  template: `<ng-antd-color-block [color]="nzColor" (nzOnClick)="nzOnClick.emit($event)"></ng-antd-color-block>`,
+  template: `<ng-antd-color-block [color]="color" (onClick)="onClick.emit($event)"></ng-antd-color-block>`,
   host: {
-    class: 'ant-color-picker-inline',
-    '[class.ant-color-picker-inline-sm]': `nzSize === 'small'`,
-    '[class.ant-color-picker-inline-lg]': `nzSize === 'large'`
+    class: 'tri-color-picker-inline',
+    '[class.tri-color-picker-inline-sm]': `size === 'small'`,
+    '[class.tri-color-picker-inline-lg]': `size === 'large'`
   }
 })
-export class NzColorBlockComponent {
-  @Input() nzColor: string = defaultColor.toHexString();
-  @Input() nzSize: NzSizeLDSType = 'default';
-  @Output() readonly nzOnClick = new EventEmitter<boolean>();
+export class TriColorBlockComponent {
+  @Input() color: string = defaultColor.toHexString();
+  @Input() size: TriSizeLDSType = 'default';
+  @Output() readonly onClick = new EventEmitter<boolean>();
 }

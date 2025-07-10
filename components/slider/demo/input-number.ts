@@ -1,34 +1,34 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
-import { NzSliderModule } from 'ng-zorro-antd/slider';
+import { TriGridModule } from 'ng-zorro-antd/grid';
+import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
+import { TriSliderModule } from 'ng-zorro-antd/slider';
 
 @Component({
-  selector: 'nz-demo-slider-input-number',
-  imports: [FormsModule, NzGridModule, NzInputNumberModule, NzSliderModule],
+  selector: '',
+  imports: [FormsModule, TriGridModule, TriInputNumberModule, TriSliderModule],
   template: `
-    <nz-row nzGutter="8">
-      <nz-col nzSpan="12">
-        <nz-slider [nzMin]="1" [nzMax]="20" [(ngModel)]="value1"></nz-slider>
-      </nz-col>
-      <div nz-col nzSpan="4">
-        <nz-input-number [nzMin]="1" [nzMax]="20" [(ngModel)]="value1"></nz-input-number>
+    <tri-row gutter="8">
+      <tri-col span="12">
+        <tri-slider [min]="1" [max]="20" [(ngModel)]="value1"></tri-slider>
+      </tri-col>
+      <div tri-col span="4">
+        <tri-input-number [min]="1" [max]="20" [(ngModel)]="value1"></tri-input-number>
       </div>
-    </nz-row>
+    </tri-row>
 
-    <nz-row nzGutter="8">
-      <nz-col nzSpan="12">
-        <nz-slider [nzMin]="0" [nzMax]="1" [nzStep]="0.01" [(ngModel)]="value2"></nz-slider>
-      </nz-col>
-      <nz-col nzSpan="4">
-        <nz-input-number [nzMin]="0" [nzMax]="1" [nzStep]="0.01" [(ngModel)]="value2"></nz-input-number>
-      </nz-col>
-    </nz-row>
+    <tri-row gutter="8">
+      <tri-col span="12">
+        <tri-slider [min]="0" [max]="1" [step]="0.01" [(ngModel)]="value2"></tri-slider>
+      </tri-col>
+      <tri-col span="4">
+        <tri-input-number [min]="0" [max]="1" [step]="0.01" [(ngModel)]="value2"></tri-input-number>
+      </tri-col>
+    </tri-row>
   `
 })
-export class NzDemoSliderInputNumberComponent {
+export class TriDemoSliderInputNumberComponent {
   value1 = 1;
   value2 = 0;
 }

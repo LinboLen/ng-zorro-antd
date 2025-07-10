@@ -28,16 +28,16 @@ import { IconDirective, ThemeType } from '@ant-design/icons-angular';
 import { warn } from 'ng-zorro-antd/core/logger';
 import { wrapIntoObservable } from 'ng-zorro-antd/core/util';
 
-import { NzIconPatchService, NzIconService } from './icon.service';
+import { TriIconPatchService, TriIconService } from './icon.service';
 
 @Directive({
-  selector: 'nz-icon,[nz-icon]',
-  exportAs: 'nzIcon',
+  selector: '',
+  exportAs: 'triIcon',
   host: {
     class: 'anticon'
   }
 })
-export class NzIconDirective extends IconDirective implements OnChanges, AfterContentChecked {
+export class TriIconDirective extends IconDirective implements OnChanges, AfterContentChecked {
   private readonly ngZone = inject(NgZone);
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
   public readonly renderer = inject(Renderer2);
@@ -47,41 +47,41 @@ export class NzIconDirective extends IconDirective implements OnChanges, AfterCo
 
   cacheClassName: string | null = null;
   @Input({ transform: booleanAttribute })
-  set nzSpin(value: boolean) {
-    this.spin = value;
+  set spin(value: boolean) {
+    this.#spin = value;
   }
 
-  @Input({ transform: numberAttribute }) nzRotate: number = 0;
+  @Input({ transform: numberAttribute }) rotate: number = 0;
 
   @Input()
-  set nzType(value: string) {
+  set type(value: string) {
     this.type = value;
   }
 
   @Input()
-  set nzTheme(value: ThemeType) {
+  set theme(value: ThemeType) {
     this.theme = value;
   }
 
   @Input()
-  set nzTwotoneColor(value: string) {
+  set twotoneColor(value: string) {
     this.twoToneColor = value;
   }
 
   @Input()
-  set nzIconfont(value: string) {
-    this.iconfont = value;
+  set iconfont(value: string) {
+    this.#iconfont = value;
   }
 
   hostClass?: string;
 
   private readonly el: HTMLElement;
-  private iconfont?: string;
-  private spin: boolean = false;
+  #iconfont?: string;
+  #spin: boolean = false;
 
-  constructor(public readonly iconService: NzIconService) {
+  constructor(public readonly iconService: TriIconService) {
     super(iconService);
-    inject(NzIconPatchService, { optional: true })?.doPatch();
+    inject(TriIconPatchService, { optional: true })?.doPatch();
     this.el = this._elementRef.nativeElement;
   }
 
@@ -95,7 +95,7 @@ export class NzIconDirective extends IconDirective implements OnChanges, AfterCo
     } else if (nzRotate) {
       this.handleRotate(this.el.firstChild as SVGElement);
     } else {
-      this._setSVGElement(this.iconService.createIconfontIcon(`#${this.iconfont}`));
+      this._setSVGElement(this.iconService.createIconfontIcon(`#${this.#iconfont}`));
     }
   }
 
@@ -161,7 +161,7 @@ export class NzIconDirective extends IconDirective implements OnChanges, AfterCo
   }
 
   private handleSpin(svg: SVGElement): void {
-    if (this.spin || this.type === 'loading') {
+    if (this.#spin || this.type === 'loading') {
       this.renderer.addClass(svg, 'anticon-spin');
     } else {
       this.renderer.removeClass(svg, 'anticon-spin');
@@ -169,8 +169,8 @@ export class NzIconDirective extends IconDirective implements OnChanges, AfterCo
   }
 
   private handleRotate(svg: SVGElement): void {
-    if (this.nzRotate) {
-      this.renderer.setAttribute(svg, 'style', `transform: rotate(${this.nzRotate}deg)`);
+    if (this.rotate) {
+      this.renderer.setAttribute(svg, 'style', `transform: rotate(${this.rotate}deg)`);
     } else {
       this.renderer.removeAttribute(svg, 'style');
     }

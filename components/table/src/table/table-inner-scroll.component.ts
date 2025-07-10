@@ -27,23 +27,23 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { merge, Subject } from 'rxjs';
 import { delay, filter, startWith, switchMap } from 'rxjs/operators';
 
-import { NzResizeService } from 'ng-zorro-antd/core/services';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriResizeService } from 'ng-zorro-antd/core/services';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 
-import { NzTableSummaryFixedType } from '../table.types';
-import { NzTableContentComponent } from './table-content.component';
-import { NzTbodyComponent } from './tbody.component';
+import { TriTableSummaryFixedType } from '../table.types';
+import { TriTableContentComponent } from './table-content.component';
+import { TriTbodyComponent } from './tbody.component';
 
 @Component({
-  selector: 'nz-table-inner-scroll',
+  selector: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
     @if (scrollY) {
-      <div #tableHeaderElement [style]="headerStyleMap" class="ant-table-header nz-table-hide-scrollbar">
+      <div #tableHeaderElement [style]="headerStyleMap" class="tri-table-header nz-table-hide-scrollbar">
         <table
-          nz-table-content
+          tri-table-content
           tableLayout="fixed"
           [scrollX]="scrollX"
           [listOfColWidth]="listOfColWidth"
@@ -52,9 +52,9 @@ import { NzTbodyComponent } from './tbody.component';
         ></table>
       </div>
       @if (!virtualTemplate) {
-        <div #tableBodyElement class="ant-table-body" [style]="bodyStyleMap">
+        <div #tableBodyElement class="tri-table-body" [style]="bodyStyleMap">
           <table
-            nz-table-content
+            tri-table-content
             tableLayout="fixed"
             [scrollX]="scrollX"
             [listOfColWidth]="listOfColWidth"
@@ -69,7 +69,7 @@ import { NzTbodyComponent } from './tbody.component';
           [minBufferPx]="virtualMinBufferPx"
           [style.height]="data.length ? scrollY : noDataVirtualHeight"
         >
-          <table nz-table-content tableLayout="fixed" [scrollX]="scrollX" [listOfColWidth]="listOfColWidth">
+          <table tri-table-content tableLayout="fixed" [scrollX]="scrollX" [listOfColWidth]="listOfColWidth">
             <tbody>
               <ng-container *cdkVirtualFor="let item of data; let i = index; trackBy: virtualForTrackBy">
                 <ng-template
@@ -82,9 +82,9 @@ import { NzTbodyComponent } from './tbody.component';
         </cdk-virtual-scroll-viewport>
       }
       @if (tfootFixed === 'bottom') {
-        <div #tableFootElement class="ant-table-summary" [style]="headerStyleMap">
+        <div #tableFootElement class="tri-table-summary" [style]="headerStyleMap">
           <table
-            nz-table-content
+            tri-table-content
             tableLayout="fixed"
             [scrollX]="scrollX"
             [listOfColWidth]="listOfColWidth"
@@ -93,9 +93,9 @@ import { NzTbodyComponent } from './tbody.component';
         </div>
       }
     } @else {
-      <div class="ant-table-content" #tableBodyElement [style]="bodyStyleMap">
+      <div class="tri-table-content" #tableBodyElement [style]="bodyStyleMap">
         <table
-          nz-table-content
+          tri-table-content
           tableLayout="fixed"
           [scrollX]="scrollX"
           [listOfColWidth]="listOfColWidth"
@@ -106,26 +106,26 @@ import { NzTbodyComponent } from './tbody.component';
       </div>
     }
   `,
-  host: { class: 'ant-table-container' },
-  imports: [NzTableContentComponent, ScrollingModule, NgTemplateOutlet, NzTbodyComponent]
+  host: { class: 'tri-table-container' },
+  imports: [TriTableContentComponent, ScrollingModule, NgTemplateOutlet, TriTbodyComponent]
 })
-export class NzTableInnerScrollComponent<T> implements OnChanges, AfterViewInit {
+export class TriTableInnerScrollComponent<T> implements OnChanges, AfterViewInit {
   private renderer = inject(Renderer2);
   private ngZone = inject(NgZone);
   private platform = inject(Platform);
-  private resizeService = inject(NzResizeService);
+  private resizeService = inject(TriResizeService);
   private destroyRef = inject(DestroyRef);
 
   @Input() data: readonly T[] = [];
   @Input() scrollX: string | null = null;
   @Input() scrollY: string | null = null;
-  @Input() contentTemplate: TemplateRef<NzSafeAny> | null = null;
+  @Input() contentTemplate: TemplateRef<TriSafeAny> | null = null;
   @Input() widthConfig: string[] = [];
   @Input() listOfColWidth: ReadonlyArray<string | null> = [];
-  @Input() theadTemplate: TemplateRef<NzSafeAny> | null = null;
-  @Input() tfootTemplate: TemplateRef<NzSafeAny> | null = null;
-  @Input() tfootFixed: NzTableSummaryFixedType | null = null;
-  @Input() virtualTemplate: TemplateRef<NzSafeAny> | null = null;
+  @Input() theadTemplate: TemplateRef<TriSafeAny> | null = null;
+  @Input() tfootTemplate: TemplateRef<TriSafeAny> | null = null;
+  @Input() tfootFixed: TriTableSummaryFixedType | null = null;
+  @Input() virtualTemplate: TemplateRef<TriSafeAny> | null = null;
   @Input() virtualItemSize = 0;
   @Input() virtualMaxBufferPx = 200;
   @Input() virtualMinBufferPx = 100;

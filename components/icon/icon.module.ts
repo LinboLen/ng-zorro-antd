@@ -7,24 +7,24 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { IconDefinition } from '@ant-design/icons-angular';
 
-import { NzIconDirective } from './icon.directive';
+import { TriIconDirective } from './icon.directive';
 import { provideNzIcons, provideNzIconsPatch } from './provide-icons';
 
 @NgModule({
-  imports: [NzIconDirective],
-  exports: [NzIconDirective]
+  imports: [TriIconDirective],
+  exports: [TriIconDirective]
 })
-export class NzIconModule {
-  static forRoot(icons: IconDefinition[]): ModuleWithProviders<NzIconModule> {
+export class TriIconModule {
+  static forRoot(icons: IconDefinition[]): ModuleWithProviders<TriIconModule> {
     return {
-      ngModule: NzIconModule,
+      ngModule: TriIconModule,
       providers: [provideNzIcons(icons)]
     };
   }
 
-  static forChild(icons: IconDefinition[]): ModuleWithProviders<NzIconModule> {
+  static forChild(icons: IconDefinition[]): ModuleWithProviders<TriIconModule> {
     return {
-      ngModule: NzIconModule,
+      ngModule: TriIconModule,
       providers: [provideNzIconsPatch(icons)]
     };
   }

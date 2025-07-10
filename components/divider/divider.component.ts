@@ -12,39 +12,39 @@ import {
   booleanAttribute
 } from '@angular/core';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 
 @Component({
-  selector: 'nz-divider',
-  exportAs: 'nzDivider',
+  selector: '',
+  exportAs: 'triDivider',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    @if (nzText) {
-      <span class="ant-divider-inner-text">
-        <ng-container *nzStringTemplateOutlet="nzText">{{ nzText }}</ng-container>
+    @if (text) {
+      <span class="tri-divider-inner-text">
+        <ng-container *stringTemplateOutlet="text">{{ text }}</ng-container>
       </span>
     }
   `,
   host: {
-    class: 'ant-divider',
-    '[class.ant-divider-horizontal]': `nzType === 'horizontal'`,
-    '[class.ant-divider-vertical]': `nzType === 'vertical'`,
-    '[class.ant-divider-with-text]': `nzText`,
-    '[class.ant-divider-plain]': `nzPlain`,
-    '[class.ant-divider-with-text-left]': `nzText && nzOrientation === 'left'`,
-    '[class.ant-divider-with-text-right]': `nzText && nzOrientation === 'right'`,
-    '[class.ant-divider-with-text-center]': `nzText && nzOrientation === 'center'`,
-    '[class.ant-divider-dashed]': `nzDashed || nzVariant === 'dashed'`,
-    '[class.ant-divider-dotted]': `nzVariant === 'dotted'`
+    class: 'tri-divider',
+    '[class.tri-divider-horizontal]': `type === 'horizontal'`,
+    '[class.tri-divider-vertical]': `type === 'vertical'`,
+    '[class.tri-divider-with-text]': `text`,
+    '[class.tri-divider-plain]': `plain`,
+    '[class.tri-divider-with-text-left]': `text && orientation === 'left'`,
+    '[class.tri-divider-with-text-right]': `text && orientation === 'right'`,
+    '[class.tri-divider-with-text-center]': `text && orientation === 'center'`,
+    '[class.tri-divider-dashed]': `dashed || variant === 'dashed'`,
+    '[class.tri-divider-dotted]': `variant === 'dotted'`
   },
-  imports: [NzOutletModule]
+  imports: [TriOutletModule]
 })
-export class NzDividerComponent {
-  @Input() nzText?: string | TemplateRef<void>;
-  @Input() nzType: 'horizontal' | 'vertical' = 'horizontal';
-  @Input() nzOrientation: 'left' | 'right' | 'center' = 'center';
-  @Input() nzVariant: 'dashed' | 'dotted' | 'solid' = 'solid';
-  @Input({ transform: booleanAttribute }) nzDashed = false;
-  @Input({ transform: booleanAttribute }) nzPlain = false;
+export class TriDividerComponent {
+  @Input() text?: string | TemplateRef<void>;
+  @Input() type: 'horizontal' | 'vertical' = 'horizontal';
+  @Input() orientation: 'left' | 'right' | 'center' = 'center';
+  @Input() variant: 'dashed' | 'dotted' | 'solid' = 'solid';
+  @Input({ transform: booleanAttribute }) dashed = false;
+  @Input({ transform: booleanAttribute }) plain = false;
 }

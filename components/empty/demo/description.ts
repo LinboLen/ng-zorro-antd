@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
-import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { TriEmptyModule } from 'ng-zorro-antd/empty';
 
 @Component({
-  selector: 'nz-demo-empty-description',
-  imports: [NzEmptyModule],
-  template: `<nz-empty [nzNotFoundContent]="null"></nz-empty>`
+  selector: '',
+  imports: [TriEmptyModule],
+  template: `<tri-empty [notFoundContent]="null"></tri-empty>`
 })
-export class NzDemoEmptyDescriptionComponent {}
+export class TriDemoEmptyDescriptionComponent {}

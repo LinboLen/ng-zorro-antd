@@ -16,7 +16,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 
 import { NzIsMenuInsideDropDownToken } from './menu.token';
 
@@ -25,8 +25,8 @@ export function MenuGroupFactory(): boolean {
   return isMenuInsideDropDownToken ?? false;
 }
 @Component({
-  selector: '[nz-menu-group]',
-  exportAs: 'nzMenuGroup',
+  selector: '',
+  exportAs: 'triMenuGroup',
   providers: [
     /** check if menu inside dropdown-menu component **/
     {
@@ -36,30 +36,30 @@ export function MenuGroupFactory(): boolean {
   ],
   template: `
     <div
-      [class.ant-menu-item-group-title]="!isMenuInsideDropDown"
-      [class.ant-dropdown-menu-item-group-title]="isMenuInsideDropDown"
+      [class.tri-menu-item-group-title]="!isMenuInsideDropDown"
+      [class.tri-dropdown-menu-item-group-title]="isMenuInsideDropDown"
       #titleElement
     >
-      <ng-container *nzStringTemplateOutlet="nzTitle">{{ nzTitle }}</ng-container>
-      @if (!nzTitle) {
+      <ng-container *stringTemplateOutlet="title">{{ title }}</ng-container>
+      @if (!title) {
         <ng-content select="[title]" />
       }
     </div>
     <ng-content></ng-content>
   `,
-  imports: [NzOutletModule],
+  imports: [TriOutletModule],
   host: {
-    '[class.ant-menu-item-group]': '!isMenuInsideDropDown',
-    '[class.ant-dropdown-menu-item-group]': 'isMenuInsideDropDown'
+    '[class.tri-menu-item-group]': '!isMenuInsideDropDown',
+    '[class.tri-dropdown-menu-item-group]': 'isMenuInsideDropDown'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class NzMenuGroupComponent implements AfterViewInit {
+export class TriMenuGroupComponent implements AfterViewInit {
   private readonly renderer = inject(Renderer2);
   protected readonly isMenuInsideDropDown = inject(NzIsMenuInsideDropDownToken);
 
-  @Input() nzTitle?: string | TemplateRef<void>;
+  @Input() title?: string | TemplateRef<void>;
   @ViewChild('titleElement') titleElement?: ElementRef;
 
   ngAfterViewInit(): void {

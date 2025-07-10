@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 
-import { NzSpaceModule } from 'ng-zorro-antd/space';
-import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
+import { TriSpaceModule } from 'ng-zorro-antd/space';
+import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
 
 @Component({
-  selector: 'nz-demo-time-picker-variant',
-  imports: [NzTimePickerModule, NzSpaceModule],
-  template: ` <nz-space nzDirection="vertical" style="width: 100%">
-    <nz-time-picker *nzSpaceItem nzVariant="outlined" />
-    <nz-time-picker *nzSpaceItem nzVariant="filled" />
-    <nz-time-picker *nzSpaceItem nzVariant="borderless" />
-    <nz-time-picker *nzSpaceItem nzVariant="underlined" />
-  </nz-space>`
+  selector: '',
+  imports: [TriTimePickerModule, TriSpaceModule],
+  template: ` <tri-space direction="vertical" style="width: 100%">
+    <tri-time-picker *spaceItem variant="outlined" />
+    <tri-time-picker *spaceItem variant="filled" />
+    <tri-time-picker *spaceItem variant="borderless" />
+    <tri-time-picker *spaceItem variant="underlined" />
+  </tri-space>`
 })
-export class NzDemoTimePickerVariantComponent {}
+export class TriDemoTimePickerVariantComponent {}

@@ -1,54 +1,54 @@
 import { Component } from '@angular/core';
 
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzLayoutModule } from 'ng-zorro-antd/layout';
-import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriLayoutModule } from 'ng-zorro-antd/layout';
+import { TriMenuModule } from 'ng-zorro-antd/menu';
 
 @Component({
-  selector: 'nz-demo-layout-fixed-sider',
-  imports: [NzIconModule, NzMenuModule, NzLayoutModule],
+  selector: '',
+  imports: [TriIconModule, TriMenuModule, TriLayoutModule],
   template: `
-    <nz-layout class="layout">
-      <nz-sider>
+    <tri-layout class="layout">
+      <tri-sider>
         <div class="logo"></div>
-        <ul nz-menu nzTheme="dark" nzMode="inline">
-          <li nz-menu-item>
-            <nz-icon nzType="file" />
+        <ul tri-menu theme="dark" mode="inline">
+          <li tri-menu-item>
+            <tri-icon type="file" />
             <span>nav 1</span>
           </li>
-          <li nz-menu-item>
-            <nz-icon nzType="video-camera" />
+          <li tri-menu-item>
+            <tri-icon type="video-camera" />
             <span>nav 2</span>
           </li>
-          <li nz-menu-item>
-            <nz-icon nzType="upload" />
+          <li tri-menu-item>
+            <tri-icon type="upload" />
             <span>nav 3</span>
           </li>
-          <li nz-menu-item>
-            <nz-icon nzType="bar-chart" />
+          <li tri-menu-item>
+            <tri-icon type="bar-chart" />
             <span>nav 4</span>
           </li>
-          <li nz-menu-item>
-            <nz-icon nzType="cloud-o" />
+          <li tri-menu-item>
+            <tri-icon type="cloud-o" />
             <span>nav 5</span>
           </li>
-          <li nz-menu-item>
-            <nz-icon nzType="appstore-o" />
+          <li tri-menu-item>
+            <tri-icon type="appstore-o" />
             <span>nav 6</span>
           </li>
-          <li nz-menu-item>
-            <nz-icon nzType="team" />
+          <li tri-menu-item>
+            <tri-icon type="team" />
             <span>nav 7</span>
           </li>
-          <li nz-menu-item>
-            <nz-icon nzType="shop" />
+          <li tri-menu-item>
+            <tri-icon type="shop" />
             <span>nav 8</span>
           </li>
         </ul>
-      </nz-sider>
-      <nz-layout class="right-layout">
-        <nz-header></nz-header>
-        <nz-content>
+      </tri-sider>
+      <tri-layout class="right-layout">
+        <tri-header></tri-header>
+        <tri-content>
           <div class="inner-content">
             ...
             <br />
@@ -146,10 +146,10 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
             <br />
             content
           </div>
-        </nz-content>
-        <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
-      </nz-layout>
-    </nz-layout>
+        </tri-content>
+        <tri-footer>Ant Design ©2020 Implement By Angular</tri-footer>
+      </tri-layout>
+    </tri-layout>
   `,
   styles: [
     `
@@ -196,4 +196,4 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
     `
   ]
 })
-export class NzDemoLayoutFixedSiderComponent {}
+export class TriDemoLayoutFixedSiderComponent {}

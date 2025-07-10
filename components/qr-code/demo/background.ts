@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 
-import { NzQRCodeModule } from 'ng-zorro-antd/qr-code';
+import { TriQRCodeModule } from 'ng-zorro-antd/qr-code';
 
 @Component({
-  selector: 'nz-demo-qr-code-background',
-  imports: [NzQRCodeModule],
+  selector: '',
+  imports: [TriQRCodeModule],
   template: `
-    <nz-qrcode nzBgColor="#f6f6f6" nzColor="#ff6600" nzValue="https://ng.ant.design/"></nz-qrcode>
-    <nz-qrcode nzBgColor="#f6f6f6" nzColor="#1677ff" nzValue="https://ng.ant.design/"></nz-qrcode>
+    <tri-qrcode bgColor="#f6f6f6" color="#ff6600" value="https://ng.ant.design/"></tri-qrcode>
+    <tri-qrcode bgColor="#f6f6f6" color="#1677ff" value="https://ng.ant.design/"></tri-qrcode>
   `,
   styles: [
     `
@@ -17,4 +17,4 @@ import { NzQRCodeModule } from 'ng-zorro-antd/qr-code';
     `
   ]
 })
-export class NzDemoQrCodeBackgroundComponent {}
+export class TriDemoQrCodeBackgroundComponent {}

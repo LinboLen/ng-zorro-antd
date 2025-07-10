@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzCascaderModule, NzCascaderOption } from 'ng-zorro-antd/cascader';
+import { TriCascaderModule, TriCascaderOption } from 'ng-zorro-antd/cascader';
 
 const options = [
   {
@@ -52,29 +52,29 @@ const options = [
 ];
 
 @Component({
-  selector: 'nz-demo-cascader-custom-field-names',
-  imports: [FormsModule, NzCascaderModule],
+  selector: '',
+  imports: [FormsModule, TriCascaderModule],
   template: `
-    <nz-cascader
-      [nzChangeOn]="validate"
-      [nzOptions]="nzOptions"
-      [nzLabelProperty]="'name'"
-      [nzValueProperty]="'code'"
-      [nzShowSearch]="true"
+    <tri-cascader
+      [changeOn]="validate"
+      [options]="options"
+      [labelProperty]="'name'"
+      [valueProperty]="'code'"
+      [showSearch]="true"
       [(ngModel)]="values"
       (ngModelChange)="onChanges($event)"
-    ></nz-cascader>
+    ></tri-cascader>
   `
 })
-export class NzDemoCascaderCustomFieldNamesComponent {
-  nzOptions: NzCascaderOption[] = options;
+export class TriDemoCascaderCustomFieldNamesComponent {
+  options: TriCascaderOption[] = options;
   values: string[] | null = null;
 
   onChanges(values: string[]): void {
     console.log(values, this.values);
   }
 
-  validate(option: NzCascaderOption, _index: number): boolean {
+  validate(option: TriCascaderOption, _index: number): boolean {
     const value = option.value as string;
     return ['hangzhou', 'xihu', 'nanjing', 'zhonghuamen'].indexOf(value) >= 0;
   }

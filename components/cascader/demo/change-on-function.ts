@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzCascaderModule, NzCascaderOption } from 'ng-zorro-antd/cascader';
+import { TriCascaderModule, TriCascaderOption } from 'ng-zorro-antd/cascader';
 
-const options: NzCascaderOption[] = [
+const options: TriCascaderOption[] = [
   {
     value: 'zhejiang',
     label: 'Zhejiang',
@@ -52,26 +52,26 @@ const options: NzCascaderOption[] = [
 ];
 
 @Component({
-  selector: 'nz-demo-cascader-change-on-function',
-  imports: [FormsModule, NzCascaderModule],
+  selector: '',
+  imports: [FormsModule, TriCascaderModule],
   template: `
-    <nz-cascader
-      [nzChangeOn]="validate"
-      [nzOptions]="nzOptions"
+    <tri-cascader
+      [changeOn]="validate"
+      [options]="options"
       [(ngModel)]="values"
       (ngModelChange)="onChanges($event)"
-    ></nz-cascader>
+    ></tri-cascader>
   `
 })
-export class NzDemoCascaderChangeOnFunctionComponent {
-  nzOptions: NzCascaderOption[] = options;
+export class TriDemoCascaderChangeOnFunctionComponent {
+  options: TriCascaderOption[] = options;
   values: string[] | null = null;
 
   onChanges(values: string[]): void {
     console.log(values, this.values);
   }
 
-  validate(option: NzCascaderOption, _index: number): boolean {
+  validate(option: TriCascaderOption, _index: number): boolean {
     const value = option.value as string;
     return ['hangzhou', 'xihu', 'nanjing', 'zhonghuamen'].indexOf(value) >= 0;
   }

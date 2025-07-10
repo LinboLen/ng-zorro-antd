@@ -1,28 +1,28 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 @Component({
-  selector: 'nz-demo-date-picker-time',
-  imports: [FormsModule, NzDatePickerModule],
+  selector: '',
+  imports: [FormsModule, TriDatePickerModule],
   template: `
-    <nz-date-picker
-      nzShowTime
-      nzFormat="yyyy-MM-dd HH:mm:ss"
+    <tri-date-picker
+      showTime
+      format="yyyy-MM-dd HH:mm:ss"
       ngModel
       (ngModelChange)="onChange($event)"
-      (nzOnOk)="onOk($event)"
-    ></nz-date-picker>
+      (onOk)="onOk($event)"
+    ></tri-date-picker>
     <br />
-    <nz-range-picker
-      [nzShowTime]="{ nzFormat: 'HH:mm' }"
-      nzFormat="yyyy-MM-dd HH:mm"
+    <tri-range-picker
+      [showTime]="{ nzFormat: 'HH:mm' }"
+      format="yyyy-MM-dd HH:mm"
       ngModel
       (ngModelChange)="onChange($event)"
-      (nzOnCalendarChange)="onCalendarChange($event)"
-      (nzOnOk)="onOk($event)"
-    ></nz-range-picker>
+      (onCalendarChange)="onCalendarChange($event)"
+      (onOk)="onOk($event)"
+    ></tri-range-picker>
   `,
   styles: [
     `
@@ -33,7 +33,7 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
     `
   ]
 })
-export class NzDemoDatePickerTimeComponent {
+export class TriDemoDatePickerTimeComponent {
   onChange(result: Date): void {
     console.log('Selected Time: ', result);
   }

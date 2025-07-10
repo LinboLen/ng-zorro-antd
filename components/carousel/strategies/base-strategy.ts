@@ -7,15 +7,15 @@ import { Platform } from '@angular/cdk/platform';
 import { ChangeDetectorRef, QueryList, Renderer2 } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NzCarouselContentDirective } from '../carousel-content.directive';
-import { FromToInterface, NzCarouselComponentAsSource, PointerVector } from '../typings';
+import { TriCarouselContentDirective } from '../carousel-content.directive';
+import { FromToInterface, TriCarouselComponentAsSource, PointerVector } from '../typings';
 
-export abstract class NzCarouselBaseStrategy<T = NzSafeAny> {
+export abstract class TriCarouselBaseStrategy<T = TriSafeAny> {
   // Properties that strategies may want to use.
-  protected carouselComponent: NzCarouselComponentAsSource | null;
-  protected contents!: NzCarouselContentDirective[];
+  protected carouselComponent: TriCarouselComponentAsSource | null;
+  protected contents!: TriCarouselContentDirective[];
   protected slickListEl!: HTMLElement;
   protected slickTrackEl!: HTMLElement;
   protected length!: number;
@@ -35,7 +35,7 @@ export abstract class NzCarouselBaseStrategy<T = NzSafeAny> {
   }
 
   constructor(
-    carouselComponent: NzCarouselComponentAsSource,
+    carouselComponent: TriCarouselComponentAsSource,
     protected cdr: ChangeDetectorRef,
     protected renderer: Renderer2,
     protected platform: Platform,
@@ -49,7 +49,7 @@ export abstract class NzCarouselBaseStrategy<T = NzSafeAny> {
    *
    * @param contents
    */
-  withCarouselContents(contents: QueryList<NzCarouselContentDirective> | null): void {
+  withCarouselContents(contents: QueryList<TriCarouselContentDirective> | null): void {
     const carousel = this.carouselComponent!;
     this.slickListEl = carousel.slickListEl;
     this.slickTrackEl = carousel.slickTrackEl;

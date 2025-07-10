@@ -21,14 +21,14 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable, Subject } from 'rxjs';
 
-import { NzNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 @Component({
   template: ''
 })
-export class NzTreeView<T> extends CdkTree<T> implements OnInit, OnDestroy {
-  noAnimation = inject(NzNoAnimationDirective, { host: true, optional: true });
+export class TriTreeView<T> extends CdkTree<T> implements OnInit, OnDestroy {
+  noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
   protected destroyRef = inject(DestroyRef);
   protected directionality = inject(Directionality);
   protected cdr = inject(ChangeDetectorRef);
@@ -37,7 +37,7 @@ export class NzTreeView<T> extends CdkTree<T> implements OnInit, OnDestroy {
   _dataSourceChanged = new Subject<void>();
 
   // eslint-disable-next-line @angular-eslint/no-input-rename
-  @Input('nzTreeControl') override treeControl?: TreeControl<T, NzSafeAny> = undefined;
+  @Input('nzTreeControl') override treeControl?: TreeControl<T, TriSafeAny> = undefined;
   @Input('nzDataSource')
   override get dataSource(): DataSource<T> | Observable<T[]> | T[] {
     return super.dataSource;
@@ -45,8 +45,8 @@ export class NzTreeView<T> extends CdkTree<T> implements OnInit, OnDestroy {
   override set dataSource(dataSource: DataSource<T> | Observable<T[]> | T[]) {
     super.dataSource = dataSource;
   }
-  @Input({ transform: booleanAttribute }) nzDirectoryTree = false;
-  @Input({ transform: booleanAttribute }) nzBlockNode = false;
+  @Input({ transform: booleanAttribute }) directoryTree = false;
+  @Input({ transform: booleanAttribute }) blockNode = false;
 
   override ngOnInit(): void {
     super.ngOnInit();

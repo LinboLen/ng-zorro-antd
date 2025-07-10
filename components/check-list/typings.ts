@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export interface NzItemProps {
+export interface TriItemProps {
   description: string;
   onClick?: () => void;
   key?: string;

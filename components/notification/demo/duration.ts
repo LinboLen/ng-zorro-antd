@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
-  selector: 'nz-demo-notification-duration',
-  imports: [NzButtonModule],
-  template: `<button nz-button nzType="primary" (click)="createNotification()">Open the notification box</button>`
+  selector: '',
+  imports: [TriButtonModule],
+  template: `<button tri-button type="primary" (click)="createNotification()">Open the notification box</button>`
 })
-export class NzDemoNotificationDurationComponent {
-  constructor(private notification: NzNotificationService) {}
+export class TriDemoNotificationDurationComponent {
+  constructor(private notification: TriNotificationService) {}
 
   createNotification(): void {
     this.notification.blank(

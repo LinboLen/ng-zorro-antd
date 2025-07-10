@@ -27,28 +27,28 @@ import { defaultColor, generateColor } from './util/util';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'ng-antd-color-picker',
+  selector: '',
   imports: [PickerComponent, SliderComponent, NgAntdColorBlockComponent, NgTemplateOutlet],
   template: `
-    <div class="ant-color-picker-panel" [class.ant-color-picker-panel-disabled]="disabled">
+    <div class="tri-color-picker-panel" [class.tri-color-picker-panel-disabled]="disabled">
       @if (panelRenderHeader) {
         <ng-template [ngTemplateOutlet]="panelRenderHeader"></ng-template>
       }
       <color-picker
         [color]="colorValue"
-        (nzOnChange)="handleChange($event)"
+        (onChange)="handleChange($event)"
         [disabled]="disabled"
-        (nzOnChangeComplete)="nzOnChangeComplete.emit($event)"
+        (onChangeComplete)="onChangeComplete.emit($event)"
       ></color-picker>
-      <div class="ant-color-picker-slider-container">
-        <div class="ant-color-picker-slider-group" [class.ant-color-picker-slider-group-disabled-alpha]="disabledAlpha">
+      <div class="tri-color-picker-slider-container">
+        <div class="tri-color-picker-slider-group" [class.tri-color-picker-slider-group-disabled-alpha]="disabledAlpha">
           <color-slider
             [color]="colorValue"
             [value]="'hsl(' + colorValue?.toHsb()?.h + ',100%, 50%)'"
             [gradientColors]="hueColor"
-            (nzOnChange)="handleChange($event, 'hue')"
+            (onChange)="handleChange($event, 'hue')"
             [disabled]="disabled"
-            (nzOnChangeComplete)="nzOnChangeComplete.emit($event)"
+            (onChangeComplete)="onChangeComplete.emit($event)"
           ></color-slider>
           @if (!disabledAlpha) {
             <color-slider
@@ -56,9 +56,9 @@ import { defaultColor, generateColor } from './util/util';
               [color]="colorValue"
               [value]="toRgbString"
               [gradientColors]="gradientColors"
-              (nzOnChange)="handleChange($event, 'alpha')"
+              (onChange)="handleChange($event, 'alpha')"
               [disabled]="disabled"
-              (nzOnChangeComplete)="nzOnChangeComplete.emit($event)"
+              (onChangeComplete)="onChangeComplete.emit($event)"
             ></color-slider>
           }
         </div>
@@ -75,8 +75,8 @@ export class NgAntdColorPickerComponent implements OnInit, OnChanges {
 
   @Input() value: ColorValue;
   @Input() defaultValue: ColorValue;
-  @Output() readonly nzOnChange = new EventEmitter<{ color: Color; type?: HsbaColorType }>();
-  @Output() readonly nzOnChangeComplete = new EventEmitter<HsbaColorType>();
+  @Output() readonly onChange = new EventEmitter<{ color: Color; type?: HsbaColorType }>();
+  @Output() readonly onChangeComplete = new EventEmitter<HsbaColorType>();
   @Input() panelRenderHeader: TemplateRef<void> | null = null;
   @Input() panelRenderFooter: TemplateRef<void> | null = null;
   @Input({ transform: booleanAttribute }) disabledAlpha: boolean = false;
@@ -138,6 +138,6 @@ export class NgAntdColorPickerComponent implements OnInit, OnChanges {
 
   handleChange(color: Color, type?: HsbaColorType): void {
     this.setColorValue(color);
-    this.nzOnChange.emit({ color, type });
+    this.onChange.emit({ color, type });
   }
 }

@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 
-import { NzFormatEmitEvent, NzTreeModule } from 'ng-zorro-antd/tree';
+import { TriFormatEmitEvent, TriTreeModule } from 'ng-zorro-antd/tree';
 
 @Component({
-  selector: 'nz-demo-tree-line',
-  imports: [NzTreeModule],
-  template: `<nz-tree [nzData]="nodes" nzShowLine (nzClick)="nzEvent($event)"></nz-tree>`
+  selector: '',
+  imports: [TriTreeModule],
+  template: `<tri-tree [data]="nodes" showLine (click)="event($event)"></tri-tree>`
 })
-export class NzDemoTreeLineComponent {
+export class TriDemoTreeLineComponent {
   readonly nodes = [
     {
       title: 'parent 1',
@@ -41,7 +41,7 @@ export class NzDemoTreeLineComponent {
     }
   ];
 
-  nzEvent(event: NzFormatEmitEvent): void {
+  event(event: TriFormatEmitEvent): void {
     console.log(event);
   }
 }

@@ -13,43 +13,43 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 
 import { badgePresetColors } from './preset-colors';
 
 @Component({
-  selector: 'nz-ribbon',
-  exportAs: 'nzRibbon',
+  selector: '',
+  exportAs: 'triRibbon',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NzOutletModule],
+  imports: [TriOutletModule],
   template: `
     <ng-content></ng-content>
     <div
-      class="ant-ribbon"
+      class="tri-ribbon"
       [class]="presetColor && 'ant-ribbon-color-' + presetColor"
-      [class.ant-ribbon-placement-end]="nzPlacement === 'end'"
-      [class.ant-ribbon-placement-start]="nzPlacement === 'start'"
-      [style.background-color]="!presetColor && nzColor"
+      [class.tri-ribbon-placement-end]="placement === 'end'"
+      [class.tri-ribbon-placement-start]="placement === 'start'"
+      [style.background-color]="!presetColor && color"
     >
-      <ng-container *nzStringTemplateOutlet="nzText">
-        <span class="ant-ribbon-text">{{ nzText }}</span>
+      <ng-container *stringTemplateOutlet="text">
+        <span class="tri-ribbon-text">{{ text }}</span>
       </ng-container>
-      <div class="ant-ribbon-corner" [style.color]="!presetColor && nzColor"></div>
+      <div class="tri-ribbon-corner" [style.color]="!presetColor && color"></div>
     </div>
   `,
-  host: { class: 'ant-ribbon-wrapper' }
+  host: { class: 'tri-ribbon-wrapper' }
 })
-export class NzRibbonComponent implements OnChanges {
-  @Input() nzColor: string | undefined;
-  @Input() nzPlacement: 'start' | 'end' = 'end';
-  @Input() nzText: string | TemplateRef<void> | null = null;
+export class TriRibbonComponent implements OnChanges {
+  @Input() color: string | undefined;
+  @Input() placement: 'start' | 'end' = 'end';
+  @Input() text: string | TemplateRef<void> | null = null;
   presetColor: string | null = null;
 
   ngOnChanges(changes: SimpleChanges): void {
     const { nzColor } = changes;
     if (nzColor) {
-      this.presetColor = this.nzColor && badgePresetColors.indexOf(this.nzColor) !== -1 ? this.nzColor : null;
+      this.presetColor = this.color && badgePresetColors.indexOf(this.color) !== -1 ? this.color : null;
     }
   }
 }

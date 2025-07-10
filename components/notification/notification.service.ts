@@ -5,77 +5,77 @@
 
 import { Injectable, TemplateRef } from '@angular/core';
 
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzMNService } from 'ng-zorro-antd/message';
+import type { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { TriMNService } from 'ng-zorro-antd/message';
 
-import { NzNotificationContainerComponent } from './notification-container.component';
-import type { NzNotificationComponent } from './notification.component';
-import { NzNotificationContentType, NzNotificationData, NzNotificationDataOptions, NzNotificationRef } from './typings';
+import { TriNotificationContainerComponent } from './notification-container.component';
+import type { TriNotificationComponent } from './notification.component';
+import { TriNotificationContentType, TriNotificationData, TriNotificationDataOptions, TriNotificationRef } from './typings';
 
 let notificationId = 0;
 
 @Injectable({
   providedIn: 'root'
 })
-export class NzNotificationService extends NzMNService<NzNotificationContainerComponent> {
+export class TriNotificationService extends TriMNService<TriNotificationContainerComponent> {
   protected componentPrefix = 'notification-';
 
   success(
     title: string | TemplateRef<void>,
-    content: NzNotificationContentType,
-    options?: NzNotificationDataOptions
-  ): NzNotificationRef {
+    content: TriNotificationContentType,
+    options?: TriNotificationDataOptions
+  ): TriNotificationRef {
     return this.create('success', title, content, options);
   }
 
   error(
     title: string | TemplateRef<void>,
-    content: NzNotificationContentType,
-    options?: NzNotificationDataOptions
-  ): NzNotificationRef {
+    content: TriNotificationContentType,
+    options?: TriNotificationDataOptions
+  ): TriNotificationRef {
     return this.create('error', title, content, options);
   }
 
   info(
     title: string | TemplateRef<void>,
-    content: NzNotificationContentType,
-    options?: NzNotificationDataOptions
-  ): NzNotificationRef {
+    content: TriNotificationContentType,
+    options?: TriNotificationDataOptions
+  ): TriNotificationRef {
     return this.create('info', title, content, options);
   }
 
   warning(
     title: string | TemplateRef<void>,
-    content: NzNotificationContentType,
-    options?: NzNotificationDataOptions
-  ): NzNotificationRef {
+    content: TriNotificationContentType,
+    options?: TriNotificationDataOptions
+  ): TriNotificationRef {
     return this.create('warning', title, content, options);
   }
 
   blank(
     title: string | TemplateRef<void>,
-    content: NzNotificationContentType,
-    options?: NzNotificationDataOptions
-  ): NzNotificationRef {
+    content: TriNotificationContentType,
+    options?: TriNotificationDataOptions
+  ): TriNotificationRef {
     return this.create('blank', title, content, options);
   }
 
   create(
     type: 'success' | 'info' | 'warning' | 'error' | 'blank' | string,
     title: string | TemplateRef<void>,
-    content: NzNotificationContentType,
-    options?: NzNotificationDataOptions
-  ): NzNotificationRef {
+    content: TriNotificationContentType,
+    options?: TriNotificationDataOptions
+  ): TriNotificationRef {
     return this.createInstance({ type, title, content }, options);
   }
 
   template(
     template: TemplateRef<{
-      $implicit: NzNotificationComponent;
-      data: NzSafeAny;
+      $implicit: TriNotificationComponent;
+      data: TriSafeAny;
     }>,
-    options?: NzNotificationDataOptions
-  ): NzNotificationRef {
+    options?: TriNotificationDataOptions
+  ): TriNotificationRef {
     return this.createInstance({ template }, options);
   }
 
@@ -83,8 +83,8 @@ export class NzNotificationService extends NzMNService<NzNotificationContainerCo
     return `${this.componentPrefix}-${notificationId++}`;
   }
 
-  private createInstance(message: NzNotificationData, options?: NzNotificationDataOptions): NzNotificationRef {
-    this.container = this.withContainer(NzNotificationContainerComponent);
+  private createInstance(message: TriNotificationData, options?: TriNotificationDataOptions): TriNotificationRef {
+    this.container = this.withContainer(TriNotificationContainerComponent);
 
     return this.container.create({
       ...message,

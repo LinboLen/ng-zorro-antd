@@ -4,7 +4,7 @@
  */
 
 // TODO: replace other size with this type.
-export type NzSizeLDSType = 'large' | 'default' | 'small';
-export type NzSizeLMSType = 'large' | 'middle' | 'small';
-export type NzSizeMDSType = 'middle' | 'default' | 'small';
-export type NzSizeDSType = 'default' | 'small';
+export type TriSizeLDSType = 'large' | 'default' | 'small';
+export type TriSizeLMSType = 'large' | 'middle' | 'small';
+export type TriSizeMDSType = 'middle' | 'default' | 'small';
+export type TriSizeDSType = 'default' | 'small';

@@ -11,14 +11,14 @@ import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { createKeyboardEvent, dispatchKeyboardEvent } from 'ng-zorro-antd/core/testing';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import en_US from 'ng-zorro-antd/i18n/languages/en_US';
-import { NzI18nService } from 'ng-zorro-antd/i18n/nz-i18n.service';
+import { TriI18nService } from 'ng-zorro-antd/i18n/nz-i18n.service';
 
-import { NzPaginationComponent } from './pagination.component';
-import { NzPaginationModule } from './pagination.module';
+import { TriPaginationComponent } from './pagination.component';
+import { TriPaginationModule } from './pagination.module';
 
-declare const viewport: NzSafeAny;
+declare const viewport: TriSafeAny;
 
 describe('pagination', () => {
   beforeEach(waitForAsync(() => {
@@ -28,16 +28,16 @@ describe('pagination', () => {
   }));
 
   describe('pagination complex', () => {
-    let fixture: ComponentFixture<NzTestPaginationComponent>;
-    let testComponent: NzTestPaginationComponent;
+    let fixture: ComponentFixture<TriTestPaginationComponent>;
+    let testComponent: TriTestPaginationComponent;
     let pagination: DebugElement;
     let paginationElement: HTMLElement;
     let paginationRootElement: HTMLElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestPaginationComponent);
+      fixture = TestBed.createComponent(TriTestPaginationComponent);
       testComponent = fixture.debugElement.componentInstance;
-      pagination = fixture.debugElement.query(By.directive(NzPaginationComponent));
+      pagination = fixture.debugElement.query(By.directive(TriPaginationComponent));
       fixture.detectChanges();
       paginationRootElement = pagination.nativeElement;
       paginationElement = pagination.nativeElement.querySelector('ul')!;
@@ -184,7 +184,7 @@ describe('pagination', () => {
       it('should change pageSize correct', () => {
         testComponent.pageIndex = 5;
         fixture.detectChanges();
-        testComponent.nzPaginationComponent.onPageSizeChange(20);
+        testComponent.paginationComponent.onPageSizeChange(20);
         fixture.detectChanges();
         expect(testComponent.pageIndex).toBe(3);
         expect(testComponent.pageSizeChange).toHaveBeenCalledTimes(1);
@@ -275,8 +275,8 @@ describe('pagination', () => {
       expect(pagination.nativeElement.innerText).toEqual('');
     });
     it('should be hidden pagination when total is 0 and nzHideOnSinglePage is true', () => {
-      (testComponent as NzTestPaginationComponent).total = 0;
-      (testComponent as NzTestPaginationComponent).hideOnSinglePage = true;
+      (testComponent as TriTestPaginationComponent).total = 0;
+      (testComponent as TriTestPaginationComponent).hideOnSinglePage = true;
       fixture.detectChanges();
       expect(fixture.debugElement.nativeElement.querySelector('.ant-pagination').children.length).toBe(0);
     });
@@ -299,12 +299,12 @@ describe('pagination', () => {
   });
 
   describe('pagination render items', () => {
-    let fixture: ComponentFixture<NzTestPaginationRenderComponent>;
+    let fixture: ComponentFixture<TriTestPaginationRenderComponent>;
     let pagination: DebugElement;
     let paginationElement: HTMLElement;
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestPaginationRenderComponent);
-      pagination = fixture.debugElement.query(By.directive(NzPaginationComponent));
+      fixture = TestBed.createComponent(TriTestPaginationRenderComponent);
+      pagination = fixture.debugElement.query(By.directive(TriPaginationComponent));
       fixture.detectChanges();
       paginationElement = pagination.nativeElement.querySelector('ul')!;
     });
@@ -317,15 +317,15 @@ describe('pagination', () => {
   });
 
   describe('pagination total items', () => {
-    let fixture: ComponentFixture<NzTestPaginationTotalComponent>;
-    let testComponent: NzTestPaginationTotalComponent;
+    let fixture: ComponentFixture<TriTestPaginationTotalComponent>;
+    let testComponent: TriTestPaginationTotalComponent;
     let pagination: DebugElement;
     let paginationElement: HTMLElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestPaginationTotalComponent);
+      fixture = TestBed.createComponent(TriTestPaginationTotalComponent);
       testComponent = fixture.debugElement.componentInstance;
-      pagination = fixture.debugElement.query(By.directive(NzPaginationComponent));
+      pagination = fixture.debugElement.query(By.directive(TriPaginationComponent));
       fixture.detectChanges();
       paginationElement = pagination.nativeElement.querySelector('ul')!;
     });
@@ -343,8 +343,8 @@ describe('pagination', () => {
   });
 
   it('should auto resize work', fakeAsync(() => {
-    const fixture = TestBed.createComponent(NzTestPaginationAutoResizeComponent);
-    const pagination = fixture.debugElement.query(By.directive(NzPaginationComponent));
+    const fixture = TestBed.createComponent(TriTestPaginationAutoResizeComponent);
+    const pagination = fixture.debugElement.query(By.directive(TriPaginationComponent));
 
     viewport.set(1200, 350);
     fixture.detectChanges();
@@ -362,10 +362,10 @@ describe('pagination', () => {
   }));
 
   it('#i18n', () => {
-    const fixture = TestBed.createComponent(NzTestPaginationComponent);
+    const fixture = TestBed.createComponent(TriTestPaginationComponent);
     const dl = fixture.debugElement;
     fixture.detectChanges();
-    TestBed.inject(NzI18nService).setLocale(en_US);
+    TestBed.inject(TriI18nService).setLocale(en_US);
     fixture.detectChanges();
     const prevText = (dl.query(By.css('.ant-pagination-prev')).nativeElement as HTMLElement).title;
     expect(prevText).toBe(en_US.Pagination.prev_page);
@@ -374,13 +374,13 @@ describe('pagination', () => {
   });
 
   describe('RTL', () => {
-    let fixture: ComponentFixture<NzTestPaginationRtlComponent>;
+    let fixture: ComponentFixture<TriTestPaginationRtlComponent>;
     let pagination: DebugElement;
     let paginationElement: HTMLElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestPaginationRtlComponent);
-      pagination = fixture.debugElement.query(By.directive(NzPaginationComponent));
+      fixture = TestBed.createComponent(TriTestPaginationRtlComponent);
+      pagination = fixture.debugElement.query(By.directive(TriPaginationComponent));
       fixture.detectChanges();
       paginationElement = pagination.nativeElement.querySelector('ul')!;
     });
@@ -415,32 +415,32 @@ describe('pagination', () => {
 });
 
 @Component({
-  imports: [NzPaginationModule],
+  imports: [TriPaginationModule],
   template: `
-    <nz-pagination
-      [nzSimple]="simple"
-      [(nzPageIndex)]="pageIndex"
-      [nzDisabled]="disabled"
-      (nzPageIndexChange)="pageIndexChange($event)"
-      [(nzPageSize)]="pageSize"
-      (nzPageSizeChange)="pageSizeChange($event)"
-      [nzSize]="size"
-      [nzTotal]="total"
-      [nzHideOnSinglePage]="hideOnSinglePage"
-      [nzPageSizeOptions]="pageSizeOptions"
-      [nzShowSizeChanger]="showSizeChanger"
-      [nzShowQuickJumper]="showQuickJumper"
-    ></nz-pagination>
+    <tri-pagination
+      [simple]="simple"
+      [(pageIndexChange)]="pageIndex"
+      [disabled]="disabled"
+      (pageIndexChange)="pageIndexChange($event)"
+      [(pageSizeChange)]="pageSize"
+      (pageSizeChange)="pageSizeChange($event)"
+      [size]="size"
+      [total]="total"
+      [hideOnSinglePage]="hideOnSinglePage"
+      [pageSizeOptions]="pageSizeOptions"
+      [showSizeChanger]="showSizeChanger"
+      [showQuickJumper]="showQuickJumper"
+    ></tri-pagination>
   `
 })
-export class NzTestPaginationComponent {
-  @ViewChild(NzPaginationComponent, { static: false }) nzPaginationComponent!: NzPaginationComponent;
+export class TriTestPaginationComponent {
+  @ViewChild(TriPaginationComponent, { static: false }) paginationComponent!: TriPaginationComponent;
   pageIndex = 1;
   pageSize = 10;
   total = 50;
   disabled = false;
-  pageIndexChange = jasmine.createSpy<NzSafeAny>('pageIndexChange callback');
-  pageSizeChange = jasmine.createSpy<NzSafeAny>('pageSizeChange callback');
+  pageIndexChange = jasmine.createSpy<TriSafeAny>('pageIndexChange callback');
+  pageSizeChange = jasmine.createSpy<TriSafeAny>('pageSizeChange callback');
   showQuickJumper = false;
   showSizeChanger = false;
   hideOnSinglePage = false;
@@ -450,9 +450,9 @@ export class NzTestPaginationComponent {
 }
 
 @Component({
-  imports: [NzPaginationModule],
+  imports: [TriPaginationModule],
   template: `
-    <nz-pagination [nzPageIndex]="1" [nzTotal]="50" [nzItemRender]="renderItemTemplate"></nz-pagination>
+    <tri-pagination [pageIndex]="1" [total]="50" [itemRender]="renderItemTemplate"></tri-pagination>
     <ng-template #renderItemTemplate let-type let-page="page">
       @switch (type) {
         @case ('prev') {
@@ -468,46 +468,46 @@ export class NzTestPaginationComponent {
     </ng-template>
   `
 })
-export class NzTestPaginationRenderComponent {}
+export class TriTestPaginationRenderComponent {}
 
 @Component({
-  imports: [NzPaginationModule],
+  imports: [TriPaginationModule],
   template: `
-    <nz-pagination
-      [(nzPageIndex)]="pageIndex"
-      [nzTotal]="85"
-      [nzPageSize]="20"
-      [nzShowTotal]="rangeTemplate"
-    ></nz-pagination>
+    <tri-pagination
+      [(pageIndexChange)]="pageIndex"
+      [total]="85"
+      [pageSize]="20"
+      [showTotal]="rangeTemplate"
+    ></tri-pagination>
     <ng-template #rangeTemplate let-range="range" let-total>
       {{ range[0] }}-{{ range[1] }} of {{ total }} items
     </ng-template>
   `
 })
-export class NzTestPaginationTotalComponent {
+export class TriTestPaginationTotalComponent {
   pageIndex = 1;
 }
 
 @Component({
-  imports: [NzPaginationModule],
-  template: `<nz-pagination nzResponsive></nz-pagination>`
+  imports: [TriPaginationModule],
+  template: `<tri-pagination responsive></tri-pagination>`
 })
-export class NzTestPaginationAutoResizeComponent {}
+export class TriTestPaginationAutoResizeComponent {}
 
 @Component({
-  imports: [BidiModule, NzPaginationModule],
+  imports: [BidiModule, TriPaginationModule],
   template: `
     <div [dir]="direction">
-      <nz-pagination
-        [nzSimple]="false"
-        [(nzPageIndex)]="pageIndex"
-        [nzTotal]="total"
-        [(nzPageSize)]="pageSize"
-      ></nz-pagination>
+      <tri-pagination
+        [simple]="false"
+        [(pageIndexChange)]="pageIndex"
+        [total]="total"
+        [(pageSizeChange)]="pageSize"
+      ></tri-pagination>
     </div>
   `
 })
-export class NzTestPaginationRtlComponent {
+export class TriTestPaginationRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
   pageIndex = 1;

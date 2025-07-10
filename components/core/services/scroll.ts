@@ -6,7 +6,7 @@
 import { DOCUMENT, inject, Injectable, NgZone } from '@angular/core';
 
 import { requestAnimationFrame } from 'ng-zorro-antd/core/polyfill';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 export type EasyingFn = (t: number, b: number, c: number, d: number) => number;
 
@@ -20,7 +20,7 @@ function easeInOutCubic(t: number, b: number, c: number, d: number): number {
   }
 }
 
-export interface NzScrollToOptions {
+export interface TriScrollToOptions {
   /** Scroll container, default as window */
   easing?: EasyingFn;
   /** Scroll end callback */
@@ -32,7 +32,7 @@ export interface NzScrollToOptions {
 @Injectable({
   providedIn: 'root'
 })
-export class NzScrollService {
+export class TriScrollService {
   private doc: Document = inject(DOCUMENT);
   private ngZone = inject(NgZone);
 
@@ -90,7 +90,7 @@ export class NzScrollService {
     return result;
   }
 
-  isWindow(obj: NzSafeAny): boolean {
+  isWindow(obj: TriSafeAny): boolean {
     return obj !== null && obj !== undefined && obj === obj.window;
   }
 
@@ -104,7 +104,7 @@ export class NzScrollService {
   scrollTo(
     containerEl?: Element | HTMLElement | Window | Document | null,
     y: number = 0,
-    options: NzScrollToOptions = {}
+    options: TriScrollToOptions = {}
   ): void {
     const target = containerEl ? containerEl : window;
     const scrollTop = this.getScroll(target);

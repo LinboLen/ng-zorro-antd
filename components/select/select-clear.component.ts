@@ -14,28 +14,28 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'nz-select-clear',
+  selector: '',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (clearIcon) {
       <ng-template [ngTemplateOutlet]="clearIcon"></ng-template>
     } @else {
-      <nz-icon nzType="close-circle" nzTheme="fill" class="ant-select-close-icon" />
+      <tri-icon type="close-circle" theme="fill" class="tri-select-close-icon" />
     }
   `,
   host: {
-    class: 'ant-select-clear',
+    class: 'tri-select-clear',
     '(click)': 'onClick($event)'
   },
-  imports: [NgTemplateOutlet, NzIconModule]
+  imports: [NgTemplateOutlet, TriIconModule]
 })
-export class NzSelectClearComponent {
-  @Input() clearIcon: TemplateRef<NzSafeAny> | null = null;
+export class TriSelectClearComponent {
+  @Input() clearIcon: TemplateRef<TriSafeAny> | null = null;
   @Output() readonly clear = new EventEmitter<MouseEvent>();
 
   onClick(e: MouseEvent): void {

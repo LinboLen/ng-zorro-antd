@@ -7,7 +7,7 @@ import { Directive } from '@angular/core';
 
 /** Decorates the `ng-template` tags and reads out the template from it. */
 @Directive({
-  selector: '[nz-tab]',
-  exportAs: 'nzTab'
+  selector: '',
+  exportAs: 'triTab'
 })
-export class NzTabDirective {}
+export class TriTabDirective {}

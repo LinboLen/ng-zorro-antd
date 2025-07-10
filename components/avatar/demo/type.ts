@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 
-import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { TriAvatarModule } from 'ng-zorro-antd/avatar';
 
 @Component({
-  selector: 'nz-demo-avatar-type',
-  imports: [NzAvatarModule],
+  selector: '',
+  imports: [TriAvatarModule],
   template: `
-    <nz-avatar nzIcon="user"></nz-avatar>
-    <nz-avatar nzText="U"></nz-avatar>
-    <nz-avatar nzText="USER"></nz-avatar>
-    <nz-avatar nzIcon="user" nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
-    <nz-avatar nzText="U" style="color:#f56a00; background-color:#fde3cf;"></nz-avatar>
-    <nz-avatar nzIcon="user" style="background-color:#87d068;"></nz-avatar>
+    <tri-avatar icon="user"></tri-avatar>
+    <tri-avatar text="U"></tri-avatar>
+    <tri-avatar text="USER"></tri-avatar>
+    <tri-avatar icon="user" src="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></tri-avatar>
+    <tri-avatar text="U" style="color:#f56a00; background-color:#fde3cf;"></tri-avatar>
+    <tri-avatar icon="user" style="background-color:#87d068;"></tri-avatar>
   `,
   styles: [
     `
@@ -22,4 +22,4 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
     `
   ]
 })
-export class NzDemoAvatarTypeComponent {}
+export class TriDemoAvatarTypeComponent {}

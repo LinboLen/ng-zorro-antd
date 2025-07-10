@@ -42,16 +42,16 @@ import {
   MockNgZone,
   typeInElement
 } from 'ng-zorro-antd/core/testing';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { TriInputModule } from 'ng-zorro-antd/input';
 
 import { getNzAutocompleteMissingPanelError } from './autocomplete-trigger.directive';
 import {
-  NzAutocompleteComponent,
-  NzAutocompleteModule,
-  NzAutocompleteOptionComponent,
-  NzAutocompleteTriggerDirective,
-  NzOptionSelectionChange
+  TriAutocompleteComponent,
+  TriAutocompleteModule,
+  TriAutocompleteOptionComponent,
+  TriAutocompleteTriggerDirective,
+  TriOptionSelectionChange
 } from './index';
 
 describe('auto-complete', () => {
@@ -87,11 +87,11 @@ describe('auto-complete', () => {
   }));
 
   describe('toggling', () => {
-    let fixture: ComponentFixture<NzTestSimpleAutocompleteComponent>;
+    let fixture: ComponentFixture<TriTestSimpleAutocompleteComponent>;
     let input: HTMLInputElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestSimpleAutocompleteComponent);
+      fixture = TestBed.createComponent(TriTestSimpleAutocompleteComponent);
       fixture.detectChanges();
       input = fixture.debugElement.query(By.css('input')).nativeElement;
     });
@@ -292,14 +292,14 @@ describe('auto-complete', () => {
   });
 
   describe('property', () => {
-    let fixture: ComponentFixture<NzTestAutocompletePropertyComponent>;
+    let fixture: ComponentFixture<TriTestAutocompletePropertyComponent>;
     let input: HTMLInputElement;
     let DOWN_ARROW_EVENT: KeyboardEvent;
     let ENTER_EVENT: KeyboardEvent;
     let TAB_EVENT: KeyboardEvent;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestAutocompletePropertyComponent);
+      fixture = TestBed.createComponent(TriTestAutocompletePropertyComponent);
       fixture.detectChanges();
       input = fixture.debugElement.query(By.css('input')).nativeElement;
       DOWN_ARROW_EVENT = createKeyboardEvent('keydown', DOWN_ARROW);
@@ -396,11 +396,11 @@ describe('auto-complete', () => {
   });
 
   describe('value', () => {
-    let fixture: ComponentFixture<NzTestSimpleAutocompleteComponent>;
+    let fixture: ComponentFixture<TriTestSimpleAutocompleteComponent>;
     let input: HTMLInputElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestSimpleAutocompleteComponent);
+      fixture = TestBed.createComponent(TriTestSimpleAutocompleteComponent);
       fixture.detectChanges();
       input = fixture.debugElement.query(By.css('input')).nativeElement;
     });
@@ -488,12 +488,12 @@ describe('auto-complete', () => {
   });
 
   describe('object option', () => {
-    let fixture: ComponentFixture<NzTestAutocompleteWithObjectOptionComponent>;
-    let componentInstance: NzTestAutocompleteWithObjectOptionComponent;
+    let fixture: ComponentFixture<TriTestAutocompleteWithObjectOptionComponent>;
+    let componentInstance: TriTestAutocompleteWithObjectOptionComponent;
     let input: HTMLInputElement;
 
     beforeEach(fakeAsync(() => {
-      fixture = TestBed.createComponent(NzTestAutocompleteWithObjectOptionComponent);
+      fixture = TestBed.createComponent(TriTestAutocompleteWithObjectOptionComponent);
       componentInstance = fixture.componentInstance;
       flush();
       fixture.detectChanges();
@@ -502,7 +502,7 @@ describe('auto-complete', () => {
 
     it('should select init option', fakeAsync(() => {
       componentInstance.trigger.openPanel();
-      const options = componentInstance.trigger.nzAutocomplete.options.toArray();
+      const options = componentInstance.trigger.autocomplete.options.toArray();
       expect(options[0].selected).toBe(true);
       expect(input.value).toBe('Lucy');
       expect(componentInstance.formControl.value).toEqual({ label: 'Lucy', value: 'lucy' });
@@ -513,7 +513,7 @@ describe('auto-complete', () => {
       flush();
       fixture.detectChanges();
       componentInstance.trigger.openPanel();
-      const options = componentInstance.trigger.nzAutocomplete.options.toArray();
+      const options = componentInstance.trigger.autocomplete.options.toArray();
       expect(options[0].selected).toBe(false);
       expect(options[1].selected).toBe(true);
       expect(input.value).toBe('Jack');
@@ -528,11 +528,11 @@ describe('auto-complete', () => {
   });
 
   describe('form', () => {
-    let fixture: ComponentFixture<NzTestAutocompleteWithFormComponent>;
+    let fixture: ComponentFixture<TriTestAutocompleteWithFormComponent>;
     let input: HTMLInputElement;
 
     beforeEach(fakeAsync(() => {
-      fixture = TestBed.createComponent(NzTestAutocompleteWithFormComponent);
+      fixture = TestBed.createComponent(TriTestAutocompleteWithFormComponent);
       fixture.detectChanges();
       input = fixture.debugElement.query(By.css('input')).nativeElement;
     }));
@@ -574,7 +574,7 @@ describe('auto-complete', () => {
     });
 
     it('should set correct label', fakeAsync(() => {
-      const differentValueWithFormFixture = TestBed.createComponent(NzTestAutocompleteDifferentValueWithFormComponent);
+      const differentValueWithFormFixture = TestBed.createComponent(TriTestAutocompleteDifferentValueWithFormComponent);
       differentValueWithFormFixture.detectChanges();
       flush();
       differentValueWithFormFixture.detectChanges();
@@ -589,13 +589,13 @@ describe('auto-complete', () => {
   });
 
   describe('option groups', () => {
-    let fixture: ComponentFixture<NzTestAutocompleteGroupComponent>;
+    let fixture: ComponentFixture<TriTestAutocompleteGroupComponent>;
     let input: HTMLInputElement;
     let DOWN_ARROW_EVENT: KeyboardEvent;
     let ENTER_EVENT: KeyboardEvent;
 
     beforeEach(fakeAsync(() => {
-      fixture = TestBed.createComponent(NzTestAutocompleteGroupComponent);
+      fixture = TestBed.createComponent(TriTestAutocompleteGroupComponent);
       fixture.detectChanges();
 
       input = fixture.debugElement.query(By.css('input')).nativeElement;
@@ -628,10 +628,10 @@ describe('auto-complete', () => {
   });
 
   describe('Option selection', () => {
-    let fixture: ComponentFixture<NzTestSimpleAutocompleteComponent>;
+    let fixture: ComponentFixture<TriTestSimpleAutocompleteComponent>;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestSimpleAutocompleteComponent);
+      fixture = TestBed.createComponent(TriTestSimpleAutocompleteComponent);
       fixture.detectChanges();
     });
 
@@ -685,14 +685,14 @@ describe('auto-complete', () => {
   });
 
   describe('keyboard events', () => {
-    let fixture: ComponentFixture<NzTestSimpleAutocompleteComponent>;
+    let fixture: ComponentFixture<TriTestSimpleAutocompleteComponent>;
     let input: HTMLInputElement;
     let DOWN_ARROW_EVENT: KeyboardEvent;
     let UP_ARROW_EVENT: KeyboardEvent;
     let ENTER_EVENT: KeyboardEvent;
 
     beforeEach(fakeAsync(() => {
-      fixture = TestBed.createComponent(NzTestSimpleAutocompleteComponent);
+      fixture = TestBed.createComponent(TriTestSimpleAutocompleteComponent);
       fixture.detectChanges();
       input = fixture.debugElement.query(By.css('input')).nativeElement;
 
@@ -890,7 +890,7 @@ describe('auto-complete', () => {
       const trigger = fixture.componentInstance.trigger;
 
       trigger.panelOpen = true;
-      trigger.nzAutocomplete.showPanel = true;
+      trigger.autocomplete.showPanel = true;
       const event = new KeyboardEvent('keydown', {
         key: 'Enter',
         code: 'Enter',
@@ -917,10 +917,10 @@ describe('auto-complete', () => {
   // });
 
   describe('misc', () => {
-    let fixture: ComponentFixture<NzTestAutocompleteWithoutPanelComponent>;
+    let fixture: ComponentFixture<TriTestAutocompleteWithoutPanelComponent>;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestAutocompleteWithoutPanelComponent);
+      fixture = TestBed.createComponent(TriTestAutocompleteWithoutPanelComponent);
       fixture.detectChanges();
     });
 
@@ -936,7 +936,7 @@ describe('auto-complete', () => {
       'should show the panel when the options are initialized later within a component with ' +
         'OnPush change detection',
       fakeAsync(() => {
-        fixture = TestBed.createComponent(NzTestAutocompleteWithOnPushDelayComponent);
+        fixture = TestBed.createComponent(TriTestAutocompleteWithOnPushDelayComponent);
         fixture.detectChanges();
 
         dispatchFakeEvent(fixture.debugElement.query(By.css('input')).nativeElement, 'focusin');
@@ -958,11 +958,11 @@ describe('auto-complete', () => {
   });
 
   describe('group-input', () => {
-    let fixture: ComponentFixture<NzTestAutocompleteWithGroupInputComponent>;
+    let fixture: ComponentFixture<TriTestAutocompleteWithGroupInputComponent>;
     let input: HTMLInputElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(NzTestAutocompleteWithGroupInputComponent);
+      fixture = TestBed.createComponent(TriTestAutocompleteWithGroupInputComponent);
       fixture.detectChanges();
       input = fixture.debugElement.query(By.css('input')).nativeElement;
     });
@@ -981,33 +981,33 @@ describe('auto-complete', () => {
 });
 
 @Component({
-  imports: [ReactiveFormsModule, NzAutocompleteModule, NzInputModule],
+  imports: [ReactiveFormsModule, TriAutocompleteModule, TriInputModule],
   template: `
     <div>
       <input
         class="input"
-        nz-input
+        tri-input
         [formControl]="inputControl"
-        [nzAutocomplete]="auto"
+        [autocomplete]="auto"
         (input)="onInput($any($event).target?.value)"
       />
-      <nz-autocomplete #auto>
+      <tri-autocomplete #auto>
         @for (option of filteredOptions; track option) {
-          <nz-auto-option [nzValue]="option">{{ option }}</nz-auto-option>
+          <tri-auto-option [value]="option">{{ option }}</tri-auto-option>
         }
-      </nz-autocomplete>
+      </tri-autocomplete>
     </div>
   `
 })
-class NzTestSimpleAutocompleteComponent {
+class TriTestSimpleAutocompleteComponent {
   inputValue!: string;
   filteredOptions: Array<string | number>;
   inputControl = new FormControl<string | number | null>('');
   options: Array<string | number> = ['Burns Bay Road', 'Downing Street', 'Wall Street'];
 
-  @ViewChild(NzAutocompleteComponent, { static: false }) panel!: NzAutocompleteComponent;
-  @ViewChild(NzAutocompleteTriggerDirective, { static: false }) trigger!: NzAutocompleteTriggerDirective;
-  @ViewChildren(NzAutocompleteOptionComponent) optionComponents!: QueryList<NzAutocompleteOptionComponent>;
+  @ViewChild(TriAutocompleteComponent, { static: false }) panel!: TriAutocompleteComponent;
+  @ViewChild(TriAutocompleteTriggerDirective, { static: false }) trigger!: TriAutocompleteTriggerDirective;
+  @ViewChildren(TriAutocompleteOptionComponent) optionComponents!: QueryList<TriAutocompleteOptionComponent>;
 
   constructor() {
     this.filteredOptions = this.options;
@@ -1019,53 +1019,53 @@ class NzTestSimpleAutocompleteComponent {
 }
 
 @Component({
-  imports: [FormsModule, NzAutocompleteModule],
+  imports: [FormsModule, TriAutocompleteModule],
   template: `
     <div>
-      <input [(ngModel)]="inputValue" [nzAutocomplete]="auto" />
-      <nz-autocomplete
-        [nzWidth]="width"
-        [nzOverlayClassName]="overlayClassName"
-        [nzOverlayStyle]="overlayStyle"
-        [nzDataSource]="options"
-        [nzDefaultActiveFirstOption]="false"
-        nzBackfill
+      <input [(ngModel)]="inputValue" [autocomplete]="auto" />
+      <tri-autocomplete
+        [width]="width"
+        [overlayClassName]="overlayClassName"
+        [overlayStyle]="overlayStyle"
+        [dataSource]="options"
+        [defaultActiveFirstOption]="false"
+        backfill
         #auto
-      ></nz-autocomplete>
+      ></tri-autocomplete>
     </div>
   `
 })
-class NzTestAutocompletePropertyComponent {
+class TriTestAutocompletePropertyComponent {
   inputValue?: string;
   width?: number;
   overlayClassName = '';
   overlayStyle = {};
   options = ['Burns Bay Road', 'Downing Street', 'Wall Street'];
-  @ViewChild(NzAutocompleteComponent, { static: false }) panel!: NzAutocompleteComponent;
-  @ViewChild(NzAutocompleteTriggerDirective, { static: false }) trigger!: NzAutocompleteTriggerDirective;
+  @ViewChild(TriAutocompleteComponent, { static: false }) panel!: TriAutocompleteComponent;
+  @ViewChild(TriAutocompleteTriggerDirective, { static: false }) trigger!: TriAutocompleteTriggerDirective;
 }
 
 @Component({
-  imports: [NzAutocompleteModule],
-  template: `<input [nzAutocomplete]="auto" />`
+  imports: [TriAutocompleteModule],
+  template: `<input [autocomplete]="auto" />`
 })
-class NzTestAutocompleteWithoutPanelComponent {
-  @ViewChild(NzAutocompleteTriggerDirective, { static: false }) trigger!: NzAutocompleteTriggerDirective;
+class TriTestAutocompleteWithoutPanelComponent {
+  @ViewChild(TriAutocompleteTriggerDirective, { static: false }) trigger!: TriAutocompleteTriggerDirective;
 }
 
 @Component({
-  imports: [NzAutocompleteModule],
+  imports: [TriAutocompleteModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div>
-      <input [nzAutocomplete]="auto" />
-      <nz-autocomplete [nzDataSource]="options" #auto></nz-autocomplete>
+      <input [autocomplete]="auto" />
+      <tri-autocomplete [dataSource]="options" #auto></tri-autocomplete>
     </div>
   `
 })
-class NzTestAutocompleteWithOnPushDelayComponent implements OnInit {
+class TriTestAutocompleteWithOnPushDelayComponent implements OnInit {
   options: string[] = [];
-  @ViewChild(NzAutocompleteTriggerDirective, { static: false }) trigger!: NzAutocompleteTriggerDirective;
+  @ViewChild(TriAutocompleteTriggerDirective, { static: false }) trigger!: TriAutocompleteTriggerDirective;
 
   constructor(private cdr: ChangeDetectorRef) {}
 
@@ -1078,12 +1078,12 @@ class NzTestAutocompleteWithOnPushDelayComponent implements OnInit {
 }
 
 @Component({
-  imports: [FormsModule, NzAutocompleteModule],
+  imports: [FormsModule, TriAutocompleteModule],
   template: `
-    <input [nzAutocomplete]="auto" [(ngModel)]="inputValue" />
-    <nz-autocomplete #auto>
+    <input [autocomplete]="auto" [(ngModel)]="inputValue" />
+    <tri-autocomplete #auto>
       @for (group of optionGroups; track group.title) {
-        <nz-auto-optgroup [nzLabel]="groupTitle">
+        <tri-auto-optgroup [label]="groupTitle">
           <ng-template #groupTitle>
             <span>
               {{ group.title }}
@@ -1091,17 +1091,17 @@ class NzTestAutocompleteWithOnPushDelayComponent implements OnInit {
             </span>
           </ng-template>
           @for (option of group.children; track option.title) {
-            <nz-auto-option [nzValue]="option.title" [nzDisabled]="option.disabled">
+            <tri-auto-option [value]="option.title" [disabled]="option.disabled">
               {{ option.title }}
               <span class="certain-search-item-count">{{ option.count }} 人 关注</span>
-            </nz-auto-option>
+            </tri-auto-option>
           }
-        </nz-auto-optgroup>
+        </tri-auto-optgroup>
       }
-    </nz-autocomplete>
+    </tri-autocomplete>
   `
 })
-class NzTestAutocompleteGroupComponent {
+class TriTestAutocompleteGroupComponent {
   inputValue!: string;
   optionGroups: Array<{ title: string; children: Array<{ title: string; count: number; disabled?: boolean }> }> = [
     {
@@ -1142,72 +1142,72 @@ class NzTestAutocompleteGroupComponent {
     }
   ];
 
-  @ViewChild(NzAutocompleteTriggerDirective, { static: false }) trigger!: NzAutocompleteTriggerDirective;
+  @ViewChild(TriAutocompleteTriggerDirective, { static: false }) trigger!: TriAutocompleteTriggerDirective;
 }
 
 @Component({
-  imports: [ReactiveFormsModule, NzAutocompleteModule],
+  imports: [ReactiveFormsModule, TriAutocompleteModule],
   template: `
     <form>
-      <input [formControl]="formControl" [nzAutocomplete]="auto" />
-      <nz-autocomplete #auto>
+      <input [formControl]="formControl" [autocomplete]="auto" />
+      <tri-autocomplete #auto>
         @for (option of options; track option) {
-          <nz-auto-option [nzValue]="option">{{ option }}</nz-auto-option>
+          <tri-auto-option [value]="option">{{ option }}</tri-auto-option>
         }
-      </nz-autocomplete>
+      </tri-autocomplete>
     </form>
   `
 })
-class NzTestAutocompleteWithFormComponent {
+class TriTestAutocompleteWithFormComponent {
   formControl = new FormControl('Burns');
   options = ['Burns Bay Road', 'Downing Street', 'Wall Street'];
-  @ViewChild(NzAutocompleteTriggerDirective, { static: false }) trigger!: NzAutocompleteTriggerDirective;
+  @ViewChild(TriAutocompleteTriggerDirective, { static: false }) trigger!: TriAutocompleteTriggerDirective;
 }
 
 @Component({
-  imports: [ReactiveFormsModule, NzAutocompleteModule],
+  imports: [ReactiveFormsModule, TriAutocompleteModule],
   template: `
-    <input [formControl]="formControl" [nzAutocomplete]="auto" />
-    <nz-autocomplete #auto>
+    <input [formControl]="formControl" [autocomplete]="auto" />
+    <tri-autocomplete #auto>
       @for (option of options; track option.value) {
-        <nz-auto-option [nzValue]="option.value" [nzLabel]="option.label">
+        <tri-auto-option [value]="option.value" [label]="option.label">
           {{ option.label }}
-        </nz-auto-option>
+        </tri-auto-option>
       }
-    </nz-autocomplete>
+    </tri-autocomplete>
   `
 })
-class NzTestAutocompleteDifferentValueWithFormComponent {
+class TriTestAutocompleteDifferentValueWithFormComponent {
   formControl = new FormControl('lucy');
   options = [
     { label: 'Lucy', value: 'lucy' },
     { label: 'Jack', value: 'jack' }
   ];
-  @ViewChild(NzAutocompleteTriggerDirective) trigger!: NzAutocompleteTriggerDirective;
+  @ViewChild(TriAutocompleteTriggerDirective) trigger!: TriAutocompleteTriggerDirective;
 }
 
 @Component({
-  imports: [ReactiveFormsModule, NzAutocompleteModule],
+  imports: [ReactiveFormsModule, TriAutocompleteModule],
   template: `
-    <input [formControl]="formControl" [nzAutocomplete]="auto" />
-    <nz-autocomplete #auto [compareWith]="compareFun">
+    <input [formControl]="formControl" [autocomplete]="auto" />
+    <tri-autocomplete #auto [compareWith]="compareFun">
       @for (option of options; track option.value) {
-        <nz-auto-option [nzValue]="option" [nzLabel]="option.label">
+        <tri-auto-option [value]="option" [label]="option.label">
           {{ option.label }}
-        </nz-auto-option>
+        </tri-auto-option>
       }
-    </nz-autocomplete>
+    </tri-autocomplete>
   `
 })
-class NzTestAutocompleteWithObjectOptionComponent {
+class TriTestAutocompleteWithObjectOptionComponent {
   formControl = new FormControl<string | { label: string; value: string } | null>({ label: 'Lucy', value: 'lucy' });
   options = [
     { label: 'Lucy', value: 'lucy' },
     { label: 'Jack', value: 'jack' }
   ];
-  @ViewChild(NzAutocompleteTriggerDirective) trigger!: NzAutocompleteTriggerDirective;
+  @ViewChild(TriAutocompleteTriggerDirective) trigger!: TriAutocompleteTriggerDirective;
 
-  compareFun = (o1: NzSafeAny, o2: NzSafeAny): boolean => {
+  compareFun = (o1: TriSafeAny, o2: TriSafeAny): boolean => {
     if (o1) {
       return typeof o1 === 'string' ? o1 === o2.label : o1.value === o2.value;
     } else {
@@ -1217,25 +1217,25 @@ class NzTestAutocompleteWithObjectOptionComponent {
 }
 
 @Component({
-  imports: [NzAutocompleteModule, NzInputModule],
+  imports: [TriAutocompleteModule, TriInputModule],
   template: `
-    <nz-input-group #inputGroupComponent nzSize="large" [nzSuffix]="suffixIcon">
-      <input placeholder="input here" nz-input [nzAutocomplete]="auto" />
+    <tri-input-group #inputGroupComponent size="large" [suffix]="suffixIcon">
+      <input placeholder="input here" tri-input [autocomplete]="auto" />
       <ng-template #suffixIcon></ng-template>
-      <nz-autocomplete #auto>
-        <nz-auto-option nzValue="value">label</nz-auto-option>
-      </nz-autocomplete>
-    </nz-input-group>
+      <tri-autocomplete #auto>
+        <tri-auto-option value="value">label</tri-auto-option>
+      </tri-autocomplete>
+    </tri-input-group>
   `
 })
-class NzTestAutocompleteWithGroupInputComponent {
-  @ViewChild(NzAutocompleteTriggerDirective, { static: false }) trigger!: NzAutocompleteTriggerDirective;
+class TriTestAutocompleteWithGroupInputComponent {
+  @ViewChild(TriAutocompleteTriggerDirective, { static: false }) trigger!: TriAutocompleteTriggerDirective;
   @ViewChild('inputGroupComponent', { static: false, read: ElementRef }) inputGroupComponent!: ElementRef;
 }
 
 describe('auto-complete', () => {
-  let component: NzAutocompleteComponent;
-  let fixture: ComponentFixture<NzAutocompleteComponent>;
+  let component: TriAutocompleteComponent;
+  let fixture: ComponentFixture<TriAutocompleteComponent>;
   let mockDirectionality: MockDirectionality;
 
   beforeEach(() => {
@@ -1243,7 +1243,7 @@ describe('auto-complete', () => {
       providers: [{ provide: Directionality, useClass: MockDirectionality }]
     });
 
-    fixture = TestBed.createComponent(NzAutocompleteComponent);
+    fixture = TestBed.createComponent(TriAutocompleteComponent);
     component = fixture.componentInstance;
     mockDirectionality = TestBed.inject(Directionality) as unknown as MockDirectionality;
   });
@@ -1337,7 +1337,7 @@ describe('auto-complete', () => {
   });
 
   it('NzOptionSelectionChange should have correct initial value for isUserInput', () => {
-    const nzOptionSelectionChange = new NzOptionSelectionChange({} as NzSafeAny);
+    const nzOptionSelectionChange = new TriOptionSelectionChange({} as TriSafeAny);
     expect(nzOptionSelectionChange.isUserInput).toBeFalsy();
   });
 });
