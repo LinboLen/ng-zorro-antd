@@ -43,7 +43,7 @@ import { TriI18nService, TriTextI18nInterface } from 'ng-zorro-antd/i18n';
 import { TriTextCopyComponent } from './text-copy.component';
 import { TriTextEditComponent } from './text-edit.component';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'typography';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'typography';
 const EXPAND_ELEMENT_CLASSNAME = 'ant-typography-expand';
 
 @Component({
@@ -131,7 +131,7 @@ const EXPAND_ELEMENT_CLASSNAME = 'ant-typography-expand';
   imports: [NgTemplateOutlet, TriTextEditComponent, TriTextCopyComponent]
 })
 export class TriTypographyComponent implements OnInit, AfterViewInit, OnChanges {
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   configService = inject(TriConfigService);
   private el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;

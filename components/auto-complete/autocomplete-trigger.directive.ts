@@ -40,7 +40,7 @@ import { TriAutocompleteComponent } from './autocomplete.component';
 /**
  * @deprecated Internally used, will be removed in v21, please do not use it.
  */
-export const NZ_AUTOCOMPLETE_VALUE_ACCESSOR: ExistingProvider = {
+export const TRI_AUTOCOMPLETE_VALUE_ACCESSOR: ExistingProvider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => TriAutocompleteTriggerDirective),
   multi: true
@@ -60,7 +60,7 @@ export function getNzAutocompleteMissingPanelError(): Error {
 @Directive({
   selector: `input[nzAutocomplete], textarea[nzAutocomplete]`,
   exportAs: 'triAutocompleteTrigger',
-  providers: [NZ_AUTOCOMPLETE_VALUE_ACCESSOR],
+  providers: [TRI_AUTOCOMPLETE_VALUE_ACCESSOR],
   host: {
     autocomplete: 'off',
     'aria-autocomplete': 'list',

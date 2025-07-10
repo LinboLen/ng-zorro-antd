@@ -54,7 +54,7 @@ import { TriTableInnerScrollComponent } from './table-inner-scroll.component';
 import { TriTableVirtualScrollDirective } from './table-virtual-scroll.directive';
 import { TriTableTitleFooterComponent } from './title-footer.component';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'table';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'table';
 
 @Component({
   selector: '',
@@ -159,7 +159,7 @@ const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'table';
   ]
 })
 export class TriTableComponent<T> implements OnInit, OnChanges, AfterViewInit {
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   private elementRef = inject(ElementRef);
   private resizeObserver = inject(TriResizeObserver);
@@ -238,7 +238,7 @@ export class TriTableComponent<T> implements OnInit, OnChanges, AfterViewInit {
   }
 
   constructor() {
-    onConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME, () => this.cdr.markForCheck());
+    onConfigChangeEventForComponent(TRI_CONFIG_MODULE_NAME, () => this.cdr.markForCheck());
   }
 
   ngOnInit(): void {

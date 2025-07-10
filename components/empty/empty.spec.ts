@@ -7,12 +7,12 @@ import { Component, DebugElement, TemplateRef, ViewChild, inject } from '@angula
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NZ_CONFIG, TriConfigService } from 'ng-zorro-antd/core/config';
+import { TRI_CONFIG, TriConfigService } from 'ng-zorro-antd/core/config';
 import { TriI18nService } from 'ng-zorro-antd/i18n';
 import en_US from 'ng-zorro-antd/i18n/languages/en_US';
 import { TriListModule } from 'ng-zorro-antd/list';
 
-import { NZ_EMPTY_COMPONENT_NAME } from './config';
+import { TRI_EMPTY_COMPONENT_NAME } from './config';
 import { TriEmbedEmptyComponent } from './embed-empty.component';
 import { TriEmptyComponent } from './empty.component';
 import { TriEmptyModule } from './empty.module';
@@ -228,7 +228,7 @@ describe('nz-empty', () => {
         TestBed.configureTestingModule({
           providers: [
             {
-              provide: NZ_CONFIG,
+              provide: TRI_CONFIG,
               useValue: {
                 empty: {
                   nzDefaultEmptyContent: TriEmptyTestCustomComponent
@@ -315,5 +315,5 @@ export class TriEmptyTestServiceComponent {
   template: `<div>I'm in component {{ name }}</div>`
 })
 export class TriEmptyTestCustomComponent {
-  name = inject(NZ_EMPTY_COMPONENT_NAME);
+  name = inject(TRI_EMPTY_COMPONENT_NAME);
 }

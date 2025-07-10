@@ -7,7 +7,7 @@ import { booleanAttribute, ChangeDetectionStrategy, Component, ElementRef, injec
 
 import { TriSizeLDSType } from 'ng-zorro-antd/core/types';
 
-import { NZ_SPACE_COMPACT_ITEMS, NZ_SPACE_COMPACT_SIZE } from './space-compact.token';
+import { TRI_SPACE_COMPACT_ITEMS, TRI_SPACE_COMPACT_SIZE } from './space-compact.token';
 
 @Component({
   selector: '',
@@ -19,8 +19,8 @@ import { NZ_SPACE_COMPACT_ITEMS, NZ_SPACE_COMPACT_SIZE } from './space-compact.t
     '[class.tri-space-compact-vertical]': `direction() === 'vertical'`
   },
   providers: [
-    { provide: NZ_SPACE_COMPACT_SIZE, useFactory: () => inject(TriSpaceCompactComponent).size },
-    { provide: NZ_SPACE_COMPACT_ITEMS, useFactory: () => signal([]) }
+    { provide: TRI_SPACE_COMPACT_SIZE, useFactory: () => inject(TriSpaceCompactComponent).size },
+    { provide: TRI_SPACE_COMPACT_ITEMS, useFactory: () => signal([]) }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

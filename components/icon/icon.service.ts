@@ -12,14 +12,14 @@ import { IconDefinition, IconService } from '@ant-design/icons-angular';
 import { IconConfig, TriConfigService, onConfigChangeEventForComponent } from 'ng-zorro-antd/core/config';
 import { warn } from 'ng-zorro-antd/core/logger';
 
-import { NZ_ICONS_USED_BY_ZORRO } from './icons';
+import { TRI_ICONS_USED_BY_ZORRO } from './icons';
 
 export interface TriIconfontOption {
   scriptUrl: string;
 }
 
-export const NZ_ICONS = new InjectionToken<IconDefinition[]>('nz_icons');
-export const NZ_ICON_DEFAULT_TWOTONE_COLOR = new InjectionToken('nz_icon_default_twotone_color');
+export const TRI_ICONS = new InjectionToken<IconDefinition[]>('nz_icons');
+export const TRI_ICON_DEFAULT_TWOTONE_COLOR = new InjectionToken('nz_icon_default_twotone_color');
 export const DEFAULT_TWOTONE_COLOR = '#1890ff';
 
 /**
@@ -69,7 +69,7 @@ export class TriIconService extends IconService {
   }
 
   constructor() {
-    super([...NZ_ICONS_USED_BY_ZORRO, ...(inject(NZ_ICONS, { optional: true }) || [])]);
+    super([...TRI_ICONS_USED_BY_ZORRO, ...(inject(TRI_ICONS, { optional: true }) || [])]);
 
     this.onConfigChange();
     this.configDefaultTwotoneColor();
@@ -111,12 +111,12 @@ export class TriIconService extends IconService {
   }
 }
 
-export const NZ_ICONS_PATCH = new InjectionToken<IconDefinition[]>('nz_icons_patch');
+export const TRI_ICONS_PATCH = new InjectionToken<IconDefinition[]>('nz_icons_patch');
 
 @Injectable()
 export class TriIconPatchService {
   patched = false;
-  private extraIcons = inject(NZ_ICONS_PATCH, { self: true });
+  private extraIcons = inject(TRI_ICONS_PATCH, { self: true });
 
   constructor(private rootIconService: TriIconService) {}
 

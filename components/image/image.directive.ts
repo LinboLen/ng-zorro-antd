@@ -24,10 +24,10 @@ import { takeUntil } from 'rxjs/operators';
 import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
 
 import { TriImageGroupComponent } from './image-group.component';
-import { NZ_DEFAULT_SCALE_STEP } from './image-preview.component';
+import { TRI_DEFAULT_SCALE_STEP } from './image-preview.component';
 import { TriImageService } from './image.service';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'image';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'image';
 
 export type ImageStatusType = 'error' | 'loading' | 'normal';
 export type TriImageUrl = string;
@@ -48,7 +48,7 @@ export class TriImageDirective implements OnInit, OnChanges {
   protected cdr = inject(ChangeDetectorRef);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   @Input() src = '';
   @Input() srcset = '';
@@ -95,7 +95,7 @@ export class TriImageDirective implements OnInit, OnChanges {
       previewAbleImages.forEach(imageDirective => {
         scaleStepMap.set(
           imageDirective.src ?? imageDirective.srcset,
-          imageDirective.scaleStep ?? this.parentGroup!.scaleStep ?? this.scaleStep ?? NZ_DEFAULT_SCALE_STEP
+          imageDirective.scaleStep ?? this.parentGroup!.scaleStep ?? this.scaleStep ?? TRI_DEFAULT_SCALE_STEP
         );
       });
       const previewRef = this.imageService.preview(
@@ -111,7 +111,7 @@ export class TriImageDirective implements OnInit, OnChanges {
       const previewImages = [{ src: this.src, srcset: this.srcset }];
       this.imageService.preview(previewImages, {
         direction: this.dir,
-        scaleStep: this.scaleStep ?? NZ_DEFAULT_SCALE_STEP
+        scaleStep: this.scaleStep ?? TRI_DEFAULT_SCALE_STEP
       });
     }
   }

@@ -37,7 +37,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 
 import { TriFloatButtonComponent } from './float-button.component';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'backTop';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'backTop';
 
 const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: true });
 
@@ -79,7 +79,7 @@ export class TriFloatButtonTopComponent implements OnInit, OnChanges {
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
 
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   private scrollListenerDestroy$ = new Subject<void>();
   #target?: HTMLElement | null = null;

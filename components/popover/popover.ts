@@ -30,7 +30,7 @@ import {
   isTooltipEmpty
 } from 'ng-zorro-antd/tooltip';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'popover';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'popover';
 
 @Directive({
   selector: '',
@@ -40,7 +40,7 @@ const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'popover';
   }
 })
 export class TriPopoverDirective extends TriTooltipBaseDirective {
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   /* eslint-disable @angular-eslint/no-input-rename, @angular-eslint/no-output-rename */
   @Input({ alias: 'nzPopoverArrowPointAtCenter', transform: booleanAttribute }) override arrowPointAtCenter?: boolean;

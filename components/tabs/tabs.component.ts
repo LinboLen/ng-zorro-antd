@@ -58,9 +58,9 @@ import { TriTabCloseButtonComponent } from './tab-close-button.component';
 import { TriTabLinkDirective } from './tab-link.directive';
 import { TriTabNavBarComponent } from './tab-nav-bar.component';
 import { TriTabNavItemDirective } from './tab-nav-item.directive';
-import { NZ_TAB_SET, TriTabComponent } from './tab.component';
+import { TRI_TAB_SET, TriTabComponent } from './tab.component';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'tabs';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'tabs';
 
 let nextId = 0;
 
@@ -71,7 +71,7 @@ let nextId = 0;
   changeDetection: ChangeDetectionStrategy.Default,
   providers: [
     {
-      provide: NZ_TAB_SET,
+      provide: TRI_TAB_SET,
       useExisting: forwardRef(() => TriTabsComponent)
     }
   ],
@@ -197,7 +197,7 @@ let nextId = 0;
   ]
 })
 export class TriTabsComponent implements OnInit, AfterContentChecked, AfterContentInit {
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   public configService = inject(TriConfigService);
   private ngZone = inject(NgZone);

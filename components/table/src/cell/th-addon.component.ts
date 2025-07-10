@@ -40,7 +40,7 @@ import {
   TriTableSortOrder
 } from '../table.types';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'table';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'table';
 
 @Component({
   selector:
@@ -85,7 +85,7 @@ const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'table';
   imports: [TriTableFilterComponent, NgTemplateOutlet, TriTableSortersComponent]
 })
 export class TriThAddOnComponent<T> implements OnChanges, OnInit {
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   configService = inject(TriConfigService);
   private el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;

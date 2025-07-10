@@ -77,7 +77,7 @@ import {
   TriSelectPlacementType,
   TriSelectSearchComponent
 } from 'ng-zorro-antd/select';
-import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
+import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
 import { TriCascaderOptionComponent } from './cascader-option.component';
 import { TriCascaderTreeService } from './cascader-tree.service';
@@ -92,7 +92,7 @@ import {
   TriShowSearchOptions
 } from './typings';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'cascader';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'cascader';
 const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
 
 @Component({
@@ -248,7 +248,7 @@ const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
       useExisting: forwardRef(() => TriCascaderComponent),
       multi: true
     },
-    { provide: NZ_SPACE_COMPACT_ITEM_TYPE, useValue: 'select' },
+    { provide: TRI_SPACE_COMPACT_ITEM_TYPE, useValue: 'select' },
     TriCascaderService,
     TriCascaderTreeService
   ],
@@ -299,7 +299,7 @@ export class TriCascaderComponent
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
 
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   @ViewChild('selectContainer', { static: false }) selectContainer!: ElementRef;
 
@@ -435,7 +435,7 @@ export class TriCascaderComponent
   });
 
   #size = signal<TriSizeLDSType>(this.size);
-  private compactSize = inject(NZ_SPACE_COMPACT_SIZE, { optional: true });
+  private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private inputString = '';
   private isOpening = false;
   private delayMenuTimer?: ReturnType<typeof setTimeout>;
@@ -496,7 +496,7 @@ export class TriCascaderComponent
       this.clearDelaySelectTimer();
     });
 
-    onConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME, () => {
+    onConfigChangeEventForComponent(TRI_CONFIG_MODULE_NAME, () => {
       this.#size.set(this.size);
       this.cdr.markForCheck();
     });

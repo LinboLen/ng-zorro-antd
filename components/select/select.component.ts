@@ -67,7 +67,7 @@ import {
   isNotNil,
   numberAttributeWithInfinityFallback
 } from 'ng-zorro-antd/core/util';
-import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
+import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
 import { TriOptionContainerComponent } from './option-container.component';
 import { TriOptionGroupComponent } from './option-group.component';
@@ -91,7 +91,7 @@ const defaultFilterOption: TriFilterOptionType = (searchValue: string, item: Tri
   }
 };
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'select';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'select';
 
 export type TriSelectSizeType = TriSizeLDSType;
 
@@ -104,7 +104,7 @@ export type TriSelectSizeType = TriSizeLDSType;
       useExisting: forwardRef(() => TriSelectComponent),
       multi: true
     },
-    { provide: NZ_SPACE_COMPACT_ITEM_TYPE, useValue: 'select' }
+    { provide: TRI_SPACE_COMPACT_ITEM_TYPE, useValue: 'select' }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
@@ -229,7 +229,7 @@ export type TriSelectSizeType = TriSizeLDSType;
   ]
 })
 export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterContentInit, OnChanges {
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   private readonly ngZone = inject(NgZone);
   private readonly cdr = inject(ChangeDetectorRef);
@@ -327,7 +327,7 @@ export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterCo
   });
 
   #size = signal<TriSizeLDSType>(this.size);
-  private compactSize = inject(NZ_SPACE_COMPACT_SIZE, { optional: true });
+  private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private listOfValue$ = new BehaviorSubject<TriSafeAny[]>([]);
   private listOfTemplateItem$ = new BehaviorSubject<TriSelectItemInterface[]>([]);
   private listOfTagAndTemplateItem: TriSelectItemInterface[] = [];
@@ -637,7 +637,7 @@ export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterCo
       this.focusMonitor.stopMonitoring(this.host);
     });
 
-    onConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME, () => {
+    onConfigChangeEventForComponent(TRI_CONFIG_MODULE_NAME, () => {
       this.#size.set(this.size);
       this.cdr.markForCheck();
     });

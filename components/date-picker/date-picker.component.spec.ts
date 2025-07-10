@@ -23,7 +23,7 @@ import {
 } from 'ng-zorro-antd/core/testing';
 import { NgStyleInterface, TriSafeAny, TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
 import { TriFormModule } from 'ng-zorro-antd/form';
-import { NZ_DATE_LOCALE, TriI18nService } from 'ng-zorro-antd/i18n';
+import { TRI_DATE_LOCALE, TriI18nService } from 'ng-zorro-antd/i18n';
 import en_US from 'ng-zorro-antd/i18n/languages/en_US';
 
 import { TriDatePickerComponent, TriDatePickerSizeType, TriPlacement } from './date-picker.component';
@@ -1396,7 +1396,7 @@ describe('date-fns testing', () => {
 
   beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
-      providers: [provideNoopAnimations(), { provide: NZ_DATE_LOCALE, useValue: enUS }]
+      providers: [provideNoopAnimations(), { provide: TRI_DATE_LOCALE, useValue: enUS }]
     });
   }));
 

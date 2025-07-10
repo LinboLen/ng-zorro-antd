@@ -10,7 +10,7 @@ import { filter, map } from 'rxjs/operators';
 
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NZ_CONFIG, TriConfig, TriConfigKey } from './config';
+import { TRI_CONFIG, TriConfig, TriConfigKey } from './config';
 import { registerTheme } from './css-variables';
 
 const isDefined = function (value?: TriSafeAny): boolean {
@@ -26,7 +26,7 @@ export class TriConfigService {
   private configUpdated$ = new Subject<keyof TriConfig>();
 
   /** Global config holding property. */
-  private readonly config: TriConfig = inject(NZ_CONFIG, { optional: true }) || {};
+  private readonly config: TriConfig = inject(TRI_CONFIG, { optional: true }) || {};
 
   private readonly cspNonce: string | null = inject(CSP_NONCE, { optional: true });
 

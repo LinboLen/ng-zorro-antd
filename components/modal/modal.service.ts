@@ -16,7 +16,7 @@ import { overlayZIndexSetter } from 'ng-zorro-antd/core/overlay';
 import { IndexableObject, TriSafeAny } from 'ng-zorro-antd/core/types';
 import { isNotNil } from 'ng-zorro-antd/core/util';
 
-import { MODAL_MASK_CLASS_NAME, NZ_CONFIG_MODULE_NAME, NZ_MODAL_DATA } from './modal-config';
+import { MODAL_MASK_CLASS_NAME, TRI_CONFIG_MODULE_NAME, TRI_MODAL_DATA } from './modal-config';
 import { TriModalConfirmContainerComponent } from './modal-confirm-container.component';
 import { TriModalContainerComponent } from './modal-container.component';
 import { BaseModalContainerComponent } from './modal-container.directive';
@@ -127,7 +127,7 @@ export class TriModalService implements OnDestroy {
   }
 
   private createOverlay(config: ModalOptions): OverlayRef {
-    const globalConfig: TriSafeAny = this.configService.getConfigForComponent(NZ_CONFIG_MODULE_NAME) || {};
+    const globalConfig: TriSafeAny = this.configService.getConfigForComponent(TRI_CONFIG_MODULE_NAME) || {};
     const overlayConfig = new OverlayConfig({
       hasBackdrop: true,
       scrollStrategy: this.overlay.scrollStrategies.block(),
@@ -202,7 +202,7 @@ export class TriModalService implements OnDestroy {
       parent: userInjector || this.injector,
       providers: [
         { provide: TriModalRef, useValue: modalRef },
-        { provide: NZ_MODAL_DATA, useValue: config.data }
+        { provide: TRI_MODAL_DATA, useValue: config.data }
       ]
     });
   }

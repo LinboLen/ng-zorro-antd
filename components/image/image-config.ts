@@ -5,4 +5,4 @@
 
 import { TriConfigKey } from 'ng-zorro-antd/core/config';
 
-export const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'image';
+export const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'image';

@@ -47,7 +47,7 @@ import { TriGraphNodeComponent } from './graph-node.component';
 import { TriGraphNodeDirective } from './graph-node.directive';
 import { TriGraphZoomDirective } from './graph-zoom.directive';
 import {
-  NZ_GRAPH_LAYOUT_SETTING,
+  TRI_GRAPH_LAYOUT_SETTING,
   TriGraphDataDef,
   TriGraphEdge,
   TriGraphEdgeDef,
@@ -170,7 +170,7 @@ export class TriGraphComponent implements OnInit, OnChanges, AfterContentChecked
 
   public readonly typedNodes = nzTypeDefinition<Array<TriGraphNode | TriGraphGroupNode>>();
   private dataSource?: TriGraphData;
-  private layoutSetting: TriLayoutSetting = NZ_GRAPH_LAYOUT_SETTING;
+  private layoutSetting: TriLayoutSetting = TRI_GRAPH_LAYOUT_SETTING;
   /** Data subscription */
   private _dataSubscription?: Subscription | null;
 
@@ -464,15 +464,15 @@ export class TriGraphComponent implements OnInit, OnChanges, AfterContentChecked
     const subSceneMeta = config?.subScene || {};
     const defaultNodeMeta = config?.defaultNode || {};
     const defaultCompoundNodeMeta = config?.defaultCompoundNode || {};
-    const bridge = NZ_GRAPH_LAYOUT_SETTING.nodeSize.bridge;
+    const bridge = TRI_GRAPH_LAYOUT_SETTING.nodeSize.bridge;
 
-    const graph: TriLayoutSetting['graph'] = { meta: { ...NZ_GRAPH_LAYOUT_SETTING.graph.meta, ...graphMeta } };
+    const graph: TriLayoutSetting['graph'] = { meta: { ...TRI_GRAPH_LAYOUT_SETTING.graph.meta, ...graphMeta } };
     const subScene: TriLayoutSetting['subScene'] = {
-      meta: { ...NZ_GRAPH_LAYOUT_SETTING.subScene.meta, ...subSceneMeta }
+      meta: { ...TRI_GRAPH_LAYOUT_SETTING.subScene.meta, ...subSceneMeta }
     };
     const nodeSize: TriLayoutSetting['nodeSize'] = {
-      meta: { ...NZ_GRAPH_LAYOUT_SETTING.nodeSize.meta, ...defaultCompoundNodeMeta },
-      node: { ...NZ_GRAPH_LAYOUT_SETTING.nodeSize.node, ...defaultNodeMeta },
+      meta: { ...TRI_GRAPH_LAYOUT_SETTING.nodeSize.meta, ...defaultCompoundNodeMeta },
+      node: { ...TRI_GRAPH_LAYOUT_SETTING.nodeSize.node, ...defaultNodeMeta },
       bridge
     };
 

@@ -42,7 +42,7 @@ import { handleCircleGradient, handleLinearGradient } from './utils';
 
 let gradientIdSeed = 0;
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'progress';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'progress';
 const statusIconNameMap = new Map([
   ['success', 'check'],
   ['exception', 'close']
@@ -170,7 +170,7 @@ const defaultFormatter: TriProgressFormatter = (p: number): string => `${p}%`;
   `
 })
 export class TriProgressComponent implements OnChanges, OnInit {
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly directionality = inject(Directionality);
@@ -238,7 +238,7 @@ export class TriProgressComponent implements OnChanges, OnInit {
   private inferredStatus: TriProgressStatusType = 'normal';
 
   constructor() {
-    onConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME, () => {
+    onConfigChangeEventForComponent(TRI_CONFIG_MODULE_NAME, () => {
       this.updateIcon();
       this.setStrokeColor();
       this.getCirclePaths();

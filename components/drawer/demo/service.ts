@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriDividerModule } from 'ng-zorro-antd/divider';
-import { NZ_DRAWER_DATA, TriDrawerModule, TriDrawerRef, TriDrawerService } from 'ng-zorro-antd/drawer';
+import { TRI_DRAWER_DATA, TriDrawerModule, TriDrawerRef, TriDrawerService } from 'ng-zorro-antd/drawer';
 import { TriFormModule } from 'ng-zorro-antd/form';
 import { TriInputModule } from 'ng-zorro-antd/input';
 
@@ -96,7 +96,7 @@ export class TriDemoDrawerServiceComponent {
 })
 export class TriDrawerCustomComponent {
   // @Input() value = '';
-  data: { value: string } = inject(NZ_DRAWER_DATA);
+  data: { value: string } = inject(TRI_DRAWER_DATA);
 
   constructor(private drawerRef: TriDrawerRef<string>) {}
 

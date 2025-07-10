@@ -31,7 +31,7 @@ import { distinctUntilChanged, map, mergeMap, startWith, switchMap, takeUntil } 
 import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
 import { NgClassInterface, TriSizeLDSType, TriStatus, TriValidateStatus } from 'ng-zorro-antd/core/types';
 import { getStatusClassNames } from 'ng-zorro-antd/core/util';
-import { NZ_SPACE_COMPACT_ITEM_TYPE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
+import { TRI_SPACE_COMPACT_ITEM_TYPE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
 import { TriInputNumberGroupSlotComponent } from './input-number-group-slot.component';
 import { TriInputNumberLegacyComponent } from './input-number.component';
@@ -116,7 +116,7 @@ export class TriInputNumberGroupWhitSuffixOrPrefixDirective {
   `,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [TriFormNoStatusService, { provide: NZ_SPACE_COMPACT_ITEM_TYPE, useValue: 'input-number' }],
+  providers: [TriFormNoStatusService, { provide: TRI_SPACE_COMPACT_ITEM_TYPE, useValue: 'input-number' }],
   host: {
     '[class.tri-input-number-group-wrapper]': `isAddOn`,
     '[class.tri-input-number-group-wrapper-rtl]': `isAddOn && dir === 'rtl'`,

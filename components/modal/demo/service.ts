@@ -1,7 +1,7 @@
 import { Component, inject, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
-import { TriModalRef, TriModalService, NZ_MODAL_DATA, TriModalModule } from 'ng-zorro-antd/modal';
+import { TriModalRef, TriModalService, TRI_MODAL_DATA, TriModalModule } from 'ng-zorro-antd/modal';
 
 interface IModalData {
   favoriteLibrary: string;
@@ -204,7 +204,7 @@ export class TriModalCustomComponent {
   @Input() subtitle?: string;
 
   readonly #modal = inject(TriModalRef);
-  readonly modalData: IModalData = inject(NZ_MODAL_DATA);
+  readonly modalData: IModalData = inject(TRI_MODAL_DATA);
 
   destroyModal(): void {
     this.#modal.destroy({ data: 'this the result data' });

@@ -27,7 +27,7 @@ import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zo
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'alert';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'alert';
 export type TriAlertType = 'success' | 'info' | 'warning' | 'error';
 
 @Component({
@@ -104,7 +104,7 @@ export class TriAlertComponent implements OnChanges, OnInit {
   private cdr = inject(ChangeDetectorRef);
   private directionality = inject(Directionality);
   private readonly destroyRef = inject(DestroyRef);
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   @Input() action: string | TemplateRef<void> | null = null;
   @Input() closeText: string | TemplateRef<void> | null = null;
@@ -126,7 +126,7 @@ export class TriAlertComponent implements OnChanges, OnInit {
   private isShowIconSet = false;
 
   constructor() {
-    onConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME, () => this.cdr.markForCheck());
+    onConfigChangeEventForComponent(TRI_CONFIG_MODULE_NAME, () => this.cdr.markForCheck());
   }
 
   ngOnInit(): void {

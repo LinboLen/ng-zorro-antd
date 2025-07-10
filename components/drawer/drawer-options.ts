@@ -46,4 +46,4 @@ export interface TriDrawerOptions<T = TriSafeAny, D = TriSafeAny> extends TriDra
   nzOnCancel?(): Promise<TriSafeAny>;
 }
 
-export const NZ_DRAWER_DATA = new InjectionToken<TriSafeAny>('NZ_DRAWER_DATA');
+export const TRI_DRAWER_DATA = new InjectionToken<TriSafeAny>('NZ_DRAWER_DATA');

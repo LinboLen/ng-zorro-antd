@@ -10,7 +10,7 @@ import { format as fnsFormat, getISOWeek as fnsGetISOWeek, parse as fnsParse, ge
 
 import { WeekDayIndex, ɵNgTimeParser } from 'ng-zorro-antd/core/time';
 
-import { NZ_DATE_CONFIG, TriDateConfig, mergeDateConfig } from './date-config';
+import { TRI_DATE_CONFIG, TriDateConfig, mergeDateConfig } from './date-config';
 import { TriI18nService } from './nz-i18n.service';
 
 export function DATE_HELPER_SERVICE_FACTORY(): DateHelperService {
@@ -27,7 +27,7 @@ export function DATE_HELPER_SERVICE_FACTORY(): DateHelperService {
   useFactory: DATE_HELPER_SERVICE_FACTORY
 })
 export abstract class DateHelperService {
-  protected config: TriDateConfig = mergeDateConfig(inject(NZ_DATE_CONFIG, { optional: true }));
+  protected config: TriDateConfig = mergeDateConfig(inject(TRI_DATE_CONFIG, { optional: true }));
 
   constructor(protected i18n: TriI18nService) {}
 

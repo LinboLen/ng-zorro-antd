@@ -29,7 +29,7 @@ import { distinctUntilChanged, filter } from 'rxjs/operators';
 import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
 import { NgClassInterface, TriSizeLDSType, TriStatus, TriValidateStatus, TriVariant } from 'ng-zorro-antd/core/types';
 import { getStatusClassNames } from 'ng-zorro-antd/core/util';
-import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
+import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
 @Directive({
   selector: '',
@@ -48,14 +48,14 @@ import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, TriSpaceCompactItemD
     '[class.tri-input-focused]': 'focused()'
   },
   hostDirectives: [TriSpaceCompactItemDirective],
-  providers: [{ provide: NZ_SPACE_COMPACT_ITEM_TYPE, useValue: 'input' }]
+  providers: [{ provide: TRI_SPACE_COMPACT_ITEM_TYPE, useValue: 'input' }]
 })
 export class TriInputDirective implements OnChanges, OnInit {
   private renderer = inject(Renderer2);
   private elementRef = inject(ElementRef);
   protected hostView = inject(ViewContainerRef);
   private directionality = inject(Directionality);
-  private compactSize = inject(NZ_SPACE_COMPACT_SIZE, { optional: true });
+  private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private destroyRef = inject(DestroyRef);
   private formStatusService = inject(TriFormStatusService, { optional: true });
   private formNoStatusService = inject(TriFormNoStatusService, { optional: true });

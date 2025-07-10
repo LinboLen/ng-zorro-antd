@@ -20,7 +20,7 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
 import { dispatchKeyboardEvent } from 'ng-zorro-antd/core/testing';
-import { NZ_DRAWER_DATA, TriDrawerPlacement } from 'ng-zorro-antd/drawer/drawer-options';
+import { TRI_DRAWER_DATA, TriDrawerPlacement } from 'ng-zorro-antd/drawer/drawer-options';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
@@ -923,7 +923,7 @@ class TriTestDrawerWithServiceComponent {
 })
 export class TriDrawerCustomComponent {
   @Input() value: any; // eslint-disable-line @typescript-eslint/no-explicit-any
-  data: { value: string } = inject(NZ_DRAWER_DATA);
+  data: { value: string } = inject(TRI_DRAWER_DATA);
 
   constructor(private drawerRef: TriDrawerRef) {}
 

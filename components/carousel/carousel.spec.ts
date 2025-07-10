@@ -19,7 +19,7 @@ import { TriCarouselComponent } from './carousel.component';
 import { TriCarouselModule } from './carousel.module';
 import { TriCarouselFlipStrategy } from './strategies/experimental/flip-strategy';
 import { TriCarouselTransformNoLoopStrategy } from './strategies/experimental/transform-no-loop-strategy';
-import { NZ_CAROUSEL_CUSTOM_STRATEGIES } from './typings';
+import { TRI_CAROUSEL_CUSTOM_STRATEGIES } from './typings';
 
 describe('carousel', () => {
   describe('carousel basic', () => {
@@ -370,7 +370,7 @@ describe('carousel custom strategies', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: NZ_CAROUSEL_CUSTOM_STRATEGIES,
+          provide: TRI_CAROUSEL_CUSTOM_STRATEGIES,
           useValue: [
             {
               name: 'flip',

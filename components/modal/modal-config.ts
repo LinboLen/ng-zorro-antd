@@ -23,5 +23,5 @@ export const FADE_CLASS_NAME_MAP = {
 };
 
 export const MODAL_MASK_CLASS_NAME = 'ant-modal-mask';
-export const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'modal';
-export const NZ_MODAL_DATA = new InjectionToken<TriSafeAny>('NZ_MODAL_DATA');
+export const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'modal';
+export const TRI_MODAL_DATA = new InjectionToken<TriSafeAny>('NZ_MODAL_DATA');

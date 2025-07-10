@@ -24,7 +24,7 @@ import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/c
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 import { TriDropDownDirective, TriDropDownModule, TriDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'filterTrigger';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'filterTrigger';
 
 @Component({
   selector: '',
@@ -51,7 +51,7 @@ const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'filterTrigger';
   imports: [TriDropDownModule]
 })
 export class TriFilterTriggerComponent implements OnInit {
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   public readonly configService = inject(TriConfigService);
   private readonly cdr = inject(ChangeDetectorRef);

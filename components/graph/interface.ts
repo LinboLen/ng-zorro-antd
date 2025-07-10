@@ -102,7 +102,7 @@ export type TriDeepPartial<T> = {
 };
 
 export type TriGraphLayoutConfig = TriDeepPartial<TriGraphBaseLayout>;
-export const NZ_GRAPH_LAYOUT_SETTING: TriLayoutSetting = {
+export const TRI_GRAPH_LAYOUT_SETTING: TriLayoutSetting = {
   graph: {
     meta: {
       nodeSep: 50,

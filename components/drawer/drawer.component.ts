@@ -49,7 +49,7 @@ import { TriDrawerContentDirective } from './drawer-content.directive';
 import {
   DRAWER_DEFAULT_SIZE,
   DRAWER_LARGE_SIZE,
-  NZ_DRAWER_DATA,
+  TRI_DRAWER_DATA,
   TriDrawerOptionsOfComponent,
   TriDrawerPlacement,
   TriDrawerSize
@@ -58,7 +58,7 @@ import { TriDrawerRef } from './drawer-ref';
 
 export const DRAWER_ANIMATE_DURATION = 300;
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'drawer';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'drawer';
 
 @Component({
   selector: '',
@@ -157,7 +157,7 @@ export class TriDrawerComponent<T extends {} = TriSafeAny, R = TriSafeAny, D ext
   private overlayKeyboardDispatcher = inject(OverlayKeyboardDispatcher);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   @Input() content!: TemplateRef<{ $implicit: D; drawerRef: TriDrawerRef<R> }> | Type<T>;
   @Input() closeIcon: string | TemplateRef<void> = 'close';
@@ -418,7 +418,7 @@ export class TriDrawerComponent<T extends {} = TriSafeAny, R = TriSafeAny, D ext
         parent: this.injector,
         providers: [
           { provide: TriDrawerRef, useValue: this },
-          { provide: NZ_DRAWER_DATA, useValue: this.data }
+          { provide: TRI_DRAWER_DATA, useValue: this.data }
         ]
       });
       const componentPortal = new ComponentPortal<T>(this.content, null, childInjector);

@@ -23,7 +23,7 @@ import {
 import { TriConfigService, onConfigChangeEventForComponent } from 'ng-zorro-antd/core/config';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { NZ_EMPTY_COMPONENT_NAME, TriEmptyCustomContent, TriEmptySize } from './config';
+import { TRI_EMPTY_COMPONENT_NAME, TriEmptyCustomContent, TriEmptySize } from './config';
 import { TriEmptyComponent } from './empty.component';
 
 function getEmptySize(componentName: string): TriEmptySize {
@@ -122,7 +122,7 @@ export class TriEmbedEmptyComponent implements OnChanges, OnInit {
     } else if (content instanceof Type) {
       const injector = Injector.create({
         parent: this.injector,
-        providers: [{ provide: NZ_EMPTY_COMPONENT_NAME, useValue: this.componentName }]
+        providers: [{ provide: TRI_EMPTY_COMPONENT_NAME, useValue: this.componentName }]
       });
       this.contentType = 'component';
       this.contentPortal = new ComponentPortal(content, this.viewContainerRef, injector);

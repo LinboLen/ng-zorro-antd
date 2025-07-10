@@ -36,7 +36,7 @@ import { TriSegmentedItemComponent } from './segmented-item.component';
 import { TriSegmentedService } from './segmented.service';
 import { normalizeOptions, TriSegmentedOption, TriSegmentedOptions } from './types';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'segmented';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'segmented';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -83,7 +83,7 @@ const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'segmented';
   imports: [TriIconModule, TriOutletModule, TriSegmentedItemComponent]
 })
 export class TriSegmentedComponent implements OnChanges, ControlValueAccessor {
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   public readonly configService = inject(TriConfigService);
   private readonly cdr = inject(ChangeDetectorRef);

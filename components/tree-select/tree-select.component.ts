@@ -67,13 +67,13 @@ import {
 import { getStatusClassNames, isNotNil } from 'ng-zorro-antd/core/util';
 import { TriEmptyModule } from 'ng-zorro-antd/empty';
 import { TriSelectModule, TriSelectSearchComponent } from 'ng-zorro-antd/select';
-import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
+import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 import { TriTreeComponent, TriTreeModule } from 'ng-zorro-antd/tree';
 
 import { TriTreeSelectService } from './tree-select.service';
 
 export type TriPlacementType = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' | '';
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'treeSelect';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'treeSelect';
 const TREE_SELECT_DEFAULT_CLASS = 'ant-select-dropdown ant-select-tree-dropdown';
 const listOfPositions = [
   POSITION_MAP.bottomLeft,
@@ -226,7 +226,7 @@ const listOfPositions = [
   `,
   providers: [
     TriTreeSelectService,
-    { provide: NZ_SPACE_COMPACT_ITEM_TYPE, useValue: 'select' },
+    { provide: TRI_SPACE_COMPACT_ITEM_TYPE, useValue: 'select' },
     {
       provide: NzTreeHigherOrderServiceToken,
       useExisting: TriTreeSelectService
@@ -260,7 +260,7 @@ const listOfPositions = [
   hostDirectives: [TriSpaceCompactItemDirective]
 })
 export class TriTreeSelectComponent extends TriTreeBase implements ControlValueAccessor, OnInit, OnChanges {
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   private renderer = inject(Renderer2);
   private cdr = inject(ChangeDetectorRef);
@@ -357,7 +357,7 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
   });
 
   #size = signal<TriSizeLDSType>(this.size);
-  private compactSize = inject(NZ_SPACE_COMPACT_SIZE, { optional: true });
+  private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private isNzDisableFirstChange: boolean = true;
   private isComposingChange$ = new Subject<boolean>();
   private searchValueChange$ = new Subject<string>();
@@ -384,7 +384,7 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
       this.closeDropDown();
     });
 
-    onConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME, () => {
+    onConfigChangeEventForComponent(TRI_CONFIG_MODULE_NAME, () => {
       this.#size.set(this.size);
       this.cdr.markForCheck();
     });

@@ -73,7 +73,7 @@ import {
   TriI18nService
 } from 'ng-zorro-antd/i18n';
 import { TriIconModule } from 'ng-zorro-antd/icon';
-import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
+import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
 import { DatePickerService } from './date-picker.service';
 import { DateRangePopupComponent } from './date-range-popup.component';
@@ -89,7 +89,7 @@ import {
 import { PREFIX_CLASS } from './util';
 
 const POPUP_STYLE_PATCH = { position: 'relative' }; // Aim to override antd's style to support overlay's position strategy (position:absolute will cause it not working because the overlay can't get the height/width of it's content)
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'datePicker';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'datePicker';
 
 export type TriDatePickerSizeType = 'large' | 'default' | 'small';
 export type TriPlacement = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight'; // todo: export it in public API
@@ -260,7 +260,7 @@ export type TriPlacement = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight'
   hostDirectives: [TriSpaceCompactItemDirective],
   providers: [
     DatePickerService,
-    { provide: NZ_SPACE_COMPACT_ITEM_TYPE, useValue: 'picker' },
+    { provide: TRI_SPACE_COMPACT_ITEM_TYPE, useValue: 'picker' },
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
@@ -293,7 +293,7 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
 
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   static ngAcceptInputType_nzShowTime: BooleanInput | SupportTimeOptions | null | undefined;
   static ngAcceptInputType_nzMode: TriDateMode | string;
@@ -396,7 +396,7 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
   });
 
   #size = signal<TriSizeLDSType>(this.size);
-  private compactSize = inject(NZ_SPACE_COMPACT_SIZE, { optional: true });
+  private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private document: Document = inject(DOCUMENT);
 
   ngAfterViewInit(): void {

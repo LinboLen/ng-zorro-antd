@@ -25,7 +25,7 @@ import { TriShapeSCType, TriSizeLDSType } from 'ng-zorro-antd/core/types';
 import { toCssPixel } from 'ng-zorro-antd/core/util';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'avatar';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'avatar';
 
 /** https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-loading */
 type TriAvatarLoading = 'eager' | 'lazy';
@@ -72,7 +72,7 @@ type TriAvatarFetchPriority = 'high' | 'low' | 'auto';
   encapsulation: ViewEncapsulation.None
 })
 export class TriAvatarComponent implements OnChanges {
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
   @Input() @WithConfig() shape: TriShapeSCType = 'circle';
   @Input() @WithConfig() size: TriSizeLDSType | number = 'default';
   @Input({ transform: numberAttribute }) @WithConfig() gap = 4;

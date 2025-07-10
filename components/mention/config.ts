@@ -3,6 +3,6 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export const NZ_MENTION_CONFIG = {
+export const TRI_MENTION_CONFIG = {
   split: ' '
 };

@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
  * where streams of data are already being used and we need to wait until
  * the change detection ends before performing any tasks.
  */
-export const NZ_AFTER_NEXT_RENDER$ = new InjectionToken<Observable<void>>('nz-after-next-render', {
+export const TRI_AFTER_NEXT_RENDER$ = new InjectionToken<Observable<void>>('nz-after-next-render', {
   providedIn: 'root',
   factory: () => {
     const injector = inject(Injector);

@@ -14,9 +14,9 @@ import { TriMNContainerComponent } from 'ng-zorro-antd/message';
 import { TriNotificationComponent } from './notification.component';
 import { TriNotificationData, TriNotificationDataOptions, TriNotificationPlacement } from './typings';
 
-const NZ_CONFIG_MODULE_NAME = 'notification';
+const TRI_CONFIG_MODULE_NAME = 'notification';
 
-const NZ_NOTIFICATION_DEFAULT_CONFIG: Required<NotificationConfig> = {
+const TRI_NOTIFICATION_DEFAULT_CONFIG: Required<NotificationConfig> = {
   nzTop: '24px',
   nzBottom: '24px',
   nzPlacement: 'topRight',
@@ -119,7 +119,7 @@ const NZ_NOTIFICATION_DEFAULT_CONFIG: Required<NotificationConfig> = {
   imports: [TriNotificationComponent]
 })
 export class TriNotificationContainerComponent extends TriMNContainerComponent<NotificationConfig, TriNotificationData> {
-  dir: Direction = this.configService.getConfigForComponent(NZ_CONFIG_MODULE_NAME)?.nzDirection || 'ltr';
+  dir: Direction = this.configService.getConfigForComponent(TRI_CONFIG_MODULE_NAME)?.nzDirection || 'ltr';
   bottom?: string | null;
   top?: string | null;
   topLeftInstances: Array<Required<TriNotificationData>> = [];
@@ -162,17 +162,17 @@ export class TriNotificationContainerComponent extends TriMNContainerComponent<N
   }
 
   protected subscribeConfigChange(): void {
-    onConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME, () => {
+    onConfigChangeEventForComponent(TRI_CONFIG_MODULE_NAME, () => {
       this.updateConfig();
-      this.dir = this.configService.getConfigForComponent(NZ_CONFIG_MODULE_NAME)?.nzDirection || this.dir;
+      this.dir = this.configService.getConfigForComponent(TRI_CONFIG_MODULE_NAME)?.nzDirection || this.dir;
     });
   }
 
   protected updateConfig(): void {
     this.config = {
-      ...NZ_NOTIFICATION_DEFAULT_CONFIG,
+      ...TRI_NOTIFICATION_DEFAULT_CONFIG,
       ...this.config,
-      ...this.configService.getConfigForComponent(NZ_CONFIG_MODULE_NAME)
+      ...this.configService.getConfigForComponent(TRI_CONFIG_MODULE_NAME)
     };
 
     this.top = toCssPixel(this.config.nzTop!);

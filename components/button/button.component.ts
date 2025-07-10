@@ -32,13 +32,13 @@ import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zo
 import { TriSizeLDSType } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 import { TriIconDirective, TriIconModule } from 'ng-zorro-antd/icon';
-import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
+import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
 export type TriButtonType = 'primary' | 'default' | 'dashed' | 'link' | 'text' | null;
 export type TriButtonShape = 'circle' | 'round' | null;
 export type TriButtonSize = TriSizeLDSType;
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'button';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'button';
 
 @Component({
   selector: '',
@@ -74,7 +74,7 @@ const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'button';
     '[attr.disabled]': 'disabled || null'
   },
   hostDirectives: [TriSpaceCompactItemDirective],
-  providers: [{ provide: NZ_SPACE_COMPACT_ITEM_TYPE, useValue: 'btn' }]
+  providers: [{ provide: TRI_SPACE_COMPACT_ITEM_TYPE, useValue: 'btn' }]
 })
 export class TriButtonComponent implements OnChanges, AfterViewInit, AfterContentInit, OnInit {
   private elementRef = inject(ElementRef);
@@ -82,7 +82,7 @@ export class TriButtonComponent implements OnChanges, AfterViewInit, AfterConten
   private renderer = inject(Renderer2);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   @ContentChild(TriIconDirective, { read: ElementRef }) iconDirectiveElement!: ElementRef;
   @Input({ transform: booleanAttribute }) block: boolean = false;
@@ -105,7 +105,7 @@ export class TriButtonComponent implements OnChanges, AfterViewInit, AfterConten
   });
 
   #size = signal<TriSizeLDSType>(this.size);
-  private compactSize = inject(NZ_SPACE_COMPACT_SIZE, { optional: true });
+  private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private loading$ = new Subject<boolean>();
 
   insertSpan(nodes: NodeList, renderer: Renderer2): void {
@@ -131,7 +131,7 @@ export class TriButtonComponent implements OnChanges, AfterViewInit, AfterConten
   }
 
   constructor() {
-    onConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME, () => {
+    onConfigChangeEventForComponent(TRI_CONFIG_MODULE_NAME, () => {
       this.#size.set(this.size);
       this.cdr.markForCheck();
     });

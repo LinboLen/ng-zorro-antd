@@ -8,7 +8,7 @@ import { afterNextRender, computed, DestroyRef, Directive, ElementRef, inject } 
 import { toSignal } from '@angular/core/rxjs-interop';
 
 import { TriSpaceCompactComponent } from './space-compact.component';
-import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_ITEMS } from './space-compact.token';
+import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_ITEMS } from './space-compact.token';
 
 @Directive({
   exportAs: 'triSpaceCompactItem',
@@ -22,8 +22,8 @@ export class TriSpaceCompactItemDirective {
    * Note that it is not necessarily the direct parent component.
    */
   private readonly spaceCompactCmp = inject(TriSpaceCompactComponent, { host: true, optional: true });
-  private readonly items = inject(NZ_SPACE_COMPACT_ITEMS, { host: true, optional: true });
-  private readonly type = inject(NZ_SPACE_COMPACT_ITEM_TYPE);
+  private readonly items = inject(TRI_SPACE_COMPACT_ITEMS, { host: true, optional: true });
+  private readonly type = inject(TRI_SPACE_COMPACT_ITEM_TYPE);
   private readonly elementRef: ElementRef<HTMLElement> = inject(ElementRef);
   private readonly directionality = inject(Directionality);
   private readonly dir = toSignal(this.directionality.change, { initialValue: this.directionality.value });

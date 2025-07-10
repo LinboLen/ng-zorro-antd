@@ -56,7 +56,7 @@ import {
 import { TriEmptyModule } from 'ng-zorro-antd/empty';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
-import { NZ_MENTION_CONFIG } from './config';
+import { TRI_MENTION_CONFIG } from './config';
 import { TriMentionSuggestionDirective } from './mention-suggestions';
 import { TriMentionTriggerDirective } from './mention-trigger';
 import { TriMentionService } from './mention.service';
@@ -392,22 +392,22 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   private resetCursorMention(): void {
-    const value = this.triggerNativeElement.value.replace(/[\r\n]/g, NZ_MENTION_CONFIG.split) || '';
+    const value = this.triggerNativeElement.value.replace(/[\r\n]/g, TRI_MENTION_CONFIG.split) || '';
     const selectionStart = this.triggerNativeElement.selectionStart!;
     const prefix = typeof this.prefix === 'string' ? [this.prefix] : this.prefix;
     let i = prefix.length;
     while (i >= 0) {
       const startPos = value.lastIndexOf(prefix[i], selectionStart);
       const endPos =
-        value.indexOf(NZ_MENTION_CONFIG.split, selectionStart) > -1
-          ? value.indexOf(NZ_MENTION_CONFIG.split, selectionStart)
+        value.indexOf(TRI_MENTION_CONFIG.split, selectionStart) > -1
+          ? value.indexOf(TRI_MENTION_CONFIG.split, selectionStart)
           : value.length;
       const mention = value.substring(startPos, endPos);
       if (
-        (startPos > 0 && value[startPos - 1] !== NZ_MENTION_CONFIG.split) ||
+        (startPos > 0 && value[startPos - 1] !== TRI_MENTION_CONFIG.split) ||
         startPos < 0 ||
         mention.includes(prefix[i], 1) ||
-        mention.includes(NZ_MENTION_CONFIG.split)
+        mention.includes(TRI_MENTION_CONFIG.split)
       ) {
         this.cursorMention = null;
         this.cursorMentionStart = -1;

@@ -31,7 +31,7 @@ import { TriTabDirective } from './tab.directive';
 /**
  * Used to provide a tab set to a tab without causing a circular dependency.
  */
-export const NZ_TAB_SET = new InjectionToken<TriSafeAny>('NZ_TAB_SET');
+export const TRI_TAB_SET = new InjectionToken<TriSafeAny>('NZ_TAB_SET');
 
 @Component({
   selector: '',
@@ -67,7 +67,7 @@ export class TriTabComponent implements OnChanges, OnDestroy {
   hasBeenActive = false;
   position: number | null = null;
   origin: number | null = null;
-  closestTabSet = inject(NZ_TAB_SET);
+  closestTabSet = inject(TRI_TAB_SET);
 
   readonly stateChanges = new Subject<void>();
 

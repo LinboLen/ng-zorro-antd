@@ -43,7 +43,7 @@ interface Section {
 }
 
 const VISIBLE_CLASSNAME = 'ant-anchor-ink-ball-visible';
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'anchor';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'anchor';
 const sharpMatcherRegx = /#([^#]+)$/;
 
 const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: true });
@@ -88,7 +88,7 @@ export class TriAnchorComponent implements AfterViewInit, OnChanges {
   private doc: Document = inject(DOCUMENT);
   private destroyRef = inject(DestroyRef);
 
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   @ViewChild('ink', { static: false }) private ink!: ElementRef;
 

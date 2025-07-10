@@ -32,7 +32,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 
 import { TriCollapseComponent } from './collapse.component';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'collapsePanel';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'collapsePanel';
 
 @Component({
   selector: '',
@@ -84,7 +84,7 @@ export class TriCollapsePanelComponent implements OnInit {
   private collapseComponent = inject(TriCollapseComponent, { host: true });
   noAnimation = inject(TriNoAnimationDirective, { optional: true });
 
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   @Input({ transform: booleanAttribute }) active = false;
   @Input({ transform: booleanAttribute }) disabled = false;
@@ -101,7 +101,7 @@ export class TriCollapsePanelComponent implements OnInit {
   }
 
   constructor() {
-    onConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME, () => this.cdr.markForCheck());
+    onConfigChangeEventForComponent(TRI_CONFIG_MODULE_NAME, () => this.cdr.markForCheck());
 
     this.destroyRef.onDestroy(() => {
       this.collapseComponent.removePanel(this);

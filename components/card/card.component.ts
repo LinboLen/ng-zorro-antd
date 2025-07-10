@@ -30,7 +30,7 @@ import { TriSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { TriCardGridDirective } from './card-grid.directive';
 import { TriCardTabComponent } from './card-tab.component';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'card';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'card';
 
 @Component({
   selector: '',
@@ -99,7 +99,7 @@ export class TriCardComponent implements OnInit {
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
 
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   @Input({ transform: booleanAttribute }) @WithConfig() bordered: boolean = true;
   @Input({ transform: booleanAttribute }) loading = false;
@@ -116,7 +116,7 @@ export class TriCardComponent implements OnInit {
   dir: Direction = 'ltr';
 
   constructor() {
-    onConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME, () => this.cdr.markForCheck());
+    onConfigChangeEventForComponent(TRI_CONFIG_MODULE_NAME, () => this.cdr.markForCheck());
   }
 
   ngOnInit(): void {

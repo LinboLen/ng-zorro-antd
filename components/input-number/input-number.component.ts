@@ -49,7 +49,7 @@ import {
   TriInputPrefixDirective,
   TriInputSuffixDirective
 } from 'ng-zorro-antd/input';
-import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
+import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
 @Component({
   selector: '',
@@ -171,7 +171,7 @@ import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, TriSpaceCompactItemD
       useExisting: forwardRef(() => TriInputNumberComponent),
       multi: true
     },
-    { provide: NZ_SPACE_COMPACT_ITEM_TYPE, useValue: 'input-number' }
+    { provide: TRI_SPACE_COMPACT_ITEM_TYPE, useValue: 'input-number' }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
@@ -211,7 +211,7 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
   private onChange: OnChangeType = () => {};
   private onTouched: OnTouchedType = () => {};
   private isDisabledFirstChange = true;
-  private compactSize = inject(NZ_SPACE_COMPACT_SIZE, { optional: true });
+  private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private inputRef = viewChild.required<ElementRef<HTMLInputElement>>('input');
   private hostRef = viewChild<ElementRef<HTMLDivElement>>('inputNumberHost');
   private elementRef = inject(ElementRef);

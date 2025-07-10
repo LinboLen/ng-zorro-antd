@@ -22,14 +22,14 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 
-import { NZ_MENTION_CONFIG } from './config';
+import { TRI_MENTION_CONFIG } from './config';
 import { Mention } from './mention.component';
 import { TriMentionService } from './mention.service';
 
 /**
  * @deprecated Internally used, will be removed in v21, please do not use it.
  */
-export const NZ_MENTION_TRIGGER_ACCESSOR: ExistingProvider = {
+export const TRI_MENTION_TRIGGER_ACCESSOR: ExistingProvider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => TriMentionTriggerDirective),
   multi: true
@@ -38,7 +38,7 @@ export const NZ_MENTION_TRIGGER_ACCESSOR: ExistingProvider = {
 @Directive({
   selector: '',
   exportAs: 'triMentionTrigger',
-  providers: [NZ_MENTION_TRIGGER_ACCESSOR],
+  providers: [TRI_MENTION_TRIGGER_ACCESSOR],
   host: {
     autocomplete: 'off'
   }
@@ -85,7 +85,7 @@ export class TriMentionTriggerDirective implements ControlValueAccessor, AfterVi
 
   insertMention(mention: Mention): void {
     const value: string = this.elementRef.nativeElement.value;
-    const insertValue = `${mention.mention}${NZ_MENTION_CONFIG.split}`;
+    const insertValue = `${mention.mention}${TRI_MENTION_CONFIG.split}`;
     const newValue = [
       value.slice(0, mention.startPos + 1),
       insertValue,

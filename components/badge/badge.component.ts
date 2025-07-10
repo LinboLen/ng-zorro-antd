@@ -32,7 +32,7 @@ import { TriBadgeSupComponent } from './badge-sup.component';
 import { badgePresetColors } from './preset-colors';
 import { TriBadgeStatusType } from './types';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'badge';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'badge';
 
 @Component({
   selector: '',
@@ -83,7 +83,7 @@ export class TriBadgeComponent implements OnChanges, OnInit {
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
 
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   showSup = false;
   presetColor: string | null = null;

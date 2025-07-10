@@ -42,9 +42,9 @@ import {
 import { AffixRespondEvents } from './respond-events';
 import { getTargetRect, SimpleRect } from './utils';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'affix';
-const NZ_AFFIX_CLS_PREFIX = 'ant-affix';
-const NZ_AFFIX_DEFAULT_SCROLL_TIME = 20;
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'affix';
+const TRI_AFFIX_CLS_PREFIX = 'ant-affix';
+const TRI_AFFIX_DEFAULT_SCROLL_TIME = 20;
 
 @Component({
   selector: '',
@@ -68,7 +68,7 @@ export class TriAffixComponent implements AfterViewInit, OnChanges, OnInit {
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
 
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   @ViewChild('fixedEl', { static: true }) private fixedEl!: ElementRef<HTMLDivElement>;
 
@@ -145,7 +145,7 @@ export class TriAffixComponent implements AfterViewInit, OnChanges, OnInit {
       this.resizeObserver.observe(el)
     )
       .pipe(
-        throttleTime(NZ_AFFIX_DEFAULT_SCROLL_TIME, undefined, { trailing: true }),
+        throttleTime(TRI_AFFIX_DEFAULT_SCROLL_TIME, undefined, { trailing: true }),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(e => this.updatePosition(e as Event));
@@ -191,9 +191,9 @@ export class TriAffixComponent implements AfterViewInit, OnChanges, OnInit {
     this.renderer.setStyle(wrapEl, 'cssText', getStyleAsText(affixStyle));
     this.affixStyle = affixStyle;
     if (fixed) {
-      wrapEl.classList.add(NZ_AFFIX_CLS_PREFIX);
+      wrapEl.classList.add(TRI_AFFIX_CLS_PREFIX);
     } else {
-      wrapEl.classList.remove(NZ_AFFIX_CLS_PREFIX);
+      wrapEl.classList.remove(TRI_AFFIX_CLS_PREFIX);
     }
     this.updateRtlClass();
     if ((affixStyle && !originalAffixStyle) || (!affixStyle && originalAffixStyle)) {
@@ -309,13 +309,13 @@ export class TriAffixComponent implements AfterViewInit, OnChanges, OnInit {
   private updateRtlClass(): void {
     const wrapEl = this.fixedEl.nativeElement;
     if (this.dir === 'rtl') {
-      if (wrapEl.classList.contains(NZ_AFFIX_CLS_PREFIX)) {
-        wrapEl.classList.add(`${NZ_AFFIX_CLS_PREFIX}-rtl`);
+      if (wrapEl.classList.contains(TRI_AFFIX_CLS_PREFIX)) {
+        wrapEl.classList.add(`${TRI_AFFIX_CLS_PREFIX}-rtl`);
       } else {
-        wrapEl.classList.remove(`${NZ_AFFIX_CLS_PREFIX}-rtl`);
+        wrapEl.classList.remove(`${TRI_AFFIX_CLS_PREFIX}-rtl`);
       }
     } else {
-      wrapEl.classList.remove(`${NZ_AFFIX_CLS_PREFIX}-rtl`);
+      wrapEl.classList.remove(`${TRI_AFFIX_CLS_PREFIX}-rtl`);
     }
   }
 }

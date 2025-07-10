@@ -32,7 +32,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 
 import { TriPageHeaderBreadcrumbDirective, TriPageHeaderFooterDirective } from './page-header-cells';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'pageHeader';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'pageHeader';
 
 @Component({
   selector: '',
@@ -97,7 +97,7 @@ export class TriPageHeaderComponent implements AfterViewInit, OnInit {
   private location = inject(Location);
   private destroyRef = inject(DestroyRef);
 
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   @Input() backIcon: string | TemplateRef<void> | null = null;
   @Input() title?: string | TemplateRef<void>;

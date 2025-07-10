@@ -9,8 +9,8 @@ import { TriSizeLDSType } from 'ng-zorro-antd/core/types';
 
 import type { TriSpaceCompactItemDirective } from './space-compact-item.directive';
 
-export const NZ_SPACE_COMPACT_SIZE = new InjectionToken<Signal<TriSizeLDSType>>('NZ_SPACE_COMPACT_SIZE');
-export const NZ_SPACE_COMPACT_ITEMS = new InjectionToken<WritableSignal<TriSpaceCompactItemDirective[]>>(
+export const TRI_SPACE_COMPACT_SIZE = new InjectionToken<Signal<TriSizeLDSType>>('NZ_SPACE_COMPACT_SIZE');
+export const TRI_SPACE_COMPACT_ITEMS = new InjectionToken<WritableSignal<TriSpaceCompactItemDirective[]>>(
   'NZ_SPACE_COMPACT_ITEMS'
 );
-export const NZ_SPACE_COMPACT_ITEM_TYPE = new InjectionToken<string>('NZ_SPACE_COMPACT_ITEM_TYPE');
+export const TRI_SPACE_COMPACT_ITEM_TYPE = new InjectionToken<string>('NZ_SPACE_COMPACT_ITEM_TYPE');

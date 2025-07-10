@@ -13,7 +13,7 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CandyDate } from 'ng-zorro-antd/core/time';
-import { NZ_DATE_CONFIG } from 'ng-zorro-antd/i18n/date-config';
+import { TRI_DATE_CONFIG } from 'ng-zorro-antd/i18n/date-config';
 
 import { TriCalendarHeaderComponent as CalendarHeader } from './calendar-header.component';
 import { TriCalendarComponent as Calendar, TriCalendarMode } from './calendar.component';
@@ -25,7 +25,7 @@ describe('Calendar', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [NoopAnimationsModule],
-      providers: [{ provide: NZ_DATE_CONFIG, useValue: { firstDayOfWeek: 0 } }]
+      providers: [{ provide: TRI_DATE_CONFIG, useValue: { firstDayOfWeek: 0 } }]
     });
   }));
 

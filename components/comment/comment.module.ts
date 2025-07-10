@@ -13,7 +13,7 @@ import {
 } from './comment-cells';
 import { TriCommentComponent } from './comment.component';
 
-const NZ_COMMENT_CELLS = [
+const TRI_COMMENT_CELLS = [
   TriCommentAvatarDirective,
   TriCommentContentDirective,
   TriCommentActionComponent,
@@ -21,7 +21,7 @@ const NZ_COMMENT_CELLS = [
 ];
 
 @NgModule({
-  imports: [TriCommentComponent, ...NZ_COMMENT_CELLS],
-  exports: [TriCommentComponent, ...NZ_COMMENT_CELLS]
+  imports: [TriCommentComponent, ...TRI_COMMENT_CELLS],
+  exports: [TriCommentComponent, ...TRI_COMMENT_CELLS]
 })
 export class TriCommentModule {}

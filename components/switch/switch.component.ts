@@ -33,7 +33,7 @@ import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 import { TriWaveModule } from 'ng-zorro-antd/core/wave';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'switch';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'switch';
 
 @Component({
   selector: '',
@@ -80,7 +80,7 @@ const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'switch';
   imports: [TriWaveModule, TriIconModule, TriOutletModule]
 })
 export class TriSwitchComponent implements ControlValueAccessor, AfterViewInit, OnInit {
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   configService = inject(TriConfigService);
   private el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;

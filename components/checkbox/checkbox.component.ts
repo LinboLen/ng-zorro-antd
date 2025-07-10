@@ -33,7 +33,7 @@ import { TriSafeAny, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/type
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 
 import { TriCheckboxWrapperComponent } from './checkbox-wrapper.component';
-import { NZ_CHECKBOX_GROUP } from './tokens';
+import { TRI_CHECKBOX_GROUP } from './tokens';
 
 @Component({
   selector: '',
@@ -87,7 +87,7 @@ export class TriCheckboxComponent implements OnInit, ControlValueAccessor, After
   private focusMonitor = inject(FocusMonitor);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
-  protected checkboxGroupComponent = inject(NZ_CHECKBOX_GROUP, { optional: true });
+  protected checkboxGroupComponent = inject(TRI_CHECKBOX_GROUP, { optional: true });
   protected formStatusService = inject(TriFormStatusService, { optional: true });
   /** @deprecated */
   private checkboxWrapperComponent = inject(TriCheckboxWrapperComponent, { optional: true });

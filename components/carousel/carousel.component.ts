@@ -47,13 +47,13 @@ import { TriCarouselOpacityStrategy } from './strategies/opacity-strategy';
 import { TriCarouselTransformStrategy } from './strategies/transform-strategy';
 import {
   FromToInterface,
-  NZ_CAROUSEL_CUSTOM_STRATEGIES,
+  TRI_CAROUSEL_CUSTOM_STRATEGIES,
   TriCarouselDotPosition,
   TriCarouselEffects,
   PointerVector
 } from './typings';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'carousel';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'carousel';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -111,7 +111,7 @@ const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'carousel';
   imports: [NgTemplateOutlet]
 })
 export class TriCarouselComponent implements AfterContentInit, AfterViewInit, OnChanges, OnInit {
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   public readonly configService = inject(TriConfigService);
   public readonly ngZone = inject(NgZone);
@@ -173,7 +173,7 @@ export class TriCarouselComponent implements AfterContentInit, AfterViewInit, On
   private isTransiting = false;
   private isDragging = false;
   private directionality = inject(Directionality);
-  private customStrategies = inject(NZ_CAROUSEL_CUSTOM_STRATEGIES, { optional: true });
+  private customStrategies = inject(TRI_CAROUSEL_CUSTOM_STRATEGIES, { optional: true });
 
   constructor() {
     this.dotPosition = 'bottom';

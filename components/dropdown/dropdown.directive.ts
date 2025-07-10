@@ -32,7 +32,7 @@ import { IndexableObject } from 'ng-zorro-antd/core/types';
 
 import { TriDropdownMenuComponent, TriPlacementType } from './dropdown-menu.component';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'dropDown';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'dropDown';
 
 const listOfPositions = [
   POSITION_MAP.bottomLeft,
@@ -54,7 +54,7 @@ export class TriDropDownDirective implements AfterViewInit, OnChanges {
   private viewContainerRef = inject(ViewContainerRef);
   private platform = inject(Platform);
   private destroyRef = inject(DestroyRef);
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
   public elementRef = inject(ElementRef);
   private overlay = inject(Overlay);
 

@@ -10,7 +10,7 @@ import { inject, Injectable, Injector } from '@angular/core';
 
 import { ImageConfig, TriConfigService } from 'ng-zorro-antd/core/config';
 
-import { NZ_CONFIG_MODULE_NAME } from './image-config';
+import { TRI_CONFIG_MODULE_NAME } from './image-config';
 import { TriImage, TriImagePreviewOptions } from './image-preview-options';
 import { TriImagePreviewRef } from './image-preview-ref';
 import { TriImagePreviewComponent } from './image-preview.component';
@@ -68,7 +68,7 @@ export class TriImageService {
   }
 
   private createOverlay(config: TriImagePreviewOptions): OverlayRef {
-    const globalConfig = (this.configService.getConfigForComponent(NZ_CONFIG_MODULE_NAME) as ImageConfig) || {};
+    const globalConfig = (this.configService.getConfigForComponent(TRI_CONFIG_MODULE_NAME) as ImageConfig) || {};
     const overLayConfig = new OverlayConfig({
       scrollStrategy: this.overlay.scrollStrategies.block(),
       positionStrategy: this.overlay.position().global(),

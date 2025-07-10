@@ -7,11 +7,11 @@ import { TestBed } from '@angular/core/testing';
 
 import { enUS } from 'date-fns/locale';
 
-import { NZ_DATE_CONFIG } from './date-config';
+import { TRI_DATE_CONFIG } from './date-config';
 import { DateHelperByDatePipe, DateHelperService } from './date-helper.service';
 import en_US from './languages/en_US';
 import { TriI18nModule } from './nz-i18n.module';
-import { NZ_DATE_LOCALE, provideNzI18n } from './nz-i18n.token';
+import { TRI_DATE_LOCALE, provideNzI18n } from './nz-i18n.token';
 
 describe('DateHelperService', () => {
   let dateHelper: DateHelperService;
@@ -60,7 +60,7 @@ describe('DateHelperService', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TriI18nModule],
-        providers: [{ provide: NZ_DATE_LOCALE, useValue: enUS }]
+        providers: [{ provide: TRI_DATE_LOCALE, useValue: enUS }]
       });
 
       dateHelper = TestBed.inject(DateHelperService);
@@ -87,8 +87,8 @@ describe('DateHelperService', () => {
       TestBed.configureTestingModule({
         imports: [TriI18nModule],
         providers: [
-          { provide: NZ_DATE_LOCALE, useValue: enUS },
-          { provide: NZ_DATE_CONFIG, useValue: { firstDayOfWeek: 4 } }
+          { provide: TRI_DATE_LOCALE, useValue: enUS },
+          { provide: TRI_DATE_CONFIG, useValue: { firstDayOfWeek: 4 } }
         ]
       });
 

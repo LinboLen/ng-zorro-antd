@@ -33,7 +33,7 @@ import { TriPaginationDefaultComponent } from './pagination-default.component';
 import { TriPaginationSimpleComponent } from './pagination-simple.component';
 import { PaginationItemRenderContext } from './pagination.types';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'pagination';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'pagination';
 
 @Component({
   selector: '',
@@ -86,7 +86,7 @@ const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'pagination';
   imports: [NgTemplateOutlet, TriPaginationSimpleComponent, TriPaginationDefaultComponent]
 })
 export class TriPaginationComponent implements OnInit, OnChanges {
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   private readonly i18n = inject(TriI18nService);
   private readonly cdr = inject(ChangeDetectorRef);

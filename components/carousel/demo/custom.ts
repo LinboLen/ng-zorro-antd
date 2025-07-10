@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import {
-  NZ_CAROUSEL_CUSTOM_STRATEGIES,
+  TRI_CAROUSEL_CUSTOM_STRATEGIES,
   TriCarouselFlipStrategy,
   TriCarouselModule,
   TriCarouselTransformNoLoopStrategy
@@ -50,7 +50,7 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
   ],
   providers: [
     {
-      provide: NZ_CAROUSEL_CUSTOM_STRATEGIES,
+      provide: TRI_CAROUSEL_CUSTOM_STRATEGIES,
       useValue: [
         { name: 'transform-no-loop', strategy: TriCarouselTransformNoLoopStrategy },
         { name: 'flip', strategy: TriCarouselFlipStrategy }

@@ -15,7 +15,7 @@ import { JoinedEditorOptions, TriCodeEditorLoadingStatus } from './typings';
 
 declare const monaco: TriSafeAny;
 
-const NZ_CONFIG_MODULE_NAME = 'codeEditor';
+const TRI_CONFIG_MODULE_NAME = 'codeEditor';
 
 function tryTriggerFunc(fn?: (...args: TriSafeAny[]) => TriSafeAny): (...args: TriSafeAny) => void {
   return (...args: TriSafeAny[]) => {
@@ -48,7 +48,7 @@ export class TriCodeEditorService {
   option$ = new BehaviorSubject<JoinedEditorOptions>(this.option);
 
   constructor() {
-    const globalConfig = this.configService.getConfigForComponent(NZ_CONFIG_MODULE_NAME);
+    const globalConfig = this.configService.getConfigForComponent(TRI_CONFIG_MODULE_NAME);
 
     this.config = { ...globalConfig };
     if (this.config.monacoEnvironment) {
@@ -56,8 +56,8 @@ export class TriCodeEditorService {
     }
     this.option = this.config.defaultEditorOption || {};
 
-    onConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME, () => {
-      const newGlobalConfig: TriSafeAny = this.configService.getConfigForComponent(NZ_CONFIG_MODULE_NAME);
+    onConfigChangeEventForComponent(TRI_CONFIG_MODULE_NAME, () => {
+      const newGlobalConfig: TriSafeAny = this.configService.getConfigForComponent(TRI_CONFIG_MODULE_NAME);
       if (newGlobalConfig) {
         this._updateDefaultOption(newGlobalConfig.defaultEditorOption);
       }

@@ -29,7 +29,7 @@ import { requestAnimationFrame } from 'ng-zorro-antd/core/polyfill';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular, getElementOffset, isNotNil } from 'ng-zorro-antd/core/util';
 
-import { FADE_CLASS_NAME_MAP, MODAL_MASK_CLASS_NAME, NZ_CONFIG_MODULE_NAME, ZOOM_CLASS_NAME_MAP } from './modal-config';
+import { FADE_CLASS_NAME_MAP, MODAL_MASK_CLASS_NAME, TRI_CONFIG_MODULE_NAME, ZOOM_CLASS_NAME_MAP } from './modal-config';
 import { TriModalRef } from './modal-ref';
 import { ModalOptions } from './modal-types';
 import { getValueWithConfig } from './utils';
@@ -70,13 +70,13 @@ export class BaseModalContainerComponent extends BasePortalOutlet {
   private oldMaskStyle: Record<string, string> | null = null;
 
   get showMask(): boolean {
-    const defaultConfig: TriSafeAny = this.configService.getConfigForComponent(NZ_CONFIG_MODULE_NAME) || {};
+    const defaultConfig: TriSafeAny = this.configService.getConfigForComponent(TRI_CONFIG_MODULE_NAME) || {};
 
     return !!getValueWithConfig<boolean>(this.config.mask, defaultConfig.nzMask, true);
   }
 
   get maskClosable(): boolean {
-    const defaultConfig: TriSafeAny = this.configService.getConfigForComponent(NZ_CONFIG_MODULE_NAME) || {};
+    const defaultConfig: TriSafeAny = this.configService.getConfigForComponent(TRI_CONFIG_MODULE_NAME) || {};
 
     return !!getValueWithConfig<boolean>(this.config.maskClosable, defaultConfig.nzMaskClosable, true);
   }
@@ -86,7 +86,7 @@ export class BaseModalContainerComponent extends BasePortalOutlet {
     this.dir = this.overlayRef.getDirection();
     this.isStringContent = typeof this.config.content === 'string';
 
-    onConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME, () => this.updateMaskClassname());
+    onConfigChangeEventForComponent(TRI_CONFIG_MODULE_NAME, () => this.updateMaskClassname());
 
     this.destroyRef.onDestroy(() => {
       this.setMaskExitAnimationClass(true);

@@ -54,7 +54,7 @@ export function NzTreeServiceFactory(): TriTreeBaseService {
   return higherOrderService ?? treeService;
 }
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'tree';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'tree';
 
 @Component({
   selector: '',
@@ -183,7 +183,7 @@ const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'tree';
   ]
 })
 export class TriTreeComponent extends TriTreeBase implements OnInit, ControlValueAccessor, OnChanges, AfterViewInit {
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
   configService = inject(TriConfigService);

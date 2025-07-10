@@ -37,7 +37,7 @@ import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
 
 import { TriRateItemComponent } from './rate-item.component';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'rate';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'rate';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -84,7 +84,7 @@ const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'rate';
   imports: [TriToolTipModule, TriRateItemComponent]
 })
 export class TriRateComponent implements OnInit, ControlValueAccessor, OnChanges {
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   private readonly ngZone = inject(NgZone);
   private readonly renderer = inject(Renderer2);
@@ -132,7 +132,7 @@ export class TriRateComponent implements OnInit, ControlValueAccessor, OnChanges
   }
 
   constructor() {
-    onConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME, () => this.cdr.markForCheck());
+    onConfigChangeEventForComponent(TRI_CONFIG_MODULE_NAME, () => this.cdr.markForCheck());
   }
 
   ngOnChanges(changes: SimpleChanges): void {

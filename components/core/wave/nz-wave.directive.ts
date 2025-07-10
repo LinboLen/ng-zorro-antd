@@ -25,14 +25,14 @@ export interface TriWaveConfig {
   disabled?: boolean;
 }
 
-export const NZ_WAVE_GLOBAL_DEFAULT_CONFIG: TriWaveConfig = {
+export const TRI_WAVE_GLOBAL_DEFAULT_CONFIG: TriWaveConfig = {
   disabled: false
 };
 
-export const NZ_WAVE_GLOBAL_CONFIG = new InjectionToken<TriWaveConfig>('nz-wave-global-options');
+export const TRI_WAVE_GLOBAL_CONFIG = new InjectionToken<TriWaveConfig>('nz-wave-global-options');
 
 export function provideNzWave(config: TriWaveConfig): EnvironmentProviders {
-  return makeEnvironmentProviders([{ provide: NZ_WAVE_GLOBAL_CONFIG, useValue: config }]);
+  return makeEnvironmentProviders([{ provide: TRI_WAVE_GLOBAL_CONFIG, useValue: config }]);
 }
 
 @Directive({
@@ -55,7 +55,7 @@ export class TriWaveDirective implements OnInit, OnDestroy {
 
   private cspNonce = inject(CSP_NONCE, { optional: true });
   private platform = inject(Platform);
-  private config = inject(NZ_WAVE_GLOBAL_CONFIG, { optional: true });
+  private config = inject(TRI_WAVE_GLOBAL_CONFIG, { optional: true });
   private animationType = inject(ANIMATION_MODULE_TYPE, { optional: true });
   private ngZone = inject(NgZone);
   private elementRef = inject(ElementRef<HTMLElement>);

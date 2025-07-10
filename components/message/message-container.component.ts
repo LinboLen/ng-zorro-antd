@@ -12,9 +12,9 @@ import { toCssPixel } from 'ng-zorro-antd/core/util';
 import { TriMNContainerComponent } from './base';
 import { TriMessageComponent } from './message.component';
 
-const NZ_CONFIG_COMPONENT_NAME = 'message';
+const TRI_CONFIG_COMPONENT_NAME = 'message';
 
-const NZ_MESSAGE_DEFAULT_CONFIG: Required<MessageConfig> = {
+const TRI_MESSAGE_DEFAULT_CONFIG: Required<MessageConfig> = {
   nzAnimate: true,
   nzDuration: 3000,
   nzMaxStack: 7,
@@ -38,7 +38,7 @@ const NZ_MESSAGE_DEFAULT_CONFIG: Required<MessageConfig> = {
   imports: [TriMessageComponent]
 })
 export class TriMessageContainerComponent extends TriMNContainerComponent {
-  dir: Direction = this.configService.getConfigForComponent(NZ_CONFIG_COMPONENT_NAME)?.nzDirection || 'ltr';
+  dir: Direction = this.configService.getConfigForComponent(TRI_CONFIG_COMPONENT_NAME)?.nzDirection || 'ltr';
   top?: string | null;
 
   constructor() {
@@ -47,17 +47,17 @@ export class TriMessageContainerComponent extends TriMNContainerComponent {
   }
 
   protected subscribeConfigChange(): void {
-    onConfigChangeEventForComponent(NZ_CONFIG_COMPONENT_NAME, () => {
+    onConfigChangeEventForComponent(TRI_CONFIG_COMPONENT_NAME, () => {
       this.updateConfig();
-      this.dir = this.configService.getConfigForComponent(NZ_CONFIG_COMPONENT_NAME)?.nzDirection || this.dir;
+      this.dir = this.configService.getConfigForComponent(TRI_CONFIG_COMPONENT_NAME)?.nzDirection || this.dir;
     });
   }
 
   protected updateConfig(): void {
     this.config = {
-      ...NZ_MESSAGE_DEFAULT_CONFIG,
+      ...TRI_MESSAGE_DEFAULT_CONFIG,
       ...this.config,
-      ...this.configService.getConfigForComponent(NZ_CONFIG_COMPONENT_NAME)
+      ...this.configService.getConfigForComponent(TRI_CONFIG_COMPONENT_NAME)
     };
 
     this.top = toCssPixel(this.config.nzTop);

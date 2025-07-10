@@ -12,12 +12,12 @@ export interface TriDateConfig {
   firstDayOfWeek?: WeekDayIndex;
 }
 
-export const NZ_DATE_CONFIG = new InjectionToken<TriDateConfig>('date-config');
+export const TRI_DATE_CONFIG = new InjectionToken<TriDateConfig>('date-config');
 
-export const NZ_DATE_CONFIG_DEFAULT: TriDateConfig = {
+export const TRI_DATE_CONFIG_DEFAULT: TriDateConfig = {
   firstDayOfWeek: undefined
 };
 
 export function mergeDateConfig(config: TriDateConfig | null): TriDateConfig {
-  return { ...NZ_DATE_CONFIG_DEFAULT, ...config };
+  return { ...TRI_DATE_CONFIG_DEFAULT, ...config };
 }

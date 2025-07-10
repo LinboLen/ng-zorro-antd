@@ -27,7 +27,7 @@ import { distinctUntilChanged, startWith, switchMap } from 'rxjs/operators';
 import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
 import { TriSafeAny, TriSizeLDSType } from 'ng-zorro-antd/core/types';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'spin';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'spin';
 
 @Component({
   selector: '',
@@ -70,7 +70,7 @@ const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'spin';
   imports: [NgTemplateOutlet]
 })
 export class TriSpinComponent implements OnChanges, OnInit {
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   private cdr = inject(ChangeDetectorRef);
   private directionality = inject(Directionality);
@@ -90,7 +90,7 @@ export class TriSpinComponent implements OnChanges, OnInit {
   dir: Direction = 'ltr';
 
   constructor() {
-    onConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME, () => this.cdr.markForCheck());
+    onConfigChangeEventForComponent(TRI_CONFIG_MODULE_NAME, () => this.cdr.markForCheck());
   }
 
   ngOnInit(): void {

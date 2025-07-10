@@ -12,7 +12,7 @@ import { IndexableObject, TriSafeAny } from 'ng-zorro-antd/core/types';
 import en_US from './languages/en_US';
 import zh_CN from './languages/zh_CN';
 import { DateLocale, TriI18nInterface } from './nz-i18n.interface';
-import { NZ_DATE_LOCALE, NZ_I18N } from './nz-i18n.token';
+import { TRI_DATE_LOCALE, TRI_I18N } from './nz-i18n.token';
 
 @Injectable({
   providedIn: 'root'
@@ -27,8 +27,8 @@ export class TriI18nService {
   }
 
   constructor() {
-    this.setLocale(inject(NZ_I18N, { optional: true }) || zh_CN);
-    this.setDateLocale(inject(NZ_DATE_LOCALE, { optional: true }) as DateLocale); // TODO: fix the type
+    this.setLocale(inject(TRI_I18N, { optional: true }) || zh_CN);
+    this.setDateLocale(inject(TRI_DATE_LOCALE, { optional: true }) as DateLocale); // TODO: fix the type
   }
 
   // [NOTE] Performance issue: this method may called by every change detections

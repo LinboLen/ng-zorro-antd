@@ -38,7 +38,7 @@ import {
   dispatchMouseEvent
 } from 'ng-zorro-antd/core/testing';
 
-import { NZ_MODAL_DATA } from './modal-config';
+import { TRI_MODAL_DATA } from './modal-config';
 import { TriModalRef, TriModalState } from './modal-ref';
 import { TriModalComponent } from './modal.component';
 import { TriModalModule } from './modal.module';
@@ -1819,8 +1819,8 @@ class TestWithServiceComponent {
   `
 })
 class TestWithModalContentComponent {
-  @Input() value: string = inject(NZ_MODAL_DATA);
-  modalData: string = inject(NZ_MODAL_DATA);
+  @Input() value: string = inject(TRI_MODAL_DATA);
+  modalData: string = inject(TRI_MODAL_DATA);
   modalRef = inject(TriModalRef);
   modalInjector = inject(Injector);
 

@@ -46,7 +46,7 @@ import {
 } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular, getStatusClassNames, isNotNil } from 'ng-zorro-antd/core/util';
 import { TriIconModule } from 'ng-zorro-antd/icon';
-import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
+import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
 /**
  * @deprecated Will be removed in v21. It is recommended to use the new version `<nz-input-number>`.
@@ -103,7 +103,7 @@ import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, TriSpaceCompactItemD
       useExisting: forwardRef(() => TriInputNumberLegacyComponent),
       multi: true
     },
-    { provide: NZ_SPACE_COMPACT_ITEM_TYPE, useValue: 'input-number' },
+    { provide: TRI_SPACE_COMPACT_ITEM_TYPE, useValue: 'input-number' },
     TriDestroyService
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -174,7 +174,7 @@ export class TriInputNumberLegacyComponent implements ControlValueAccessor, Afte
   });
 
   #size = signal<TriSizeLDSType>(this.size);
-  private compactSize = inject(NZ_SPACE_COMPACT_SIZE, { optional: true });
+  private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private autoStepTimer?: ReturnType<typeof setTimeout>;
   private parsedValue?: string | number;
   private value?: number;

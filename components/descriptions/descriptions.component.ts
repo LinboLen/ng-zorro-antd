@@ -34,7 +34,7 @@ import { NzBreakpointEnum, TriBreakpointService, gridResponsiveMap } from 'ng-zo
 import { TriDescriptionsItemComponent } from './descriptions-item.component';
 import { TriDescriptionsItemRenderProps, TriDescriptionsLayout, TriDescriptionsSize } from './typings';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'descriptions';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'descriptions';
 const defaultColumnMap: Record<NzBreakpointEnum, number> = {
   xxl: 3,
   xl: 3,
@@ -168,7 +168,7 @@ export class TriDescriptionsComponent implements OnChanges, AfterContentInit, On
   private breakpointService = inject(TriBreakpointService);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   @ContentChildren(TriDescriptionsItemComponent) items!: QueryList<TriDescriptionsItemComponent>;
 

@@ -35,7 +35,7 @@ import { filter, switchMap } from 'rxjs/operators';
 
 import { slideMotion } from 'ng-zorro-antd/core/animation';
 import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
-import { NZ_AFTER_NEXT_RENDER$ } from 'ng-zorro-antd/core/render';
+import { TRI_AFTER_NEXT_RENDER$ } from 'ng-zorro-antd/core/render';
 import { CompareWith, TriSafeAny } from 'ng-zorro-antd/core/types';
 import { numberAttributeWithZeroFallback } from 'ng-zorro-antd/core/util';
 
@@ -167,7 +167,7 @@ export class TriAutocompleteComponent implements AfterContentInit, AfterViewInit
     return this.afterNextRender$.pipe(switchMap(() => this.optionMouseEnter));
   });
 
-  private afterNextRender$ = inject(NZ_AFTER_NEXT_RENDER$);
+  private afterNextRender$ = inject(TRI_AFTER_NEXT_RENDER$);
 
   noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
 

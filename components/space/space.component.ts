@@ -27,7 +27,7 @@ import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { TriSpaceItemDirective } from './space-item.directive';
 import { TriSpaceAlign, TriSpaceDirection, TriSpaceSize, TriSpaceType } from './types';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'space';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'space';
 const SPACE_SIZE: Record<TriSpaceType, number> = {
   small: 8,
   middle: 16,
@@ -72,7 +72,7 @@ const SPACE_SIZE: Record<TriSpaceType, number> = {
   imports: [NgTemplateOutlet, TriStringTemplateOutletDirective]
 })
 export class TriSpaceComponent implements OnChanges, AfterContentInit {
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   configService = inject(TriConfigService);
   private cdr = inject(ChangeDetectorRef);

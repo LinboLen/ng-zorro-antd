@@ -7,7 +7,7 @@ import { EnvironmentProviders, makeEnvironmentProviders, Provider } from '@angul
 
 import { IconDefinition } from '@ant-design/icons-angular';
 
-import { NZ_ICONS, NZ_ICONS_PATCH, TriIconPatchService } from './icon.service';
+import { TRI_ICONS, TRI_ICONS_PATCH, TriIconPatchService } from './icon.service';
 
 /**
  * Provide icon definitions for NzIcon in root
@@ -17,7 +17,7 @@ import { NZ_ICONS, NZ_ICONS_PATCH, TriIconPatchService } from './icon.service';
 export const provideNzIcons = (icons: IconDefinition[]): EnvironmentProviders => {
   return makeEnvironmentProviders([
     {
-      provide: NZ_ICONS,
+      provide: TRI_ICONS,
       useValue: icons
     }
   ]);
@@ -32,7 +32,7 @@ export const provideNzIconsPatch = (icons: IconDefinition[]): Provider[] => {
   return [
     TriIconPatchService,
     {
-      provide: NZ_ICONS_PATCH,
+      provide: TRI_ICONS_PATCH,
       useValue: icons
     }
   ];

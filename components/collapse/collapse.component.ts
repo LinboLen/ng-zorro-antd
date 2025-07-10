@@ -21,7 +21,7 @@ import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zo
 
 import { TriCollapsePanelComponent } from './collapse-panel.component';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'collapse';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'collapse';
 
 @Component({
   selector: '',
@@ -43,7 +43,7 @@ export class TriCollapseComponent implements OnInit {
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
 
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   @Input({ transform: booleanAttribute }) @WithConfig() accordion: boolean = false;
   @Input({ transform: booleanAttribute }) @WithConfig() bordered: boolean = true;
@@ -55,7 +55,7 @@ export class TriCollapseComponent implements OnInit {
   private listOfNzCollapsePanelComponent: TriCollapsePanelComponent[] = [];
 
   constructor() {
-    onConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME, () => this.cdr.markForCheck());
+    onConfigChangeEventForComponent(TRI_CONFIG_MODULE_NAME, () => this.cdr.markForCheck());
   }
 
   ngOnInit(): void {

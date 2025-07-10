@@ -28,7 +28,7 @@ import { defaultImageSrcLoader } from './image-loader';
 import { TriImageSrcLoader } from './typings';
 import { isFixedSize } from './utils';
 
-export const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'imageExperimental';
+export const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'imageExperimental';
 const sizeBreakpoints = [16, 32, 48, 64, 96, 128, 256, 384, 640, 750, 828, 1080, 1200, 1920, 2048, 3840];
 
 @Component({
@@ -58,7 +58,7 @@ export class TriImageViewComponent implements OnInit, OnChanges {
   private imagePreloadService = inject(ImagePreloadService);
   private destroyRef = inject(DestroyRef);
 
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   @Input() src: string = '';
   @Input() alt: string = '';
@@ -81,7 +81,7 @@ export class TriImageViewComponent implements OnInit, OnChanges {
   private reloadDisposeHandler: PreloadDisposeHandle = () => void 0;
 
   constructor() {
-    onConfigChangeEventForComponent(NZ_CONFIG_MODULE_NAME, () => {
+    onConfigChangeEventForComponent(TRI_CONFIG_MODULE_NAME, () => {
       this.composeImageAttrs();
       this.cdr.markForCheck();
     });

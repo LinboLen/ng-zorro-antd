@@ -23,7 +23,7 @@ import { ThemeType } from '@ant-design/icons-angular';
 import { TriConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
 import { InputObservable } from 'ng-zorro-antd/core/types';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'form';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'form';
 
 export type TriFormLayoutType = 'horizontal' | 'vertical' | 'inline';
 
@@ -49,7 +49,7 @@ export class TriFormDirective implements OnChanges, InputObservable {
   private destroyRef = inject(DestroyRef);
   private directionality = inject(Directionality);
 
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   @Input() layout: TriFormLayoutType = 'horizontal';
   @Input({ transform: booleanAttribute }) @WithConfig() noColon: boolean = false;

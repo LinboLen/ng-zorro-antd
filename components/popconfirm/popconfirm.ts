@@ -44,7 +44,7 @@ import { TriPopConfirmButtonProps } from './popconfirm-option';
 
 export type TriAutoFocusType = null | 'ok' | 'cancel';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'popconfirm';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'popconfirm';
 
 @Directive({
   selector: '',
@@ -54,7 +54,7 @@ const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'popconfirm';
   }
 })
 export class TriPopconfirmDirective extends TriTooltipBaseDirective {
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   /* eslint-disable @angular-eslint/no-input-rename, @angular-eslint/no-output-rename */
   @Input({ alias: 'nzPopconfirmArrowPointAtCenter', transform: booleanAttribute })

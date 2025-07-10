@@ -36,7 +36,7 @@ import { TriScrollService } from 'ng-zorro-antd/core/services';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'backTop';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'backTop';
 
 const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: true });
 
@@ -73,7 +73,7 @@ export class TriBackTopComponent implements OnInit, OnChanges {
   private cdr = inject(ChangeDetectorRef);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   private scrollListenerDestroy$ = new Subject<boolean>();
   #target: HTMLElement | null = null;

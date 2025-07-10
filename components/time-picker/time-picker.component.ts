@@ -54,11 +54,11 @@ import {
 import { getStatusClassNames, isNil } from 'ng-zorro-antd/core/util';
 import { DateHelperService, TriI18nService } from 'ng-zorro-antd/i18n';
 import { TriIconModule } from 'ng-zorro-antd/icon';
-import { NZ_SPACE_COMPACT_ITEM_TYPE, NZ_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
+import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
 import { TriTimePickerPanelComponent } from './time-picker-panel.component';
 
-const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'timePicker';
+const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'timePicker';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
@@ -160,7 +160,7 @@ const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'timePicker';
       multi: true
     },
     {
-      provide: NZ_SPACE_COMPACT_ITEM_TYPE,
+      provide: TRI_SPACE_COMPACT_ITEM_TYPE,
       useValue: 'picker'
     }
   ],
@@ -176,7 +176,7 @@ const NZ_CONFIG_MODULE_NAME: TriConfigKey = 'timePicker';
   ]
 })
 export class TriTimePickerComponent implements ControlValueAccessor, OnInit, AfterViewInit, OnChanges {
-  readonly _nzModuleName: TriConfigKey = NZ_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   public configService = inject(TriConfigService);
   protected i18n = inject(TriI18nService);
@@ -398,7 +398,7 @@ export class TriTimePickerComponent implements ControlValueAccessor, OnInit, Aft
   });
 
   #size = signal<TriSizeLDSType>(this.size);
-  private compactSize = inject(NZ_SPACE_COMPACT_SIZE, { optional: true });
+  private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private formStatusService = inject(TriFormStatusService, { optional: true });
   private formNoStatusService = inject(TriFormNoStatusService, { optional: true });
 

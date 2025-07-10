@@ -7,7 +7,7 @@ import { Component, inject, OnDestroy } from '@angular/core';
 import { ComponentFixture, TestBed, inject as testingInject } from '@angular/core/testing';
 import { Subscription } from 'rxjs';
 
-import { NZ_I18N, provideNzI18n } from 'ng-zorro-antd/i18n/nz-i18n.token';
+import { TRI_I18N, provideNzI18n } from 'ng-zorro-antd/i18n/nz-i18n.token';
 
 import cs_CZ from './languages/cs_CZ';
 import de_DE from './languages/de_DE';
@@ -92,7 +92,7 @@ https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/CONTRIBUTING.md`
 })
 export class TriI18nTestComponent implements OnDestroy {
   private localeSubscription: Subscription;
-  locale = inject(NZ_I18N);
+  locale = inject(TRI_I18N);
 
   constructor(private nzI18nService: TriI18nService) {
     this.localeSubscription = this.nzI18nService.localeChange.subscribe(locale => {

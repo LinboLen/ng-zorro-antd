@@ -27,7 +27,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
 
 import { TriCheckboxComponent } from './checkbox.component';
-import { NZ_CHECKBOX_GROUP } from './tokens';
+import { TRI_CHECKBOX_GROUP } from './tokens';
 
 export interface TriCheckboxOption {
   label: string;
@@ -60,7 +60,7 @@ export interface TriCheckboxOption {
       multi: true
     },
     {
-      provide: NZ_CHECKBOX_GROUP,
+      provide: TRI_CHECKBOX_GROUP,
       useExisting: forwardRef(() => TriCheckboxGroupComponent)
     }
   ],

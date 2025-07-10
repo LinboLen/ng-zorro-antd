@@ -30,7 +30,7 @@ import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular, isNotNil } from 'ng-zorro-antd/core/util';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
-import { NZ_CONFIG_MODULE_NAME } from './image-config';
+import { TRI_CONFIG_MODULE_NAME } from './image-config';
 import { TriImage, TriImagePreviewOptions } from './image-preview-options';
 import { TriImagePreviewRef } from './image-preview-ref';
 import { TriImageScaleStep, TriImageUrl } from './image.directive';
@@ -48,9 +48,9 @@ const initialPosition = {
   y: 0
 };
 
-export const NZ_DEFAULT_SCALE_STEP = 0.5;
-const NZ_DEFAULT_ZOOM = 1;
-const NZ_DEFAULT_ROTATE = 0;
+export const TRI_DEFAULT_SCALE_STEP = 0.5;
+const TRI_DEFAULT_ZOOM = 1;
+const TRI_DEFAULT_ROTATE = 0;
 
 @Component({
   selector: '',
@@ -159,9 +159,9 @@ export class TriImagePreviewComponent implements OnInit {
   public config = inject(TriImagePreviewOptions);
   private sanitizer = inject(DomSanitizer);
   private destroyRef = inject(DestroyRef);
-  readonly _defaultNzZoom = NZ_DEFAULT_ZOOM;
-  readonly _defaultNzScaleStep = NZ_DEFAULT_SCALE_STEP;
-  readonly _defaultNzRotate = NZ_DEFAULT_ROTATE;
+  readonly _defaultNzZoom = TRI_DEFAULT_ZOOM;
+  readonly _defaultNzScaleStep = TRI_DEFAULT_SCALE_STEP;
+  readonly _defaultNzRotate = TRI_DEFAULT_ROTATE;
 
   images: TriImage[] = [];
   index = 0;
@@ -244,7 +244,7 @@ export class TriImagePreviewComponent implements OnInit {
   }
 
   get maskClosable(): boolean {
-    const defaultConfig: TriSafeAny = this.configService.getConfigForComponent(NZ_CONFIG_MODULE_NAME) || {};
+    const defaultConfig: TriSafeAny = this.configService.getConfigForComponent(TRI_CONFIG_MODULE_NAME) || {};
     return this.config.maskClosable ?? defaultConfig.nzMaskClosable ?? true;
   }
 

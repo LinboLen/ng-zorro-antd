@@ -29,7 +29,7 @@ export interface TriCarouselStrategyRegistryItem {
   strategy: TriCarouselBaseStrategy;
 }
 
-export const NZ_CAROUSEL_CUSTOM_STRATEGIES = new InjectionToken<TriCarouselStrategyRegistryItem[]>(
+export const TRI_CAROUSEL_CUSTOM_STRATEGIES = new InjectionToken<TriCarouselStrategyRegistryItem[]>(
   'nz-carousel-custom-strategies'
 );
 
