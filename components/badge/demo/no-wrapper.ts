@@ -6,7 +6,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-badge-no-wrapper',
   imports: [FormsModule, TriBadgeModule, TriIconModule, TriSwitchModule],
   template: `
     <tri-switch [(ngModel)]="show"></tri-switch>

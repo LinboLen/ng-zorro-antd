@@ -42,7 +42,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'backTop';
 const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: true });
 
 @Component({
-  selector: '',
+  selector: 'tri-float-button-top',
   exportAs: 'triFloatButtonTop',
   imports: [TriFloatButtonComponent, TriIconModule],
   animations: [fadeMotion],

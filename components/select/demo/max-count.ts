@@ -12,7 +12,7 @@ function alphabet(): string[] {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-select-max-count',
   imports: [FormsModule, TriSelectModule],
   template: `
     <tri-select

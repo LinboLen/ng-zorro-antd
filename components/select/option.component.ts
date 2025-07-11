@@ -25,7 +25,7 @@ import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { TriOptionGroupComponent } from './option-group.component';
 
 @Component({
-  selector: '',
+  selector: 'tri-option',
   exportAs: 'triOption',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

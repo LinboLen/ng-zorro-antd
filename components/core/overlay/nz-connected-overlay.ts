@@ -18,7 +18,7 @@ import { getPlacementName } from './overlay-position';
 type Dimensions = Omit<DOMRect, 'x' | 'y' | 'toJSON'>;
 
 @Directive({
-  selector: '',
+  selector: '[cdkConnectedOverlay][nzConnectedOverlay]',
   exportAs: 'triConnectedOverlay'
 })
 export class TriConnectedOverlayDirective {

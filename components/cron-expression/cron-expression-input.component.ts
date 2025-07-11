@@ -21,7 +21,7 @@ import { CronChangeType, TimeType } from './typings';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-cron-expression-input',
   exportAs: 'triCronExpressionInput',
   template: `
     <div class="tri-cron-expression-input">

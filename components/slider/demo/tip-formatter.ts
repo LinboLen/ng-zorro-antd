@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriSliderModule } from 'ng-zorro-antd/slider';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-slider-tip-formatter',
   imports: [TriSliderModule],
   template: `
     <tri-slider [tipFormatter]="formatter"></tri-slider>

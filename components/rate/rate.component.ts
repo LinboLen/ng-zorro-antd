@@ -42,7 +42,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'rate';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-rate',
   exportAs: 'triRate',
   template: `
     <ul

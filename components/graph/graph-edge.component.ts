@@ -24,7 +24,7 @@ import { curveBasis, curveLinear, line } from 'd3-shape';
 import { TriGraphEdge, NzGraphEdgeType } from './interface';
 
 @Component({
-  selector: '',
+  selector: '[tri-graph-edge]',
   template: `
     @if (customTemplate) {
       <ng-container [ngTemplateOutlet]="customTemplate" [ngTemplateOutletContext]="{ $implicit: edge }" />

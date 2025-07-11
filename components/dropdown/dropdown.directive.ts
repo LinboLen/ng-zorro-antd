@@ -42,7 +42,7 @@ const listOfPositions = [
 ];
 
 @Directive({
-  selector: '',
+  selector: '[tri-dropdown]',
   exportAs: 'triDropdown',
   host: {
     class: 'tri-dropdown-trigger'

@@ -7,7 +7,7 @@ import { CdkTreeNodePadding } from '@angular/cdk/tree';
 import { Directive, forwardRef, Input, numberAttribute } from '@angular/core';
 
 @Directive({
-  selector: '',
+  selector: '[triTreeNodePadding]',
   providers: [
     {
       provide: CdkTreeNodePadding,

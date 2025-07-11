@@ -4,7 +4,7 @@ import { TriDividerModule } from 'ng-zorro-antd/divider';
 import { TriTypographyModule } from 'ng-zorro-antd/typography';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-typography-basic',
   imports: [TriDividerModule, TriTypographyModule],
   template: `
     <article tri-typography>

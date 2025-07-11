@@ -45,7 +45,7 @@ interface FlatNode {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tree-view-line',
   imports: [FormsModule, TriIconModule, TriSwitchModule, TriTreeViewModule],
   template: `
     Show Leaf Icon:

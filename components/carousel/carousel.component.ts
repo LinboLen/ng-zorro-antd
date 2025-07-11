@@ -58,7 +58,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'carousel';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-carousel',
   exportAs: 'triCarousel',
   template: `
     <div

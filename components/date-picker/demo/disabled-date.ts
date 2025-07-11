@@ -5,7 +5,7 @@ import { differenceInCalendarDays, setHours } from 'date-fns';
 import { DisabledTimeFn, DisabledTimePartial, TriDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-date-picker-disabled-date',
   imports: [TriDatePickerModule],
   template: `
     <tri-date-picker

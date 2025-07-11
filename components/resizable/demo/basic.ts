@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriResizableModule, TriResizeDirection, TriResizeEvent } from 'ng-zorro-antd/resizable';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-resizable-basic',
   imports: [TriResizableModule],
   template: `
     <div

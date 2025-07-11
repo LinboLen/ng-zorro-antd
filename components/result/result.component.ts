@@ -38,7 +38,7 @@ const IconMap = {
 const ExceptionStatus = ['404', '500', '403'];
 
 @Component({
-  selector: '',
+  selector: 'tri-result',
   exportAs: 'triResult',
   template: `
     <div class="tri-result-icon">

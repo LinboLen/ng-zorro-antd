@@ -11,7 +11,7 @@ interface Panel {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-collapse-custom',
   imports: [TriIconModule, TriCollapseModule],
   template: `
     <tri-collapse [bordered]="false">

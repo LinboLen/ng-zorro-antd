@@ -8,7 +8,7 @@ import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@a
 import { TriImageDirective } from './image.directive';
 
 @Component({
-  selector: '',
+  selector: 'tri-image-group',
   exportAs: 'triImageGroup',
   template: '<ng-content></ng-content>',
   changeDetection: ChangeDetectionStrategy.OnPush,

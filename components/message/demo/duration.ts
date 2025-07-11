@@ -4,7 +4,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriMessageService } from 'ng-zorro-antd/message';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-message-duration',
   imports: [TriButtonModule],
   template: `<button tri-button type="default" (click)="createBasicMessage()">Customized display duration</button>`
 })

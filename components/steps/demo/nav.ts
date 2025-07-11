@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriStepsModule } from 'ng-zorro-antd/steps';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-steps-nav',
   imports: [TriStepsModule],
   template: `
     <tri-steps type="navigation" size="small" [current]="index" (indexChange)="onIndexChange($event)">

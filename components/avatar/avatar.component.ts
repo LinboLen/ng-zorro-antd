@@ -34,7 +34,7 @@ type TriAvatarLoading = 'eager' | 'lazy';
 type TriAvatarFetchPriority = 'high' | 'low' | 'auto';
 
 @Component({
-  selector: '',
+  selector: 'tri-avatar',
   exportAs: 'triAvatar',
   imports: [TriIconModule],
   template: `

@@ -17,7 +17,7 @@ import { TriModalFooterComponent } from './modal-footer.component';
 import { TriModalTitleComponent } from './modal-title.component';
 
 @Component({
-  selector: '',
+  selector: 'tri-modal-container',
   exportAs: 'triModalContainer',
   hostDirectives: [CdkScrollable],
   template: `

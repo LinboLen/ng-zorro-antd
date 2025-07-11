@@ -6,7 +6,7 @@
 import { Directive, ElementRef, inject, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: '',
+  selector: '[tri-carousel-content]',
   exportAs: 'triCarouselContent',
   host: {
     class: 'slick-slide'

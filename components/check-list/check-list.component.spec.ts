@@ -250,7 +250,7 @@ describe('check-list', () => {
 });
 
 @Component({
-  selector: '',
+  selector: 'tri-test-check-list-basic',
   imports: [TriCheckListModule],
   template: `
     <tri-check-list

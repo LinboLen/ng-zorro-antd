@@ -46,7 +46,7 @@ interface UploadListFile extends TriUploadFile {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-upload-list',
   exportAs: 'triUploadList',
   templateUrl: './upload-list.component.html',
   animations: [

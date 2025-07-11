@@ -6,7 +6,7 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-  selector: '',
+  selector: 'div[nz-result-title]',
   exportAs: 'triResultTitle',
   host: {
     class: 'tri-result-title'
@@ -15,7 +15,7 @@ import { Directive } from '@angular/core';
 export class TriResultTitleDirective {}
 
 @Directive({
-  selector: '',
+  selector: 'div[nz-result-subtitle]',
   exportAs: 'triResultSubtitle',
   host: {
     class: 'tri-result-subtitle'
@@ -24,13 +24,13 @@ export class TriResultTitleDirective {}
 export class TriResultSubtitleDirective {}
 
 @Directive({
-  selector: '',
+  selector: 'i[nz-result-icon],div[nz-result-icon]',
   exportAs: 'triResultIcon'
 })
 export class TriResultIconDirective {}
 
 @Directive({
-  selector: '',
+  selector: 'div[nz-result-content]',
   exportAs: 'triResultContent',
   host: {
     class: 'tri-result-content'
@@ -39,7 +39,7 @@ export class TriResultIconDirective {}
 export class TriResultContentDirective {}
 
 @Directive({
-  selector: '',
+  selector: 'div[nz-result-extra]',
   exportAs: 'triResultExtra',
   host: {
     class: 'tri-result-extra'

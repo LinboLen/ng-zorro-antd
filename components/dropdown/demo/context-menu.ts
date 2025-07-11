@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriContextMenuService, TriDropdownMenuComponent, TriDropDownModule } from 'ng-zorro-antd/dropdown';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-dropdown-context-menu',
   imports: [TriDropDownModule],
   template: `
     <div class="context-area" (contextmenu)="contextMenu($event, menu)">Right Click on here</div>

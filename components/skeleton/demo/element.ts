@@ -14,7 +14,7 @@ import { TriSpaceModule } from 'ng-zorro-antd/space';
 import { TriSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-skeleton-element',
   imports: [FormsModule, TriDividerModule, TriGridModule, TriSkeletonModule, TriRadioModule, TriSpaceModule, TriSwitchModule],
   template: `
     <tri-space size="middle">

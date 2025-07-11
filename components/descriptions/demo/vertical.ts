@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriDescriptionsModule } from 'ng-zorro-antd/descriptions';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-descriptions-vertical',
   imports: [TriDescriptionsModule],
   template: `
     <tri-descriptions title="User Info" layout="vertical">

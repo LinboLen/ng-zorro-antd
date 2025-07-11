@@ -6,7 +6,7 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
 import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-date-picker-switch',
   imports: [FormsModule, TriDatePickerModule, TriSelectModule, TriSpaceModule],
   template: `
     <tri-space>

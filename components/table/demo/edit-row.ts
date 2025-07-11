@@ -13,7 +13,7 @@ interface ItemData {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-edit-row',
   imports: [FormsModule, TriInputModule, TriPopconfirmModule, TriTableModule],
   template: `
     <tri-table #editRowTable bordered [data]="listOfData" tableLayout="fixed">

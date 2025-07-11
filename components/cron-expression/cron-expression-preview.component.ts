@@ -23,7 +23,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-cron-expression-preview',
   exportAs: 'triCronExpressionPreview',
   template: `
     <div class="tri-collapse tri-collapse-borderless tri-cron-expression-preview">

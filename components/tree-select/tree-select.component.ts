@@ -83,7 +83,7 @@ const listOfPositions = [
 ];
 
 @Component({
-  selector: '',
+  selector: 'tri-tree-select',
   exportAs: 'triTreeSelect',
   imports: [
     TriOverlayModule,

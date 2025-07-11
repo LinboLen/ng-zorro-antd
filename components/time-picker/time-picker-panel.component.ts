@@ -45,7 +45,7 @@ export type TriTimePickerUnit = 'hour' | 'minute' | 'second' | '12-hour';
 @Component({
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: '',
+  selector: 'tri-time-picker-panel',
   exportAs: 'triTimePickerPanel',
   template: `
     @if (inDatePicker) {

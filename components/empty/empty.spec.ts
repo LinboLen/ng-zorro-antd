@@ -311,7 +311,7 @@ export class TriEmptyTestServiceComponent {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-empty-test-custom',
   template: `<div>I'm in component {{ name }}</div>`
 })
 export class TriEmptyTestCustomComponent {

@@ -9,7 +9,7 @@ import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 @Component({
-  selector: '',
+  selector: 'tri-table-title-footer',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `

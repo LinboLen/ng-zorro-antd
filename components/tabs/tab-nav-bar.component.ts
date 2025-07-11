@@ -53,7 +53,7 @@ const RESIZE_SCHEDULER = typeof requestAnimationFrame !== 'undefined' ? animatio
 const CSS_TRANSFORM_TIME = 150;
 
 @Component({
-  selector: '',
+  selector: 'tri-tabs-nav',
   exportAs: 'triTabsNav',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,

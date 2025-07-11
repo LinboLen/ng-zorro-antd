@@ -4,7 +4,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriTreeModule } from 'ng-zorro-antd/tree';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tree-customized-icon',
   imports: [TriIconModule, TriTreeModule],
   template: `
     <tri-tree [data]="nodes" showIcon></tri-tree>

@@ -8,7 +8,7 @@ import { Directive, inject } from '@angular/core';
 import { TriDatePickerComponent } from './date-picker.component';
 
 @Directive({
-  selector: '',
+  selector: 'tri-range-picker',
   exportAs: 'triRangePicker'
 })
 export class TriRangePickerComponent {

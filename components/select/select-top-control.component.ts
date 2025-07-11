@@ -34,7 +34,7 @@ import { TriSelectSearchComponent } from './select-search.component';
 import { TriSelectItemInterface, TriSelectModeType, TriSelectTopControlItemType } from './select.types';
 
 @Component({
-  selector: '',
+  selector: 'tri-select-top-control',
   exportAs: 'triSelectTopControl',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,

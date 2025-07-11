@@ -20,7 +20,7 @@ import { FormsModule } from '@angular/forms';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: '',
+  selector: '[tri-transfer-search]',
   exportAs: 'triTransferSearch',
   template: `
     <span class="tri-input-prefix">

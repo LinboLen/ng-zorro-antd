@@ -14,7 +14,7 @@ export interface TreeNodeInterface {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-expand-children',
   imports: [TriTableModule],
   template: `
     <tri-table #expandTable [data]="listOfMapData" tableLayout="fixed">

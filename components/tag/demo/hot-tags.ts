@@ -5,7 +5,7 @@ import { TriTagModule } from 'ng-zorro-antd/tag';
 const tagsFromServer = ['Movie', 'Books', 'Music', 'Sports'];
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tag-hot-tags',
   imports: [TriTagModule],
   template: `
     <strong>Categories:</strong>

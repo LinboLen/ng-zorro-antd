@@ -6,7 +6,7 @@ import { TriImageModule, TriImageService } from 'ng-zorro-antd/image';
 import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-image-controlled-preview',
   imports: [FormsModule, TriButtonModule, TriImageModule, TriInputNumberModule],
   template: `
     <div>

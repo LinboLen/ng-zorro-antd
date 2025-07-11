@@ -19,7 +19,7 @@ import { NgStyleInterface } from 'ng-zorro-antd/core/types';
 import { TriDisplayedMark, TriExtendedMark, TriMark, TriMarkObj } from './typings';
 
 @Component({
-  selector: '',
+  selector: 'tri-slider-marks',
   exportAs: 'triSliderMarks',
   template: `
     @for (attr of marks; track attr.value) {

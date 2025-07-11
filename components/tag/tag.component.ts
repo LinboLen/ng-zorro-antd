@@ -34,7 +34,7 @@ import {
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: '',
+  selector: 'tri-tag',
   exportAs: 'triTag',
   template: `
     <ng-content></ng-content>

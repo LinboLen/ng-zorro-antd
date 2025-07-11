@@ -4,7 +4,7 @@ import { TriTableModule } from 'ng-zorro-antd/table';
 import { TriTypographyModule } from 'ng-zorro-antd/typography';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-summary',
   imports: [TriTableModule, TriTypographyModule],
   template: `
     <tri-table #middleTable bordered [data]="data" [showPagination]="false">

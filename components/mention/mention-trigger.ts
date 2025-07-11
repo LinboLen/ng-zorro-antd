@@ -36,7 +36,7 @@ export const TRI_MENTION_TRIGGER_ACCESSOR: ExistingProvider = {
 };
 
 @Directive({
-  selector: '',
+  selector: 'input[nzMentionTrigger],textarea[nzMentionTrigger]',
   exportAs: 'triMentionTrigger',
   providers: [TRI_MENTION_TRIGGER_ACCESSOR],
   host: {

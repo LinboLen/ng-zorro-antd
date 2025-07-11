@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { TriBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-breadcrumb-router',
   imports: [RouterLink, TriBreadCrumbModule],
   template: `
     <tri-breadcrumb>

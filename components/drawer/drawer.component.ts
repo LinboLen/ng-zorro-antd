@@ -61,7 +61,7 @@ export const DRAWER_ANIMATE_DURATION = 300;
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'drawer';
 
 @Component({
-  selector: '',
+  selector: 'tri-drawer',
   exportAs: 'triDrawer',
   template: `
     <ng-template #drawerTemplate>

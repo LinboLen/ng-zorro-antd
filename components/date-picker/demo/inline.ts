@@ -7,7 +7,7 @@ import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-date-picker-inline',
   imports: [FormsModule, TriDatePickerModule, TriTabsModule],
   template: `
     <tri-tabs>

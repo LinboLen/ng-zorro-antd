@@ -11,7 +11,7 @@ import { TriTableLayout } from '../table.types';
 import { TriTableContentComponent } from './table-content.component';
 
 @Component({
-  selector: '',
+  selector: 'tri-table-inner-default',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `

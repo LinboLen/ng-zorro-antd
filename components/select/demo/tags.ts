@@ -12,7 +12,7 @@ function alphabet(): string[] {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-select-tags',
   imports: [FormsModule, TriSelectModule],
   template: `
     <tri-select mode="tags" placeHolder="Tag Mode" [(ngModel)]="listOfTagOptions">

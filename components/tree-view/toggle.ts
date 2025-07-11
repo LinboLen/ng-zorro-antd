@@ -7,7 +7,7 @@ import { CdkTreeNodeToggle } from '@angular/cdk/tree';
 import { booleanAttribute, Directive, forwardRef, Input } from '@angular/core';
 
 @Directive({
-  selector: '',
+  selector: 'tri-tree-node-toggle[nzTreeNodeNoopToggle],[triTreeNodeNoopToggle]',
   host: {
     class: 'tri-tree-switcher ant-tree-switcher-noop'
   }
@@ -15,7 +15,7 @@ import { booleanAttribute, Directive, forwardRef, Input } from '@angular/core';
 export class TriTreeNodeNoopToggleDirective {}
 
 @Directive({
-  selector: '',
+  selector: 'tri-tree-node-toggle:not([nzTreeNodeNoopToggle]),[triTreeNodeToggle]',
   providers: [{ provide: CdkTreeNodeToggle, useExisting: forwardRef(() => TriTreeNodeToggleDirective) }],
   host: {
     class: 'tri-tree-switcher',
@@ -32,7 +32,7 @@ export class TriTreeNodeToggleDirective<T> extends CdkTreeNodeToggle<T> {
 }
 
 @Directive({
-  selector: '',
+  selector: '[triTreeNodeToggleRotateIcon]',
   host: {
     class: 'tri-tree-switcher-icon'
   }
@@ -40,7 +40,7 @@ export class TriTreeNodeToggleDirective<T> extends CdkTreeNodeToggle<T> {
 export class TriTreeNodeToggleRotateIconDirective {}
 
 @Directive({
-  selector: '',
+  selector: '[triTreeNodeToggleActiveIcon]',
   host: {
     class: 'tri-tree-switcher-loading-icon'
   }

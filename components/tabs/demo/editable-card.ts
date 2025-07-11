@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tabs-editable-card',
   imports: [TriTabsModule],
   template: `
     <tri-tabs [(selectedIndexChange)]="selectedIndex" type="editable-card" (add)="newTab()" (close)="closeTab($event)">

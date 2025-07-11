@@ -27,7 +27,7 @@ import { TriRowIndentDirective } from '../addon/row-indent.directive';
 
 @Component({
   selector:
-    '',
+    'td[nzChecked],td[nzDisabled],td[nzIndeterminate],td[nzIndentSize],td[nzExpand],td[nzShowExpand],td[nzShowCheckbox]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `

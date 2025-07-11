@@ -26,7 +26,7 @@ import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 import { TriTreeNodeComponent } from './node';
 
 @Component({
-  selector: '',
+  selector: 'tri-tree-node-option',
   template: `<span class="tri-tree-title"><ng-content></ng-content></span>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {

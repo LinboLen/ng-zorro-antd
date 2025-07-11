@@ -11,7 +11,7 @@ interface Person {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-basic',
   imports: [TriDividerModule, TriTableModule],
   template: `
     <tri-table #basicTable [data]="listOfData">

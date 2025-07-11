@@ -35,7 +35,7 @@ const SPACE_SIZE: Record<TriSpaceType, number> = {
 };
 
 @Component({
-  selector: '',
+  selector: 'tri-space,[tri-space]',
   exportAs: 'triSpace',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `

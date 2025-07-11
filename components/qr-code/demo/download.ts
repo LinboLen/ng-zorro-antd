@@ -4,7 +4,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriQRCodeModule } from 'ng-zorro-antd/qr-code';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-qr-code-download',
   imports: [TriButtonModule, TriQRCodeModule],
   template: `
     <div id="download">

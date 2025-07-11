@@ -65,7 +65,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'tabs';
 let nextId = 0;
 
 @Component({
-  selector: '',
+  selector: 'tri-tabs,tri-tabset',
   exportAs: 'triTabs',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.Default,

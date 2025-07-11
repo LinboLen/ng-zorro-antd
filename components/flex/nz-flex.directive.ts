@@ -8,7 +8,7 @@ import { Directive, Input, booleanAttribute } from '@angular/core';
 import { TriAlign, TriFlex, TriGap, TriJustify, TriWrap } from './typings';
 
 @Directive({
-  selector: '',
+  selector: '[tri-flex],tri-flex',
   exportAs: 'triFlex',
   host: {
     class: 'tri-flex',

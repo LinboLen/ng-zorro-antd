@@ -4,7 +4,7 @@ import { TriFloatButtonModule } from 'ng-zorro-antd/float-button';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-float-button-shape',
   imports: [TriFloatButtonModule, TriIconModule],
   template: `
     <div class="shape">

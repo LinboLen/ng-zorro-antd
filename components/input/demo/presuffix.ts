@@ -5,7 +5,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
 import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-input-presuffix',
   imports: [TriInputModule, TriIconModule, TriToolTipModule],
   template: `
     <tri-input-group [suffix]="suffixTemplateInfo" [prefix]="prefixTemplateUser">

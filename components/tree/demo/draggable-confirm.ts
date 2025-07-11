@@ -5,7 +5,7 @@ import { delay } from 'rxjs/operators';
 import { TriFormatBeforeDropEvent, TriTreeModule } from 'ng-zorro-antd/tree';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tree-draggable-confirm',
   imports: [TriTreeModule],
   template: `<tri-tree [data]="nodes" draggable blockNode [beforeDrop]="beforeDrop"></tri-tree>`
 })

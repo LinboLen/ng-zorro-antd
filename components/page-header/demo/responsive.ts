@@ -8,7 +8,7 @@ import { TriStatisticModule } from 'ng-zorro-antd/statistic';
 import { TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-page-header-responsive',
   imports: [TriButtonModule, TriDescriptionsModule, TriPageHeaderModule, TriSpaceModule, TriStatisticModule, TriTabsModule],
   template: `
     <tri-page-header backIcon>

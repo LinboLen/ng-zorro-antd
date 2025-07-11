@@ -6,7 +6,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
 import { TriMentionModule } from 'ng-zorro-antd/mention';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-mention-avatar',
   imports: [FormsModule, TriAvatarModule, TriInputModule, TriMentionModule],
   template: `
     <tri-mention [suggestions]="webFrameworks" [valueWith]="valueWith" (onSelect)="onSelect($event)">

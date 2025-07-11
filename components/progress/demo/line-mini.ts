@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriProgressModule } from 'ng-zorro-antd/progress';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-progress-line-mini',
   imports: [TriProgressModule],
   template: `
     <div style="width: 170px;">

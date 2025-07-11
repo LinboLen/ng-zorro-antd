@@ -14,7 +14,7 @@ interface ItemData {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-grouping-columns',
   imports: [TriTableModule],
   template: `
     <tri-table #groupingTable [data]="listOfData" bordered size="middle" [scroll]="{ x: '1200px', y: '240px' }">

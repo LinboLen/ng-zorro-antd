@@ -34,7 +34,7 @@ export type TriImageUrl = string;
 export type TriImageScaleStep = number;
 
 @Directive({
-  selector: '',
+  selector: 'img[nz-image]',
   exportAs: 'triImage',
   host: {
     '(click)': 'onPreview()'

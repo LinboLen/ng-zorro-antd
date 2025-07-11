@@ -6,7 +6,7 @@ import { TriDescriptionsModule, TriDescriptionsSize } from 'ng-zorro-antd/descri
 import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-descriptions-custom-size',
   imports: [FormsModule, TriButtonModule, TriDescriptionsModule, TriRadioModule],
   template: `
     <tri-radio-group [(ngModel)]="size">

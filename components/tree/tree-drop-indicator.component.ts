@@ -17,7 +17,7 @@ import {
 import { NgStyleInterface } from 'ng-zorro-antd/core/types';
 
 @Component({
-  selector: '',
+  selector: 'tri-tree-drop-indicator',
   exportAs: 'triTreeDropIndicator',
   template: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,

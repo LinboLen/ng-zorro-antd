@@ -46,7 +46,7 @@ const options: TriCascaderOption[] = [
 ];
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-cascader-variant',
   imports: [TriCascaderModule, TriSpaceModule],
   template: `
     <tri-space direction="vertical" style="width: 100%">

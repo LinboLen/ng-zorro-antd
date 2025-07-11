@@ -7,7 +7,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
 import { TriTagModule } from 'ng-zorro-antd/tag';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tag-control',
   imports: [FormsModule, TriIconModule, TriInputModule, TriTagModule, TriNoAnimationDirective],
   template: `
     @for (tag of tags; track tag) {

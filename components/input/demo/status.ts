@@ -6,7 +6,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
 import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-input-status',
   imports: [FormsModule, TriIconModule, TriInputModule, TriSpaceModule],
   template: `
     <tri-space direction="vertical" style="width: 100%">

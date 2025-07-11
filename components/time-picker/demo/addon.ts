@@ -5,7 +5,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-time-picker-addon',
   imports: [FormsModule, TriButtonModule, TriTimePickerModule],
   template: `
     <tri-time-picker [(ngModel)]="time" [addOn]="addOnTemplate" #timePicker></tri-time-picker>

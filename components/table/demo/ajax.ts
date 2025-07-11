@@ -16,7 +16,7 @@ interface RandomUser {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-ajax',
   imports: [TriTableModule],
   template: `
     <tri-table

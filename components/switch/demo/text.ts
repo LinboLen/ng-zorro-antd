@@ -5,7 +5,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-switch-text',
   imports: [FormsModule, TriIconModule, TriSwitchModule],
   template: `
     <tri-switch [ngModel]="true" checkedChildren="开" unCheckedChildren="关"></tri-switch>

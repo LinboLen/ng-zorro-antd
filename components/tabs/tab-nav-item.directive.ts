@@ -9,7 +9,7 @@ import { Directive, ElementRef, Input, booleanAttribute, inject } from '@angular
 import { TriTabComponent } from './tab.component';
 
 @Directive({
-  selector: ''
+  selector: '[triTabNavItem]'
 })
 export class TriTabNavItemDirective implements FocusableOption {
   @Input({ transform: booleanAttribute }) disabled: boolean = false;

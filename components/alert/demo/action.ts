@@ -5,7 +5,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-alert-action',
   imports: [TriAlertModule, TriButtonModule, TriSpaceModule],
   template: `
     <tri-alert showIcon type="success" message="Success Text" [action]="actionTemplate1"></tri-alert>

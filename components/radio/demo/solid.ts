@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-radio-solid',
   imports: [FormsModule, TriRadioModule],
   template: `
     <tri-radio-group [(ngModel)]="radioValue" buttonStyle="solid">

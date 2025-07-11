@@ -96,7 +96,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'select';
 export type TriSelectSizeType = TriSizeLDSType;
 
 @Component({
-  selector: '',
+  selector: 'tri-select',
   exportAs: 'triSelect',
   providers: [
     {

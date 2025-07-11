@@ -5,7 +5,7 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
 import { TriTimelineMode, TriTimelineModule } from 'ng-zorro-antd/timeline';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-timeline-label',
   imports: [FormsModule, TriRadioModule, TriTimelineModule],
   template: `
     <tri-radio-group [(ngModel)]="mode">

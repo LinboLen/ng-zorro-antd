@@ -44,7 +44,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'table';
 
 @Component({
   selector:
-    '',
+    'th[nzColumnKey],th[nzSortFn],th[nzSortOrder],th[nzFilters],th[nzShowSort],th[nzShowFilter],th[nzCustomFilter]',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `

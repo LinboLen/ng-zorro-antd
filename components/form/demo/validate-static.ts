@@ -9,7 +9,7 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
 import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-form-validate-static',
   imports: [
     FormsModule,
     TriDatePickerModule,

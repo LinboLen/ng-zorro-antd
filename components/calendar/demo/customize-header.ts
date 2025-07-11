@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriCalendarModule } from 'ng-zorro-antd/calendar';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-calendar-customize-header',
   imports: [TriCalendarModule],
   template: `
     <div class="card">

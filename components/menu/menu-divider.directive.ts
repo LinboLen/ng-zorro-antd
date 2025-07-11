@@ -6,7 +6,7 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-  selector: '',
+  selector: '[tri-menu-divider]',
   exportAs: 'triMenuDivider',
   host: {
     class: 'tri-dropdown-menu-item-divider'

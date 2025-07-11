@@ -6,7 +6,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
-  selector: '',
+  selector: 'tri-tree-indent',
   exportAs: 'triTreeIndent',
   template: `
     @for (_ of listOfUnit; track i; let i = $index) {

@@ -6,7 +6,7 @@ import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
 import { TriSliderModule } from 'ng-zorro-antd/slider';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-slider-input-number',
   imports: [FormsModule, TriGridModule, TriInputNumberModule, TriSliderModule],
   template: `
     <tri-row gutter="8">

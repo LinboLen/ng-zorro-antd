@@ -14,7 +14,7 @@ interface ItemData {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-edit-cell',
   imports: [FormsModule, TriButtonModule, TriInputModule, TriPopconfirmModule, TriTableModule],
   template: `
     <button tri-button (click)="addRow()" type="primary">Add</button>

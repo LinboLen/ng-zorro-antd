@@ -8,7 +8,7 @@ import { Directive, TemplateRef, inject } from '@angular/core';
 import { TriModalRef } from './modal-ref';
 
 @Directive({
-  selector: '',
+  selector: '[triModalTitle]',
   exportAs: 'triModalTitle'
 })
 export class TriModalTitleDirective {

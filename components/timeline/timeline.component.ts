@@ -35,7 +35,7 @@ import { TriTimelineMode, TriTimelinePosition } from './typings';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-timeline',
   providers: [TimelineService],
   exportAs: 'triTimeline',
   template: `

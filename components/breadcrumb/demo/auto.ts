@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-breadcrumb-auto',
   imports: [TriBreadCrumbModule],
   template: `
     <tri-breadcrumb [autoGenerate]="true">

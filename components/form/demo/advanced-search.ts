@@ -7,7 +7,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-form-advanced-search',
   imports: [ReactiveFormsModule, TriButtonModule, TriFormModule, TriIconModule, TriInputModule],
   template: `
     <form tri-form [formGroup]="validateForm" class="tri-advanced-search-form">

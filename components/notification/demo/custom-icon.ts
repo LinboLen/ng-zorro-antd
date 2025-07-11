@@ -5,7 +5,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { type TriNotificationComponent, TriNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-notification-custom-icon',
   imports: [TriIconModule, TriButtonModule],
   template: `
     <ng-template #template>

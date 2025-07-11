@@ -5,7 +5,7 @@ import { TriCardModule } from 'ng-zorro-antd/card';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-card-meta',
   imports: [TriAvatarModule, TriCardModule, TriIconModule],
   template: `
     <tri-card style="width:300px;" [cover]="coverTemplate" [actions]="[actionSetting, actionEdit, actionEllipsis]">

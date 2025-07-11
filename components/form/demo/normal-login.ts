@@ -7,7 +7,7 @@ import { TriFormModule } from 'ng-zorro-antd/form';
 import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-form-normal-login',
   imports: [ReactiveFormsModule, TriButtonModule, TriCheckboxModule, TriFormModule, TriInputModule],
   template: `
     <form tri-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">

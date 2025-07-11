@@ -9,7 +9,7 @@ import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulati
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 
 @Component({
-  selector: '',
+  selector: 'tri-card-meta',
   exportAs: 'triCardMeta',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,

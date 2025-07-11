@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriFormatEmitEvent, TriTreeModule } from 'ng-zorro-antd/tree';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tree-line',
   imports: [TriTreeModule],
   template: `<tri-tree [data]="nodes" showLine (click)="event($event)"></tri-tree>`
 })

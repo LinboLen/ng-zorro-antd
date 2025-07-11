@@ -15,7 +15,7 @@ import {
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 
 @Component({
-  selector: '',
+  selector: 'tri-divider',
   exportAs: 'triDivider',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

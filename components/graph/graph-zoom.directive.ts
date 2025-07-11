@@ -26,7 +26,7 @@ import { calculateTransform } from './core/utils';
 import { TriZoomTransform, RelativePositionInfo } from './interface';
 
 @Directive({
-  selector: '',
+  selector: '[tri-graph-zoom]',
   exportAs: 'triGraphZoom'
 })
 export class TriGraphZoomDirective implements AfterViewInit {

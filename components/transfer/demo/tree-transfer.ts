@@ -5,7 +5,7 @@ import { TriTransferModule, TransferChange } from 'ng-zorro-antd/transfer';
 import { TriTreeComponent, TriTreeModule } from 'ng-zorro-antd/tree';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-transfer-tree-transfer',
   imports: [TriTransferModule, TriTreeModule],
   template: `
     <tri-transfer

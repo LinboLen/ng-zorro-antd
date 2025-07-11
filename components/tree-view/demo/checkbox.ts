@@ -40,7 +40,7 @@ interface FlatNode {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tree-view-checkbox',
   imports: [TriIconModule, TriTreeViewModule],
   template: `
     <tri-tree-view [treeControl]="treeControl" [dataSource]="dataSource">

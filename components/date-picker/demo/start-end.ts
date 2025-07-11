@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TriDatePickerComponent, TriDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-date-picker-start-end',
   imports: [FormsModule, TriDatePickerModule],
   template: `
     <tri-date-picker

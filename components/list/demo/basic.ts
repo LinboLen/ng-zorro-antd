@@ -4,7 +4,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriListModule } from 'ng-zorro-antd/list';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-list-basic',
   imports: [TriButtonModule, TriListModule],
   template: `
     <div style="margin-bottom: 8px;">

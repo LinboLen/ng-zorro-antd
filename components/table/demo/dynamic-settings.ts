@@ -47,7 +47,7 @@ interface Setting {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-dynamic-settings',
   imports: [ReactiveFormsModule, TriDividerModule, TriFormModule, TriRadioModule, TriSwitchModule, TriTableModule],
   template: `
     <div class="components-table-demo-control-bar">

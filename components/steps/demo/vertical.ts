@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriStepsModule } from 'ng-zorro-antd/steps';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-steps-vertical',
   imports: [TriStepsModule],
   template: `
     <tri-steps [current]="1" direction="vertical">

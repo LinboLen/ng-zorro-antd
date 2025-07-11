@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tab-content-lazy',
   template: `lazy`
 })
 export class TriDemoTabContentLazyComponent implements OnInit {
@@ -13,7 +13,7 @@ export class TriDemoTabContentLazyComponent implements OnInit {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tab-content-eagerly',
   template: `eagerly`
 })
 export class TriDemoTabContentEagerlyComponent implements OnInit {
@@ -23,7 +23,7 @@ export class TriDemoTabContentEagerlyComponent implements OnInit {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tabs-lazy',
   imports: [TriTabsModule, TriDemoTabContentEagerlyComponent, TriDemoTabContentLazyComponent],
   template: `
     <tri-tabs>

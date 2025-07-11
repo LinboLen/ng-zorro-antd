@@ -4,7 +4,7 @@ import { TriSpaceModule } from 'ng-zorro-antd/space';
 import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-time-picker-variant',
   imports: [TriTimePickerModule, TriSpaceModule],
   template: ` <tri-space direction="vertical" style="width: 100%">
     <tri-time-picker *spaceItem variant="outlined" />

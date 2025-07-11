@@ -6,7 +6,7 @@ import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
 const defaultOptions = ['Daily', 'Weekly', 'Monthly'];
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-segmented-dynamic',
   imports: [TriButtonModule, TriSegmentedModule],
   template: `
     <tri-segmented [options]="options"></tri-segmented>

@@ -19,7 +19,7 @@ import { TriDisplayedStep, TriExtendedMark } from './typings';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-slider-step',
   exportAs: 'triSliderStep',
   template: `
     @for (step of steps; track step.value) {

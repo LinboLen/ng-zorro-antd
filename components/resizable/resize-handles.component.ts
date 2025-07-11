@@ -37,7 +37,7 @@ function normalizeResizeHandleOptions(value: Array<TriResizeDirection | TriResiz
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-resize-handles',
   exportAs: 'triResizeHandles',
   template: `
     @for (option of resizeHandleOptions; track option) {

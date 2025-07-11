@@ -23,7 +23,7 @@ interface CustomColumn extends TriCustomColumn {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-custom-column',
   imports: [
     TriButtonModule,
     TriDividerModule,

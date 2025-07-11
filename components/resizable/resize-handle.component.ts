@@ -45,7 +45,7 @@ export class TriResizeHandleMouseDownEvent {
 const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: true }) as AddEventListenerOptions;
 
 @Component({
-  selector: '',
+  selector: 'tri-resize-handle,[tri-resize-handle]',
   exportAs: 'triResizeHandle',
   template: `<ng-content></ng-content>`,
   changeDetection: ChangeDetectionStrategy.OnPush,

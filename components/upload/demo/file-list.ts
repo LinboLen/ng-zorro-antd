@@ -5,7 +5,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriUploadChangeParam, TriUploadFile, TriUploadModule } from 'ng-zorro-antd/upload';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-upload-file-list',
   imports: [TriButtonModule, TriIconModule, TriUploadModule],
   template: `
     <tri-upload

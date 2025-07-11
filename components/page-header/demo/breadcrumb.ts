@@ -4,7 +4,7 @@ import { TriBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { TriPageHeaderModule } from 'ng-zorro-antd/page-header';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-page-header-breadcrumb',
   imports: [TriBreadCrumbModule, TriPageHeaderModule],
   template: `
     <tri-page-header title="Title" subtitle="This is a subtitle">

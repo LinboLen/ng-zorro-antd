@@ -5,7 +5,7 @@ import { TriImageModule } from 'ng-zorro-antd/image';
 import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-image-placeholder',
   imports: [TriButtonModule, TriImageModule, TriSpaceModule],
   template: `
     <tri-space [size]="12">

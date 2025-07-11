@@ -35,7 +35,7 @@ import { TriCollapseComponent } from './collapse.component';
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'collapsePanel';
 
 @Component({
-  selector: '',
+  selector: 'tri-collapse-panel',
   exportAs: 'triCollapsePanel',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,

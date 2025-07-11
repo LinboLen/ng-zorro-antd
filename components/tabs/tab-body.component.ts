@@ -9,7 +9,7 @@ import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulati
 import { tabSwitchMotion } from 'ng-zorro-antd/core/animation';
 
 @Component({
-  selector: '',
+  selector: '[tri-tab-body]',
   exportAs: 'triTabBody',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

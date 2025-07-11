@@ -4,7 +4,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriTimelineModule } from 'ng-zorro-antd/timeline';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-timeline-pending',
   imports: [TriButtonModule, TriTimelineModule],
   template: `
     <tri-timeline pending="Recording..." [reverse]="reverse">

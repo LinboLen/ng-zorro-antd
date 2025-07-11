@@ -5,7 +5,7 @@ import { TriSliderModule } from 'ng-zorro-antd/slider';
 import { TriTypographyModule } from 'ng-zorro-antd/typography';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-typography-suffix',
   imports: [FormsModule, TriSliderModule, TriTypographyModule],
   template: `
     <tri-slider [(ngModel)]="rows" [max]="10" [min]="1"></tri-slider>

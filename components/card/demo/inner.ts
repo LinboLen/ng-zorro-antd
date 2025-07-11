@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriCardModule } from 'ng-zorro-antd/card';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-card-inner',
   imports: [TriCardModule],
   template: `
     <tri-card title="Card Title">

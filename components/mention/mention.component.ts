@@ -75,7 +75,7 @@ export interface Mention {
 export type MentionPlacement = 'top' | 'bottom';
 
 @Component({
-  selector: '',
+  selector: 'tri-mention',
   exportAs: 'triMention',
   template: `
     <ng-content></ng-content>

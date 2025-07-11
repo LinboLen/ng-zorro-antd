@@ -5,7 +5,7 @@ import { TriSliderModule } from 'ng-zorro-antd/slider';
 import { TriSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-slider-basic',
   imports: [FormsModule, TriSliderModule, TriSwitchModule],
   template: `
     <tri-slider [(ngModel)]="value1" [disabled]="disabled"></tri-slider>

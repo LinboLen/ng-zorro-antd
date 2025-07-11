@@ -154,7 +154,7 @@ describe('tag', () => {
 
 @Component({
   imports: [TriTagModule],
-  selector: '',
+  selector: 'tri-test-basic-tag',
   template: `
     <tri-tag
       [mode]="mode"

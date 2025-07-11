@@ -5,7 +5,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tree-select-customized-icon',
   imports: [FormsModule, TriIconModule, TriTreeSelectModule],
   template: `
     <tri-tree-select

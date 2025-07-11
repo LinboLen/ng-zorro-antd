@@ -37,7 +37,7 @@ export interface TriResizeEvent {
 }
 
 @Directive({
-  selector: '',
+  selector: '[tri-resizable]',
   exportAs: 'triResizable',
   providers: [TriResizableService],
   host: {

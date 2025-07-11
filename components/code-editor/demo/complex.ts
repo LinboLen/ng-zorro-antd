@@ -8,7 +8,7 @@ import { TriTooltipDirective, TriToolTipModule } from 'ng-zorro-antd/tooltip';
 import { TriTypographyModule } from 'ng-zorro-antd/typography';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-code-editor-complex',
   imports: [FormsModule, TriCodeEditorModule, TriIconModule, TriTypographyModule, TriSwitchModule, TriToolTipModule],
   template: `
     <p tri-paragraph style="margin-bottom: 8px;">

@@ -8,7 +8,7 @@ import { TriListModule } from 'ng-zorro-antd/list';
 import { TriTagModule } from 'ng-zorro-antd/tag';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-drawer-multi-level-drawer',
   imports: [TriButtonModule, TriDrawerModule, TriFormModule, TriInputModule, TriListModule, TriTagModule],
   template: `
     <button tri-button type="primary" (click)="open()">New Cookbook</button>

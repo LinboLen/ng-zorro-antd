@@ -33,7 +33,7 @@ import { TriCardTabComponent } from './card-tab.component';
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'card';
 
 @Component({
-  selector: '',
+  selector: 'tri-card',
   exportAs: 'triCard',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,

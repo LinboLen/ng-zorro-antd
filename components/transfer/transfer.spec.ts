@@ -593,7 +593,7 @@ interface AbstractTestTransferComponent {
 
 @Component({
   imports: [TriTransferModule],
-  selector: '',
+  selector: 'tri-test-transfer',
   template: `
     <tri-transfer
       #comp

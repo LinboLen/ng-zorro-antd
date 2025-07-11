@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-input-size',
   imports: [TriInputModule],
   template: `
     <input tri-input placeholder="large size" size="large" />

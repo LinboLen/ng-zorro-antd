@@ -4,7 +4,7 @@ import { TriBadgeModule } from 'ng-zorro-antd/badge';
 import { TriDescriptionsModule } from 'ng-zorro-antd/descriptions';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-descriptions-vertical-border',
   imports: [TriBadgeModule, TriDescriptionsModule],
   template: `
     <tri-descriptions title="User Info" bordered layout="vertical">

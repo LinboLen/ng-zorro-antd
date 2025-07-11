@@ -46,7 +46,7 @@ declare const monaco: TriSafeAny;
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-code-editor',
   exportAs: 'triCodeEditor',
   template: `
     @if (loading) {

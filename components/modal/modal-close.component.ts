@@ -11,7 +11,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { ModalOptions } from './modal-types';
 
 @Component({
-  selector: '',
+  selector: 'button[nz-modal-close]',
   exportAs: 'triModalCloseBuiltin',
   template: `
     <span class="tri-modal-close-x">

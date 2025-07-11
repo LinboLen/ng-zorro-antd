@@ -12,7 +12,7 @@ export interface Data {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-row-selection-and-operation',
   imports: [TriButtonModule, TriTableModule],
   template: `
     <div class="send-request">

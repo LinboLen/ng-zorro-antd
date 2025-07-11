@@ -26,7 +26,7 @@ function dig(path = '0', level = 3): TriTreeNodeOptions[] {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tree-virtual-scroll',
   imports: [TriTreeModule],
   template: `<tri-tree [data]="nodes" blockNode virtualHeight="300px"></tri-tree>`
 })

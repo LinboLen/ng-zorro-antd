@@ -4,7 +4,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriModalModule, TriModalRef, TriModalService } from 'ng-zorro-antd/modal';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-modal-confirm-promise',
   imports: [TriButtonModule, TriModalModule],
   template: `<button tri-button type="primary" (click)="showConfirm()">Confirm</button>`
 })

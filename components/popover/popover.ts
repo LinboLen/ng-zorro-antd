@@ -33,7 +33,7 @@ import {
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'popover';
 
 @Directive({
-  selector: '',
+  selector: '[tri-popover]',
   exportAs: 'triPopover',
   host: {
     '[class.tri-popover-open]': 'visible'
@@ -80,7 +80,7 @@ export class TriPopoverDirective extends TriTooltipBaseDirective {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-popover',
   exportAs: 'triPopoverComponent',
   animations: [zoomBigMotion],
   changeDetection: ChangeDetectionStrategy.OnPush,

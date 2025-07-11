@@ -4,7 +4,7 @@ import { TriBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-breadcrumb-dropdown',
   imports: [TriBreadCrumbModule, TriDropDownModule],
   template: `
     <tri-breadcrumb>

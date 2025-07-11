@@ -36,7 +36,7 @@ import { drawCanvas, ERROR_LEVEL_MAP, plotQRCodeData } from './qrcode';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: '',
+  selector: 'tri-qrcode',
   exportAs: 'triQRCode',
   template: `
     @if (!!statusRender) {

@@ -57,7 +57,7 @@ const defaultFormatter: TriProgressFormatter = (p: number): string => `${p}%`;
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-progress',
   exportAs: 'triProgress',
   imports: [TriIconModule, TriOutletModule, NgTemplateOutlet],
   template: `

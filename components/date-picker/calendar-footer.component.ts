@@ -29,7 +29,7 @@ import { PREFIX_CLASS } from './util';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
-  selector: '',
+  selector: 'calendar-footer',
   imports: [NgTemplateOutlet, TriButtonModule, TriStringTemplateOutletDirective],
   template: `
     <div class="{{ prefixCls }}-footer">

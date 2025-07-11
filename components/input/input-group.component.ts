@@ -46,7 +46,7 @@ export class TriInputGroupWhitSuffixOrPrefixDirective {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-input-group',
   exportAs: 'triInputGroup',
   imports: [TriInputGroupSlotComponent, NgTemplateOutlet, TriFormItemFeedbackIconComponent],
   encapsulation: ViewEncapsulation.None,

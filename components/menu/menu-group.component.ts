@@ -25,7 +25,7 @@ export function MenuGroupFactory(): boolean {
   return isMenuInsideDropDownToken ?? false;
 }
 @Component({
-  selector: '',
+  selector: '[tri-menu-group]',
   exportAs: 'triMenuGroup',
   providers: [
     /** check if menu inside dropdown-menu component **/

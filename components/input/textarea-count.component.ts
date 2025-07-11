@@ -25,7 +25,7 @@ import { isNotNil } from 'ng-zorro-antd/core/util';
 import { TriInputDirective } from './input.directive';
 
 @Component({
-  selector: '',
+  selector: 'tri-textarea-count',
   template: `<ng-content select="textarea[nz-input]"></ng-content>`,
   host: {
     class: 'tri-input-textarea-show-count'

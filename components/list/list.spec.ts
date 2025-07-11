@@ -247,7 +247,7 @@ describe('list RTL', () => {
 
 @Component({
   imports: [TriListModule, AsyncPipe],
-  selector: '',
+  selector: 'tri-test-list',
   template: `
     <tri-list
       #comp

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriBadgeModule } from 'ng-zorro-antd/badge';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-badge-status',
   imports: [TriBadgeModule],
   template: `
     <tri-badge status="success"></tri-badge>

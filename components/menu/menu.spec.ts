@@ -561,7 +561,7 @@ describe('menu', () => {
 });
 
 @Component({
-  selector: '',
+  selector: 'tri-test-menu-horizontal',
   imports: [TriIconModule, TriMenuModule],
   template: `
     <ul tri-menu [mode]="'horizontal'">

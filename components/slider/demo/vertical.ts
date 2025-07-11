@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TriSliderModule } from 'ng-zorro-antd/slider';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-slider-vertical',
   imports: [FormsModule, TriSliderModule],
   template: `
     <div [style]="{ height: '300px' }">

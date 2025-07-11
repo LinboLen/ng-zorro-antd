@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriAlertModule } from 'ng-zorro-antd/alert';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-alert-banner',
   imports: [TriAlertModule],
   template: `
     <tri-alert banner message="Warning text"></tri-alert>

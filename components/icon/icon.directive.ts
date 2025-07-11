@@ -31,7 +31,7 @@ import { wrapIntoObservable } from 'ng-zorro-antd/core/util';
 import { TriIconPatchService, TriIconService } from './icon.service';
 
 @Directive({
-  selector: '',
+  selector: 'tri-icon,[tri-icon]',
   exportAs: 'triIcon',
   host: {
     class: 'anticon'

@@ -4,7 +4,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-space-align',
   imports: [TriButtonModule, TriSpaceModule],
   template: `
     <div class="space-align-container">

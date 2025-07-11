@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriDescriptionsModule } from 'ng-zorro-antd/descriptions';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-descriptions-responsive',
   imports: [TriDescriptionsModule],
   template: `
     <tri-descriptions

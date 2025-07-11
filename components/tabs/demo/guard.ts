@@ -5,7 +5,7 @@ import { TriModalModule, TriModalService } from 'ng-zorro-antd/modal';
 import { TriTabsCanDeactivateFn, TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tabs-guard',
   imports: [TriTabsModule, TriModalModule],
   template: `
     <tri-tabs [canDeactivate]="canDeactivate">

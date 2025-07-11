@@ -4,7 +4,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriDropDownModule, TriPlacementType } from 'ng-zorro-antd/dropdown';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-dropdown-placement',
   imports: [TriDropDownModule, TriButtonModule],
   template: `
     <div>

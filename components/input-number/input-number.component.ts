@@ -52,7 +52,7 @@ import {
 import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: '',
+  selector: 'tri-input-number',
   exportAs: 'triInputNumber',
   imports: [TriIconModule, TriFormItemFeedbackIconComponent, NgTemplateOutlet],
   template: `

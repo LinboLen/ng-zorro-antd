@@ -49,7 +49,7 @@ import { TriUploadBtnComponent } from './upload-btn.component';
 import { TriUploadListComponent } from './upload-list.component';
 
 @Component({
-  selector: '',
+  selector: 'tri-upload',
   exportAs: 'triUpload',
   templateUrl: './upload.component.html',
   encapsulation: ViewEncapsulation.None,

@@ -4,7 +4,7 @@ import { TriDividerModule } from 'ng-zorro-antd/divider';
 import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-space-split',
   imports: [TriDividerModule, TriSpaceModule],
   template: `
     <tri-space [split]="spaceSplit">

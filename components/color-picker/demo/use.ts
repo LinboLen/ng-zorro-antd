@@ -7,7 +7,7 @@ import { TriFormModule } from 'ng-zorro-antd/form';
 import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-color-picker-use',
   imports: [ReactiveFormsModule, TriButtonModule, TriColorPickerModule, TriFormModule, TriInputModule],
   template: `
     <form tri-form [formGroup]="validateForm" (ngSubmit)="submitForm()">

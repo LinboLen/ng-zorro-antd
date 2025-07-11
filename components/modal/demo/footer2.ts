@@ -4,7 +4,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriModalModule, TriModalRef, TriModalService } from 'ng-zorro-antd/modal';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-modal-footer2',
   imports: [TriButtonModule, TriModalModule],
   template: `
     <button tri-button type="primary" (click)="showModal1()">
@@ -63,7 +63,7 @@ export class TriDemoModalFooter2Component {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-modal-custom-footer-component',
   imports: [TriButtonModule, TriModalModule],
   template: `
     <div>

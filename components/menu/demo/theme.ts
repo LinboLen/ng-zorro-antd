@@ -5,7 +5,7 @@ import { TriMenuModule } from 'ng-zorro-antd/menu';
 import { TriSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-menu-theme',
   imports: [FormsModule, TriMenuModule, TriSwitchModule],
   template: `
     <tri-switch [(ngModel)]="theme">

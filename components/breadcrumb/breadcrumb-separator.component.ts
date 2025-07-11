@@ -6,7 +6,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: '',
+  selector: 'tri-breadcrumb-separator',
   exportAs: 'triBreadcrumbSeparator',
   template: `<ng-content></ng-content>`,
   host: {

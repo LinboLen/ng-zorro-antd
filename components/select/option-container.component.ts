@@ -32,7 +32,7 @@ import { TriOptionItemComponent } from './option-item.component';
 import { TriSelectItemInterface, TriSelectModeType } from './select.types';
 
 @Component({
-  selector: '',
+  selector: 'tri-option-container',
   exportAs: 'triOptionContainer',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
@@ -70,7 +70,7 @@ import { TriSelectItemInterface, TriSelectModeType } from './select.types';
                 [template]="item.template ?? null"
                 [grouped]="!!item.groupLabel"
                 [disabled]="
-                  item.nzDisabled || disabledched && !listOfSelectedValue.includes(item['nzValue']))
+                  item.nzDisabled || disabledountReached && !listOfSelectedValue.includes(item['nzValue']))
                 "
                 [showState]="mode === 'tags' || mode === 'multiple'"
                 [title]="title"

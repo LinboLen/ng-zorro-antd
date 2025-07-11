@@ -46,7 +46,7 @@ const options: TriCascaderOption[] = [
 ];
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-cascader-placement',
   imports: [TriCascaderModule, TriSegmentedModule],
   template: `
     <tri-segmented [options]="placements" (valueChange)="setPlacement($event)"></tri-segmented>

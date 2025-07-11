@@ -39,7 +39,7 @@ export type TriProgressDotTemplate = TemplateRef<{ $implicit: TemplateRef<void>;
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-steps',
   exportAs: 'triSteps',
   template: `<ng-content></ng-content>`,
   host: {

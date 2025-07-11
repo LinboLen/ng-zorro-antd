@@ -8,7 +8,7 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-result-server-error',
   exportAs: 'triResultServerError',
   template: `
     <svg width="254" height="294">

@@ -6,7 +6,7 @@ import { TriSliderModule } from 'ng-zorro-antd/slider';
 import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-space-customize',
   imports: [FormsModule, TriButtonModule, TriSpaceModule, TriSliderModule],
   template: `
     <tri-slider [(ngModel)]="size"></tri-slider>

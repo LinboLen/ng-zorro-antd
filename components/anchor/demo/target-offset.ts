@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { TriAnchorModule } from 'ng-zorro-antd/anchor';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-anchor-target-offset',
   imports: [TriAnchorModule],
   template: `
     <tri-anchor [targetOffset]="targetOffset">

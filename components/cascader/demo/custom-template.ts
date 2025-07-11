@@ -29,7 +29,7 @@ const options: TriCascaderOption[] = [
 ];
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-cascader-custom-template',
   imports: [FormsModule, TriCascaderModule],
   template: `
     <tri-cascader

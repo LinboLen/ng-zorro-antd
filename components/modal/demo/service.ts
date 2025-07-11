@@ -9,7 +9,7 @@ interface IModalData {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-modal-service',
   imports: [TriButtonModule, TriModalModule],
   template: `
     <button tri-button type="primary" (click)="createModal()">
@@ -182,7 +182,7 @@ export class TriDemoModalServiceComponent {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-modal-custom-component',
   imports: [TriButtonModule],
   template: `
     <div>

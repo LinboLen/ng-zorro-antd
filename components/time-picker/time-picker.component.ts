@@ -63,7 +63,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'timePicker';
 @Component({
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: '',
+  selector: 'tri-time-picker',
   exportAs: 'triTimePicker',
   template: `
     <div class="tri-picker-input">

@@ -4,7 +4,7 @@ import { TriBadgeModule } from 'ng-zorro-antd/badge';
 import { TriCalendarModule } from 'ng-zorro-antd/calendar';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-calendar-notice-calendar',
   imports: [TriBadgeModule, TriCalendarModule],
   template: `
     <tri-calendar>

@@ -4,7 +4,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriResultModule } from 'ng-zorro-antd/result';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-result-custom',
   imports: [TriButtonModule, TriResultModule],
   template: `
     <tri-result icon="smile-twotone" title="Great, we have done all the operators!">

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-time-picker-interval-options',
   imports: [TriTimePickerModule],
   template: `<tri-time-picker [minuteStep]="15" [secondStep]="10"></tri-time-picker>`
 })

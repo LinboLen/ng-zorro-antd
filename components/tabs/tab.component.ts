@@ -34,7 +34,7 @@ import { TriTabDirective } from './tab.directive';
 export const TRI_TAB_SET = new InjectionToken<TriSafeAny>('NZ_TAB_SET');
 
 @Component({
-  selector: '',
+  selector: 'tri-tab',
   exportAs: 'triTab',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

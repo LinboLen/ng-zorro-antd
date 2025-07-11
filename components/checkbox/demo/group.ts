@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TriCheckboxModule, TriCheckboxOption } from 'ng-zorro-antd/checkbox';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-checkbox-group',
   imports: [FormsModule, TriCheckboxModule],
   template: `
     <tri-checkbox-group [options]="options1" [(ngModel)]="value" (ngModelChange)="log($event)" />

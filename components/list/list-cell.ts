@@ -8,7 +8,7 @@ import { ChangeDetectionStrategy, Component, Directive, Input, TemplateRef } fro
 import { TriEmptyModule } from 'ng-zorro-antd/empty';
 
 @Component({
-  selector: '',
+  selector: 'tri-list-empty',
   exportAs: 'triListHeader',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<tri-embed-empty [componentName]="'list'" [specificContent]="noResult"></tri-embed-empty>`,
@@ -22,7 +22,7 @@ export class TriListEmptyComponent {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-list-header',
   exportAs: 'triListHeader',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<ng-content></ng-content>`,
@@ -33,7 +33,7 @@ export class TriListEmptyComponent {
 export class TriListHeaderComponent {}
 
 @Component({
-  selector: '',
+  selector: 'tri-list-footer',
   exportAs: 'triListFooter',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<ng-content></ng-content>`,
@@ -44,7 +44,7 @@ export class TriListHeaderComponent {}
 export class TriListFooterComponent {}
 
 @Component({
-  selector: '',
+  selector: 'tri-list-pagination',
   exportAs: 'triListPagination',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<ng-content></ng-content>`,
@@ -55,13 +55,13 @@ export class TriListFooterComponent {}
 export class TriListPaginationComponent {}
 
 @Directive({
-  selector: '',
+  selector: 'tri-list-load-more',
   exportAs: 'triListLoadMoreDirective'
 })
 export class TriListLoadMoreDirective {}
 
 @Directive({
-  selector: '',
+  selector: 'tri-list[nzGrid]',
   host: {
     class: 'tri-list-grid'
   }

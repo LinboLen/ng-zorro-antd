@@ -4,7 +4,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tabs-icon',
   imports: [TriIconModule, TriTabsModule],
   template: `
     <tri-tabs>

@@ -27,7 +27,7 @@ import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { TriMenuModeType, TriMenuThemeType, TriSubmenuTrigger } from './menu.types';
 
 @Component({
-  selector: '',
+  selector: '[tri-submenu-none-inline-child]',
   exportAs: 'triSubmenuNoneInlineChild',
   encapsulation: ViewEncapsulation.None,
   animations: [zoomBigMotion, slideMotion],

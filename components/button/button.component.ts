@@ -41,7 +41,7 @@ export type TriButtonSize = TriSizeLDSType;
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'button';
 
 @Component({
-  selector: '',
+  selector: 'button[nz-button],a[nz-button]',
   exportAs: 'triButton',
   imports: [TriIconModule],
   changeDetection: ChangeDetectionStrategy.OnPush,

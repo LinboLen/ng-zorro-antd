@@ -35,7 +35,7 @@ export const DefaultTooltipIcon = {
 } as const;
 
 @Directive({
-  selector: '',
+  selector: '[tri-form]',
   exportAs: 'triForm',
   host: {
     class: 'tri-form',

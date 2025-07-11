@@ -9,7 +9,7 @@ import { TriStatisticModule } from 'ng-zorro-antd/statistic';
 import { TriTagModule } from 'ng-zorro-antd/tag';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-page-header-actions',
   imports: [
     TriButtonModule,
     TriDescriptionsModule,

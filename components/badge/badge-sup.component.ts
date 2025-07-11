@@ -20,7 +20,7 @@ import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
 import { TriSafeAny, TriSizeDSType } from 'ng-zorro-antd/core/types';
 
 @Component({
-  selector: '',
+  selector: 'tri-badge-sup',
   exportAs: 'triBadgeSup',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

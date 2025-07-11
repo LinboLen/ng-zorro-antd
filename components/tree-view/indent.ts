@@ -30,7 +30,7 @@ function booleanArrayToString(arr: boolean[]): string {
 const BUILD_INDENTS_SCHEDULER = typeof requestAnimationFrame !== 'undefined' ? animationFrameScheduler : asapScheduler;
 
 @Component({
-  selector: '',
+  selector: 'tri-tree-node-indents',
   template: `
     @for (isEnd of indents; track isEnd) {
       <span class="tri-tree-indent-unit" [class.tri-tree-indent-unit-end]="!isEnd"></span>
@@ -46,7 +46,7 @@ export class TriTreeNodeIndentsComponent {
 }
 
 @Directive({
-  selector: '',
+  selector: 'tri-tree-node[nzTreeNodeIndentLine]',
   host: {
     class: 'tri-tree-show-line',
     '[class.tri-tree-treenode-leaf-last]': 'isLast && isLeaf'

@@ -6,7 +6,7 @@ import { TriFormModule } from 'ng-zorro-antd/form';
 import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-form-horizontal-login',
   imports: [ReactiveFormsModule, TriButtonModule, TriFormModule, TriInputModule],
   template: `
     <form tri-form [layout]="'inline'" [formGroup]="validateForm" (ngSubmit)="submitForm()">

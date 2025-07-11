@@ -12,7 +12,7 @@ import { getEventWithPoint } from 'ng-zorro-antd/resizable';
 import { TriSplitterCollapseOption } from './typings';
 
 @Component({
-  selector: '',
+  selector: '[tri-splitter-bar]',
   imports: [TriIconModule],
   template: `
     @if (lazy()) {

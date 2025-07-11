@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-select-options',
   imports: [FormsModule, TriSelectModule],
   template: `
     <tri-select ngModel="lucy" [options]="listOfOption"></tri-select>

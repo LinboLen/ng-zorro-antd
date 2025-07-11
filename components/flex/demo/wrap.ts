@@ -6,7 +6,7 @@ import { TriFlexModule, TriWrap } from 'ng-zorro-antd/flex';
 import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-flex-wrap',
   imports: [FormsModule, TriButtonModule, TriFlexModule, TriSegmentedModule],
   template: `
     <div class="segment-wrapper">

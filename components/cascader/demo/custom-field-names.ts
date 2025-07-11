@@ -52,7 +52,7 @@ const options = [
 ];
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-cascader-custom-field-names',
   imports: [FormsModule, TriCascaderModule],
   template: `
     <tri-cascader

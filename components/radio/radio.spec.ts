@@ -446,7 +446,7 @@ describe('radio', () => {
 });
 
 @Component({
-  selector: '',
+  selector: 'tri-test-radio-single',
   imports: [FormsModule, TriRadioModule],
   template: `
     <label
@@ -475,7 +475,7 @@ export class TriTestRadioSingleComponent {
 export class TriTestRadioButtonComponent {}
 
 @Component({
-  selector: '',
+  selector: 'tri-test-radio-group',
   imports: [FormsModule, TriRadioModule],
   template: `
     <tri-radio-group

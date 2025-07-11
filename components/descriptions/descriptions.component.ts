@@ -47,7 +47,7 @@ const defaultColumnMap: Record<NzBreakpointEnum, number> = {
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-descriptions',
   exportAs: 'triDescriptions',
   template: `
     @if (title || extra) {

@@ -4,7 +4,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriPopoverModule } from 'ng-zorro-antd/popover';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-popover-overlay',
   imports: [TriButtonModule, TriPopoverModule],
   template: `
     <button

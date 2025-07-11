@@ -72,7 +72,7 @@ export function isDataSource(value: TriSafeAny): value is TriGraphData {
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-graph',
   exportAs: 'triGraph',
   providers: [{ provide: TriGraph, useExisting: forwardRef(() => TriGraphComponent) }],
   template: `

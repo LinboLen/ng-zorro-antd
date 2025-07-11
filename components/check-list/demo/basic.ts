@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriCheckListModule, TriItemProps } from 'ng-zorro-antd/check-list';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-check-list-basic',
   imports: [TriCheckListModule],
   template: `<tri-check-list [items]="items" [index]="index"></tri-check-list>`
 })

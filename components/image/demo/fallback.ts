@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriImageModule } from 'ng-zorro-antd/image';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-image-fallback',
   imports: [TriImageModule],
   template: `<img tri-image width="200px" height="200px" src="error" [fallback]="fallback" alt="" />`
 })

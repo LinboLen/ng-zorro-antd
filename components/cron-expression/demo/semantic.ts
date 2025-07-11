@@ -7,7 +7,7 @@ import { parseExpression } from 'cron-parser';
 import { TriCronExpressionModule } from 'ng-zorro-antd/cron-expression';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-cron-expression-semantic',
   imports: [FormsModule, TriCronExpressionModule, DatePipe],
   template: `
     <tri-cron-expression

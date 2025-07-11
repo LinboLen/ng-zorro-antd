@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-icon-basic',
   imports: [TriIconModule],
   template: `
     <div class="icons-list">

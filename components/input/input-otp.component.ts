@@ -37,7 +37,7 @@ import { TriSafeAny, TriSizeLDSType, TriStatus, OnTouchedType } from 'ng-zorro-a
 import { TriInputDirective } from './input.directive';
 
 @Component({
-  selector: '',
+  selector: 'tri-input-otp',
   exportAs: 'triInputOtp',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

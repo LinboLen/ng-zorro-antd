@@ -23,7 +23,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriSegmentedService } from './segmented.service';
 
 @Component({
-  selector: '',
+  selector: 'label[nz-segmented-item],label[nzSegmentedItem]',
   exportAs: 'triSegmentedItem',
   imports: [TriIconModule, NgTemplateOutlet],
   template: `

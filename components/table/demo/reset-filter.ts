@@ -24,7 +24,7 @@ interface ColumnItem {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-reset-filter',
   imports: [TriButtonModule, TriTableModule],
   template: `
     <div class="table-operations">

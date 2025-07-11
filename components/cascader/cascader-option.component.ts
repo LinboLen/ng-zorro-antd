@@ -29,7 +29,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriCascaderOption } from './typings';
 
 @Component({
-  selector: '',
+  selector: '[tri-cascader-option]',
   exportAs: 'triCascaderOption',
   imports: [NgTemplateOutlet, TriHighlightPipe, TriIconModule, TriOutletModule],
   template: `

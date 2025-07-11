@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriTableModule } from 'ng-zorro-antd/table';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-colspan-rowspan',
   imports: [TriTableModule],
   template: `
     <tri-table #colSpanTable [data]="listOfData" bordered>

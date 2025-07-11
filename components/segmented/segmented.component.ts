@@ -41,7 +41,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'segmented';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-segmented',
   exportAs: 'triSegmented',
   template: `
     <!-- thumb motion div -->

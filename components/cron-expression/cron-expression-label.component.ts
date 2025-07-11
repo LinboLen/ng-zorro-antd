@@ -12,7 +12,7 @@ import { TimeType } from './typings';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-cron-expression-label',
   exportAs: 'triCronExpressionLabel',
   template: `
     <div class="tri-cron-expression-label" [class.tri-cron-expression-label-foucs]="labelFocus === type">

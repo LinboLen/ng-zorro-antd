@@ -30,7 +30,7 @@ const TRI_NOTIFICATION_DEFAULT_CONFIG: Required<NotificationConfig> = {
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-notification-container',
   exportAs: 'triNotificationContainer',
   template: `
     <div

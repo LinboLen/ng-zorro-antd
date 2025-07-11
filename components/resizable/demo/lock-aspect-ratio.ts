@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-resizable-lock-aspect-ratio',
   imports: [TriResizableModule],
   template: `
     <div

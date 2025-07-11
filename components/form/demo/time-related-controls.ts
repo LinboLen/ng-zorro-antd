@@ -7,7 +7,7 @@ import { TriFormModule } from 'ng-zorro-antd/form';
 import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-form-time-related-controls',
   imports: [ReactiveFormsModule, TriButtonModule, TriDatePickerModule, TriFormModule, TriTimePickerModule],
   template: `
     <form tri-form [formGroup]="validateForm" (ngSubmit)="submitForm()">

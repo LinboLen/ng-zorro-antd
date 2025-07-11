@@ -7,7 +7,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
 import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-form-layout',
   imports: [ReactiveFormsModule, TriButtonModule, TriFormModule, TriInputModule, TriRadioModule],
   template: `
     <form

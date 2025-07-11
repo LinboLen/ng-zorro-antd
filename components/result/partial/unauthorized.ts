@@ -8,7 +8,7 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-result-unauthorized',
   exportAs: 'triResultUnauthorized',
   template: `
     <svg width="251" height="294">

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriProgressModule } from 'ng-zorro-antd/progress';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-progress-step',
   imports: [TriProgressModule],
   template: `
     <tri-progress [percent]="50" [steps]="3" strokeColor="#1890ff"></tri-progress>

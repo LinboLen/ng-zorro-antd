@@ -4,7 +4,7 @@ import { TriAffixModule } from 'ng-zorro-antd/affix';
 import { TriButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-affix-target',
   imports: [TriAffixModule, TriButtonModule],
   template: `
     <div class="scrollable-container" #target>

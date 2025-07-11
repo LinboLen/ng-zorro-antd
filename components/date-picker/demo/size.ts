@@ -5,7 +5,7 @@ import { TriDatePickerModule, TriDatePickerSizeType } from 'ng-zorro-antd/date-p
 import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-date-picker-size',
   imports: [FormsModule, TriDatePickerModule, TriRadioModule],
   template: `
     <tri-radio-group [(ngModel)]="size">

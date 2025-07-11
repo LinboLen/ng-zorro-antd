@@ -19,7 +19,7 @@ import { TriTreeNodeOutletDirective } from './outlet';
 import { TriTreeView } from './tree';
 
 @Component({
-  selector: '',
+  selector: 'tri-tree-view',
   exportAs: 'triTreeView',
   template: `
     <div class="tri-tree-list-holder">

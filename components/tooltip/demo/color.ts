@@ -6,7 +6,7 @@ import { TriDividerModule } from 'ng-zorro-antd/divider';
 import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tooltip-color',
   imports: [TriButtonModule, TriDividerModule, TriToolTipModule],
   template: `
     <tri-divider text="Preset" orientation="left"></tri-divider>

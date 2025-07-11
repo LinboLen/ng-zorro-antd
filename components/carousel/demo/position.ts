@@ -5,7 +5,7 @@ import { TriCarouselModule } from 'ng-zorro-antd/carousel';
 import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-carousel-position',
   imports: [FormsModule, TriCarouselModule, TriRadioModule],
   template: `
     <tri-radio-group [(ngModel)]="dotPosition">

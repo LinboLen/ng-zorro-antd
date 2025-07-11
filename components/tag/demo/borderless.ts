@@ -4,7 +4,7 @@ import { presetColors } from 'ng-zorro-antd/core/color';
 import { TriTagModule } from 'ng-zorro-antd/tag';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tag-borderless',
   imports: [TriTagModule],
   template: `
     @for (color of tagColors; track color) {

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriQRCodeModule } from 'ng-zorro-antd/qr-code';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-qr-code-status',
   imports: [TriQRCodeModule],
   template: `
     <tri-qrcode value="https://ng.ant.design/" status="loading"></tri-qrcode>

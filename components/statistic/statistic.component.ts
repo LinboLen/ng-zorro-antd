@@ -28,7 +28,7 @@ import { TriStatisticValueType } from './typings';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-statistic',
   exportAs: 'triStatistic',
   template: `
     <div class="tri-statistic-title">

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriBadgeModule } from 'ng-zorro-antd/badge';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-badge-size',
   imports: [TriBadgeModule],
   template: `
     <tri-badge size="default" [count]="5">

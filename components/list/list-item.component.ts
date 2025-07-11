@@ -27,7 +27,7 @@ import { TriListItemActionsComponent, TriListItemExtraComponent } from './list-i
 import { TriListComponent } from './list.component';
 
 @Component({
-  selector: '',
+  selector: 'tri-list-item,[tri-list-item]',
   exportAs: 'triListItem',
   template: `
     <ng-template #actionsTpl>

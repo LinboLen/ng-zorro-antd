@@ -28,7 +28,7 @@ import {
 } from './skeleton.type';
 
 @Component({
-  selector: '',
+  selector: 'tri-skeleton',
   exportAs: 'triSkeleton',
   host: {
     class: 'tri-skeleton',

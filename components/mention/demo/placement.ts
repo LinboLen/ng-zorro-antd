@@ -5,7 +5,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
 import { TriMentionModule } from 'ng-zorro-antd/mention';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-mention-placement',
   imports: [FormsModule, TriInputModule, TriMentionModule],
   template: `
     <tri-mention placement="top" [suggestions]="suggestions" (onSelect)="onSelect($event)">

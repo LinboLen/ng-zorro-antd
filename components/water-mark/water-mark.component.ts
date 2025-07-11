@@ -32,7 +32,7 @@ const BaseSize = 2;
 const FontGap = 3;
 
 @Component({
-  selector: '',
+  selector: 'tri-water-mark',
   exportAs: 'triWaterMark',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<ng-content></ng-content>`,

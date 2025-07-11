@@ -13,7 +13,7 @@ export interface VirtualDataInterface {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-virtual',
   imports: [TriButtonModule, TriTableModule],
   template: `
     <button tri-button (click)="scrollToIndex(200)">Scroll To Index 200</button>

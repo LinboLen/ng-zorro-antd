@@ -5,7 +5,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
 import { TriTrimPipe } from 'ng-zorro-antd/pipes';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-pipes-trim',
   imports: [FormsModule, TriInputModule, TriTrimPipe],
   template: `
     <input type="text" tri-input [(ngModel)]="str" />

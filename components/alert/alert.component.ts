@@ -31,7 +31,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'alert';
 export type TriAlertType = 'success' | 'info' | 'warning' | 'error';
 
 @Component({
-  selector: '',
+  selector: 'tri-alert',
   exportAs: 'triAlert',
   animations: [slideAlertMotion],
   imports: [TriIconModule, TriOutletModule],

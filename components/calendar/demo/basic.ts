@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TriCalendarMode, TriCalendarModule } from 'ng-zorro-antd/calendar';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-calendar-basic',
   imports: [FormsModule, TriCalendarModule],
   template: `<tri-calendar [(ngModel)]="date" [(modeChange)]="mode" (panelChange)="panelChange($event)"></tri-calendar>`
 })

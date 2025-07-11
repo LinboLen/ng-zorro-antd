@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-segmented-disabled',
   imports: [TriSegmentedModule],
   template: `
     <tri-segmented [options]="['Map', 'Transit', 'Satellite']" disabled></tri-segmented>

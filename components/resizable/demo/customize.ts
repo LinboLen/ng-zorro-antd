@@ -4,7 +4,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-resizable-customize',
   imports: [TriIconModule, TriResizableModule],
   template: `
     <div class="box" tri-resizable (resize)="onResize($event)" [style.height.px]="height" [style.width.px]="width">

@@ -4,7 +4,7 @@ import { TriDividerModule } from 'ng-zorro-antd/divider';
 import { TriStepsModule } from 'ng-zorro-antd/steps';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-steps-progress-dot',
   imports: [TriDividerModule, TriStepsModule],
   template: `
     <tri-steps [current]="1" progressDot>

@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-select-search-box',
   imports: [FormsModule, TriSelectModule],
   template: `
     <tri-select

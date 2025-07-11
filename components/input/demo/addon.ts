@@ -5,7 +5,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
 import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-input-addon',
   imports: [FormsModule, TriInputModule, TriSelectModule],
   template: `
     <tri-input-group addOnBefore="Http://" addOnAfter=".com">

@@ -36,7 +36,7 @@ export interface TriCheckboxOption {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-checkbox-group',
   exportAs: 'triCheckboxGroup',
   imports: [TriCheckboxComponent],
   template: `

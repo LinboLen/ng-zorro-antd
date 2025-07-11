@@ -4,7 +4,7 @@ import { TriAvatarModule } from 'ng-zorro-antd/avatar';
 import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-segmented-custom',
   imports: [TriAvatarModule, TriSegmentedModule],
   template: `
     <tri-segmented>

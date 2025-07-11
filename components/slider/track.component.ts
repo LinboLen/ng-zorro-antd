@@ -24,7 +24,7 @@ export interface TriSliderTrackStyle {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-slider-track',
   exportAs: 'triSliderTrack',
   template: `<div class="tri-slider-track" [style]="style"></div>`,
   encapsulation: ViewEncapsulation.None,

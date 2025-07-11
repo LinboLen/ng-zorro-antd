@@ -4,7 +4,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriImageModule, TriImageService } from 'ng-zorro-antd/image';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-image-service',
   imports: [TriButtonModule, TriImageModule],
   template: `<button tri-button type="primary" (click)="onClick()">Preview</button>`
 })

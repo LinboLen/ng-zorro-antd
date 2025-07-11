@@ -11,7 +11,7 @@ import { TriSafeAny } from 'ng-zorro-antd/core/types';
  * A patch directive to select the element of a component.
  */
 @Directive({
-  selector: '',
+  selector: '[triElement],[tri-element]',
   exportAs: 'triElement'
 })
 export class TriElementPatchDirective {

@@ -4,7 +4,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriTagModule } from 'ng-zorro-antd/tag';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tag-icon',
   imports: [TriIconModule, TriTagModule],
   template: `
     <tri-tag color="#55acee">

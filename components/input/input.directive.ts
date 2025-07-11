@@ -32,7 +32,7 @@ import { getStatusClassNames } from 'ng-zorro-antd/core/util';
 import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
 @Directive({
-  selector: '',
+  selector: 'input[nz-input],textarea[nz-input]',
   exportAs: 'triInput',
   host: {
     class: 'tri-input',

@@ -5,7 +5,7 @@ import { TriNoAnimationModule } from 'ng-zorro-antd/core/no-animation';
 import { TriPopoverModule } from 'ng-zorro-antd/popover';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-popover-arrow-point-at-center',
   imports: [TriButtonModule, TriPopoverModule, TriNoAnimationModule],
   template: `
     <button tri-button popoverTitle="Title" popoverContent="Content" popoverPlacement="topLeft" tri-popover>

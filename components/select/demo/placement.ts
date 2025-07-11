@@ -5,7 +5,7 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
 import { TriSelectModule, TriSelectPlacementType } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-select-placement',
   imports: [FormsModule, TriRadioModule, TriSelectModule],
   template: `
     <tri-radio-group [(ngModel)]="placement">

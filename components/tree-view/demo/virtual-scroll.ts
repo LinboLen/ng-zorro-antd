@@ -36,7 +36,7 @@ interface ExampleFlatNode {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tree-view-virtual-scroll',
   imports: [TriIconModule, TriTreeViewModule],
   template: `
     <tri-tree-virtual-scroll-view class="virtual-scroll-tree" [treeControl]="treeControl" [dataSource]="dataSource">

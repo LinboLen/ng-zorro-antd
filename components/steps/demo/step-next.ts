@@ -4,7 +4,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriStepsModule } from 'ng-zorro-antd/steps';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-steps-step-next',
   imports: [TriButtonModule, TriStepsModule],
   template: `
     <tri-steps [current]="current">

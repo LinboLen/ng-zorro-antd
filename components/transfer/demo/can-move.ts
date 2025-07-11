@@ -5,7 +5,7 @@ import { delay } from 'rxjs/operators';
 import { TriTransferModule, TransferCanMove, TransferItem } from 'ng-zorro-antd/transfer';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-transfer-can-move',
   imports: [TriTransferModule],
   template: `
     <tri-transfer

@@ -6,7 +6,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-collapse-extra',
   imports: [FormsModule, TriCollapseModule, TriIconModule, TriSelectModule],
   template: `
     <tri-collapse [expandIconPosition]="expandIconPosition">

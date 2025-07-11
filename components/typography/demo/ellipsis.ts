@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriTypographyModule } from 'ng-zorro-antd/typography';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-typography-ellipsis',
   imports: [TriTypographyModule],
   template: `
     <p

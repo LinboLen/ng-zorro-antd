@@ -4,7 +4,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tooltip-placement',
   imports: [TriButtonModule, TriToolTipModule],
   template: `
     <div style="margin-left:60px;">

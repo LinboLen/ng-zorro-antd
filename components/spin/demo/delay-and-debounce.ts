@@ -6,7 +6,7 @@ import { TriSpinModule } from 'ng-zorro-antd/spin';
 import { TriSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-spin-delay-and-debounce',
   imports: [FormsModule, TriAlertModule, TriSpinModule, TriSwitchModule],
   template: `
     <tri-spin [spinning]="isSpinning" [delay]="500">

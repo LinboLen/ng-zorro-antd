@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-time-picker-size',
   imports: [FormsModule, TriTimePickerModule],
   template: `
     <tri-time-picker [(ngModel)]="time" size="large"></tri-time-picker>

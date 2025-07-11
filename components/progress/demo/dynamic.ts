@@ -7,7 +7,7 @@ import { TriProgressModule } from 'ng-zorro-antd/progress';
 import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-progress-dynamic',
   imports: [TriButtonModule, TriIconModule, TriFlexModule, TriProgressModule, TriSpaceModule],
   template: `
     <div tri-flex vertical gap="small">

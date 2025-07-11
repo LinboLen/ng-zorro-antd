@@ -14,7 +14,7 @@ import { TriTransferModule } from 'ng-zorro-antd/transfer';
 import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-empty-config',
   imports: [
     FormsModule,
     TriCascaderModule,

@@ -34,7 +34,7 @@ import { RenderListContext, TransferDirection, TransferItem, TransferStat } from
 import { TriTransferSearchComponent } from './transfer-search.component';
 
 @Component({
-  selector: '',
+  selector: 'tri-transfer-list',
   exportAs: 'triTransferList',
   template: `
     <div class="tri-transfer-list-header">

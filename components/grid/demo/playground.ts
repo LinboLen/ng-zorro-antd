@@ -5,7 +5,7 @@ import { TriGridModule } from 'ng-zorro-antd/grid';
 import { TriMarks, TriSliderModule } from 'ng-zorro-antd/slider';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-grid-playground',
   imports: [FormsModule, TriGridModule, TriSliderModule],
   template: `
     <div class="slider-container">

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriAvatarModule } from 'ng-zorro-antd/avatar';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-avatar-type',
   imports: [TriAvatarModule],
   template: `
     <tri-avatar icon="user"></tri-avatar>

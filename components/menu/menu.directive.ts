@@ -41,7 +41,7 @@ export function MenuDropDownTokenFactory(): boolean {
 }
 
 @Directive({
-  selector: '',
+  selector: '[tri-menu]',
   exportAs: 'triMenu',
   providers: [
     {

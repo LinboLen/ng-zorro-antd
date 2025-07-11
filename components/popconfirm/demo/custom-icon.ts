@@ -4,7 +4,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-popconfirm-custom-icon',
   imports: [TriIconModule, TriPopconfirmModule],
   template: `
     <a tri-popconfirm popconfirmTitle="Are you sure?" [icon]="iconTpl">Delete</a>

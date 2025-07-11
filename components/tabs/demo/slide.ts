@@ -6,7 +6,7 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
 import { TriTabPosition, TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tabs-slide',
   imports: [FormsModule, TriInputNumberModule, TriRadioModule, TriTabsModule],
   template: `
     <tri-radio-group [(ngModel)]="tabPosition" style="margin-bottom: 8px;">

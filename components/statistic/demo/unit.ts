@@ -6,7 +6,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriStatisticModule } from 'ng-zorro-antd/statistic';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-statistic-unit',
   imports: [DecimalPipe, TriGridModule, TriIconModule, TriStatisticModule],
   template: `
     <tri-row [gutter]="16">

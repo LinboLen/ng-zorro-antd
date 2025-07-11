@@ -5,7 +5,7 @@ import { TriDrawerModule } from 'ng-zorro-antd/drawer';
 import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-drawer-size',
   imports: [TriButtonModule, TriDrawerModule, TriSpaceModule],
   template: `
     <tri-space>

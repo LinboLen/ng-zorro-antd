@@ -4,7 +4,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriTransferModule, TransferItem } from 'ng-zorro-antd/transfer';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-transfer-custom-item',
   imports: [TriIconModule, TriTransferModule],
   template: `
     <tri-transfer

@@ -5,7 +5,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-radio-disable',
   imports: [FormsModule, TriButtonModule, TriRadioModule],
   template: `
     <div>

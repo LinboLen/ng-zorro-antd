@@ -7,7 +7,7 @@ import { TriSplitterModule } from 'ng-zorro-antd/splitter';
 import { TriSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-splitter-control',
   imports: [FormsModule, TriButtonModule, TriFlexModule, TriSplitterModule, TriSwitchModule],
   template: `
     <tri-flex gap="middle" vertical>

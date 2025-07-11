@@ -12,7 +12,7 @@ interface AutocompleteOptionGroups {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-auto-complete-certain-category',
   imports: [FormsModule, TriAutocompleteModule, TriIconModule, TriInputModule],
   encapsulation: ViewEncapsulation.None,
   template: `

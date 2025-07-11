@@ -6,7 +6,7 @@
 import { Directive, Input, booleanAttribute } from '@angular/core';
 
 @Directive({
-  selector: '',
+  selector: '[tri-card-grid]',
   exportAs: 'triCardGrid',
   host: {
     class: 'tri-card-grid',

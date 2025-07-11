@@ -5,7 +5,7 @@ import { TriElementPatchDirective } from 'ng-zorro-antd/core/element-patch';
 import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tooltip-origin',
   imports: [TriButtonModule, TriToolTipModule, TriElementPatchDirective],
   template: `
     <button tri-button tri-element #button="nzElement">Action</button>

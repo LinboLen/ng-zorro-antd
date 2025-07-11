@@ -4,7 +4,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriSkeletonModule } from 'ng-zorro-antd/skeleton';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-skeleton-children',
   imports: [TriButtonModule, TriSkeletonModule],
   template: `
     <div class="article">

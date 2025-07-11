@@ -23,7 +23,7 @@ import { TriMessageData } from './typings';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-message',
   exportAs: 'triMessage',
   animations: [moveUpMotion],
   template: `

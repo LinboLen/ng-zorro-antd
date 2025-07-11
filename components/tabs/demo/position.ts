@@ -5,7 +5,7 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
 import { TriTabPosition, TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tabs-position',
   imports: [FormsModule, TriSelectModule, TriTabsModule],
   template: `
     <div style="margin-bottom: 16px;">

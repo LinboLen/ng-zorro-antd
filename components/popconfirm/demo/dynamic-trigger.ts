@@ -6,7 +6,7 @@ import { TriPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { TriSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-popconfirm-dynamic-trigger',
   imports: [FormsModule, TriPopconfirmModule, TriSwitchModule],
   template: `
     <a

@@ -32,7 +32,7 @@ import {
 } from './base';
 
 @Directive({
-  selector: '',
+  selector: '[tri-tooltip]',
   exportAs: 'triTooltip',
   host: {
     '[class.tri-tooltip-open]': 'visible'
@@ -75,7 +75,7 @@ export class TriTooltipDirective extends TriTooltipBaseDirective {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-tooltip',
   exportAs: 'triTooltipComponent',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,

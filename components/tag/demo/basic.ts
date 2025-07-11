@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriTagModule } from 'ng-zorro-antd/tag';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tag-basic',
   imports: [TriTagModule],
   template: `
     <tri-tag>Tag 1</tri-tag>

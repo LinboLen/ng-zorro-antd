@@ -31,7 +31,7 @@ import { TriMenuDirective } from 'ng-zorro-antd/menu';
 import { TriSiderTriggerComponent } from './sider-trigger.component';
 
 @Component({
-  selector: '',
+  selector: 'tri-sider',
   exportAs: 'triSider',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -120,7 +120,7 @@ describe('nz-float-button-group RTL', () => {
 });
 
 @Component({
-  selector: '',
+  selector: 'tri-test-basic-float-button-group',
   imports: [TriFloatButtonModule, TriIconModule],
   template: `
     <tri-float-button-group

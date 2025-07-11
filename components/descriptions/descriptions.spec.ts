@@ -144,7 +144,7 @@ describe('nz descriptions', () => {
 
 @Component({
   imports: [TriDescriptionsModule],
-  selector: '',
+  selector: 'tri-test-descriptions',
   template: `
     <tri-descriptions [title]="title" [bordered]="bordered" [column]="column">
       @for (col of colspanArray; track i; let i = $index) {

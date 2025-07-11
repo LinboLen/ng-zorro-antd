@@ -13,7 +13,7 @@ function alphabet(): string[] {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-select-size',
   imports: [FormsModule, TriSelectModule, TriRadioModule],
   template: `
     <tri-radio-group [(ngModel)]="size">

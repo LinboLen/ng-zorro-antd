@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriHashCodeModule } from 'ng-zorro-antd/hash-code';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-hash-code-logo',
   imports: [TriHashCodeModule],
   template: `<tri-hash-code [value]="value" logo="Antd"></tri-hash-code>`
 })

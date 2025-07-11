@@ -13,7 +13,7 @@ import { TriTagModule } from 'ng-zorro-antd/tag';
 import { TriTypographyModule } from 'ng-zorro-antd/typography';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-page-header-content',
   imports: [
     TriAvatarModule,
     TriBreadCrumbModule,

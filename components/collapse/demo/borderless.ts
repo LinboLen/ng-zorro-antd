@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriCollapseModule } from 'ng-zorro-antd/collapse';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-collapse-borderless',
   imports: [TriCollapseModule],
   template: `
     <tri-collapse [bordered]="false">

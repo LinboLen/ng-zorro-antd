@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TriMarks, TriSliderModule } from 'ng-zorro-antd/slider';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-slider-reverse',
   imports: [FormsModule, TriSliderModule],
   template: `
     <tri-slider [ngModel]="30" [reverse]="reverse"></tri-slider>

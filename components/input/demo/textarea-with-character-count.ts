@@ -5,7 +5,7 @@ import { TriFormModule } from 'ng-zorro-antd/form';
 import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-input-textarea-with-character-count',
   imports: [ReactiveFormsModule, TriFormModule, TriInputModule],
   template: `
     <form tri-form [formGroup]="form" layout="vertical">

@@ -8,7 +8,7 @@ import { Directive, inject } from '@angular/core';
 import { TriTableStyleService } from '../table-style.service';
 
 @Directive({
-  selector: '',
+  selector: 'th:not(.nz-disable-th),td:not(.nz-disable-td)',
   host: {
     '[class.tri-table-cell]': 'isInsideTable'
   }

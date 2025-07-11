@@ -27,7 +27,7 @@ import { TriOverflowRestDirective } from './overflow-rest.directive';
 import { TriOverflowSuffixDirective } from './overflow-suffix.directive';
 
 @Component({
-  selector: '',
+  selector: 'tri-overflow-container',
   template: `
     <ng-content></ng-content>
     <ng-content select="[appOverflowRest]"></ng-content>

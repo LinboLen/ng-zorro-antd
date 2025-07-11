@@ -24,7 +24,7 @@ import { COMPOSITION_BUFFER_MODE, FormsModule } from '@angular/forms';
 import { requestAnimationFrame } from 'ng-zorro-antd/core/polyfill';
 
 @Component({
-  selector: '',
+  selector: 'tri-select-search',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `

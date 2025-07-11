@@ -7,7 +7,7 @@ import { CdkTreeNodeOutlet } from '@angular/cdk/tree';
 import { Directive, forwardRef } from '@angular/core';
 
 @Directive({
-  selector: '',
+  selector: '[triTreeNodeOutlet]',
   providers: [
     {
       provide: CdkTreeNodeOutlet,

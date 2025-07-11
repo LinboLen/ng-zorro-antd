@@ -6,11 +6,11 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-  selector: ''
+  selector: '[triInputAddonBefore]'
 })
 export class TriInputAddonBeforeDirective {}
 
 @Directive({
-  selector: ''
+  selector: '[triInputAddonAfter]'
 })
 export class TriInputAddonAfterDirective {}

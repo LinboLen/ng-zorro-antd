@@ -7,7 +7,7 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
 import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-button-size',
   imports: [FormsModule, TriButtonModule, TriIconModule, TriRadioModule, TriSpaceModule],
   template: `
     <tri-radio-group [(ngModel)]="size">

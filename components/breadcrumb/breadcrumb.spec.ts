@@ -296,7 +296,7 @@ function flushFixture(fixture: ComponentFixture<any>): void {
 
 @Component({
   imports: [RouterOutlet, TriBreadCrumbModule],
-  selector: '',
+  selector: 'tri-test-breadcrumb',
   template: `
     <tri-breadcrumb [autoGenerate]="true"></tri-breadcrumb>
     <router-outlet></router-outlet>

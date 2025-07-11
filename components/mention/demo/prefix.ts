@@ -5,7 +5,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
 import { MentionOnSearchTypes, TriMentionModule } from 'ng-zorro-antd/mention';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-mention-prefix',
   imports: [FormsModule, TriInputModule, TriMentionModule],
   template: `
     <tri-mention [suggestions]="suggestions" (onSearchChange)="onSearchChange($event)" [prefix]="['#', '@']">

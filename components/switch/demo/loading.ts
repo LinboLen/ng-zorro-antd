@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TriSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-switch-loading',
   imports: [FormsModule, TriSwitchModule],
   template: `
     <tri-switch [ngModel]="true" loading></tri-switch>

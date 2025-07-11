@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriBackTopModule } from 'ng-zorro-antd/back-top';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-back-top-basic',
   imports: [TriBackTopModule],
   template: `
     <tri-back-top></tri-back-top>

@@ -12,7 +12,7 @@ import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: '',
+  selector: 'tri-table-selection',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `

@@ -11,7 +11,7 @@ import { requestAnimationFrame } from 'ng-zorro-antd/core/polyfill';
 import { TriTabPositionMode } from './interfaces';
 
 @Directive({
-  selector: '',
+  selector: 'tri-tabs-ink-bar,[tri-tabs-ink-bar]',
   host: {
     class: 'tri-tabs-ink-bar',
     '[class.tri-tabs-ink-bar-animated]': '_animated'

@@ -5,7 +5,7 @@ import { type TriNotificationComponent, TriNotificationService } from 'ng-zorro-
 import { TriTagModule } from 'ng-zorro-antd/tag';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-notification-template',
   imports: [TriButtonModule, TriTagModule],
   template: `
     <button tri-button type="primary" (click)="createNotification()">Open the notification box</button>

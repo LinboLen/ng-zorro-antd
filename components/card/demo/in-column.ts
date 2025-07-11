@@ -4,7 +4,7 @@ import { TriCardModule } from 'ng-zorro-antd/card';
 import { TriGridModule } from 'ng-zorro-antd/grid';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-card-in-column',
   imports: [TriCardModule, TriGridModule],
   template: `
     <div style="background: #ECECEC; padding:30px;">

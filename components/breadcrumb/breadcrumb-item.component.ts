@@ -16,7 +16,7 @@ import { TriBreadCrumbSeparatorComponent } from './breadcrumb-separator.componen
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-breadcrumb-item',
   exportAs: 'triBreadcrumbItem',
   imports: [NgTemplateOutlet, TriBreadCrumbSeparatorComponent, TriDropDownModule, TriIconModule, TriOutletModule],
   template: `

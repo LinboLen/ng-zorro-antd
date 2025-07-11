@@ -4,7 +4,7 @@ import { TriLayoutModule } from 'ng-zorro-antd/layout';
 import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-resizable-layout',
   imports: [TriLayoutModule, TriResizableModule],
   template: `
     <tri-layout>

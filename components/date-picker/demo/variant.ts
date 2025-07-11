@@ -4,7 +4,7 @@ import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-date-picker-variant',
   imports: [TriDatePickerModule, TriSpaceModule],
   template: `
     <tri-space direction="vertical" style="width: 100%">

@@ -36,7 +36,7 @@ export function provideNzWave(config: TriWaveConfig): EnvironmentProviders {
 }
 
 @Directive({
-  selector: '',
+  selector: '[tri-wave],button[nz-button]:not([nzType="link"]):not([nzType="text"])',
   exportAs: 'triWave'
 })
 export class TriWaveDirective implements OnInit, OnDestroy {

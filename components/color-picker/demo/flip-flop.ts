@@ -5,7 +5,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriColorPickerModule } from 'ng-zorro-antd/color-picker';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-color-picker-flip-flop',
   imports: [FormsModule, TriButtonModule, TriColorPickerModule],
   template: `
     <tri-color-picker [flipFlop]="flipFlop" [(ngModel)]="color"></tri-color-picker>

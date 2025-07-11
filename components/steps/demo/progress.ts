@@ -32,7 +32,7 @@ function mockAsyncStep(): Observable<number> {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-steps-progress',
   imports: [TriButtonModule, TriStepsModule],
   template: `
     <tri-steps [current]="current">

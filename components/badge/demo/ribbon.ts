@@ -4,7 +4,7 @@ import { TriBadgeModule } from 'ng-zorro-antd/badge';
 import { TriCardModule } from 'ng-zorro-antd/card';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-badge-ribbon',
   imports: [TriBadgeModule, TriCardModule],
   template: `
     <tri-ribbon text="Hippies">

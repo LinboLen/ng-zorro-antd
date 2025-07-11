@@ -12,7 +12,7 @@ import { TabTemplateContext } from './interfaces';
  * Fix https://github.com/angular/angular/issues/8563
  */
 @Directive({
-  selector: '',
+  selector: 'ng-template[nzTabLink]',
   exportAs: 'triTabLinkTemplate'
 })
 export class TriTabLinkTemplateDirective {
@@ -23,7 +23,7 @@ export class TriTabLinkTemplateDirective {
  * This component is for catching `routerLink` directive.
  */
 @Directive({
-  selector: '',
+  selector: 'a[nz-tab-link]',
   exportAs: 'triTabLink'
 })
 export class TriTabLinkDirective {

@@ -12,7 +12,7 @@ function alphabet(): string[] {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-select-automatic-tokenization',
   imports: [FormsModule, TriSelectModule],
   template: `
     <tri-select

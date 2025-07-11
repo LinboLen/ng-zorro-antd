@@ -20,7 +20,7 @@ import { TriStatisticValueType } from './typings';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-statistic-number',
   exportAs: 'triStatisticNumber',
   template: `
     <span class="tri-statistic-content-value">

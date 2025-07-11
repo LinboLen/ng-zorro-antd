@@ -6,7 +6,7 @@ import { endOfMonth } from 'date-fns';
 import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-date-picker-presetted-ranges',
   imports: [FormsModule, TriDatePickerModule],
   template: `
     <tri-range-picker [ranges]="ranges" ngModel (ngModelChange)="onChange($event)"></tri-range-picker>

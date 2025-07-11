@@ -5,7 +5,7 @@ import { TriLayoutModule } from 'ng-zorro-antd/layout';
 import { TriMenuModule } from 'ng-zorro-antd/menu';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-layout-fixed-sider',
   imports: [TriIconModule, TriMenuModule, TriLayoutModule],
   template: `
     <tri-layout class="layout">

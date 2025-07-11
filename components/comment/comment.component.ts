@@ -24,7 +24,7 @@ import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriCommentActionComponent as CommentAction, TriCommentActionHostDirective } from './comment-cells';
 
 @Component({
-  selector: '',
+  selector: 'tri-comment',
   exportAs: 'triComment',
   template: `
     <div class="tri-comment-inner">

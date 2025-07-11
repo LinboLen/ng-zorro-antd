@@ -10,7 +10,7 @@ interface ItemData {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-row-selection-custom',
   imports: [TriTableModule],
   template: `
     <tri-table

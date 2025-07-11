@@ -7,7 +7,7 @@ import { TriMentionModule } from 'ng-zorro-antd/mention';
 import { TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-mention-preview',
   imports: [FormsModule, TriInputModule, TriMentionModule, TriTabsModule],
   template: `
     <tri-tabs>

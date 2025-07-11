@@ -8,7 +8,7 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
 import { TriTypographyModule } from 'ng-zorro-antd/typography';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-code-editor-config',
   imports: [FormsModule, TriCodeEditorModule, TriIconModule, TriSwitchModule, TriTypographyModule],
   template: `
     <p tri-paragraph style="margin-bottom: 8px;">

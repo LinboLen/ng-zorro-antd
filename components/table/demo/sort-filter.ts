@@ -25,7 +25,7 @@ interface ColumnItem {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-sort-filter',
   imports: [TriTableModule],
   template: `
     <tri-table #filterTable [data]="listOfData" tableLayout="fixed">

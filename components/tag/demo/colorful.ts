@@ -4,7 +4,7 @@ import { presetColors } from 'ng-zorro-antd/core/color';
 import { TriTagModule } from 'ng-zorro-antd/tag';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tag-colorful',
   imports: [TriTagModule],
   template: `
     <h4 style="margin-bottom: 16px">Presets:</h4>

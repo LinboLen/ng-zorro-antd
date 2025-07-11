@@ -9,7 +9,7 @@ import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: '',
+  selector: '[tri-input-group-slot]',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `

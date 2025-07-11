@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-input-number-formatter',
   imports: [FormsModule, TriInputNumberModule],
   template: `
     <tri-input-number [(ngModel)]="dollarValue" [formatter]="formatterDollar" [parser]="parserDollar" />

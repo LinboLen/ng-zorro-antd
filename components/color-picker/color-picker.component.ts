@@ -34,7 +34,7 @@ import { defaultColor, generateColor } from './src/util/util';
 import { TriColor, TriColorPickerFormatType, TriColorPickerTriggerType } from './typings';
 
 @Component({
-  selector: '',
+  selector: 'tri-color-picker',
   exportAs: 'triColorPicker',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [

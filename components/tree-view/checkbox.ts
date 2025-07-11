@@ -22,7 +22,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 
 @Component({
-  selector: '',
+  selector: 'tri-tree-node-checkbox:not([builtin])',
   template: `<span class="tri-tree-checkbox-inner"></span>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {

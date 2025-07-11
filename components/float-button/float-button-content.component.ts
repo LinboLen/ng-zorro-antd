@@ -10,7 +10,7 @@ import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: '',
+  selector: 'tri-float-button-content',
   exportAs: 'triFloatButtonContent',
   imports: [TriIconModule, NgTemplateOutlet, TriStringTemplateOutletDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -22,7 +22,7 @@ const REFRESH_INTERVAL = 20;
 const SPEED_OFF_MULTIPLE = 0.995 ** REFRESH_INTERVAL;
 
 @Directive({
-  selector: ''
+  selector: '[triTabScrollList]'
 })
 export class TriTabScrollListDirective implements OnInit {
   private ngZone = inject(NgZone);

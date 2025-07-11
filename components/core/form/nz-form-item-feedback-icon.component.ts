@@ -25,7 +25,7 @@ const iconTypeMap = {
 } as const;
 
 @Component({
-  selector: '',
+  selector: 'tri-form-item-feedback-icon',
   exportAs: 'triFormFeedbackIcon',
   imports: [TriIconModule],
   encapsulation: ViewEncapsulation.None,

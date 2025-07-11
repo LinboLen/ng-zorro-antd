@@ -5,7 +5,7 @@ import { TriAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-auto-complete-options',
   imports: [FormsModule, TriAutocompleteModule, TriInputModule],
   encapsulation: ViewEncapsulation.None,
   template: `

@@ -4,7 +4,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriDrawerModule } from 'ng-zorro-antd/drawer';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-drawer-basic-right',
   imports: [TriButtonModule, TriDrawerModule],
   template: `
     <button tri-button type="primary" (click)="open()">Open</button>

@@ -13,7 +13,7 @@ import { TriCheckboxComponent } from './checkbox.component';
  * @deprecated Will be removed in v21. It is recommended to use `<nz-checkbox-group>`.
  */
 @Component({
-  selector: '',
+  selector: 'tri-checkbox-wrapper',
   exportAs: 'triCheckboxWrapper',
   template: `<ng-content></ng-content>`,
   changeDetection: ChangeDetectionStrategy.OnPush,

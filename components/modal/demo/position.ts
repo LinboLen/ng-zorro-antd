@@ -4,7 +4,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriModalModule } from 'ng-zorro-antd/modal';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-modal-position',
   imports: [TriButtonModule, TriModalModule],
   template: `
     <button tri-button type="primary" (click)="showModalTop()">Display a modal dialog at 20px to Top</button>

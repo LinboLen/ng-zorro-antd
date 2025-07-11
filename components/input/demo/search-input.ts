@@ -6,7 +6,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-input-search-input',
   imports: [FormsModule, TriButtonModule, TriInputModule, TriIconModule],
   template: `
     <tri-input-group [suffix]="suffixIconSearch">

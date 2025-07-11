@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriFlexModule } from 'ng-zorro-antd/flex';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-flex-combination',
   imports: [TriFlexModule],
   template: `
     <div class="combination-wrapper" tri-flex [gap]="80">

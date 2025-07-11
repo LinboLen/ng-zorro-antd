@@ -309,7 +309,7 @@ describe('rate', () => {
 });
 
 @Component({
-  selector: '',
+  selector: 'tri-test-rate',
   imports: [FormsModule, TriRateModule],
   template: `
     <tri-rate
@@ -378,7 +378,7 @@ export class TriTestRateRtlComponent {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-test-rate-character',
   imports: [FormsModule, TriRateModule],
   template: `
     <tri-rate [(ngModel)]="value" [character]="characterTpl"></tri-rate>

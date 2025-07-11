@@ -15,7 +15,7 @@ export interface AutoSizeType {
 }
 
 @Directive({
-  selector: '',
+  selector: 'textarea[nzAutosize]',
   exportAs: 'triAutosize',
   host: {
     // Textarea elements that have the directive applied should have a single row by default.

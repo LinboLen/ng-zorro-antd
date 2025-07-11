@@ -35,7 +35,7 @@ import { TriBadgeStatusType } from './types';
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'badge';
 
 @Component({
-  selector: '',
+  selector: 'tri-badge',
   exportAs: 'triBadge',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

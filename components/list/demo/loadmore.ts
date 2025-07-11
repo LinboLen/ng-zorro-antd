@@ -13,7 +13,7 @@ const count = 5;
 const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-list-loadmore',
   imports: [TriButtonModule, TriListModule, TriSkeletonModule],
   template: `
     <tri-list class="demo-loadmore-list" [loading]="initLoading">

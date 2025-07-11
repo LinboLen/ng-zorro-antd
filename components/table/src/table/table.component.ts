@@ -57,7 +57,7 @@ import { TriTableTitleFooterComponent } from './title-footer.component';
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'table';
 
 @Component({
-  selector: '',
+  selector: 'tri-table',
   exportAs: 'triTable',
   providers: [TriTableStyleService, TriTableDataService],
   changeDetection: ChangeDetectionStrategy.OnPush,

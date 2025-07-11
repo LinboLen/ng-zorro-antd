@@ -4,7 +4,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-select-custom-template',
   imports: [TriIconModule, TriSelectModule],
   template: `
     <tri-select allowClear placeHolder="Select OS" [customTemplate]="defaultTemplate">

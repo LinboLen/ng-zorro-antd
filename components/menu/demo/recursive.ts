@@ -5,7 +5,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriMenuModule } from 'ng-zorro-antd/menu';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-menu-recursive',
   imports: [NgTemplateOutlet, TriIconModule, TriMenuModule],
   template: `
     <ul tri-menu mode="inline" style="width: 240px;">

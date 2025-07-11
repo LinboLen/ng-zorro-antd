@@ -5,7 +5,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
 import { TriEllipsisPipe } from 'ng-zorro-antd/pipes';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-pipes-ellipsis',
   imports: [FormsModule, TriInputModule, TriEllipsisPipe],
   template: `
     <input type="text" tri-input [(ngModel)]="str" />

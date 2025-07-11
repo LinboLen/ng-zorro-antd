@@ -5,7 +5,7 @@ import { TriToCssUnitPipe } from 'ng-zorro-antd/pipes';
 import { TriSliderModule } from 'ng-zorro-antd/slider';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-pipes-css-unit',
   imports: [FormsModule, TriSliderModule, TriToCssUnitPipe],
   template: `
     <tri-slider [(ngModel)]="radiusValue" [max]="100" [min]="0"></tri-slider>

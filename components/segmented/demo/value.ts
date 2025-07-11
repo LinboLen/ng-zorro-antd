@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-segmented-value',
   imports: [FormsModule, TriSegmentedModule],
   template: `
     <tri-segmented [options]="options" [(ngModel)]="selectedValue" (ngModelChange)="handleModelChange($event)" />

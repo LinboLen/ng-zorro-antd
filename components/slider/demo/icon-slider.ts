@@ -5,7 +5,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriSliderModule } from 'ng-zorro-antd/slider';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-slider-icon-slider',
   imports: [FormsModule, TriIconModule, TriSliderModule],
   template: `
     <div class="icon-wrapper test-class">

@@ -10,7 +10,7 @@ interface Option {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-select-label-in-value',
   imports: [FormsModule, TriSelectModule],
   template: `
     <p>The selected option's age is {{ selectedValue?.age }}</p>

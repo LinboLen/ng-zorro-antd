@@ -35,7 +35,7 @@ function toTooltipIcon(value: string | TriFormTooltipIcon): Required<TriFormTool
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-form-label',
   exportAs: 'triFormLabel',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

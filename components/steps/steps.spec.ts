@@ -513,7 +513,7 @@ describe('steps', () => {
 });
 
 @Component({
-  selector: '',
+  selector: 'tri-test-outer-steps',
   imports: [NgTemplateOutlet, TriStepsModule],
   template: `
     <tri-steps

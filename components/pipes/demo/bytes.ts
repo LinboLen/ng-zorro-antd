@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriBytesPipe } from 'ng-zorro-antd/pipes';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-pipes-bytes',
   imports: [TriBytesPipe],
   template: `
     <ul>

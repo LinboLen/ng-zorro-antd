@@ -25,7 +25,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriMenuModeType, TriSubmenuTrigger } from './menu.types';
 
 @Component({
-  selector: '',
+  selector: '[tri-submenu-title]',
   exportAs: 'triSubmenuTitle',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

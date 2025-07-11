@@ -36,7 +36,7 @@ import { PaginationItemRenderContext } from './pagination.types';
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'pagination';
 
 @Component({
-  selector: '',
+  selector: 'tri-pagination',
   exportAs: 'triPagination',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

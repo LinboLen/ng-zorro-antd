@@ -7,7 +7,7 @@ import { Directive, Input, booleanAttribute, inject } from '@angular/core';
 import { ANIMATION_MODULE_TYPE } from '@angular/platform-browser/animations';
 
 @Directive({
-  selector: '',
+  selector: '[triNoAnimation]',
   exportAs: 'triNoAnimation',
   host: {
     '[class.nz-animate-disabled]': `nzNoAnimation || animationType === 'NoopAnimations'`

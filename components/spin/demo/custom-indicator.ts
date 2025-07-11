@@ -4,7 +4,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriSpinModule } from 'ng-zorro-antd/spin';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-spin-custom-indicator',
   imports: [TriIconModule, TriSpinModule],
   template: `
     <ng-template #indicatorTemplate><tri-icon type="loading" /></ng-template>

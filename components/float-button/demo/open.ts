@@ -6,7 +6,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-float-button-open',
   imports: [FormsModule, TriFloatButtonModule, TriIconModule, TriSwitchModule],
   template: `
     <div class="open">

@@ -5,7 +5,7 @@ import { TriMessageService } from 'ng-zorro-antd/message';
 import { TriPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-popconfirm-promise',
   imports: [TriButtonModule, TriPopconfirmModule],
   template: `
     <button

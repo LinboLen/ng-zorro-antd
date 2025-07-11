@@ -52,7 +52,7 @@ const scenicspots: { [key: string]: Array<{ value: string; label: string; isLeaf
 };
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-cascader-lazy',
   imports: [FormsModule, TriCascaderModule],
   template: `
     <tri-cascader [(ngModel)]="values" [loadData]="loadData" (ngModelChange)="onChanges($event)"></tri-cascader>

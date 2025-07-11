@@ -6,7 +6,7 @@ import { TriMessageService } from 'ng-zorro-antd/message';
 import { TriUploadChangeParam, TriUploadModule } from 'ng-zorro-antd/upload';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-upload-basic',
   imports: [TriButtonModule, TriIconModule, TriUploadModule],
   template: `
     <tri-upload

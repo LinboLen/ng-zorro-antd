@@ -6,7 +6,7 @@
 import { Directive, inject, TemplateRef } from '@angular/core';
 
 @Directive({
-  selector: '',
+  selector: '[triModalContent]',
   exportAs: 'triModalContent'
 })
 export class TriModalContentDirective {

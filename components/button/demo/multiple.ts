@@ -5,7 +5,7 @@ import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-button-multiple',
   imports: [TriButtonModule, TriDropDownModule, TriIconModule],
   template: `
     <button tri-button type="primary">primary</button>

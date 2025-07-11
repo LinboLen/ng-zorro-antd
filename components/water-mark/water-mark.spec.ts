@@ -120,7 +120,7 @@ describe('water-mark (SSR)', () => {
 });
 
 @Component({
-  selector: '',
+  selector: 'tri-app',
   imports: [TriWaterMarkModule],
   template: `
     <tri-water-mark

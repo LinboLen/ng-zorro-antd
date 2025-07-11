@@ -36,7 +36,7 @@ import { TriCheckboxWrapperComponent } from './checkbox-wrapper.component';
 import { TRI_CHECKBOX_GROUP } from './tokens';
 
 @Component({
-  selector: '',
+  selector: '[tri-checkbox]',
   exportAs: 'triCheckbox',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,

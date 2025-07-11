@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriGridModule } from 'ng-zorro-antd/grid';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-grid-flex',
   imports: [TriGridModule],
   template: `
     <div>

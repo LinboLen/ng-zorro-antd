@@ -8,7 +8,7 @@ import { TriSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { TriSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-card-loading',
   imports: [FormsModule, TriAvatarModule, TriCardModule, TriIconModule, TriSwitchModule, TriSkeletonModule],
   template: `
     <tri-switch [(ngModel)]="loading"></tri-switch>

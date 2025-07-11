@@ -20,7 +20,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriTableSortOrder } from '../table.types';
 
 @Component({
-  selector: '',
+  selector: 'tri-table-sorters',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `

@@ -3,7 +3,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { TriAnchorModule } from 'ng-zorro-antd/anchor';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-anchor-static',
   imports: [TriAnchorModule],
   encapsulation: ViewEncapsulation.None,
   template: `

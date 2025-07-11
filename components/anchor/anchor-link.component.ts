@@ -25,7 +25,7 @@ import { TriDirectionVHType, TriSafeAny } from 'ng-zorro-antd/core/types';
 import { TriAnchorComponent } from './anchor.component';
 
 @Component({
-  selector: '',
+  selector: 'tri-link',
   exportAs: 'triLink',
   imports: [NgTemplateOutlet],
   template: `

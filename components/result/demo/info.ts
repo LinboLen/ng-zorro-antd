@@ -4,7 +4,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriResultModule } from 'ng-zorro-antd/result';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-result-info',
   imports: [TriButtonModule, TriResultModule],
   template: `
     <tri-result status="info" title="Your operation has been executed">

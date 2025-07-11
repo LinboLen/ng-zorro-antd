@@ -8,7 +8,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
 import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-drawer-from-drawer',
   imports: [TriButtonModule, TriDrawerModule, TriDatePickerModule, TriFormModule, TriInputModule, TriSelectModule],
   template: `
     <button tri-button type="primary" (click)="open()">Create</button>

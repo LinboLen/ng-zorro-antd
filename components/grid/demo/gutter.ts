@@ -4,7 +4,7 @@ import { TriDividerModule } from 'ng-zorro-antd/divider';
 import { TriGridModule } from 'ng-zorro-antd/grid';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-grid-gutter',
   imports: [TriDividerModule, TriGridModule],
   template: `
     <tri-divider orientation="left" text="Horizontal"></tri-divider>

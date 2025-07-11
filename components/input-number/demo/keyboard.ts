@@ -5,7 +5,7 @@ import { TriCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-input-number-keyboard',
   imports: [FormsModule, TriInputNumberModule, TriCheckboxModule],
   template: `
     <tri-input-number [(ngModel)]="value" [keyboard]="keyboard" min="1" max="10" />

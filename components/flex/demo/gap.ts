@@ -7,7 +7,7 @@ import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
 import { TriSliderModule } from 'ng-zorro-antd/slider';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-flex-gap',
   imports: [FormsModule, TriButtonModule, TriFlexModule, TriSegmentedModule, TriSliderModule],
   template: `
     <div class="segment-wrapper">

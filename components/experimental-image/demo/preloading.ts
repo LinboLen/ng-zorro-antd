@@ -4,7 +4,7 @@ import { TriImageModule as NzExperimentalImageModule } from 'ng-zorro-antd/exper
 import { TriImageModule } from 'ng-zorro-antd/image';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-experimental-image-preloading',
   imports: [TriImageModule, NzExperimentalImageModule],
   template: `<tri-image [src]="src" width="200" height="200" priority></tri-image>`
 })

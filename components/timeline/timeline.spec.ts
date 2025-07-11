@@ -237,7 +237,7 @@ describe('nz-timeline', () => {
 
 @Component({
   imports: [TriTimelineModule],
-  selector: '',
+  selector: 'tri-test-basic-timeline',
   template: `
     <ng-template #dotTemplate>template</ng-template>
     <tri-timeline [pending]="pending" [reverse]="reverse" [mode]="mode">

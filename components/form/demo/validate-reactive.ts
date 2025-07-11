@@ -14,7 +14,7 @@ import { TriFormModule } from 'ng-zorro-antd/form';
 import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-form-validate-reactive',
   imports: [ReactiveFormsModule, TriButtonModule, TriFormModule, TriInputModule],
   template: `
     <form tri-form [formGroup]="validateForm" (ngSubmit)="submitForm()">

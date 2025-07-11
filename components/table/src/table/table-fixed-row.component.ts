@@ -22,7 +22,7 @@ import { BehaviorSubject } from 'rxjs';
 import { TriTableStyleService } from '../table-style.service';
 
 @Component({
-  selector: '',
+  selector: 'tr[nz-table-fixed-row],tr[nzExpand]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `

@@ -28,7 +28,7 @@ import { TriTabAddButtonComponent } from './tab-add-button.component';
 import { TriTabNavItemDirective } from './tab-nav-item.directive';
 
 @Component({
-  selector: '',
+  selector: 'tri-tab-nav-operation',
   exportAs: 'triTabNavOperation',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,

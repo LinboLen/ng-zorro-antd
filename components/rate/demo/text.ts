@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TriRateModule } from 'ng-zorro-antd/rate';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-rate-text',
   imports: [FormsModule, TriRateModule],
   template: `
     <tri-rate [(ngModel)]="value" [tooltips]="tooltips"></tri-rate>

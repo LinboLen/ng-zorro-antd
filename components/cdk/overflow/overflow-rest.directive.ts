@@ -9,7 +9,7 @@ import { map, startWith, tap } from 'rxjs/operators';
 import { TriResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
 
 @Directive({
-  selector: '',
+  selector: '[triOverflowRest]',
   host: {
     '[style]': 'restStyle'
   }

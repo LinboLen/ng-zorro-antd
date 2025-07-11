@@ -36,7 +36,7 @@ import { TriTableContentComponent } from './table-content.component';
 import { TriTbodyComponent } from './tbody.component';
 
 @Component({
-  selector: '',
+  selector: 'tri-table-inner-scroll',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `

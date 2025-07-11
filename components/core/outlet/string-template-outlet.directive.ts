@@ -19,7 +19,7 @@ import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { isTemplateRef } from 'ng-zorro-antd/core/util';
 
 @Directive({
-  selector: '',
+  selector: '[triStringTemplateOutlet]',
   exportAs: 'triStringTemplateOutlet'
 })
 export class TriStringTemplateOutletDirective<_T = unknown> implements OnChanges {

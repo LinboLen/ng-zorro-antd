@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriTableModule } from 'ng-zorro-antd/table';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-fixed-columns',
   imports: [TriTableModule],
   template: `
     <tri-table #columnTable [data]="listOfData" [scroll]="{ x: '1100px' }">

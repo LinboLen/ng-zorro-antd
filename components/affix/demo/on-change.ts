@@ -4,7 +4,7 @@ import { TriAffixModule } from 'ng-zorro-antd/affix';
 import { TriButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-affix-on-change',
   imports: [TriAffixModule, TriButtonModule],
   template: `
     <tri-affix [offsetTop]="120" (change)="onChange($event)">

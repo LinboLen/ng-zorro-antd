@@ -5,7 +5,7 @@ import { TriQRCodeModule } from 'ng-zorro-antd/qr-code';
 import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-qr-code-error-level',
   imports: [TriQRCodeModule, TriSegmentedModule, FormsModule],
   template: `
     <tri-qrcode value="https://github.com/NG-ZORRO/ng-zorro-antd/issues" [level]="errorLevel"></tri-qrcode>

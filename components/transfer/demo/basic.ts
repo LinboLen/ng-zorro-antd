@@ -5,7 +5,7 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
 import { TriTransferModule, TransferItem } from 'ng-zorro-antd/transfer';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-transfer-basic',
   imports: [FormsModule, TriSwitchModule, TriTransferModule],
   template: `
     <tri-transfer

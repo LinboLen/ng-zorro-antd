@@ -15,7 +15,7 @@ import { TriResultComponent, TriResultStatusType } from './result.component';
 import { TriResultModule } from './result.module';
 
 @Component({
-  selector: '',
+  selector: 'tri-test-basic-result',
   imports: [TriIconModule, TriResultModule],
   template: `
     <tri-result [icon]="icon" [status]="status" [title]="title" [subTitle]="subtitle" [extra]="extra">

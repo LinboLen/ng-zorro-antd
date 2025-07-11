@@ -26,7 +26,7 @@ import { TriProgressModule } from 'ng-zorro-antd/progress';
 import { TriItemProps } from './typings';
 
 @Component({
-  selector: '',
+  selector: 'tri-check-list-content',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [TriIconModule, TriProgressModule, TriOutletModule, TriCheckboxModule, TriButtonModule, FormsModule, DecimalPipe],

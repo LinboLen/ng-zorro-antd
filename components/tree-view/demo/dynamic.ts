@@ -124,7 +124,7 @@ class DynamicDatasource implements DataSource<FlatNode> {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tree-view-dynamic',
   imports: [TriIconModule, TriTreeViewModule],
   template: `
     <tri-tree-view [treeControl]="treeControl" [dataSource]="dataSource">

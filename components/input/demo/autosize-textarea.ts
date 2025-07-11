@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-input-autosize-textarea',
   imports: [FormsModule, TriInputModule],
   template: `
     <textarea tri-input placeholder="Autosize height based on content lines" autosize></textarea>

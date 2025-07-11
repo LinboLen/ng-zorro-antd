@@ -9,7 +9,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
 import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-check-list-custom',
   imports: [
     TriCheckListModule,
     TriButtonModule,

@@ -4,7 +4,7 @@ import { TriSpinModule } from 'ng-zorro-antd/spin';
 import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tree-select-no-data',
   imports: [TriSpinModule, TriTreeSelectModule],
   template: `
     <tri-tree-select

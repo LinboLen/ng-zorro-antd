@@ -6,7 +6,7 @@ import { TriResultModule } from 'ng-zorro-antd/result';
 import { TriTypographyModule } from 'ng-zorro-antd/typography';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-result-error',
   imports: [TriButtonModule, TriIconModule, TriResultModule, TriTypographyModule],
   template: `
     <tri-result

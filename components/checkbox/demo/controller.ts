@@ -5,7 +5,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-checkbox-controller',
   imports: [FormsModule, TriButtonModule, TriCheckboxModule],
   template: `
     <label tri-checkbox [(ngModel)]="isCheckedButton" [disabled]="isDisabledButton">

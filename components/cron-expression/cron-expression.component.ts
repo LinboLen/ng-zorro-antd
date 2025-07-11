@@ -55,7 +55,7 @@ function labelsOfType(type: TriCronExpressionType): TimeType[] {
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-cron-expression',
   exportAs: 'triCronExpression',
   template: `
     <div class="tri-cron-expression">

@@ -38,7 +38,7 @@ import {
 } from './list-cell';
 
 @Component({
-  selector: '',
+  selector: 'tri-list,[tri-list]',
   exportAs: 'triList',
   template: `
     @if (header) {

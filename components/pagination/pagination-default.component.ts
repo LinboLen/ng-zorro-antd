@@ -33,7 +33,7 @@ import { TriPaginationOptionsComponent } from './pagination-options.component';
 import { PaginationItemRenderContext } from './pagination.types';
 
 @Component({
-  selector: '',
+  selector: 'tri-pagination-default',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `

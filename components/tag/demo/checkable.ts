@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriTagModule } from 'ng-zorro-antd/tag';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tag-checkable',
   imports: [TriTagModule],
   template: `
     <tri-tag mode="checkable" [checked]="true" (checkedChange)="checkChange($event)">Tag1</tri-tag>

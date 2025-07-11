@@ -5,7 +5,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriPopoverModule } from 'ng-zorro-antd/popover';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-popover-template',
   imports: [TriButtonModule, TriIconModule, TriPopoverModule],
   template: `
     <button tri-button tri-popover [popoverTitle]="titleTemplate" [popoverContent]="contentTemplate">

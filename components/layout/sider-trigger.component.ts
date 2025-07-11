@@ -18,7 +18,7 @@ import { TriBreakpointKey } from 'ng-zorro-antd/core/services';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: '',
+  selector: '[tri-sider-trigger]',
   exportAs: 'triSiderTrigger',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

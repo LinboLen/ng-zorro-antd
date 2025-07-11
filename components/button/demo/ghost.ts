@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-button-ghost',
   imports: [TriButtonModule],
   template: `
     <div class="ghost-background">

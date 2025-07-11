@@ -6,7 +6,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriNotificationPlacement, TriNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-notification-placement',
   imports: [TriButtonModule, TriDividerModule, TriIconModule],
   template: `
     <button tri-button (click)="createNotification('top')" type="primary">

@@ -73,7 +73,7 @@ function filterTreeData(data: TreeNode[], value: string): FilteredTreeResult {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tree-view-search',
   imports: [FormsModule, TriInputModule, TriIconModule, TriTreeViewModule, TriNoAnimationDirective, TriHighlightPipe],
   template: `
     <tri-input-group [suffix]="suffixIcon">

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriTimelineModule } from 'ng-zorro-antd/timeline';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-timeline-basic',
   imports: [TriTimelineModule],
   template: `
     <tri-timeline>

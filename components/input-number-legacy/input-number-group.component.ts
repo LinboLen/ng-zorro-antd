@@ -50,7 +50,7 @@ export class TriInputNumberGroupWhitSuffixOrPrefixDirective {
  * @deprecated Will be removed in v21. It is recommended to use the new version `<nz-input-number>`.
  */
 @Component({
-  selector: '',
+  selector: 'tri-input-number-group',
   exportAs: 'triInputNumberGroup',
   imports: [TriInputNumberGroupSlotComponent, NgTemplateOutlet, TriFormItemFeedbackIconComponent],
   template: `

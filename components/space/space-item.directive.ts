@@ -6,6 +6,6 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-  selector: ''
+  selector: '[triSpaceItem]'
 })
 export class TriSpaceItemDirective {}

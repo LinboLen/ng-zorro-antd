@@ -7,7 +7,7 @@ import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
 import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-input-number-addon',
   imports: [FormsModule, TriSelectModule, TriCascaderModule, TriInputNumberModule, TriIconModule],
   template: `
     <tri-input-number [(ngModel)]="value">

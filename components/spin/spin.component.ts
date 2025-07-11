@@ -30,7 +30,7 @@ import { TriSafeAny, TriSizeLDSType } from 'ng-zorro-antd/core/types';
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'spin';
 
 @Component({
-  selector: '',
+  selector: 'tri-spin',
   exportAs: 'triSpin',
   encapsulation: ViewEncapsulation.None,
   template: `

@@ -27,7 +27,7 @@ import { TriDropDownDirective, TriDropDownModule, TriDropdownMenuComponent } fro
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'filterTrigger';
 
 @Component({
-  selector: '',
+  selector: 'tri-filter-trigger',
   exportAs: `nzFilterTrigger`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,

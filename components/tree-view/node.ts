@@ -33,7 +33,7 @@ export interface TriTreeVirtualNodeData<T> {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-tree-node:not([builtin])',
   exportAs: 'triTreeNode',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
@@ -105,7 +105,7 @@ export class TriTreeNodeComponent<T> extends TriNodeBase<T> implements OnInit {
 }
 
 @Directive({
-  selector: '',
+  selector: '[triTreeNodeDef]',
   providers: [
     {
       provide: CdkTreeNodeDef,
@@ -118,7 +118,7 @@ export class TriTreeNodeDefDirective<T> extends CdkTreeNodeDef<T> {
 }
 
 @Directive({
-  selector: ''
+  selector: '[triTreeVirtualScrollNodeOutlet]'
 })
 export class TriTreeVirtualScrollNodeOutletDirective<T> implements OnChanges {
   private _viewRef: EmbeddedViewRef<TriSafeAny> | null = null;

@@ -6,7 +6,7 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
 import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-select-variant',
   imports: [FormsModule, TriSelectModule, TriSpaceModule, TriFlexDirective],
   template: `
     <div tri-flex gap="large">

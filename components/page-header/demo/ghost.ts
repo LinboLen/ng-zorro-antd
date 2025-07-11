@@ -6,7 +6,7 @@ import { TriPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-page-header-ghost',
   imports: [TriButtonModule, TriDescriptionsModule, TriPageHeaderModule, TriSpaceModule],
   template: `
     <tri-page-header backIcon [ghost]="false">

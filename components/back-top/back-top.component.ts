@@ -44,7 +44,7 @@ const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: t
  * @deprecated Will be removed in v21. It is recommended to use `<nz-float-button-top>` instead.
  */
 @Component({
-  selector: '',
+  selector: 'tri-back-top',
   exportAs: 'triBackTop',
   animations: [fadeMotion],
   imports: [NgTemplateOutlet, TriIconModule],

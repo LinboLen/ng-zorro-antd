@@ -4,7 +4,7 @@ import { TriDividerModule } from 'ng-zorro-antd/divider';
 import { TriStepsModule } from 'ng-zorro-antd/steps';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-steps-clickable',
   imports: [TriDividerModule, TriStepsModule],
   template: `
     <tri-steps [current]="index" (indexChange)="onIndexChange($event)">

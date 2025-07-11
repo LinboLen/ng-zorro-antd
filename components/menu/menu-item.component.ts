@@ -32,7 +32,7 @@ import { NzIsMenuInsideDropDownToken } from './menu.token';
 import { TriSubmenuService } from './submenu.service';
 
 @Component({
-  selector: '',
+  selector: '[tri-menu-item]',
   exportAs: 'triMenuItem',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,

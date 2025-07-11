@@ -10,7 +10,7 @@ import { TriSizeLDSType } from 'ng-zorro-antd/core/types';
 import { TRI_SPACE_COMPACT_ITEMS, TRI_SPACE_COMPACT_SIZE } from './space-compact.token';
 
 @Component({
-  selector: '',
+  selector: 'tri-space-compact',
   exportAs: 'triSpaceCompact',
   template: `<ng-content></ng-content>`,
   host: {

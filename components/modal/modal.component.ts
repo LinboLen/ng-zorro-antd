@@ -37,7 +37,7 @@ import { TriModalService } from './modal.service';
 import { getConfigFromComponent } from './utils';
 
 @Component({
-  selector: '',
+  selector: 'tri-modal',
   exportAs: 'triModal',
   template: ``,
   changeDetection: ChangeDetectionStrategy.OnPush

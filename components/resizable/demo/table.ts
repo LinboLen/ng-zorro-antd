@@ -4,7 +4,7 @@ import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
 import { TriTableModule } from 'ng-zorro-antd/table';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-resizable-table',
   imports: [TriResizableModule, TriTableModule],
   template: `
     <tri-table #basicTable [data]="listOfData">

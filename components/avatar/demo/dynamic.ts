@@ -9,7 +9,7 @@ const userList = ['Lucy', 'U', 'Tom', 'Edward'];
 const colorList = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'];
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-avatar-dynamic',
   imports: [FormsModule, TriAvatarModule, TriButtonModule, TriInputNumberModule],
   template: `
     <div>

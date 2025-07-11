@@ -8,7 +8,7 @@ import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { en_US, TriI18nService, zh_CN } from 'ng-zorro-antd/i18n';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-date-picker-basic',
   imports: [FormsModule, TriButtonModule, TriDatePickerModule],
   template: `
     <tri-date-picker [(ngModel)]="date" (ngModelChange)="onChange($event)"></tri-date-picker>

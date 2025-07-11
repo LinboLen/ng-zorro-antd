@@ -4,7 +4,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriTimelineModule } from 'ng-zorro-antd/timeline';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-timeline-right',
   imports: [TriIconModule, TriTimelineModule],
   template: `
     <tri-timeline mode="right">

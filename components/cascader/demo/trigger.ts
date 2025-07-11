@@ -46,7 +46,7 @@ const options: TriCascaderOption[] = [
 ];
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-cascader-trigger',
   imports: [FormsModule, TriCascaderModule],
   template: `
     {{ text }}

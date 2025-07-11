@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { TriTableModule } from 'ng-zorro-antd/table';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-break-word',
   imports: [TriTableModule],
   template: `
     <tri-table #fixedTable [data]="listOfData" [scroll]="{ x: '1000px', y: '240px' }">

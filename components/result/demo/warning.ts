@@ -4,7 +4,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriResultModule } from 'ng-zorro-antd/result';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-result-warning',
   imports: [TriButtonModule, TriResultModule],
   template: `
     <tri-result status="warning" title="There are some problems with your operation">

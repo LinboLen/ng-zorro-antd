@@ -52,7 +52,7 @@ const options: TriCascaderOption[] = [
 ];
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-cascader-change-on-function',
   imports: [FormsModule, TriCascaderModule],
   template: `
     <tri-cascader

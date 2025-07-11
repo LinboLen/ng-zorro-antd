@@ -193,7 +193,7 @@ describe('collapse', () => {
 });
 
 @Component({
-  selector: '',
+  selector: 'tri-test-basic-collapse',
   imports: [TriCollapseModule],
   template: `
     <ng-template #headerTemplate>template</ng-template>

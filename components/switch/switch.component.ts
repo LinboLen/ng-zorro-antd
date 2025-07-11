@@ -36,7 +36,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'switch';
 
 @Component({
-  selector: '',
+  selector: 'tri-switch',
   exportAs: 'triSwitch',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,

@@ -16,7 +16,7 @@ import {
 import { TriSplitterCollapsible } from './typings';
 
 @Component({
-  selector: '',
+  selector: 'tri-splitter-panel',
   exportAs: 'triSplitterPanel',
   template: `
     <ng-template #contentTemplate>

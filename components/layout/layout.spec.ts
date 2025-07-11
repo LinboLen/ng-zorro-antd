@@ -331,7 +331,7 @@ export class TriLayoutResponsiveComponent {
 
 @Component({
   imports: [TriLayoutModule],
-  selector: '',
+  selector: 'tri-test-layout-basic',
   template: `
     <tri-layout>
       <tri-header>Header</tri-header>

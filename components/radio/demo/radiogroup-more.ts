@@ -5,7 +5,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
 import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-radio-radiogroup-more',
   imports: [FormsModule, TriInputModule, TriRadioModule],
   template: `
     <tri-radio-group [(ngModel)]="radioValue">

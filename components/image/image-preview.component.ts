@@ -53,7 +53,7 @@ const TRI_DEFAULT_ZOOM = 1;
 const TRI_DEFAULT_ROTATE = 0;
 
 @Component({
-  selector: '',
+  selector: 'tri-image-preview',
   exportAs: 'triImagePreview',
   animations: [fadeMotion],
   template: `

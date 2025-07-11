@@ -4,7 +4,7 @@ import { TriBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-breadcrumb-separator',
   imports: [TriBreadCrumbModule, TriIconModule],
   template: `
     <h4>String</h4>

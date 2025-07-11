@@ -155,7 +155,7 @@ describe('spin', () => {
 });
 
 @Component({
-  selector: '',
+  selector: 'tri-test-basic-spin',
   imports: [TriIconModule, TriSpinModule],
   template: `
     <ng-template #indicatorTemplate><tri-icon type="loading" style="font-size: 24px;" /></ng-template>

@@ -4,7 +4,7 @@ import { TriAvatarModule } from 'ng-zorro-antd/avatar';
 import { TriBadgeModule } from 'ng-zorro-antd/badge';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-avatar-badge',
   imports: [TriBadgeModule, TriAvatarModule],
   template: `
     <tri-badge [count]="5" style="margin-right: 24px">

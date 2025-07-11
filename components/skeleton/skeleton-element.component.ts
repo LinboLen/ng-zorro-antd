@@ -22,7 +22,7 @@ import {
 } from './skeleton.type';
 
 @Directive({
-  selector: '',
+  selector: 'tri-skeleton-element',
   host: {
     class: 'tri-skeleton ant-skeleton-element',
     '[class.tri-skeleton-active]': 'active',
@@ -37,7 +37,7 @@ export class TriSkeletonElementDirective {
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: '',
+  selector: 'tri-skeleton-element[nzType="button"]',
   template: `
     <span
       class="tri-skeleton-button"
@@ -56,7 +56,7 @@ export class TriSkeletonElementButtonComponent {
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: '',
+  selector: 'tri-skeleton-element[nzType="avatar"]',
   template: `
     <span
       class="tri-skeleton-avatar"
@@ -86,7 +86,7 @@ export class TriSkeletonElementAvatarComponent implements OnChanges {
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: '',
+  selector: 'tri-skeleton-element[nzType="input"]',
   template: `
     <span
       class="tri-skeleton-input"
@@ -101,7 +101,7 @@ export class TriSkeletonElementInputComponent {
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: '',
+  selector: 'tri-skeleton-element[nzType="image"]',
   template: `
     <span class="tri-skeleton-image">
       <svg class="tri-skeleton-image-svg" viewBox="0 0 1098 1024" xmlns="http://www.w3.org/2000/svg">

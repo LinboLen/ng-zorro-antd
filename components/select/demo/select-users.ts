@@ -14,7 +14,7 @@ interface MockUser {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-select-select-users',
   imports: [FormsModule, TriIconModule, TriSelectModule],
   template: `
     <tri-select

@@ -12,7 +12,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
  * @deprecated Will be removed in v21. It is recommended to use the new version `<nz-input-number>`.
  */
 @Component({
-  selector: '',
+  selector: '[tri-input-number-group-slot]',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `

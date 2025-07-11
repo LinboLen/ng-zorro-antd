@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-button-danger',
   imports: [TriButtonModule],
   template: `
     <button tri-button type="primary" danger>Primary</button>

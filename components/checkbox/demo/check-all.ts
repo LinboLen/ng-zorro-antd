@@ -5,7 +5,7 @@ import { TriCheckboxModule, TriCheckboxOption } from 'ng-zorro-antd/checkbox';
 import { TriDividerModule } from 'ng-zorro-antd/divider';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-checkbox-check-all',
   imports: [FormsModule, TriCheckboxModule, TriDividerModule],
   template: `
     <label

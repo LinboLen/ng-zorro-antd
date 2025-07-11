@@ -5,7 +5,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-input-number-disabled',
   imports: [FormsModule, TriButtonModule, TriInputNumberModule],
   template: `
     <tri-input-number [(ngModel)]="value" min="1" max="10" [disabled]="isDisabled" />

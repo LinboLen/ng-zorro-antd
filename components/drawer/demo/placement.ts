@@ -6,7 +6,7 @@ import { TriDrawerModule, TriDrawerPlacement } from 'ng-zorro-antd/drawer';
 import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-drawer-placement',
   imports: [FormsModule, TriButtonModule, TriDrawerModule, TriRadioModule],
   template: `
     <tri-radio-group [(ngModel)]="placement">

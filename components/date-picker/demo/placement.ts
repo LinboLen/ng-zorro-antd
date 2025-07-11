@@ -5,7 +5,7 @@ import { TriDatePickerModule, TriPlacement } from 'ng-zorro-antd/date-picker';
 import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-date-picker-placement',
   imports: [FormsModule, TriDatePickerModule, TriRadioModule],
   template: `
     <tri-radio-group [(ngModel)]="placement">

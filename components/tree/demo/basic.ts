@@ -3,7 +3,7 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { TriFormatEmitEvent, TriTreeComponent, TriTreeModule, TriTreeNodeOptions } from 'ng-zorro-antd/tree';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tree-basic',
   imports: [TriTreeModule],
   template: `
     <tri-tree

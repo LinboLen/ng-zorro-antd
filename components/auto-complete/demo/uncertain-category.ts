@@ -7,7 +7,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-auto-complete-uncertain-category',
   imports: [FormsModule, TriAutocompleteModule, TriButtonModule, TriIconModule, TriInputModule],
   encapsulation: ViewEncapsulation.None,
   template: `

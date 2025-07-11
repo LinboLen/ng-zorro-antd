@@ -5,7 +5,7 @@ import { TriInputOtpComponent } from 'ng-zorro-antd/input';
 import { TriTypographyComponent } from 'ng-zorro-antd/typography';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-input-otp',
   template: `
     <tri-flex vertical [gap]="16">
       <tri-flex vertical>

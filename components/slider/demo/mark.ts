@@ -5,7 +5,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriMarks, TriSliderModule } from 'ng-zorro-antd/slider';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-slider-mark',
   imports: [FormsModule, TriButtonModule, TriSliderModule],
   template: `
     <h4>included=true</h4>

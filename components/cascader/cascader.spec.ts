@@ -2403,7 +2403,7 @@ const options5: TriSafeAny[] = [];
 
 @Component({
   imports: [FormsModule, TriCascaderModule],
-  selector: '',
+  selector: 'tri-test-cascader-default',
   template: `
     <tri-cascader
       [(ngModel)]="values"

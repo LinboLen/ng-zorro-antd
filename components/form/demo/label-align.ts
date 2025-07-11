@@ -5,7 +5,7 @@ import { TriFormModule } from 'ng-zorro-antd/form';
 import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-form-label-align',
   imports: [ReactiveFormsModule, TriFormModule, TriInputModule],
   template: `
     <form tri-form [formGroup]="validateForm" (ngSubmit)="submitForm()">

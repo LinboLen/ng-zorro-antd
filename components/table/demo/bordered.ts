@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriTableModule } from 'ng-zorro-antd/table';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-bordered',
   imports: [TriTableModule],
   template: `
     <tri-table #borderedTable bordered footer="Footer" title="Header" [data]="dataSet">

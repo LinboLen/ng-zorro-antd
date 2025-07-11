@@ -7,7 +7,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-dropdown-dropdown-button',
   imports: [TriButtonModule, TriDropDownModule, TriFlexModule, TriIconModule, TriSpaceModule],
   template: `
     <div tri-flex gap="small" wrap="wrap">

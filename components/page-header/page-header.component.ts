@@ -35,7 +35,7 @@ import { TriPageHeaderBreadcrumbDirective, TriPageHeaderFooterDirective } from '
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'pageHeader';
 
 @Component({
-  selector: '',
+  selector: 'tri-page-header',
   exportAs: 'triPageHeader',
   template: `
     <ng-content select="nz-breadcrumb[nz-page-header-breadcrumb]" />

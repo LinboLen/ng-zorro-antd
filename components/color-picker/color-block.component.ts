@@ -11,7 +11,7 @@ import { NgAntdColorPickerModule } from './src/ng-antd-color-picker.module';
 import { defaultColor } from './src/util/util';
 
 @Component({
-  selector: '',
+  selector: 'tri-color-block',
   exportAs: 'triColorBlock',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgAntdColorPickerModule],

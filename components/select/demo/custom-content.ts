@@ -5,7 +5,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-select-custom-content',
   imports: [FormsModule, TriIconModule, TriSelectModule],
   template: `
     <tri-select showSearch allowClear placeHolder="Select OS" [(ngModel)]="selectedValue">

@@ -23,7 +23,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriTreeDropIndicatorComponent } from './tree-drop-indicator.component';
 
 @Component({
-  selector: '',
+  selector: 'tri-tree-node-title',
   template: `
     <ng-template
       [ngTemplateOutlet]="treeTemplate"

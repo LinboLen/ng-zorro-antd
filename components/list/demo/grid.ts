@@ -5,7 +5,7 @@ import { TriGridModule } from 'ng-zorro-antd/grid';
 import { TriListModule } from 'ng-zorro-antd/list';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-list-grid',
   imports: [TriCardModule, TriGridModule, TriListModule],
   template: `
     <tri-list grid>

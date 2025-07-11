@@ -10,7 +10,7 @@ import {
 import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-carousel-custom',
   imports: [FormsModule, TriCarouselModule, TriRadioModule],
   template: `
     <tri-radio-group [(ngModel)]="strategy">

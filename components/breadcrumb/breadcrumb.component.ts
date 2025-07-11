@@ -38,7 +38,7 @@ export interface BreadcrumbOption {
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-breadcrumb',
   exportAs: 'triBreadcrumb',
   providers: [{ provide: TriBreadcrumb, useExisting: forwardRef(() => TriBreadCrumbComponent) }],
   imports: [TriBreadCrumbItemComponent],

@@ -5,7 +5,7 @@ import { TriAggregatePipe } from 'ng-zorro-antd/pipes';
 import { TriStatisticModule } from 'ng-zorro-antd/statistic';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-pipes-aggregate',
   imports: [TriGridModule, TriStatisticModule, TriAggregatePipe],
   template: `
     <tri-row [gutter]="16">

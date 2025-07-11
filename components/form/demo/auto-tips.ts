@@ -16,7 +16,7 @@ import { TriFormModule } from 'ng-zorro-antd/form';
 import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-form-auto-tips',
   imports: [ReactiveFormsModule, TriButtonModule, TriFormModule, TriInputModule],
   template: `
     <form tri-form [autoTips]="autoTips" [formGroup]="validateForm" (ngSubmit)="submitForm()">

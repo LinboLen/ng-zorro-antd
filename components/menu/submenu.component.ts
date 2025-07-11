@@ -60,7 +60,7 @@ const listOfHorizontalPositions = [
 ];
 
 @Component({
-  selector: '',
+  selector: '[tri-submenu]',
   exportAs: 'triSubmenu',
   providers: [TriSubmenuService],
   encapsulation: ViewEncapsulation.None,

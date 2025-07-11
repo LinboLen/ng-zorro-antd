@@ -20,7 +20,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: '[tri-rate-item]',
   exportAs: 'triRateItem',
   template: `
     <div

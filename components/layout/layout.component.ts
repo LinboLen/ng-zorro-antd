@@ -19,7 +19,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TriSiderComponent } from './sider.component';
 
 @Component({
-  selector: '',
+  selector: 'tri-layout',
   exportAs: 'triLayout',
   template: `<ng-content></ng-content>`,
   encapsulation: ViewEncapsulation.None,

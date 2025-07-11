@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TriCodeEditorModule } from 'ng-zorro-antd/code-editor';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-code-editor-basic',
   imports: [FormsModule, TriCodeEditorModule],
   template: `
     <tri-code-editor class="editor" [ngModel]="code" [editorOption]="{ language: 'typescript' }"></tri-code-editor>

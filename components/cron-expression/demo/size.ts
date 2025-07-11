@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriCronExpressionModule } from 'ng-zorro-antd/cron-expression';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-cron-expression-size',
   imports: [TriCronExpressionModule],
   template: `
     <div class="example-cron-expression">

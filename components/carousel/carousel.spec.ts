@@ -448,7 +448,7 @@ function swipe(carousel: TriCarouselComponent, distance: number): void {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-test-carousel',
   imports: [TriCarouselModule],
   template: `
     <tri-carousel

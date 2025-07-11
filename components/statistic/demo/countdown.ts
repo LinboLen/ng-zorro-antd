@@ -4,7 +4,7 @@ import { TriGridModule } from 'ng-zorro-antd/grid';
 import { TriStatisticModule } from 'ng-zorro-antd/statistic';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-statistic-countdown',
   imports: [TriGridModule, TriStatisticModule],
   template: `
     <tri-row [gutter]="16">

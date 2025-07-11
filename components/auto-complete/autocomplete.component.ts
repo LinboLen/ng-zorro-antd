@@ -61,7 +61,7 @@ function normalizeDataSource(value: AutocompleteDataSource): AutocompleteDataSou
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-autocomplete',
   exportAs: 'triAutocomplete',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,

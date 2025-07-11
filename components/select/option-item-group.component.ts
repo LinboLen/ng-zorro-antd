@@ -9,7 +9,7 @@ import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 @Component({
-  selector: '',
+  selector: 'tri-option-item-group',
   template: `<ng-container *stringTemplateOutlet="label">{{ label }}</ng-container>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriLayoutModule } from 'ng-zorro-antd/layout';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-layout-basic',
   imports: [TriLayoutModule],
   template: `
     <tri-layout>

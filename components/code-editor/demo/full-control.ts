@@ -8,7 +8,7 @@ import { TriCodeEditorModule } from 'ng-zorro-antd/code-editor';
 declare const monaco: any;
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-code-editor-full-control',
   imports: [TriCodeEditorModule],
   template: `
     <tri-code-editor class="editor" [fullControl]="true" (editorInitialized)="onEditorInit($event)"></tri-code-editor>

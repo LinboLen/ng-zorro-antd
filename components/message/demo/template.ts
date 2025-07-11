@@ -4,7 +4,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriMessageComponent, TriMessageService } from 'ng-zorro-antd/message';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-message-template',
   imports: [TriButtonModule],
   template: `
     <button tri-button type="default" (click)="showMessage()">Display a custom template</button>

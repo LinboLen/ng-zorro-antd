@@ -4,7 +4,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriEmptyModule } from 'ng-zorro-antd/empty';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-empty-customize',
   imports: [TriButtonModule, TriEmptyModule],
   template: `
     <tri-empty

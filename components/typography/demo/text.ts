@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriTypographyModule } from 'ng-zorro-antd/typography';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-typography-text',
   imports: [TriTypographyModule],
   template: `
     <span tri-typography>Ant Design (default)</span>

@@ -41,7 +41,7 @@ import { TriTreeNodeSwitcherComponent } from './tree-node-switcher.component';
 import { TriTreeNodeTitleComponent } from './tree-node-title.component';
 
 @Component({
-  selector: '',
+  selector: 'tri-tree-node[builtin]',
   exportAs: 'triTreeBuiltinNode',
   template: `
     <tri-tree-indent

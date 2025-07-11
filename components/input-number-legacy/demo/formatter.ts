@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TriInputNumberLegacyModule } from 'ng-zorro-antd/input-number-legacy';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-input-number-legacy-formatter',
   imports: [FormsModule, TriInputNumberLegacyModule],
   template: `
     <tri-input-number

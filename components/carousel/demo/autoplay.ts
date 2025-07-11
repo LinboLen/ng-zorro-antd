@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriCarouselModule } from 'ng-zorro-antd/carousel';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-carousel-autoplay',
   imports: [TriCarouselModule],
   template: `
     <tri-carousel autoPlay>

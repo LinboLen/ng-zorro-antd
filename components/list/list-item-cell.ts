@@ -24,7 +24,7 @@ import { mergeMap, startWith } from 'rxjs/operators';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 @Component({
-  selector: '',
+  selector: 'tri-list-item-extra,[tri-list-item-extra]',
   exportAs: 'triListItemExtra',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<ng-content></ng-content>`,
@@ -35,7 +35,7 @@ import { TriSafeAny } from 'ng-zorro-antd/core/types';
 export class TriListItemExtraComponent {}
 
 @Component({
-  selector: '',
+  selector: 'tri-list-item-action',
   exportAs: 'triListItemAction',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<ng-template><ng-content></ng-content></ng-template>`
@@ -45,7 +45,7 @@ export class TriListItemActionComponent {
 }
 
 @Component({
-  selector: '',
+  selector: 'ul[nz-list-item-actions]',
   exportAs: 'triListItemActions',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `

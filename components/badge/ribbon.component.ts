@@ -18,7 +18,7 @@ import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { badgePresetColors } from './preset-colors';
 
 @Component({
-  selector: '',
+  selector: 'tri-ribbon',
   exportAs: 'triRibbon',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

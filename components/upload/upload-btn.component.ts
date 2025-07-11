@@ -17,7 +17,7 @@ import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 import { TriUploadFile, TriUploadXHRArgs, ZipButtonOptions } from './interface';
 
 @Component({
-  selector: '',
+  selector: '[tri-upload-btn]',
   exportAs: 'triUploadBtn',
   templateUrl: './upload-btn.component.html',
   host: {

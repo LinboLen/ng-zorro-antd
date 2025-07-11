@@ -7,7 +7,7 @@ import { TriTagModule } from 'ng-zorro-antd/tag';
 import { TriTransferModule, TransferChange, TransferItem, TransferSelectChange } from 'ng-zorro-antd/transfer';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-transfer-table-transfer',
   imports: [FormsModule, TriSwitchModule, TriTableModule, TriTagModule, TriTransferModule],
   template: `
     <tri-transfer

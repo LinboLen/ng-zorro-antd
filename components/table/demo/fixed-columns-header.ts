@@ -9,7 +9,7 @@ interface ItemData {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-fixed-columns-header',
   imports: [TriTableModule],
   template: `
     <tri-table #fixedTable [data]="listOfData" [scroll]="{ x: '1150px', y: '240px' }">

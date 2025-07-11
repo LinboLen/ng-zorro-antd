@@ -6,7 +6,7 @@ import { TriAlertModule } from 'ng-zorro-antd/alert';
 import { TriCalendarModule } from 'ng-zorro-antd/calendar';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-calendar-select',
   imports: [DatePipe, FormsModule, TriAlertModule, TriCalendarModule],
   template: `
     <tri-alert message="Your selected date: {{ selectedValue | date: 'yyyy-MM-dd' }}"></tri-alert>

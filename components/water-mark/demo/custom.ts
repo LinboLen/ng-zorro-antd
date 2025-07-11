@@ -11,7 +11,7 @@ import { TriTypographyModule } from 'ng-zorro-antd/typography';
 import { FontType, TriWaterMarkModule } from 'ng-zorro-antd/water-mark';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-water-mark-custom',
   imports: [
     ReactiveFormsModule,
     TriColorPickerModule,

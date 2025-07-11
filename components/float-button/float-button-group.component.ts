@@ -28,7 +28,7 @@ import { TriFloatButtonTopComponent } from './float-button-top.component';
 import { TriFloatButtonComponent } from './float-button.component';
 
 @Component({
-  selector: '',
+  selector: 'tri-float-button-group',
   exportAs: 'triFloatButtonGroup',
   imports: [TriFloatButtonComponent, TriIconModule],
   changeDetection: ChangeDetectionStrategy.OnPush,

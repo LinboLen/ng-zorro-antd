@@ -254,7 +254,7 @@ describe('checkbox', () => {
 
 @Component({
   imports: [FormsModule, TriCheckboxModule],
-  selector: '',
+  selector: 'tri-test-single-checkbox',
   template: `
     <label
       tri-checkbox

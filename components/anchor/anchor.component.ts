@@ -49,7 +49,7 @@ const sharpMatcherRegx = /#([^#]+)$/;
 const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: true });
 
 @Component({
-  selector: '',
+  selector: 'tri-anchor',
   exportAs: 'triAnchor',
   imports: [NgTemplateOutlet, TriAffixModule],
   template: `

@@ -6,7 +6,7 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-  selector: '',
+  selector: 'tri-page-header-title,[tri-page-header-title]',
   exportAs: 'triPageHeaderTitle',
   host: {
     class: 'tri-page-header-heading-title'
@@ -15,7 +15,7 @@ import { Directive } from '@angular/core';
 export class TriPageHeaderTitleDirective {}
 
 @Directive({
-  selector: '',
+  selector: 'tri-page-header-subtitle,[tri-page-header-subtitle]',
   exportAs: 'triPageHeaderSubtitle',
   host: {
     class: 'tri-page-header-heading-sub-title'
@@ -24,7 +24,7 @@ export class TriPageHeaderTitleDirective {}
 export class TriPageHeaderSubtitleDirective {}
 
 @Directive({
-  selector: '',
+  selector: 'tri-page-header-content,[tri-page-header-content]',
   exportAs: 'triPageHeaderContent',
   host: {
     class: 'tri-page-header-content'
@@ -33,7 +33,7 @@ export class TriPageHeaderSubtitleDirective {}
 export class TriPageHeaderContentDirective {}
 
 @Directive({
-  selector: '',
+  selector: 'tri-page-header-tags,[tri-page-header-tags]',
   exportAs: 'triPageHeaderTags',
   host: {
     class: 'tri-page-header-heading-tags'
@@ -42,7 +42,7 @@ export class TriPageHeaderContentDirective {}
 export class TriPageHeaderTagDirective {}
 
 @Directive({
-  selector: '',
+  selector: 'tri-page-header-extra,[tri-page-header-extra]',
   exportAs: 'triPageHeaderExtra',
   host: {
     class: 'tri-page-header-heading-extra'
@@ -51,7 +51,7 @@ export class TriPageHeaderTagDirective {}
 export class TriPageHeaderExtraDirective {}
 
 @Directive({
-  selector: '',
+  selector: 'tri-page-header-footer,[tri-page-header-footer]',
   exportAs: 'triPageHeaderFooter',
   host: {
     class: 'tri-page-header-footer'
@@ -60,13 +60,13 @@ export class TriPageHeaderExtraDirective {}
 export class TriPageHeaderFooterDirective {}
 
 @Directive({
-  selector: '',
+  selector: 'tri-breadcrumb[nz-page-header-breadcrumb]',
   exportAs: 'triPageHeaderBreadcrumb'
 })
 export class TriPageHeaderBreadcrumbDirective {}
 
 @Directive({
-  selector: '',
+  selector: 'tri-avatar[nz-page-header-avatar]',
   exportAs: 'triPageHeaderAvatar'
 })
 export class TriPageHeaderAvatarDirective {}

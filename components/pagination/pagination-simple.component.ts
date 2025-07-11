@@ -32,7 +32,7 @@ import { TriPaginationItemComponent } from './pagination-item.component';
 import { PaginationItemRenderContext } from './pagination.types';
 
 @Component({
-  selector: '',
+  selector: 'tri-pagination-simple',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `

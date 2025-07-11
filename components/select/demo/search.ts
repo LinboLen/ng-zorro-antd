@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-select-search',
   imports: [FormsModule, TriSelectModule],
   template: `
     <tri-select showSearch allowClear placeHolder="Select a person" [(ngModel)]="selectedValue">

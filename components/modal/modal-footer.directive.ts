@@ -8,7 +8,7 @@ import { Directive, TemplateRef, inject } from '@angular/core';
 import { TriModalRef } from './modal-ref';
 
 @Directive({
-  selector: '',
+  selector: '[triModalFooter]',
   exportAs: 'triModalFooter'
 })
 export class TriModalFooterDirective {

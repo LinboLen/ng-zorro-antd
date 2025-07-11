@@ -4,7 +4,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriTableModule } from 'ng-zorro-antd/table';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-expand-icon',
   imports: [TriIconModule, TriTableModule],
   template: `
     <tri-table #nzTable [data]="listOfData" tableLayout="fixed">

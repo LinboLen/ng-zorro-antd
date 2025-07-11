@@ -24,7 +24,7 @@ import { TriModeType } from './typings';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TriIconModule, TriStringTemplateOutletDirective],
-  selector: '',
+  selector: 'tri-hash-code',
   exportAs: 'triHashCode',
   template: `
     @if (mode !== 'single' && mode !== 'rect') {

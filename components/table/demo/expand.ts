@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriTableModule } from 'ng-zorro-antd/table';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-expand',
   imports: [TriTableModule],
   template: `
     <tri-table #nzTable [data]="listOfData" tableLayout="fixed">

@@ -15,7 +15,7 @@ import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
 import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-space-compact',
   imports: [
     TriSpaceModule,
     TriButtonModule,

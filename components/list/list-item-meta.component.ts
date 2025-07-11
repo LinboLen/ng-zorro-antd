@@ -26,7 +26,7 @@ import {
 } from './list-item-meta-cell';
 
 @Component({
-  selector: '',
+  selector: 'tri-list-item-meta,[tri-list-item-meta]',
   exportAs: 'triListItemMeta',
   template: `
     <!--Old API Start-->

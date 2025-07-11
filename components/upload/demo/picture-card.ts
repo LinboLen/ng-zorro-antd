@@ -13,7 +13,7 @@ const getBase64 = (file: File): Promise<string | ArrayBuffer | null> =>
   });
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-upload-picture-card',
   imports: [TriIconModule, TriModalModule, TriUploadModule],
   template: `
     <tri-upload

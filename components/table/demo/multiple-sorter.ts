@@ -10,7 +10,7 @@ interface ItemData {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-multiple-sorter',
   imports: [TriTableModule],
   template: `
     <tri-table #sortTable [data]="listOfData" tableLayout="fixed">

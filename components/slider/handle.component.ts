@@ -26,7 +26,7 @@ import { TriToolTipModule, TriTooltipDirective } from 'ng-zorro-antd/tooltip';
 import { TriSliderShowTooltip } from './typings';
 
 @Component({
-  selector: '',
+  selector: 'tri-slider-handle',
   exportAs: 'triSliderHandle',
   template: `
     <div

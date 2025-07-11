@@ -6,7 +6,7 @@ import { TriMenuModule } from 'ng-zorro-antd/menu';
 import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-menu-inline-collapsed',
   imports: [TriButtonModule, TriIconModule, TriMenuModule, TriToolTipModule],
   template: `
     <div class="wrapper">

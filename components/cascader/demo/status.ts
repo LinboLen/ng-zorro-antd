@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TriCascaderModule, TriCascaderOption } from 'ng-zorro-antd/cascader';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-cascader-status',
   imports: [FormsModule, TriCascaderModule],
   template: `
     <tri-cascader [options]="options" status="error"></tri-cascader>

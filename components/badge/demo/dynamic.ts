@@ -9,7 +9,7 @@ import { TriSpaceModule } from 'ng-zorro-antd/space';
 import { TriSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-badge-dynamic',
   imports: [FormsModule, TriBadgeModule, TriButtonModule, TriFlexModule, TriIconModule, TriSwitchModule, TriSpaceModule],
   template: `
     <div tri-flex vertical gap="middle">

@@ -46,7 +46,7 @@ type TriEmptyContentType = 'component' | 'template' | 'string';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-embed-empty',
   exportAs: 'triEmbedEmpty',
   template: `
     @if (content) {

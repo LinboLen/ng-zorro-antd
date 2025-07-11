@@ -48,7 +48,7 @@ interface FlatNode {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tree-view-editable',
   imports: [TriButtonModule, TriInputModule, TriIconModule, TriTreeViewModule],
   template: `
     <tri-tree-view [treeControl]="treeControl" [dataSource]="dataSource" [trackBy]="trackBy">

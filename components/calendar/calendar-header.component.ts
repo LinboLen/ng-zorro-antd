@@ -28,7 +28,7 @@ import { TriSelectModule, TriSelectSizeType } from 'ng-zorro-antd/select';
 @Component({
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: '',
+  selector: 'tri-calendar-header',
   exportAs: 'triCalendarHeader',
   template: `
     @if (customHeader) {

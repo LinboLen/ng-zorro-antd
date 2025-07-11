@@ -6,7 +6,7 @@
 import { ChangeDetectionStrategy, Component, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: '',
+  selector: 'tri-card-tab',
   exportAs: 'triCardTab',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -27,7 +27,7 @@ const REFRESH_INTERVAL = 1000 / 30;
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-countdown',
   exportAs: 'triCountdown',
   template: `
     <tri-statistic

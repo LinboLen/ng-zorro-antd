@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TriColorPickerModule } from 'ng-zorro-antd/color-picker';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-color-picker-format',
   imports: [FormsModule, TriColorPickerModule],
   template: `
     <div class="format"> <tri-color-picker format="hex" [(ngModel)]="hex"></tri-color-picker> HEX: {{ hex }} </div>

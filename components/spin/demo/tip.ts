@@ -4,7 +4,7 @@ import { TriAlertModule } from 'ng-zorro-antd/alert';
 import { TriSpinModule } from 'ng-zorro-antd/spin';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-spin-tip',
   imports: [TriAlertModule, TriSpinModule],
   template: `
     <tri-spin tip="Loading...">

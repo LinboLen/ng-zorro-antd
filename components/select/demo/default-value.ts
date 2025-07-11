@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-select-default-value',
   imports: [FormsModule, TriSelectModule],
   template: `
     <tri-select mode="multiple" placeHolder="Inserted are removed" [(ngModel)]="listOfSelectedValue">

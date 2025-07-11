@@ -5,7 +5,7 @@ import { TriInputNumberLegacyModule } from 'ng-zorro-antd/input-number-legacy';
 import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-input-number-legacy-status',
   imports: [FormsModule, TriInputNumberLegacyModule, TriSpaceModule],
   template: `
     <tri-space direction="vertical" style="width: 100%">

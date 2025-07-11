@@ -7,7 +7,7 @@ import { TriSpaceModule } from 'ng-zorro-antd/space';
 import { TriUploadModule } from 'ng-zorro-antd/upload';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-space-basic',
   imports: [TriButtonModule, TriIconModule, TriSpaceModule, TriPopconfirmModule, TriUploadModule],
   template: `
     <tri-space>

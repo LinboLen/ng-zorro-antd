@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriColorPickerModule } from 'ng-zorro-antd/color-picker';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-color-picker-block',
   imports: [TriColorPickerModule],
   template: `
     <tri-color-block size="small"></tri-color-block>

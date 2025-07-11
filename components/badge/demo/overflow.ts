@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriBadgeModule } from 'ng-zorro-antd/badge';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-badge-overflow',
   imports: [TriBadgeModule],
   template: `
     <tri-badge [count]="99">

@@ -57,7 +57,7 @@ export function NzTreeServiceFactory(): TriTreeBaseService {
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'tree';
 
 @Component({
-  selector: '',
+  selector: 'tri-tree',
   exportAs: 'triTree',
   animations: [treeCollapseMotion],
   template: `

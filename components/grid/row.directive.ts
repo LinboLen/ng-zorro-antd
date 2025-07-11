@@ -29,7 +29,7 @@ export type TriJustify = 'start' | 'end' | 'center' | 'space-around' | 'space-be
 export type TriAlign = 'top' | 'middle' | 'bottom';
 
 @Directive({
-  selector: '',
+  selector: '[tri-row],tri-row,tri-form-item',
   exportAs: 'triRow',
   host: {
     class: 'tri-row',

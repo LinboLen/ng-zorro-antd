@@ -13,7 +13,7 @@ import {
 import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-graph-customized',
   imports: [FormsModule, TriButtonModule, TriGraphModule, TriRadioModule],
   template: `
     <button tri-button type="default" (click)="expandAll()">ExpandAll</button>

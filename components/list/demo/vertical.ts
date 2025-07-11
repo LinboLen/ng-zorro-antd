@@ -12,7 +12,7 @@ interface ItemData {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-list-vertical',
   imports: [TriIconModule, TriListModule],
   template: `
     <tri-list itemLayout="vertical">

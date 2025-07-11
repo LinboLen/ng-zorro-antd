@@ -5,7 +5,7 @@ import { TriDrawerModule } from 'ng-zorro-antd/drawer';
 import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-resizable-drawer',
   imports: [TriButtonModule, TriDrawerModule, TriResizableModule],
   template: `
     <button tri-button type="primary" (click)="open()">Open</button>

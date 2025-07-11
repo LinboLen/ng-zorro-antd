@@ -6,7 +6,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriUploadFile, TriUploadModule } from 'ng-zorro-antd/upload';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-upload-transform-file',
   imports: [TriButtonModule, TriIconModule, TriUploadModule],
   template: `
     <tri-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76" [transformFile]="transformFile">

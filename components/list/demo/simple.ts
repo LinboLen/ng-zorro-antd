@@ -5,7 +5,7 @@ import { TriMessageService } from 'ng-zorro-antd/message';
 import { TriTypographyModule } from 'ng-zorro-antd/typography';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-list-simple',
   imports: [TriListModule, TriTypographyModule],
   template: `
     <h3>Default Size</h3>

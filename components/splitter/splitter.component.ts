@@ -61,7 +61,7 @@ interface ResizableInfo {
 const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: true });
 
 @Component({
-  selector: '',
+  selector: 'tri-splitter',
   exportAs: 'triSplitter',
   template: `
     @for (panel of panelProps(); let i = $index; track i; let last = $last) {

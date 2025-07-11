@@ -11,7 +11,7 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
 type Gender = 'male' | 'female';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-form-coordinated',
   imports: [ReactiveFormsModule, TriButtonModule, TriFormModule, TriInputModule, TriSelectModule],
   template: `
     <form tri-form [formGroup]="validateForm" (ngSubmit)="submitForm()">

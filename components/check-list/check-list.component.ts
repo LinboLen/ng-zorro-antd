@@ -26,7 +26,7 @@ import { TriCheckListContentComponent } from './check-list-content.component';
 import { TriItemProps } from './typings';
 
 @Component({
-  selector: '',
+  selector: 'tri-check-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [TriPopoverModule, TriIconModule, TriOutletModule, TriCheckListButtonComponent, TriCheckListContentComponent],

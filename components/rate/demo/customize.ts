@@ -5,7 +5,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriRateModule } from 'ng-zorro-antd/rate';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-rate-customize',
   imports: [FormsModule, TriIconModule, TriRateModule],
   template: `
     <tri-rate [ngModel]="2" [character]="characterNumber"></tri-rate>

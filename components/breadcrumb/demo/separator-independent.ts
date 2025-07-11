@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-breadcrumb-separator-independent',
   imports: [TriBreadCrumbModule],
   template: `
     <tri-breadcrumb [separator]="null">

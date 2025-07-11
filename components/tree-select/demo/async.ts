@@ -5,7 +5,7 @@ import { TriFormatEmitEvent, TriTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tree-select-async',
   imports: [FormsModule, TriTreeSelectModule],
   template: `
     <tri-tree-select

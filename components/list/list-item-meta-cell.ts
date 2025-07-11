@@ -8,7 +8,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { TriAvatarModule } from 'ng-zorro-antd/avatar';
 
 @Component({
-  selector: '',
+  selector: 'tri-list-item-meta-title',
   exportAs: 'triListItemMetaTitle',
   template: `
     <h4 class="tri-list-item-meta-title">
@@ -20,7 +20,7 @@ import { TriAvatarModule } from 'ng-zorro-antd/avatar';
 export class TriListItemMetaTitleComponent {}
 
 @Component({
-  selector: '',
+  selector: 'tri-list-item-meta-description',
   exportAs: 'triListItemMetaDescription',
   template: `
     <div class="tri-list-item-meta-description">
@@ -32,7 +32,7 @@ export class TriListItemMetaTitleComponent {}
 export class TriListItemMetaDescriptionComponent {}
 
 @Component({
-  selector: '',
+  selector: 'tri-list-item-meta-avatar',
   exportAs: 'triListItemMetaAvatar',
   template: `
     <div class="tri-list-item-meta-avatar">

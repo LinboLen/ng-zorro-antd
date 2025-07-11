@@ -100,7 +100,7 @@ export type TriPlacement = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight'
 @Component({
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: '',
+  selector: 'tri-date-picker,tri-week-picker,tri-month-picker,tri-quarter-picker,tri-year-picker,tri-range-picker',
   exportAs: 'triDatePicker',
   template: `
     @if (!inline) {

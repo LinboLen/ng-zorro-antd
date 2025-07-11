@@ -5,7 +5,7 @@ import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-date-picker-week-number',
   imports: [FormsModule, TriDatePickerModule, TriRadioModule],
   template: `
     <tri-radio-group [(ngModel)]="showWeekNumber">

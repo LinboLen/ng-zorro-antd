@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriSpinModule } from 'ng-zorro-antd/spin';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-spin-inside',
   imports: [TriSpinModule],
   template: `
     <div class="container">

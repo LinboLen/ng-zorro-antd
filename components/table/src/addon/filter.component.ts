@@ -41,7 +41,7 @@ interface TriThItemInterface {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-table-filter',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `

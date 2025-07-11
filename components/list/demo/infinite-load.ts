@@ -23,7 +23,7 @@ interface Name {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-list-infinite-load',
   imports: [CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf, TriListModule, TriSkeletonModule],
   template: `
     <div>

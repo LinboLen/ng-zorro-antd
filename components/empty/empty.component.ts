@@ -30,7 +30,7 @@ type TriEmptyNotFoundImageType = (typeof NzEmptyDefaultImages)[number] | null | 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-empty',
   exportAs: 'triEmpty',
   template: `
     <div class="tri-empty-image">

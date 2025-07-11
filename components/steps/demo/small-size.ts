@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriStepsModule } from 'ng-zorro-antd/steps';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-steps-small-size',
   imports: [TriStepsModule],
   template: `
     <tri-steps [current]="current" size="small">

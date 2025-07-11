@@ -31,7 +31,7 @@ import { TriProgressFormatter, TriProgressModule } from 'ng-zorro-antd/progress'
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-step',
   exportAs: 'triStep',
   template: `
     <div

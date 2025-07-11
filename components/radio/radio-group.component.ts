@@ -28,7 +28,7 @@ import { TriRadioService } from './radio.service';
 export type TriRadioButtonStyle = 'outline' | 'solid';
 
 @Component({
-  selector: '',
+  selector: 'tri-radio-group',
   exportAs: 'triRadioGroup',
   template: `<ng-content></ng-content>`,
   encapsulation: ViewEncapsulation.None,

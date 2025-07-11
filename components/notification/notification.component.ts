@@ -15,7 +15,7 @@ import { TriNotificationData } from './typings';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-notification',
   exportAs: 'triNotification',
   animations: [notificationMotion],
   template: `

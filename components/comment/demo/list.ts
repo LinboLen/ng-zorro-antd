@@ -7,7 +7,7 @@ import { TriCommentModule } from 'ng-zorro-antd/comment';
 import { TriListModule } from 'ng-zorro-antd/list';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-comment-list',
   imports: [TriAvatarModule, TriCommentModule, TriListModule],
   template: `
     <tri-list [dataSource]="data" [renderItem]="item" [itemLayout]="'horizontal'">

@@ -35,7 +35,7 @@ interface Info {
 }
 
 @Component({
-  selector: '',
+  selector: '[tri-graph-node]',
   template: `
     <svg:g>
       @if (customTemplate) {

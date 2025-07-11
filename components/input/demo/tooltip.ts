@@ -5,7 +5,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
 import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-input-tooltip',
   imports: [FormsModule, TriInputModule, TriToolTipModule],
   template: `
     <input

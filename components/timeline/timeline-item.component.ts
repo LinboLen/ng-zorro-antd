@@ -26,7 +26,7 @@ function isDefaultColor(color?: string): boolean {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-timeline-item,[tri-timeline-item]',
   exportAs: 'triTimelineItem',
   template: `
     <ng-template #template>

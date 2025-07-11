@@ -4,7 +4,7 @@ import { TriGridModule } from 'ng-zorro-antd/grid';
 import { TriResizableModule, TriResizeEvent, TriResizeHandleOption } from 'ng-zorro-antd/resizable';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-resizable-grid',
   imports: [TriGridModule, TriResizableModule],
   template: `
     <div tri-row>

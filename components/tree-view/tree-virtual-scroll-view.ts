@@ -26,7 +26,7 @@ import { TriTreeView } from './tree';
 const DEFAULT_SIZE = 28;
 
 @Component({
-  selector: '',
+  selector: 'tri-tree-virtual-scroll-view',
   exportAs: 'triTreeVirtualScrollView',
   template: `
     <div class="tri-tree-list">

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriMenuModule } from 'ng-zorro-antd/menu';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-menu-horizontal-position',
   imports: [TriMenuModule],
   template: `
     <ul tri-menu mode="horizontal">

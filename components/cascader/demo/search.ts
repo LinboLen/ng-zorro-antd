@@ -84,7 +84,7 @@ const otherOptions = [
 ];
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-cascader-search',
   imports: [FormsModule, TriCascaderModule],
   template: `
     <tri-cascader

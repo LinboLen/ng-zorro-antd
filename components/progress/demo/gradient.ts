@@ -3,7 +3,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { TriProgressModule } from 'ng-zorro-antd/progress';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-progress-gradient',
   imports: [TriProgressModule],
   template: `
     <tri-progress [percent]="99.9" [strokeColor]="{ '0%': '#108ee9', '100%': '#87d068' }"></tri-progress>

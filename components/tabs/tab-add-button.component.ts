@@ -10,7 +10,7 @@ import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: '',
+  selector: 'tri-tab-add-button,button[nz-tab-add-button]',
   template: `
     <ng-container *stringTemplateOutlet="addIcon; let icon">
       <tri-icon [type]="icon" theme="outline" />

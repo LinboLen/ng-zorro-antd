@@ -8,7 +8,7 @@ import { TriMessageService } from 'ng-zorro-antd/message';
 import { TriUploadFile, TriUploadModule } from 'ng-zorro-antd/upload';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-upload-upload-manually',
   imports: [TriButtonModule, TriIconModule, TriUploadModule],
   template: `
     <tri-upload [(fileListChange)]="fileList" [beforeUpload]="beforeUpload">

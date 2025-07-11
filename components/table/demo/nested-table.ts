@@ -25,7 +25,7 @@ interface ChildrenItemData {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-nested-table',
   imports: [TriBadgeModule, TriDividerModule, TriDropDownModule, TriIconModule, TriTableModule],
   template: `
     <tri-table #nestedTable [data]="listOfParentData" [pageSize]="10">

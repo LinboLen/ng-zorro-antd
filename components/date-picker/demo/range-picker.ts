@@ -6,7 +6,7 @@ import { getISOWeek } from 'date-fns';
 import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-date-picker-range-picker',
   imports: [FormsModule, TriDatePickerModule],
   template: `
     <tri-range-picker [(ngModel)]="date" (ngModelChange)="onChange($event)"></tri-range-picker>

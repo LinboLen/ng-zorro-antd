@@ -6,7 +6,7 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: '',
+  selector: 'tri-footer',
   exportAs: 'triFooter',
   template: `<ng-content></ng-content>`,
   encapsulation: ViewEncapsulation.None,

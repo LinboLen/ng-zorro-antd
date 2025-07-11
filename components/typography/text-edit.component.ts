@@ -35,7 +35,7 @@ import { TriAutosizeDirective, TriInputModule } from 'ng-zorro-antd/input';
 import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
-  selector: '',
+  selector: 'tri-text-edit',
   exportAs: 'triTextEdit',
   template: `
     @if (editing) {

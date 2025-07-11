@@ -5,7 +5,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriInputNumberLegacyModule } from 'ng-zorro-antd/input-number-legacy';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-input-number-legacy-disabled',
   imports: [FormsModule, TriButtonModule, TriInputNumberLegacyModule],
   template: `
     <tri-input-number

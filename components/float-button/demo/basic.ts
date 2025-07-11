@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriFloatButtonModule } from 'ng-zorro-antd/float-button';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-float-button-basic',
   imports: [TriFloatButtonModule],
   template: `
     <div class="basic">

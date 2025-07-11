@@ -47,7 +47,7 @@ import {
 import { TriTransferListComponent } from './transfer-list.component';
 
 @Component({
-  selector: '',
+  selector: 'tri-transfer',
   exportAs: 'triTransfer',
   template: `
     <tri-transfer-list

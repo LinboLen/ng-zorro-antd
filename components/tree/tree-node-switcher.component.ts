@@ -10,7 +10,7 @@ import { TriTreeNode, TriTreeNodeOptions } from 'ng-zorro-antd/core/tree';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: '',
+  selector: 'tri-tree-node-switcher',
   template: `
     @if (isShowSwitchIcon) {
       @if (!isLoading) {

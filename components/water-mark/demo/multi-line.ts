@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriWaterMarkModule } from 'ng-zorro-antd/water-mark';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-water-mark-multi-line',
   imports: [TriWaterMarkModule],
   template: `
     <tri-water-mark [content]="['Angular', 'NG Ant Design']">

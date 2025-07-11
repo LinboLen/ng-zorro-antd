@@ -1,11 +1,11 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 
-import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
   selector: 'tri-demo-tabs-draggable',
-  imports: [NzTabsModule, CdkDrag, CdkDropList],
+  imports: [TriTabsModule, CdkDrag, CdkDropList],
   template: `
     <tri-tabs
       [(selectedIndexChange)]="selectedTabIndex"

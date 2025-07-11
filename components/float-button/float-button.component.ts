@@ -23,7 +23,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriFloatButtonContentComponent } from './float-button-content.component';
 
 @Component({
-  selector: '',
+  selector: 'tri-float-button',
   exportAs: 'triFloatButton',
   imports: [TriButtonModule, TriFloatButtonContentComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,

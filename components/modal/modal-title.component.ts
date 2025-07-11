@@ -10,7 +10,7 @@ import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { ModalOptions } from './modal-types';
 
 @Component({
-  selector: '',
+  selector: 'div[nz-modal-title]',
   exportAs: 'triModalTitleBuiltin',
   template: `
     <div class="tri-modal-title">

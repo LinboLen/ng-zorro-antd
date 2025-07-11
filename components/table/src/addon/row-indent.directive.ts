@@ -6,7 +6,7 @@
 import { Directive, Input } from '@angular/core';
 
 @Directive({
-  selector: '',
+  selector: 'tri-row-indent',
   host: {
     class: 'tri-table-row-indent',
     '[style.padding-left.px]': 'indentSize'

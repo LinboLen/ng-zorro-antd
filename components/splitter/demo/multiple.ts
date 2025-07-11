@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriSplitterModule } from 'ng-zorro-antd/splitter';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-splitter-multiple',
   imports: [TriSplitterModule],
   template: `
     <tri-splitter>

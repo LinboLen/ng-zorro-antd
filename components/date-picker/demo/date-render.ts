@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-date-picker-date-render',
   imports: [TriDatePickerModule],
   template: `
     <tri-date-picker [dateRender]="tplRender"></tri-date-picker>

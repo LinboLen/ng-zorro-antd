@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriDividerModule } from 'ng-zorro-antd/divider';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-divider-plain',
   imports: [TriDividerModule],
   template: `
     <div>

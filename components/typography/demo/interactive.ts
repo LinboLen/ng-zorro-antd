@@ -4,7 +4,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriTypographyModule } from 'ng-zorro-antd/typography';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-typography-interactive',
   imports: [TriIconModule, TriTypographyModule],
   template: `
     <p tri-typography editable [(contentChange)]="editStr"></p>

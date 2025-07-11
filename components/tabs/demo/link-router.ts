@@ -5,7 +5,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tabs-link-router',
   imports: [RouterLink, TriTabsModule, TriButtonModule],
   template: `
     <div style="margin-bottom: 16px;">

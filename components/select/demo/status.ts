@@ -4,7 +4,7 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
 import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-select-status',
   imports: [TriSelectModule, TriSpaceModule],
   template: `
     <tri-select status="error"></tri-select>

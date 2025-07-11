@@ -5,7 +5,7 @@ import { TriMessageService } from 'ng-zorro-antd/message';
 import { TriTransferModule, TransferItem } from 'ng-zorro-antd/transfer';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-transfer-advanced',
   imports: [TriButtonModule, TriTransferModule],
   template: `
     <tri-transfer

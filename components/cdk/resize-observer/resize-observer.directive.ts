@@ -21,7 +21,7 @@ import { Subscription } from 'rxjs';
 import { TriResizeObserver, TriResizeObserverFactory } from './resize-observer.service';
 
 @Directive({
-  selector: '',
+  selector: '[triResizeObserver]',
   providers: [TriResizeObserverFactory]
 })
 export class TriResizeObserverDirective implements AfterContentInit, OnChanges {

@@ -55,7 +55,7 @@ import { TriExtendedMark, TriMarks, TriSliderHandler, TriSliderShowTooltip, TriS
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-slider',
   exportAs: 'triSlider',
   providers: [
     {

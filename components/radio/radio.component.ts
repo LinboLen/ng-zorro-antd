@@ -31,7 +31,7 @@ import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 import { TriRadioService } from './radio.service';
 
 @Component({
-  selector: '',
+  selector: '[tri-radio],[tri-radio-button]',
   exportAs: 'triRadio',
   template: `
     <span

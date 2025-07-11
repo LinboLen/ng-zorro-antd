@@ -9,6 +9,6 @@ import { Directive } from '@angular/core';
  * @deprecated Will be removed in v21, because it is not used anymore.
  */
 @Directive({
-  selector: ''
+  selector: '[tri-button][nz-dropdown]'
 })
 export class TriDropdownButtonDirective {}

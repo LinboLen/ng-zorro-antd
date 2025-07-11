@@ -12,7 +12,7 @@ function alphabet(size: number): string[] {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-select-big-data',
   imports: [FormsModule, TriSelectModule],
   template: `
     <tri-select

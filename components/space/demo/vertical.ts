@@ -4,7 +4,7 @@ import { TriCardModule } from 'ng-zorro-antd/card';
 import { TriSpaceModule } from 'ng-zorro-antd/space';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-space-vertical',
   imports: [TriCardModule, TriSpaceModule],
   template: `
     <tri-space direction="vertical">

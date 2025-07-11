@@ -13,7 +13,7 @@ import { Minimap } from './core/minimap';
 import { TriZoomTransform } from './interface';
 
 @Component({
-  selector: '',
+  selector: 'tri-graph-minimap',
   template: `
     <svg>
       <defs>

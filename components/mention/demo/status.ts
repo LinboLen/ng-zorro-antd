@@ -5,7 +5,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
 import { TriMentionModule } from 'ng-zorro-antd/mention';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-mention-status',
   imports: [FormsModule, TriInputModule, TriMentionModule],
   template: `
     <tri-mention [suggestions]="suggestions" status="error" style="margin-bottom: 8px;">

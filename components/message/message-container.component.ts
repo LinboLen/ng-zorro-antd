@@ -26,7 +26,7 @@ const TRI_MESSAGE_DEFAULT_CONFIG: Required<MessageConfig> = {
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-message-container',
   exportAs: 'triMessageContainer',
   template: `
     <div class="tri-message" [class.tri-message-rtl]="dir === 'rtl'" [style.top]="top">

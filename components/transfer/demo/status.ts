@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriTransferModule } from 'ng-zorro-antd/transfer';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-transfer-status',
   imports: [TriTransferModule],
   template: `
     <tri-transfer [dataSource]="[]" status="error"></tri-transfer>

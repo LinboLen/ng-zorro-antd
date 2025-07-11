@@ -14,7 +14,7 @@ import { TriSafeAny } from 'ng-zorro-antd/core/types';
  */
 @Directive({
   selector:
-    ''
+    '[tri-button],[tri-icon],tri-icon,[tri-menu-item],[tri-submenu],tri-select-top-control,tri-select-placeholder,tri-input-group'
 })
 export class TriTransitionPatchDirective implements AfterViewInit, OnChanges {
   private elementRef = inject(ElementRef<HTMLElement>);

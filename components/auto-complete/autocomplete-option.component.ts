@@ -34,7 +34,7 @@ export class TriOptionSelectionChange {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-auto-option',
   exportAs: 'triAutoOption',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,

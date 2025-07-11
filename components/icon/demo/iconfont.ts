@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriIconModule, TriIconService } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-icon-iconfont',
   imports: [TriIconModule],
   template: `
     <tri-icon iconfont="icon-tuichu" />

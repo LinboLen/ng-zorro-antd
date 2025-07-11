@@ -42,7 +42,7 @@ type TriCalendarDateTemplate = TemplateRef<{ $implicit: Date }>;
 @Component({
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: '',
+  selector: 'tri-calendar',
   exportAs: 'triCalendar',
   template: `
     <tri-calendar-header

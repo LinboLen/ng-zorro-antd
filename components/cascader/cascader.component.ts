@@ -98,7 +98,7 @@ const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-cascader,[tri-cascader]',
   exportAs: 'triCascader',
   template: `
     @if (showInput) {

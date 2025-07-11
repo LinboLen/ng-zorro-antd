@@ -28,7 +28,7 @@ import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: '',
+  selector: 'tri-option-item',
   template: `
     <div class="tri-select-item-option-content">
       @if (customContent) {

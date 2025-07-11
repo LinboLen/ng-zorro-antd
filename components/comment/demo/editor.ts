@@ -22,7 +22,7 @@ interface Data extends User {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-comment-editor',
   imports: [FormsModule, TriAvatarModule, TriButtonModule, TriCommentModule, TriFormModule, TriInputModule, TriListModule],
   template: `
     @if (data.length) {

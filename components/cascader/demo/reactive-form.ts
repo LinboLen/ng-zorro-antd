@@ -48,7 +48,7 @@ const options: TriCascaderOption[] = [
 ];
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-cascader-reactive-form',
   imports: [ReactiveFormsModule, TriButtonModule, TriCascaderModule],
   template: `
     <form [formGroup]="form" novalidate>

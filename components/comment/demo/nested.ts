@@ -5,7 +5,7 @@ import { TriAvatarModule } from 'ng-zorro-antd/avatar';
 import { TriCommentModule } from 'ng-zorro-antd/comment';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-comment-nested',
   imports: [NgTemplateOutlet, TriAvatarModule, TriCommentModule],
   template: `
     <ng-template #commentTemplateRef let-comment="comment">

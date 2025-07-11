@@ -83,7 +83,7 @@ const otherOptions: TriCascaderOption[] = [
 ];
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-cascader-basic',
   imports: [FormsModule, TriCascaderModule],
   template: `
     <tri-cascader [options]="options" [(ngModel)]="values" (ngModelChange)="onChanges($event)"></tri-cascader>

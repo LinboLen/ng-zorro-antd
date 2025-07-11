@@ -5,7 +5,7 @@ import { TriCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { TriGridModule } from 'ng-zorro-antd/grid';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-checkbox-layout',
   imports: [FormsModule, TriCheckboxModule, TriGridModule],
   template: `
     <tri-checkbox-group [(ngModel)]="value" [style.width.%]="100" (ngModelChange)="log($event)">

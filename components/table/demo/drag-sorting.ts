@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
 import { TriTableModule } from 'ng-zorro-antd/table';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-drag-sorting',
   imports: [CdkDropList, CdkDrag, TriTableModule],
   template: `
     <tri-table [data]="listOfData" [frontPagination]="false" [showPagination]="false">

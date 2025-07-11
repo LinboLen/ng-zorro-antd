@@ -35,7 +35,7 @@ import { TriFormControlStatusType, TriFormItemComponent } from './form-item.comp
 import { TriFormDirective } from './form.directive';
 
 @Component({
-  selector: '',
+  selector: 'tri-form-control',
   exportAs: 'triFormControl',
   animations: [helpMotion],
   encapsulation: ViewEncapsulation.None,

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriAnchorModule } from 'ng-zorro-antd/anchor';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-anchor-customize-highlight',
   imports: [TriAnchorModule],
   template: `
     <tri-anchor currentAnchor="#components-anchor-demo-static">

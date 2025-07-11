@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriAnchorModule } from 'ng-zorro-antd/anchor';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-anchor-on-change',
   imports: [TriAnchorModule],
   template: `
     <tri-anchor (change)="handleChange($event)">

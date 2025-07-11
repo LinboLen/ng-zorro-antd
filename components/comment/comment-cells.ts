@@ -20,20 +20,20 @@ import {
 } from '@angular/core';
 
 @Directive({
-  selector: '',
+  selector: 'tri-avatar[nz-comment-avatar]',
   exportAs: 'triCommentAvatar'
 })
 export class TriCommentAvatarDirective {}
 
 @Directive({
-  selector: '',
+  selector: 'tri-comment-content,[tri-comment-content]',
   exportAs: 'triCommentContent',
   host: { class: 'tri-comment-content-detail' }
 })
 export class TriCommentContentDirective {}
 
 @Directive({
-  selector: '',
+  selector: '[triCommentActionHost]',
   exportAs: 'triCommentActionHost'
 })
 export class TriCommentActionHostDirective extends CdkPortalOutlet implements OnInit, OnDestroy, AfterViewInit {
@@ -53,7 +53,7 @@ export class TriCommentActionHostDirective extends CdkPortalOutlet implements On
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-comment-action',
   exportAs: 'triCommentAction',
   template: '<ng-template><ng-content /></ng-template>',
   encapsulation: ViewEncapsulation.None,

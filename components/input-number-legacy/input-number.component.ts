@@ -52,7 +52,7 @@ import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactIte
  * @deprecated Will be removed in v21. It is recommended to use the new version `<nz-input-number>`.
  */
 @Component({
-  selector: '',
+  selector: 'tri-input-number',
   exportAs: 'triInputNumber',
   template: `
     <div class="tri-input-number-handler-wrap">

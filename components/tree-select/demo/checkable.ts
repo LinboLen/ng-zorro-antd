@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tree-select-checkable',
   imports: [FormsModule, TriTreeSelectModule],
   template: `
     <tri-tree-select

@@ -4,7 +4,7 @@ import { TriCardModule } from 'ng-zorro-antd/card';
 import { TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-card-tabs',
   imports: [TriCardModule, TriTabsModule],
   template: `
     <tri-card style="width: 100%;" title="Card title" [extra]="extraTemplate">

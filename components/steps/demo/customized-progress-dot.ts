@@ -5,7 +5,7 @@ import { TriPopoverModule } from 'ng-zorro-antd/popover';
 import { TriStepsModule } from 'ng-zorro-antd/steps';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-steps-customized-progress-dot',
   imports: [NgTemplateOutlet, TriStepsModule, TriPopoverModule],
   template: `
     <tri-steps [current]="1" [progressDot]="progressTemplate">

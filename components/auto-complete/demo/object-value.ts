@@ -11,7 +11,7 @@ interface Option {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-auto-complete-object-value',
   imports: [FormsModule, TriAutocompleteModule, TriInputModule],
   encapsulation: ViewEncapsulation.None,
   template: `

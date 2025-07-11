@@ -13,7 +13,7 @@ interface DataItem {
   address: string;
 }
 @Component({
-  selector: '',
+  selector: 'tri-demo-table-custom-filter-panel',
   imports: [FormsModule, TriButtonModule, TriDropDownModule, TriIconModule, TriInputModule, TriTableModule],
   template: `
     <tri-table #nzTable [data]="listOfDisplayData" tableLayout="fixed">

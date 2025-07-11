@@ -47,7 +47,7 @@ export type TriAutoFocusType = null | 'ok' | 'cancel';
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'popconfirm';
 
 @Directive({
-  selector: '',
+  selector: '[tri-popconfirm]',
   exportAs: 'triPopconfirm',
   host: {
     '[class.tri-popover-open]': 'visible'
@@ -148,7 +148,7 @@ export class TriPopconfirmDirective extends TriTooltipBaseDirective {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-popconfirm',
   exportAs: 'triPopconfirmComponent',
   animations: [zoomBigMotion],
   template: `

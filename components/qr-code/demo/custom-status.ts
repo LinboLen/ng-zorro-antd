@@ -4,7 +4,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriQRCodeModule } from 'ng-zorro-antd/qr-code';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-qr-code-custom-status',
   imports: [TriQRCodeModule, TriIconModule],
   template: `
     <tri-qrcode value="https://ng.ant.design/" statusRender="NgZorro"></tri-qrcode>

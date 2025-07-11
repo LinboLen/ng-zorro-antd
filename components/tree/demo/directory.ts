@@ -6,7 +6,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriFormatEmitEvent, TriTreeModule, TriTreeNode } from 'ng-zorro-antd/tree';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tree-directory',
   imports: [TriDropDownModule, TriIconModule, TriTreeModule, LowerCasePipe],
   template: `
     <tri-tree

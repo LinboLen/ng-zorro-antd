@@ -8,7 +8,7 @@ import { TriFormModule } from 'ng-zorro-antd/form';
 import { TriInputModule } from 'ng-zorro-antd/input';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-drawer-service',
   imports: [FormsModule, TriButtonModule, TriDrawerModule, TriFormModule, TriInputModule],
   template: `
     <ng-template #drawerTemplate let-data let-drawerRef="drawerRef">
@@ -84,7 +84,7 @@ export class TriDemoDrawerServiceComponent {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-drawer-custom-component',
   imports: [FormsModule, TriButtonModule, TriDividerModule, TriInputModule],
   template: `
     <div>

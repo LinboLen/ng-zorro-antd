@@ -47,7 +47,7 @@ const TRI_AFFIX_CLS_PREFIX = 'ant-affix';
 const TRI_AFFIX_DEFAULT_SCROLL_TIME = 20;
 
 @Component({
-  selector: '',
+  selector: 'tri-affix',
   exportAs: 'triAffix',
   imports: [BidiModule, PlatformModule],
   template: `

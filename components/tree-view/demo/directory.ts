@@ -40,7 +40,7 @@ interface ExampleFlatNode {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tree-view-directory',
   imports: [TriIconModule, TriTreeViewModule],
   template: `
     <tri-tree-view [treeControl]="treeControl" [dataSource]="dataSource" [directoryTree]="true">

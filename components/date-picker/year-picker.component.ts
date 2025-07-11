@@ -8,7 +8,7 @@ import { Directive, inject } from '@angular/core';
 import { TriDatePickerComponent } from './date-picker.component';
 
 @Directive({
-  selector: '',
+  selector: 'tri-year-picker',
   exportAs: 'triYearPicker'
 })
 export class TriYearPickerComponent {

@@ -4,7 +4,7 @@ import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-dropdown-trigger',
   imports: [TriDropDownModule, TriIconModule],
   template: `
     <a tri-dropdown trigger="click" [dropdownMenu]="menu">

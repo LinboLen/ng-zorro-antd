@@ -314,7 +314,7 @@ const newIconNames: string[] = [
 declare const locale: TriSafeAny;
 
 @Component({
-  selector: '',
+  selector: 'tri-page-demo-icon',
   imports: [
     FormsModule,
     TriBadgeModule,
@@ -733,7 +733,7 @@ export class TriPageDemoIconComponent implements OnInit {
 }
 
 @Component({
-  selector: '',
+  selector: 'tri-page-demo-icon-copied-code',
   template: `
     <ng-template #templateRef>
       <span>

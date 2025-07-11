@@ -157,7 +157,7 @@ describe('alert', () => {
 
 @Component({
   imports: [TriAlertModule],
-  selector: '',
+  selector: 'tri-test-basic-alert',
   template: `
     <ng-template #template>template</ng-template>
     <tri-alert

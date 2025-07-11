@@ -5,7 +5,7 @@ import { TriFlexModule } from 'ng-zorro-antd/flex';
 import { TriRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-flex-basic',
   imports: [FormsModule, TriFlexModule, TriRadioModule],
   template: `
     <tri-radio-group [(ngModel)]="isVertical">

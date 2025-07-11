@@ -36,7 +36,7 @@ import { generateColor } from './src/util/util';
 import { TriColorPickerFormatType, ValidFormKey } from './typings';
 
 @Component({
-  selector: '',
+  selector: 'tri-color-format',
   exportAs: 'triColorFormat',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ReactiveFormsModule, TriSelectModule, TriInputDirective, TriInputGroupComponent, TriInputNumberComponent],

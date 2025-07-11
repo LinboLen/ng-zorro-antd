@@ -6,7 +6,7 @@ import { TriCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-tabs-extra',
   imports: [TriButtonModule, TriTabsModule, TriCheckboxModule, FormsModule],
   template: `
     <tri-tabs [tabBarExtraContent]="extraTemplate">

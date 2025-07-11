@@ -4,7 +4,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-button-icon',
   imports: [TriButtonModule, TriIconModule],
   template: `
     <button tri-button type="primary" shape="circle">

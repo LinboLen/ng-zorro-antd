@@ -15,7 +15,7 @@ import { TriModalRef } from './modal-ref';
 import { ModalButtonOptions, ModalOptions } from './modal-types';
 
 @Component({
-  selector: '',
+  selector: 'div[nz-modal-footer]',
   exportAs: 'triModalFooterBuiltin',
   template: `
     @if (footer) {

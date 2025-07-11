@@ -7,7 +7,7 @@ import { TriDrawerModule } from 'ng-zorro-antd/drawer';
 import { TriListModule } from 'ng-zorro-antd/list';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-drawer-user-profile',
   imports: [TriButtonModule, TriDescriptionsModule, TriDividerModule, TriDrawerModule, TriListModule],
   template: `
     <tri-list [dataSource]="data" [renderItem]="item" [itemLayout]="'horizontal'">

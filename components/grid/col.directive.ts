@@ -32,7 +32,7 @@ export interface EmbeddedProperty {
 }
 
 @Directive({
-  selector: '',
+  selector: '[tri-col],tri-col,tri-form-control,tri-form-label',
   exportAs: 'triCol',
   host: {
     '[style.flex]': 'hostFlexStyle'

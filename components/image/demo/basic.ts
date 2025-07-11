@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriImageModule } from 'ng-zorro-antd/image';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-image-basic',
   imports: [TriImageModule],
   template: `
     <img

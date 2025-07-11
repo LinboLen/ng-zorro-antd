@@ -6,7 +6,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
 import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-select-custom-dropdown-menu',
   imports: [TriDividerModule, TriIconModule, TriInputModule, TriSelectModule],
   template: `
     <tri-select showSearch allowClear [dropdownRender]="renderTemplate" placeHolder="custom dropdown render">

@@ -19,7 +19,7 @@ import { Subject } from 'rxjs';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  selector: '',
+  selector: 'tri-descriptions-item',
   template: `
     <ng-template>
       <ng-content></ng-content>

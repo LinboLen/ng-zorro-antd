@@ -8,7 +8,7 @@ import { Directive, inject, TemplateRef } from '@angular/core';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 @Directive({
-  selector: '',
+  selector: '[tri-virtual-scroll]',
   exportAs: 'triVirtualScroll'
 })
 export class TriTableVirtualScrollDirective<T> {

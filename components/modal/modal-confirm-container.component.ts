@@ -28,7 +28,7 @@ import { TriModalCloseComponent } from './modal-close.component';
 import { BaseModalContainerComponent } from './modal-container.directive';
 
 @Component({
-  selector: '',
+  selector: 'tri-modal-confirm-container',
   exportAs: 'triModalConfirmContainer',
   template: `
     <div

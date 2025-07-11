@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { TriMenuModule } from 'ng-zorro-antd/menu';
 
 @Component({
-  selector: '',
+  selector: 'tri-demo-menu-router',
   imports: [RouterLink, TriMenuModule],
   template: `
     <ul tri-menu mode="horizontal">
