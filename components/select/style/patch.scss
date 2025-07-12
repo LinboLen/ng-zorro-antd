@@ -6,18 +6,14 @@
   width: 100%;
   margin-top: 4px;
   margin-bottom: 4px;
-
   .cdk-virtual-scroll-content-wrapper {
     right: 0;
   }
-
   .full-width {
     contain: initial;
-
     .cdk-virtual-scroll-content-wrapper {
       position: static;
     }
-
     .cdk-virtual-scroll-spacer {
       position: absolute;
       top: 0;

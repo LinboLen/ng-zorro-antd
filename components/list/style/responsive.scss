@@ -7,7 +7,6 @@
         }
       }
     }
-
     .#{$list-prefix-cls}-vertical {
       .#{$list-prefix-cls}-item {
         &-extra {
@@ -17,27 +16,22 @@
     }
   }
 }
-
 @media screen and (max-width: $screen-sm) {
   @at-root #{&} {
     .#{$list-prefix-cls} {
       &-item {
         flex-wrap: wrap;
-
         &-action {
           margin-left: 12px;
         }
       }
     }
-
     .#{$list-prefix-cls}-vertical {
       .#{$list-prefix-cls}-item {
         flex-wrap: wrap-reverse;
-
         &-main {
           min-width: 220px;
         }
-
         &-extra {
           margin: auto auto 16px;
         }

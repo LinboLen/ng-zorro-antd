@@ -1,11 +1,15 @@
 @import "../../input/style/mixin";
-
-@mixin form-control-validation($text-color: $input-color, $border-color: $input-border-color, $background-color: $input-bg, $hoverBorderColor: $primary-color-hover, $outlineColor: $primary-color-outline) {
+@mixin form-control-validation(
+  $text-color: $input-color,
+  $border-color: $input-border-color,
+  $background-color: $input-bg,
+  $hoverBorderColor: $primary-color-hover,
+  $outlineColor: $primary-color-outline
+) {
   .#{$ant-prefix}-form-item-split {
     color: $text-color;
   }
 }
-
 // Reset form styles
 
 // -----------------------------
@@ -30,7 +34,8 @@
     box-sizing: border-box;
   }
   // Position radios and checkboxes better
-  input[type="radio"], input[type="checkbox"] {
+  input[type="radio"],
+  input[type="checkbox"] {
     line-height: normal;
   }
   input[type="file"] {
@@ -42,11 +47,14 @@
     width: 100%;
   }
   // Make multiple select elements height not fixed
-  select[multiple], select[size] {
+  select[multiple],
+  select[size] {
     height: auto;
   }
   // Focus for file, radio, and checkbox
-  input[type="file"]:focus, input[type="radio"]:focus, input[type="checkbox"]:focus {
+  input[type="file"]:focus,
+  input[type="radio"]:focus,
+  input[type="checkbox"]:focus {
     outline: thin dotted;
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px;

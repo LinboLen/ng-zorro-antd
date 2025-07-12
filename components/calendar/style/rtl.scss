@@ -2,7 +2,6 @@
   &-rtl {
     direction: rtl;
   }
-
   &-header {
     .#{$calendar-prefix-cls}-month-select {
       .#{$calendar-prefix-cls}-rtl & {
@@ -10,7 +9,6 @@
         margin-left: 0;
       }
     }
-
     .#{$calendar-prefix-cls}-mode-switch {
       .#{$calendar-prefix-cls}-rtl & {
         margin-right: $padding-xs;
@@ -18,14 +16,12 @@
       }
     }
   }
-
   // ========================== Full ==========================
   &-full {
     .#{$calendar-picker-prefix-cls}-panel {
       .#{$calendar-prefix-cls}-rtl#{&} {
         text-align: left;
       }
-
       .#{$calendar-picker-prefix-cls}-body {
         th {
           .#{$calendar-prefix-cls}-rtl#{&} {
@@ -33,7 +29,6 @@
           }
         }
       }
-
       .#{$calendar-prefix-cls}-date {
         &-content {
           .#{$calendar-prefix-cls}-rtl#{&} {

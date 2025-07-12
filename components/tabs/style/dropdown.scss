@@ -1,6 +1,5 @@
 @import "../../style/themes/index";
 @import "../../style/mixins/index";
-
 $tab-prefix-cls: "#{$ant-prefix}-tabs";
 .#{$tab-prefix-cls}-dropdown {
   @include reset-component;
@@ -9,11 +8,9 @@ $tab-prefix-cls: "#{$ant-prefix}-tabs";
   left: -9999px;
   z-index: $zindex-dropdown;
   display: block;
-
   &-hidden {
     display: none;
   }
-
   &-menu {
     max-height: 200px;
     margin: 0;
@@ -27,7 +24,6 @@ $tab-prefix-cls: "#{$ant-prefix}-tabs";
     border-radius: $border-radius-base;
     outline: none;
     box-shadow: $box-shadow-base;
-
     &-item {
       display: flex;
       align-items: center;
@@ -43,12 +39,10 @@ $tab-prefix-cls: "#{$ant-prefix}-tabs";
       text-overflow: ellipsis;
       cursor: pointer;
       transition: all 0.3s;
-
       > span {
         flex: 1;
         white-space: nowrap;
       }
-
       &-remove {
         flex: none;
         margin-left: $margin-sm;
@@ -57,18 +51,16 @@ $tab-prefix-cls: "#{$ant-prefix}-tabs";
         background: transparent;
         border: 0;
         cursor: pointer;
-
         &:hover {
           color: $tabs-hover-color;
         }
       }
-
       &:hover {
         background: $item-hover-bg;
       }
-
       &-disabled {
-        &, &:hover {
+        &,
+        &:hover {
           color: $disabled-color;
           background: transparent;
           cursor: not-allowed;

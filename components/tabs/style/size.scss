@@ -1,6 +1,5 @@
 @import "../../style/themes/index";
 @import "../../style/mixins/index";
-
 $tab-prefix-cls: "#{$ant-prefix}-tabs";
 .#{$tab-prefix-cls} {
   &-small {
@@ -11,7 +10,6 @@ $tab-prefix-cls: "#{$ant-prefix}-tabs";
       }
     }
   }
-
   &-large {
     > .#{$tab-prefix-cls}-nav {
       .#{$tab-prefix-cls}-tab {
@@ -20,7 +18,6 @@ $tab-prefix-cls: "#{$ant-prefix}-tabs";
       }
     }
   }
-
   &-card {
     &.#{$tab-prefix-cls}-small {
       > .#{$tab-prefix-cls}-nav {
@@ -29,7 +26,6 @@ $tab-prefix-cls: "#{$ant-prefix}-tabs";
         }
       }
     }
-
     &.#{$tab-prefix-cls}-large {
       > .#{$tab-prefix-cls}-nav {
         .#{$tab-prefix-cls}-tab {

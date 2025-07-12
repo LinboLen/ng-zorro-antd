@@ -1,6 +1,5 @@
 @import "../../style/themes/index";
 @import "../../style/mixins/index";
-
 $rate-prefix-cls: "#{$ant-prefix}-rate";
 .#{$rate-prefix-cls} {
   @include reset-component;
@@ -12,52 +11,44 @@ $rate-prefix-cls: "#{$ant-prefix}-rate";
   line-height: unset;
   list-style: none;
   outline: none;
-
   &-disabled &-star {
     cursor: default;
-
     > div:hover {
       transform: scale(1);
     }
   }
-
   &-star {
     position: relative;
     display: inline-block;
     color: inherit;
     cursor: pointer;
-
     &:not(:last-child) {
       margin-right: 8px;
     }
-
     > div {
-      transition: all 0.3s, outline 0s;
-
+      transition:
+        all 0.3s,
+        outline 0s;
       &:hover {
         transform: $rate-star-hover-scale;
       }
-
       &:focus {
         outline: 0;
       }
-
       &:focus-visible {
         outline: 1px dashed $rate-star-color;
         transform: $rate-star-hover-scale;
       }
     }
-
-    &-first, &-second {
+    &-first,
+    &-second {
       color: $rate-star-bg;
       transition: all 0.3s;
       user-select: none;
-
       .#{$iconfont-css-prefix} {
         vertical-align: middle;
       }
     }
-
     &-first {
       position: absolute;
       top: 0;
@@ -67,21 +58,19 @@ $rate-prefix-cls: "#{$ant-prefix}-rate";
       overflow: hidden;
       opacity: 0;
     }
-
-    &-half &-first, &-half &-second {
+    &-half &-first,
+    &-half &-second {
       opacity: 1;
     }
-
-    &-half &-first, &-full &-second {
+    &-half &-first,
+    &-full &-second {
       color: inherit;
     }
   }
-
   &-text {
     display: inline-block;
     margin: 0 8px;
     font-size: $font-size-base;
   }
 }
-
 @import "./rtl";

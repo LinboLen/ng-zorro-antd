@@ -3,13 +3,11 @@
   top: 40px;
   width: 100%;
   background-color: $component-background;
-
   &-panel {
     position: absolute;
     z-index: $zindex-picker;
     width: 100%;
   }
-
   &-inner {
     position: relative;
     display: inline-block;
@@ -23,31 +21,25 @@
     background-clip: padding-box;
     outline: none;
   }
-
   &-combobox {
     width: 100%;
   }
-
-  &-column-1, &-column-1 &-select {
+  &-column-1,
+  &-column-1 &-select {
     width: 100%;
   }
-
   &-column-2 &-select {
     width: 50%;
   }
-
   &-column-3 &-select {
     width: 33.33%;
   }
-
   &-column-4 &-select {
     width: 25%;
   }
-
   &-input-wrap {
     display: none;
   }
-
   &-select {
     position: relative;
     // Fix chrome weird render bug
@@ -56,20 +48,16 @@
     overflow: hidden;
     font-size: $font-size-base;
     border-right: $border-width-base $border-style-base $border-color-split;
-
     &:hover {
       overflow-y: auto;
     }
-
     &:first-child {
       margin-left: 0;
       border-left: 0;
     }
-
     &:last-child {
       border-right: 0;
     }
-
     ul {
       width: 100%;
       max-height: 206px;
@@ -77,7 +65,6 @@
       padding: 0;
       list-style: none;
     }
-
     li {
       width: 100%;
       height: 24px;
@@ -86,39 +73,35 @@
       text-align: center;
       list-style: none;
       cursor: pointer;
-      transition: all .3s;
+      transition: all 0.3s;
       user-select: none;
-
       &:last-child::after {
         display: block;
         height: 202px;
         content: "";
       }
-
       &:hover {
         background: $item-hover-bg;
       }
-
       &:focus {
         color: $primary-color;
         font-weight: 600;
         outline: none;
       }
     }
-
-    @at-root  li#{&}-option-selected {
+    @at-root li#{&}-option-selected {
       font-weight: 600;
       background: $time-picker-selected-bg;
     }
-    @at-root  li#{&}-option-disabled {
-      color: $btn-disable-color;  &:hover {
-      background: transparent;
-      cursor: not-allowed;
-    }
+    @at-root li#{&}-option-disabled {
+      color: $btn-disable-color;
+      &:hover {
+        background: transparent;
+        cursor: not-allowed;
+      }
     }
   }
 }
-
 .#{$calendar-prefix-cls}-time {
   .#{$calendar-prefix-cls}-day-select {
     display: inline-block;
@@ -127,24 +110,19 @@
     font-weight: 500;
     line-height: 34px;
   }
-
   .#{$calendar-prefix-cls}-footer {
     position: relative;
     height: auto;
-
     &-btn {
       text-align: right;
     }
-
     .#{$calendar-prefix-cls}-today-btn {
       float: left;
       margin: 0;
     }
-
     .#{$calendar-prefix-cls}-time-picker-btn {
       display: inline-block;
       margin-right: 8px;
-
       &-disabled {
         color: $disabled-color;
       }

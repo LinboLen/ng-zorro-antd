@@ -5,13 +5,11 @@
       width: 100%;
       border: none;
       outline: none;
-
       &.#{$ant-prefix}-input-number-focused {
         box-shadow: none !important;
       }
     }
   }
-
   &#{&}-has-feedback {
     .#{$ant-prefix}-input-number-handler-wrap {
       z-index: 2;

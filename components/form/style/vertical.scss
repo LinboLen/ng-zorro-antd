@@ -1,5 +1,4 @@
 @import "../../style/themes/index";
-
 $form-prefix-cls: "#{$ant-prefix}-form";
 $form-item-prefix-cls: "#{$form-prefix-cls}-item";
 // ================== Label ==================
@@ -13,13 +12,11 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
   text-align: left;
   > label {
     margin: 0;
-
     &::after {
       display: none;
     }
   }
 }
-
 @mixin make-vertical-layout {
   .#{$form-prefix-cls}-item .#{$form-prefix-cls}-item-label {
     @include make-vertical-layout-label;
@@ -27,43 +24,40 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
   .#{$form-prefix-cls} {
     .#{$form-prefix-cls}-item {
       flex-wrap: wrap;
-
-      .#{$form-prefix-cls}-item-label, .#{$form-prefix-cls}-item-control {
+      .#{$form-prefix-cls}-item-label,
+      .#{$form-prefix-cls}-item-control {
         flex: 0 0 100%;
         max-width: 100%;
       }
     }
   }
 }
-
 .#{$form-prefix-cls}-vertical {
   .#{$form-item-prefix-cls} {
     &-row {
       flex-direction: column;
     }
-
     &-label > label {
       height: auto;
     }
-
     .#{$form-prefix-cls}-item-control {
       width: 100%;
     }
   }
 }
-
-.#{$form-prefix-cls}-vertical .#{$form-item-prefix-cls}-label, .#{$ant-prefix}-col-24.#{$form-item-prefix-cls}-label, .#{$ant-prefix}-col-xl-24.#{$form-item-prefix-cls}-label {
+.#{$form-prefix-cls}-vertical .#{$form-item-prefix-cls}-label,
+.#{$ant-prefix}-col-24.#{$form-item-prefix-cls}-label,
+.#{$ant-prefix}-col-xl-24.#{$form-item-prefix-cls}-label {
   @include make-vertical-layout-label;
 }
-
 @media (max-width: $screen-xs-max) {
   @at-root #{&} {
-    @include make-vertical-layout;  .#{$ant-prefix}-col-xs-24.#{$form-item-prefix-cls}-label {
-    @include make-vertical-layout-label;
-  }
+    @include make-vertical-layout;
+    .#{$ant-prefix}-col-xs-24.#{$form-item-prefix-cls}-label {
+      @include make-vertical-layout-label;
+    }
   }
 }
-
 @media (max-width: $screen-sm-max) {
   @at-root #{&} {
     .#{$ant-prefix}-col-sm-24.#{$form-item-prefix-cls}-label {
@@ -71,7 +65,6 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
     }
   }
 }
-
 @media (max-width: $screen-md-max) {
   @at-root #{&} {
     .#{$ant-prefix}-col-md-24.#{$form-item-prefix-cls}-label {
@@ -79,7 +72,6 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
     }
   }
 }
-
 @media (max-width: $screen-lg-max) {
   @at-root #{&} {
     .#{$ant-prefix}-col-lg-24.#{$form-item-prefix-cls}-label {
@@ -87,7 +79,6 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
     }
   }
 }
-
 @media (max-width: $screen-xl-max) {
   @at-root #{&} {
     .#{$ant-prefix}-col-xl-24.#{$form-item-prefix-cls}-label {

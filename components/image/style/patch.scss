@@ -4,7 +4,6 @@ $image-prefix-cls: "#{$ant-prefix}-image";
     opacity: 1;
   }
 }
-
 .cdk-global-overlay-wrapper[dir="rtl"] {
   .#{$image-prefix-cls} {
     &-preview {
@@ -13,7 +12,6 @@ $image-prefix-cls: "#{$ant-prefix}-image";
         left: unset;
         rotate: 180deg;
       }
-
       &-switch-right {
         right: unset;
         left: 10px;

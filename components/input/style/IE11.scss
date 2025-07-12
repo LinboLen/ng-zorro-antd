@@ -3,15 +3,12 @@
   @at-root #{&} {
     .#{$ant-prefix}-input {
       height: $input-height-base;
-
       &-lg {
         height: $input-height-lg;
       }
-
       &-sm {
         height: $input-height-sm;
       }
-
       &-affix-wrapper {
         > input.#{$ant-prefix}-input {
           height: auto;

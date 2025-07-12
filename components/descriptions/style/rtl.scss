@@ -1,12 +1,10 @@
 @import "../../style/themes/index";
 @import "../../style/mixins/index";
-
 $descriptions-prefix-cls: "#{$ant-prefix}-descriptions";
 .#{$descriptions-prefix-cls} {
   &-rtl {
     direction: rtl;
   }
-
   &-item-label {
     &::after {
       .#{$descriptions-prefix-cls}-rtl & {
@@ -14,13 +12,12 @@ $descriptions-prefix-cls: "#{$ant-prefix}-descriptions";
       }
     }
   }
-
   &-bordered {
-    .#{$descriptions-prefix-cls}-item-label, .#{$descriptions-prefix-cls}-item-content {
+    .#{$descriptions-prefix-cls}-item-label,
+    .#{$descriptions-prefix-cls}-item-content {
       .#{$descriptions-prefix-cls}-rtl#{&} {
         border-right: none;
         border-left: 1px solid $border-color-split;
-
         &:last-child {
           border-left: none;
         }

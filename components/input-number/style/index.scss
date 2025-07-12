@@ -3,7 +3,6 @@
 @import "../../input/style/mixin";
 @import "./affix";
 @import "./status";
-
 $input-number-prefix-cls: "#{$ant-prefix}-input-number";
 $form-item-prefix-cls: "#{$ant-prefix}-form-item";
 .#{$input-number-prefix-cls} {
@@ -13,7 +12,6 @@ $form-item-prefix-cls: "#{$ant-prefix}-form-item";
   &-group {
     @include reset-component;
     @include input-group(("#{$input-number-prefix-cls}"));
-
     &-wrapper {
       display: inline-block;
       text-align: start;
@@ -21,14 +19,12 @@ $form-item-prefix-cls: "#{$ant-prefix}-form-item";
       // https://github.com/ant-design/ant-design/issues/6403
     }
   }
-
   display: inline-block;
   width: 90px;
   margin: 0;
   padding: 0;
   border: $border-width-base $border-style-base $input-border-color;
   border-radius: $control-border-radius;
-
   &-handler {
     position: relative;
     display: block;
@@ -41,17 +37,16 @@ $form-item-prefix-cls: "#{$ant-prefix}-form-item";
     text-align: center;
     border-left: $border-width-base $border-style-base $input-number-handler-border-color;
     transition: all 0.1s linear;
-
     &:active {
       background: $input-number-handler-active-bg;
     }
-
-    &:hover &-up-inner, &:hover &-down-inner {
+    &:hover &-up-inner,
+    &:hover &-down-inner {
       color: $input-number-handler-hover-bg;
     }
   }
-
-  &-handler-up-inner, &-handler-down-inner {
+  &-handler-up-inner,
+  &-handler-down-inner {
     @include iconfont-mixin;
     position: absolute;
     right: 4px;
@@ -62,38 +57,30 @@ $form-item-prefix-cls: "#{$ant-prefix}-form-item";
     transition: all 0.1s linear;
     user-select: none;
   }
-
   &:hover {
     @include hover($input-number-hover-border-color);
-
     & + .#{$form-item-prefix-cls}-children-icon {
       opacity: 0;
       transition: opacity 0.24s linear 0.24s;
     }
   }
-
   &-focused {
     @include active;
   }
-
   &-disabled {
     @include disabled;
-
     .#{$input-number-prefix-cls}-input {
       cursor: not-allowed;
     }
-
     .#{$input-number-prefix-cls}-handler-wrap {
       display: none;
     }
   }
-
   &-readonly {
     .#{$input-number-prefix-cls}-handler-wrap {
       display: none;
     }
   }
-
   &-input {
     width: 100%;
     height: $input-height-base - 2px;
@@ -106,8 +93,8 @@ $form-item-prefix-cls: "#{$ant-prefix}-form-item";
     transition: all 0.3s linear;
     appearance: textfield !important;
     @include placeholder;
-
-    &[type="number"]::-webkit-inner-spin-button, &[type="number"]::-webkit-outer-spin-button {
+    &[type="number"]::-webkit-inner-spin-button,
+    &[type="number"]::-webkit-outer-spin-button {
       margin: 0;
       /* stylelint-disable-next-line property-no-vendor-prefix */
 
@@ -115,25 +102,20 @@ $form-item-prefix-cls: "#{$ant-prefix}-form-item";
       appearance: none;
     }
   }
-
   &-lg {
     padding: 0;
     font-size: $font-size-lg;
-
     input {
       height: $input-height-lg - 2px;
     }
   }
-
   &-sm {
     padding: 0;
-
     input {
       height: $input-height-sm - 2px;
       padding: 0 $control-padding-horizontal-sm - 1px;
     }
   }
-
   &-handler-wrap {
     position: absolute;
     top: 0;
@@ -150,7 +132,8 @@ $form-item-prefix-cls: "#{$ant-prefix}-form-item";
 
     // https://github.com/ant-design/ant-design/issues/14367
     .#{$input-number-prefix-cls}-handler {
-      .#{$input-number-prefix-cls}-handler-up-inner, .#{$input-number-prefix-cls}-handler-down-inner {
+      .#{$input-number-prefix-cls}-handler-up-inner,
+      .#{$input-number-prefix-cls}-handler-down-inner {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -159,82 +142,76 @@ $form-item-prefix-cls: "#{$ant-prefix}-form-item";
         font-size: 7px;
       }
     }
-
     .#{$input-number-prefix-cls}-borderless & {
       border-left-width: 0;
     }
   }
-
   &-handler-wrap:hover &-handler {
     height: 40%;
   }
-
-  &:hover &-handler-wrap, &-focused &-handler-wrap {
+  &:hover &-handler-wrap,
+  &-focused &-handler-wrap {
     opacity: 1;
   }
-
   &-handler-up {
     border-top-right-radius: $control-border-radius;
     cursor: pointer;
-
     &-inner {
       top: 50%;
       margin-top: -5px;
       text-align: center;
     }
-
     &:hover {
       height: 60% !important;
     }
   }
-
   &-handler-down {
     top: 0;
     border-top: $border-width-base $border-style-base $input-number-handler-border-color;
     border-bottom-right-radius: $control-border-radius;
     cursor: pointer;
-
     &-inner {
       top: 50%;
       text-align: center;
       transform: translateY(-50%);
     }
-
     &:hover {
       height: 60% !important;
     }
-
     .#{$input-number-prefix-cls}-borderless & {
       border-top-width: 0;
     }
   }
-
-  &:hover:not(.$input-number-prefix-cls-borderless) &-handler-down, &-focused:not(.$input-number-prefix-cls-borderless) &-handler-down {
+  &:hover:not(.$input-number-prefix-cls-borderless) &-handler-down,
+  &-focused:not(.$input-number-prefix-cls-borderless) &-handler-down {
     border-top: $border-width-base $border-style-base $input-number-handler-border-color;
   }
-
-  &-handler-up-disabled, &-handler-down-disabled {
+  &-handler-up-disabled,
+  &-handler-down-disabled {
     cursor: not-allowed;
   }
-
-  &-handler-up-disabled:hover &-handler-up-inner, &-handler-down-disabled:hover &-handler-down-inner {
+  &-handler-up-disabled:hover &-handler-up-inner,
+  &-handler-down-disabled:hover &-handler-down-inner {
     color: $disabled-color;
   }
-
   // ===================== Out Of Range =====================
   &-out-of-range {
     input {
       color: $error-color;
     }
   }
-
   // ===================== Compact Item Styles =====================
 
   /* stylelint-disable less/no-duplicate-variables */
 
   @include compact-item(($input-number-prefix-cls, null, "#{$input-number-prefix-cls}-focused"));
   @include compact-item(("#{$input-number-prefix-cls}-affix-wrapper", null, "#{$input-number-prefix-cls}-focused"));
-  @include compact-item(("#{$input-number-prefix-cls}-group-wrapper", "#{$input-number-prefix-cls}-group-addon", "#{$input-number-prefix-cls}-focused"));
+  @include compact-item(
+    (
+      "#{$input-number-prefix-cls}-group-wrapper",
+      "#{$input-number-prefix-cls}-group-addon",
+      "#{$input-number-prefix-cls}-focused"
+    )
+  );
 }
-
 @import "./rtl";

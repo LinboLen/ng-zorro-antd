@@ -3,7 +3,6 @@
     height: auto;
     background: none;
     border: 0;
-
     > .#{$steps-prefix-cls}-icon {
       top: $steps-icon-custom-top;
       left: 0.5px;
@@ -13,14 +12,12 @@
       line-height: $steps-icon-custom-size;
     }
   }
-
   &.#{$steps-prefix-cls}-item-process {
     .#{$steps-prefix-cls}-item-icon > .#{$steps-prefix-cls}-icon {
       color: $process-icon-color;
     }
   }
 }
-
 // Only adjust horizontal customize icon width
 .#{$steps-prefix-cls} {
   &:not(.$steps-prefix-cls-vertical) {

@@ -1,6 +1,5 @@
 @import "../../style/themes/index";
 @import "../../style/mixins/index";
-
 $steps-prefix-cls: "#{$ant-prefix}-steps";
 $process-icon-color: $primary-color;
 $process-title-color: $heading-color;
@@ -26,31 +25,27 @@ $steps-nav-active-color: $primary-color;
   font-size: 0;
   text-align: initial;
 }
-
 .#{$steps-prefix-cls}-item {
   position: relative;
   display: inline-block;
   flex: 1;
   overflow: hidden;
   vertical-align: top;
-
   &-container {
     outline: none;
   }
-
   &:last-child {
     flex: none;
   }
-
-  &:last-child > &-container > &-tail, &:last-child > &-container > &-content > &-title::after {
+  &:last-child > &-container > &-tail,
+  &:last-child > &-container > &-content > &-title::after {
     display: none;
   }
-
-  &-icon, &-content {
+  &-icon,
+  &-content {
     display: inline-block;
     vertical-align: top;
   }
-
   &-icon {
     width: $steps-icon-size;
     height: $steps-icon-size;
@@ -61,8 +56,9 @@ $steps-nav-active-color: $primary-color;
     text-align: center;
     border: $border-width-base $border-style-base $wait-icon-color;
     border-radius: $steps-icon-size;
-    transition: background-color 0.3s, border-color 0.3s;
-
+    transition:
+      background-color 0.3s,
+      border-color 0.3s;
     .#{$steps-prefix-cls}-icon {
       position: relative;
       top: $steps-icon-top;
@@ -70,14 +66,12 @@ $steps-nav-active-color: $primary-color;
       line-height: 1;
     }
   }
-
   &-tail {
     position: absolute;
     top: 12px;
     left: 0;
     width: 100%;
     padding: 0 10px;
-
     &::after {
       display: inline-block;
       width: 100%;
@@ -88,7 +82,6 @@ $steps-nav-active-color: $primary-color;
       content: "";
     }
   }
-
   &-title {
     position: relative;
     display: inline-block;
@@ -96,7 +89,6 @@ $steps-nav-active-color: $primary-color;
     color: $text-color;
     font-size: $font-size-lg;
     line-height: $steps-title-line-height;
-
     &::after {
       position: absolute;
       top: ($steps-title-line-height / 2);
@@ -108,7 +100,6 @@ $steps-nav-active-color: $primary-color;
       content: "";
     }
   }
-
   &-subtitle {
     display: inline;
     margin-left: 8px;
@@ -116,66 +107,58 @@ $steps-nav-active-color: $primary-color;
     font-weight: normal;
     font-size: $font-size-base;
   }
-
   &-description {
     color: $text-color-secondary;
     font-size: $font-size-base;
   }
-
   @include step-item-status(wait);
   @include step-item-status(process);
-
   &-process > &-container > &-icon {
     background: $process-icon-color;
-
     .#{$steps-prefix-cls}-icon {
       color: $process-icon-text-color;
     }
   }
-
   &-process > &-container > &-title {
     font-weight: 500;
   }
-
   @include step-item-status(finish);
   @include step-item-status(error);
-
   &.#{$steps-prefix-cls}-next-error .#{$steps-prefix-cls}-item-title::after {
     background: $error-icon-color;
   }
-
   &-disabled {
     cursor: not-allowed;
   }
 }
-
 // ===================== Clickable =====================
 .#{$steps-prefix-cls} .#{$steps-prefix-cls}-item {
   &:not(.$steps-prefix-cls-item-active) {
     & > .#{$steps-prefix-cls}-item-container[role="button"] {
       cursor: pointer;
-
       .#{$steps-prefix-cls}-item {
-        &-title, &-subtitle, &-description, &-icon .#{$steps-prefix-cls}-icon {
+        &-title,
+        &-subtitle,
+        &-description,
+        &-icon .#{$steps-prefix-cls}-icon {
           transition: color 0.3s;
         }
       }
-
       &:hover {
         .#{$steps-prefix-cls}-item {
-          &-title, &-subtitle, &-description {
+          &-title,
+          &-subtitle,
+          &-description {
             color: $primary-color;
           }
         }
       }
     }
-
     &:not(.$steps-prefix-cls-item-process) {
       & > .#{$steps-prefix-cls}-item-container[role="button"]:hover {
         .#{$steps-prefix-cls}-item {
           &-icon {
             border-color: $primary-color;
-
             .#{$steps-prefix-cls}-icon {
               color: $primary-color;
             }
@@ -185,31 +168,25 @@ $steps-nav-active-color: $primary-color;
     }
   }
 }
-
 .#{$steps-prefix-cls}-horizontal:not(.$steps-prefix-cls-label-vertical) {
   .#{$steps-prefix-cls}-item {
     padding-left: 16px;
     white-space: nowrap;
-
     &:first-child {
       padding-left: 0;
     }
-
     &:last-child .#{$steps-prefix-cls}-item-title {
       padding-right: 0;
     }
-
     &-tail {
       display: none;
     }
-
     &-description {
       max-width: $steps-description-max-width;
       white-space: normal;
     }
   }
 }
-
 @mixin step-item-status($status) {
   $icon-color: "#{$status}-icon-color";
   $title-color: "#{$status}-title-color";
@@ -218,10 +195,8 @@ $steps-nav-active-color: $primary-color;
   &-#{$status} &-icon {
     background-color: $steps-background;
     border-color: $__not_support__icon-color;
-
     > .#{$steps-prefix-cls}-icon {
       color: $__not_support__icon-color;
-
       .#{$steps-prefix-cls}-icon-dot {
         background: $__not_support__icon-color;
       }
@@ -229,7 +204,6 @@ $steps-nav-active-color: $primary-color;
   }
   &-#{$status} > &-container > &-content > &-title {
     color: $__not_support__title-color;
-
     &::after {
       background-color: $__not_support__tail-color;
     }
@@ -241,7 +215,6 @@ $steps-nav-active-color: $primary-color;
     background-color: $__not_support__tail-color;
   }
 }
-
 @import "./custom-icon";
 @import "./small";
 @import "./vertical";

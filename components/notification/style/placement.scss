@@ -1,31 +1,31 @@
 .#{$notification-prefix-cls} {
-  &-top, &-bottom {
+  &-top,
+  &-bottom {
     margin-right: 0;
     margin-left: 0;
   }
-
   &-top {
-    .#{$notification-prefix-cls}-fade-enter.#{$notification-prefix-cls}-fade-enter-active, .#{$notification-prefix-cls}-fade-appear.#{$notification-prefix-cls}-fade-appear-active {
+    .#{$notification-prefix-cls}-fade-enter.#{$notification-prefix-cls}-fade-enter-active,
+    .#{$notification-prefix-cls}-fade-appear.#{$notification-prefix-cls}-fade-appear-active {
       animation-name: NotificationTopFadeIn;
     }
   }
-
   &-bottom {
-    .#{$notification-prefix-cls}-fade-enter.#{$notification-prefix-cls}-fade-enter-active, .#{$notification-prefix-cls}-fade-appear.#{$notification-prefix-cls}-fade-appear-active {
+    .#{$notification-prefix-cls}-fade-enter.#{$notification-prefix-cls}-fade-enter-active,
+    .#{$notification-prefix-cls}-fade-appear.#{$notification-prefix-cls}-fade-appear-active {
       animation-name: NotificationBottomFadeIn;
     }
   }
-
-  &-topLeft, &-bottomLeft {
+  &-topLeft,
+  &-bottomLeft {
     margin-right: 0;
     margin-left: $notification-margin-edge;
-
-    .#{$notification-prefix-cls}-fade-enter.#{$notification-prefix-cls}-fade-enter-active, .#{$notification-prefix-cls}-fade-appear.#{$notification-prefix-cls}-fade-appear-active {
+    .#{$notification-prefix-cls}-fade-enter.#{$notification-prefix-cls}-fade-enter-active,
+    .#{$notification-prefix-cls}-fade-appear.#{$notification-prefix-cls}-fade-appear-active {
       animation-name: NotificationLeftFadeIn;
     }
   }
 }
-
 @keyframes NotificationTopFadeIn {
   0% {
     margin-top: -100%;
@@ -36,7 +36,6 @@
     opacity: 1;
   }
 }
-
 @keyframes NotificationBottomFadeIn {
   0% {
     margin-bottom: -100%;
@@ -47,7 +46,6 @@
     opacity: 1;
   }
 }
-
 @keyframes NotificationLeftFadeIn {
   0% {
     right: $notification-width;

@@ -1,8 +1,8 @@
 @import "box";
-
 @mixin modal-mask {
   pointer-events: none;
-  &.#{$ant-prefix}-zoom-enter, &.#{$ant-prefix}-zoom-appear {
+  &.#{$ant-prefix}-zoom-enter,
+  &.#{$ant-prefix}-zoom-appear {
     transform: none;
     // reset scale avoid mousePosition bug
     opacity: 0;
@@ -15,7 +15,6 @@
     z-index: $zindex-modal-mask;
     height: 100%;
     background-color: $modal-mask-bg;
-
     &-hidden {
       display: none;
     }

@@ -1,6 +1,5 @@
 @import "../../style/themes/index";
 @import "../../style/mixins/index";
-
 $card-prefix-cls: "#{$ant-prefix}-card";
 $card-hoverable-hover-border: black;
 $card-action-icon-size: 16px;
@@ -11,25 +10,22 @@ $gradient-max: fade($card-skeleton-bg, 40%);
   position: relative;
   background: $card-background;
   border-radius: $card-radius;
-
   &-rtl {
     direction: rtl;
   }
-
   &-hoverable {
     cursor: pointer;
-    transition: box-shadow 0.3s, border-color 0.3s;
-
+    transition:
+      box-shadow 0.3s,
+      border-color 0.3s;
     &:hover {
       border-color: $card-hoverable-hover-border;
       box-shadow: $card-shadow;
     }
   }
-
   &-bordered {
     border: $border-width-base $border-style-base $border-color-split;
   }
-
   &-head {
     min-height: $card-head-height;
     margin-bottom: -1px;
@@ -42,12 +38,10 @@ $gradient-max: fade($card-skeleton-bg, 40%);
     border-bottom: $border-width-base $border-style-base $border-color-split;
     border-radius: $card-radius $card-radius 0 0;
     @include clearfix;
-
     &-wrapper {
       display: flex;
       align-items: center;
     }
-
     &-title {
       display: inline-block;
       flex: 1;
@@ -55,27 +49,24 @@ $gradient-max: fade($card-skeleton-bg, 40%);
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-
-      > .#{$ant-prefix}-typography, > .#{$ant-prefix}-typography-edit-content {
+      > .#{$ant-prefix}-typography,
+      > .#{$ant-prefix}-typography-edit-content {
         left: 0;
         margin-top: 0;
         margin-bottom: 0;
       }
     }
-
     .#{$ant-prefix}-tabs-top {
       clear: both;
       margin-bottom: $card-head-tabs-margin-bottom;
       color: $text-color;
       font-weight: normal;
       font-size: $font-size-base;
-
       &-bar {
         border-bottom: $border-width-base $border-style-base $border-color-split;
       }
     }
   }
-
   &-extra {
     // https://stackoverflow.com/a/22429853/3040605
     margin-left: auto;
@@ -83,36 +74,35 @@ $gradient-max: fade($card-skeleton-bg, 40%);
     color: $card-head-extra-color;
     font-weight: normal;
     font-size: $font-size-base;
-
     .#{$card-prefix-cls}-rtl & {
       margin-right: auto;
       margin-left: 0;
     }
   }
-
   &-body {
     padding: $card-padding-base;
     @include clearfix;
   }
-
   &-contain-grid &-body {
     display: flex;
     flex-wrap: wrap;
   }
-
   &-contain-grid:not(&-loading) &-body {
     margin: -1px 0 0 -1px;
     padding: 0;
   }
-
   &-grid {
     width: 33.33%;
     padding: $card-padding-base;
     border: 0;
     border-radius: 0;
-    box-shadow: 1px 0 0 0 $border-color-split, 0 1px 0 0 $border-color-split, 1px 1px 0 0 $border-color-split, 1px 0 0 0 $border-color-split inset, 0 1px 0 0 $border-color-split inset;
+    box-shadow:
+      1px 0 0 0 $border-color-split,
+      0 1px 0 0 $border-color-split,
+      1px 1px 0 0 $border-color-split,
+      1px 0 0 0 $border-color-split inset,
+      0 1px 0 0 $border-color-split inset;
     transition: all 0.3s;
-
     &-hoverable {
       &:hover {
         position: relative;
@@ -121,33 +111,27 @@ $gradient-max: fade($card-skeleton-bg, 40%);
       }
     }
   }
-
   &-contain-tabs > &-head &-head-title {
     min-height: $card-head-height - $card-head-padding;
     padding-bottom: 0;
   }
-
   &-contain-tabs > &-head &-extra {
     padding-bottom: 0;
   }
-
   &-bordered &-cover {
     margin-top: -1px;
     margin-right: -1px;
     margin-left: -1px;
   }
-
   &-cover {
     > * {
       display: block;
       width: 100%;
     }
-
     img {
       border-radius: $card-radius $card-radius 0 0;
     }
   }
-
   &-actions {
     display: flex;
     margin: 0;
@@ -156,12 +140,10 @@ $gradient-max: fade($card-skeleton-bg, 40%);
     background: $card-actions-background;
     border-top: $border-width-base $border-style-base $border-color-split;
     @include clearfix;
-
     & > li {
       margin: $card-actions-li-margin;
       color: $text-color-secondary;
       text-align: center;
-
       > span {
         position: relative;
         display: block;
@@ -169,33 +151,28 @@ $gradient-max: fade($card-skeleton-bg, 40%);
         font-size: $font-size-base;
         line-height: $line-height-base;
         cursor: pointer;
-
         &:hover {
           color: $primary-color;
           transition: color 0.3s;
         }
-
-        a:not(.$ant-prefix-btn), > .#{$iconfont-css-prefix} {
+        a:not(.$ant-prefix-btn),
+        > .#{$iconfont-css-prefix} {
           display: inline-block;
           width: 100%;
           color: $text-color-secondary;
           line-height: 22px;
           transition: color 0.3s;
-
           &:hover {
             color: $primary-color;
           }
         }
-
         > .#{$iconfont-css-prefix} {
           font-size: $card-action-icon-size;
           line-height: 22px;
         }
       }
-
       &:not(:last-child) {
         border-right: $border-width-base $border-style-base $border-color-split;
-
         .#{$card-prefix-cls}-rtl & {
           border-right: none;
           border-left: $border-width-base $border-style-base $border-color-split;
@@ -203,48 +180,38 @@ $gradient-max: fade($card-skeleton-bg, 40%);
       }
     }
   }
-
   &-type-inner &-head {
     padding: 0 $card-padding-base;
     background: $background-color-light;
-
     &-title {
       padding: $card-inner-head-padding 0;
       font-size: $font-size-base;
     }
   }
-
   &-type-inner &-body {
     padding: 16px $card-padding-base;
   }
-
   &-type-inner &-extra {
     padding: $card-inner-head-padding + 1.5px 0;
   }
-
   &-meta {
     display: flex;
     margin: -4px 0;
     @include clearfix;
-
     &-avatar {
       padding-right: 16px;
-
       .#{$card-prefix-cls}-rtl & {
         padding-right: 0;
         padding-left: 16px;
       }
     }
-
     &-detail {
       flex: 1;
       overflow: hidden;
-
       > div:not(:last-child) {
         margin-bottom: $margin-xs;
       }
     }
-
     &-title {
       overflow: hidden;
       color: $card-head-color;
@@ -253,19 +220,15 @@ $gradient-max: fade($card-skeleton-bg, 40%);
       white-space: nowrap;
       text-overflow: ellipsis;
     }
-
     &-description {
       color: $text-color-secondary;
     }
   }
-
   &-loading {
     overflow: hidden;
   }
-
   &-loading &-body {
     user-select: none;
   }
 }
-
 @import "./size";

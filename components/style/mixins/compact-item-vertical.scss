@@ -11,23 +11,22 @@
     border-top-right-radius: 0;
   }
 }
-
 @mixin compact-item-vertical-border($prefix-cls) {
   // border collapse
   &-item:not(&-last-item) {
     margin-bottom: -$border-width-base;
   }
   &-item {
-    &:hover, &:focus, &:active {
+    &:hover,
+    &:focus,
+    &:active {
       z-index: 2;
     }
-
     &[disabled] {
       z-index: 0;
     }
   }
 }
-
 @mixin compact-item-vertical($prefix-cls) {
   &-compact-vertical {
     @include compact-item-vertical-border($prefix-cls);

@@ -2,7 +2,6 @@
   &-rtl {
     direction: rtl;
   }
-
   &-wrapper {
     .#{$ant-prefix}-anchor-rtl#{&} {
       margin-right: -4px;
@@ -11,13 +10,11 @@
       padding-left: 0;
     }
   }
-
   &-ink {
     .#{$ant-prefix}-anchor-rtl & {
       right: 0;
       left: auto;
     }
-
     &-ball {
       .#{$ant-prefix}-anchor-rtl & {
         right: 50%;
@@ -26,7 +23,6 @@
       }
     }
   }
-
   &-link {
     .#{$ant-prefix}-anchor-rtl & {
       padding: $anchor-link-top $anchor-link-left $anchor-link-top 0;

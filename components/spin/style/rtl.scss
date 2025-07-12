@@ -2,7 +2,6 @@
   &-rtl {
     direction: rtl;
   }
-
   &-dot {
     &-spin {
       .#{$spin-prefix-cls}-rtl & {
@@ -12,7 +11,6 @@
     }
   }
 }
-
 @keyframes antRotateRtl {
   to {
     transform: rotate(-405deg);

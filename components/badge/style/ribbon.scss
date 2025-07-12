@@ -1,12 +1,10 @@
 @import "../../style/themes/index";
 @import "../../style/mixins/index";
-
 $ribbon-prefix-cls: "#{$ant-prefix}-ribbon";
 $ribbon-wrapper-prefix-cls: "#{$ant-prefix}-ribbon-wrapper";
 .#{$ribbon-wrapper-prefix-cls} {
   position: relative;
 }
-
 .#{$ribbon-prefix-cls} {
   @include reset-component;
   position: absolute;
@@ -18,11 +16,9 @@ $ribbon-wrapper-prefix-cls: "#{$ant-prefix}-ribbon-wrapper";
   white-space: nowrap;
   background-color: $primary-color;
   border-radius: $border-radius-sm;
-
   &-text {
     color: $white;
   }
-
   &-corner {
     position: absolute;
     top: 100%;
@@ -44,7 +40,6 @@ $ribbon-wrapper-prefix-cls: "#{$ant-prefix}-ribbon-wrapper";
       content: "";
     }
   }
-
   // colors
 
   // mixin to iterate over colors and create CSS class for each one
@@ -62,17 +57,14 @@ $ribbon-wrapper-prefix-cls: "#{$ant-prefix}-ribbon-wrapper";
   &.#{$ribbon-prefix-cls}-placement-end {
     right: -8px;
     border-bottom-right-radius: 0;
-
     .#{$ribbon-prefix-cls}-corner {
       right: 0;
       border-color: currentcolor transparent transparent currentcolor;
     }
   }
-
   &.#{$ribbon-prefix-cls}-placement-start {
     left: -8px;
     border-bottom-left-radius: 0;
-
     .#{$ribbon-prefix-cls}-corner {
       left: 0;
       border-color: currentcolor currentcolor transparent transparent;

@@ -2,22 +2,22 @@
 @import "../../style/mixins/index";
 @import "../../input/style/mixin";
 @import "../../checkbox/style/mixin";
-
 $cascader-prefix-cls: "#{$ant-prefix}-cascader";
-@include antCheckboxFn(($checkbox-prefix-cls: "#{$cascader-prefix-cls}-checkbox"));
+@include antCheckboxFn(
+  (
+    $checkbox-prefix-cls: "#{$cascader-prefix-cls}-checkbox",
+  )
+);
 .#{$cascader-prefix-cls} {
   width: 184px;
-
   &-checkbox {
     top: 0;
     margin-right: $padding-xs;
   }
-
   &-menus {
     display: flex;
     flex-wrap: nowrap;
     align-items: flex-start;
-
     &.#{$cascader-prefix-cls}-menu-empty {
       .#{$cascader-prefix-cls}-menu {
         width: 100%;
@@ -25,7 +25,6 @@ $cascader-prefix-cls: "#{$ant-prefix}-cascader";
       }
     }
   }
-
   &-menu {
     flex-grow: 1;
     min-width: 111px;
@@ -50,55 +49,46 @@ $cascader-prefix-cls: "#{$ant-prefix}-cascader";
       text-overflow: ellipsis;
       cursor: pointer;
       transition: all 0.3s;
-
       &:hover {
         background: $item-hover-bg;
       }
-
       &-disabled {
         color: $disabled-color;
         cursor: not-allowed;
-
         &:hover {
           background: transparent;
         }
       }
-
       .#{$cascader-prefix-cls}-menu-empty & {
         color: $disabled-color;
         cursor: default;
         pointer-events: none;
       }
-
       &-active:not(&-disabled) {
-        &, &:hover {
+        &,
+        &:hover {
           font-weight: $select-item-selected-font-weight;
           background-color: $cascader-item-selected-bg;
         }
       }
-
       &-content {
         flex: auto;
       }
-
-      &-expand &-expand-icon, &-loading-icon {
+      &-expand &-expand-icon,
+      &-loading-icon {
         margin-left: $padding-xss;
         color: $text-color-secondary;
         font-size: 10px;
-
         .#{$cascader-prefix-cls}-menu-item-disabled#{&} {
           color: $disabled-color;
         }
       }
-
       &-keyword {
         color: $highlight-color;
       }
     }
   }
-
   // ===================== Compact Item Styles =====================
   @include compact-item($cascader-prefix-cls);
 }
-
 @import "./rtl";

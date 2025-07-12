@@ -1,6 +1,5 @@
 @import "../../style/themes/index";
 @import "../../style/mixins/index";
-
 $dialog-prefix-cls: "#{$ant-prefix}-modal";
 $confirm-prefix-cls: "#{$ant-prefix}-modal-confirm";
 $dialog-wrap-rtl-cls: "#{$dialog-prefix-cls}-wrap-rtl";
@@ -10,19 +9,16 @@ $dialog-wrap-rtl-cls: "#{$dialog-prefix-cls}-wrap-rtl";
       direction: rtl;
     }
   }
-
   &-close {
     .#{$dialog-wrap-rtl-cls} & {
       right: initial;
       left: 0;
     }
   }
-
   &-footer {
     .#{$dialog-wrap-rtl-cls} & {
       text-align: left;
     }
-
     .#{$ant-prefix}-btn + .#{$ant-prefix}-btn {
       .#{$dialog-wrap-rtl-cls} & {
         margin-right: 8px;
@@ -30,20 +26,17 @@ $dialog-wrap-rtl-cls: "#{$dialog-prefix-cls}-wrap-rtl";
       }
     }
   }
-
   &-confirm {
     &-body {
       .#{$dialog-wrap-rtl-cls} & {
         direction: rtl;
       }
-
       > .#{$iconfont-css-prefix} {
         .#{$dialog-wrap-rtl-cls} & {
           float: right;
           margin-right: 0;
           margin-left: 16px;
         }
-
         + .#{$confirm-prefix-cls}-title + .#{$confirm-prefix-cls}-content {
           .#{$dialog-wrap-rtl-cls} & {
             margin-right: 38px;
@@ -52,12 +45,10 @@ $dialog-wrap-rtl-cls: "#{$dialog-prefix-cls}-wrap-rtl";
         }
       }
     }
-
     &-btns {
       .#{$dialog-wrap-rtl-cls} & {
         text-align: left;
       }
-
       .#{$ant-prefix}-btn + .#{$ant-prefix}-btn {
         .#{$dialog-wrap-rtl-cls} & {
           margin-right: 8px;
@@ -67,7 +58,6 @@ $dialog-wrap-rtl-cls: "#{$dialog-prefix-cls}-wrap-rtl";
     }
   }
 }
-
 .#{$dialog-prefix-cls}-centered {
   .#{$dialog-prefix-cls} {
     .#{$dialog-wrap-rtl-cls}#{&} {

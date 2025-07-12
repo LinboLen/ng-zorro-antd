@@ -1,7 +1,8 @@
 @mixin slide-motion($className, $keyframeName) {
   $name: "#{$ant-prefix}-#{$className}";
   @include make-motion($name, $keyframeName);
-  .#{$name}-enter, .#{$name}-appear {
+  .#{$name}-enter,
+  .#{$name}-appear {
     transform: scale(0);
     transform-origin: 0% 0%;
     opacity: 0;
@@ -11,7 +12,6 @@
     animation-timing-function: $ease-in-quint;
   }
 }
-
 @include slide-motion(slide-up, antSlideUp);
 @include slide-motion(slide-down, antSlideDown);
 @include slide-motion(slide-left, antSlideLeft);
@@ -28,7 +28,6 @@
     opacity: 1;
   }
 }
-
 @keyframes antSlideUpOut {
   0% {
     transform: scaleY(1);
@@ -41,7 +40,6 @@
     opacity: 0;
   }
 }
-
 @keyframes antSlideDownIn {
   0% {
     transform: scaleY(0.8);
@@ -54,7 +52,6 @@
     opacity: 1;
   }
 }
-
 @keyframes antSlideDownOut {
   0% {
     transform: scaleY(1);
@@ -67,7 +64,6 @@
     opacity: 0;
   }
 }
-
 @keyframes antSlideLeftIn {
   0% {
     transform: scaleX(0.8);
@@ -80,7 +76,6 @@
     opacity: 1;
   }
 }
-
 @keyframes antSlideLeftOut {
   0% {
     transform: scaleX(1);
@@ -93,7 +88,6 @@
     opacity: 0;
   }
 }
-
 @keyframes antSlideRightIn {
   0% {
     transform: scaleX(0.8);
@@ -106,7 +100,6 @@
     opacity: 1;
   }
 }
-
 @keyframes antSlideRightOut {
   0% {
     transform: scaleX(1);

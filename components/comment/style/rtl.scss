@@ -1,22 +1,20 @@
 @import "../../style/themes/index";
 @import "../../style/mixins/index";
-
 $comment-prefix-cls: "#{$ant-prefix}-comment";
 .#{$comment-prefix-cls} {
   &-rtl {
     direction: rtl;
   }
-
   &-avatar {
     .#{$comment-prefix-cls}-rtl & {
       margin-right: 0;
       margin-left: 12px;
     }
   }
-
   &-content {
     &-author {
-      & > a, & > span {
+      & > a,
+      & > span {
         .#{$comment-prefix-cls}-rtl & {
           padding-right: 0;
           padding-left: 8px;
@@ -24,12 +22,10 @@ $comment-prefix-cls: "#{$ant-prefix}-comment";
       }
     }
   }
-
   &-actions {
     .#{$comment-prefix-cls}-rtl & {
       padding-right: 0;
     }
-
     > li {
       > span {
         .#{$comment-prefix-cls}-rtl & {
@@ -39,7 +35,6 @@ $comment-prefix-cls: "#{$ant-prefix}-comment";
       }
     }
   }
-
   &-nested {
     .#{$comment-prefix-cls}-rtl & {
       margin-right: $comment-nest-indent;

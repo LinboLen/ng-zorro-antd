@@ -3,7 +3,8 @@
   outline: none;
   cursor: pointer;
   transition: color 0.3s;
-  &:focus-visible, &:hover {
+  &:focus-visible,
+  &:hover {
     color: $link-hover-color;
   }
   &:active {

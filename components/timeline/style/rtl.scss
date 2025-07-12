@@ -1,12 +1,10 @@
 @import "../../style/themes/index";
 @import "../../style/mixins/index";
-
 $timeline-prefix-cls: "#{$ant-prefix}-timeline";
 .#{$timeline-prefix-cls} {
   &-rtl {
     direction: rtl;
   }
-
   &-item {
     &-tail {
       .#{$timeline-prefix-cls}-rtl & {
@@ -16,7 +14,6 @@ $timeline-prefix-cls: "#{$ant-prefix}-timeline";
         border-left: none;
       }
     }
-
     &-head-custom {
       .#{$timeline-prefix-cls}-rtl & {
         right: 5px;
@@ -24,29 +21,29 @@ $timeline-prefix-cls: "#{$ant-prefix}-timeline";
         transform: translate(50%, -50%);
       }
     }
-
     &-content {
       .#{$timeline-prefix-cls}-rtl & {
         margin: 0 18px 0 0;
       }
     }
   }
-
-  &.#{$timeline-prefix-cls}-alternate, &.#{$timeline-prefix-cls}-right, &.#{$timeline-prefix-cls}-label {
+  &.#{$timeline-prefix-cls}-alternate,
+  &.#{$timeline-prefix-cls}-right,
+  &.#{$timeline-prefix-cls}-label {
     .#{$timeline-prefix-cls}-item {
-      &-tail, &-head, &-head-custom {
+      &-tail,
+      &-head,
+      &-head-custom {
         .#{$timeline-prefix-cls}-rtl#{&} {
           right: 50%;
           left: auto;
         }
       }
-
       &-head {
         .#{$timeline-prefix-cls}-rtl#{&} {
           margin-right: -4px;
           margin-left: 0;
         }
-
         &-custom {
           .#{$timeline-prefix-cls}-rtl#{&} {
             margin-right: 1px;
@@ -54,7 +51,6 @@ $timeline-prefix-cls: "#{$ant-prefix}-timeline";
           }
         }
       }
-
       &-left {
         .#{$timeline-prefix-cls}-item-content {
           .#{$timeline-prefix-cls}-rtl#{&} {
@@ -64,7 +60,6 @@ $timeline-prefix-cls: "#{$ant-prefix}-timeline";
           }
         }
       }
-
       &-right {
         .#{$timeline-prefix-cls}-item-content {
           .#{$timeline-prefix-cls}-rtl#{&} {
@@ -74,16 +69,16 @@ $timeline-prefix-cls: "#{$ant-prefix}-timeline";
       }
     }
   }
-
   &.#{$timeline-prefix-cls}-right {
     .#{$timeline-prefix-cls}-item-right {
-      .#{$timeline-prefix-cls}-item-tail, .#{$timeline-prefix-cls}-item-head, .#{$timeline-prefix-cls}-item-head-custom {
+      .#{$timeline-prefix-cls}-item-tail,
+      .#{$timeline-prefix-cls}-item-head,
+      .#{$timeline-prefix-cls}-item-head-custom {
         .#{$timeline-prefix-cls}-rtl#{&} {
           right: 0;
           left: auto;
         }
       }
-
       .#{$timeline-prefix-cls}-item-content {
         .#{$timeline-prefix-cls}-rtl#{&} {
           width: 100%;
@@ -93,14 +88,12 @@ $timeline-prefix-cls: "#{$ant-prefix}-timeline";
       }
     }
   }
-
   &#{&}-pending &-item-last &-item-tail {
     .#{$timeline-prefix-cls}-rtl#{&} {
       border-right: 2px dotted $timeline-color;
       border-left: none;
     }
   }
-
   &#{&}-reverse &-item-pending {
     .#{$timeline-prefix-cls}-item-tail {
       .#{$timeline-prefix-cls}-rtl#{&} {
@@ -109,14 +102,12 @@ $timeline-prefix-cls: "#{$ant-prefix}-timeline";
       }
     }
   }
-
   &.#{$timeline-prefix-cls}-label {
     .#{$timeline-prefix-cls}-item-label {
       .#{$timeline-prefix-cls}-rtl#{&} {
         text-align: left;
       }
     }
-
     .#{$timeline-prefix-cls}-item-right {
       .#{$timeline-prefix-cls}-item-label {
         .#{$timeline-prefix-cls}-rtl#{&} {

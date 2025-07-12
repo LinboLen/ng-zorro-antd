@@ -1,6 +1,5 @@
 @import "../../style/themes/index";
 @import "../../style/mixins/index";
-
 @include popover-customize-bg($notification-prefix-cls, $popover-background);
 $notification-prefix-cls: "#{$ant-prefix}-notification";
 $notification-width: 384px;
@@ -12,16 +11,13 @@ $notification-margin-edge: 24px;
   position: fixed;
   z-index: $zindex-notification;
   margin-right: $notification-margin-edge;
-
   &-close-icon {
     font-size: $font-size-base;
     cursor: pointer;
   }
-
   &-hook-holder {
     position: relative;
   }
-
   &-notice {
     position: relative;
     width: $notification-width;
@@ -35,17 +31,16 @@ $notification-margin-edge: 24px;
     background: $notification-bg;
     border-radius: $border-radius-base;
     box-shadow: $shadow-2;
-
-    .#{$notification-prefix-cls}-top &, .#{$notification-prefix-cls}-bottom & {
+    .#{$notification-prefix-cls}-top &,
+    .#{$notification-prefix-cls}-bottom & {
       margin-right: auto;
       margin-left: auto;
     }
-
-    .#{$notification-prefix-cls}-topLeft &, .#{$notification-prefix-cls}-bottomLeft & {
+    .#{$notification-prefix-cls}-topLeft &,
+    .#{$notification-prefix-cls}-bottomLeft & {
       margin-right: auto;
       margin-left: 0;
     }
-
     &-message {
       margin-bottom: 8px;
       color: $heading-color;
@@ -58,33 +53,27 @@ $notification-margin-edge: 24px;
         max-width: 4px;
         background-color: transparent;
         pointer-events: none;
-
         &::before {
           display: block;
           content: "";
         }
       }
     }
-
     &-description {
       font-size: $font-size-base;
     }
-
     &-closable &-message {
       padding-right: 24px;
     }
-
     &-with-icon &-message {
       margin-bottom: 4px;
       margin-left: 48px;
       font-size: $font-size-lg;
     }
-
     &-with-icon &-description {
       margin-left: 48px;
       font-size: $font-size-base;
     }
-
     // Icon & color style in different selector level
 
     // https://github.com/ant-design/ant-design/issues/16503
@@ -96,78 +85,66 @@ $notification-margin-edge: 24px;
       font-size: 24px;
       line-height: 24px;
     }
-
     .#{$iconfont-css-prefix}#{&}-icon {
       &-success {
         color: $success-color;
       }
-
       &-info {
         color: $info-color;
       }
-
       &-warning {
         color: $warning-color;
       }
-
       &-error {
         color: $error-color;
       }
     }
-
     &-close {
       position: absolute;
       top: 16px;
       right: 22px;
       color: $text-color-secondary;
       outline: none;
-
       &:hover {
         & {
           color: fade($white, 85%);
         }
-
         & {
           color: shade($text-color-secondary, 40%);
         }
       }
     }
-
     &-btn {
       float: right;
       margin-top: 16px;
     }
   }
-
   .notification-fade-effect {
     animation-duration: 0.24s;
     animation-timing-function: $ease-in-out;
     animation-fill-mode: both;
   }
-
-  &-fade-enter, &-fade-appear {
+  &-fade-enter,
+  &-fade-appear {
     @include notification-fade-effect;
     opacity: 0;
     animation-play-state: paused;
   }
-
   &-fade-leave {
     @include notification-fade-effect;
     animation-duration: 0.2s;
     animation-play-state: paused;
   }
-
-  &-fade-enter#{&}-fade-enter-active, &-fade-appear#{&}-fade-appear-active {
+  &-fade-enter#{&}-fade-enter-active,
+  &-fade-appear#{&}-fade-appear-active {
     animation-name: NotificationFadeIn;
     animation-play-state: running;
   }
-
   &-fade-leave#{&}-fade-leave-active {
     animation-name: NotificationFadeOut;
     animation-play-state: running;
   }
 }
-
 @keyframes NotificationFadeIn {
   0% {
     left: $notification-width;
@@ -178,7 +155,6 @@ $notification-margin-edge: 24px;
     opacity: 1;
   }
 }
-
 @keyframes NotificationFadeOut {
   0% {
     max-height: 150px;
@@ -193,6 +169,5 @@ $notification-margin-edge: 24px;
     opacity: 0;
   }
 }
-
 @import "./rtl";
 @import "./placement";

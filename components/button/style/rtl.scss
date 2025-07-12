@@ -2,14 +2,13 @@
   &-rtl {
     direction: rtl;
   }
-
   &-primary {
-    .#{$btn-prefix-cls}-group &:last-child:not(:first-child), .#{$btn-prefix-cls}-group & + & {
+    .#{$btn-prefix-cls}-group &:last-child:not(:first-child),
+    .#{$btn-prefix-cls}-group & + & {
       .#{$btn-prefix-cls}-group-rtl#{&} {
         border-right-color: $btn-group-border;
         border-left-color: $btn-default-border;
       }
-
       &[disabled] {
         .#{$btn-prefix-cls}-group-rtl#{&} {
           border-right-color: $btn-default-border;
@@ -18,7 +17,6 @@
       }
     }
   }
-
   & > &-loading-icon {
     .#{$iconfont-css-prefix} {
       .#{$btn-prefix-cls}-rtl#{&} {
@@ -27,19 +25,25 @@
       }
     }
   }
-
-  > .#{$iconfont-css-prefix} + span, > span + .#{$iconfont-css-prefix} {
+  > .#{$iconfont-css-prefix} + span,
+  > span + .#{$iconfont-css-prefix} {
     .#{$btn-prefix-cls}-rtl#{&} {
       margin-right: 8px;
       margin-left: 0;
     }
   }
 }
-
 // mixin
 @mixin btn-group($btnClassName: btn) {
-  @at-root  .#{$btnClassName} + .#{$btnClassName}, .#{$btnClassName} + &, span + .#{$btnClassName}, .#{$btnClassName} + span, > span + span, & + .#{$btnClassName}, & + & {
-    .#{$btnClassName}-rtl#{&}, .#{$btnClassName}-group-rtl#{&} {
+  @at-root .#{$btnClassName} + .#{$btnClassName},
+    .#{$btnClassName} + &,
+    span + .#{$btnClassName},
+    .#{$btnClassName} + span,
+    > span + span,
+    & + .#{$btnClassName},
+    & + & {
+    .#{$btnClassName}-rtl#{&},
+    .#{$btnClassName}-group-rtl#{&} {
       margin-right: -1px;
       margin-left: auto;
     }
@@ -47,24 +51,27 @@
   &.#{$btnClassName}-group-rtl {
     direction: rtl;
   }
-  > .#{$btnClassName}:first-child:not(:last-child), > span:first-child:not(:last-child) > .#{$btnClassName} {
+  > .#{$btnClassName}:first-child:not(:last-child),
+  > span:first-child:not(:last-child) > .#{$btnClassName} {
     .#{$btnClassName}-group-rtl#{&} {
       border-radius: 0 $btn-border-radius-base $btn-border-radius-base 0;
     }
   }
-  > .#{$btnClassName}:last-child:not(:first-child), > span:last-child:not(:first-child) > .#{$btnClassName} {
+  > .#{$btnClassName}:last-child:not(:first-child),
+  > span:last-child:not(:first-child) > .#{$btnClassName} {
     .#{$btnClassName}-group-rtl#{&} {
       border-radius: $btn-border-radius-base 0 0 $btn-border-radius-base;
     }
   }
   &-sm {
-    > .#{$btnClassName}:first-child:not(:last-child), > span:first-child:not(:last-child) > .#{$btnClassName} {
+    > .#{$btnClassName}:first-child:not(:last-child),
+    > span:first-child:not(:last-child) > .#{$btnClassName} {
       .#{$btnClassName}-group-rtl#{&} {
         border-radius: 0 $btn-border-radius-sm $btn-border-radius-sm 0;
       }
     }
-
-    > .#{$btnClassName}:last-child:not(:first-child), > span:last-child:not(:first-child) > .#{$btnClassName} {
+    > .#{$btnClassName}:last-child:not(:first-child),
+    > span:last-child:not(:first-child) > .#{$btnClassName} {
       .#{$btnClassName}-group-rtl#{&} {
         border-radius: $btn-border-radius-sm 0 0 $btn-border-radius-sm;
       }

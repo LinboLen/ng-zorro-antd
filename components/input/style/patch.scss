@@ -1,5 +1,4 @@
 @import "./input-otp";
-
 textarea.nz-textarea-autosize-measuring {
   height: auto !important;
   // Having 2px top and bottom padding seems to fix a bug where Chrome gets an incorrect
@@ -8,18 +7,16 @@ textarea.nz-textarea-autosize-measuring {
   padding: 2px 0 !important;
   overflow: hidden !important;
 }
-
 .#{$search-prefix} {
   &-enter-button {
-    & + .#{$ant-prefix}-input-group-addon, input + .#{$ant-prefix}-input-group-addon {
+    & + .#{$ant-prefix}-input-group-addon,
+    input + .#{$ant-prefix}-input-group-addon {
       .#{$search-rtl-cls}#{&} {
         .#{$search-prefix}-button.#{$ant-prefix}-btn-icon-only {
           @include square($btn-height-base);
-
           &.#{$ant-prefix}-btn-sm {
             @include square($btn-height-sm);
           }
-
           &.#{$ant-prefix}-btn-lg {
             @include square($btn-height-lg);
           }
@@ -28,11 +25,9 @@ textarea.nz-textarea-autosize-measuring {
     }
   }
 }
-
 .ant-input-affix-wrapper-textarea-with-clear-btn .ant-input-suffix {
   margin-left: 0;
 }
-
 nz-form-item-feedback-icon.#{$ant-prefix}-input {
   &-suffix {
     position: absolute;
@@ -48,27 +43,27 @@ nz-form-item-feedback-icon.#{$ant-prefix}-input {
     pointer-events: none;
   }
 }
-
 .#{$ant-prefix}-input {
-  &-status-error, &-status-warning, &-status-validating, &-status-success {
+  &-status-error,
+  &-status-warning,
+  &-status-validating,
+  &-status-success {
     &.#{$ant-prefix}-input-has-feedback {
       padding-right: $padding-lg + $padding-xss;
     }
   }
 }
-
 .#{$ant-prefix}-input-textarea-show-count {
   position: relative;
   display: block;
 }
-
 @mixin input {
   &-stepperless[type="number"] {
     /* stylelint-disable-next-line property-no-vendor-prefix */
 
     -moz-appearance: textfield;
-
-    &::-webkit-inner-spin-button, ::-webkit-outer-spin-button {
+    &::-webkit-inner-spin-button,
+    ::-webkit-outer-spin-button {
       margin: 0;
       /* stylelint-disable-next-line property-no-vendor-prefix */
 
@@ -76,7 +71,6 @@ nz-form-item-feedback-icon.#{$ant-prefix}-input {
     }
   }
 }
-
 .#{$ant-prefix}-otp-input {
   width: auto;
 }

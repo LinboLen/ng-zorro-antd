@@ -1,7 +1,8 @@
 @mixin fade-motion($className, $keyframeName) {
   $name: "#{$ant-prefix}-#{$className}";
   @include make-motion($name, $keyframeName);
-  .#{$name}-enter, .#{$name}-appear {
+  .#{$name}-enter,
+  .#{$name}-appear {
     opacity: 0;
     animation-timing-function: linear;
   }
@@ -9,7 +10,6 @@
     animation-timing-function: linear;
   }
 }
-
 @include fade-motion(fade, antFade);
 @keyframes antFadeIn {
   0% {
@@ -19,7 +19,6 @@
     opacity: 1;
   }
 }
-
 @keyframes antFadeOut {
   0% {
     opacity: 1;

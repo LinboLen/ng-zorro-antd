@@ -7,11 +7,9 @@
     margin-top: 8px;
     margin-bottom: 4px;
   }
-
   &:focus-within {
     @include active;
   }
-
   &#{&}-status-error {
     &:not(.$mention-prefix-cls-disabled):not(.$mention-prefix-cls-borderless).#{$mention-prefix-cls} {
       &:focus-within {
@@ -19,7 +17,6 @@
       }
     }
   }
-
   &#{&}-status-warning {
     &:not(.$mention-prefix-cls-disabled):not(.$mention-prefix-cls-borderless).#{$mention-prefix-cls} {
       &:focus-within {

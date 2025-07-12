@@ -1,6 +1,5 @@
 @import "../../style/themes/index";
 @import "../../style/mixins/index";
-
 $collapse-prefix-cls: "#{$ant-prefix}-collapse";
 .#{$collapse-prefix-cls} {
   &-rtl {
@@ -12,7 +11,6 @@ $collapse-prefix-cls: "#{$ant-prefix}-collapse";
           position: relative;
           padding: $collapse-header-padding;
           padding-left: $collapse-header-padding-extra;
-
           .#{$collapse-prefix-cls}-arrow {
             position: absolute;
             top: 50%;
@@ -25,27 +23,23 @@ $collapse-prefix-cls: "#{$ant-prefix}-collapse";
       }
     }
   }
-
   & > &-item {
     > .#{$collapse-prefix-cls}-header {
       .#{$collapse-prefix-cls}-rtl & {
         padding: $collapse-header-padding;
         padding-right: $collapse-header-padding-extra;
       }
-
       .#{$collapse-prefix-cls}-arrow {
         .#{$collapse-prefix-cls}-rtl#{&} {
           margin-right: 0;
           margin-left: $margin-sm;
         }
-
         & svg {
           .#{$collapse-prefix-cls}-rtl#{&} {
             transform: rotate(180deg);
           }
         }
       }
-
       .#{$collapse-prefix-cls}-extra {
         .#{$collapse-prefix-cls}-rtl#{&} {
           margin-right: auto;
@@ -53,7 +47,6 @@ $collapse-prefix-cls: "#{$ant-prefix}-collapse";
         }
       }
     }
-
     &.#{$collapse-prefix-cls}-no-arrow {
       > .#{$collapse-prefix-cls}-header {
         .#{$collapse-prefix-cls}-rtl#{&} {

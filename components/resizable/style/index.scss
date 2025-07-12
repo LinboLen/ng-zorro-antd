@@ -7,40 +7,34 @@ $resizable-prefix-cls: "nz-resizable";
     z-index: 8;
     border: 1px dashed #d1d1d1;
   }
-
   &-handle {
     position: absolute;
     z-index: 9;
     user-select: none;
-
     &-top {
       top: -5px;
       left: 0;
       width: 100%;
       height: 10px;
     }
-
     &-right {
       top: 0;
       right: -5px;
       width: 10px;
       height: 100%;
     }
-
     &-bottom {
       bottom: -5px;
       left: 0;
       width: 100%;
       height: 10px;
     }
-
     &-left {
       top: 0;
       left: -5px;
       width: 10px;
       height: 100%;
     }
-
     &-topRight {
       top: -5px;
       right: -5px;
@@ -48,7 +42,6 @@ $resizable-prefix-cls: "nz-resizable";
       width: 20px;
       height: 20px;
     }
-
     &-bottomRight {
       right: -5px;
       bottom: -5px;
@@ -56,7 +49,6 @@ $resizable-prefix-cls: "nz-resizable";
       width: 20px;
       height: 20px;
     }
-
     &-bottomLeft {
       bottom: -5px;
       left: -5px;
@@ -64,7 +56,6 @@ $resizable-prefix-cls: "nz-resizable";
       width: 20px;
       height: 20px;
     }
-
     &-topLeft {
       top: -5px;
       left: -5px;
@@ -73,43 +64,42 @@ $resizable-prefix-cls: "nz-resizable";
       height: 20px;
     }
   }
-
   .#{$resizable-prefix-cls}-handle {
     &-cursor-type {
       &-window {
         &.#{$resizable-prefix-cls}-handle {
-          &-top, &-bottom {
+          &-top,
+          &-bottom {
             cursor: ns-resize;
           }
-
-          &-right, &-left {
+          &-right,
+          &-left {
             cursor: ew-resize;
           }
         }
       }
-
       &-grid {
         &.#{$resizable-prefix-cls}-handle {
-          &-top, &-bottom {
+          &-top,
+          &-bottom {
             cursor: row-resize;
           }
-
-          &-right, &-left {
+          &-right,
+          &-left {
             cursor: col-resize;
           }
         }
       }
     }
-
-    &-bottomRight, &-topLeft {
+    &-bottomRight,
+    &-topLeft {
       cursor: nwse-resize;
     }
-
-    &-bottomLeft, &-topRight {
+    &-bottomLeft,
+    &-topRight {
       cursor: nesw-resize;
     }
   }
-
   &-disabled {
     .#{$resizable-prefix-cls} {
       &-handle {

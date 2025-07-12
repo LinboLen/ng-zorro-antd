@@ -1,12 +1,10 @@
 @import "../../style/themes/index";
 @import "../../style/mixins/index";
-
 $pageheader-prefix-cls: "#{$ant-prefix}-page-header";
 .#{$pageheader-prefix-cls} {
   &-rtl {
     direction: rtl;
   }
-
   &-back {
     .#{$pageheader-prefix-cls}-rtl & {
       float: right;
@@ -14,7 +12,6 @@ $pageheader-prefix-cls: "#{$ant-prefix}-page-header";
       margin-left: 16px;
     }
   }
-
   &-heading {
     &-title {
       .#{$pageheader-prefix-cls}-rtl & {
@@ -22,14 +19,12 @@ $pageheader-prefix-cls: "#{$ant-prefix}-page-header";
         margin-left: $margin-sm;
       }
     }
-
     .#{$ant-prefix}-avatar {
       .#{$pageheader-prefix-cls}-rtl & {
         margin-right: 0;
         margin-left: $margin-sm;
       }
     }
-
     &-sub-title {
       .#{$pageheader-prefix-cls}-rtl & {
         float: right;
@@ -37,25 +32,21 @@ $pageheader-prefix-cls: "#{$ant-prefix}-page-header";
         margin-left: 12px;
       }
     }
-
     &-tags {
       .#{$pageheader-prefix-cls}-rtl & {
         float: right;
       }
     }
-
     &-extra {
       .#{$pageheader-prefix-cls}-rtl & {
         float: left;
       }
-
       > * {
         .#{$pageheader-prefix-cls}-rtl & {
           margin-right: $margin-sm;
           margin-left: 0;
         }
       }
-
       > *:first-child {
         .#{$pageheader-prefix-cls}-rtl & {
           margin-right: 0;
@@ -63,7 +54,6 @@ $pageheader-prefix-cls: "#{$ant-prefix}-page-header";
       }
     }
   }
-
   &-footer {
     .#{$ant-prefix}-tabs-bar {
       .#{$ant-prefix}-tabs-nav {

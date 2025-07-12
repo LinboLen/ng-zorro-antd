@@ -1,7 +1,6 @@
 @import "../../style/themes/index";
 @import "../../style/mixins/index";
 @import "./customize.less";
-
 $list-prefix-cls: "#{$ant-prefix}-list";
 .#{$list-prefix-cls} {
   &-rtl {
@@ -12,13 +11,11 @@ $list-prefix-cls: "#{$ant-prefix}-list";
       direction: rtl;
     }
   }
-
   &-pagination {
     .#{$list-prefix-cls}-rtl & {
       text-align: left;
     }
   }
-
   &-item {
     &-meta {
       &-avatar {
@@ -28,20 +25,17 @@ $list-prefix-cls: "#{$ant-prefix}-list";
         }
       }
     }
-
     &-action {
       .#{$list-prefix-cls}-rtl & {
         margin-right: 48px;
         margin-left: 0;
       }
-
       & > li:first-child {
         .#{$list-prefix-cls}.#{$list-prefix-cls}-rtl & {
           padding-right: 0;
           padding-left: $padding-md;
         }
       }
-
       &-split {
         .#{$list-prefix-cls}-rtl & {
           right: auto;
@@ -50,7 +44,6 @@ $list-prefix-cls: "#{$ant-prefix}-list";
       }
     }
   }
-
   &-vertical &-item {
     &-extra {
       .#{$list-prefix-cls}-rtl#{&} {
@@ -58,12 +51,10 @@ $list-prefix-cls: "#{$ant-prefix}-list";
         margin-left: 0;
       }
     }
-
     &-action {
       .#{$list-prefix-cls}-rtl#{&} {
         margin-right: auto;
       }
-
       > li {
         &:first-child {
           .#{$list-prefix-cls}-rtl & {
@@ -74,7 +65,6 @@ $list-prefix-cls: "#{$ant-prefix}-list";
       }
     }
   }
-
   // Horizontal
   &:not(.$list-prefix-cls-vertical) {
     .#{$list-prefix-cls}-item-no-flex {
@@ -86,7 +76,6 @@ $list-prefix-cls: "#{$ant-prefix}-list";
     }
   }
 }
-
 // responsive
 @media screen and (max-width: $screen-md) {
   @at-root #{&} {
@@ -100,7 +89,6 @@ $list-prefix-cls: "#{$ant-prefix}-list";
         }
       }
     }
-
     .#{$list-prefix-cls}-vertical {
       .#{$list-prefix-cls}-item {
         &-extra {
@@ -113,7 +101,6 @@ $list-prefix-cls: "#{$ant-prefix}-list";
     }
   }
 }
-
 @media screen and (max-width: $screen-sm) {
   @at-root #{&} {
     .#{$list-prefix-cls} {
@@ -126,7 +113,6 @@ $list-prefix-cls: "#{$ant-prefix}-list";
         }
       }
     }
-
     .#{$list-prefix-cls}-vertical {
       .#{$list-prefix-cls}-item {
         &-extra {

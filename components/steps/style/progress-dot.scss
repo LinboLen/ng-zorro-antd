@@ -1,26 +1,23 @@
-.#{$steps-prefix-cls}-dot, .#{$steps-prefix-cls}-dot.#{$steps-prefix-cls}-small {
+.#{$steps-prefix-cls}-dot,
+.#{$steps-prefix-cls}-dot.#{$steps-prefix-cls}-small {
   .#{$steps-prefix-cls}-item {
     &-title {
       line-height: $line-height-base;
     }
-
     &-tail {
       top: $steps-dot-top;
       width: 100%;
       margin: 0 0 0 ($steps-description-max-width / 2);
       padding: 0;
-
       &::after {
         width: "calc(100% - 20px)";
         height: 3px;
         margin-left: 12px;
       }
     }
-
     &:first-child .#{$steps-prefix-cls}-icon-dot {
       left: 2px;
     }
-
     &-icon {
       width: $steps-dot-size;
       height: $steps-dot-size;
@@ -29,7 +26,6 @@
       line-height: $steps-dot-size;
       background: transparent;
       border: 0;
-
       .#{$steps-prefix-cls}-icon-dot {
         position: relative;
         float: left;
@@ -50,11 +46,9 @@
         }
       }
     }
-
     &-content {
       width: $steps-description-max-width;
     }
-
     &-process .#{$steps-prefix-cls}-item-icon {
       position: relative;
       top: -1px;
@@ -63,7 +57,6 @@
       line-height: $steps-current-dot-size;
       background: none;
     }
-
     &-process .#{$steps-prefix-cls}-icon {
       &:first-child .#{$steps-prefix-cls}-icon-dot {
         left: 0;
@@ -71,14 +64,12 @@
     }
   }
 }
-
 .#{$steps-prefix-cls}-vertical.#{$steps-prefix-cls}-dot {
   .#{$steps-prefix-cls}-item-icon {
     margin-top: 13px;
     margin-left: 0;
     background: none;
   }
-
   // https://github.com/ant-design/ant-design/issues/18354
   .#{$steps-prefix-cls}-item > .#{$steps-prefix-cls}-item-container > .#{$steps-prefix-cls}-item-tail {
     top: 6.5px;
@@ -86,26 +77,24 @@
     margin: 0;
     padding: 22px 0 4px;
   }
-
   &.#{$steps-prefix-cls}-small {
     .#{$steps-prefix-cls}-item-icon {
       margin-top: 10px;
     }
-
     .#{$steps-prefix-cls}-item > .#{$steps-prefix-cls}-item-container > .#{$steps-prefix-cls}-item-tail {
       top: 3.5px;
     }
   }
-
   .#{$steps-prefix-cls}-item:first-child .#{$steps-prefix-cls}-icon-dot {
     left: 0;
   }
-
   .#{$steps-prefix-cls}-item-content {
     width: inherit;
   }
-
-  .#{$steps-prefix-cls}-item-process .#{$steps-prefix-cls}-item-container .#{$steps-prefix-cls}-item-icon .#{$steps-prefix-cls}-icon-dot {
+  .#{$steps-prefix-cls}-item-process
+    .#{$steps-prefix-cls}-item-container
+    .#{$steps-prefix-cls}-item-icon
+    .#{$steps-prefix-cls}-icon-dot {
     top: -1px;
     left: -1px;
   }

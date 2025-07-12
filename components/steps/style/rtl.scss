@@ -3,7 +3,6 @@
     direction: rtl;
   }
 }
-
 .#{$steps-prefix-cls}-item {
   &-icon {
     .#{$steps-prefix-cls}.#{$steps-prefix-cls}-rtl & {
@@ -11,20 +10,17 @@
       margin-left: 8px;
     }
   }
-
   &-tail {
     .#{$steps-prefix-cls}-rtl & {
       right: 0;
       left: auto;
     }
   }
-
   &-title {
     .#{$steps-prefix-cls}-rtl & {
       padding-right: 0;
       padding-left: 16px;
     }
-
     .#{$steps-prefix-cls}-item-subtitle {
       .#{$steps-prefix-cls}-rtl & {
         float: left;
@@ -32,7 +28,6 @@
         margin-left: 0;
       }
     }
-
     &::after {
       .#{$steps-prefix-cls}-rtl & {
         right: 100%;
@@ -41,20 +36,17 @@
     }
   }
 }
-
 .#{$steps-prefix-cls}-horizontal:not(.$steps-prefix-cls-label-vertical) {
   .#{$steps-prefix-cls}-item {
     .#{$steps-prefix-cls}-rtl#{&} {
       padding-right: 16px;
       padding-left: 0;
     }
-
     &:first-child {
       .#{$steps-prefix-cls}-rtl#{&} {
         padding-right: 0;
       }
     }
-
     &:last-child .#{$steps-prefix-cls}-item-title {
       .#{$steps-prefix-cls}-rtl#{&} {
         padding-left: 0;
@@ -62,7 +54,6 @@
     }
   }
 }
-
 // custom-icon
 .#{$steps-prefix-cls}-item-custom {
   .#{$steps-prefix-cls}-item-icon {
@@ -74,7 +65,6 @@
     }
   }
 }
-
 // nav
 .#{$steps-prefix-cls}-navigation {
   &.#{$steps-prefix-cls}-small {
@@ -87,7 +77,6 @@
       }
     }
   }
-
   .#{$steps-prefix-cls}-item {
     &-container {
       .#{$steps-prefix-cls}-rtl#{&} {
@@ -95,14 +84,12 @@
         margin-left: 0;
         text-align: right;
       }
-
       .#{$steps-prefix-cls}-item-title {
         .#{$steps-prefix-cls}-rtl#{&} {
           padding-left: 0;
         }
       }
     }
-
     &::after {
       .#{$steps-prefix-cls}-rtl#{&} {
         right: 100%;
@@ -114,7 +101,6 @@
     }
   }
 }
-
 // small
 .#{$steps-prefix-cls}-small {
   &.#{$steps-prefix-cls}-horizontal:not(.$steps-prefix-cls-label-vertical) .#{$steps-prefix-cls}-item {
@@ -122,14 +108,12 @@
       padding-right: 12px;
       padding-left: 0;
     }
-
     &:first-child {
       .#{$steps-prefix-cls}-rtl#{&} {
         padding-right: 0;
       }
     }
   }
-
   .#{$steps-prefix-cls}-item-title {
     .#{$steps-prefix-cls}-rtl#{&} {
       padding-right: 0;
@@ -137,7 +121,6 @@
     }
   }
 }
-
 // vertical
 .#{$steps-prefix-cls}-vertical {
   > .#{$steps-prefix-cls}-item {
@@ -149,14 +132,12 @@
       }
     }
   }
-
   > .#{$steps-prefix-cls}-item > .#{$steps-prefix-cls}-item-container > .#{$steps-prefix-cls}-item-tail {
     .#{$steps-prefix-cls}-rtl#{&} {
       right: $steps-vertical-tail-width;
       left: auto;
     }
   }
-
   &.#{$steps-prefix-cls}-small .#{$steps-prefix-cls}-item-container {
     .#{$steps-prefix-cls}-item-tail {
       .#{$steps-prefix-cls}-rtl#{&} {
@@ -166,7 +147,6 @@
     }
   }
 }
-
 // label
 .#{$steps-prefix-cls}-label-vertical {
   .#{$steps-prefix-cls}-item {
@@ -177,15 +157,14 @@
     }
   }
 }
-
 // progress-dot
-.#{$steps-prefix-cls}-dot, .#{$steps-prefix-cls}-dot.#{$steps-prefix-cls}-small {
+.#{$steps-prefix-cls}-dot,
+.#{$steps-prefix-cls}-dot.#{$steps-prefix-cls}-small {
   .#{$steps-prefix-cls}-item {
     &-tail {
       .#{$steps-prefix-cls}-rtl#{&} {
         margin: 0 ($steps-description-max-width / 2) 0 0;
       }
-
       &::after {
         .#{$steps-prefix-cls}-rtl#{&} {
           margin-right: 12px;
@@ -193,25 +172,21 @@
         }
       }
     }
-
     &:first-child .#{$steps-prefix-cls}-icon-dot {
       .#{$steps-prefix-cls}-rtl#{&} {
         right: 2px;
         left: auto;
       }
     }
-
     &-icon {
       .#{$steps-prefix-cls}-rtl#{&} {
         margin-right: 67px;
         margin-left: 0;
       }
-
       .#{$steps-prefix-cls}-icon-dot {
         .#{$steps-prefix-cls}-rtl#{&} {
           float: right;
         }
-
         /* expand hover area */
 
         &::after {
@@ -224,7 +199,6 @@
     }
   }
 }
-
 .#{$steps-prefix-cls}-vertical.#{$steps-prefix-cls}-dot {
   .#{$steps-prefix-cls}-item-icon {
     .#{$steps-prefix-cls}-rtl#{&} {
@@ -232,7 +206,6 @@
       margin-left: 16px;
     }
   }
-
   // https://github.com/ant-design/ant-design/issues/18354
   .#{$steps-prefix-cls}-item > .#{$steps-prefix-cls}-item-container > .#{$steps-prefix-cls}-item-tail {
     .#{$steps-prefix-cls}-rtl#{&} {
@@ -240,14 +213,12 @@
       left: auto;
     }
   }
-
   .#{$steps-prefix-cls}-item:first-child .#{$steps-prefix-cls}-icon-dot {
     .#{$steps-prefix-cls}-rtl#{&} {
       right: 0;
       left: auto;
     }
   }
-
   .#{$steps-prefix-cls}-item-process .#{$steps-prefix-cls}-icon-dot {
     .#{$steps-prefix-cls}-rtl#{&} {
       right: -2px;
@@ -255,28 +226,23 @@
     }
   }
 }
-
 // RTL Steps with progress
 .#{$steps-prefix-cls}-rtl.#{$steps-prefix-cls}-with-progress {
   &.#{$steps-prefix-cls}-vertical > .#{$steps-prefix-cls}-item {
     padding-right: 4px;
-
     > .#{$steps-prefix-cls}-item-container > .#{$steps-prefix-cls}-item-tail {
       right: $steps-vertical-tail-width + 3;
     }
   }
-
   &.#{$steps-prefix-cls}-small.#{$steps-prefix-cls}-vertical > .#{$steps-prefix-cls}-item {
     > .#{$steps-prefix-cls}-item-container > .#{$steps-prefix-cls}-item-tail {
       right: $steps-vertical-tail-width-sm + 3;
     }
   }
-
   &.#{$steps-prefix-cls}-horizontal.#{$steps-prefix-cls}-label-horizontal {
     .#{$steps-prefix-cls}-item:first-child {
       padding-right: 4px;
       padding-left: 0;
-
       &.#{$steps-prefix-cls}-item-active {
         padding-right: 4px;
       }

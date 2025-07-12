@@ -1,6 +1,7 @@
 @mixin calendarLeftArrow {
   height: 100%;
-  &::before, &::after {
+  &::before,
+  &::after {
     position: relative;
     top: -1px;
     display: inline-block;
@@ -14,14 +15,14 @@
     transition: all 0.3s;
     content: "";
   }
-  &:hover::before, &:hover::after {
+  &:hover::before,
+  &:hover::after {
     border-color: $text-color;
   }
   &::after {
     display: none;
   }
 }
-
 @mixin calendarLeftDoubleArrow {
   @include calendarLeftArrow;
   &::after {
@@ -30,14 +31,13 @@
     display: inline-block;
   }
 }
-
 @mixin calendarRightArrow {
   @include calendarLeftArrow;
-  &::before, &::after {
+  &::before,
+  &::after {
     transform: rotate(135deg) scale(0.8);
   }
 }
-
 @mixin calendarRightDoubleArrow {
   @include calendarRightArrow;
   &::before {
@@ -48,7 +48,6 @@
     display: inline-block;
   }
 }
-
 @mixin calendarPanelHeader($calendar-prefix-cls) {
   height: 40px;
   line-height: 40px;
@@ -58,17 +57,30 @@
   a:hover {
     color: $link-hover-color;
   }
-  .#{$calendar-prefix-cls}-century-select, .#{$calendar-prefix-cls}-decade-select, .#{$calendar-prefix-cls}-year-select, .#{$calendar-prefix-cls}-month-select {
+  .#{$calendar-prefix-cls}-century-select,
+  .#{$calendar-prefix-cls}-decade-select,
+  .#{$calendar-prefix-cls}-year-select,
+  .#{$calendar-prefix-cls}-month-select {
     display: inline-block;
     padding: 0 2px;
     color: $heading-color;
     font-weight: 500;
     line-height: 40px;
   }
-  .#{$calendar-prefix-cls}-century-select-arrow, .#{$calendar-prefix-cls}-decade-select-arrow, .#{$calendar-prefix-cls}-year-select-arrow, .#{$calendar-prefix-cls}-month-select-arrow {
+  .#{$calendar-prefix-cls}-century-select-arrow,
+  .#{$calendar-prefix-cls}-decade-select-arrow,
+  .#{$calendar-prefix-cls}-year-select-arrow,
+  .#{$calendar-prefix-cls}-month-select-arrow {
     display: none;
   }
-  .#{$calendar-prefix-cls}-prev-century-btn, .#{$calendar-prefix-cls}-next-century-btn, .#{$calendar-prefix-cls}-prev-decade-btn, .#{$calendar-prefix-cls}-next-decade-btn, .#{$calendar-prefix-cls}-prev-month-btn, .#{$calendar-prefix-cls}-next-month-btn, .#{$calendar-prefix-cls}-prev-year-btn, .#{$calendar-prefix-cls}-next-year-btn {
+  .#{$calendar-prefix-cls}-prev-century-btn,
+  .#{$calendar-prefix-cls}-next-century-btn,
+  .#{$calendar-prefix-cls}-prev-decade-btn,
+  .#{$calendar-prefix-cls}-next-decade-btn,
+  .#{$calendar-prefix-cls}-prev-month-btn,
+  .#{$calendar-prefix-cls}-next-month-btn,
+  .#{$calendar-prefix-cls}-prev-year-btn,
+  .#{$calendar-prefix-cls}-next-year-btn {
     position: absolute;
     top: 0;
     display: inline-block;
@@ -78,11 +90,15 @@
     font-family: Arial, "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Sans Serif", sans-serif;
     line-height: 40px;
   }
-  .#{$calendar-prefix-cls}-prev-century-btn, .#{$calendar-prefix-cls}-prev-decade-btn, .#{$calendar-prefix-cls}-prev-year-btn {
+  .#{$calendar-prefix-cls}-prev-century-btn,
+  .#{$calendar-prefix-cls}-prev-decade-btn,
+  .#{$calendar-prefix-cls}-prev-year-btn {
     left: 7px;
     @include calendarLeftDoubleArrow;
   }
-  .#{$calendar-prefix-cls}-next-century-btn, .#{$calendar-prefix-cls}-next-decade-btn, .#{$calendar-prefix-cls}-next-year-btn {
+  .#{$calendar-prefix-cls}-next-century-btn,
+  .#{$calendar-prefix-cls}-next-decade-btn,
+  .#{$calendar-prefix-cls}-next-year-btn {
     right: 7px;
     @include calendarRightDoubleArrow;
   }
@@ -95,19 +111,16 @@
     @include calendarRightArrow;
   }
 }
-
 @mixin calendar-selected-cell {
   .#{$calendar-prefix-cls}-date {
     color: $text-color-inverse;
     background: $primary-color;
     border: $border-width-base $border-style-base black;
-
     &:hover {
       background: $primary-color;
     }
   }
 }
-
 .#{$calendar-prefix-cls} {
   position: relative;
   width: 280px;
@@ -121,13 +134,11 @@
   border-radius: $border-radius-base;
   outline: none;
   box-shadow: $box-shadow-base;
-
   &-input-wrap {
     height: 34px;
     padding: 6px $control-padding-horizontal - 2px;
     border-bottom: $border-width-base $border-style-base $border-color-split;
   }
-
   &-input {
     width: 100%;
     height: 22px;
@@ -138,63 +149,53 @@
     cursor: auto;
     @include placeholder;
   }
-
   &-week-number {
     width: 286px;
-
     &-cell {
       text-align: center;
     }
   }
-
   &-header {
     @include calendarPanelHeader($calendar-prefix-cls);
   }
-
   &-body {
     padding: 8px 12px;
   }
-
   table {
     width: 100%;
     max-width: 100%;
     background-color: transparent;
     border-collapse: collapse;
   }
-
-  table, th, td {
+  table,
+  th,
+  td {
     text-align: center;
     border: 0;
   }
-
   &-calendar-table {
     margin-bottom: 0;
     border-spacing: 0;
   }
-
   &-column-header {
     width: 33px;
     padding: 6px 0;
     line-height: 18px;
     text-align: center;
-
     .#{$calendar-prefix-cls}-column-header-inner {
       display: block;
       font-weight: normal;
     }
   }
-
   &-week-number-header {
     .#{$calendar-prefix-cls}-column-header-inner {
       display: none;
     }
   }
-
   &-cell {
     height: 30px;
     padding: 3px 0;
   }
-
   &-date {
     display: block;
     width: 24px;
@@ -208,41 +209,36 @@
     border: $border-width-base $border-style-base black;
     border-radius: $border-radius-sm;
     transition: background 0.3s ease;
-
     &-panel {
       position: relative;
       outline: none;
     }
-
     &:hover {
       background: $item-hover-bg;
       cursor: pointer;
     }
-
     &:active {
       color: $text-color-inverse;
       background: $primary-5;
     }
   }
-
   &-today &-date {
     color: $primary-color;
     font-weight: bold;
     border-color: $primary-color;
   }
-
   &-selected-day &-date {
     background: $primary-2;
   }
-
-  &-last-month-cell &-date, &-next-month-btn-day &-date {
-    &, &:hover {
+  &-last-month-cell &-date,
+  &-next-month-btn-day &-date {
+    &,
+    &:hover {
       color: $disabled-color;
       background: transparent;
       border-color: transparent;
     }
   }
-
   &-disabled-cell &-date {
     position: relative;
     width: auto;
@@ -251,12 +247,10 @@
     border: $border-width-base $border-style-base black;
     border-radius: 0;
     cursor: not-allowed;
-
     &:hover {
       background: $disabled-bg;
     }
   }
-
   &-disabled-cell#{&}-selected-day &-date::before {
     position: absolute;
     top: -1px;
@@ -267,12 +261,10 @@
     border-radius: $border-radius-sm;
     content: "";
   }
-
   &-disabled-cell#{&}-today &-date {
     position: relative;
     padding-right: 5px;
     padding-left: 5px;
-
     &::before {
       position: absolute;
       top: -1px;
@@ -284,51 +276,42 @@
       content: " ";
     }
   }
-
   &-disabled-cell-first-of-row &-date {
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
   }
-
   &-disabled-cell-last-of-row &-date {
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
   }
-
   &-footer {
     padding: 0 12px;
     line-height: 38px;
     border-top: $border-width-base $border-style-base $border-color-split;
-
     &:empty {
       border-top: 0;
     }
-
     &-btn {
       display: block;
       text-align: center;
     }
-
     &-extra {
       text-align: left;
     }
   }
-
-  .#{$calendar-prefix-cls}-today-btn, .#{$calendar-prefix-cls}-clear-btn {
+  .#{$calendar-prefix-cls}-today-btn,
+  .#{$calendar-prefix-cls}-clear-btn {
     display: inline-block;
     margin: 0 0 0 8px;
     text-align: center;
-
     &-disabled {
       color: $disabled-color;
       cursor: not-allowed;
     }
-
     &:only-child {
       margin: 0;
     }
   }
-
   .#{$calendar-prefix-cls}-clear-btn {
     position: absolute;
     top: 7px;
@@ -342,7 +325,6 @@
     text-align: center;
     text-indent: -76px;
   }
-
   .#{$calendar-prefix-cls}-clear-btn::after {
     display: inline-block;
     width: 20px;
@@ -352,11 +334,9 @@
     text-indent: 43px;
     transition: color 0.3s ease;
   }
-
   .#{$calendar-prefix-cls}-clear-btn:hover::after {
     color: $text-color-secondary;
   }
-
   .#{$calendar-prefix-cls}-ok-btn {
     @include btn;
     @include btn-primary;

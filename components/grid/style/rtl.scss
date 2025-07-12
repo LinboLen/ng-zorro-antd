@@ -1,13 +1,11 @@
 @import "../../style/themes/index";
 @import "../../style/mixins/index";
 @import "./mixin";
-
 .#{$row-prefix-cls} {
   &-rtl {
     direction: rtl;
   }
 }
-
 // mixin
 @mixin loop-grid-columns($index, $class) {
   .#{$col-prefix-cls}#{$class}-push-#{$index} {
@@ -32,7 +30,6 @@
     }
   }
 }
-
 @mixin loop-grid-columns($index, $class) {
   .#{$col-prefix-cls}-push-#{$index} {
     // reset property in RTL direction

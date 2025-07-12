@@ -3,5 +3,4 @@
 @import "./modal";
 @import "./confirm";
 @import "./rtl";
-
 @include popover-customize-bg($dialog-prefix-cls, $popover-background);

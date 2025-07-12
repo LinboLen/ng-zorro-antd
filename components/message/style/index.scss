@@ -1,6 +1,5 @@
 @import "../../style/themes/index";
 @import "../../style/mixins/index";
-
 $message-prefix-cls: "#{$ant-prefix}-message";
 .#{$message-prefix-cls} {
   @include reset-component;
@@ -10,12 +9,10 @@ $message-prefix-cls: "#{$ant-prefix}-message";
   z-index: $zindex-message;
   width: 100%;
   pointer-events: none;
-
   &-notice {
     padding: 8px;
     text-align: center;
   }
-
   &-notice-content {
     display: inline-block;
     padding: $message-notice-content-padding;
@@ -24,36 +21,30 @@ $message-prefix-cls: "#{$ant-prefix}-message";
     box-shadow: $shadow-2;
     pointer-events: all;
   }
-
   &-success .#{$iconfont-css-prefix} {
     color: $success-color;
   }
-
   &-error .#{$iconfont-css-prefix} {
     color: $error-color;
   }
-
   &-warning .#{$iconfont-css-prefix} {
     color: $warning-color;
   }
-
-  &-info .#{$iconfont-css-prefix}, &-loading .#{$iconfont-css-prefix} {
+  &-info .#{$iconfont-css-prefix},
+  &-loading .#{$iconfont-css-prefix} {
     color: $info-color;
   }
-
   .#{$iconfont-css-prefix} {
     position: relative;
     top: 1px;
     margin-right: 8px;
     font-size: $font-size-lg;
   }
-
   &-notice.#{$ant-prefix}-move-up-leave.#{$ant-prefix}-move-up-leave-active {
     animation-name: MessageMoveOut;
     animation-duration: 0.3s;
   }
 }
-
 @keyframes MessageMoveOut {
   0% {
     max-height: 150px;
@@ -66,5 +57,4 @@ $message-prefix-cls: "#{$ant-prefix}-message";
     opacity: 0;
   }
 }
-
 @import "./rtl";

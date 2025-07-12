@@ -11,18 +11,17 @@ nz-tree-virtual-scroll-view {
   will-change: scroll-position;
   contain: strict;
   -webkit-overflow-scrolling: touch;
-
-  .ant-tree-list, .ant-tree-list-holder {
+  .ant-tree-list,
+  .ant-tree-list-holder {
     height: 100%;
   }
 }
-
-nz-tree-virtual-scroll-view, nz-tree-view {
+nz-tree-virtual-scroll-view,
+nz-tree-view {
   .ant-tree-switcher + .ant-tree-switcher.nz-tree-leaf-line-icon {
     display: none;
   }
 }
-
 nz-tree-view .ant-tree-list-holder-inner {
   display: flex;
   flex-direction: column;

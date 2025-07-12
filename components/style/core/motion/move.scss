@@ -1,7 +1,8 @@
 @mixin move-motion($className, $keyframeName) {
   $name: "#{$ant-prefix}-#{$className}";
   @include make-motion($name, $keyframeName);
-  .#{$name}-enter, .#{$name}-appear {
+  .#{$name}-enter,
+  .#{$name}-appear {
     opacity: 0;
     animation-timing-function: $ease-out-circ;
   }
@@ -9,7 +10,6 @@
     animation-timing-function: $ease-in-circ;
   }
 }
-
 @include move-motion(move-up, antMoveUp);
 @include move-motion(move-down, antMoveDown);
 @include move-motion(move-left, antMoveLeft);
@@ -26,7 +26,6 @@
     opacity: 1;
   }
 }
-
 @keyframes antMoveDownOut {
   0% {
     transform: translateY(0%);
@@ -39,7 +38,6 @@
     opacity: 0;
   }
 }
-
 @keyframes antMoveLeftIn {
   0% {
     transform: translateX(-100%);
@@ -52,7 +50,6 @@
     opacity: 1;
   }
 }
-
 @keyframes antMoveLeftOut {
   0% {
     transform: translateX(0%);
@@ -65,7 +62,6 @@
     opacity: 0;
   }
 }
-
 @keyframes antMoveRightIn {
   0% {
     transform: translateX(100%);
@@ -78,7 +74,6 @@
     opacity: 1;
   }
 }
-
 @keyframes antMoveRightOut {
   0% {
     transform: translateX(0%);
@@ -91,7 +86,6 @@
     opacity: 0;
   }
 }
-
 @keyframes antMoveUpIn {
   0% {
     transform: translateY(-100%);
@@ -104,7 +98,6 @@
     opacity: 1;
   }
 }
-
 @keyframes antMoveUpOut {
   0% {
     transform: translateY(0%);

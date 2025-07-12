@@ -2,7 +2,6 @@
   &-rtl {
     direction: rtl;
   }
-
   &-content {
     &-prefix {
       .#{$statistic-prefix-cls}-rtl & {
@@ -10,7 +9,6 @@
         margin-left: 4px;
       }
     }
-
     &-suffix {
       .#{$statistic-prefix-cls}-rtl & {
         margin-right: 4px;

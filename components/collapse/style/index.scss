@@ -1,6 +1,5 @@
 @import "../../style/themes/index";
 @import "../../style/mixins/index";
-
 $collapse-prefix-cls: "#{$ant-prefix}-collapse";
 .#{$collapse-prefix-cls} {
   @include reset-component;
@@ -8,16 +7,14 @@ $collapse-prefix-cls: "#{$ant-prefix}-collapse";
   border: $border-width-base $border-style-base $border-color-base;
   border-bottom: 0;
   border-radius: $collapse-panel-border-radius;
-
   & > &-item {
     border-bottom: $border-width-base $border-style-base $border-color-base;
-
     &:last-child {
-      &, & > .#{$collapse-prefix-cls}-header {
+      &,
+      & > .#{$collapse-prefix-cls}-header {
         border-radius: 0 0 $collapse-panel-border-radius $collapse-panel-border-radius;
       }
     }
-
     > .#{$collapse-prefix-cls}-header {
       position: relative;
       // Compatible with old version of antd, should remove in next version
@@ -28,56 +25,47 @@ $collapse-prefix-cls: "#{$ant-prefix}-collapse";
       color: $heading-color;
       line-height: $line-height-base;
       cursor: pointer;
-      transition: all 0.3s, visibility 0s;
-
+      transition:
+        all 0.3s,
+        visibility 0s;
       .#{$collapse-prefix-cls}-arrow {
         display: inline-block;
         margin-right: $margin-sm;
         font-size: $font-size-sm;
         vertical-align: -1px;
-
         & svg {
           transition: transform 0.24s;
         }
       }
-
       .#{$collapse-prefix-cls}-header-text {
         flex: auto;
       }
-
       .#{$collapse-prefix-cls}-extra {
         margin-left: auto;
       }
-
       &:focus {
         outline: none;
       }
     }
-
     .#{$collapse-prefix-cls}-header-collapsible-only {
       cursor: default;
-
       .#{$collapse-prefix-cls}-header-text {
         flex: none;
         cursor: pointer;
       }
     }
-
     .#{$collapse-prefix-cls}-icon-collapsible-only {
       cursor: default;
-
       .#{$collapse-prefix-cls}-expand-icon {
         cursor: pointer;
       }
     }
-
     &.#{$collapse-prefix-cls}-no-arrow {
       > .#{$collapse-prefix-cls}-header {
         padding-left: $padding-sm;
       }
     }
   }
-
   // Expand Icon end
   &-icon-position-end {
     & > .#{$collapse-prefix-cls}-item {
@@ -85,7 +73,6 @@ $collapse-prefix-cls: "#{$ant-prefix}-collapse";
         position: relative;
         padding: $collapse-header-padding;
         padding-right: $collapse-header-padding-extra;
-
         .#{$collapse-prefix-cls}-arrow {
           position: absolute;
           top: 50%;
@@ -97,65 +84,52 @@ $collapse-prefix-cls: "#{$ant-prefix}-collapse";
       }
     }
   }
-
   &-content {
     color: $text-color;
     background-color: $collapse-content-bg;
     border-top: $border-width-base $border-style-base $border-color-base;
-
     & > &-box {
       padding: $collapse-content-padding;
     }
-
     &-hidden {
       display: none;
     }
   }
-
   &-item:last-child {
     > .#{$collapse-prefix-cls}-content {
       border-radius: 0 0 $collapse-panel-border-radius $collapse-panel-border-radius;
     }
   }
-
   &-borderless {
     background-color: $collapse-header-bg;
     border: 0;
   }
-
   &-borderless > &-item {
     border-bottom: 1px solid $border-color-base;
   }
-
-  &-borderless > &-item:last-child, &-borderless > &-item:last-child &-header {
+  &-borderless > &-item:last-child,
+  &-borderless > &-item:last-child &-header {
     border-radius: 0;
   }
-
   // hide the last border-bottom in borderless mode
   &-borderless > &-item:last-child {
     border-bottom: 0;
   }
-
   &-borderless > &-item > &-content {
     background-color: transparent;
     border-top: 0;
   }
-
   &-borderless > &-item > &-content > &-content-box {
     padding-top: 4px;
   }
-
   &-ghost {
     background-color: transparent;
     border: 0;
-
     > .#{$collapse-prefix-cls}-item {
       border-bottom: 0;
-
       > .#{$collapse-prefix-cls}-content {
         background-color: transparent;
         border-top: 0;
-
         > .#{$collapse-prefix-cls}-content-box {
           padding-top: 12px;
           padding-bottom: 12px;
@@ -163,13 +137,12 @@ $collapse-prefix-cls: "#{$ant-prefix}-collapse";
       }
     }
   }
-
   & &-item-disabled > &-header {
-    &, & > .arrow {
+    &,
+    & > .arrow {
       color: $disabled-color;
       cursor: not-allowed;
     }
   }
 }
-
 @import "./rtl";

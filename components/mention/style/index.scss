@@ -2,7 +2,6 @@
 @import "../../style/mixins/index";
 @import "../../input/style/mixin";
 @import "./status";
-
 $mention-prefix-cls: "#{$ant-prefix}-mentions";
 .#{$mention-prefix-cls} {
   @include reset-component;
@@ -21,13 +20,12 @@ $mention-prefix-cls: "#{$ant-prefix}-mentions";
       @include disabled;
     }
   }
-
   &-focused {
     @include active;
   }
-
   // ================= Input Area =================
-  @at-root  > textarea, &-measure {
+  @at-root > textarea,
+    &-measure {
     min-height: $input-height-base - 2px;
     margin: 0;
     padding: $input-padding-vertical-base $input-padding-horizontal-base;
@@ -35,6 +33,7 @@ $mention-prefix-cls: "#{$ant-prefix}-mentions";
     overflow-x: hidden;
     overflow-y: auto;
     /* stylelint-disable declaration-block-no-redundant-longhand-properties */
+
     font-weight: inherit;
     font-size: inherit;
     font-family: inherit;
@@ -44,6 +43,7 @@ $mention-prefix-cls: "#{$ant-prefix}-mentions";
     font-stretch: inherit;
     line-height: inherit;
     /* stylelint-enable declaration-block-no-redundant-longhand-properties */
+
     direction: inherit;
     letter-spacing: inherit;
     white-space: inherit;
@@ -58,14 +58,11 @@ $mention-prefix-cls: "#{$ant-prefix}-mentions";
     border: none;
     outline: none;
     resize: none;
-
     & {
       background-color: transparent;
     }
-
     @include placeholder;
   }
-
   &-measure {
     position: absolute;
     top: 0;
@@ -75,13 +72,11 @@ $mention-prefix-cls: "#{$ant-prefix}-mentions";
     z-index: -1;
     color: transparent;
     pointer-events: none;
-
     > span {
       display: inline-block;
       min-height: 1em;
     }
   }
-
   // ================== Dropdown ==================
   &-dropdown {
     // Ref select dropdown style
@@ -97,11 +92,9 @@ $mention-prefix-cls: "#{$ant-prefix}-mentions";
     border-radius: $border-radius-base;
     outline: none;
     box-shadow: $box-shadow-base;
-
     &-hidden {
       display: none;
     }
-
     &-menu {
       max-height: 250px;
       margin-bottom: 0;
@@ -110,7 +103,6 @@ $mention-prefix-cls: "#{$ant-prefix}-mentions";
       overflow: auto;
       list-style: none;
       outline: none;
-
       &-item {
         position: relative;
         display: block;
@@ -124,43 +116,35 @@ $mention-prefix-cls: "#{$ant-prefix}-mentions";
         text-overflow: ellipsis;
         cursor: pointer;
         transition: background 0.3s ease;
-
         &:hover {
           background-color: $item-hover-bg;
         }
-
         &:first-child {
           border-radius: $border-radius-base $border-radius-base 0 0;
         }
-
         &:last-child {
           border-radius: 0 0 $border-radius-base $border-radius-base;
         }
-
         &-disabled {
           color: $disabled-color;
           cursor: not-allowed;
-
           &:hover {
             color: $disabled-color;
             background-color: $mentions-dropdown-menu-item-hover-bg;
             cursor: not-allowed;
           }
         }
-
         &-selected {
           color: $text-color;
           font-weight: $select-item-selected-font-weight;
           background-color: $background-color-light;
         }
-
         &-active {
           background-color: $item-hover-bg;
         }
       }
     }
   }
-
   &-suffix {
     position: absolute;
     top: 0;
@@ -172,5 +156,4 @@ $mention-prefix-cls: "#{$ant-prefix}-mentions";
     margin: auto;
   }
 }
-
 @import "./rtl";

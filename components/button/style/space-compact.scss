@@ -1,5 +1,4 @@
 @import "../../style/mixins/index";
-
 $btn-prefix-cls: "#{$ant-prefix}-btn";
 // Button in Space.Compact
 .#{$btn-prefix-cls} {
@@ -8,12 +7,10 @@ $btn-prefix-cls: "#{$ant-prefix}-btn";
   &-icon-only#{&}-compact-item {
     flex: none;
   }
-
   // Special styles for Primary Button
   &-compact-item.#{$btn-prefix-cls}-primary {
-    &:not([disabled]) + &:not([disabled]):not([ant-click-animating-without-extra-node='true']) {
+    &:not([disabled]) + &:not([disabled]):not([ant-click-animating-without-extra-node="true"]) {
       position: relative;
-
       &::after {
         position: absolute;
         top: -$border-width-base;
@@ -26,31 +23,26 @@ $btn-prefix-cls: "#{$ant-prefix}-btn";
       }
     }
   }
-
   // ----------RTL----------
   &-compact-item-rtl {
     &.#{$btn-prefix-cls}-compact-first-item#{&}:not(.$btn-prefix-cls-compact-last-item) {
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
     }
-
     &.#{$btn-prefix-cls}-compact-last-item#{&}:not(.$btn-prefix-cls-compact-first-item) {
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
     }
-
     &.#{$btn-prefix-cls}-sm {
       &.#{$btn-prefix-cls}-compact-first-item#{&}:not(.$btn-prefix-cls-compact-last-item) {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
       }
-
       &.#{$btn-prefix-cls}-compact-last-item#{&}:not(.$btn-prefix-cls-compact-first-item) {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
       }
     }
-
     // ----------RTL Special styles for Primary Button----------
     &.#{$btn-prefix-cls}-primary {
       &:not([disabled]) + &:not([disabled]) {
@@ -60,15 +52,13 @@ $btn-prefix-cls: "#{$ant-prefix}-btn";
       }
     }
   }
-
   // Button in Space.Compact when direction=vertical
   @include compact-item-vertical($btn-prefix-cls);
   // Special styles for Primary Button
   &-compact-vertical-item {
     &.#{$btn-prefix-cls}-primary {
-      &:not([disabled]) + &:not([disabled]):not([ant-click-animating-without-extra-node='true']) {
+      &:not([disabled]) + &:not([disabled]):not([ant-click-animating-without-extra-node="true"]) {
         position: relative;
-
         &::after {
           position: absolute;
           top: -$border-width-base;

@@ -2,7 +2,6 @@
   &-rtl {
     direction: rtl;
   }
-
   &-star {
     &:not(:last-child) {
       .#{$rate-prefix-cls}-rtl & {
@@ -10,7 +9,6 @@
         margin-left: 8px;
       }
     }
-
     &-first {
       .#{$rate-prefix-cls}-rtl & {
         right: 0;

@@ -1,5 +1,4 @@
 @import "./default.less";
-
 $line-height-base: 1.66667;
 $mode: compact;
 $font-size-base: 12px;
@@ -111,7 +110,9 @@ $slider-handle-margin-top: -4px;
 // Input
 
 // ---
-$input-padding-vertical-base: round(max((round((($input-height-base - $font-size-base * $line-height-base) / 2) * 10) / 10) - $border-width-base, 2px));
+$input-padding-vertical-base: round(
+  max((round((($input-height-base - $font-size-base * $line-height-base) / 2) * 10) / 10) - $border-width-base, 2px)
+);
 $input-padding-horizontal-lg: 11px;
 // PageHeader
 

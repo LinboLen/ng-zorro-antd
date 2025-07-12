@@ -2,27 +2,23 @@
   &-rtl {
     direction: rtl;
   }
-
   &-suffix {
     .#{$picker-prefix-cls}-rtl & {
       margin-right: ($padding-xs / 2);
       margin-left: 0;
     }
   }
-
   &-clear {
     .#{$picker-prefix-cls}-rtl & {
       right: auto;
       left: 0;
     }
   }
-
   &-separator {
     .#{$picker-prefix-cls}-rtl & {
       transform: rotate(180deg);
     }
   }
-
   &-header {
     &-view {
       button {
@@ -35,7 +31,6 @@
       }
     }
   }
-
   // ======================== Range =========================
   &-range {
     // Clear
@@ -45,7 +40,6 @@
         left: $input-padding-horizontal-base;
       }
     }
-
     // Active bar
     .#{$picker-prefix-cls}-active-bar {
       .#{$picker-prefix-cls}-rtl#{&} {
@@ -53,7 +47,6 @@
         margin-left: 0;
       }
     }
-
     &.#{$picker-prefix-cls}-small {
       .#{$picker-prefix-cls}-active-bar {
         .#{$picker-prefix-cls}-rtl#{&} {
@@ -62,13 +55,11 @@
       }
     }
   }
-
   // ======================== Ranges ========================
   &-ranges {
     .#{$picker-prefix-cls}-dropdown-rtl & {
       text-align: right;
     }
-
     .#{$picker-prefix-cls}-ok {
       .#{$picker-prefix-cls}-dropdown-rtl & {
         float: left;
@@ -77,30 +68,27 @@
       }
     }
   }
-
   // ======================== Panel ========================
   &-panel {
     &-rtl {
       direction: rtl;
     }
   }
-
-  &-prev-icon, &-super-prev-icon {
+  &-prev-icon,
+  &-super-prev-icon {
     .#{$picker-prefix-cls}-panel-rtl & {
       transform: rotate(135deg);
     }
   }
-
-  &-next-icon, &-super-next-icon {
+  &-next-icon,
+  &-super-next-icon {
     .#{$picker-prefix-cls}-panel-rtl & {
       transform: rotate(-45deg);
     }
   }
-
   &-cell {
     @include picker-cell-inner(("#{$picker-cell-inner-cls}"));
   }
-
   // ======================== Body ==========================
   @mixin picker-cell-inner($cellClassName) {
     .#{$cellClassName} {
@@ -111,7 +99,9 @@
       height: $picker-panel-cell-height;
       line-height: $picker-panel-cell-height;
       border-radius: $border-radius-base;
-      transition: background $animation-duration-slow, border $animation-duration-slow;
+      transition:
+        background $animation-duration-slow,
+        border $animation-duration-slow;
     }
     &-in-view#{&}-range-start::before {
       .#{$picker-prefix-cls}-panel-rtl & {
@@ -169,7 +159,10 @@
       }
     }
     // Edge start
-    @at-root  tr > &-in-view#{&}-range-hover:not(&-selected):first-child::after, &-in-view#{&}-start#{&}-range-hover-edge-start#{&}-range-hover-edge-start-near-range::after, &-in-view#{&}-range-hover-edge-start:not(&-range-hover-edge-start-near-range)::after, &-in-view#{&}-range-hover-start::after {
+    @at-root tr > &-in-view#{&}-range-hover:not(&-selected):first-child::after,
+      &-in-view#{&}-start#{&}-range-hover-edge-start#{&}-range-hover-edge-start-near-range::after,
+      &-in-view#{&}-range-hover-edge-start:not(&-range-hover-edge-start-near-range)::after,
+      &-in-view#{&}-range-hover-start::after {
       .#{$picker-prefix-cls}-panel-rtl & {
         right: 6px;
         left: 0;
@@ -179,7 +172,10 @@
       }
     }
     // Edge end
-    @at-root  tr > &-in-view#{&}-range-hover:not(&-selected):last-child::after, &-in-view#{&}-end#{&}-range-hover-edge-end#{&}-range-hover-edge-end-near-range::after, &-in-view#{&}-range-hover-edge-end:not(&-range-hover-edge-end-near-range)::after, &-in-view#{&}-range-hover-end::after {
+    @at-root tr > &-in-view#{&}-range-hover:not(&-selected):last-child::after,
+      &-in-view#{&}-end#{&}-range-hover-edge-end#{&}-range-hover-edge-end-near-range::after,
+      &-in-view#{&}-range-hover-edge-end:not(&-range-hover-edge-end-near-range)::after,
+      &-in-view#{&}-range-hover-end::after {
       .#{$picker-prefix-cls}-panel-rtl & {
         right: 0;
         left: 6px;
@@ -188,7 +184,13 @@
         border-radius: $border-radius-base 0 0 $border-radius-base;
       }
     }
-    @at-root  tr > &-in-view#{&}-range-hover-start:last-child::after, tr > &-in-view#{&}-range-hover-end:first-child::after, &-in-view#{&}-start#{&}-range-hover-edge-start:not(&-range-hover)::after, &-in-view#{&}-start#{&}-range-hover-end#{&}-range-hover-edge-start:not(&-range-hover)::after, &-in-view#{&}-end#{&}-range-hover-start#{&}-range-hover-edge-end:not(&-range-hover)::after, tr > &-in-view#{&}-start#{&}-range-hover#{&}-range-hover-edge-start:last-child::after, tr > &-in-view#{&}-end#{&}-range-hover#{&}-range-hover-edge-end:first-child::after {
+    @at-root tr > &-in-view#{&}-range-hover-start:last-child::after,
+      tr > &-in-view#{&}-range-hover-end:first-child::after,
+      &-in-view#{&}-start#{&}-range-hover-edge-start:not(&-range-hover)::after,
+      &-in-view#{&}-start#{&}-range-hover-end#{&}-range-hover-edge-start:not(&-range-hover)::after,
+      &-in-view#{&}-end#{&}-range-hover-start#{&}-range-hover-edge-end:not(&-range-hover)::after,
+      tr > &-in-view#{&}-start#{&}-range-hover#{&}-range-hover-edge-start:last-child::after,
+      tr > &-in-view#{&}-end#{&}-range-hover#{&}-range-hover-edge-end:first-child::after {
       .#{$picker-prefix-cls}-panel-rtl & {
         right: 6px;
         left: 6px;
@@ -207,7 +209,6 @@
       }
     }
   }
-
   // ====================== Time Panel ======================
   &-time-panel {
     .#{$picker-prefix-cls}-panel-rtl & {
