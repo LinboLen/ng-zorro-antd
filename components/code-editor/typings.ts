@@ -20,10 +20,10 @@ export type JoinedEditorOptions = EditorOptions | DiffEditorOptions;
 
 export type TriEditorMode = 'normal' | 'diff';
 
-export const NzCodeEditorLoadingStatus = {
+export const TriCodeEditorLoadingStatus = {
   UNLOAD: 'unload',
   LOADING: 'loading',
   LOADED: 'LOADED'
 } as const;
 
-export type TriCodeEditorLoadingStatus = (typeof NzCodeEditorLoadingStatus)[keyof typeof NzCodeEditorLoadingStatus];
+export type TriCodeEditorLoadingStatus = (typeof TriCodeEditorLoadingStatus)[keyof typeof TriCodeEditorLoadingStatus];

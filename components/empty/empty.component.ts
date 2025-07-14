@@ -24,8 +24,8 @@ import { TriEmptyI18nInterface, TriI18nService } from 'ng-zorro-antd/i18n';
 import { TriEmptyDefaultComponent } from './partial/default';
 import { TriEmptySimpleComponent } from './partial/simple';
 
-const NzEmptyDefaultImages = ['default', 'simple'] as const;
-type TriEmptyNotFoundImageType = (typeof NzEmptyDefaultImages)[number] | null | string | TemplateRef<void>;
+const TriEmptyDefaultImages = ['default', 'simple'] as const;
+type TriEmptyNotFoundImageType = (typeof TriEmptyDefaultImages)[number] | null | string | TemplateRef<void>;
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -90,7 +90,7 @@ export class TriEmptyComponent implements OnChanges, OnInit {
 
     if (nzNotFoundImage) {
       const image = nzNotFoundImage.currentValue || 'default';
-      this.isImageBuildIn = NzEmptyDefaultImages.findIndex(i => i === image) > -1;
+      this.isImageBuildIn = TriEmptyDefaultImages.findIndex(i => i === image) > -1;
     }
   }
 

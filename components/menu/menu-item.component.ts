@@ -28,7 +28,7 @@ import { filter } from 'rxjs/operators';
 import { numberAttributeWithZeroFallback } from 'ng-zorro-antd/core/util';
 
 import { MenuService } from './menu.service';
-import { NzIsMenuInsideDropDownToken } from './menu.token';
+import { TriIsMenuInsideDropDownToken } from './menu.token';
 import { TriSubmenuService } from './submenu.service';
 
 @Component({
@@ -63,7 +63,7 @@ export class TriMenuItemComponent implements OnInit, OnChanges, AfterContentInit
   private readonly directionality = inject(Directionality);
   private readonly routerLink = inject(RouterLink, { optional: true });
   private readonly router = inject(Router, { optional: true });
-  protected readonly isMenuInsideDropDown = inject(NzIsMenuInsideDropDownToken);
+  protected readonly isMenuInsideDropDown = inject(TriIsMenuInsideDropDownToken);
 
   level = this.submenuService ? this.submenuService.level + 1 : 1;
   selected$ = new Subject<boolean>();

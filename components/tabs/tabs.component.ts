@@ -530,4 +530,4 @@ export class TriTabsComponent implements OnInit, AfterContentChecked, AfterConte
 /**
  * @deprecated Use `NzTabsComponent` instead. This will be removed in 21.0.0.
  */
-export const NzTabSetComponent = TriTabsComponent;
+export const TriTabSetComponent = TriTabsComponent;

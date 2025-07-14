@@ -37,7 +37,7 @@ import { getPlacementName, POSITION_MAP, POSITION_TYPE_HORIZONTAL } from 'ng-zor
 
 import { TriMenuItemComponent } from './menu-item.component';
 import { MenuService } from './menu.service';
-import { NzIsMenuInsideDropDownToken } from './menu.token';
+import { TriIsMenuInsideDropDownToken } from './menu.token';
 import { TriMenuModeType, TriMenuThemeType, TriSubmenuTrigger } from './menu.types';
 import { TriSubmenuInlineChildComponent } from './submenu-inline-child.component';
 import { TriSubmenuNoneInlineChildComponent } from './submenu-non-inline-child.component';
@@ -156,7 +156,7 @@ const listOfHorizontalPositions = [
 })
 export class TriSubMenuComponent implements OnInit, AfterContentInit, OnChanges {
   public readonly submenuService = inject(TriSubmenuService);
-  protected readonly isMenuInsideDropDown = inject(NzIsMenuInsideDropDownToken);
+  protected readonly isMenuInsideDropDown = inject(TriIsMenuInsideDropDownToken);
   protected readonly noAnimation = inject(TriNoAnimationDirective, { optional: true, host: true });
   private readonly directionality = inject(Directionality);
   private readonly destroyRef = inject(DestroyRef);

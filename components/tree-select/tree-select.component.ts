@@ -50,7 +50,7 @@ import { requestAnimationFrame } from 'ng-zorro-antd/core/polyfill';
 import {
   TriFormatEmitEvent,
   TriTreeBase,
-  NzTreeHigherOrderServiceToken,
+  TriTreeHigherOrderServiceToken,
   TriTreeNode,
   TriTreeNodeOptions
 } from 'ng-zorro-antd/core/tree';
@@ -228,7 +228,7 @@ const listOfPositions = [
     TriTreeSelectService,
     { provide: TRI_SPACE_COMPACT_ITEM_TYPE, useValue: 'select' },
     {
-      provide: NzTreeHigherOrderServiceToken,
+      provide: TriTreeHigherOrderServiceToken,
       useExisting: TriTreeSelectService
     },
     {

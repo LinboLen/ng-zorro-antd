@@ -25,18 +25,18 @@ import { BehaviorSubject, combineLatest } from 'rxjs';
 
 import { TriMenuItemComponent } from './menu-item.component';
 import { MenuService } from './menu.service';
-import { NzIsMenuInsideDropDownToken, NzMenuServiceLocalToken } from './menu.token';
+import { TriIsMenuInsideDropDownToken, TriMenuServiceLocalToken } from './menu.token';
 import { TriMenuModeType, TriMenuThemeType } from './menu.types';
 import { TriSubMenuComponent } from './submenu.component';
 
 export function MenuServiceFactory(): MenuService {
   const serviceInsideDropDown = inject(MenuService, { skipSelf: true, optional: true });
-  const serviceOutsideDropDown = inject(NzMenuServiceLocalToken);
+  const serviceOutsideDropDown = inject(TriMenuServiceLocalToken);
   return serviceInsideDropDown ?? serviceOutsideDropDown;
 }
 
 export function MenuDropDownTokenFactory(): boolean {
-  const isMenuInsideDropDownToken = inject(NzIsMenuInsideDropDownToken, { skipSelf: true, optional: true });
+  const isMenuInsideDropDownToken = inject(TriIsMenuInsideDropDownToken, { skipSelf: true, optional: true });
   return isMenuInsideDropDownToken ?? false;
 }
 
@@ -45,7 +45,7 @@ export function MenuDropDownTokenFactory(): boolean {
   exportAs: 'triMenu',
   providers: [
     {
-      provide: NzMenuServiceLocalToken,
+      provide: TriMenuServiceLocalToken,
       useClass: MenuService
     },
     /** use the top level service **/
@@ -55,7 +55,7 @@ export function MenuDropDownTokenFactory(): boolean {
     },
     /** check if menu inside dropdown-menu component **/
     {
-      provide: NzIsMenuInsideDropDownToken,
+      provide: TriIsMenuInsideDropDownToken,
       useFactory: MenuDropDownTokenFactory
     }
   ],
@@ -87,7 +87,7 @@ export class TriMenuDirective implements AfterContentInit, OnInit, OnChanges {
 
   @ContentChildren(TriMenuItemComponent, { descendants: true })
   listOfNzMenuItemDirective!: QueryList<TriMenuItemComponent>;
-  isMenuInsideDropDown = inject(NzIsMenuInsideDropDownToken);
+  isMenuInsideDropDown = inject(TriIsMenuInsideDropDownToken);
   @ContentChildren(TriSubMenuComponent, { descendants: true }) listOfNzSubMenuComponent!: QueryList<TriSubMenuComponent>;
   @Input() inlineIndent = 24;
   @Input() theme: TriMenuThemeType = 'light';

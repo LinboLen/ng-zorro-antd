@@ -11,7 +11,7 @@ import { auditTime, distinctUntilChanged, filter, map, mergeMap } from 'rxjs/ope
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 import { MenuService } from './menu.service';
-import { NzIsMenuInsideDropDownToken } from './menu.token';
+import { TriIsMenuInsideDropDownToken } from './menu.token';
 import { TriMenuModeType } from './menu.types';
 
 @Injectable()
@@ -32,7 +32,7 @@ export class TriSubmenuService {
     })
   );
   level = 1;
-  isMenuInsideDropDown = inject(NzIsMenuInsideDropDownToken);
+  isMenuInsideDropDown = inject(TriIsMenuInsideDropDownToken);
   isCurrentSubMenuOpen$ = new BehaviorSubject<boolean>(false);
   private isChildSubMenuOpen$ = new BehaviorSubject<boolean>(false);
   /** submenu title & overlay mouse enter status **/

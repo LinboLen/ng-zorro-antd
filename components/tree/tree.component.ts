@@ -37,7 +37,7 @@ import {
   TriFormatEmitEvent,
   TriTreeBase,
   TriTreeBaseService,
-  NzTreeHigherOrderServiceToken,
+  TriTreeHigherOrderServiceToken,
   TriTreeNode,
   TriTreeNodeKey,
   TriTreeNodeOptions,
@@ -49,7 +49,7 @@ import { TriTreeNodeBuiltinComponent } from './tree-node.component';
 import { TriTreeService } from './tree.service';
 
 export function NzTreeServiceFactory(): TriTreeBaseService {
-  const higherOrderService = inject(NzTreeHigherOrderServiceToken, { skipSelf: true, optional: true });
+  const higherOrderService = inject(TriTreeHigherOrderServiceToken, { skipSelf: true, optional: true });
   const treeService = inject(TriTreeService);
   return higherOrderService ?? treeService;
 }

@@ -18,10 +18,10 @@ import {
 
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 
-import { NzIsMenuInsideDropDownToken } from './menu.token';
+import { TriIsMenuInsideDropDownToken } from './menu.token';
 
 export function MenuGroupFactory(): boolean {
-  const isMenuInsideDropDownToken = inject(NzIsMenuInsideDropDownToken, { optional: true, skipSelf: true });
+  const isMenuInsideDropDownToken = inject(TriIsMenuInsideDropDownToken, { optional: true, skipSelf: true });
   return isMenuInsideDropDownToken ?? false;
 }
 @Component({
@@ -30,7 +30,7 @@ export function MenuGroupFactory(): boolean {
   providers: [
     /** check if menu inside dropdown-menu component **/
     {
-      provide: NzIsMenuInsideDropDownToken,
+      provide: TriIsMenuInsideDropDownToken,
       useFactory: MenuGroupFactory
     }
   ],
@@ -57,7 +57,7 @@ export function MenuGroupFactory(): boolean {
 })
 export class TriMenuGroupComponent implements AfterViewInit {
   private readonly renderer = inject(Renderer2);
-  protected readonly isMenuInsideDropDown = inject(NzIsMenuInsideDropDownToken);
+  protected readonly isMenuInsideDropDown = inject(TriIsMenuInsideDropDownToken);
 
   @Input() title?: string | TemplateRef<void>;
   @ViewChild('titleElement') titleElement?: ElementRef;

@@ -17,7 +17,7 @@ import {
 } from './page-header-cells';
 import { TriPageHeaderComponent } from './page-header.component';
 
-const NzPageHeaderCells = [
+const TriPageHeaderCells = [
   TriPageHeaderTitleDirective,
   TriPageHeaderSubtitleDirective,
   TriPageHeaderContentDirective,
@@ -29,7 +29,7 @@ const NzPageHeaderCells = [
 ];
 
 @NgModule({
-  imports: [TriPageHeaderComponent, NzPageHeaderCells],
-  exports: [TriPageHeaderComponent, NzPageHeaderCells]
+  imports: [TriPageHeaderComponent, TriPageHeaderCells],
+  exports: [TriPageHeaderComponent, TriPageHeaderCells]
 })
 export class TriPageHeaderModule {}

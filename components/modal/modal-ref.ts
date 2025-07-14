@@ -16,26 +16,26 @@ import { BaseModalContainerComponent } from './modal-container.directive';
 import { TriModalLegacyAPI } from './modal-legacy-api';
 import { ModalOptions } from './modal-types';
 
-export const NzModalState = {
+export const TriModalState = {
   OPEN: 0,
   CLOSING: 1,
   CLOSED: 2
 } as const;
 
-export type TriModalState = (typeof NzModalState)[keyof typeof NzModalState];
+export type TriModalState = (typeof TriModalState)[keyof typeof TriModalState];
 
-export const NzTriggerAction = {
+export const TriTriggerAction = {
   CANCEL: 'cancel',
   OK: 'ok'
 } as const;
 
-export type TriTriggerAction = (typeof NzTriggerAction)[keyof typeof NzTriggerAction];
+export type TriTriggerAction = (typeof TriTriggerAction)[keyof typeof TriTriggerAction];
 
 export class TriModalRef<T = TriSafeAny, R = TriSafeAny> implements TriModalLegacyAPI<T, R> {
   componentInstance: T | null = null;
   componentRef: ComponentRef<T> | null = null;
   result?: R;
-  state: TriModalState = NzModalState.OPEN;
+  state: TriModalState = TriModalState.OPEN;
   _afterClose = new Subject<R | undefined>();
   _afterOpen = new Subject<void>();
 
@@ -74,7 +74,7 @@ export class TriModalRef<T = TriSafeAny, R = TriSafeAny> implements TriModalLega
     containerInstance.containerClick.pipe(takeUntil(this.destroy$)).subscribe(() => {
       const cancelable = !this.config.cancelLoading && !this.config.okLoading;
       if (cancelable) {
-        this.trigger(NzTriggerAction.CANCEL);
+        this.trigger(TriTriggerAction.CANCEL);
       }
     });
 
@@ -92,14 +92,14 @@ export class TriModalRef<T = TriSafeAny, R = TriSafeAny> implements TriModalLega
       )
       .subscribe(event => {
         event.preventDefault();
-        this.trigger(NzTriggerAction.CANCEL);
+        this.trigger(TriTriggerAction.CANCEL);
       });
 
     containerInstance.cancelTriggered
       .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.trigger(NzTriggerAction.CANCEL));
+      .subscribe(() => this.trigger(TriTriggerAction.CANCEL));
 
-    containerInstance.okTriggered.pipe(takeUntil(this.destroy$)).subscribe(() => this.trigger(NzTriggerAction.OK));
+    containerInstance.okTriggered.pipe(takeUntil(this.destroy$)).subscribe(() => this.trigger(TriTriggerAction.OK));
 
     overlayRef.detachments().subscribe(() => {
       this._afterClose.next(this.result);
@@ -130,15 +130,15 @@ export class TriModalRef<T = TriSafeAny, R = TriSafeAny> implements TriModalLega
   }
 
   triggerOk(): Promise<void> {
-    return this.trigger(NzTriggerAction.OK);
+    return this.trigger(TriTriggerAction.OK);
   }
 
   triggerCancel(): Promise<void> {
-    return this.trigger(NzTriggerAction.CANCEL);
+    return this.trigger(TriTriggerAction.CANCEL);
   }
 
   close(result?: R): void {
-    if (this.state !== NzModalState.OPEN) {
+    if (this.state !== TriModalState.OPEN) {
       return;
     }
     this.result = result;
@@ -155,7 +155,7 @@ export class TriModalRef<T = TriSafeAny, R = TriSafeAny> implements TriModalLega
       });
 
     this.containerInstance.startExitAnimation();
-    this.state = NzModalState.CLOSING;
+    this.state = TriModalState.CLOSING;
   }
 
   updateConfig(config: ModalOptions): void {
@@ -177,12 +177,12 @@ export class TriModalRef<T = TriSafeAny, R = TriSafeAny> implements TriModalLega
   }
 
   private async trigger(action: TriTriggerAction): Promise<void> {
-    if (this.state === NzModalState.CLOSING) {
+    if (this.state === TriModalState.CLOSING) {
       return;
     }
     const actionMap = {
-      [NzTriggerAction.OK]: { trigger: this.config.onOk, loadingKey: 'nzOkLoading' },
-      [NzTriggerAction.CANCEL]: { trigger: this.config.onCancel, loadingKey: 'nzCancelLoading' }
+      [TriTriggerAction.OK]: { trigger: this.config.onOk, loadingKey: 'nzOkLoading' },
+      [TriTriggerAction.CANCEL]: { trigger: this.config.onCancel, loadingKey: 'nzCancelLoading' }
     } as const;
     const { trigger, loadingKey } = actionMap[action];
     if (this.config[loadingKey]) {
@@ -214,7 +214,7 @@ export class TriModalRef<T = TriSafeAny, R = TriSafeAny> implements TriModalLega
   }
 
   _finishDialogClose(): void {
-    this.state = NzModalState.CLOSED;
+    this.state = TriModalState.CLOSED;
     this.overlayRef.dispose();
     this.destroy$.next();
   }

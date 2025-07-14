@@ -27,7 +27,7 @@ import { BehaviorSubject } from 'rxjs';
 import { slideMotion } from 'ng-zorro-antd/core/animation';
 import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
 import { IndexableObject, TriSafeAny } from 'ng-zorro-antd/core/types';
-import { MenuService, NzIsMenuInsideDropDownToken } from 'ng-zorro-antd/menu';
+import { MenuService, TriIsMenuInsideDropDownToken } from 'ng-zorro-antd/menu';
 
 export type TriPlacementType = 'bottomLeft' | 'bottomCenter' | 'bottomRight' | 'topLeft' | 'topCenter' | 'topRight';
 
@@ -39,7 +39,7 @@ export type TriPlacementType = 'bottomLeft' | 'bottomCenter' | 'bottomRight' | '
     MenuService,
     /** menu is inside dropdown-menu component **/
     {
-      provide: NzIsMenuInsideDropDownToken,
+      provide: TriIsMenuInsideDropDownToken,
       useValue: true
     }
   ],
