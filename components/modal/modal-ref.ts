@@ -180,10 +180,12 @@ export class TriModalRef<T = TriSafeAny, R = TriSafeAny> implements TriModalLega
     if (this.state === NzModalState.CLOSING) {
       return;
     }
-    const trigger = { ok: this.config.onOk, cancel: this.config.onCancel }[action];
-    const loadingKey = { ok: 'nzOkLoading', cancel: 'nzCancelLoading' }[action] as 'nzOkLoading' | 'nzCancelLoading';
-    const loading = this.config[loadingKey];
-    if (loading) {
+    const actionMap = {
+      [NzTriggerAction.OK]: { trigger: this.config.onOk, loadingKey: 'nzOkLoading' },
+      [NzTriggerAction.CANCEL]: { trigger: this.config.onCancel, loadingKey: 'nzCancelLoading' }
+    } as const;
+    const { trigger, loadingKey } = actionMap[action];
+    if (this.config[loadingKey]) {
       return;
     }
     if (trigger instanceof EventEmitter) {
