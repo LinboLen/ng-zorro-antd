@@ -100,7 +100,7 @@ a {
     }
   }
   a[disabled] {
-    color: black;
+    color: #cccccc;
   }
   .menu-item-link-outside {
     position: relative;
@@ -129,7 +129,7 @@ a {
 }
 .outside-link-icon {
   margin-left: 5px;
-  color: black;
+  color: #aaaaaa;
   font-size: 12px;
 }
 // reset menu text color
@@ -196,7 +196,7 @@ a {
   }
   & &-avatar {
     color: black;
-    background-color: black;
+    background-color: white;
     box-shadow: $shadow-2;
     transition: color 0.3s;
     &:hover {

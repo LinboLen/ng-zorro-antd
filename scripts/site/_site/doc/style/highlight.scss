@@ -76,7 +76,7 @@ pre[class*="language-"] {
   color: slategray;
 }
 .token.punctuation {
-  color: black;
+  color: #999999;
 }
 .namespace {
   opacity: 0.7;
@@ -116,7 +116,7 @@ pre[class*="language-"] {
 .token.regex,
 .token.important,
 .token.variable {
-  color: black;
+  color: #ee9900;
 }
 .token.important,
 .token.bold {

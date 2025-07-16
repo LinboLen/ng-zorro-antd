@@ -15,14 +15,14 @@
 .gh-btn,
 .gh-count {
   padding: 2px 5px 2px 4px;
-  color: black;
+  color: #333333;
   white-space: nowrap;
   text-decoration: none;
   border-radius: 3px;
   cursor: pointer;
 }
 .gh-btn {
-  background-color: black;
+  background-color: #eeeeee;
   background-image: linear-gradient(to bottom, #fcfcfc 0, #eeeeee 100%);
   background-repeat: no-repeat;
   border: 1px solid #d5d5d5;
@@ -31,10 +31,10 @@
 .gh-btn:hover,
 .gh-btn:focus {
   text-decoration: none;
-  background-color: black;
+  background-color: #dddddd;
   background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #eeeeee), color-stop(100%, #dddddd));
   background-image: linear-gradient(to bottom, #eeeeee 0, #dddddd 100%);
-  border-color: black;
+  border-color: #cccccc;
   filter: "progid:dximagetransform.microsoft.gradient(startColorstr='#eeeeee', endColorstr='#dddddd', GradientType=0)";
 }
 .gh-btn:active {

@@ -63,7 +63,7 @@ $mobile-max-width: 767.99px;
     height: auto;
     padding: 4px 8px;
     font-weight: normal;
-    background: black;
+    background: white;
     &:hover {
       color: $primary-color;
     }
@@ -169,7 +169,7 @@ $mobile-max-width: 767.99px;
       }
       .ant-menu-item,
       a {
-        color: black;
+        color: #333333;
       }
     }
   }
@@ -276,7 +276,7 @@ $search-icon-color: #ced4d9;
   .ant-component-decs {
     position: absolute;
     right: 16px;
-    color: black;
+    color: #aaaaaa;
     font-size: 12px;
     @at-root .page-wrapper-rtl & {
       right: auto;

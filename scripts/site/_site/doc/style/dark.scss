@@ -51,7 +51,7 @@
     &-expand-trigger {
       position: relative;
       margin-left: 12px;
-      color: black;
+      color: white;
       font-size: 20px;
       cursor: pointer;
       opacity: 0.45;
@@ -78,7 +78,7 @@
       }
       &:hover {
         .anticon {
-          color: black;
+          color: white;
         }
       }
     }
