@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
-import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'tri-demo-tooltip-arrow-point-at-center',
-  imports: [TriButtonModule, TriToolTipModule],
+  imports: [TriButtonModule, TriTooltipModule],
   template: `
     <button tri-button tooltipTitle="prompt text" tooltipPlacement="topLeft" tri-tooltip>
       Align edge / 边缘对齐

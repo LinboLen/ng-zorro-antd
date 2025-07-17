@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 import { TriProgressModule } from 'ng-zorro-antd/progress';
-import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'tri-demo-progress-segment',
-  imports: [TriProgressModule, TriToolTipModule],
+  imports: [TriProgressModule, TriTooltipModule],
   template: `
     <tri-progress
       tri-tooltip

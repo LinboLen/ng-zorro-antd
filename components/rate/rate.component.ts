@@ -6,13 +6,18 @@
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import { LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
 import {
+  booleanAttribute,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   ElementRef,
   EventEmitter,
+  forwardRef,
+  inject,
   Input,
   NgZone,
+  numberAttribute,
   OnChanges,
   OnInit,
   Output,
@@ -20,12 +25,7 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
-  ViewEncapsulation,
-  booleanAttribute,
-  forwardRef,
-  numberAttribute,
-  DestroyRef,
-  inject
+  ViewEncapsulation
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -33,7 +33,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
 import { NgClassType, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
-import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
 
 import { TriRateItemComponent } from './rate-item.component';
 
@@ -81,7 +81,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'rate';
       multi: true
     }
   ],
-  imports: [TriToolTipModule, TriRateItemComponent]
+  imports: [TriTooltipModule, TriRateItemComponent]
 })
 export class TriRateComponent implements OnInit, ControlValueAccessor, OnChanges {
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;

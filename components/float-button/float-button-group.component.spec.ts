@@ -26,12 +26,14 @@ describe('nz-float-button-group', () => {
     let fixture: ComponentFixture<TriTestFloatButtonGroupBasicComponent>;
     let testComponent: TriTestFloatButtonGroupBasicComponent;
     let resultEl: DebugElement;
+    let groupComponent: TriFloatButtonGroupComponent;
 
     beforeEach(() => {
       fixture = TestBed.createComponent(TriTestFloatButtonGroupBasicComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
       resultEl = fixture.debugElement.query(By.directive(TriFloatButtonGroupComponent));
+      groupComponent = resultEl.componentInstance;
     });
 
     it('basic', () => {
@@ -43,6 +45,13 @@ describe('nz-float-button-group', () => {
       testComponent.shape = 'square';
       fixture.detectChanges();
       expect(resultEl.nativeElement.classList).toContain('ant-float-btn-group-square');
+      const innerButtons = [
+        ...groupComponent.floatButtonComponents(),
+        ...groupComponent.floatButtonTopComponents()
+      ];
+      innerButtons.forEach(btn => {
+        expect(btn.shape).toBe('square');
+      });
     });
 
     it('nzTrigger hover', () => {
@@ -98,12 +107,59 @@ describe('nz-float-button-group', () => {
         false
       );
     });
+
+    describe('float-button-group placement', () => {
+      it('should set correct class for nzPlacement top', () => {
+        testComponent.trigger = 'click';
+        testComponent.placement = 'top';
+        fixture.detectChanges();
+        expect(resultEl.nativeElement.classList).toContain('ant-float-btn-group-top');
+        // is not menu mode
+        testComponent.trigger = null;
+        fixture.detectChanges();
+        expect(resultEl.nativeElement.classList).not.toContain('ant-float-btn-group-top');
+      });
+
+      it('should set correct class for nzPlacement bottom', () => {
+        testComponent.trigger = 'click';
+        testComponent.placement = 'bottom';
+        fixture.detectChanges();
+        expect(resultEl.nativeElement.classList).toContain('ant-float-btn-group-bottom');
+        // is not menu mode
+        testComponent.trigger = null;
+        fixture.detectChanges();
+        expect(resultEl.nativeElement.classList).not.toContain('ant-float-btn-group-bottom');
+      });
+
+      it('should set correct class for nzPlacement left', () => {
+        testComponent.trigger = 'click';
+        testComponent.placement = 'left';
+        fixture.detectChanges();
+        expect(resultEl.nativeElement.classList).toContain('ant-float-btn-group-left');
+        // is not menu mode
+        testComponent.trigger = null;
+        fixture.detectChanges();
+        expect(resultEl.nativeElement.classList).not.toContain('ant-float-btn-group-left');
+      });
+
+      it('should set correct class for nzPlacement right', () => {
+        testComponent.trigger = 'click';
+        testComponent.placement = 'right';
+        fixture.detectChanges();
+        expect(resultEl.nativeElement.classList).toContain('ant-float-btn-group-right');
+        // is not menu mode
+        testComponent.trigger = null;
+        fixture.detectChanges();
+        expect(resultEl.nativeElement.classList).not.toContain('ant-float-btn-group-right');
+      });
+    });
   });
 });
 
 describe('nz-float-button-group RTL', () => {
   let fixture: ComponentFixture<TriTestFloatButtonRtlComponent>;
   let resultEl: DebugElement;
+  let groupComponent: TriFloatButtonGroupComponent;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -111,10 +167,13 @@ describe('nz-float-button-group RTL', () => {
     });
     fixture = TestBed.createComponent(TriTestFloatButtonRtlComponent);
     resultEl = fixture.debugElement.query(By.directive(TriFloatButtonGroupComponent));
+    groupComponent = resultEl.componentInstance;
   }));
 
   it('rtl', () => {
     fixture.detectChanges();
+    // @ts-ignore
+    expect(groupComponent.dir()).toBe('rtl');
     expect(resultEl.nativeElement.classList).toContain('ant-float-btn-group-rtl');
   });
 });
@@ -128,6 +187,7 @@ describe('nz-float-button-group RTL', () => {
       [shape]="shape"
       [trigger]="trigger"
       [open]="open"
+      [placement]="placement"
       (onOpenChange)="onClick($event)"
     >
     </tri-float-button-group>
@@ -141,6 +201,7 @@ export class TriTestFloatButtonGroupBasicComponent {
   trigger: 'click' | 'hover' | null = null;
   open: boolean | null = null;
   icon: TemplateRef<void> | null = null;
+  placement: 'top' | 'right' | 'bottom' | 'left' = 'top';
   @ViewChild('icon', { static: false }) _icon!: TemplateRef<void>;
 
   isClick: boolean = false;

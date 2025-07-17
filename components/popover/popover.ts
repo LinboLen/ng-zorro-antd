@@ -23,8 +23,8 @@ import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriOverlayModule } from 'ng-zorro-antd/core/overlay';
 import { NgStyleInterface, TriSafeAny, TriTSType } from 'ng-zorro-antd/core/types';
 import {
-  TriToolTipComponent,
   TriTooltipBaseDirective,
+  TriTooltipComponent,
   TriTooltipTrigger,
   PropertyMapping,
   isTooltipEmpty
@@ -135,7 +135,7 @@ export class TriPopoverDirective extends TriTooltipBaseDirective {
   `,
   imports: [OverlayModule, TriOverlayModule, TriNoAnimationDirective, TriOutletModule]
 })
-export class TriPopoverComponent extends TriToolTipComponent {
+export class TriPopoverComponent extends TriTooltipComponent {
   override _prefix = 'ant-popover';
   contentContext: object | null = null;
 

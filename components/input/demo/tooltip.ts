@@ -2,11 +2,11 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriInputModule } from 'ng-zorro-antd/input';
-import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'tri-demo-input-tooltip',
-  imports: [FormsModule, TriInputModule, TriToolTipModule],
+  imports: [FormsModule, TriInputModule, TriTooltipModule],
   template: `
     <input
       #inputElement

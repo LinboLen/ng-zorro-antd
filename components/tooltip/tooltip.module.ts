@@ -5,11 +5,16 @@
 
 import { NgModule } from '@angular/core';
 
-// NOTE: the `t` is not uppercase in directives. Change this would however introduce breaking change.
-import { TriToolTipComponent, TriTooltipDirective } from './tooltip';
+import { TriTooltipComponent, TriTooltipDirective } from './tooltip';
 
 @NgModule({
-  imports: [TriToolTipComponent, TriTooltipDirective],
-  exports: [TriToolTipComponent, TriTooltipDirective]
+  imports: [TriTooltipComponent, TriTooltipDirective],
+  exports: [TriTooltipComponent, TriTooltipDirective]
 })
-export class TriToolTipModule {}
+export class TriTooltipModule {}
+
+/**
+ * @deprecated Use {@link TriTooltipModule} instead.
+ * This will be removed in v21.0.0.
+ */
+export const TriToolTipModule = TriTooltipModule;

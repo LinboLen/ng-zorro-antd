@@ -28,7 +28,7 @@ import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriProgressModule } from 'ng-zorro-antd/progress';
-import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
 
 import { TriIconRenderTemplate, TriShowUploadList, TriUploadFile, TriUploadListType } from './interface';
 
@@ -67,7 +67,7 @@ interface UploadListFile extends TriUploadFile {
   },
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TriToolTipModule, NgTemplateOutlet, TriIconModule, TriButtonModule, TriProgressModule]
+  imports: [TriTooltipModule, NgTemplateOutlet, TriIconModule, TriButtonModule, TriProgressModule]
 })
 export class TriUploadListComponent implements OnChanges {
   list: UploadListFile[] = [];

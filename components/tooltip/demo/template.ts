@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 import { TriIconModule } from 'ng-zorro-antd/icon';
-import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'tri-demo-tooltip-template',
-  imports: [TriIconModule, TriToolTipModule],
+  imports: [TriIconModule, TriTooltipModule],
   template: `
     <a tri-tooltip [tooltipTitle]="titleTemplate" [tooltipTitleContext]="{ $implicit: 'Icon' }"
       >This Tooltip has an Icon</a

@@ -4,12 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { TriCodeEditorComponent, TriCodeEditorModule } from 'ng-zorro-antd/code-editor';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriSwitchModule } from 'ng-zorro-antd/switch';
-import { TriTooltipDirective, TriToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriTooltipDirective, TriTooltipModule } from 'ng-zorro-antd/tooltip';
 import { TriTypographyModule } from 'ng-zorro-antd/typography';
 
 @Component({
   selector: 'tri-demo-code-editor-complex',
-  imports: [FormsModule, TriCodeEditorModule, TriIconModule, TriTypographyModule, TriSwitchModule, TriToolTipModule],
+  imports: [FormsModule, TriCodeEditorModule, TriIconModule, TriTypographyModule, TriSwitchModule, TriTooltipModule],
   template: `
     <p tri-paragraph style="margin-bottom: 8px;">
       Loading

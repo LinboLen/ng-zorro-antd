@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
-import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'tri-demo-tooltip-placement',
-  imports: [TriButtonModule, TriToolTipModule],
+  imports: [TriButtonModule, TriTooltipModule],
   template: `
     <div style="margin-left:60px;">
       <button tooltipTitle="prompt text" [tooltipPlacement]="['topLeft', 'leftTop']" tri-button tri-tooltip>

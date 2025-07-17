@@ -3,11 +3,11 @@ import { Component } from '@angular/core';
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { presetColors } from 'ng-zorro-antd/core/color';
 import { TriDividerModule } from 'ng-zorro-antd/divider';
-import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'tri-demo-tooltip-color',
-  imports: [TriButtonModule, TriDividerModule, TriToolTipModule],
+  imports: [TriButtonModule, TriDividerModule, TriTooltipModule],
   template: `
     <tri-divider text="Preset" orientation="left"></tri-divider>
     @for (color of presetColors; track color) {

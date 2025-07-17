@@ -10,13 +10,14 @@ import {
   ChangeDetectorRef,
   Component,
   ContentChildren,
+  DestroyRef,
   Input,
   OnChanges,
   QueryList,
+  SimpleChanges,
   TemplateRef,
   booleanAttribute,
-  inject,
-  DestroyRef
+  inject
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -41,19 +42,11 @@ const SPACE_SIZE: Record<TriSpaceType, number> = {
   template: `
     <ng-content></ng-content>
     @for (item of items; track item; let last = $last; let index = $index) {
-      <div
-        class="tri-space-item"
-        [style.margin-block-end.px]="direction === 'vertical' ? (last ? null : spaceSize) : null"
-        [style.margin-inline-end.px]="direction === 'horizontal' ? (last ? null : spaceSize) : null"
-      >
+      <div class="tri-space-item">
         <ng-container [ngTemplateOutlet]="item"></ng-container>
       </div>
       @if (split && !last) {
-        <span
-          class="tri-space-split"
-          [style.margin-block-end.px]="direction === 'vertical' ? (last ? null : spaceSize) : null"
-          [style.margin-inline-end.px]="direction === 'horizontal' ? (last ? null : spaceSize) : null"
-        >
+        <span class="tri-space-split">
           <ng-template [stringTemplateOutlet]="split" [stringTemplateOutletContext]="{ $implicit: index }">{{ split }}</ng-template>
         </span>
       }
@@ -67,7 +60,9 @@ const SPACE_SIZE: Record<TriSpaceType, number> = {
     '[class.tri-space-align-end]': 'mergedAlign === "end"',
     '[class.tri-space-align-center]': 'mergedAlign === "center"',
     '[class.tri-space-align-baseline]': 'mergedAlign === "baseline"',
-    '[style.flex-wrap]': 'nzWrap ? "wrap" : null'
+    '[style.flex-wrap]': 'nzWrap ? "wrap" : null',
+    '[style.column-gap.px]': 'horizontalSize',
+    '[style.row-gap.px]': 'verticalSize'
   },
   imports: [NgTemplateOutlet, TriStringTemplateOutletDirective]
 })
@@ -82,28 +77,45 @@ export class TriSpaceComponent implements OnChanges, AfterContentInit {
   @Input() align?: TriSpaceAlign;
   @Input() split: TemplateRef<{ $implicit: number }> | string | null = null;
   @Input({ transform: booleanAttribute }) wrap: boolean = false;
-  @Input() @WithConfig() size: TriSpaceSize = 'small';
+  @Input() @WithConfig() size: TriSpaceSize | [TriSpaceSize, TriSpaceSize] = 'small';
 
   @ContentChildren(TriSpaceItemDirective, { read: TemplateRef }) items!: QueryList<TemplateRef<TriSafeAny>>;
 
   mergedAlign?: TriSpaceAlign;
-  spaceSize: number = SPACE_SIZE.small;
+  horizontalSize!: number;
+  verticalSize!: number;
 
-  private updateSpaceItems(): void {
-    const numberSize = typeof this.size === 'string' ? SPACE_SIZE[this.size] : this.size;
-    this.spaceSize = numberSize / (this.split ? 2 : 1);
-    this.cdr.markForCheck();
+  constructor() {
+    this.updateSpaceSize();
   }
 
-  ngOnChanges(): void {
-    this.updateSpaceItems();
+  ngOnChanges(changes: SimpleChanges): void {
+    const { nzSize } = changes;
+    if (nzSize) {
+      this.updateSpaceSize();
+    }
     this.mergedAlign = this.align === undefined && this.direction === 'horizontal' ? 'center' : this.align;
   }
 
   ngAfterContentInit(): void {
-    this.updateSpaceItems();
     this.items.changes.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.cdr.markForCheck();
     });
   }
+
+  private updateSpaceSize(): void {
+    const { horizontalSize, verticalSize } = normalizeSpaceSize(this.size);
+    this.horizontalSize = horizontalSize;
+    this.verticalSize = verticalSize;
+  }
+}
+
+function normalizeSpaceSize(size: TriSpaceSize | [TriSpaceSize, TriSpaceSize]): {
+  horizontalSize: number;
+  verticalSize: number;
+} {
+  const [horizontalSize, verticalSize] = (Array.isArray(size) ? size : ([size, size] as const)).map(s =>
+    typeof s === 'number' ? s : SPACE_SIZE[s]
+  );
+  return { horizontalSize, verticalSize };
 }

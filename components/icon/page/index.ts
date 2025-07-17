@@ -35,7 +35,7 @@ import { TriProgressModule } from 'ng-zorro-antd/progress';
 import { TriRadioModule } from 'ng-zorro-antd/radio';
 import { TriResultModule } from 'ng-zorro-antd/result';
 import { TriSpinModule } from 'ng-zorro-antd/spin';
-import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
 import { TriUploadFile, TriUploadModule, TriUploadXHRArgs } from 'ng-zorro-antd/upload';
 
 export interface Categories {
@@ -326,7 +326,7 @@ declare const locale: TriSafeAny;
     TriRadioModule,
     TriResultModule,
     TriSpinModule,
-    TriToolTipModule,
+    TriTooltipModule,
     TriProgressModule,
     TriUploadModule
   ],

@@ -11,7 +11,7 @@ import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
 import { TriSelectModule } from 'ng-zorro-antd/select';
 import { TriSpaceModule } from 'ng-zorro-antd/space';
 import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
-import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
 import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
 @Component({
@@ -28,7 +28,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
     TriDatePickerModule,
     TriTimePickerModule,
     TriAutocompleteModule,
-    TriToolTipModule,
+    TriTooltipModule,
     FormsModule
   ],
   template: `

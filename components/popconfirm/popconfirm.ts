@@ -38,7 +38,7 @@ import { NgStyleInterface, TriTSType } from 'ng-zorro-antd/core/types';
 import { wrapIntoObservable } from 'ng-zorro-antd/core/util';
 import { TriI18nModule } from 'ng-zorro-antd/i18n';
 import { TriIconModule } from 'ng-zorro-antd/icon';
-import { TriTooltipBaseDirective, TriToolTipComponent, TriTooltipTrigger, PropertyMapping } from 'ng-zorro-antd/tooltip';
+import { TriTooltipBaseDirective, TriTooltipComponent, TriTooltipTrigger, PropertyMapping } from 'ng-zorro-antd/tooltip';
 
 import { TriPopConfirmButtonProps } from './popconfirm-option';
 
@@ -201,6 +201,7 @@ export class TriPopconfirmDirective extends TriTooltipBaseDirective {
                     tri-button
                     #cancelBtn
                     [size]="'small'"
+                    [danger]="cancelButtonProps()?.nzDanger"
                     (click)="onCancel()"
                     [disabled]="cancelButtonProps()?.nzDisabled"
                     [attr.cdkFocusInitial]="autoFocus === 'cancel' || null"
@@ -243,7 +244,7 @@ export class TriPopconfirmDirective extends TriTooltipBaseDirective {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class TriPopconfirmComponent extends TriToolTipComponent {
+export class TriPopconfirmComponent extends TriTooltipComponent {
   @ViewChildren('okBtn', { read: ElementRef }) okBtn!: QueryList<ElementRef>;
   @ViewChildren('cancelBtn', { read: ElementRef }) cancelBtn!: QueryList<ElementRef>;
 

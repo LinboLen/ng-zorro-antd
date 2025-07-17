@@ -13,7 +13,7 @@ import { dispatchMouseEvent } from 'ng-zorro-antd/core/testing';
 
 import { TriTooltipBaseDirective, TriTooltipTrigger } from './base';
 import { TriTooltipDirective } from './tooltip';
-import { TriToolTipModule } from './tooltip.module';
+import { TriTooltipModule } from './tooltip.module';
 
 describe('nz-tooltip', () => {
   let fixture: ComponentFixture<TriTooltipTestComponent>;
@@ -372,7 +372,7 @@ function getOverlayElementForTooltip(tooltip: TriTooltipBaseDirective): HTMLElem
 }
 
 @Component({
-  imports: [TriToolTipModule],
+  imports: [TriTooltipModule],
   template: `
     <a
       #titleString
@@ -455,7 +455,7 @@ export class TriTooltipTestComponent {
 }
 
 @Component({
-  imports: [TriElementPatchModule, TriToolTipModule],
+  imports: [TriElementPatchModule, TriTooltipModule],
   template: `
     <button tri-element #button="nzElement">Action</button>
     <a tri-tooltip tooltipTitle="This action could not be revoked!" [tooltipOrigin]="button.elementRef">Notice</a>
@@ -466,7 +466,7 @@ export class TriTestTooltipTargetComponent {
 }
 
 @Component({
-  imports: [TriToolTipModule],
+  imports: [TriTooltipModule],
   template: `
     <a
       #titleString

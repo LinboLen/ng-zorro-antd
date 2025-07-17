@@ -26,7 +26,7 @@ import { TriTransButtonModule } from 'ng-zorro-antd/core/trans-button';
 import { TriTSType } from 'ng-zorro-antd/core/types';
 import { TriI18nService, TriTextI18nInterface } from 'ng-zorro-antd/i18n';
 import { TriIconModule } from 'ng-zorro-antd/icon';
-import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'tri-text-copy',
@@ -48,7 +48,7 @@ import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  imports: [TriToolTipModule, TriTransButtonModule, TriIconModule, TriOutletModule]
+  imports: [TriTooltipModule, TriTransButtonModule, TriIconModule, TriOutletModule]
 })
 export class TriTextCopyComponent implements OnInit, OnChanges {
   private cdr = inject(ChangeDetectorRef);

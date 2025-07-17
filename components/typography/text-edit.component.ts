@@ -32,7 +32,7 @@ import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 import { TriI18nService, TriTextI18nInterface } from 'ng-zorro-antd/i18n';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriAutosizeDirective, TriInputModule } from 'ng-zorro-antd/input';
-import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'tri-text-edit',
@@ -59,7 +59,7 @@ import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  imports: [TriInputModule, TriTransButtonModule, TriIconModule, TriToolTipModule, TriOutletModule]
+  imports: [TriInputModule, TriTransButtonModule, TriIconModule, TriTooltipModule, TriOutletModule]
 })
 export class TriTextEditComponent implements OnInit {
   private ngZone = inject(NgZone);

@@ -21,7 +21,7 @@ import {
 
 import { NgStyleInterface, TriTSType } from 'ng-zorro-antd/core/types';
 import { numberAttributeWithZeroFallback } from 'ng-zorro-antd/core/util';
-import { TriToolTipModule, TriTooltipDirective } from 'ng-zorro-antd/tooltip';
+import { TriTooltipDirective, TriTooltipModule } from 'ng-zorro-antd/tooltip';
 
 import { TriSliderShowTooltip } from './typings';
 
@@ -45,7 +45,7 @@ import { TriSliderShowTooltip } from './typings';
     '(mouseenter)': 'enterHandle()',
     '(mouseleave)': 'leaveHandle()'
   },
-  imports: [TriToolTipModule],
+  imports: [TriTooltipModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })

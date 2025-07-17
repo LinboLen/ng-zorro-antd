@@ -3,11 +3,11 @@ import { Component } from '@angular/core';
 import { TriAvatarModule } from 'ng-zorro-antd/avatar';
 import { TriDividerModule } from 'ng-zorro-antd/divider';
 import { TriIconModule } from 'ng-zorro-antd/icon';
-import { TriToolTipModule } from 'ng-zorro-antd/tooltip';
+import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'tri-demo-avatar-group',
-  imports: [TriAvatarModule, TriDividerModule, TriToolTipModule, TriIconModule],
+  imports: [TriAvatarModule, TriDividerModule, TriTooltipModule, TriIconModule],
   template: `
     <tri-avatar-group>
       <tri-avatar icon="user" src="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></tri-avatar>

@@ -62,7 +62,7 @@ export class TriTooltipDirective extends TriTooltipBaseDirective {
   @Output('nzTooltipVisibleChange') override readonly visibleChange = new EventEmitter<boolean>();
 
   constructor() {
-    super(TriToolTipComponent);
+    super(TriTooltipComponent);
   }
 
   protected override getProxyPropertyMap(): PropertyMapping {
@@ -116,7 +116,7 @@ export class TriTooltipDirective extends TriTooltipBaseDirective {
   `,
   imports: [OverlayModule, TriNoAnimationDirective, TriOutletModule, TriOverlayModule]
 })
-export class TriToolTipComponent extends TriTooltipBaseComponent {
+export class TriTooltipComponent extends TriTooltipBaseComponent {
   override title: TriTSType | null = null;
   titleContext: object | null = null;
 
@@ -143,3 +143,9 @@ export class TriToolTipComponent extends TriTooltipBaseComponent {
     };
   }
 }
+
+/**
+ * @deprecated Use {@link TriTooltipComponent} instead.
+ * This will be removed in v21.0.0.
+ */
+export const TriToolTipComponent = TriTooltipComponent;
