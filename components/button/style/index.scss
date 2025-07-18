@@ -4,7 +4,7 @@
 $btn-prefix-cls: "#{$ant-prefix}-btn";
 // for compatible
 $btn-ghost-color: $text-color;
-$btn-ghost-bg: black;
+$btn-ghost-bg: transparent;
 $btn-ghost-border: $border-color-base;
 // Button styles
 
@@ -208,7 +208,7 @@ $btn-ghost-border: $border-color-base;
     @include button-variant-ghost($btn-danger-border, $btn-danger-border, $error-color-hover, $error-color-active);
   }
   &-background-ghost#{&}-dangerous#{&}-link {
-    @include button-variant-ghost($btn-danger-border, black, $error-color-hover, $error-color-active);
+    @include button-variant-ghost($btn-danger-border, transparent, $error-color-hover, $error-color-active);
   }
   &-two-chinese-chars::first-letter {
     letter-spacing: 0.34em;

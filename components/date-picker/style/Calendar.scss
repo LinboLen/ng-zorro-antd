@@ -115,7 +115,7 @@
   .#{$calendar-prefix-cls}-date {
     color: $text-color-inverse;
     background: $primary-color;
-    border: $border-width-base $border-style-base black;
+    border: $border-width-base $border-style-base transparent;
     &:hover {
       background: $primary-color;
     }
@@ -206,7 +206,7 @@
     line-height: 22px;
     text-align: center;
     background: transparent;
-    border: $border-width-base $border-style-base black;
+    border: $border-width-base $border-style-base transparent;
     border-radius: $border-radius-sm;
     transition: background 0.3s ease;
     &-panel {
@@ -244,7 +244,7 @@
     width: auto;
     color: $disabled-color;
     background: $disabled-bg;
-    border: $border-width-base $border-style-base black;
+    border: $border-width-base $border-style-base transparent;
     border-radius: 0;
     cursor: not-allowed;
     &:hover {

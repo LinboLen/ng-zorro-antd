@@ -31,7 +31,7 @@ $timeline-prefix-cls: "#{$ant-prefix}-timeline";
       width: 10px;
       height: 10px;
       background-color: $timeline-dot-bg;
-      border: $timeline-dot-border-width solid black;
+      border: $timeline-dot-border-width solid transparent;
       border-radius: 100px;
       &-blue {
         color: $primary-color;

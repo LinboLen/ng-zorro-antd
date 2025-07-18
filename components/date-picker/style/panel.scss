@@ -350,7 +350,7 @@ $picker-cell-inner-cls: "#{$picker-prefix-cls}-cell-inner";
     min-width: 100%;
     line-height: $picker-text-height - 2 * $border-width-base;
     text-align: center;
-    border-bottom: $border-width-base $border-style-base black;
+    border-bottom: $border-width-base $border-style-base transparent;
     .#{$picker-prefix-cls}-panel & {
       border-top: $border-width-base $border-style-base $picker-border-color;
     }

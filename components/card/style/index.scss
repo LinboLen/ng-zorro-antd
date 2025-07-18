@@ -1,7 +1,7 @@
 @import "../../style/themes/index";
 @import "../../style/mixins/index";
 $card-prefix-cls: "#{$ant-prefix}-card";
-$card-hoverable-hover-border: black;
+$card-hoverable-hover-border: transparent;
 $card-action-icon-size: 16px;
 $gradient-min: fade($card-skeleton-bg, 20%);
 $gradient-max: fade($card-skeleton-bg, 40%);

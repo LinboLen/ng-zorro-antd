@@ -44,7 +44,7 @@ $color-picker-prefix-cls: "#{$ant-prefix}-color-picker";
     right: 0;
     bottom: 0;
     left: 0;
-    background-image: linear-gradient(0deg, black, black), linear-gradient(90deg, white, hsla(0deg, 0%, 100%, 0));
+    background-image: linear-gradient(0deg, black, transparent), linear-gradient(90deg, white, hsla(0deg, 0%, 100%, 0));
     border-radius: inherit;
   }
   &-transform {
@@ -75,7 +75,12 @@ $color-picker-prefix-cls: "#{$ant-prefix}-color-picker";
       margin-bottom: $margin-sm;
     }
     &-alpha {
-      background-image: conic-gradient(rgba(0, 0, 0, 0.06) 0 25%, black 0 50%, rgba(0, 0, 0, 0.06) 0 75%, black 0);
+      background-image: conic-gradient(
+        rgba(0, 0, 0, 0.06) 0 25%,
+        transparent 0 50%,
+        rgba(0, 0, 0, 0.06) 0 75%,
+        transparent 0
+      );
       background-size: 8px 8px;
     }
   }
@@ -114,7 +119,12 @@ $color-picker-prefix-cls: "#{$ant-prefix}-color-picker";
     width: 28px;
     height: 28px;
     overflow: hidden;
-    background-image: conic-gradient(rgba(0, 0, 0, 0.06) 0 25%, black 0 50%, rgba(0, 0, 0, 0.06) 0 75%, black 0);
+    background-image: conic-gradient(
+      rgba(0, 0, 0, 0.06) 0 25%,
+      transparent 0 50%,
+      rgba(0, 0, 0, 0.06) 0 75%,
+      transparent 0
+    );
     background-size: 50% 50%;
     border-radius: $border-radius-base;
     &-inner {

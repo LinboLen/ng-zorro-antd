@@ -177,11 +177,11 @@ $disabled-color-dark: fade($white, 30%);
 // Tree
 
 // ---
-$tree-bg: black;
+$tree-bg: transparent;
 // List
 
 // ---
-$list-customize-card-bg: black;
+$list-customize-card-bg: transparent;
 // Shadow
 
 // ---
@@ -210,14 +210,14 @@ $shadow-2:
 $btn-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
 $btn-primary-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
 $btn-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
-$btn-default-bg: black;
+$btn-default-bg: transparent;
 $btn-default-ghost-color: $text-color;
 $btn-default-ghost-border: fade($white, 25%);
 $btn-text-hover-bg: rgba(255, 255, 255, 0.03);
 // Checkbox
 
 // ---
-$checkbox-check-bg: black;
+$checkbox-check-bg: transparent;
 // Descriptions
 
 // ---
@@ -252,7 +252,7 @@ $layout-trigger-background: #262626;
 // Input
 
 // ---
-$input-bg: black;
+$input-bg: transparent;
 $input-placeholder-color: fade($white, 30%);
 $input-icon-color: fade($white, 30%);
 $input-number-handler-active-bg: $item-hover-bg;
@@ -262,7 +262,7 @@ $input-variant-filled-hover-bg: $background-color-base;
 // Select
 
 // ---
-$select-background: black;
+$select-background: transparent;
 $select-dropdown-bg: $popover-background;
 $select-clear-background: $component-background;
 $select-selection-item-bg: fade($white, 8);
@@ -274,7 +274,7 @@ $select-multiple-item-filled-bg: $component-background;
 // Cascader
 
 // ---
-$cascader-bg: black;
+$cascader-bg: transparent;
 $cascader-menu-bg: $popover-background;
 $cascader-menu-border-color-split: $border-color-split;
 // Tooltip
@@ -320,7 +320,7 @@ $table-fixed-header-sort-active-bg: #222222;
 $table-filter-btns-bg: $popover-background;
 $table-expanded-row-bg: $table-header-bg;
 $table-filter-dropdown-bg: $popover-background;
-$table-expand-icon-bg: black;
+$table-expand-icon-bg: transparent;
 // Tag
 
 // ---
@@ -338,18 +338,18 @@ $error-color-deprecated-border: $red-3;
 $picker-basic-cell-hover-with-range-color: darken($primary-color, 35%);
 $picker-basic-cell-disabled-bg: #303030;
 $picker-border-color: $border-color-split;
-$picker-bg: black;
+$picker-bg: transparent;
 $picker-date-hover-range-border-color: darken($primary-color, 20%);
 // Dropdown
 
 // ---
 $dropdown-menu-bg: $popover-background;
-$dropdown-menu-submenu-disabled-bg: black;
+$dropdown-menu-submenu-disabled-bg: transparent;
 // Steps
 
 // ---
 $steps-nav-arrow-color: fade($white, 20%);
-$steps-background: black;
+$steps-background: transparent;
 // Avatar
 
 // ---
@@ -363,7 +363,7 @@ $progress-steps-item-bg: fade($white, 8%);
 // ---
 $calendar-bg: $popover-background;
 $calendar-input-bg: $calendar-bg;
-$calendar-border-color: black;
+$calendar-border-color: transparent;
 $calendar-full-bg: $component-background;
 // Badge
 
@@ -389,7 +389,7 @@ $transfer-item-hover-bg: #262626;
 // Comment
 
 // ---
-$comment-bg: black;
+$comment-bg: transparent;
 $comment-author-time-color: fade($white, 30%);
 $comment-action-hover-color: fade($white, 65%);
 // Rate
@@ -403,9 +403,9 @@ $switch-bg: $white;
 // Pagination
 
 // ---
-$pagination-item-bg: black;
-$pagination-item-bg-active: black;
-$pagination-item-link-bg: black;
+$pagination-item-bg: transparent;
+$pagination-item-bg-active: transparent;
+$pagination-item-link-bg: transparent;
 $pagination-item-disabled-bg-active: fade($white, 25%);
 $pagination-item-disabled-color-active: $black;
 $pagination-item-input-bg: $pagination-item-bg;
@@ -413,7 +413,7 @@ $pagination-item-input-bg: $pagination-item-bg;
 
 // ---
 $page-header-back-color: $icon-color;
-$page-header-ghost-bg: black;
+$page-header-ghost-bg: transparent;
 // Slider
 
 // ---

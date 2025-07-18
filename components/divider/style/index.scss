@@ -37,7 +37,7 @@ $divider-prefix-cls: "#{$ant-prefix}-divider";
     &::after {
       position: relative;
       width: 50%;
-      border-top: $border-width-base solid black;
+      border-top: $border-width-base solid transparent;
       // Chrome not accept `inherit` in `border-top`
       border-top-color: inherit;
       border-bottom: 0;

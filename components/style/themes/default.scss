@@ -249,7 +249,7 @@ $btn-disable-color: $disabled-color;
 $btn-disable-bg: $disabled-bg;
 $btn-disable-border: $border-color-base;
 $btn-default-ghost-color: $component-background;
-$btn-default-ghost-bg: black;
+$btn-default-ghost-bg: transparent;
 $btn-default-ghost-border: $component-background;
 $btn-font-size-lg: $font-size-lg;
 $btn-font-size-sm: $font-size-base;
@@ -270,7 +270,7 @@ $btn-square-only-icon-size: $font-size-base + 2px;
 $btn-square-only-icon-size-sm: $font-size-base;
 $btn-square-only-icon-size-lg: $btn-font-size-lg + 2px;
 $btn-group-border: $primary-5;
-$btn-link-hover-bg: black;
+$btn-link-hover-bg: transparent;
 $btn-text-hover-bg: rgba(0, 0, 0, 0.018);
 // Checkbox
 $checkbox-size: 16px;
@@ -503,7 +503,7 @@ $cascader-dropdown-line-height: $dropdown-line-height;
 // Anchor
 
 // ---
-$anchor-bg: black;
+$anchor-bg: transparent;
 $anchor-border-color: $border-color-split;
 $anchor-link-top: 4px;
 $anchor-link-left: 16px;
@@ -564,7 +564,7 @@ $modal-header-close-size: $modal-header-title-line-height + 2 * $modal-header-pa
 $modal-content-bg: $component-background;
 $modal-heading-color: $heading-color;
 $modal-close-color: $text-color-secondary;
-$modal-footer-bg: black;
+$modal-footer-bg: transparent;
 $modal-footer-border-color-split: $border-color-split;
 $modal-footer-border-style: $border-style-base;
 $modal-footer-padding-vertical: 10px;
@@ -624,7 +624,7 @@ $menu-dark-item-active-bg: $primary-color;
 $menu-dark-item-active-danger-bg: $error-color;
 $menu-dark-selected-item-icon-color: $white;
 $menu-dark-selected-item-text-color: $white;
-$menu-dark-item-hover-bg: black;
+$menu-dark-item-hover-bg: transparent;
 // Spin
 
 // ---
@@ -750,7 +750,7 @@ $rate-star-hover-scale: scale(1.1);
 
 // ---
 $card-head-color: $heading-color;
-$card-head-background: black;
+$card-head-background: transparent;
 $card-head-font-size: $font-size-lg;
 $card-head-font-size-sm: $font-size-base;
 $card-head-padding: 16px;
@@ -814,7 +814,7 @@ $tabs-highlight-color: $primary-color;
 $tabs-hover-color: $primary-5;
 $tabs-active-color: $primary-7;
 $tabs-card-gutter: 2px;
-$tabs-card-tab-active-border-top: 2px solid black;
+$tabs-card-tab-active-border-top: 2px solid transparent;
 // BackTop
 
 // ---
@@ -992,8 +992,8 @@ $alert-with-description-icon-size: 24px;
 // List
 
 // ---
-$list-header-background: black;
-$list-footer-background: black;
+$list-header-background: transparent;
+$list-footer-background: transparent;
 $list-empty-text-padding: $padding-md;
 $list-item-padding: $padding-sm 0;
 $list-item-padding-sm: $padding-xs $padding-md;
