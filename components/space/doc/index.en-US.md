@@ -36,12 +36,6 @@ The difference with Flex component is:
 type NzSpaceSize = 'small' | 'middle' | 'large' | number;
 ```
 
-#### Interfaces
-
-```ts
-type NzSpaceSize = 'small' | 'middle' | 'large' | number;
-```
-
 ### nz-space-compact
 
 Use `<nz-space-compact>` when child form components are compactly connected and the border is collapsed. The supported components are：

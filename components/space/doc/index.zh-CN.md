@@ -41,12 +41,6 @@ description: 设置组件之间的间距。
 type NzSpaceSize = 'small' | 'middle' | 'large' | number;
 ```
 
-#### Interfaces
-
-```ts
-type NzSpaceSize = 'small' | 'middle' | 'large' | number;
-```
-
 ### nz-space-compact
 
 需要表单组件之间紧凑连接且合并边框时，使用 `<nz-space-compact>`。支持的组件有：
