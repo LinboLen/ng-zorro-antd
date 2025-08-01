@@ -49,7 +49,7 @@ import { TriMenuModule } from 'ng-zorro-antd/menu';
           </tri-breadcrumb>
           <div class="inner-content">Bill is a cat.</div>
         </tri-content>
-        <tri-footer>Ant Design ©2020 Implement By Angular</tri-footer>
+        <tri-footer>Ant Design ©{{ date.getFullYear() }} Implement By Angular</tri-footer>
       </tri-layout>
     </tri-layout>
   `,
@@ -78,12 +78,19 @@ import { TriMenuModule } from 'ng-zorro-antd/menu';
         padding: 24px;
         background: #fff;
         min-height: 360px;
+        border-radius: 8px;
       }
 
       nz-footer {
         text-align: center;
       }
+
+      :host > nz-layout {
+        min-height: 100vh;
+      }
     `
   ]
 })
-export class TriDemoLayoutSideComponent {}
+export class TriDemoLayoutSideComponent {
+  protected readonly date = new Date();
+}

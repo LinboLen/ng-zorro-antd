@@ -8,7 +8,7 @@ import { TriMenuModule } from 'ng-zorro-antd/menu';
   selector: 'tri-demo-layout-responsive',
   imports: [TriIconModule, TriMenuModule, TriLayoutModule],
   template: `
-    <tri-layout class="layout">
+    <tri-layout>
       <tri-sider collapsible breakpoint="lg" [collapsedWidth]="0">
         <div class="logo"></div>
         <ul tri-menu theme="dark" mode="inline">
@@ -35,16 +35,12 @@ import { TriMenuModule } from 'ng-zorro-antd/menu';
         <tri-content>
           <div class="inner-content">Content</div>
         </tri-content>
-        <tri-footer>Ant Design ©2020 Implement By Angular</tri-footer>
+        <tri-footer>Ant Design ©{{ date.getFullYear() }} Implement By Angular</tri-footer>
       </tri-layout>
     </tri-layout>
   `,
   styles: [
     `
-      .layout {
-        min-height: 100vh;
-      }
-
       .logo {
         height: 32px;
         background: rgba(255, 255, 255, 0.2);
@@ -72,4 +68,6 @@ import { TriMenuModule } from 'ng-zorro-antd/menu';
     `
   ]
 })
-export class TriDemoLayoutResponsiveComponent {}
+export class TriDemoLayoutResponsiveComponent {
+  protected readonly date = new Date();
+}

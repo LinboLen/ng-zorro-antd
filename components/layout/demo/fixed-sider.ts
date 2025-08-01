@@ -147,7 +147,7 @@ import { TriMenuModule } from 'ng-zorro-antd/menu';
             content
           </div>
         </tri-content>
-        <tri-footer>Ant Design ©2020 Implement By Angular</tri-footer>
+        <tri-footer>Ant Design ©{{ date.getFullYear() }} Implement By Angular</tri-footer>
       </tri-layout>
     </tri-layout>
   `,
@@ -196,4 +196,6 @@ import { TriMenuModule } from 'ng-zorro-antd/menu';
     `
   ]
 })
-export class TriDemoLayoutFixedSiderComponent {}
+export class TriDemoLayoutFixedSiderComponent {
+  protected readonly date = new Date();
+}

@@ -47,7 +47,7 @@ import { TriMenuModule } from 'ng-zorro-antd/menu';
           </tri-breadcrumb>
           <div class="inner-content">Bill is a cat.</div>
         </tri-content>
-        <tri-footer>Ant Design ©2020 Implement By Angular</tri-footer>
+        <tri-footer>Ant Design ©{{ date.getFullYear() }} Implement By Angular</tri-footer>
       </tri-layout>
     </tri-layout>
   `,
@@ -98,4 +98,5 @@ import { TriMenuModule } from 'ng-zorro-antd/menu';
 })
 export class TriDemoLayoutCustomTriggerComponent {
   isCollapsed = false;
+  protected readonly date = new Date();
 }
