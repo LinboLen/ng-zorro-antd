@@ -52,7 +52,7 @@ import { TriTbodyComponent } from './tbody.component';
         ></table>
       </div>
       @if (!virtualTemplate) {
-        <div #tableBodyElement class="tri-table-body" [style]="bodyStyleMap">
+        <div #tableBodyElement cdkScrollable class="tri-table-body" [style]="bodyStyleMap">
           <table
             tri-table-content
             tableLayout="fixed"

@@ -12,13 +12,12 @@ description: A button that floats at the top of the page.
 - For global functionality on the site.
 - Buttons that can be seen wherever you browse.
 
-
 ## API
 
 ### common API
 
 | Property          | Description                               | Type                          | Default     |
-|-------------------|-------------------------------------------|-------------------------------|-------------|
+| ----------------- | ----------------------------------------- | ----------------------------- | ----------- |
 | `[nzIcon]`        | Set the icon component of button          | `TemplateRef<void>`           | -           |
 | `[nzDescription]` | Text and other                            | `TemplateRef<void> \| string` | -           |
 | `[nzType]`        | Setting button type                       | `'default' \| 'primary'`      | `'default'` |
@@ -30,7 +29,7 @@ description: A button that floats at the top of the page.
 ### nz-float-button-group
 
 | Property           | Description                                   | Type                                     | Default    |
-|--------------------|-----------------------------------------------|------------------------------------------|------------|
+| ------------------ | --------------------------------------------- | ---------------------------------------- | ---------- |
 | `[nzShape]`        | Set button group shape                        | `'circle' \| 'square'`                   | `'circle'` |
 | `[nzTrigger]`      | Which action can trigger menu open/close      | `'click' \| 'hover'`                     | -          |
 | `[nzOpen]`         | Whether the menu is visible or not            | `boolean`                                | -          |

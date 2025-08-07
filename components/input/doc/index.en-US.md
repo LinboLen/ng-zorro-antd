@@ -6,12 +6,10 @@ cover: 'https://gw.alipayobjects.com/zos/alicdn/xS9YEJhfe/Input.svg'
 description: Through mouse or keyboard input content, it is the most basic form field wrapper.
 ---
 
-
 ## When To Use
 
 - A user input in a form field is needed.
 - A search input is required.
-
 
 ## API
 
@@ -20,7 +18,7 @@ description: Through mouse or keyboard input content, it is the most basic form 
 All props of input supported by [w3c standards](https://www.w3schools.com/tags/tag_input.asp) and Angular can used in `nz-input`.
 
 | Property             | Description                                                                                                          | Type                                                     | Default      |
-|----------------------|----------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------|--------------|
+| -------------------- | -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- | ------------ |
 | `[nzSize]`           | The size of the input box. Note: in the context of a form, the `large` size is used.                                 | `'large' \| 'small' \| 'default'`                        | `'default'`  |
 | `[nzAutosize]`       | Only used for `textarea`, height autosize feature, can be set to `boolean` or an object `{ minRows: 2, maxRows: 6 }` | `boolean \| { minRows: number, maxRows: number }`        | `false`      |
 | ~~`[nzBorderless]`~~ | ~~Whether hide border~~                                                                                              | ~~`boolean`~~                                            | ~~`false`~~  |
@@ -49,7 +47,7 @@ All props of input supported by [w3c standards](https://www.w3schools.com/tags/t
 ### nz-input-otp
 
 | Property        | Description                                             | Type                              | Default     |
-|-----------------|---------------------------------------------------------|-----------------------------------|-------------|
+| --------------- | ------------------------------------------------------- | --------------------------------- | ----------- |
 | `[disabled]`    | Whether the input is disabled                           | `boolean`                         | `false`     |
 | `[nzFormatter]` | Format display, blank fields will be filled with ` `    | `(value: string) => string`       | -           |
 | `[nzMask]`      | Custom display, the original value will not be modified | `boolean  \| null`                | `null`      |

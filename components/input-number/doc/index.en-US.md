@@ -7,18 +7,16 @@ tag: 19.0.0
 description: Enter a number within certain range with the mouse or keyboard.
 ---
 
-
 ## When To Use
 
 When a numeric value needs to be provided.
-
 
 ## API
 
 ### nz-input-number
 
-| property           | description                                                                     | type                                                                    | default                                                                                                                             |
-|--------------------|---------------------------------------------------------------------------------|-------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| Property           | Description                                                                     | Type                                                                    | Default                                                                                                                             |
+| ------------------ | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | `[ngModel]`        | current value, two way binding                                                  | `number`                                                                | -                                                                                                                                   |
 | `[nzId]`           | ID of the input box                                                             | `string`                                                                | -                                                                                                                                   |
 | `[nzPlaceHolder]`  | placeholder                                                                     | `string`                                                                | -                                                                                                                                   |
@@ -28,6 +26,7 @@ When a numeric value needs to be provided.
 | `[nzControls]`     | whether to show up and down buttons                                             | `boolean`                                                               | `true`                                                                                                                              |
 | `[nzDisabled]`     | whether to disable                                                              | `boolean`                                                               | `false`                                                                                                                             |
 | `[nzFormatter]`    | specify the format of the displayed value                                       | `(value: number) => string`                                             | -                                                                                                                                   |
+| `[nzKeyboard]`     | Whether to enable keyboard shortcuts                                            | `boolean`                                                               | `true`                                                                                                                              |
 | `[nzMax]`          | maximum value                                                                   | `number`                                                                | [Number.MAX_SAFE_INTEGER](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER) |
 | `[nzMin]`          | minimum value                                                                   | `number`                                                                | [Number.MIN_SAFE_INTEGER](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Number/MIN_SAFE_INTEGER) |
 | `[nzParser]`       | specify how to convert back to a number from `formatter`, used with `formatter` | `(value: string) => number`                                             | -                                                                                                                                   |

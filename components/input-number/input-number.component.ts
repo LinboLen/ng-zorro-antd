@@ -220,7 +220,7 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
   private directionality = inject(Directionality);
   private formStatusService = inject(TriFormStatusService, { optional: true });
   private autoStepTimer: ReturnType<typeof setTimeout> | null = null;
-  private defaultFormater = (value: number): string => {
+  private defaultFormatter = (value: number): string => {
     const precision = this.precision();
     if (isNotNil(precision)) {
       return value.toFixed(precision);
@@ -404,7 +404,7 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
   }
 
   private setValue(value: number | null): void {
-    const formatter = this.formatter() ?? this.defaultFormater;
+    const formatter = this.formatter() ?? this.defaultFormatter;
     const precision = this.precision();
 
     if (isNotNil(precision)) {
@@ -417,8 +417,9 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
   }
 
   private setValueByTyping(value: string): void {
+    this.displayValue.set(value);
+
     if (value === '') {
-      this.displayValue.set('');
       this.updateValue(null);
       return;
     }
@@ -427,12 +428,16 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
     const parsedValue = parser(value);
 
     if (isNotCompleteNumber(value) || Number.isNaN(parsedValue)) {
-      this.displayValue.set(value);
       return;
     }
 
-    const formattedValue = this.formatter()?.(parsedValue) ?? parsedValue.toString();
-    this.displayValue.set(formattedValue);
+    // Formatting is called during input only if the user provided a formatter.
+    // Otherwise, formatting is only called when the input blurs.
+    const formatter = this.formatter();
+    if (formatter) {
+      const formattedValue = formatter(parsedValue);
+      this.displayValue.set(formattedValue);
+    }
 
     if (!isInRange(parsedValue, this.min(), this.max())) {
       return;
@@ -532,7 +537,12 @@ const STEP_INTERVAL = 200;
 const STEP_DELAY = 600;
 
 function defaultParser(value: string): number {
-  return parseFloat(value.trim().replace(/,/g, '').replace(/。/g, '.'));
+  const parsedValue = value.trim().replace(/,/g, '').replace(/。/g, '.');
+  // `+'' === 0`, so we need to check if parsedValue is empty
+  if (parsedValue.length) {
+    return +parsedValue;
+  }
+  return NaN;
 }
 
 function isInRange(value: number, min: number, max: number): boolean {

@@ -6,11 +6,9 @@ cover: 'https://gw.alipayobjects.com/zos/alicdn/RT_USzA48/DatePicker.svg'
 description: To select or input a date.
 ---
 
-
 ## When To Use
 
 By clicking the input box, you can select a date from a popup calendar.
-
 
 ## API
 
@@ -35,7 +33,7 @@ with [date-fns](https://date-fns.org/).
 The following APIs are shared by nz-date-picker, nz-range-picker.
 
 | Property                 | Description                                                                                                                        | Type                                                       | Default                                                                                                    | Global Config |
-|--------------------------|------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|---------------|
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------- |
 | `[nzId]`                 | input id attribute inside the component                                                                                            | `string`                                                   | -                                                                                                          |
 | `[nzAllowClear]`         | Whether to show clear button                                                                                                       | `boolean`                                                  | `true`                                                                                                     | -             |
 | `[nzAutoFocus]`          | get focus when component mounted                                                                                                   | `boolean`                                                  | `false`                                                                                                    | -             |
@@ -54,9 +52,9 @@ The following APIs are shared by nz-date-picker, nz-range-picker.
 | `[nzSize]`               | determine the size of the input box, the height of `large` and `small`, are 40px and 24px respectively, while default size is 32px | `'large' \| 'small'`                                       | -                                                                                                          | -             |
 | `[nzStatus]`             | Set validation status                                                                                                              | `'error' \| 'warning'`                                     | -                                                                                                          |
 | `[nzPlacement]`          | The position where the selection box pops up                                                                                       | `'bottomLeft' \| 'bottomRight' \| 'topLeft' \| 'topRight'` | `'bottomLeft'`                                                                                             |               |
-| `[nzSuffixIcon]`         | the custom suffix icon                                                                                                             | `string \| TemplateRef`                                    | -                                                                                                          | ✅             |
+| `[nzSuffixIcon]`         | the custom suffix icon                                                                                                             | `string \| TemplateRef`                                    | -                                                                                                          | ✅            |
 | ~~`[nzBorderless]`~~     | ~~remove the border~~                                                                                                              | ~~`boolean`~~                                              | ~~`false`~~                                                                                                | -             |
-| `[nzVariant]`            | Variants of DatePicker                                                                                                             | `'outlined' \| 'borderless' \| 'filled' \| 'underlined'`   | `'outlined'`                                                                                               | ✅             |
+| `[nzVariant]`            | Variants of DatePicker                                                                                                             | `'outlined' \| 'borderless' \| 'filled' \| 'underlined'`   | `'outlined'`                                                                                               | ✅            |
 | `[nzInline]`             | inline mode                                                                                                                        | `boolean`                                                  | `false`                                                                                                    | -             |
 | `(nzOnOpenChange)`       | a callback emitter, can be executed whether the popup calendar is popped up or closed                                              | `EventEmitter<boolean>`                                    | -                                                                                                          | -             |
 | `(nzOnPanelChange)`      | a callback emitter, can be executed when the panel changes                                                                         | `EventEmitter<NzPanelChangeType>`                          | -                                                                                                          | -             |
@@ -105,8 +103,8 @@ The following APIs are shared by nz-date-picker, nz-range-picker.
 | `(nzOnOk)`           | click ok callback                                                                                                  | `EventEmitter<Date[]>`                                                                                    | -                                                    |
 
 > Currently, supported `nz-time-picker` parameters in `nzShowTime` are: `nzFormat`, `nzHourStep`, `nzMinuteStep`,
-`nzSecondStep`, `nzDisabledHours`, `nzDisabledMinutes`, `nzDisabledSeconds`, `nzHideDisabledOptions`,
-`nzDefaultOpenValue`, `nzAddOn`
+> `nzSecondStep`, `nzDisabledHours`, `nzDisabledMinutes`, `nzDisabledSeconds`, `nzHideDisabledOptions`,
+> `nzDefaultOpenValue`, `nzAddOn`
 
 ## FAQ
 

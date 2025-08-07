@@ -8,12 +8,10 @@ cover: 'https://gw.alipayobjects.com/zos/alicdn/f-SbcX2Lx/Table.svg'
 description: 展示行列数据。
 ---
 
-
 ## 何时使用
 
 - 当有大量结构化的数据需要展现时；
 - 当需要对数据进行排序、搜索、分页、自定义操作等复杂行为时。
-
 
 ## 如何使用
 
@@ -60,38 +58,38 @@ Table 组件同时具备了易用性和高度可定制性
 
 ### nz-table
 
-| 参数                          | 说明                                                                                          | 类型                                                                     | 默认值                      | 全局配置 |
-|-----------------------------|---------------------------------------------------------------------------------------------|------------------------------------------------------------------------|--------------------------|------|
-| `[nzData]`                  | 数据数组                                                                                        | `T[]`                                                                  | -                        |
-| `[nzFrontPagination]`       | 是否在前端对数据进行分页，如果在服务器分页数据或者需要在前端显示全部数据时传入 false                                               | `boolean`                                                              | `true`                   |
-| `[nzTotal]`                 | 当前总数据，在服务器渲染时需要传入                                                                           | `number`                                                               | -                        |
-| `[nzCustomColumn]`          | 控制表格列的展示与排序，(开启后 `nzWidthConfig` 和 `th` 的 `[nzWidth]` 将不生效)                                 | `NzCustomColumn[]`                                                     | -                        |
-| `[nzPageIndex]`             | 当前页码，可双向绑定                                                                                  | `number`                                                               | -                        |
-| `[nzPageSize]`              | 每页展示多少数据，可双向绑定                                                                              | `number`                                                               | -                        |
-| `[nzShowPagination]`        | 是否显示分页器                                                                                     | `boolean`                                                              | `true`                   |
-| `[nzPaginationPosition]`    | 指定分页显示的位置                                                                                   | `'top' \| 'bottom' \| 'both'`                                          | `'bottom'`               |
-| `[nzPaginationType]`        | 指定分页显示的尺寸                                                                                   | `'default' \| 'small'`                                                 | `'default'`              |
-| `[nzBordered]`              | 是否展示外边框和列边框                                                                                 | `boolean`                                                              | `false`                  | ✅    |
-| `[nzOuterBordered]`         | 是否显示外边框                                                                                     | `boolean`                                                              | `false`                  | -    |
-| `[nzWidthConfig]`           | 表头分组时指定每列宽度，与 `th` 的 `[nzWidth]` 不可混用                                                       | `string[]`                                                             | `[]`                     |
-| `[nzSize]`                  | 正常或迷你类型                                                                                     | `'middle' \| 'small' \| 'default'`                                     | `'default'`              | ✅    |
-| `[nzLoading]`               | 页面是否加载中                                                                                     | `boolean`                                                              | `false`                  |
-| `[nzLoadingIndicator]`      | 加载指示符                                                                                       | `TemplateRef<void>`                                                    | -                        | ✅    |
-| `[nzLoadingDelay]`          | 延迟显示加载效果的时间（防止闪烁）                                                                           | `number`                                                               | `0`                      |
+| 参数                        | 说明                                                                                                                 | 类型                                                                   | 默认值                   | 全局配置 |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ------------------------ | -------- |
+| `[nzData]`                  | 数据数组                                                                                                             | `T[]`                                                                  | -                        |
+| `[nzFrontPagination]`       | 是否在前端对数据进行分页，如果在服务器分页数据或者需要在前端显示全部数据时传入 false                                 | `boolean`                                                              | `true`                   |
+| `[nzTotal]`                 | 当前总数据，在服务器渲染时需要传入                                                                                   | `number`                                                               | -                        |
+| `[nzCustomColumn]`          | 控制表格列的展示与排序，(开启后 `nzWidthConfig` 和 `th` 的 `[nzWidth]` 将不生效)                                     | `NzCustomColumn[]`                                                     | -                        |
+| `[nzPageIndex]`             | 当前页码，可双向绑定                                                                                                 | `number`                                                               | -                        |
+| `[nzPageSize]`              | 每页展示多少数据，可双向绑定                                                                                         | `number`                                                               | -                        |
+| `[nzShowPagination]`        | 是否显示分页器                                                                                                       | `boolean`                                                              | `true`                   |
+| `[nzPaginationPosition]`    | 指定分页显示的位置                                                                                                   | `'top' \| 'bottom' \| 'both'`                                          | `'bottom'`               |
+| `[nzPaginationType]`        | 指定分页显示的尺寸                                                                                                   | `'default' \| 'small'`                                                 | `'default'`              |
+| `[nzBordered]`              | 是否展示外边框和列边框                                                                                               | `boolean`                                                              | `false`                  | ✅       |
+| `[nzOuterBordered]`         | 是否显示外边框                                                                                                       | `boolean`                                                              | `false`                  | -        |
+| `[nzWidthConfig]`           | 表头分组时指定每列宽度，与 `th` 的 `[nzWidth]` 不可混用                                                              | `string[]`                                                             | `[]`                     |
+| `[nzSize]`                  | 正常或迷你类型                                                                                                       | `'middle' \| 'small' \| 'default'`                                     | `'default'`              | ✅       |
+| `[nzLoading]`               | 页面是否加载中                                                                                                       | `boolean`                                                              | `false`                  |
+| `[nzLoadingIndicator]`      | 加载指示符                                                                                                           | `TemplateRef<void>`                                                    | -                        | ✅       |
+| `[nzLoadingDelay]`          | 延迟显示加载效果的时间（防止闪烁）                                                                                   | `number`                                                               | `0`                      |
 | `[nzScroll]`                | 横向或纵向支持滚动，也可用于指定滚动区域的宽高度：`{ x: "300px", y: "300px" }`                                       | `object`                                                               | -                        |
-| `[nzTitle]`                 | 表格标题                                                                                        | `string \| TemplateRef<void>`                                          | -                        |
-| `[nzFooter]`                | 表格尾部                                                                                        | `string \| TemplateRef<void>`                                          | -                        |
-| `[nzNoResult]`              | 无数据时显示内容                                                                                    | `string \| TemplateRef<void>`                                          | -                        |
-| `[nzPageSizeOptions]`       | 页数选择器可选值                                                                                    | `number[]`                                                             | `[ 10, 20, 30, 40, 50 ]` |
-| `[nzShowQuickJumper]`       | 是否可以快速跳转至某页                                                                                 | `boolean`                                                              | `false`                  | ✅    |
-| `[nzShowSizeChanger]`       | 是否可以改变 `nzPageSize`                                                                         | `boolean`                                                              | `false`                  | ✅    |
-| `[nzShowTotal]`             | 用于显示数据总量和当前数据范围，用法参照 Pagination 组件                                                          | `TemplateRef<{ $implicit: number, range: [ number, number ] }>`        | -                        |
-| `[nzItemRender]`            | 用于自定义页码的结构，用法参照 Pagination 组件                                                               | `TemplateRef<{ $implicit: 'page' \| 'prev' \| 'next', page: number }>` | -                        |
-| `[nzHideOnSinglePage]`      | 只有一页时是否隐藏分页器                                                                                | `boolean`                                                              | `false`                  | ✅    |
-| `[nzSimple]`                | 当添加该属性时，显示为简单分页                                                                             | `boolean`                                                              | -                        | ✅    |
-| `[nzTemplateMode]`          | 模板模式，无需将数据传递给 `nzData`                                                                      | `boolean`                                                              | `false`                  |
-| `[nzVirtualItemSize]`       | 虚拟滚动时每一列的高度，与 [cdk itemSize](https://material.angular.io/cdk/scrolling/api) 相同              | `number`                                                               | `0`                      |
-| `[nzVirtualMaxBufferPx]`    | 缓冲区最大像素高度，与 [cdk maxBufferPx](https://material.angular.io/cdk/scrolling/api) 相同             | `number`                                                               | `200`                    |
+| `[nzTitle]`                 | 表格标题                                                                                                             | `string \| TemplateRef<void>`                                          | -                        |
+| `[nzFooter]`                | 表格尾部                                                                                                             | `string \| TemplateRef<void>`                                          | -                        |
+| `[nzNoResult]`              | 无数据时显示内容                                                                                                     | `string \| TemplateRef<void>`                                          | -                        |
+| `[nzPageSizeOptions]`       | 页数选择器可选值                                                                                                     | `number[]`                                                             | `[ 10, 20, 30, 40, 50 ]` |
+| `[nzShowQuickJumper]`       | 是否可以快速跳转至某页                                                                                               | `boolean`                                                              | `false`                  | ✅       |
+| `[nzShowSizeChanger]`       | 是否可以改变 `nzPageSize`                                                                                            | `boolean`                                                              | `false`                  | ✅       |
+| `[nzShowTotal]`             | 用于显示数据总量和当前数据范围，用法参照 Pagination 组件                                                             | `TemplateRef<{ $implicit: number, range: [ number, number ] }>`        | -                        |
+| `[nzItemRender]`            | 用于自定义页码的结构，用法参照 Pagination 组件                                                                       | `TemplateRef<{ $implicit: 'page' \| 'prev' \| 'next', page: number }>` | -                        |
+| `[nzHideOnSinglePage]`      | 只有一页时是否隐藏分页器                                                                                             | `boolean`                                                              | `false`                  | ✅       |
+| `[nzSimple]`                | 当添加该属性时，显示为简单分页                                                                                       | `boolean`                                                              | -                        | ✅       |
+| `[nzTemplateMode]`          | 模板模式，无需将数据传递给 `nzData`                                                                                  | `boolean`                                                              | `false`                  |
+| `[nzVirtualItemSize]`       | 虚拟滚动时每一列的高度，与 [cdk itemSize](https://material.angular.io/cdk/scrolling/api) 相同                        | `number`                                                               | `0`                      |
+| `[nzVirtualMaxBufferPx]`    | 缓冲区最大像素高度，与 [cdk maxBufferPx](https://material.angular.io/cdk/scrolling/api) 相同                         | `number`                                                               | `200`                    |
 | `[nzVirtualMinBufferPx]`    | 缓冲区最小像素高度，低于该值时将加载新结构，与 [cdk minBufferPx](https://material.angular.io/cdk/scrolling/api) 相同 | `number`                                                               | `100`                    |
 | `[nzVirtualForTrackBy]`     | 虚拟滚动数据 `TrackByFunction` 函数                                                                 | `TrackByFunction<T>`                                                   | -                        |
 | `(nzPageIndexChange)`       | 当前页码改变时的回调函数                                                                                | `EventEmitter<number>`                                                 | -                        |
@@ -126,9 +124,9 @@ Table 组件同时具备了易用性和高度可定制性
 |-----------------------|----------------------------------------------------------------|-----------------------------------------------|-------------------------------|
 | `[nzShowSort]`        | 是否显示排序                                                         | `boolean`                                     | -                             |
 | `[nzSortFn]`          | 排序函数，前端排序使用一个函数(参考 Array.sort 的 compareFunction)，服务端排序时传入 true | `NzTableSortFn<T> \| boolean`                 | -                             |
-| `[nzSortDirections]`  | 支持的排序方式，取值为 `'ascend'`, `'descend'`, `null`                    | `Array<'ascend' \| 'descend' \| null>`        | `['ascend', 'descend', null]` |
-| `[nzSortOrder]`       | 当前排序状态，可双向绑定                                                   | `'ascend' \| 'descend' \| null`               | null                          |
-| `(nzSortOrderChange)` | 排序状态改变回调                                                       | `EventEmitter<'ascend' \| 'descend' \| null>` | -                             |
+| `[nzSortDirections]`  | 支持的排序方式，取值为 `'ascend'`, `'descend'`, `null`                                    | `Array<'ascend' \| 'descend' \| null>`        | `['ascend', 'descend', null]` |
+| `[nzSortOrder]`       | 当前排序状态，可双向绑定                                                                  | `'ascend' \| 'descend' \| null`               | null                          |
+| `(nzSortOrderChange)` | 排序状态改变回调                                                                          | `EventEmitter<'ascend' \| 'descend' \| null>` | -                             |
 
 过滤属性
 

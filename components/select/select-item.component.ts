@@ -26,9 +26,9 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
   template: `
     <ng-container *stringTemplateOutlet="contentTemplateOutlet; stringTemplateOutletContext: templateOutletContext">
       @if (displayLabelInHtml) {
-        <div [class.tri-select-selection-item-content]="deletable" [innerHTML]="label"></div>
+        <span [class.tri-select-selection-item-content]="deletable" [innerHTML]="label"></span>
       } @else {
-        <div [class.tri-select-selection-item-content]="deletable">{{ label }}</div>
+        <span [class.tri-select-selection-item-content]="deletable">{{ label }}</span>
       }
     </ng-container>
     @if (deletable && !disabled) {

@@ -15,7 +15,7 @@ import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 import { TriInputNumberComponent } from './input-number.component';
 import { TriInputNumberModule } from './input-number.module';
 
-describe('Input number', () => {
+describe('input-number', () => {
   let component: InputNumberTestComponent;
   let fixture: ComponentFixture<InputNumberTestComponent>;
   let hostElement: HTMLElement;
@@ -145,6 +145,13 @@ describe('Input number', () => {
       expect(component.value).toBe(123);
 
       input('NonNumber');
+      expect(component.value).toBe(123);
+      enter();
+      expect(component.value).toBe(123);
+      blur();
+      expect(component.value).toBe(123);
+
+      input('321NonNumber');
       expect(component.value).toBe(123);
       enter();
       expect(component.value).toBe(123);
@@ -499,7 +506,7 @@ describe('Input number', () => {
   }
 });
 
-describe('Input number with affixes or addons', () => {
+describe('input-number with affixes or addons', () => {
   let component: InputNumberWithAffixesAndAddonsTestComponent;
   let fixture: ComponentFixture<InputNumberWithAffixesAndAddonsTestComponent>;
 
