@@ -10,7 +10,6 @@ import { TriPopconfirmModule } from 'ng-zorro-antd/popconfirm';
     <a
       tri-popconfirm
       popconfirmTitle="Are you sure delete this task?"
-      popconfirmPlacement="bottom"
       (onConfirm)="confirm()"
       (onCancel)="cancel()"
     >

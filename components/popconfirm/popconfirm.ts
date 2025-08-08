@@ -187,14 +187,18 @@ export class TriPopconfirmDirective extends TriTooltipBaseDirective {
             <div>
               <div class="tri-popover-inner-content">
                 <div class="tri-popover-message">
-                  <ng-container *stringTemplateOutlet="title; stringTemplateOutletContext: titleContext">
-                    <ng-container *stringTemplateOutlet="icon; let icon">
-                      <span class="tri-popover-message-icon">
+                  @if (icon !== null) {
+                    <span class="tri-popover-message-icon">
+                      <ng-container *stringTemplateOutlet="icon; let icon">
                         <tri-icon [type]="icon || 'exclamation-circle'" theme="fill" />
-                      </span>
+                      </ng-container>
+                    </span>
+                  }
+                  <div class="tri-popover-message-title">
+                    <ng-container *stringTemplateOutlet="title; stringTemplateOutletContext: titleContext">
+                      {{ title }}
                     </ng-container>
-                    <div class="tri-popover-message-title">{{ title }}</div>
-                  </ng-container>
+                  </div>
                 </div>
                 <div class="tri-popover-buttons">
                   <button
@@ -250,7 +254,7 @@ export class TriPopconfirmComponent extends TriTooltipComponent {
 
   condition = false;
   popconfirmShowArrow = true;
-  icon?: string | TemplateRef<void>;
+  icon?: string | TemplateRef<void> | null;
   autoFocus: TriAutoFocusType = null;
   beforeConfirm: (() => Observable<boolean> | Promise<boolean> | boolean) | null = null;
 
