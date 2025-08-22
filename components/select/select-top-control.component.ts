@@ -7,24 +7,25 @@ import { BACKSPACE } from '@angular/cdk/keycodes';
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   ElementRef,
   EventEmitter,
+  inject,
   Input,
   NgZone,
+  numberAttribute,
   OnChanges,
   OnInit,
   Output,
   SimpleChanges,
   TemplateRef,
   ViewChild,
-  ViewEncapsulation,
-  inject,
-  numberAttribute,
-  DestroyRef
+  ViewEncapsulation
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 
@@ -36,64 +37,84 @@ import { TriSelectItemInterface, TriSelectModeType, TriSelectTopControlItemType 
 @Component({
   selector: 'tri-select-top-control',
   exportAs: 'triSelectTopControl',
+  imports: [
+    TriSelectSearchComponent,
+    TriSelectItemComponent,
+    TriSelectPlaceholderComponent,
+    TriStringTemplateOutletDirective
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
-    <!--single mode-->
-    @switch (mode) {
-      @case ('default') {
-        <tri-select-search
-          [id]="id"
-          [disabled]="disabled"
-          [value]="inputValue!"
-          [showInput]="showSearch"
-          [mirrorSync]="false"
-          [autofocus]="autofocus"
-          [focusTrigger]="open"
-          (isComposingChange)="isComposingChange($event)"
-          (valueChange)="onInputValueChange($event)"
-        ></tri-select-search>
-        @if (isShowSingleLabel) {
-          <tri-select-item
-            [removeIcon]="removeIcon"
-            [label]="label"
-            [contentTemplateOutlet]="customTemplate"
-            [contentTemplateOutletContext]="listOfTopItem[0]"
-          ></tri-select-item>
+    @if (prefix) {
+      <div class="tri-select-prefix">
+        <ng-container *stringTemplateOutlet="prefix">{{ prefix }}</ng-container>
+      </div>
+    }
+    <span class="tri-select-selection-wrap">
+      <!--single mode-->
+      @switch (mode) {
+        @case ('default') {
+          <tri-select-search
+            [id]="id"
+            [disabled]="disabled"
+            [value]="inputValue!"
+            [showInput]="showSearch"
+            [mirrorSync]="false"
+            [autofocus]="autofocus"
+            [focusTrigger]="open"
+            (isComposingChange)="isComposingChange($event)"
+            (valueChange)="onInputValueChange($event)"
+          />
+          @if (isShowSingleLabel) {
+            <tri-select-item
+              [removeIcon]="removeIcon"
+              [label]="label"
+              [contentTemplateOutlet]="customTemplate"
+              [contentTemplateOutletContext]="listOfTopItem[0]"
+            />
+          }
+        }
+        @default {
+          <div class="tri-select-selection-overflow">
+            <!--multiple or tags mode-->
+            @for (item of listOfSlicedItem; track value) {
+              <div class="tri-select-selection-overflow-item">
+                <tri-select-item
+                  [removeIcon]="removeIcon"
+                  [label]="label"
+                  [disabled]="disabled || disabled"
+                  [contentTemplateOutlet]="item.contentTemplateOutlet"
+                  deletable
+                  [contentTemplateOutletContext]="item.contentTemplateOutletContext"
+                  (delete)="onDeleteItem(item.contentTemplateOutletContext)"
+                />
+              </div>
+            }
+            <div class="tri-select-selection-overflow-item tri-select-selection-overflow-item-suffix">
+              <tri-select-search
+                [id]="id"
+                [disabled]="disabled"
+                [value]="inputValue!"
+                [autofocus]="autofocus"
+                [showInput]="true"
+                [mirrorSync]="true"
+                [focusTrigger]="open"
+                (isComposingChange)="isComposingChange($event)"
+                (valueChange)="onInputValueChange($event)"
+              />
+            </div>
+          </div>
         }
       }
-      @default {
-        <!--multiple or tags mode-->
-        @for (item of listOfSlicedItem; track value) {
-          <tri-select-item
-            [removeIcon]="removeIcon"
-            [label]="label"
-            [disabled]="disabled || disabled"
-            [contentTemplateOutlet]="item.contentTemplateOutlet"
-            deletable
-            [contentTemplateOutletContext]="item.contentTemplateOutletContext"
-            (delete)="onDeleteItem(item.contentTemplateOutletContext)"
-          ></tri-select-item>
-        }
-        <tri-select-search
-          [id]="id"
-          [disabled]="disabled"
-          [value]="inputValue!"
-          [autofocus]="autofocus"
-          [showInput]="true"
-          [mirrorSync]="true"
-          [focusTrigger]="open"
-          (isComposingChange)="isComposingChange($event)"
-          (valueChange)="onInputValueChange($event)"
-        ></tri-select-search>
+      @if (isShowPlaceholder) {
+        <tri-select-placeholder [placeholder]="placeHolder" />
       }
-    }
-    @if (isShowPlaceholder) {
-      <tri-select-placeholder [placeholder]="placeHolder"></tri-select-placeholder>
-    }
+    </span>
   `,
-  host: { class: 'tri-select-selector' },
-  imports: [TriSelectSearchComponent, TriSelectItemComponent, TriSelectPlaceholderComponent]
+  host: {
+    class: 'tri-select-selector'
+  }
 })
 export class TriSelectTopControlComponent implements OnChanges, OnInit {
   private readonly destroyRef = inject(DestroyRef);
@@ -114,6 +135,7 @@ export class TriSelectTopControlComponent implements OnChanges, OnInit {
   @Input() removeIcon: TemplateRef<TriSafeAny> | null = null;
   @Input() listOfTopItem: TriSelectItemInterface[] = [];
   @Input() tokenSeparators: string[] = [];
+  @Input() prefix: TemplateRef<TriSafeAny> | string | null = null;
   @Output() readonly tokenize = new EventEmitter<string[]>();
   @Output() readonly inputValueChange = new EventEmitter<string>();
   @Output() readonly deleteItem = new EventEmitter<TriSelectItemInterface>();
@@ -172,21 +194,15 @@ export class TriSelectTopControlComponent implements OnChanges, OnInit {
   }
 
   clearInputValue(): void {
-    if (this.selectSearchComponent) {
-      this.selectSearchComponent.clearInputValue();
-    }
+    this.selectSearchComponent?.clearInputValue();
   }
 
   focus(): void {
-    if (this.selectSearchComponent) {
-      this.selectSearchComponent.focus();
-    }
+    this.selectSearchComponent?.focus();
   }
 
   blur(): void {
-    if (this.selectSearchComponent) {
-      this.selectSearchComponent.blur();
-    }
+    this.selectSearchComponent?.blur();
   }
 
   onDeleteItem(item: TriSelectItemInterface): void {

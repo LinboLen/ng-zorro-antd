@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ComponentPortal, Portal, PortalModule, TemplatePortal } from '@angular/cdk/portal';
+import { ComponentPortal, Portal, PortalModule } from '@angular/cdk/portal';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -21,6 +21,7 @@ import {
 } from '@angular/core';
 
 import { TriConfigService, onConfigChangeEventForComponent } from 'ng-zorro-antd/core/config';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 import { TRI_EMPTY_COMPONENT_NAME, TriEmptyCustomContent, TriEmptySize } from './config';
@@ -50,8 +51,10 @@ type TriEmptyContentType = 'component' | 'template' | 'string';
   exportAs: 'triEmbedEmpty',
   template: `
     @if (content) {
-      @if (contentType === 'string') {
-        {{ content }}
+      @if (contentType === 'template' || contentType === 'string') {
+        <ng-container *stringTemplateOutlet="content; stringTemplateOutletContext: { $implicit: componentName }">{{
+          content
+        }}</ng-container>
       } @else {
         <ng-template [cdkPortalOutlet]="contentPortal" />
       }
@@ -71,7 +74,7 @@ type TriEmptyContentType = 'component' | 'template' | 'string';
       }
     }
   `,
-  imports: [TriEmptyComponent, PortalModule]
+  imports: [TriEmptyComponent, PortalModule, TriOutletModule]
 })
 export class TriEmbedEmptyComponent implements OnChanges, OnInit {
   private configService = inject(TriConfigService);
@@ -116,9 +119,8 @@ export class TriEmbedEmptyComponent implements OnChanges, OnInit {
     if (typeof content === 'string') {
       this.contentType = 'string';
     } else if (content instanceof TemplateRef) {
-      const context = { $implicit: this.componentName } as TriSafeAny;
       this.contentType = 'template';
-      this.contentPortal = new TemplatePortal(content, this.viewContainerRef, context);
+      this.contentPortal = undefined;
     } else if (content instanceof Type) {
       const injector = Injector.create({
         parent: this.injector,

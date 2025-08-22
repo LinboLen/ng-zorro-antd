@@ -90,7 +90,7 @@ export class TriFloatButtonTopComponent implements OnInit, OnChanges {
   @Input() href: string | null = null;
   @Input() type: 'default' | 'primary' = 'default';
   @Input() shape: 'circle' | 'square' = 'circle';
-  @Input() icon: TemplateRef<void> | null = null;
+  @Input() icon: string | TemplateRef<void> | null = null;
   @Input() description: TemplateRef<void> | null = null;
 
   @Input() template?: TemplateRef<void>;

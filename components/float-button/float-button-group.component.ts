@@ -64,7 +64,7 @@ export class TriFloatButtonGroupComponent {
   readonly href = input<string | null>(null);
   readonly target = input<string | null>(null);
   readonly type = input<'default' | 'primary'>('default');
-  readonly icon = input<TemplateRef<void> | null>(null);
+  readonly icon = input<string | TemplateRef<void> | null>(null);
   readonly description = input<TemplateRef<void> | null>(null);
   readonly shape = input<'circle' | 'square'>('circle');
   readonly trigger = input<'click' | 'hover' | null>(null);

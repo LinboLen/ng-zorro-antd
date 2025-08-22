@@ -44,6 +44,7 @@ description: 级联选择框。
 | `[nzNotFoundContent]` | 当下拉列表为空时显示的内容                                                                 | `string \| TemplateRef<void>`                                         | -              |
 | `[nzOptionRender]`    | 选项的渲染模板                                                                             | `TemplateRef<{ $implicit: NzCascaderOption, index: number }>`         |                |
 | `[nzOptions]`         | 可选项数据源                                                                               | `object[]`                                                            | -              |
+| `[nzOpen]`            | 控制浮层显隐                                                                               | `boolean`                                                             | `false`        |
 | `[nzPlaceHolder]`     | 输入框占位文本                                                                             | `string`                                                              | `'请选择'`     |
 | `[nzPlacement]`       | 浮层弹出位置                                                                               | `'bottomLeft' \| 'bottomRight' \| 'topLeft' \| 'topRight'`            | `'bottomLeft'` |
 | `[nzShowArrow]`       | 是否显示箭头                                                                               | `boolean`                                                             | `true`         |
@@ -51,6 +52,7 @@ description: 级联选择框。
 | `[nzShowSearch]`      | 是否支持搜索，默认情况下对 `label` 进行全匹配搜索，不能和 `[nzLoadData]` 同时使用          | `boolean \| NzShowSearchOptions`                                      | `false`        |
 | `[nzSize]`            | 输入框大小，可选 `large` `default` `small`                                                 | `'large' \| 'small' \| 'default'`                                     | `'default'`    | ✅           |
 | `[nzStatus]`          | 设置校验状态                                                                               | `'error' \| 'warning'`                                                | -              |
+| `[nzPrefix]`          | 自定义的选择框前缀                                                                         | `string \| TemplateRef<void>`                                         | -              |
 | `[nzSuffixIcon]`      | 自定义的选择框后缀图标                                                                     | `string \| TemplateRef<void>`                                         | -              |
 | `[nzValueProperty]`   | 选项的实际值的属性名                                                                       | `string`                                                              | `'value'`      |
 | `[nzVariant]`         | 形态变体                                                                                   | `'outlined' \| 'borderless' \| 'filled' \| 'underlined'`              | `'outlined'`   | ✅           |

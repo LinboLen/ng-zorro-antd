@@ -62,6 +62,13 @@ describe('nz-float-button', () => {
       expect(view.getAttribute('nztype') === 'question-circle').toBe(true);
     });
 
+    it('should nzIcon support passing nzType string only', () => {
+      testComponent.icon = 'file-search';
+      fixture.detectChanges();
+      const view = resultEl.nativeElement.getElementsByClassName('anticon-question-circle')[0];
+      expect(view.getAttribute('nztype') === 'file-search').toBe(true);
+    });
+
     it('nzOnClick', () => {
       resultEl.nativeElement.getElementsByClassName('ant-btn')[0].dispatchEvent(new MouseEvent('click'));
       fixture.detectChanges();
@@ -112,7 +119,7 @@ export class TriTestFloatButtonBasicComponent {
   target: string | null = null;
   type: 'default' | 'primary' = 'default';
   shape: 'circle' | 'square' = 'circle';
-  icon: TemplateRef<void> | null = null;
+  icon: string | TemplateRef<void> | null = null;
   description: TemplateRef<void> | null = null;
 
   @ViewChild('icon', { static: false }) _icon!: TemplateRef<void>;

@@ -3,16 +3,15 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, TemplateRef } from '@angular/core';
 
-import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
+import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'tri-float-button-content',
   exportAs: 'triFloatButtonContent',
-  imports: [TriIconModule, NgTemplateOutlet, TriStringTemplateOutletDirective],
+  imports: [TriIconModule, TriOutletModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="tri-float-btn-body">
@@ -20,7 +19,9 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
         @if (description || icon) {
           @if (icon) {
             <div class="tri-float-btn-icon">
-              <ng-template [ngTemplateOutlet]="icon"></ng-template>
+              <ng-container *stringTemplateOutlet="icon; let icon">
+                <tri-icon [type]="icon" theme="outline" />
+              </ng-container>
             </div>
           }
           @if (description && shape === 'square') {
@@ -40,7 +41,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
   `
 })
 export class TriFloatButtonContentComponent {
-  @Input() icon: TemplateRef<void> | null = null;
+  @Input() icon: string | TemplateRef<void> | null = null;
   @Input() description: string | TemplateRef<void> | null = null;
   @Input() shape: 'circle' | 'square' = 'circle';
 }

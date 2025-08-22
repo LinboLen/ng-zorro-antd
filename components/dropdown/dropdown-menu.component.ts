@@ -48,6 +48,13 @@ export type TriPlacementType = 'bottomLeft' | 'bottomCenter' | 'bottomRight' | '
       <div
         class="tri-dropdown"
         [class.tri-dropdown-rtl]="dir === 'rtl'"
+        [class.tri-dropdown-show-arrow]="arrow"
+        [class.tri-dropdown-placement-bottomLeft]="placement === 'bottomLeft'"
+        [class.tri-dropdown-placement-bottomRight]="placement === 'bottomRight'"
+        [class.tri-dropdown-placement-bottom]="placement === 'bottom'"
+        [class.tri-dropdown-placement-topLeft]="placement === 'topLeft'"
+        [class.tri-dropdown-placement-topRight]="placement === 'topRight'"
+        [class.tri-dropdown-placement-top]="placement === 'top'"
         [class]="overlayClassName"
         [style]="overlayStyle"
         @slideMotion
@@ -57,6 +64,9 @@ export type TriPlacementType = 'bottomLeft' | 'bottomCenter' | 'bottomRight' | '
         (mouseenter)="setMouseState(true)"
         (mouseleave)="setMouseState(false)"
       >
+        @if (arrow) {
+          <div class="tri-dropdown-arrow"></div>
+        }
         <ng-content></ng-content>
       </div>
     </ng-template>
@@ -79,6 +89,8 @@ export class TriDropdownMenuComponent implements AfterContentInit, OnInit {
   animationStateChange$ = new EventEmitter<AnimationEvent>();
   overlayClassName: string = '';
   overlayStyle: IndexableObject = {};
+  arrow: boolean = false;
+  placement: TriPlacementType | 'bottom' | 'top' = 'bottomLeft';
   @ViewChild(TemplateRef, { static: true }) templateRef!: TemplateRef<TriSafeAny>;
 
   dir: Direction = 'ltr';

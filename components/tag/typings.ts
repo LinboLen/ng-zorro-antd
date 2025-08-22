@@ -3,6 +3,6 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export * from './tag.component';
-export * from './tag.module';
-export * from './typings';
+import { TriPresetColor, TriStatusColor } from 'ng-zorro-antd/core/color';
+
+export type TriTagColor = TriPresetColor | TriStatusColor | (string & {});

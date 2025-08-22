@@ -29,9 +29,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
         }
       } @else {
         <ng-container *stringTemplateOutlet="suffixIcon; let suffixIcon">
-          @if (suffixIcon) {
-            <tri-icon [type]="suffixIcon" />
-          }
+          <tri-icon [type]="suffixIcon" />
         </ng-container>
       }
     }

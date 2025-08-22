@@ -76,14 +76,10 @@ export class TriFloatButtonComponent implements OnInit {
   @Input() target: string | null = null;
   @Input() type: 'default' | 'primary' = 'default';
   @Input() shape: 'circle' | 'square' = 'circle';
-  @Input() icon: TemplateRef<void> | null = null;
+  @Input() icon: string | TemplateRef<void> | null = null;
   @Input() description: TemplateRef<void> | string | null = null;
   @Output() readonly onClick = new EventEmitter<boolean>();
   dir: Direction = 'ltr';
-
-  constructor() {
-    this.dir = this.directionality.value;
-  }
 
   ngOnInit(): void {
     this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {

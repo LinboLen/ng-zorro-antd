@@ -3,8 +3,8 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
-import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
+import { BidiModule, Direction } from '@angular/cdk/bidi';
+import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -55,7 +55,6 @@ describe('nz-float-button-group', () => {
     });
 
     it('nzTrigger hover', () => {
-      testComponent.icon = testComponent._icon;
       testComponent.trigger = 'hover';
       fixture.detectChanges();
       resultEl.nativeElement.getElementsByClassName('ant-float-btn')[0].dispatchEvent(new MouseEvent('mouseover'));
@@ -71,7 +70,6 @@ describe('nz-float-button-group', () => {
     });
 
     it('nzTrigger click', () => {
-      testComponent.icon = testComponent._icon;
       testComponent.trigger = 'click';
       fixture.detectChanges();
       resultEl.nativeElement.getElementsByClassName('ant-btn')[0].dispatchEvent(new MouseEvent('click'));
@@ -87,7 +85,6 @@ describe('nz-float-button-group', () => {
     });
 
     it('nzOpen true', () => {
-      testComponent.icon = testComponent._icon;
       testComponent.open = true;
       testComponent.trigger = 'click';
       fixture.detectChanges();
@@ -97,7 +94,6 @@ describe('nz-float-button-group', () => {
     });
 
     it('nzOpen false', () => {
-      testComponent.icon = testComponent._icon;
       testComponent.open = false;
       testComponent.trigger = 'click';
       fixture.detectChanges();
@@ -183,7 +179,7 @@ describe('nz-float-button-group RTL', () => {
   imports: [TriFloatButtonModule, TriIconModule],
   template: `
     <tri-float-button-group
-      [icon]="icon"
+      icon="question-circle"
       [shape]="shape"
       [trigger]="trigger"
       [open]="open"
@@ -191,18 +187,13 @@ describe('nz-float-button-group RTL', () => {
       (onOpenChange)="onClick($event)"
     >
     </tri-float-button-group>
-    <ng-template #icon>
-      <tri-icon type="question-circle" theme="outline" />
-    </ng-template>
   `
 })
 export class TriTestFloatButtonGroupBasicComponent {
   shape: 'circle' | 'square' = 'circle';
   trigger: 'click' | 'hover' | null = null;
   open: boolean | null = null;
-  icon: TemplateRef<void> | null = null;
   placement: 'top' | 'right' | 'bottom' | 'left' = 'top';
-  @ViewChild('icon', { static: false }) _icon!: TemplateRef<void>;
 
   isClick: boolean = false;
 
@@ -220,6 +211,5 @@ export class TriTestFloatButtonGroupBasicComponent {
   `
 })
 export class TriTestFloatButtonRtlComponent {
-  @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
 }

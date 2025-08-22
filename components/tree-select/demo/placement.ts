@@ -16,20 +16,14 @@ import { TriTreeSelectModule, TriPlacementType } from 'ng-zorro-antd/tree-select
     <br />
     <br />
     <tri-tree-select
-      style="width: 120px"
       placeHolder="Please select"
       [placement]="placement"
       [(ngModel)]="value"
-      [maxTagCount]="3"
-      [maxTagPlaceholder]="omittedPlaceHolder"
       [nodes]="nodes"
       [dropdownStyle]="{ width: '300px' }"
-      [defaultExpandAll]="true"
-      [allowClear]="false"
-      [multiple]="true"
+      defaultExpandAll
       (ngModelChange)="onChange($event)"
     ></tri-tree-select>
-    <ng-template #omittedPlaceHolder let-omittedValues>and {{ omittedValues.length }} more...</ng-template>
   `
 })
 export class TriDemoTreeSelectPlacementComponent {

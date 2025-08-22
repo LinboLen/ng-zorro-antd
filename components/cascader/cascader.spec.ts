@@ -1494,7 +1494,7 @@ describe('cascader', () => {
       fixture.detectChanges();
       const itemEl1 = getItemAtColumnAndRow(1, 1)!;
       expect(testComponent.cascader.inSearchingMode).toBe(true);
-      expect(itemEl1.innerText).toBe('Zhejiang / Hangzhou / West Lake');
+      expect(itemEl1.innerText).toBe('Zhejiang New / Hangzhou New / West Lake New');
 
       itemEl1.click();
       fixture.detectChanges();
@@ -1504,6 +1504,29 @@ describe('cascader', () => {
       expect(testComponent.cascader.menuVisible).toBe(false);
       expect(testComponent.cascader.inputValue).toBe('');
       expect(testComponent.values!.join(',')).toBe('zhejiang,hangzhou,xihu');
+    }));
+
+    it('should support nzValueProperty', fakeAsync(() => {
+      testComponent.showSearch = true;
+      testComponent.valueProperty = 'v';
+      fixture.detectChanges();
+      cascader.nativeElement.click();
+      fixture.detectChanges();
+      testComponent.cascader.inputValue = 'o';
+      testComponent.cascader.setMenuVisible(true);
+      fixture.detectChanges();
+      const itemEl1 = getItemAtColumnAndRow(1, 1)!;
+      expect(testComponent.cascader.inSearchingMode).toBe(true);
+      expect(itemEl1.innerText).toBe('Zhejiang / Hangzhou / West Lake');
+
+      itemEl1.click();
+      fixture.detectChanges();
+      flush();
+      fixture.detectChanges();
+      expect(testComponent.cascader.inSearchingMode).toBe(false);
+      expect(testComponent.cascader.menuVisible).toBe(false);
+      expect(testComponent.cascader.inputValue).toBe('');
+      expect(testComponent.values!.join(',')).toBe('zhejiang-new,hangzhou-new,xihu-new');
     }));
 
     it('should support custom filter', fakeAsync(() => {
@@ -1660,6 +1683,12 @@ describe('cascader', () => {
       expect(itemEl1.innerText).toBe('Option1 / Option11');
     });
 
+    it('should nzPrefix work', () => {
+      testComponent.prefix = 'prefix';
+      fixture.detectChanges();
+      expect(cascader.nativeElement.querySelector('.ant-select-prefix')!.textContent?.trim()).toBe('prefix');
+    });
+
     it('should support changing icon', () => {
       testComponent.suffixIcon = 'home';
       testComponent.expandIcon = 'home';
@@ -1724,6 +1753,23 @@ describe('cascader', () => {
       getItemAtColumnAndRow(3, 1)!.click();
       fixture.detectChanges();
       expect(testComponent.values).toEqual(['zhejiang', 'hangzhou', 'xihu']);
+    }));
+
+    it('should nzOpen works', fakeAsync(() => {
+      fixture.detectChanges();
+      expect(testComponent.cascader.menuVisible).toBe(false);
+      expect(testComponent.disabled).toBe(false);
+      testComponent.open = true;
+      tick(200);
+      fixture.detectChanges();
+      expect(testComponent.cascader.menuVisible).toBe(true);
+      expect(testComponent.onVisibleChange).toHaveBeenCalledTimes(1);
+
+      testComponent.open = false;
+      tick(200);
+      fixture.detectChanges();
+      expect(testComponent.cascader.menuVisible).toBe(false);
+      expect(testComponent.onVisibleChange).toHaveBeenCalledTimes(2);
     }));
   });
 
@@ -2215,17 +2261,20 @@ const options1: TriCascaderOption[] = [
   {
     value: 'zhejiang',
     label: 'Zhejiang',
-    l: 'Zhejiang',
+    v: 'zhejiang-new',
+    l: 'Zhejiang New',
     children: [
       {
         value: 'hangzhou',
         label: 'Hangzhou',
-        l: 'Hangzhou',
+        v: 'hangzhou-new',
+        l: 'Hangzhou New',
         children: [
           {
             value: 'xihu',
-            l: 'West Lake',
             label: 'West Lake',
+            v: 'xihu-new',
+            l: 'West Lake New',
             isLeaf: true
           }
         ]
@@ -2233,7 +2282,8 @@ const options1: TriCascaderOption[] = [
       {
         value: 'ningbo',
         label: 'Ningbo',
-        l: 'Ningbo',
+        v: 'ningbo-new',
+        l: 'Ningbo New',
         isLeaf: true
       }
     ]
@@ -2241,17 +2291,20 @@ const options1: TriCascaderOption[] = [
   {
     value: 'jiangsu',
     label: 'Jiangsu',
-    l: 'Jiangsu',
+    v: 'jiangsu-new',
+    l: 'Jiangsu New',
     children: [
       {
         value: 'nanjing',
         label: 'Nanjing',
-        l: 'Nanjing',
+        v: 'nanjing-new',
+        l: 'Nanjing New',
         children: [
           {
             value: 'zhonghuamen',
             label: 'Zhong Hua Men',
-            l: 'Zhong Hua Men',
+            v: 'zhonghuamen-new',
+            l: 'Zhong Hua Men New',
             isLeaf: true
           }
         ]
@@ -2407,6 +2460,8 @@ const options5: TriSafeAny[] = [];
   template: `
     <tri-cascader
       [(ngModel)]="values"
+      [open]="open"
+      [options]="options"
       [allowClear]="allowClear"
       [autoFocus]="autoFocus"
       [changeOn]="changeOn"
@@ -2416,20 +2471,20 @@ const options5: TriSafeAny[] = [];
       [expandIcon]="expandIcon"
       [expandTrigger]="expandTrigger"
       [labelProperty]="labelProperty"
+      [valueProperty]="valueProperty"
       [labelRender]="labelRender"
       [menuClassName]="menuClassName"
       [menuStyle]="menuStyle"
       [mouseEnterDelay]="mouseEnterDelay"
       [mouseLeaveDelay]="mouseLeaveDelay"
-      [options]="options"
       [placeHolder]="placeHolder"
       [showArrow]="showArrow"
       [showInput]="showInput"
       [showSearch]="showSearch"
       [size]="size"
       [triggerAction]="triggerAction"
+      [prefix]="prefix"
       [suffixIcon]="suffixIcon"
-      [valueProperty]="valueProperty"
       [backdrop]="backdrop"
       [placement]="placement"
       [variant]="variant"
@@ -2452,6 +2507,7 @@ export class TriDemoCascaderDefaultComponent {
   options: TriSafeAny[] | null = options1;
   values: string[] | number[] | null = null;
 
+  open = false;
   allowClear = true;
   autoFocus = false;
   menuClassName = 'menu-classA menu-classB';
@@ -2472,6 +2528,7 @@ export class TriDemoCascaderDefaultComponent {
   triggerAction: TriCascaderTriggerType | TriCascaderTriggerType[] = 'click';
   mouseEnterDelay = 150; // ms
   mouseLeaveDelay = 150; // ms
+  prefix: string | null = null;
   suffixIcon = 'down';
   expandIcon = 'right';
   backdrop = false;
@@ -2488,7 +2545,6 @@ export class TriDemoCascaderDefaultComponent {
   imports: [FormsModule, TriCascaderModule],
   template: `
     <tri-cascader
-      [options]="options"
       [(ngModel)]="values"
       [loadData]="loadData"
       (ngModelChange)="onValueChanges($event)"
@@ -2499,7 +2555,6 @@ export class TriDemoCascaderDefaultComponent {
 export class TriDemoCascaderLoadDataComponent {
   @ViewChild(TriCascaderComponent, { static: true }) cascader!: TriCascaderComponent;
 
-  options: TriSafeAny[] | null = null;
   values: string[] | null = null;
 
   loadData = (node: TriSafeAny, index: number): PromiseLike<TriSafeAny> => {

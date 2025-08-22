@@ -1,28 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, model } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
 @Component({
-  selector: 'tri-demo-tree-select-multiple',
+  selector: 'tri-demo-tree-select-prefix-and-suffix',
   imports: [FormsModule, TriTreeSelectModule],
   template: `
-    <tri-tree-select
-      style="width: 250px"
-      placeHolder="Please select"
-      [(ngModel)]="value"
-      [maxTagCount]="3"
-      [maxTagPlaceholder]="omittedPlaceHolder"
-      [nodes]="nodes"
-      defaultExpandAll
-      multiple
-      (ngModelChange)="onChange($event)"
-    ></tri-tree-select>
-    <ng-template #omittedPlaceHolder let-omittedValues>and {{ omittedValues.length }} more...</ng-template>
+    <tri-tree-select [nodes]="nodes" suffixIcon="smile" [(ngModel)]="value" defaultExpandAll></tri-tree-select>
+    <br />
+    <br />
+    <tri-tree-select [nodes]="nodes" prefix="Prefix" [(ngModel)]="value" defaultExpandAll></tri-tree-select>
+  `,
+  styles: `
+    nz-tree-select {
+      width: 100%;
+    }
   `
 })
-export class TriDemoTreeSelectMultipleComponent {
-  value: string[] = [];
+export class TriDemoTreeSelectPrefixAndSuffixComponent {
+  readonly value = model();
   readonly nodes = [
     {
       title: 'parent 1',
@@ -44,8 +41,4 @@ export class TriDemoTreeSelectMultipleComponent {
       ]
     }
   ];
-
-  onChange($event: string[]): void {
-    console.log($event);
-  }
 }

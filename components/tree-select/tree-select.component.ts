@@ -45,6 +45,7 @@ import { slideMotion } from 'ng-zorro-antd/core/animation';
 import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
 import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
 import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import { TriOverlayModule, POSITION_MAP } from 'ng-zorro-antd/core/overlay';
 import { requestAnimationFrame } from 'ng-zorro-antd/core/polyfill';
 import {
@@ -57,6 +58,7 @@ import {
 import {
   NgClassInterface,
   NgStyleInterface,
+  TriSafeAny,
   TriSizeLDSType,
   TriStatus,
   TriValidateStatus,
@@ -94,7 +96,8 @@ const listOfPositions = [
     CdkOverlayOrigin,
     SlicePipe,
     TriSelectModule,
-    TriFormItemFeedbackIconComponent
+    TriFormItemFeedbackIconComponent,
+    TriStringTemplateOutletDirective
   ],
   animations: [slideMotion],
   template: `
@@ -158,69 +161,93 @@ const listOfPositions = [
         ></tri-tree>
         @if (nodes.length === 0 || isNotFound) {
           <span class="tri-select-not-found">
-            <tri-embed-empty [componentName]="'tree-select'" [specificContent]="notFoundContent"></tri-embed-empty>
+            <tri-embed-empty [componentName]="'tree-select'" [specificContent]="notFoundContent" />
           </span>
         }
       </div>
     </ng-template>
 
     <div cdkOverlayOrigin class="tri-select-selector">
-      @if (isMultiple) {
-        @for (node of selectedNodes | slice: 0 : maxTagCount; track node.key) {
-          <tri-select-item
-            deletable
-            [disabled]="node.isDisabled || disabled"
-            [label]="displayWith(node)"
-            displayLabelInHtml
-            (delete)="removeSelected(node, true)"
-          ></tri-select-item>
-        }
-        @if (selectedNodes.length > maxTagCount) {
-          <tri-select-item
-            [contentTemplateOutlet]="maxTagPlaceholder"
-            [contentTemplateOutletContext]="selectedNodes | slice: maxTagCount"
-            [label]="'+ ' + (selectedNodes.length - maxTagCount) + ' ...'"
-          ></tri-select-item>
-        }
+      @if (prefix; as prefix) {
+        <div class="tri-select-prefix">
+          <ng-container *stringTemplateOutlet="prefix">{{ prefix }}</ng-container>
+        </div>
       }
 
-      <tri-select-search
-        [id]="id"
-        [showInput]="showSearch"
-        (keydown)="onKeyDownInput($event)"
-        (isComposingChange)="isComposingChange($event)"
-        (valueChange)="setInputValue($event)"
-        [value]="inputValue"
-        [mirrorSync]="isMultiple"
-        [disabled]="disabled"
-        [focusTrigger]="open"
-      ></tri-select-search>
-
-      @if (placeHolder && selectedNodes.length === 0) {
-        <tri-select-placeholder
-          [placeholder]="placeHolder"
-          [style.display]="placeHolderDisplay"
-        ></tri-select-placeholder>
-      }
-
-      @if (!isMultiple && selectedNodes.length === 1 && !isComposing && inputValue === '') {
-        <tri-select-item [label]="displayWith(selectedNodes[0])" displayLabelInHtml></tri-select-item>
-      }
-
-      @if (!isMultiple) {
-        <tri-select-arrow></tri-select-arrow>
-      }
-      @if (!isMultiple || (hasFeedback && !!status)) {
-        <tri-select-arrow [showArrow]="!isMultiple" [feedbackIcon]="feedbackIconTpl">
-          <ng-template #feedbackIconTpl>
-            @if (hasFeedback && !!status) {
-              <tri-form-item-feedback-icon [status]="status"></tri-form-item-feedback-icon>
+      <span class="tri-select-selection-wrap">
+        @if (isMultiple) {
+          <div class="tri-select-selection-overflow">
+            @for (node of selectedNodes | slice: 0 : maxTagCount; track node.key) {
+              <div class="tri-select-selection-overflow-item">
+                <tri-select-item
+                  deletable
+                  [disabled]="node.isDisabled || disabled"
+                  [label]="displayWith(node)"
+                  displayLabelInHtml
+                  (delete)="removeSelected(node, true)"
+                />
+              </div>
             }
-          </ng-template>
-        </tri-select-arrow>
-      }
+            @if (selectedNodes.length > maxTagCount) {
+              <div class="tri-select-selection-overflow-item">
+                <tri-select-item
+                  [contentTemplateOutlet]="maxTagPlaceholder"
+                  [contentTemplateOutletContext]="selectedNodes | slice: maxTagCount"
+                  [label]="'+ ' + (selectedNodes.length - maxTagCount) + ' ...'"
+                />
+              </div>
+            }
+            <div class="tri-select-selection-overflow-item tri-select-selection-overflow-item-suffix">
+              <tri-select-search
+                [id]="id"
+                [showInput]="showSearch"
+                (keydown)="onKeyDownInput($event)"
+                (isComposingChange)="isComposingChange($event)"
+                (valueChange)="setInputValue($event)"
+                [value]="inputValue"
+                [mirrorSync]="true"
+                [disabled]="disabled"
+                [focusTrigger]="open"
+              />
+            </div>
+          </div>
+        } @else {
+          <tri-select-search
+            [id]="id"
+            [showInput]="showSearch"
+            (keydown)="onKeyDownInput($event)"
+            (isComposingChange)="isComposingChange($event)"
+            (valueChange)="setInputValue($event)"
+            [value]="inputValue"
+            [mirrorSync]="false"
+            [disabled]="disabled"
+            [focusTrigger]="open"
+          />
+          @if (selectedNodes.length === 1 && !isComposing && inputValue === '') {
+            <tri-select-item [label]="displayWith(selectedNodes[0])" displayLabelInHtml />
+          }
+        }
+
+        @if (placeHolder && selectedNodes.length === 0) {
+          <tri-select-placeholder [placeholder]="placeHolder" [style.display]="placeHolderDisplay" />
+        }
+      </span>
+
+      <tri-select-arrow
+        [showArrow]="true"
+        [search]="open && showSearch"
+        [suffixIcon]="suffixIcon"
+        [feedbackIcon]="feedbackIconTpl"
+      >
+        <ng-template #feedbackIconTpl>
+          @if (hasFeedback && !!status) {
+            <tri-form-item-feedback-icon [status]="status" />
+          }
+        </ng-template>
+      </tri-select-arrow>
+
       @if (allowClear && !disabled && selectedNodes.length) {
-        <tri-select-clear (clear)="onClearSelection()"></tri-select-clear>
+        <tri-select-clear (clear)="onClearSelection()" />
       }
     </div>
   `,
@@ -307,6 +334,8 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
     return this._expandedKeys;
   }
 
+  @Input() prefix: TemplateRef<TriSafeAny> | string | null = null;
+  @Input() suffixIcon: TemplateRef<TriSafeAny> | string | null = null;
   @Input() displayWith: (node: TriTreeNode) => string | undefined = (node: TriTreeNode) => node.title;
   @Input({ transform: numberAttribute }) maxTagCount!: number;
   @Input() maxTagPlaceholder: TemplateRef<{ $implicit: TriTreeNode[] }> | null = null;

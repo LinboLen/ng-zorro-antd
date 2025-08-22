@@ -23,15 +23,10 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import {
-  isPresetColor,
-  isStatusColor,
-  TriPresetColor,
-  TriStatusColor,
-  presetColors,
-  statusColors
-} from 'ng-zorro-antd/core/color';
+import { isPresetColor, isStatusColor, presetColors, statusColors } from 'ng-zorro-antd/core/color';
 import { TriIconModule } from 'ng-zorro-antd/icon';
+
+import { TriTagColor } from './typings';
 
 @Component({
   selector: 'tri-tag',
@@ -64,7 +59,7 @@ export class TriTagComponent implements OnChanges, OnInit {
   private destroyRef = inject(DestroyRef);
 
   @Input() mode: 'default' | 'closeable' | 'checkable' = 'default';
-  @Input() color?: string | TriStatusColor | TriPresetColor;
+  @Input() color?: TriTagColor;
   @Input({ transform: booleanAttribute }) checked = false;
   @Input({ transform: booleanAttribute }) bordered = true;
   @Output() readonly onClose = new EventEmitter<MouseEvent>();

@@ -41,10 +41,10 @@ $pagination-prefix-cls: "#{$ant-prefix}-pagination";
     &.#{$select-prefix-cls}-has-feedback {
       //.@{prefix-cls}-arrow,
       .#{$select-prefix-cls}-clear {
-        right: 32px;
+        inset-inline-end: 32px;
       }
       .#{$select-prefix-cls}-selection-selected-value {
-        padding-right: 42px;
+        padding-inline-end: 42px;
       }
     }
   }

@@ -182,9 +182,19 @@ describe('select', () => {
       expect(selectElement.querySelector('nz-select-arrow')).toBeFalsy();
     });
 
+    it('should nzPrefix works', () => {
+      component.prefix = 'prefix';
+      fixture.detectChanges();
+      expect(selectElement.querySelector('.ant-select-prefix')!.textContent?.trim()).toBe('prefix');
+
+      component.prefix = component.affixTemplate;
+      fixture.detectChanges();
+      expect(selectElement.querySelector('.ant-select-prefix')!.textContent?.trim()).toBe('icon');
+    });
+
     it('should nzSuffixIcon works', () => {
       expect(selectElement.querySelector('.anticon-down')).toBeTruthy();
-      component.suffixIcon = component.suffixIconTemplate;
+      component.suffixIcon = component.affixTemplate;
       fixture.detectChanges();
       expect(selectElement.querySelector('nz-select-arrow')!.textContent?.trim()).toBe('icon');
     });
@@ -197,7 +207,7 @@ describe('select', () => {
       flush();
       fixture.detectChanges();
       expect(selectElement.querySelector('.anticon-close-circle')).toBeTruthy();
-      component.clearIcon = component.suffixIconTemplate;
+      component.clearIcon = component.affixTemplate;
       fixture.detectChanges();
       expect(selectElement.querySelector('nz-select-clear')!.textContent?.trim()).toBe('icon');
     }));
@@ -1820,6 +1830,7 @@ describe('select', () => {
       [placeHolder]="placeHolder"
       [dropdownRender]="dropdownRender"
       [customTemplate]="customTemplate ?? null"
+      [prefix]="prefix"
       [suffixIcon]="suffixIcon"
       [clearIcon]="clearIcon"
       [showArrow]="showArrow"
@@ -1867,13 +1878,13 @@ describe('select', () => {
     </tri-select>
     <ng-template #dropdownTemplate><div class="dropdown-render">dropdownRender</div></ng-template>
     <ng-template #customTemplate let-selected>selected: {{ selected.nzLabel }}</ng-template>
-    <ng-template #suffixIconTemplate>icon</ng-template>
+    <ng-template #affixTemplate>icon</ng-template>
   `
 })
 export class TestSelectTemplateDefaultComponent {
   @ViewChild('dropdownTemplate') dropdownTemplate!: TemplateRef<TriSafeAny>;
   @ViewChild('customTemplate') _customTemplate!: TemplateRef<TriSafeAny>;
-  @ViewChild('suffixIconTemplate') suffixIconTemplate!: TemplateRef<TriSafeAny>;
+  @ViewChild('affixTemplate') affixTemplate!: TemplateRef<TriSafeAny>;
   value: TriSafeAny | null = null;
   valueChange = jasmine.createSpy<TriSafeAny>('valueChange');
   openChange = jasmine.createSpy<TriSafeAny>('openChange');
@@ -1885,7 +1896,8 @@ export class TestSelectTemplateDefaultComponent {
   placeHolder: string | TemplateRef<TriSafeAny> | null = null;
   dropdownRender: TemplateRef<TriSafeAny> | null = null;
   customTemplate?: TemplateRef<{ $implicit: TriSelectItemInterface }>;
-  suffixIcon: TemplateRef<TriSafeAny> | null = null;
+  prefix: string | TemplateRef<TriSafeAny> | null = null;
+  suffixIcon: string | TemplateRef<TriSafeAny> | null = null;
   clearIcon: TemplateRef<TriSafeAny> | null = null;
   showArrow = true;
   maxMultipleCount: number = Infinity;

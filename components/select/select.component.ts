@@ -128,11 +128,12 @@ export type TriSelectSizeType = TriSizeLDSType;
       [showSearch]="showSearch"
       [autofocus]="autoFocus"
       [listOfTopItem]="listOfTopItem"
+      [prefix]="prefix"
       (inputValueChange)="onInputValueChange($event)"
       (tokenize)="onTokenSeparate($event)"
       (deleteItem)="onItemDelete($event)"
       (keydown)="onKeyDown($event)"
-    ></tri-select-top-control>
+    />
     @if (showArrow || (hasFeedback && !!status) || isMaxMultipleCountSet) {
       <tri-select-arrow
         [showArrow]="showArrow"
@@ -146,14 +147,14 @@ export type TriSelectSizeType = TriSizeLDSType;
       >
         <ng-template #feedbackIconTpl>
           @if (hasFeedback && !!status) {
-            <tri-form-item-feedback-icon [status]="status"></tri-form-item-feedback-icon>
+            <tri-form-item-feedback-icon [status]="status" />
           }
         </ng-template>
       </tri-select-arrow>
     }
 
     @if (allowClear && !disabled && listOfValue.length) {
-      <tri-select-clear [clearIcon]="clearIcon" (clear)="onClearSelection()"></tri-select-clear>
+      <tri-select-clear [clearIcon]="clearIcon" (clear)="onClearSelection()" />
     }
     <ng-template
       cdkConnectedOverlay
@@ -194,7 +195,7 @@ export type TriSelectSizeType = TriSizeLDSType;
         (keydown)="onKeyDown($event)"
         (itemClick)="onItemClick($event)"
         (scrollToBottom)="scrollToBottom.emit()"
-      ></tri-option-container>
+      />
     </ng-template>
   `,
   host: {
@@ -255,6 +256,7 @@ export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterCo
   @Input() maxTagCount = Infinity;
   @Input() dropdownRender: TemplateRef<TriSafeAny> | null = null;
   @Input() customTemplate: TemplateRef<{ $implicit: TriSelectItemInterface }> | null = null;
+  @Input() prefix: TemplateRef<TriSafeAny> | string | null = null;
   @Input()
   @WithConfig()
   suffixIcon: TemplateRef<TriSafeAny> | string | null = null;
@@ -282,13 +284,10 @@ export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterCo
   @Input({ transform: booleanAttribute }) selectOnTab = false;
   @Input({ transform: booleanAttribute }) @WithConfig() backdrop = false;
   @Input() options: TriSelectOptionInterface[] = [];
+  @Input({ transform: booleanAttribute }) showArrow: boolean = true;
 
-  @Input({ transform: booleanAttribute })
-  set showArrow(value: boolean) {
-    this._nzShowArrow = value;
-  }
-  get showArrow(): boolean {
-    return this._nzShowArrow === undefined ? this.mode === 'default' : this._nzShowArrow;
+  get _showArrow(): boolean {
+    return this.showArrow || !!this.suffixIcon;
   }
 
   get isMultiple(): boolean {
@@ -334,7 +333,6 @@ export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterCo
   private searchValue: string = '';
   private isReactiveDriven = false;
   private value: TriSafeAny | TriSafeAny[];
-  private _nzShowArrow: boolean | undefined;
   private requestId: number = -1;
   private isNzDisableFirstChange: boolean = true;
 

@@ -27,7 +27,7 @@ import { BehaviorSubject, EMPTY, Subject, combineLatest, fromEvent, merge } from
 import { auditTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
 
 import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
-import { POSITION_MAP } from 'ng-zorro-antd/core/overlay';
+import { POSITION_MAP, getPlacementName } from 'ng-zorro-antd/core/overlay';
 import { IndexableObject } from 'ng-zorro-antd/core/types';
 
 import { TriDropdownMenuComponent, TriPlacementType } from './dropdown-menu.component';
@@ -40,6 +40,17 @@ const listOfPositions = [
   POSITION_MAP.topRight,
   POSITION_MAP.topLeft
 ];
+
+const normalizePlacementForClass = (p: TriPlacementType): TriDropdownMenuComponent['placement'] => {
+  // Map center placements to generic top/bottom classes for styling
+  if (p === 'topCenter') {
+    return 'top';
+  }
+  if (p === 'bottomCenter') {
+    return 'bottom';
+  }
+  return p as TriDropdownMenuComponent['placement'];
+};
 
 @Directive({
   selector: '[tri-dropdown]',
@@ -76,6 +87,7 @@ export class TriDropDownDirective implements AfterViewInit, OnChanges {
   @Input({ transform: booleanAttribute }) clickHide = true;
   @Input({ transform: booleanAttribute }) disabled = false;
   @Input({ transform: booleanAttribute }) visible = false;
+  @Input({ transform: booleanAttribute }) arrow = false;
   @Input() overlayClassName: string = '';
   @Input() overlayStyle: IndexableObject = {};
   @Input() placement: TriPlacementType = 'bottomLeft';
@@ -154,6 +166,13 @@ export class TriDropDownDirective implements AfterViewInit, OnChanges {
                 hasBackdrop: this.backdrop && this.trigger === 'click',
                 scrollStrategy: this.overlay.scrollStrategies.reposition()
               });
+              // Listen for placement changes to update the menu classes (arrow position)
+              this.positionStrategy.positionChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(change => {
+                const placement = getPlacementName(change) as TriPlacementType | undefined;
+                if (placement) {
+                  this.setDropdownMenuValue('placement', normalizePlacementForClass(placement));
+                }
+              });
               merge(
                 this.overlayRef.backdropClick(),
                 this.overlayRef.detachments(),
@@ -177,6 +196,9 @@ export class TriDropDownDirective implements AfterViewInit, OnChanges {
             if (!this.portal || this.portal.templateRef !== this.dropdownMenu!.templateRef) {
               this.portal = new TemplatePortal(this.dropdownMenu!.templateRef, this.viewContainerRef);
             }
+            // Initialize arrow and placement on open
+            this.setDropdownMenuValue('nzArrow', this.arrow);
+            this.setDropdownMenuValue('placement', normalizePlacementForClass(this.placement));
             this.overlayRef.attach(this.portal);
           } else {
             /** detach overlayRef if needed **/
@@ -198,7 +220,7 @@ export class TriDropDownDirective implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const { nzVisible, nzDisabled, nzOverlayClassName, nzOverlayStyle, nzTrigger } = changes;
+    const { nzVisible, nzDisabled, nzOverlayClassName, nzOverlayStyle, nzTrigger, nzArrow, nzPlacement } = changes;
     if (nzTrigger) {
       this.trigger$.next(this.trigger);
     }
@@ -219,6 +241,12 @@ export class TriDropDownDirective implements AfterViewInit, OnChanges {
     }
     if (nzOverlayStyle) {
       this.setDropdownMenuValue('nzOverlayStyle', this.overlayStyle);
+    }
+    if (nzArrow) {
+      this.setDropdownMenuValue('nzArrow', this.arrow);
+    }
+    if (nzPlacement) {
+      this.setDropdownMenuValue('placement', normalizePlacementForClass(this.placement));
     }
   }
 }

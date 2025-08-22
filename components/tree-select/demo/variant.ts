@@ -17,7 +17,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
           [nodes]="nodes"
           variant="outlined"
           [ngModel]="defaultValue"
-          [defaultExpandAll]="true"
+          defaultExpandAll
         ></tri-tree-select>
         <tri-tree-select
           *spaceItem
@@ -25,7 +25,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
           [nodes]="nodes"
           variant="filled"
           [ngModel]="defaultValue"
-          [defaultExpandAll]="true"
+          defaultExpandAll
         ></tri-tree-select>
         <tri-tree-select
           *spaceItem
@@ -33,7 +33,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
           [nodes]="nodes"
           variant="borderless"
           [ngModel]="defaultValue"
-          [defaultExpandAll]="true"
+          defaultExpandAll
         ></tri-tree-select>
         <tri-tree-select
           *spaceItem
@@ -41,7 +41,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
           [nodes]="nodes"
           variant="underlined"
           [ngModel]="defaultValue"
-          [defaultExpandAll]="true"
+          defaultExpandAll
         ></tri-tree-select>
       </tri-space>
       <tri-space direction="vertical" style="flex: 1">
@@ -51,10 +51,9 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
           variant="outlined"
           [nodes]="nodes"
           [maxTagCount]="3"
-          [allowClear]="true"
-          [multiple]="true"
+          multiple
           [ngModel]="defaultValue"
-          [defaultExpandAll]="true"
+          defaultExpandAll
         ></tri-tree-select>
         <tri-tree-select
           *spaceItem
@@ -62,10 +61,9 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
           variant="filled"
           [nodes]="nodes"
           [maxTagCount]="3"
-          [allowClear]="true"
-          [multiple]="true"
+          multiple
           [ngModel]="defaultValue"
-          [defaultExpandAll]="true"
+          defaultExpandAll
         ></tri-tree-select>
         <tri-tree-select
           *spaceItem
@@ -73,10 +71,9 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
           variant="borderless"
           [nodes]="nodes"
           [maxTagCount]="3"
-          [allowClear]="true"
-          [multiple]="true"
+          multiple
           [ngModel]="defaultValue"
-          [defaultExpandAll]="true"
+          defaultExpandAll
         ></tri-tree-select>
         <tri-tree-select
           *spaceItem
@@ -84,10 +81,9 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
           variant="underlined"
           [nodes]="nodes"
           [maxTagCount]="3"
-          [allowClear]="true"
-          [multiple]="true"
+          multiple
           [ngModel]="defaultValue"
-          [defaultExpandAll]="true"
+          defaultExpandAll
         ></tri-tree-select>
       </tri-space>
     </div>

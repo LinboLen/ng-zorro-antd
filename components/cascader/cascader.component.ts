@@ -49,6 +49,7 @@ import { slideMotion } from 'ng-zorro-antd/core/animation';
 import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
 import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
 import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import {
   DEFAULT_CASCADER_POSITIONS,
   getPlacementName,
@@ -103,46 +104,72 @@ const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
   template: `
     @if (showInput) {
       <div #selectContainer class="tri-select-selector">
-        @if (multiple) {
-          @for (node of selectedNodes | slice: 0 : maxTagCount; track node) {
-            <tri-select-item
-              deletable
+        @if (prefix; as prefix) {
+          <div class="tri-select-prefix">
+            <ng-container *stringTemplateOutlet="prefix">{{ prefix }}</ng-container>
+          </div>
+        }
+        <span class="tri-select-selection-wrap">
+          @if (multiple) {
+            <div class="tri-select-selection-overflow">
+              @for (node of selectedNodes | slice: 0 : maxTagCount; track node) {
+                <div class="tri-select-selection-overflow-item">
+                  <tri-select-item
+                    deletable
+                    [disabled]="disabled"
+                    [label]="displayWith(getAncestorOptionList(node))"
+                    (delete)="removeSelected(node)"
+                  />
+                </div>
+              }
+              @if (selectedNodes.length > maxTagCount) {
+                <div class="tri-select-selection-overflow-item">
+                  <tri-select-item [label]="'+ ' + (selectedNodes.length - maxTagCount) + ' ...'" />
+                </div>
+              }
+
+              <div class="tri-select-selection-overflow-item tri-select-selection-overflow-item-suffix">
+                <tri-select-search
+                  [showInput]="!!showSearch"
+                  (isComposingChange)="isComposingChange($event)"
+                  [value]="inputValue"
+                  (valueChange)="inputValue = $event"
+                  [mirrorSync]="true"
+                  [disabled]="disabled"
+                  [autofocus]="autoFocus"
+                  [focusTrigger]="menuVisible"
+                />
+              </div>
+            </div>
+          } @else {
+            <tri-select-search
+              [showInput]="!!showSearch"
+              (isComposingChange)="isComposingChange($event)"
+              [value]="inputValue"
+              (valueChange)="inputValue = $event"
+              [mirrorSync]="false"
               [disabled]="disabled"
-              [label]="displayWith(getAncestorOptionList(node))"
-              (delete)="removeSelected(node)"
-            ></tri-select-item>
+              [autofocus]="autoFocus"
+              [focusTrigger]="menuVisible"
+            />
+
+            @if (showLabelRender) {
+              <tri-select-item
+                [disabled]="disabled"
+                [label]="labelRenderText"
+                [contentTemplateOutlet]="isLabelRenderTemplate ? labelRender : null"
+                [contentTemplateOutletContext]="labelRenderContext"
+              />
+            }
           }
-          @if (selectedNodes.length > maxTagCount) {
-            <tri-select-item [label]="'+ ' + (selectedNodes.length - maxTagCount) + ' ...'"></tri-select-item>
+
+          @if (showPlaceholder) {
+            <tri-select-placeholder
+              [placeholder]="placeHolder || locale?.placeholder!"
+              [style.display]="inputValue || isComposing ? 'none' : 'block'"
+            />
           }
-        }
-
-        <tri-select-search
-          [showInput]="!!showSearch"
-          (isComposingChange)="isComposingChange($event)"
-          [value]="inputValue"
-          (valueChange)="inputValue = $event"
-          [mirrorSync]="multiple"
-          [disabled]="disabled"
-          [autofocus]="autoFocus"
-          [focusTrigger]="menuVisible"
-        ></tri-select-search>
-
-        @if (showPlaceholder) {
-          <tri-select-placeholder
-            [placeholder]="placeHolder || locale?.placeholder!"
-            [style.display]="inputValue || isComposing ? 'none' : 'block'"
-          ></tri-select-placeholder>
-        }
-
-        @if (showLabelRender) {
-          <tri-select-item
-            [disabled]="disabled"
-            [label]="labelRenderText"
-            [contentTemplateOutlet]="isLabelRenderTemplate ? labelRender : null"
-            [contentTemplateOutletContext]="labelRenderContext"
-          ></tri-select-item>
-        }
+        </span>
       </div>
 
       @if (showArrow) {
@@ -159,7 +186,7 @@ const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
         </span>
       }
       @if (clearIconVisible) {
-        <tri-select-clear (clear)="clearSelection($event)"></tri-select-clear>
+        <tri-select-clear (clear)="clearSelection($event)" />
       }
     }
     <ng-content></ng-content>
@@ -284,7 +311,8 @@ const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
     TriSelectItemComponent,
     TriSelectPlaceholderComponent,
     TriSelectSearchComponent,
-    TriCascaderOptionComponent
+    TriCascaderOptionComponent,
+    TriStringTemplateOutletDirective
   ]
 })
 export class TriCascaderComponent
@@ -319,6 +347,8 @@ export class TriCascaderComponent
   @ViewChild(CdkConnectedOverlay, { static: false }) overlay!: CdkConnectedOverlay;
   @ViewChildren(TriCascaderOptionComponent) cascaderItems!: QueryList<TriCascaderOptionComponent>;
 
+  @Input() open: boolean = false;
+  @Input() options: TriCascaderOption[] | null = [];
   @Input() optionRender: TemplateRef<{ $implicit: TriCascaderOption; index: number }> | null = null;
   @Input({ transform: booleanAttribute }) showInput = true;
   @Input({ transform: booleanAttribute }) showArrow = true;
@@ -361,25 +391,9 @@ export class TriCascaderComponent
     return defaultDisplayRender(nodes.map(n => this.cascaderService.getOptionLabel(n!)));
   };
   // TODO: RTL
+  @Input() prefix: string | TemplateRef<void> | null = null;
   @Input() suffixIcon: string | TemplateRef<void> = 'down';
   @Input() expandIcon: string | TemplateRef<void> = '';
-
-  @Input()
-  get options(): TriCascaderOption[] | null {
-    return this.cascaderService.options;
-  }
-
-  set options(options: TriCascaderOption[] | null) {
-    const nodes = this.coerceTreeNodes(options || []);
-    this.treeService.initTree(nodes);
-    this.cascaderService.columns = [nodes];
-    this.updateSelectedNodes(true);
-
-    if (this.inSearchingMode) {
-      this.cascaderService.setSearchingMode(this.inSearchingMode);
-      this.cascaderService.prepareSearchOptions(this.inputValue);
-    }
-  }
 
   get treeService(): TriCascaderTreeService {
     return this.nzTreeService as TriCascaderTreeService;
@@ -465,7 +479,7 @@ export class TriCascaderComponent
   }
 
   get showLabelRender(): boolean {
-    return !this.hasInput && !this.multiple && !!this.selectedNodes.length;
+    return !this.hasInput && !!this.selectedNodes.length;
   }
 
   get showPlaceholder(): boolean {
@@ -569,7 +583,13 @@ export class TriCascaderComponent
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const { nzStatus, nzSize, nzPlacement } = changes;
+    const { nzOpen, nzStatus, nzSize, nzPlacement, nzOptions } = changes;
+    if (nzOpen) {
+      this.setMenuVisible(this.open);
+    }
+    if (nzOptions) {
+      this.updateOptions();
+    }
     if (nzStatus) {
       this.setStatusStyles(this.status, this.hasFeedback);
     }
@@ -964,6 +984,18 @@ export class TriCascaderComponent
   onPositionChange(position: ConnectedOverlayPositionChange): void {
     const placement = getPlacementName(position);
     this.dropdownPosition = placement as TriSelectPlacementType;
+  }
+
+  private updateOptions(): void {
+    const nodes = this.coerceTreeNodes(this.options || []);
+    this.treeService.initTree(nodes);
+    this.cascaderService.setColumnData(nodes, 0);
+    this.updateSelectedNodes(true);
+
+    if (this.inSearchingMode) {
+      this.cascaderService.setSearchingMode(this.inSearchingMode);
+      this.cascaderService.prepareSearchOptions(this.inputValue);
+    }
   }
 
   private isActionTrigger(action: 'click' | 'hover'): boolean {

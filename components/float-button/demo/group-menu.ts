@@ -9,32 +9,26 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
   template: `
     <div class="menu">
       <tri-float-button-group
-        [icon]="icon"
+        icon="customer-service"
         type="primary"
         trigger="click"
         style="right: 24px"
         (onOpenChange)="openChange($event)"
       >
         <tri-float-button></tri-float-button>
-        <tri-float-button [icon]="inner"></tri-float-button>
+        <tri-float-button icon="comment"></tri-float-button>
       </tri-float-button-group>
       <tri-float-button-group
-        [icon]="icon"
+        icon="customer-service"
         type="primary"
         trigger="hover"
         style="right: 94px"
         (onOpenChange)="openChange($event)"
       >
         <tri-float-button></tri-float-button>
-        <tri-float-button [icon]="inner"></tri-float-button>
+        <tri-float-button icon="comment"></tri-float-button>
       </tri-float-button-group>
     </div>
-    <ng-template #icon>
-      <tri-icon type="customer-service" theme="outline"></tri-icon>
-    </ng-template>
-    <ng-template #inner>
-      <tri-icon type="comment" theme="outline"></tri-icon>
-    </ng-template>
   `,
   styles: [
     `
