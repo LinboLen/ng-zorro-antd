@@ -5,19 +5,20 @@
 
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
+  booleanAttribute,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
+  inject,
   Input,
   OnInit,
-  ViewEncapsulation,
-  booleanAttribute,
-  inject,
-  DestroyRef
+  ViewEncapsulation
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
+import type { TriSizeLMSType } from 'ng-zorro-antd/core/types';
 
 import { TriCollapsePanelComponent } from './collapse-panel.component';
 
@@ -35,7 +36,9 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'collapse';
     '[class.tri-collapse-icon-position-end]': `expandIconPosition === 'end'`,
     '[class.tri-collapse-ghost]': `ghost`,
     '[class.tri-collapse-borderless]': '!bordered',
-    '[class.tri-collapse-rtl]': "dir === 'rtl'"
+    '[class.tri-collapse-rtl]': "dir === 'rtl'",
+    '[class.tri-collapse-small]': `size === 'small'`,
+    '[class.tri-collapse-large]': `size === 'large'`
   }
 })
 export class TriCollapseComponent implements OnInit {
@@ -49,6 +52,7 @@ export class TriCollapseComponent implements OnInit {
   @Input({ transform: booleanAttribute }) @WithConfig() bordered: boolean = true;
   @Input({ transform: booleanAttribute }) @WithConfig() ghost: boolean = false;
   @Input() expandIconPosition: 'start' | 'end' = 'start';
+  @Input() size: TriSizeLMSType = 'middle';
 
   dir: Direction = 'ltr';
 

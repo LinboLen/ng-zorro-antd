@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import type { TriSizeLMSType } from 'ng-zorro-antd/core/types';
 
 @Component({
   selector: 'tri-divider',
@@ -36,7 +37,9 @@ import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
     '[class.tri-divider-with-text-right]': `text && orientation === 'right'`,
     '[class.tri-divider-with-text-center]': `text && orientation === 'center'`,
     '[class.tri-divider-dashed]': `dashed || variant === 'dashed'`,
-    '[class.tri-divider-dotted]': `variant === 'dotted'`
+    '[class.tri-divider-dotted]': `variant === 'dotted'`,
+    '[class.tri-divider-sm]': `size === 'small'`,
+    '[class.tri-divider-md]': `size === 'middle'`
   },
   imports: [TriOutletModule]
 })
@@ -45,6 +48,7 @@ export class TriDividerComponent {
   @Input() type: 'horizontal' | 'vertical' = 'horizontal';
   @Input() orientation: 'left' | 'right' | 'center' = 'center';
   @Input() variant: 'dashed' | 'dotted' | 'solid' = 'solid';
+  @Input() size: TriSizeLMSType | undefined;
   @Input({ transform: booleanAttribute }) dashed = false;
   @Input({ transform: booleanAttribute }) plain = false;
 }

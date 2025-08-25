@@ -190,6 +190,35 @@ describe('collapse', () => {
       expect(collapse.nativeElement!.classList).not.toContain('ant-collapse-rtl');
     });
   });
+
+  describe('collapse size', () => {
+    let fixture: ComponentFixture<TriTestCollapseSizeSpecComponent>;
+    let collapse: DebugElement;
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(TriTestCollapseSizeSpecComponent);
+      fixture.detectChanges();
+      collapse = fixture.debugElement.query(By.directive(TriCollapseComponent));
+    });
+
+    it('should apply correct host classes for nzSize', () => {
+      // default is middle: no small/large classes
+      expect(collapse.nativeElement!.classList).not.toContain('ant-collapse-small');
+      expect(collapse.nativeElement!.classList).not.toContain('ant-collapse-large');
+
+      // small
+      fixture.componentInstance.size = 'small';
+      fixture.detectChanges();
+      expect(collapse.nativeElement!.classList).toContain('ant-collapse-small');
+      expect(collapse.nativeElement!.classList).not.toContain('ant-collapse-large');
+
+      // large
+      fixture.componentInstance.size = 'large';
+      fixture.detectChanges();
+      expect(collapse.nativeElement!.classList).toContain('ant-collapse-large');
+      expect(collapse.nativeElement!.classList).not.toContain('ant-collapse-small');
+    });
+  });
 });
 
 @Component({
@@ -272,4 +301,18 @@ export class TriTestCollapseIconComponent {}
 export class TriTestCollapseRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction: Direction = 'rtl';
+}
+
+@Component({
+  imports: [TriCollapseModule],
+  template: `
+    <tri-collapse [size]="size">
+      <tri-collapse-panel header="header" active>
+        <p>content</p>
+      </tri-collapse-panel>
+    </tri-collapse>
+  `
+})
+export class TriTestCollapseSizeSpecComponent {
+  size: 'small' | 'middle' | 'large' = 'middle';
 }
