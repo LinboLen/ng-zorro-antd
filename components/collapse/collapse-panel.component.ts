@@ -4,21 +4,22 @@
  */
 
 import {
+  booleanAttribute,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
+  DestroyRef,
   ElementRef,
   EventEmitter,
+  inject,
   Input,
+  NgZone,
   OnInit,
   Output,
   TemplateRef,
   ViewChild,
   ViewEncapsulation,
-  booleanAttribute,
-  inject,
-  NgZone,
-  ChangeDetectorRef,
-  DestroyRef
+  type AfterViewInit
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs/operators';
@@ -41,9 +42,16 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'collapsePanel';
   encapsulation: ViewEncapsulation.None,
   animations: [collapseMotion],
   template: `
-    <div #collapseHeader role="button" [attr.aria-expanded]="active" class="tri-collapse-header">
+    <div
+      #collapseHeader
+      role="button"
+      [attr.aria-expanded]="active"
+      class="tri-collapse-header"
+      [class.tri-collapse-icon-collapsible-only]="collapsible === 'icon'"
+      [class.tri-collapse-header-collapsible-only]="collapsible === 'header'"
+    >
       @if (showArrow) {
-        <div>
+        <div role="button" #collapseIcon class="tri-collapse-expand-icon">
           <ng-container *stringTemplateOutlet="expandedIcon; let expandedIcon">
             <tri-icon [type]="expandedIcon || 'right'" class="tri-collapse-arrow" [rotate]="active ? 90 : 0" />
           </ng-container>
@@ -73,11 +81,11 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'collapsePanel';
     class: 'tri-collapse-item',
     '[class.tri-collapse-no-arrow]': '!showArrow',
     '[class.tri-collapse-item-active]': 'active',
-    '[class.tri-collapse-item-disabled]': 'disabled'
+    '[class.tri-collapse-item-disabled]': 'disabled || collapsible === "disabled"'
   },
   imports: [TriOutletModule, TriIconModule]
 })
-export class TriCollapsePanelComponent implements OnInit {
+export class TriCollapsePanelComponent implements OnInit, AfterViewInit {
   private ngZone = inject(NgZone);
   private cdr = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
@@ -87,14 +95,19 @@ export class TriCollapsePanelComponent implements OnInit {
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   @Input({ transform: booleanAttribute }) active = false;
+  /**
+   * @deprecated Use `nzCollapsible` instead with the value `'disabled'`.
+   */
   @Input({ transform: booleanAttribute }) disabled = false;
   @Input({ transform: booleanAttribute }) @WithConfig() showArrow: boolean = true;
   @Input() extra?: string | TemplateRef<void>;
   @Input() header?: string | TemplateRef<void>;
   @Input() expandedIcon?: string | TemplateRef<void>;
+  @Input() collapsible?: 'disabled' | 'header' | 'icon';
   @Output() readonly activeChange = new EventEmitter<boolean>();
 
-  @ViewChild('collapseHeader', { static: true }) collapseHeader!: ElementRef<HTMLElement>;
+  @ViewChild('collapseHeader') collapseHeader!: ElementRef<HTMLElement>;
+  @ViewChild('collapseIcon') collapseIcon?: ElementRef<HTMLElement>;
 
   markForCheck(): void {
     this.cdr.markForCheck();
@@ -110,10 +123,16 @@ export class TriCollapsePanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.collapseComponent.addPanel(this);
+  }
 
-    fromEventOutsideAngular(this.collapseHeader.nativeElement, 'click')
+  ngAfterViewInit(): void {
+    let fromEvent$ = fromEventOutsideAngular(this.collapseHeader.nativeElement, 'click');
+    if (this.showArrow && this.collapsible === 'icon' && this.collapseIcon) {
+      fromEvent$ = fromEventOutsideAngular(this.collapseIcon!.nativeElement, 'click');
+    }
+    fromEvent$
       .pipe(
-        filter(() => !this.disabled),
+        filter(() => !this.disabled && this.collapsible !== 'disabled'),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(() => {
