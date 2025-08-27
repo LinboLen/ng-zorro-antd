@@ -28,11 +28,7 @@
   font-family: Avenir, $font-family, sans-serif;
   line-height: 38px;
   .subtitle {
-    margin-left: 12px;
-    @at-root .ant-row-rtl & {
-      margin-right: 12px;
-      margin-left: 0;
-    }
+    margin-inline-start: 12px;
   }
 }
 .markdown h2 {
@@ -74,29 +70,17 @@
   margin: 1em 0;
 }
 .markdown ul > li {
-  margin-left: 20px;
-  padding-left: 4px;
+  margin-inline-start: 20px;
+  padding-inline-start: 4px;
   list-style-type: circle;
-  @at-root .ant-row-rtl & {
-    margin-right: 20px;
-    margin-left: 0;
-    padding-right: 4px;
-    padding-left: 0;
-  }
   &:empty {
     display: none;
   }
 }
 .markdown ol > li {
-  margin-left: 20px;
-  padding-left: 4px;
+  margin-inline-start: 20px;
+  padding-inline-start: 4px;
   list-style-type: decimal;
-  @at-root .ant-row-rtl & {
-    margin-right: 20px;
-    margin-left: 0;
-    padding-right: 4px;
-    padding-left: 0;
-  }
 }
 .markdown ul > li > p,
 .markdown ol > li > p {
@@ -150,28 +134,18 @@
 }
 .markdown blockquote {
   margin: 1em 0;
-  padding-left: 0.8em;
+  padding-inline-start: 0.8em;
   color: $site-text-color-secondary;
   font-size: 90%;
-  border-left: 4px solid $site-border-color-split;
-  @at-root .ant-row-rtl & {
-    padding-right: 0.8em;
-    padding-left: 0;
-    border-right: 4px solid $site-border-color-split;
-    border-left: none;
-  }
+  border-inline-start: 4px solid $site-border-color-split;
 }
 .markdown blockquote p {
   margin: 0;
 }
 .markdown .anchor {
-  margin-left: 8px;
+  margin-inline-start: 8px;
   opacity: 0;
   transition: opacity 0.3s;
-  @at-root .ant-row-rtl & {
-    margin-right: 8px;
-    margin-left: 0;
-  }
 }
 .markdown .waiting {
   color: #cccccc;
@@ -179,12 +153,8 @@
 }
 .markdown a.edit-button {
   display: inline-block;
-  margin-left: 8px;
+  margin-inline-start: 8px;
   text-decoration: none;
-  @at-root .ant-row-rtl & {
-    margin-right: 8px;
-    margin-left: 0;
-  }
   .anticon {
     display: block;
     color: $site-text-color-secondary;

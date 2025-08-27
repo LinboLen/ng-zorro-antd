@@ -16,11 +16,11 @@ a {
 .main-container {
   position: relative;
   min-height: 500px;
-  padding: 0 170px 32px 64px;
+  padding-bottom: 32px;
+  padding-inline-start: 64px;
+  padding-inline-end: 170px;
+  // toc
   background: $component-background;
-  @at-root .ant-row-rtl & {
-    padding: 0 64px 144px 170px;
-  }
 }
 .main-menu {
   z-index: 1;
@@ -68,29 +68,15 @@ a {
       > .ant-menu-item-group > .ant-menu-item-group-title,
       > .ant-menu-item-group > .ant-menu-item-group-list > .ant-menu-item,
       &.ant-menu-inline > .ant-menu-item-group > .ant-menu-item-group-list > .ant-menu-item {
-      padding-left: 40px !important;
-      @at-root .ant-row-rtl & {
-        padding-right: 40px !important;
-        padding-left: 16px !important;
-        text-align: right;
-      }
+      padding-inline-start: 40px !important;
     }
     // Nest Category > Type > Article
     &.ant-menu-inline {
       .ant-menu-item-group-title {
-        padding-left: 56px;
-        @at-root .ant-row-rtl & {
-          padding-right: 56px;
-          padding-left: 16px;
-        }
+        padding-inline-start: 56px;
       }
       .ant-menu-item-group-list > .ant-menu-item {
-        padding-left: 80px !important;
-        @at-root .ant-row-rtl & {
-          padding-right: 80px !important;
-          padding-left: 16px !important;
-          text-align: right;
-        }
+        padding-inline-start: 80px !important;
       }
     }
     .ant-menu-item-group:first-child {
@@ -115,6 +101,14 @@ a {
     }
     &:hover .anticon {
       opacity: 1;
+    }
+  }
+  .menu-title-content-link {
+    display: flex;
+    align-items: center;
+    > .ant-tag {
+      position: absolute;
+      inset-inline-end: $padding-xs;
     }
   }
 }
@@ -142,10 +136,6 @@ a {
     color: $primary-color;
   }
 }
-#react-content {
-  height: 100%;
-  transition: transform 0.3s $ease-in-out-circ;
-}
 .page-wrapper {
   width: 100%;
   padding: 0;
@@ -163,26 +153,14 @@ a {
 .drawer {
   z-index: 1029;
 }
-#_hj_feedback_container {
-  .path1::before {
-    color: $primary-color;
-  }
-  .path2::before {
-    color: $body-background;
-  }
-}
 .fixed-widgets {
   position: fixed;
-  right: 32px;
+  inset-inline-end: 32px;
   bottom: 102px;
   z-index: 2147483640;
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  @at-root .page-wrapper-rtl & {
-    right: auto;
-    left: 32px;
-  }
   &-tooltip {
     .ant-tooltip-inner {
       min-width: 100px;
@@ -195,7 +173,11 @@ a {
     color: $primary-color;
   }
   & &-avatar {
+    width: 44px;
+    height: 44px;
     color: black;
+    font-size: 22px;
+    line-height: 44px;
     background-color: white;
     box-shadow: $shadow-2;
     transition: color 0.3s;
