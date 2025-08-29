@@ -79,6 +79,7 @@ export class TriTooltipDirective extends TriTooltipBaseDirective {
   exportAs: 'triTooltipComponent',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
+  // todo: currently the animation will cause small shake for the arrow (< 1px) when the tooltip is shown
   animations: [zoomBigMotion],
   template: `
     <ng-template
@@ -103,10 +104,8 @@ export class TriTooltipDirective extends TriTooltipBaseDirective {
         [noAnimation]="noAnimation?.nzNoAnimation"
         [@zoomBigMotion]="'active'"
       >
+        <div class="tri-tooltip-arrow" [style]="_arrowStyleMap"></div>
         <div class="tri-tooltip-content">
-          <div class="tri-tooltip-arrow">
-            <span class="tri-tooltip-arrow-content" [style]="_contentStyleMap"></span>
-          </div>
           <div class="tri-tooltip-inner" [style]="_contentStyleMap">
             <ng-container *stringTemplateOutlet="title; stringTemplateOutletContext: titleContext">{{ title }}</ng-container>
           </div>
@@ -122,7 +121,8 @@ export class TriTooltipComponent extends TriTooltipBaseComponent {
 
   color?: string | TriPresetColor;
 
-  _contentStyleMap: NgStyleInterface = {};
+  protected _arrowStyleMap: NgStyleInterface = {};
+  protected _contentStyleMap: NgStyleInterface = {};
 
   protected isEmpty(): boolean {
     return isTooltipEmpty(this.title);
@@ -138,8 +138,11 @@ export class TriTooltipComponent extends TriTooltipBaseComponent {
     };
 
     this._contentStyleMap = {
-      backgroundColor: !!this.color && !isColorPreset ? this.color : null,
-      '--antd-arrow-background-color': this.color
+      backgroundColor: !!this.color && !isColorPreset ? this.color : null
+    };
+
+    this._arrowStyleMap = {
+      '--antd-arrow-background-color': !!this.color && !isColorPreset ? this.color : null
     };
   }
 }

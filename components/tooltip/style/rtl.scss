@@ -4,10 +4,4 @@ $tooltip-prefix-cls: "#{$ant-prefix}-tooltip";
   &-rtl {
     direction: rtl;
   }
-  // Wrapper for the tooltip content
-  &-inner {
-    .#{$tooltip-prefix-cls}-rtl & {
-      text-align: right;
-    }
-  }
 }

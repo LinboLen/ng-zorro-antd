@@ -177,12 +177,10 @@ export class TriPopconfirmDirective extends TriTooltipBaseDirective {
         [noAnimation]="noAnimation?.nzNoAnimation"
         [@zoomBigMotion]="'active'"
       >
+        @if (popconfirmShowArrow) {
+          <div class="tri-popover-arrow"></div>
+        }
         <div class="tri-popover-content">
-          @if (popconfirmShowArrow) {
-            <div class="tri-popover-arrow">
-              <span class="tri-popover-arrow-content"></span>
-            </div>
-          }
           <div class="tri-popover-inner">
             <div>
               <div class="tri-popover-inner-content">

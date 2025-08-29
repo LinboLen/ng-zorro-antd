@@ -69,7 +69,8 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'segmented';
     '[class.tri-segmented-rtl]': `dir === 'rtl'`,
     '[class.tri-segmented-lg]': `size === 'large'`,
     '[class.tri-segmented-sm]': `size === 'small'`,
-    '[class.tri-segmented-block]': `block`
+    '[class.tri-segmented-block]': `block`,
+    '[class.tri-segmented-vertical]': `vertical`
   },
   providers: [
     TriSegmentedService,
@@ -93,6 +94,7 @@ export class TriSegmentedComponent implements OnChanges, ControlValueAccessor {
   @Input({ transform: booleanAttribute }) block: boolean = false;
   @Input({ transform: booleanAttribute }) disabled = false;
   @Input() options: TriSegmentedOptions = [];
+  @Input({ transform: booleanAttribute }) vertical: boolean = false;
   @Input() @WithConfig() size: TriSizeLDSType = 'default';
 
   @Output() readonly valueChange = new EventEmitter<number | string>();
@@ -127,17 +129,31 @@ export class TriSegmentedComponent implements OnChanges, ControlValueAccessor {
     });
 
     this.service.activated$.pipe(bufferCount(2, 1), takeUntilDestroyed()).subscribe(elements => {
-      this.animationState = {
-        value: 'from',
-        params: thumbAnimationParamsOf(elements[0])
-      };
-      this.cdr.detectChanges();
+      if (this.vertical) {
+        this.animationState = {
+          value: 'fromVertical',
+          params: thumbAnimationParamsOf(elements[0], true)
+        };
+        this.cdr.detectChanges();
 
-      this.animationState = {
-        value: 'to',
-        params: thumbAnimationParamsOf(elements[1])
-      };
-      this.cdr.detectChanges();
+        this.animationState = {
+          value: 'toVertical',
+          params: thumbAnimationParamsOf(elements[1], true)
+        };
+        this.cdr.detectChanges();
+      } else {
+        this.animationState = {
+          value: 'from',
+          params: thumbAnimationParamsOf(elements[0])
+        };
+        this.cdr.detectChanges();
+
+        this.animationState = {
+          value: 'to',
+          params: thumbAnimationParamsOf(elements[1])
+        };
+        this.cdr.detectChanges();
+      }
     });
 
     effect(() => {
@@ -149,9 +165,9 @@ export class TriSegmentedComponent implements OnChanges, ControlValueAccessor {
 
       if (
         this.value === undefined || // If no value is set, select the first item
-        !itemCmps.some(item => item.value === this.value) // handle value not in options
+        !itemCmps.some(item => item.value() === this.value) // handle value not in options
       ) {
-        this.service.selected$.next(itemCmps[0].value);
+        this.service.selected$.next(itemCmps[0].value());
       }
     });
   }
@@ -167,7 +183,7 @@ export class TriSegmentedComponent implements OnChanges, ControlValueAccessor {
   }
 
   handleThumbAnimationDone(event: AnimationEvent): void {
-    if (event.toState === 'to') {
+    if (event.toState === 'to' || event.toState === 'toVertical') {
       this.animationState = null;
     }
     this.service.animationDone$.next(event);
@@ -191,7 +207,15 @@ export class TriSegmentedComponent implements OnChanges, ControlValueAccessor {
   }
 }
 
-function thumbAnimationParamsOf(element?: HTMLElement): ThumbAnimationProps {
+function thumbAnimationParamsOf(element?: HTMLElement, vertical: boolean = false): ThumbAnimationProps {
+  if (vertical) {
+    return {
+      transform: element?.offsetTop ?? 0,
+      width: element?.clientWidth ?? 0,
+      height: element?.clientHeight ?? 0,
+      vertical
+    };
+  }
   return {
     transform: element?.offsetLeft ?? 0,
     width: element?.clientWidth ?? 0

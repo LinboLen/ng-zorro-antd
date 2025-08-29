@@ -4,7 +4,7 @@
  */
 
 import { Component, DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -17,6 +17,12 @@ import { TriSegmentedModule } from './segmented.module';
 import { TriSegmentedOptions } from './types';
 
 describe('nz-segmented', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [provideNoopAnimations()]
+    });
+  });
+
   describe('basic', () => {
     let fixture: ComponentFixture<TriSegmentedTestComponent>;
     let component: TriSegmentedTestComponent;
@@ -27,9 +33,6 @@ describe('nz-segmented', () => {
     }
 
     beforeEach(() => {
-      TestBed.configureTestingModule({
-        providers: [provideNoopAnimations()]
-      });
       fixture = TestBed.createComponent(TriSegmentedTestComponent);
       component = fixture.componentInstance;
       spyOn(component, 'handleValueChange');
@@ -53,6 +56,14 @@ describe('nz-segmented', () => {
       component.size = 'small';
       fixture.detectChanges();
       expect(segmentedElement.classList).toContain('ant-segmented-sm');
+    });
+
+    it('should support vertical mode', () => {
+      const segmentedElement: HTMLElement = segmentedComponent.nativeElement;
+      expect(segmentedElement.classList).not.toContain('ant-segmented-vertical');
+      component.vertical = true;
+      fixture.detectChanges();
+      expect(segmentedElement.classList).toContain('ant-segmented-vertical');
     });
 
     it('should be auto selected the first option when if no value is set', async () => {
@@ -132,6 +143,51 @@ describe('nz-segmented', () => {
       expect(theFirstElement.classList).toContain('ant-segmented-item-selected');
       expect(theSecondElement.classList).not.toContain('ant-segmented-item-selected');
     });
+
+    it('should animate thumb correctly in vertical mode', fakeAsync(() => {
+      component.vertical = true;
+      fixture.detectChanges();
+
+      const segmentedComponentInstance = fixture.debugElement.query(
+        By.directive(TriSegmentedComponent)
+      ).componentInstance;
+
+      expect(segmentedComponentInstance.nzVertical).toBe(true);
+
+      const theSecondElement = getSegmentedOptionByIndex(1);
+
+      tick(100);
+      fixture.detectChanges();
+
+      dispatchMouseEvent(theSecondElement, 'click');
+      tick(100);
+      fixture.detectChanges();
+
+      expect(theSecondElement.classList).toContain('ant-segmented-item-selected');
+      expect(segmentedComponentInstance.animationState).toBeDefined();
+
+      if (segmentedComponentInstance.animationState) {
+        expect(['fromVertical', 'toVertical']).toContain(segmentedComponentInstance.animationState.value);
+      }
+    }));
+  });
+
+  describe('icon-only', () => {
+    let fixture: ComponentFixture<TriSegmentedIconOnlyTestComponent>;
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(TriSegmentedIconOnlyTestComponent);
+    });
+
+    it('should render only one element in .ant-segmented-item-label if the item is icon-only', () => {
+      const items = fixture.debugElement.queryAll(By.css('.ant-segmented-item-label'));
+      expect(items.length).toBe(2);
+      expect(items[0].children.length).toBe(2);
+      expect(items[0].children[0].nativeElement.classList).toContain('ant-segmented-item-icon');
+      expect(items[0].children[1].nativeElement.tagName).toBe('SPAN');
+      expect(items[1].children.length).toBe(1);
+      expect(items[1].children[0].nativeElement.classList).toContain('ant-segmented-item-icon');
+    });
   });
 
   describe('ng model', () => {
@@ -144,9 +200,6 @@ describe('nz-segmented', () => {
     }
 
     beforeEach(() => {
-      TestBed.configureTestingModule({
-        providers: [provideNoopAnimations()]
-      });
       fixture = TestBed.createComponent(TriSegmentedNgModelTestComponent);
       component = fixture.componentInstance;
       spyOn(component, 'handleValueChange');
@@ -194,9 +247,6 @@ describe('nz-segmented', () => {
     }
 
     beforeEach(() => {
-      TestBed.configureTestingModule({
-        providers: [provideNoopAnimations()]
-      });
       fixture = TestBed.createComponent(TriSegmentedInReactiveFormTestComponent);
       component = fixture.componentInstance;
       segmentedComponent = fixture.debugElement.query(By.directive(TriSegmentedComponent));
@@ -217,6 +267,51 @@ describe('nz-segmented', () => {
       expect(theThirdElement.classList).toContain('ant-segmented-item-selected');
     });
   });
+
+  describe('vertical segmented', () => {
+    let fixture: ComponentFixture<TriSegmentedVerticalTestComponent>;
+    let component: TriSegmentedVerticalTestComponent;
+    let segmentedComponent: DebugElement;
+
+    function getSegmentedOptionByIndex(index: number): HTMLElement {
+      return segmentedComponent.nativeElement.querySelectorAll('.ant-segmented-item')[index];
+    }
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(TriSegmentedVerticalTestComponent);
+      component = fixture.componentInstance;
+      spyOn(component, 'handleValueChange');
+      segmentedComponent = fixture.debugElement.query(By.directive(TriSegmentedComponent));
+      fixture.detectChanges();
+    });
+
+    it('should render in vertical mode', () => {
+      const segmentedElement: HTMLElement = segmentedComponent.nativeElement;
+      expect(segmentedElement.classList).toContain('ant-segmented-vertical');
+      const groupElement = segmentedElement.querySelector('.ant-segmented-group') as HTMLElement;
+      expect(groupElement).toBeTruthy();
+    });
+
+    it('should change selection in vertical mode', async () => {
+      const theFirstElement = getSegmentedOptionByIndex(0);
+      const theSecondElement = getSegmentedOptionByIndex(1);
+
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      expect(theFirstElement.classList).toContain('ant-segmented-item-selected');
+      expect(component.handleValueChange).toHaveBeenCalledTimes(0);
+
+      dispatchMouseEvent(theSecondElement, 'click');
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      expect(theFirstElement.classList).not.toContain('ant-segmented-item-selected');
+      expect(theSecondElement.classList).toContain('ant-segmented-item-selected');
+      expect(component.handleValueChange).toHaveBeenCalledTimes(1);
+      expect(component.handleValueChange).toHaveBeenCalledWith('Weekly');
+    });
+  });
 });
 
 @Component({
@@ -227,8 +322,9 @@ describe('nz-segmented', () => {
       [options]="options"
       [disabled]="disabled"
       [block]="block"
+      [vertical]="vertical"
       (valueChange)="handleValueChange($event)"
-    ></tri-segmented>
+    />
   `
 })
 export class TriSegmentedTestComponent {
@@ -236,10 +332,22 @@ export class TriSegmentedTestComponent {
   options: TriSegmentedOptions = [1, 2, 3];
   block = false;
   disabled = false;
+  vertical = false;
 
   handleValueChange(_e: string | number): void {
     // empty
   }
+}
+
+@Component({
+  imports: [FormsModule, TriSegmentedModule],
+  template: `<tri-segmented [options]="options" />`
+})
+export class TriSegmentedIconOnlyTestComponent {
+  options: TriSegmentedOptions = [
+    { value: 'List', label: 'List', icon: 'bars' },
+    { value: 'Kanban', icon: 'appstore' }
+  ];
 }
 
 @Component({
@@ -262,4 +370,16 @@ export class TriSegmentedNgModelTestComponent {
 export class TriSegmentedInReactiveFormTestComponent {
   options = ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly'];
   formControl = new FormControl('Weekly');
+}
+
+@Component({
+  imports: [FormsModule, TriSegmentedModule],
+  template: `<tri-segmented [options]="options" [vertical]="true" (valueChange)="handleValueChange($event)" /> `
+})
+export class TriSegmentedVerticalTestComponent {
+  options = ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly'];
+
+  handleValueChange(_e: string | number): void {
+    // empty
+  }
 }

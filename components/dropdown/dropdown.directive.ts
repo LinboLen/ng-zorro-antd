@@ -27,19 +27,31 @@ import { BehaviorSubject, EMPTY, Subject, combineLatest, fromEvent, merge } from
 import { auditTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
 
 import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
-import { POSITION_MAP, getPlacementName } from 'ng-zorro-antd/core/overlay';
+import {
+  POSITION_MAP,
+  getPlacementName,
+  POSITION_TYPE,
+  setConnectedPositionOffset,
+  TOOLTIP_OFFSET_MAP
+} from 'ng-zorro-antd/core/overlay';
 import { IndexableObject } from 'ng-zorro-antd/core/types';
 
 import { TriDropdownMenuComponent, TriPlacementType } from './dropdown-menu.component';
 
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'dropDown';
 
-const listOfPositions = [
-  POSITION_MAP.bottomLeft,
-  POSITION_MAP.bottomRight,
-  POSITION_MAP.topRight,
-  POSITION_MAP.topLeft
-];
+const listOfPositions: POSITION_TYPE[] = ['bottomLeft', 'bottomRight', 'topRight', 'topLeft'];
+
+const normalizePlacementForClass = (p: TriPlacementType): TriDropdownMenuComponent['placement'] => {
+  // Map center placements to generic top/bottom classes for styling
+  if (p === 'topCenter') {
+    return 'top';
+  }
+  if (p === 'bottomCenter') {
+    return 'bottom';
+  }
+  return p as TriDropdownMenuComponent['placement'];
+};
 
 const normalizePlacementForClass = (p: TriPlacementType): TriDropdownMenuComponent['placement'] => {
   // Map center placements to generic top/bottom classes for styling
@@ -191,7 +203,12 @@ export class TriDropDownDirective implements AfterViewInit, OnChanges {
               overlayConfig.minWidth = triggerWidth;
             }
             /** open dropdown with animation **/
-            this.positionStrategy.withPositions([POSITION_MAP[this.placement], ...listOfPositions]);
+            const positions = [this.placement, ...listOfPositions].map(position => {
+              return this.arrow
+                ? setConnectedPositionOffset(POSITION_MAP[position], TOOLTIP_OFFSET_MAP[position])
+                : POSITION_MAP[position];
+            });
+            this.positionStrategy.withPositions(positions);
             /** reset portal if needed **/
             if (!this.portal || this.portal.templateRef !== this.dropdownMenu!.templateRef) {
               this.portal = new TemplatePortal(this.dropdownMenu!.templateRef, this.viewContainerRef);

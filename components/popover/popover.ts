@@ -109,10 +109,8 @@ export class TriPopoverDirective extends TriTooltipBaseDirective {
         [noAnimation]="noAnimation?.nzNoAnimation"
         [@zoomBigMotion]="'active'"
       >
+        <div class="tri-popover-arrow"></div>
         <div class="tri-popover-content">
-          <div class="tri-popover-arrow">
-            <span class="tri-popover-arrow-content"></span>
-          </div>
           <div class="tri-popover-inner" role="tooltip">
             <div>
               @if (title) {

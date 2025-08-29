@@ -14,6 +14,7 @@ import {
   ChangeDetectorRef,
   Component,
   ContentChildren,
+  DestroyRef,
   ElementRef,
   EventEmitter,
   Input,
@@ -29,8 +30,7 @@ import {
   ViewEncapsulation,
   booleanAttribute,
   inject,
-  numberAttribute,
-  DestroyRef
+  numberAttribute
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
@@ -142,19 +142,7 @@ export class TriCarouselComponent implements AfterContentInit, AfterViewInit, On
    */
   @Input() strategyOptions: TriSafeAny = undefined;
 
-  @Input()
-  // @ts-ignore
-  @WithConfig()
-  set dotPosition(value: TriCarouselDotPosition) {
-    this._dotPosition = value;
-    this.vertical = value === 'left' || value === 'right';
-  }
-
-  get dotPosition(): TriCarouselDotPosition {
-    return this._dotPosition;
-  }
-
-  private _dotPosition: TriCarouselDotPosition = 'bottom';
+  @Input() @WithConfig() dotPosition: TriCarouselDotPosition = 'bottom';
 
   @Output() readonly beforeChange = new EventEmitter<FromToInterface>();
   @Output() readonly afterChange = new EventEmitter<number>();
@@ -256,10 +244,13 @@ export class TriCarouselComponent implements AfterContentInit, AfterViewInit, On
       this.layout();
     }
 
-    if (nzDotPosition && !nzDotPosition.isFirstChange()) {
-      this.switchStrategy();
-      this.markContentActive(0);
-      this.layout();
+    if (nzDotPosition) {
+      this.vertical = nzDotPosition.currentValue === 'left' || nzDotPosition.currentValue === 'right';
+      if (!nzDotPosition.isFirstChange()) {
+        this.switchStrategy();
+        this.markContentActive(0);
+        this.layout();
+      }
     }
 
     if (!this.autoPlay || !this.autoPlaySpeed) {

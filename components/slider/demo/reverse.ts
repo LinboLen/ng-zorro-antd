@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriMarks, TriSliderModule } from 'ng-zorro-antd/slider';
+import { TriSwitchModule } from 'ng-zorro-antd/switch';
 
 @Component({
   selector: 'tri-demo-slider-reverse',
-  imports: [FormsModule, TriSliderModule],
+  imports: [FormsModule, TriSliderModule, TriSwitchModule],
   template: `
     <tri-slider [ngModel]="30" [reverse]="reverse"></tri-slider>
     <tri-slider range [ngModel]="[20, 50]" [reverse]="reverse"></tri-slider>
