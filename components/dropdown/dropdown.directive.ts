@@ -53,17 +53,6 @@ const normalizePlacementForClass = (p: TriPlacementType): TriDropdownMenuCompone
   return p as TriDropdownMenuComponent['placement'];
 };
 
-const normalizePlacementForClass = (p: TriPlacementType): TriDropdownMenuComponent['placement'] => {
-  // Map center placements to generic top/bottom classes for styling
-  if (p === 'topCenter') {
-    return 'top';
-  }
-  if (p === 'bottomCenter') {
-    return 'bottom';
-  }
-  return p as TriDropdownMenuComponent['placement'];
-};
-
 @Directive({
   selector: '[tri-dropdown]',
   exportAs: 'triDropdown',
