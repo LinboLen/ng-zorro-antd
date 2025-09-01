@@ -21,9 +21,11 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  contentChild,
   ContentChild,
   DestroyRef,
   DOCUMENT,
+  effect,
   ElementRef,
   EventEmitter,
   inject,
@@ -59,7 +61,6 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TRI_MENTION_CONFIG } from './config';
 import { TriMentionSuggestionDirective } from './mention-suggestions';
 import { TriMentionTriggerDirective } from './mention-trigger';
-import { TriMentionService } from './mention.service';
 
 export interface MentionOnSearchTypes {
   value: string;
@@ -119,7 +120,6 @@ export type MentionPlacement = 'top' | 'bottom';
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [TriMentionService],
   host: {
     class: 'tri-mentions',
     '[class.tri-mentions-rtl]': `dir === 'rtl'`
@@ -134,7 +134,6 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
   private viewContainerRef = inject(ViewContainerRef);
   private elementRef = inject(ElementRef);
   private renderer = inject(Renderer2);
-  private mentionService = inject(TriMentionService);
   private destroyRef = inject(DestroyRef);
   @Input() valueWith: (value: TriSafeAny) => string = value => value;
   @Input() prefix: string | string[] = '@';
@@ -146,7 +145,6 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
   @Output() readonly onSelect = new EventEmitter<TriSafeAny>();
   @Output() readonly onSearchChange = new EventEmitter<MentionOnSearchTypes>();
 
-  trigger!: TriMentionTriggerDirective;
   @ViewChild(TemplateRef, { static: false }) suggestionsTemp?: TemplateRef<void>;
   @ViewChildren('items', { read: ElementRef })
   items!: QueryList<ElementRef>;
@@ -157,6 +155,8 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
       this.suggestionTemplate = value;
     }
   }
+
+  readonly trigger = contentChild.required(TriMentionTriggerDirective);
 
   isOpen = false;
   filteredSuggestions: string[] = [];
@@ -180,7 +180,7 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
   private document: Document = inject(DOCUMENT);
 
   private get triggerNativeElement(): HTMLTextAreaElement | HTMLInputElement {
-    return this.trigger.elementRef.nativeElement;
+    return this.trigger().elementRef.nativeElement;
   }
 
   private get focusItemElement(): HTMLElement | null {
@@ -198,6 +198,15 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
     this.destroyRef.onDestroy(() => {
       this.closeDropdown();
     });
+
+    effect(() => {
+      const trigger = this.trigger();
+      if (trigger) {
+        this.bindTriggerEvents();
+        this.closeDropdown();
+        this.overlayRef = null;
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -213,14 +222,6 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
       .subscribe(({ status, hasFeedback }) => {
         this.setStatusStyles(status, hasFeedback);
       });
-
-    this.mentionService.triggerChanged().subscribe(trigger => {
-      this.trigger = trigger;
-      this.bindTriggerEvents();
-      this.closeDropdown();
-      this.overlayRef = null;
-    });
-
     this.dir = this.directionality.value;
     this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
       this.dir = direction;
@@ -271,12 +272,12 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   getMentions(): string[] {
-    return this.trigger ? getMentions(this.trigger.value!, this.prefix) : [];
+    return this.trigger() ? getMentions(this.trigger().value!, this.prefix) : [];
   }
 
   selectSuggestion(suggestion: string | {}): void {
     const value = this.valueWith(suggestion);
-    this.trigger.insertMention({
+    this.trigger().insertMention({
       mention: value,
       startPos: this.cursorMentionStart!,
       endPos: this.cursorMentionEnd!
@@ -288,8 +289,8 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
 
   private handleInput(event: KeyboardEvent): void {
     const target = event.target as HTMLInputElement | HTMLTextAreaElement;
-    this.trigger.onChange(target.value);
-    this.trigger.value = target.value;
+    this.trigger().onChange(target.value);
+    this.trigger().value = target.value;
     this.resetDropdown();
   }
 
@@ -322,13 +323,13 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   private handleClick(): void {
-    this.resetDropdown();
+    this.resetDropdown(false);
   }
 
   private bindTriggerEvents(): void {
-    this.trigger.onInput.subscribe((e: KeyboardEvent) => this.handleInput(e));
-    this.trigger.onKeydown.subscribe((e: KeyboardEvent) => this.handleKeydown(e));
-    this.trigger.onClick.subscribe(() => this.handleClick());
+    this.trigger().onInput.subscribe((e: KeyboardEvent) => this.handleInput(e));
+    this.trigger().onKeydown.subscribe((e: KeyboardEvent) => this.handleKeydown(e));
+    this.trigger().onClick.subscribe(() => this.handleClick());
   }
 
   private suggestionsFilter(value: string, emit: boolean): void {
@@ -445,7 +446,7 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
       const clickTarget = event.target as HTMLElement;
       return (
         this.isOpen &&
-        clickTarget !== this.trigger.elementRef.nativeElement &&
+        clickTarget !== this.triggerNativeElement &&
         !this.overlayRef?.overlayElement.contains(clickTarget)
       );
     };
@@ -492,7 +493,7 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
     ];
     this.positionStrategy = this.overlay
       .position()
-      .flexibleConnectedTo(this.trigger.elementRef)
+      .flexibleConnectedTo(this.trigger().elementRef)
       .withPositions(positions)
       .withFlexibleDimensions(false)
       .withPush(false);

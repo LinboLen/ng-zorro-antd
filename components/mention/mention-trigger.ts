@@ -4,7 +4,7 @@
  */
 
 import {
-  AfterViewInit,
+  afterNextRender,
   ChangeDetectorRef,
   DestroyRef,
   Directive,
@@ -24,7 +24,6 @@ import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 
 import { TRI_MENTION_CONFIG } from './config';
 import { Mention } from './mention.component';
-import { TriMentionService } from './mention.service';
 
 /**
  * @deprecated Internally used, will be removed in v21, please do not use it.
@@ -43,14 +42,13 @@ export const TRI_MENTION_TRIGGER_ACCESSOR: ExistingProvider = {
     autocomplete: 'off'
   }
 })
-export class TriMentionTriggerDirective implements ControlValueAccessor, AfterViewInit {
+export class TriMentionTriggerDirective implements ControlValueAccessor {
   public readonly elementRef: ElementRef<HTMLInputElement | HTMLTextAreaElement> = inject(
     ElementRef<HTMLInputElement | HTMLTextAreaElement>
   );
   private readonly ngZone = inject(NgZone);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly mentionService = inject(TriMentionService);
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() readonly onFocusin = new EventEmitter<FocusEvent>();
@@ -67,6 +65,14 @@ export class TriMentionTriggerDirective implements ControlValueAccessor, AfterVi
   constructor() {
     this.destroyRef.onDestroy(() => {
       this.completeEvents();
+    });
+
+    afterNextRender(() => {
+      this.setupEventListener('blur', this.onBlur);
+      this.setupEventListener('focusin', this.onFocusin);
+      this.setupEventListener('input', this.onInput);
+      this.setupEventListener('click', this.onClick);
+      this.setupEventListener('keydown', this.onKeydown);
     });
   }
 
@@ -114,16 +120,6 @@ export class TriMentionTriggerDirective implements ControlValueAccessor, AfterVi
 
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
-  }
-
-  ngAfterViewInit(): void {
-    this.mentionService.registerTrigger(this);
-
-    this.setupEventListener('blur', this.onBlur);
-    this.setupEventListener('focusin', this.onFocusin);
-    this.setupEventListener('input', this.onInput);
-    this.setupEventListener('click', this.onClick);
-    this.setupEventListener('keydown', this.onKeydown);
   }
 
   private setupEventListener<TEvent extends Event>(eventName: string, eventEmitter: EventEmitter<TEvent>): void {
