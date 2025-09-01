@@ -6,17 +6,15 @@ import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
   selector: 'tri-demo-segmented-disabled',
   imports: [TriSegmentedModule],
   template: `
-    <tri-segmented [options]="['Map', 'Transit', 'Satellite']" disabled></tri-segmented>
+    <tri-segmented [options]="['Map', 'Transit', 'Satellite']" disabled />
     <br />
-    <tri-segmented [options]="options"></tri-segmented>
+    <tri-segmented [options]="options" />
   `,
-  styles: [
-    `
-      .ant-segmented {
-        margin-bottom: 10px;
-      }
-    `
-  ]
+  styles: `
+    .ant-segmented {
+      margin-bottom: 10px;
+    }
+  `
 })
 export class TriDemoSegmentedDisabledComponent {
   options = [

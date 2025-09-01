@@ -6,11 +6,11 @@ import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
   selector: 'tri-demo-segmented-size',
   imports: [TriSegmentedModule],
   template: `
-    <tri-segmented [options]="options" size="small"></tri-segmented>
+    <tri-segmented [options]="options" size="small" />
     <br />
-    <tri-segmented [options]="options"></tri-segmented>
+    <tri-segmented [options]="options" />
     <br />
-    <tri-segmented [options]="options" size="large"></tri-segmented>
+    <tri-segmented [options]="options" size="large" />
   `,
   styles: [
     `

@@ -9,7 +9,7 @@ const defaultOptions = ['Daily', 'Weekly', 'Monthly'];
   selector: 'tri-demo-segmented-dynamic',
   imports: [TriButtonModule, TriSegmentedModule],
   template: `
-    <tri-segmented [options]="options"></tri-segmented>
+    <tri-segmented [options]="options" />
     <br />
     <button tri-button type="primary" [disabled]="moreLoaded" (click)="handleLoadMore()"> Load more options </button>
   `,

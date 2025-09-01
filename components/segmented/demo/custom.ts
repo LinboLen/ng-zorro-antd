@@ -9,22 +9,16 @@ import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
   template: `
     <tri-segmented>
       <label tri-segmented-item value="user1">
-        <div [style.padding.px]="4">
-          <tri-avatar src="https://joeschmoe.io/api/v1/random" />
-          <div>User 1</div>
-        </div>
+        <tri-avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=8" />
+        <div>User 1</div>
       </label>
       <label tri-segmented-item value="user2">
-        <div [style.padding.px]="4">
-          <tri-avatar text="K" [style.background]="'#f56a00'" />
-          <div>User 2</div>
-        </div>
+        <tri-avatar text="K" [style.background]="'#f56a00'" />
+        <div>User 2</div>
       </label>
       <label tri-segmented-item value="user3">
-        <div [style.padding.px]="4">
-          <tri-avatar icon="user" [style.background]="'#87d068'" />
-          <div>User 3</div>
-        </div>
+        <tri-avatar icon="user" [style.background]="'#87d068'" />
+        <div>User 3</div>
       </label>
     </tri-segmented>
 
@@ -33,30 +27,27 @@ import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
 
     <tri-segmented>
       <label tri-segmented-item value="spring">
-        <div [style.padding.px]="4">
-          <div>Spring</div>
-          <div>Jan-Mar</div>
-        </div>
+        <div>Spring</div>
+        <div>Jan-Mar</div>
       </label>
       <label tri-segmented-item value="summer">
-        <div [style.padding.px]="4">
-          <div>Summer</div>
-          <div>Apr-Jun</div>
-        </div>
+        <div>Summer</div>
+        <div>Apr-Jun</div>
       </label>
       <label tri-segmented-item value="autumn">
-        <div [style.padding.px]="4">
-          <div>Autumn</div>
-          <div>Jul-Sept</div>
-        </div>
+        <div>Autumn</div>
+        <div>Jul-Sept</div>
       </label>
       <label tri-segmented-item value="winter">
-        <div [style.padding.px]="4">
-          <div>Winter</div>
-          <div>Oct-Dec</div>
-        </div>
+        <div>Winter</div>
+        <div>Oct-Dec</div>
       </label>
     </tri-segmented>
+  `,
+  styles: `
+    :host ::ng-deep .ant-segmented-item-label {
+      margin: 4px;
+    }
   `
 })
 export class TriDemoSegmentedCustomComponent {}

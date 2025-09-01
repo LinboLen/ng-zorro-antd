@@ -5,7 +5,7 @@ import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
 @Component({
   selector: 'tri-demo-segmented-icon',
   imports: [TriSegmentedModule],
-  template: `<tri-segmented [options]="options"></tri-segmented>`
+  template: `<tri-segmented [options]="options" />`
 })
 export class TriDemoSegmentedIconComponent {
   options = [

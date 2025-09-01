@@ -3,17 +3,21 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
+import { DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  computed,
   DestroyRef,
   ElementRef,
   inject,
   input,
   OnInit,
   signal,
+  TemplateRef,
+  viewChild,
   ViewEncapsulation
 } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
@@ -28,13 +32,24 @@ import { TriSegmentedService } from './segmented.service';
   exportAs: 'triSegmentedItem',
   imports: [TriIconModule, NgTemplateOutlet],
   template: `
-    <input class="tri-segmented-item-input" type="radio" [checked]="isChecked()" (click)="$event.stopPropagation()" />
+    <input
+      class="tri-segmented-item-input"
+      type="radio"
+      [disabled]="finalDisabled()"
+      [checked]="isChecked()"
+      [attr.name]="name()"
+      (click)="$event.stopPropagation()"
+    />
     <div class="tri-segmented-item-label" [attr.aria-selected]="isChecked()">
       @if (icon(); as icon) {
         <span class="tri-segmented-item-icon">
           <tri-icon [type]="icon" />
         </span>
-        <span *ngTemplateOutlet="content"></span>
+        @if (hasLabel()) {
+          <span>
+            <ng-template [ngTemplateOutlet]="content" />
+          </span>
+        }
       } @else {
         <ng-template [ngTemplateOutlet]="content" />
       }
@@ -47,8 +62,9 @@ import { TriSegmentedService } from './segmented.service';
   host: {
     class: 'tri-segmented-item',
     '[class.tri-segmented-item-selected]': 'isChecked()',
-    '[class.tri-segmented-item-disabled]': 'disabled() || parentDisabled()',
-    '(click)': 'handleClick()'
+    '[class.tri-segmented-item-disabled]': 'finalDisabled()',
+    '(click)': 'handleClick()',
+    '(keydown)': 'handleKeydown($event)'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
@@ -57,13 +73,21 @@ export class TriSegmentedItemComponent implements OnInit {
   private readonly service = inject(TriSegmentedService);
   private readonly elementRef = inject(ElementRef);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly templateRef = viewChild.required('content', { read: TemplateRef });
 
-  value = input.required<string | number>();
-  icon = input<string>();
-  disabled = input(false, { transform: booleanAttribute });
+  readonly value = input.required<string | number>();
+  readonly icon = input<string>();
+  readonly disabled = input(false, { transform: booleanAttribute });
+  readonly hasLabel = computed(() =>
+    this.templateRef()
+      .createEmbeddedView({})
+      .rootNodes.some(node => node.textContent.trim().length > 0)
+  );
 
+  protected readonly name = this.service.name.asReadonly();
   protected readonly isChecked = signal(false);
-  readonly parentDisabled = toSignal(this.service.disabled$, { initialValue: false });
+  protected readonly parentDisabled = toSignal(this.service.disabled$, { initialValue: false });
+  readonly finalDisabled = computed(() => this.disabled() || this.parentDisabled());
 
   ngOnInit(): void {
     this.service.selected$
@@ -91,6 +115,20 @@ export class TriSegmentedItemComponent implements OnInit {
     if (!this.disabled() && !this.parentDisabled()) {
       this.service.selected$.next(this.value());
       this.service.change$.next(this.value());
+    }
+  }
+
+  handleKeydown(event: KeyboardEvent): void {
+    if (this.finalDisabled()) {
+      return;
+    }
+    if (
+      event.keyCode === LEFT_ARROW ||
+      event.keyCode === RIGHT_ARROW ||
+      event.keyCode === UP_ARROW ||
+      event.keyCode === DOWN_ARROW
+    ) {
+      this.service.keydown$.next(event);
     }
   }
 }

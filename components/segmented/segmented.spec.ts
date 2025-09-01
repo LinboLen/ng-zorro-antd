@@ -3,13 +3,15 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
+import { BidiModule } from '@angular/cdk/bidi';
+import { DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { dispatchMouseEvent } from 'ng-zorro-antd/core/testing';
+import { dispatchKeyboardEvent, dispatchMouseEvent } from 'ng-zorro-antd/core/testing';
 import { TriSizeLDSType } from 'ng-zorro-antd/core/types';
 
 import { TriSegmentedComponent } from './segmented.component';
@@ -141,6 +143,7 @@ describe('nz-segmented', () => {
       fixture.detectChanges();
 
       expect(theFirstElement.classList).toContain('ant-segmented-item-selected');
+      expect(theSecondElement.classList).toContain('ant-segmented-item-disabled');
       expect(theSecondElement.classList).not.toContain('ant-segmented-item-selected');
     });
 
@@ -170,23 +173,228 @@ describe('nz-segmented', () => {
         expect(['fromVertical', 'toVertical']).toContain(segmentedComponentInstance.animationState.value);
       }
     }));
+
+    describe('keyboard interaction', () => {
+      let theFirstElement: HTMLElement;
+      let theSecondElement: HTMLElement;
+      let theThirdElement: HTMLElement;
+
+      beforeEach(() => {
+        fixture.detectChanges();
+        theFirstElement = getSegmentedOptionByIndex(0);
+        theSecondElement = getSegmentedOptionByIndex(1);
+        theThirdElement = getSegmentedOptionByIndex(2);
+      });
+
+      it('should right arrow works', fakeAsync(() => {
+        dispatchKeyboardEvent(theFirstElement, 'keydown', RIGHT_ARROW);
+        tick(100);
+        fixture.detectChanges();
+        expect(theFirstElement.classList).not.toContain('ant-segmented-item-selected');
+        expect(theSecondElement.classList).toContain('ant-segmented-item-selected');
+
+        dispatchKeyboardEvent(theSecondElement, 'keydown', RIGHT_ARROW);
+        tick(100);
+        fixture.detectChanges();
+        expect(theSecondElement.classList).not.toContain('ant-segmented-item-selected');
+        expect(theThirdElement.classList).toContain('ant-segmented-item-selected');
+
+        // when the last item is selected, the first item should be selected
+        dispatchKeyboardEvent(theThirdElement, 'keydown', RIGHT_ARROW);
+        tick(100);
+        fixture.detectChanges();
+        expect(theThirdElement.classList).not.toContain('ant-segmented-item-selected');
+        expect(theFirstElement.classList).toContain('ant-segmented-item-selected');
+      }));
+
+      it('should left arrow works', fakeAsync(() => {
+        // when the first item is selected, the last item should be selected
+        dispatchKeyboardEvent(theFirstElement, 'keydown', LEFT_ARROW);
+        tick(100);
+        fixture.detectChanges();
+        expect(theFirstElement.classList).not.toContain('ant-segmented-item-selected');
+        expect(theThirdElement.classList).toContain('ant-segmented-item-selected');
+
+        dispatchKeyboardEvent(theThirdElement, 'keydown', LEFT_ARROW);
+        tick(100);
+        fixture.detectChanges();
+        expect(theThirdElement.classList).not.toContain('ant-segmented-item-selected');
+        expect(theSecondElement.classList).toContain('ant-segmented-item-selected');
+
+        dispatchKeyboardEvent(theSecondElement, 'keydown', LEFT_ARROW);
+        tick(100);
+        fixture.detectChanges();
+        expect(theSecondElement.classList).not.toContain('ant-segmented-item-selected');
+        expect(theFirstElement.classList).toContain('ant-segmented-item-selected');
+      }));
+
+      it('should not work if the segmented component is disabled', fakeAsync(() => {
+        component.disabled = true;
+        fixture.detectChanges();
+
+        const offsetSpy = spyOn(segmentedComponent.componentInstance, 'onOffset');
+
+        dispatchKeyboardEvent(theFirstElement, 'keydown', LEFT_ARROW);
+        tick(100);
+        fixture.detectChanges();
+        expect(offsetSpy).not.toHaveBeenCalled();
+      }));
+
+      it('should not work if the segmented item is disabled', fakeAsync(() => {
+        component.options = [
+          {
+            value: 1,
+            label: '1',
+            disabled: true
+          },
+          {
+            value: 2,
+            label: '2'
+          },
+          {
+            value: 3,
+            label: '3'
+          }
+        ];
+        fixture.detectChanges();
+
+        const offsetSpy = spyOn(segmentedComponent.componentInstance, 'onOffset');
+
+        dispatchKeyboardEvent(theFirstElement, 'keydown', LEFT_ARROW);
+        tick(100);
+        fixture.detectChanges();
+        expect(offsetSpy).not.toHaveBeenCalled();
+      }));
+
+      it('should skip the disabled item', fakeAsync(() => {
+        component.options = [
+          {
+            value: 1,
+            label: '1'
+          },
+          {
+            value: 2,
+            label: '2',
+            disabled: true
+          },
+          {
+            value: 3,
+            label: '3'
+          }
+        ];
+        fixture.detectChanges();
+
+        dispatchKeyboardEvent(theFirstElement, 'keydown', RIGHT_ARROW);
+        tick(100);
+        fixture.detectChanges();
+        expect(theFirstElement.classList).not.toContain('ant-segmented-item-selected');
+        expect(theThirdElement.classList).toContain('ant-segmented-item-selected');
+
+        dispatchKeyboardEvent(theFirstElement, 'keydown', LEFT_ARROW);
+        tick(100);
+        fixture.detectChanges();
+        expect(theThirdElement.classList).not.toContain('ant-segmented-item-selected');
+        expect(theFirstElement.classList).toContain('ant-segmented-item-selected');
+      }));
+    });
   });
 
-  describe('icon-only', () => {
-    let fixture: ComponentFixture<TriSegmentedIconOnlyTestComponent>;
+  describe('rtl', () => {
+    let fixture: ComponentFixture<TriSegmentedRtlTestComponent>;
+    let segmentedComponent: DebugElement;
+
+    function getSegmentedOptionByIndex(index: number): HTMLElement {
+      return segmentedComponent.nativeElement.querySelectorAll('.ant-segmented-item')[index];
+    }
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(TriSegmentedIconOnlyTestComponent);
+      fixture = TestBed.createComponent(TriSegmentedRtlTestComponent);
+      segmentedComponent = fixture.debugElement.query(By.directive(TriSegmentedComponent));
+      fixture.detectChanges();
     });
 
-    it('should render only one element in .ant-segmented-item-label if the item is icon-only', () => {
-      const items = fixture.debugElement.queryAll(By.css('.ant-segmented-item-label'));
-      expect(items.length).toBe(2);
-      expect(items[0].children.length).toBe(2);
-      expect(items[0].children[0].nativeElement.classList).toContain('ant-segmented-item-icon');
-      expect(items[0].children[1].nativeElement.tagName).toBe('SPAN');
-      expect(items[1].children.length).toBe(1);
-      expect(items[1].children[0].nativeElement.classList).toContain('ant-segmented-item-icon');
+    describe('keyboard interaction', () => {
+      let theFirstElement: HTMLElement;
+      let theSecondElement: HTMLElement;
+      let theThirdElement: HTMLElement;
+
+      beforeEach(() => {
+        fixture.detectChanges();
+        theFirstElement = getSegmentedOptionByIndex(0);
+        theSecondElement = getSegmentedOptionByIndex(1);
+        theThirdElement = getSegmentedOptionByIndex(2);
+      });
+
+      it('should left arrow works in rtl mode', fakeAsync(() => {
+        dispatchKeyboardEvent(theFirstElement, 'keydown', LEFT_ARROW);
+        tick(100);
+        fixture.detectChanges();
+        expect(theFirstElement.classList).not.toContain('ant-segmented-item-selected');
+        expect(theSecondElement.classList).toContain('ant-segmented-item-selected');
+
+        dispatchKeyboardEvent(theSecondElement, 'keydown', LEFT_ARROW);
+        tick(100);
+        fixture.detectChanges();
+        expect(theSecondElement.classList).not.toContain('ant-segmented-item-selected');
+        expect(theThirdElement.classList).toContain('ant-segmented-item-selected');
+
+        // when the last item is selected, the first item should be selected
+        dispatchKeyboardEvent(theThirdElement, 'keydown', LEFT_ARROW);
+        tick(100);
+        fixture.detectChanges();
+        expect(theThirdElement.classList).not.toContain('ant-segmented-item-selected');
+        expect(theFirstElement.classList).toContain('ant-segmented-item-selected');
+      }));
+
+      it('should right arrow works in rtl mode', fakeAsync(() => {
+        // when the first item is selected, the last item should be selected
+        dispatchKeyboardEvent(theFirstElement, 'keydown', RIGHT_ARROW);
+        tick(100);
+        fixture.detectChanges();
+        expect(theFirstElement.classList).not.toContain('ant-segmented-item-selected');
+        expect(theThirdElement.classList).toContain('ant-segmented-item-selected');
+
+        dispatchKeyboardEvent(theThirdElement, 'keydown', RIGHT_ARROW);
+        tick(100);
+        fixture.detectChanges();
+        expect(theThirdElement.classList).not.toContain('ant-segmented-item-selected');
+        expect(theSecondElement.classList).toContain('ant-segmented-item-selected');
+
+        dispatchKeyboardEvent(theSecondElement, 'keydown', RIGHT_ARROW);
+        tick(100);
+        fixture.detectChanges();
+        expect(theSecondElement.classList).not.toContain('ant-segmented-item-selected');
+        expect(theFirstElement.classList).toContain('ant-segmented-item-selected');
+      }));
+    });
+  });
+
+  describe('DOM structure', () => {
+    let fixture: ComponentFixture<TriSegmentedDomStructureTestComponent>;
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(TriSegmentedDomStructureTestComponent);
+      fixture.detectChanges();
+    });
+
+    it('should render an icon element and a text node with a wrapper element if the item is label-with-icon', () => {
+      const [withIcon] = fixture.debugElement.queryAll(By.css('.ant-segmented-item-label'));
+      expect(withIcon.children.length).toBe(2);
+      expect(withIcon.children[0].nativeElement.classList).toContain('ant-segmented-item-icon');
+      expect(withIcon.children[1].nativeElement.tagName).toBe('SPAN');
+      expect(withIcon.children[1].nativeElement.textContent.trim()).toBe('WithIcon');
+    });
+
+    it('should render a text node without wrapping elements if the item is label-only', () => {
+      const [, labelOnly] = fixture.debugElement.queryAll(By.css('.ant-segmented-item-label'));
+      expect(labelOnly.children.length).toBe(0);
+      expect(labelOnly.nativeElement.textContent.trim()).toBe('LabelOnly');
+    });
+
+    it('should render only one icon element if the item is icon-only', () => {
+      const [, , iconOnly] = fixture.debugElement.queryAll(By.css('.ant-segmented-item-label'));
+      expect(iconOnly.children.length).toBe(1);
+      expect(iconOnly.children[0].nativeElement.classList).toContain('ant-segmented-item-icon');
     });
   });
 
@@ -309,7 +517,62 @@ describe('nz-segmented', () => {
       expect(theFirstElement.classList).not.toContain('ant-segmented-item-selected');
       expect(theSecondElement.classList).toContain('ant-segmented-item-selected');
       expect(component.handleValueChange).toHaveBeenCalledTimes(1);
-      expect(component.handleValueChange).toHaveBeenCalledWith('Weekly');
+      expect(component.handleValueChange).toHaveBeenCalledWith(2);
+    });
+
+    describe('keyboard interaction', () => {
+      let theFirstElement: HTMLElement;
+      let theSecondElement: HTMLElement;
+      let theThirdElement: HTMLElement;
+
+      beforeEach(() => {
+        fixture.detectChanges();
+        theFirstElement = getSegmentedOptionByIndex(0);
+        theSecondElement = getSegmentedOptionByIndex(1);
+        theThirdElement = getSegmentedOptionByIndex(2);
+      });
+
+      it('should down arrow works', fakeAsync(() => {
+        dispatchKeyboardEvent(theFirstElement, 'keydown', DOWN_ARROW);
+        tick(100);
+        fixture.detectChanges();
+        expect(theFirstElement.classList).not.toContain('ant-segmented-item-selected');
+        expect(theSecondElement.classList).toContain('ant-segmented-item-selected');
+
+        dispatchKeyboardEvent(theSecondElement, 'keydown', DOWN_ARROW);
+        tick(100);
+        fixture.detectChanges();
+        expect(theSecondElement.classList).not.toContain('ant-segmented-item-selected');
+        expect(theThirdElement.classList).toContain('ant-segmented-item-selected');
+
+        // when the last item is selected, the first item should be selected
+        dispatchKeyboardEvent(theThirdElement, 'keydown', DOWN_ARROW);
+        tick(100);
+        fixture.detectChanges();
+        expect(theThirdElement.classList).not.toContain('ant-segmented-item-selected');
+        expect(theFirstElement.classList).toContain('ant-segmented-item-selected');
+      }));
+
+      it('should up arrow works', fakeAsync(() => {
+        // when the first item is selected, the last item should be selected
+        dispatchKeyboardEvent(theFirstElement, 'keydown', UP_ARROW);
+        tick(100);
+        fixture.detectChanges();
+        expect(theFirstElement.classList).not.toContain('ant-segmented-item-selected');
+        expect(theThirdElement.classList).toContain('ant-segmented-item-selected');
+
+        dispatchKeyboardEvent(theThirdElement, 'keydown', UP_ARROW);
+        tick(100);
+        fixture.detectChanges();
+        expect(theThirdElement.classList).not.toContain('ant-segmented-item-selected');
+        expect(theSecondElement.classList).toContain('ant-segmented-item-selected');
+
+        dispatchKeyboardEvent(theSecondElement, 'keydown', UP_ARROW);
+        tick(100);
+        fixture.detectChanges();
+        expect(theSecondElement.classList).not.toContain('ant-segmented-item-selected');
+        expect(theFirstElement.classList).toContain('ant-segmented-item-selected');
+      }));
     });
   });
 });
@@ -340,13 +603,14 @@ export class TriSegmentedTestComponent {
 }
 
 @Component({
-  imports: [FormsModule, TriSegmentedModule],
+  imports: [TriSegmentedModule],
   template: `<tri-segmented [options]="options" />`
 })
-export class TriSegmentedIconOnlyTestComponent {
+export class TriSegmentedDomStructureTestComponent {
   options: TriSegmentedOptions = [
-    { value: 'List', label: 'List', icon: 'bars' },
-    { value: 'Kanban', icon: 'appstore' }
+    { value: 'WithIcon', label: 'WithIcon', icon: 'bars' },
+    { value: 'LabelOnly', label: 'LabelOnly' },
+    { value: 'IconOnly', icon: 'bars' }
   ];
 }
 
@@ -374,12 +638,20 @@ export class TriSegmentedInReactiveFormTestComponent {
 
 @Component({
   imports: [FormsModule, TriSegmentedModule],
-  template: `<tri-segmented [options]="options" [vertical]="true" (valueChange)="handleValueChange($event)" /> `
+  template: `<tri-segmented [options]="options" vertical (valueChange)="handleValueChange($event)" /> `
 })
 export class TriSegmentedVerticalTestComponent {
-  options = ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly'];
+  options: TriSegmentedOptions = [1, 2, 3];
 
   handleValueChange(_e: string | number): void {
     // empty
   }
+}
+
+@Component({
+  imports: [BidiModule, TriSegmentedModule],
+  template: `<tri-segmented [options]="options" dir="rtl" /> `
+})
+export class TriSegmentedRtlTestComponent {
+  options: TriSegmentedOptions = [1, 2, 3];
 }
