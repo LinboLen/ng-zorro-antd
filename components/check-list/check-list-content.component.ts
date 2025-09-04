@@ -65,15 +65,14 @@ import { TriItemProps } from './typings';
       <div class="tri-check-list-steps-content">
         @for (item of items(); track item.key || item.description; let i = $index) {
           @let itemHighlight = index() === i + 1;
-          @let itemChecked = index() > i + 1;
           <div
             class="tri-check-list-steps"
             [class.tri-check-list-highlight]="itemHighlight"
-            [class.tri-check-list-checked]="itemChecked"
+            [class.tri-check-list-checked]="item?.checked"
           >
             <div class="tri-check-list-steps-item">
               <div class="tri-check-list-steps-item-circle">
-                @if (itemChecked) {
+                @if (item?.checked) {
                   <tri-icon type="check" theme="outline" class="tri-check-list-steps-checkoutlined" />
                 } @else {
                   <div class="tri-check-list-steps-number">{{ i + 1 }}</div>
@@ -81,12 +80,12 @@ import { TriItemProps } from './typings';
               </div>
               <div class="tri-check-list-steps-item-description">{{ item.description }}</div>
             </div>
-            @if (itemHighlight && !!item.onClick) {
+            @if (itemHighlight && !!item?.onClick) {
               <tri-icon
                 type="arrow-right"
                 theme="outline"
                 class="tri-check-list-steps-item-arrows"
-                (click)="item.onClick()"
+                (click)="item.onClick?.(item)"
               />
             }
           </div>

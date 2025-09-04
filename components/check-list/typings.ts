@@ -5,6 +5,7 @@
 
 export interface TriItemProps {
   description: string;
-  onClick?: () => void;
+  checked?: boolean;
+  onClick?: (item: TriItemProps) => void;
   key?: string;
 }

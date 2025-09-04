@@ -3,9 +3,11 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
+import { DecimalPipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   inject,
   input,
   linkedSignal,
@@ -29,7 +31,14 @@ import { TriItemProps } from './typings';
   selector: 'tri-check-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  imports: [TriPopoverModule, TriIconModule, TriOutletModule, TriCheckListButtonComponent, TriCheckListContentComponent],
+  imports: [
+    TriPopoverModule,
+    TriIconModule,
+    TriOutletModule,
+    TriCheckListButtonComponent,
+    TriCheckListContentComponent,
+    DecimalPipe
+  ],
   template: `
     <tri-check-list-button
       tri-popover
@@ -45,6 +54,11 @@ import { TriItemProps } from './typings';
       } @else {
         <tri-icon type="check-circle" theme="outline" class="tri-check-list-icon" />
         <div class="tri-check-list-description">{{ locale().checkList }}</div>
+      }
+      @if (!visible() && !!unfinished()) {
+        <div class="tri-check-list-trigger-dot">
+          <div class="tri-check-list-trigger-dot-text">{{ unfinished() | number: '1.0-0' }}</div>
+        </div>
       }
     </tri-check-list-button>
     <ng-template #checklistTemplate>
@@ -73,7 +87,10 @@ export class TriCheckListComponent {
   title = input<TemplateRef<void> | string | null>(null);
   footer = input<TemplateRef<void> | string | null>(null);
   readonly hide = output<boolean>();
-
+  protected unfinished = computed(() => {
+    this._visible();
+    return this.items().filter(item => !item?.checked).length;
+  });
   protected _visible = linkedSignal(this.visible);
   private i18n = inject(TriI18nService);
   locale = toSignal<TriCheckListI18nInterface>(

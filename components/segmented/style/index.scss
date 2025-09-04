@@ -34,6 +34,15 @@ $segmented-container-padding: 2px;
       will-change: transform, width, height;
     }
   }
+  &-shape-round {
+    border-radius: 9999px;
+    .#{$segmented-prefix-cls}-item {
+      border-radius: 9999px;
+    }
+    .#{$segmented-prefix-cls}-thumb {
+      border-radius: 9999px;
+    }
+  }
   // block styles
   &#{&}-block {
     display: flex;

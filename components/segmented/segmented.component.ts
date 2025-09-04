@@ -73,6 +73,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'segmented';
     '[class.tri-segmented-sm]': `size === 'small'`,
     '[class.tri-segmented-block]': `block`,
     '[class.tri-segmented-vertical]': `vertical`,
+    '[class.tri-segmented-shape-round]': `shape === 'round'`,
     // a11y
     role: 'radiogroup',
     'aria-label': 'segmented control',
@@ -101,6 +102,7 @@ export class TriSegmentedComponent implements OnChanges, ControlValueAccessor {
   @Input({ transform: booleanAttribute }) disabled = false;
   @Input() options: TriSegmentedOptions = [];
   @Input({ transform: booleanAttribute }) vertical: boolean = false;
+  @Input() shape: 'default' | 'round' = 'default';
   @Input() @WithConfig() size: TriSizeLDSType = 'default';
 
   // todo: add a method to generate hash id for the segmented instance as default value of `nzName`

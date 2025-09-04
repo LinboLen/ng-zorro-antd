@@ -8,23 +8,36 @@ import { TriCheckListModule, TriItemProps } from 'ng-zorro-antd/check-list';
   template: `<tri-check-list [items]="items" [index]="index"></tri-check-list>`
 })
 export class TriDemoCheckListBasicComponent {
-  index = 1;
+  index = 2;
   readonly items: TriItemProps[] = [
     {
       description: 'step 1',
-      onClick: () => this.index++
+      checked: true,
+      onClick: (item: TriItemProps) => {
+        this.index++;
+        item.checked = true;
+      }
     },
     {
       description: 'step 2',
-      onClick: () => this.index++
+      onClick: (item: TriItemProps) => {
+        this.index++;
+        item.checked = true;
+      }
     },
     {
       description: 'step 3',
-      onClick: () => this.index++
+      onClick: (item: TriItemProps) => {
+        this.index++;
+        item.checked = true;
+      }
     },
     {
       description: 'step 4',
-      onClick: () => this.index++
+      onClick: (item: TriItemProps) => {
+        this.index++;
+        item.checked = true;
+      }
     }
   ];
 }
