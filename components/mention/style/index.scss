@@ -16,7 +16,7 @@ $mention-prefix-cls: "#{$ant-prefix}-mentions";
   vertical-align: bottom;
   // =================== Status ===================
   &-disabled {
-    > textarea {
+    > .#{$ant-prefix}-input {
       @include disabled;
     }
   }
@@ -24,7 +24,7 @@ $mention-prefix-cls: "#{$ant-prefix}-mentions";
     @include active;
   }
   // ================= Input Area =================
-  @at-root > textarea,
+  @at-root > .#{$ant-prefix}-input,
     &-measure {
     min-height: $input-height-base - 2px;
     margin: 0;
@@ -53,8 +53,9 @@ $mention-prefix-cls: "#{$ant-prefix}-mentions";
     word-break: inherit;
     tab-size: inherit;
   }
-  > textarea {
+  > .#{$ant-prefix}-input {
     width: 100%;
+    background-color: inherit;
     border: none;
     outline: none;
     resize: none;

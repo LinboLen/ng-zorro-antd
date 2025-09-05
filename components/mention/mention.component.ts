@@ -21,6 +21,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  computed,
   contentChild,
   ContentChild,
   DestroyRef,
@@ -36,6 +37,7 @@ import {
   Output,
   QueryList,
   Renderer2,
+  signal,
   SimpleChanges,
   TemplateRef,
   ViewChild,
@@ -48,7 +50,7 @@ import { distinctUntilChanged, map, startWith, switchMap, withLatestFrom } from 
 
 import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
 import { DEFAULT_MENTION_BOTTOM_POSITIONS, DEFAULT_MENTION_TOP_POSITIONS } from 'ng-zorro-antd/core/overlay';
-import { NgClassInterface, TriSafeAny, TriStatus, TriValidateStatus } from 'ng-zorro-antd/core/types';
+import { NgClassInterface, TriSafeAny, TriStatus, TriValidateStatus, TriVariant } from 'ng-zorro-antd/core/types';
 import {
   fromEventOutsideAngular,
   getCaretCoordinates,
@@ -122,7 +124,12 @@ export type MentionPlacement = 'top' | 'bottom';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'tri-mentions',
-    '[class.tri-mentions-rtl]': `dir === 'rtl'`
+    '[class.tri-mentions-rtl]': `dir === 'rtl'`,
+    '[class.tri-mentions-borderless]': `variant === 'borderless'`,
+    '[class.tri-mentions-filled]': `variant === 'filled'`,
+    '[class.tri-mentions-underlined]': `variant === 'underlined'`,
+    '[class.tri-mentions-focused]': `focused()`,
+    '[class.tri-mentions-disabled]': `disabled()`
   },
   imports: [NgTemplateOutlet, TriIconModule, TriEmptyModule, TriFormItemFeedbackIconComponent]
 })
@@ -142,6 +149,7 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() placement: MentionPlacement = 'bottom';
   @Input() suggestions: TriSafeAny[] = [];
   @Input() status: TriStatus = '';
+  @Input() variant: TriVariant = 'outlined';
   @Output() readonly onSelect = new EventEmitter<TriSafeAny>();
   @Output() readonly onSearchChange = new EventEmitter<MentionOnSearchTypes>();
 
@@ -168,6 +176,11 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
   statusCls: NgClassInterface = {};
   _status: TriValidateStatus = '';
   hasFeedback: boolean = false;
+  readonly focused = signal(false);
+
+  readonly disabled = computed(() => {
+    return this.trigger().disabled();
+  });
 
   private previousValue: string | null = null;
   private cursorMention: string | null = null;
@@ -327,6 +340,8 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   private bindTriggerEvents(): void {
+    this.trigger().onFocusin.subscribe(() => this.focused.set(true));
+    this.trigger().onBlur.subscribe(() => this.focused.set(false));
     this.trigger().onInput.subscribe((e: KeyboardEvent) => this.handleInput(e));
     this.trigger().onKeydown.subscribe((e: KeyboardEvent) => this.handleKeydown(e));
     this.trigger().onClick.subscribe(() => this.handleClick());

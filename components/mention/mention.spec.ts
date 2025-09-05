@@ -572,6 +572,98 @@ describe('mention', () => {
       expect(mention.nativeElement.querySelector('nz-form-item-feedback-icon')).toBeNull();
     });
   });
+
+  describe('variant', () => {
+    let fixture: ComponentFixture<TriTestVariantMentionComponent>;
+    let mention: DebugElement;
+
+    beforeEach(fakeAsync(() => {
+      fixture = TestBed.createComponent(TriTestVariantMentionComponent);
+      mention = fixture.debugElement.query(By.directive(TriMentionComponent));
+      fixture.detectChanges();
+      tick();
+    }));
+
+    it('should have default outlined variant', () => {
+      expect(mention.nativeElement.classList).not.toContain('ant-mentions-borderless');
+      expect(mention.nativeElement.classList).not.toContain('ant-mentions-filled');
+      expect(mention.nativeElement.classList).not.toContain('ant-mentions-underlined');
+    });
+
+    it('should apply borderless variant correctly', () => {
+      fixture.componentInstance.variant = 'borderless';
+      fixture.detectChanges();
+      expect(mention.nativeElement.classList).toContain('ant-mentions-borderless');
+      expect(mention.nativeElement.classList).not.toContain('ant-mentions-filled');
+      expect(mention.nativeElement.classList).not.toContain('ant-mentions-underlined');
+    });
+
+    it('should apply filled variant correctly', () => {
+      fixture.componentInstance.variant = 'filled';
+      fixture.detectChanges();
+      expect(mention.nativeElement.classList).toContain('ant-mentions-filled');
+      expect(mention.nativeElement.classList).not.toContain('ant-mentions-borderless');
+      expect(mention.nativeElement.classList).not.toContain('ant-mentions-underlined');
+    });
+
+    it('should apply underlined variant correctly', () => {
+      fixture.componentInstance.variant = 'underlined';
+      fixture.detectChanges();
+      expect(mention.nativeElement.classList).toContain('ant-mentions-underlined');
+      expect(mention.nativeElement.classList).not.toContain('ant-mentions-borderless');
+      expect(mention.nativeElement.classList).not.toContain('ant-mentions-filled');
+    });
+
+    it('should switch between variants correctly', () => {
+      fixture.componentInstance.variant = 'filled';
+      fixture.detectChanges();
+      expect(mention.nativeElement.classList).toContain('ant-mentions-filled');
+
+      fixture.componentInstance.variant = 'borderless';
+      fixture.detectChanges();
+      expect(mention.nativeElement.classList).toContain('ant-mentions-borderless');
+      expect(mention.nativeElement.classList).not.toContain('ant-mentions-filled');
+
+      fixture.componentInstance.variant = 'outlined';
+      fixture.detectChanges();
+      expect(mention.nativeElement.classList).not.toContain('ant-mentions-borderless');
+      expect(mention.nativeElement.classList).not.toContain('ant-mentions-filled');
+      expect(mention.nativeElement.classList).not.toContain('ant-mentions-underlined');
+    });
+
+    it('should maintain functionality across different variants', fakeAsync(() => {
+      const variants: Array<'outlined' | 'filled' | 'borderless' | 'underlined'> = [
+        'outlined',
+        'filled',
+        'borderless',
+        'underlined'
+      ];
+
+      variants.forEach(variant => {
+        fixture.componentInstance.variant = variant;
+        fixture.detectChanges();
+
+        const textarea = fixture.debugElement.query(By.css('textarea')).nativeElement;
+        textarea.value = '@angular';
+        fixture.detectChanges();
+
+        dispatchFakeEvent(textarea, 'click');
+        fixture.detectChanges();
+        flush();
+
+        expect(fixture.componentInstance.mention.isOpen).toBe(true);
+
+        const option = overlayContainerElement.querySelector('.ant-mentions-dropdown-menu-item') as HTMLElement;
+        if (option) {
+          option.click();
+          fixture.detectChanges();
+          tick(500);
+
+          expect(fixture.componentInstance.mention.isOpen).toBe(false);
+        }
+      });
+    }));
+  });
 });
 
 @Component({
@@ -697,6 +789,21 @@ class TriTestStatusMentionComponent {
 class TriTestMentionInFormComponent {
   status: TriFormControlStatusType = 'error';
   feedback = true;
+}
+
+@Component({
+  imports: [FormsModule, TriInputModule, TriMentionModule],
+  template: `
+    <tri-mention [suggestions]="suggestions" [variant]="variant">
+      <textarea tri-input [autosize]="{ minRows: 4, maxRows: 4 }" [(ngModel)]="inputValue" mentionTrigger></textarea>
+    </tri-mention>
+  `
+})
+class TriTestVariantMentionComponent {
+  inputValue: string = '@angular';
+  variant: 'outlined' | 'filled' | 'borderless' | 'underlined' = 'outlined';
+  suggestions = ['angular', 'ant-design', 'mention'];
+  @ViewChild(TriMentionComponent, { static: false }) mention!: TriMentionComponent;
 }
 
 class MockDirectionality {
