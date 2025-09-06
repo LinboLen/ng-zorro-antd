@@ -7,6 +7,7 @@ import { AnimationEvent } from '@angular/animations';
 import { Directionality } from '@angular/cdk/bidi';
 import { DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 import {
+  afterNextRender,
   booleanAttribute,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -17,6 +18,7 @@ import {
   EventEmitter,
   forwardRef,
   inject,
+  Injector,
   Input,
   OnChanges,
   Output,
@@ -95,8 +97,9 @@ export class TriSegmentedComponent implements OnChanges, ControlValueAccessor {
 
   public readonly configService = inject(TriConfigService);
   private readonly cdr = inject(ChangeDetectorRef);
-  protected readonly dir = inject(Directionality).valueSignal;
   private readonly service = inject(TriSegmentedService);
+  private readonly injector = inject(Injector);
+  protected readonly dir = inject(Directionality).valueSignal;
 
   @Input({ transform: booleanAttribute }) block: boolean = false;
   @Input({ transform: booleanAttribute }) disabled = false;
@@ -172,19 +175,24 @@ export class TriSegmentedComponent implements OnChanges, ControlValueAccessor {
       )
       .subscribe(event => this.onKeyDown(event));
 
-    effect(() => {
-      const itemCmps = this.renderedItemCmps();
+    afterNextRender(() => {
+      effect(
+        () => {
+          const itemCmps = this.renderedItemCmps();
 
-      if (!itemCmps.length) {
-        return;
-      }
+          if (!itemCmps.length) {
+            return;
+          }
 
-      if (
-        this.value === undefined || // If no value is set, select the first item
-        !itemCmps.some(item => item.value() === this.value) // handle value not in options
-      ) {
-        this.service.selected$.next(itemCmps[0].value());
-      }
+          if (
+            this.value === undefined || // If no value is set, select the first item
+            !itemCmps.some(item => item.value() === this.value) // handle value not in options
+          ) {
+            this.service.selected$.next(itemCmps[0].value());
+          }
+        },
+        { injector: this.injector }
+      );
     });
   }
 
