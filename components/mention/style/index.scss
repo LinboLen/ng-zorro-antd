@@ -156,5 +156,20 @@ $mention-prefix-cls: "#{$ant-prefix}-mentions";
     align-items: center;
     margin: auto;
   }
+  &-clear-icon {
+    padding: 0;
+    color: $disabled-color;
+    font-size: $font-size-sm;
+    line-height: 0;
+    vertical-align: -1px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: color 0.3s;
+    &:hover {
+      color: $text-color-secondary;
+    }
+  }
 }
 @import "./rtl";

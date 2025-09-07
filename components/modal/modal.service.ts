@@ -4,7 +4,13 @@
  */
 
 import { Directionality } from '@angular/cdk/bidi';
-import { ComponentType, Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
+import {
+  ComponentType,
+  OverlayRef,
+  createBlockScrollStrategy,
+  createGlobalPositionStrategy,
+  createOverlayRef
+} from '@angular/cdk/overlay';
 import { ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
 import { Injectable, Injector, OnDestroy, TemplateRef, inject } from '@angular/core';
 import { Observable, Subject, defer } from 'rxjs';
@@ -28,7 +34,6 @@ type ContentType<T> = ComponentType<T> | TemplateRef<T> | string;
 
 @Injectable()
 export class TriModalService implements OnDestroy {
-  private overlay = inject(Overlay);
   private injector = inject(Injector);
   private configService = inject(TriConfigService);
   private directionality = inject(Directionality);
@@ -128,16 +133,15 @@ export class TriModalService implements OnDestroy {
 
   private createOverlay(config: ModalOptions): OverlayRef {
     const globalConfig: TriSafeAny = this.configService.getConfigForComponent(TRI_CONFIG_MODULE_NAME) || {};
-    const overlayConfig = new OverlayConfig({
+
+    return createOverlayRef(this.injector, {
       hasBackdrop: true,
-      scrollStrategy: this.overlay.scrollStrategies.block(),
+      scrollStrategy: createBlockScrollStrategy(this.injector),
       backdropClass: getValueWithConfig(config.mask, globalConfig.nzMask, true) ? MODAL_MASK_CLASS_NAME : '',
-      positionStrategy: this.overlay.position().global(),
+      positionStrategy: createGlobalPositionStrategy(this.injector),
       disposeOnNavigation: getValueWithConfig(config.closeOnNavigation, globalConfig.nzCloseOnNavigation, true),
       direction: getValueWithConfig(config.direction, globalConfig.nzDirection, this.directionality.value)
     });
-
-    return this.overlay.create(overlayConfig);
   }
 
   private attachModalContainer(overlayRef: OverlayRef, config: ModalOptions): BaseModalContainerComponent {

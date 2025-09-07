@@ -6,7 +6,14 @@
 import { FocusTrap, FocusTrapFactory } from '@angular/cdk/a11y';
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import { ESCAPE } from '@angular/cdk/keycodes';
-import { CdkScrollable, Overlay, OverlayConfig, OverlayKeyboardDispatcher, OverlayRef } from '@angular/cdk/overlay';
+import {
+  CdkScrollable,
+  createBlockScrollStrategy,
+  createGlobalPositionStrategy,
+  createOverlayRef,
+  OverlayKeyboardDispatcher,
+  OverlayRef
+} from '@angular/cdk/overlay';
 import { CdkPortalOutlet, ComponentPortal, PortalModule, TemplatePortal } from '@angular/cdk/portal';
 import { NgTemplateOutlet } from '@angular/common';
 import {
@@ -149,7 +156,6 @@ export class TriDrawerComponent<T extends {} = TriSafeAny, R = TriSafeAny, D ext
   private cdr = inject(ChangeDetectorRef);
   public configService = inject(TriConfigService);
   private renderer = inject(Renderer2);
-  private overlay = inject(Overlay);
   private injector = inject(Injector);
   private changeDetectorRef = inject(ChangeDetectorRef);
   private focusTrapFactory = inject(FocusTrapFactory);
@@ -436,7 +442,11 @@ export class TriDrawerComponent<T extends {} = TriSafeAny, R = TriSafeAny, D ext
   private attachOverlay(): void {
     if (!this.overlayRef) {
       this.portal = new TemplatePortal(this.drawerTemplate, this.viewContainerRef);
-      this.overlayRef = this.overlay.create(this.getOverlayConfig());
+      this.overlayRef = createOverlayRef(this.injector, {
+        disposeOnNavigation: this.closeOnNavigation,
+        positionStrategy: createGlobalPositionStrategy(this.injector),
+        scrollStrategy: createBlockScrollStrategy(this.injector)
+      });
 
       overlayZIndexSetter(this.overlayRef, this.zIndex);
     }
@@ -463,14 +473,6 @@ export class TriDrawerComponent<T extends {} = TriSafeAny, R = TriSafeAny, D ext
   private disposeOverlay(): void {
     this.overlayRef?.dispose();
     this.overlayRef = null;
-  }
-
-  private getOverlayConfig(): OverlayConfig {
-    return new OverlayConfig({
-      disposeOnNavigation: this.closeOnNavigation,
-      positionStrategy: this.overlay.position().global(),
-      scrollStrategy: this.overlay.scrollStrategies.block()
-    });
   }
 
   private updateOverlayStyle(): void {

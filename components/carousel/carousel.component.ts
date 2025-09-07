@@ -66,6 +66,15 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'carousel';
       [class.slick-vertical]="dotPosition === 'left' || dotPosition === 'right'"
       [dir]="'ltr'"
     >
+      @if (arrows) {
+        <button
+          type="button"
+          aria-label="prev"
+          class="slick-prev slick-arrow"
+          [class.slick-disabled]="this.activeIndex === 0"
+          (click)="pre()"
+        ></button>
+      }
       <div
         #slickList
         class="slick-list"
@@ -78,6 +87,15 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'carousel';
           <ng-content></ng-content>
         </div>
       </div>
+      @if (arrows) {
+        <button
+          type="button"
+          aria-label="next"
+          class="slick-next slick-arrow"
+          [class.slick-disabled]="this.activeIndex === this.carouselContents.length - 1"
+          (click)="next()"
+        ></button>
+      }
       <!-- Render dots. -->
       @if (dots) {
         <ul
@@ -136,6 +154,7 @@ export class TriCarouselComponent implements AfterContentInit, AfterViewInit, On
   @Input({ transform: numberAttribute }) @WithConfig() autoPlaySpeed: number = 3000;
   @Input({ transform: numberAttribute }) transitionSpeed = 500;
   @Input() @WithConfig() loop: boolean = true;
+  @Input({ transform: booleanAttribute }) arrows = false;
 
   /**
    * this property is passed directly to an NzCarouselBaseStrategy

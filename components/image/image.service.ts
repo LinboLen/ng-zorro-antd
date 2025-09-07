@@ -4,7 +4,12 @@
  */
 
 import { Directionality } from '@angular/cdk/bidi';
-import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
+import {
+  createBlockScrollStrategy,
+  createGlobalPositionStrategy,
+  createOverlayRef,
+  OverlayRef
+} from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { inject, Injectable, Injector } from '@angular/core';
 
@@ -24,7 +29,6 @@ export interface TriImageService {
 @Injectable()
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class TriImageService {
-  private overlay = inject(Overlay);
   private injector = inject(Injector);
   private configService = inject(TriConfigService);
   private directionality = inject(Directionality);
@@ -69,13 +73,12 @@ export class TriImageService {
 
   private createOverlay(config: TriImagePreviewOptions): OverlayRef {
     const globalConfig = (this.configService.getConfigForComponent(TRI_CONFIG_MODULE_NAME) as ImageConfig) || {};
-    const overLayConfig = new OverlayConfig({
-      scrollStrategy: this.overlay.scrollStrategies.block(),
-      positionStrategy: this.overlay.position().global(),
+
+    return createOverlayRef(this.injector, {
+      scrollStrategy: createBlockScrollStrategy(this.injector),
+      positionStrategy: createGlobalPositionStrategy(this.injector),
       disposeOnNavigation: config.closeOnNavigation ?? globalConfig.nzCloseOnNavigation ?? true,
       direction: config.direction || globalConfig.nzDirection || this.directionality.value
     });
-
-    return this.overlay.create(overLayConfig);
   }
 }

@@ -423,6 +423,80 @@ describe('carousel custom strategies', () => {
   }));
 });
 
+describe('carousel arrows', () => {
+  let fixture: ComponentFixture<TriTestCarouselArrowsComponent>;
+  let testComponent: TriTestCarouselArrowsComponent;
+  let carouselWrapper: DebugElement;
+  let carouselContents: DebugElement[];
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(TriTestCarouselArrowsComponent);
+    fixture.detectChanges();
+    testComponent = fixture.debugElement.componentInstance;
+    carouselWrapper = fixture.debugElement.query(By.directive(TriCarouselComponent));
+    carouselContents = fixture.debugElement.queryAll(By.directive(TriCarouselContentDirective));
+  });
+
+  it('should render arrows when nzArrows is true', () => {
+    const prev = carouselWrapper.nativeElement.querySelector('.slick-prev');
+    const next = carouselWrapper.nativeElement.querySelector('.slick-next');
+    expect(prev).not.toBeNull();
+    expect(next).not.toBeNull();
+  });
+
+  it('should navigate via arrows', fakeAsync(() => {
+    expect(carouselContents[0].nativeElement.classList).toContain('slick-active');
+    carouselWrapper.nativeElement.querySelector('.slick-next').click();
+    tickMilliseconds(fixture, 700);
+    expect(carouselContents[1].nativeElement.classList).toContain('slick-active');
+    carouselWrapper.nativeElement.querySelector('.slick-prev').click();
+    tickMilliseconds(fixture, 700);
+    expect(carouselContents[0].nativeElement.classList).toContain('slick-active');
+  }));
+
+  it('should disable arrows at edges when loop is false', fakeAsync(() => {
+    testComponent.loop = false;
+    fixture.detectChanges();
+    const prev = carouselWrapper.nativeElement.querySelector('.slick-prev');
+    const next = carouselWrapper.nativeElement.querySelector('.slick-next');
+    expect(prev.classList).toContain('slick-disabled');
+    expect(next.classList).not.toContain('slick-disabled');
+
+    // Go to last slide
+    for (let i = 0; i < 3; i++) {
+      next.click();
+      tickMilliseconds(fixture, 700);
+    }
+    expect(carouselContents[3].nativeElement.classList).toContain('slick-active');
+    expect(next.classList).toContain('slick-disabled');
+
+    // Clicking next should not move beyond last
+    next.click();
+    tickMilliseconds(fixture, 700);
+    expect(carouselContents[3].nativeElement.classList).toContain('slick-active');
+  }));
+});
+
+describe('carousel no swipe', () => {
+  let fixture: ComponentFixture<TriTestCarouselNoSwipeComponent>;
+  let testComponent: TriTestCarouselNoSwipeComponent;
+  let carouselContents: DebugElement[];
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(TriTestCarouselNoSwipeComponent);
+    fixture.detectChanges();
+    testComponent = fixture.debugElement.componentInstance;
+    carouselContents = fixture.debugElement.queryAll(By.directive(TriCarouselContentDirective));
+  });
+
+  it('should not change slide on swipe when nzEnableSwipe is false', fakeAsync(() => {
+    expect(carouselContents[0].nativeElement.classList).toContain('slick-active');
+    swipe(testComponent.carouselComponent, 500);
+    tickMilliseconds(fixture, 700);
+    expect(carouselContents[0].nativeElement.classList).toContain('slick-active');
+  }));
+});
+
 function tickMilliseconds<T>(fixture: ComponentFixture<T>, seconds: number = 1): void {
   fixture.detectChanges();
   tick(seconds);
@@ -506,6 +580,43 @@ export class TriTestCarouselActiveIndexComponent {
   afterChange(index: number): void {
     this.index = index;
   }
+}
+
+@Component({
+  selector: 'tri-test-carousel-arrows',
+  imports: [TriCarouselModule],
+  template: `
+    <tri-carousel [arrows]="true" [loop]="loop">
+      @for (index of array; track index) {
+        <div tri-carousel-content>
+          <h3>{{ index }}</h3>
+        </div>
+      }
+    </tri-carousel>
+  `
+})
+export class TriTestCarouselArrowsComponent {
+  @ViewChild(TriCarouselComponent, { static: true }) carouselComponent!: TriCarouselComponent;
+  array = [1, 2, 3, 4];
+  loop = true;
+}
+
+@Component({
+  selector: 'tri-test-carousel-no-swipe',
+  imports: [TriCarouselModule],
+  template: `
+    <tri-carousel [enableSwipe]="false">
+      @for (index of array; track index) {
+        <div tri-carousel-content>
+          <h3>{{ index }}</h3>
+        </div>
+      }
+    </tri-carousel>
+  `
+})
+export class TriTestCarouselNoSwipeComponent {
+  @ViewChild(TriCarouselComponent, { static: true }) carouselComponent!: TriCarouselComponent;
+  array = [1, 2, 3, 4];
 }
 
 class MockDirectionality {

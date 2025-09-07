@@ -7,9 +7,10 @@ import { Direction, Directionality } from '@angular/cdk/bidi';
 import { DOWN_ARROW, ENTER, ESCAPE, LEFT_ARROW, RIGHT_ARROW, TAB, UP_ARROW } from '@angular/cdk/keycodes';
 import {
   ConnectionPositionPair,
+  createFlexibleConnectedPositionStrategy,
+  createOverlayRef,
+  createRepositionScrollStrategy,
   FlexibleConnectedPositionStrategy,
-  Overlay,
-  OverlayConfig,
   OverlayRef,
   PositionStrategy
 } from '@angular/cdk/overlay';
@@ -30,6 +31,7 @@ import {
   ElementRef,
   EventEmitter,
   inject,
+  Injector,
   Input,
   NgZone,
   OnChanges,
@@ -49,6 +51,7 @@ import { merge, of as observableOf, Subscription } from 'rxjs';
 import { distinctUntilChanged, map, startWith, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
+import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import { DEFAULT_MENTION_BOTTOM_POSITIONS, DEFAULT_MENTION_TOP_POSITIONS } from 'ng-zorro-antd/core/overlay';
 import { NgClassInterface, TriSafeAny, TriStatus, TriValidateStatus, TriVariant } from 'ng-zorro-antd/core/types';
 import {
@@ -120,6 +123,15 @@ export type MentionPlacement = 'top' | 'bottom';
     @if (hasFeedback && !!status) {
       <tri-form-item-feedback-icon class="tri-mentions-suffix" [status]="status" />
     }
+    @if (allowClear && hasValue()) {
+      <span class="tri-mentions-suffix">
+        <button type="button" tabindex="-1" class="tri-mentions-clear-icon" (click)="clear()">
+          <ng-template [stringTemplateOutlet]="clearIcon">
+            <tri-icon type="close-circle" theme="fill" />
+          </ng-template>
+        </button>
+      </span>
+    }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
@@ -131,13 +143,19 @@ export type MentionPlacement = 'top' | 'bottom';
     '[class.tri-mentions-focused]': `focused()`,
     '[class.tri-mentions-disabled]': `disabled()`
   },
-  imports: [NgTemplateOutlet, TriIconModule, TriEmptyModule, TriFormItemFeedbackIconComponent]
+  imports: [
+    NgTemplateOutlet,
+    TriIconModule,
+    TriEmptyModule,
+    TriFormItemFeedbackIconComponent,
+    TriStringTemplateOutletDirective
+  ]
 })
 export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
   private ngZone = inject(NgZone);
   private directionality = inject(Directionality);
   private cdr = inject(ChangeDetectorRef);
-  private overlay = inject(Overlay);
+  private injector = inject(Injector);
   private viewContainerRef = inject(ViewContainerRef);
   private elementRef = inject(ElementRef);
   private renderer = inject(Renderer2);
@@ -150,8 +168,11 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() suggestions: TriSafeAny[] = [];
   @Input() status: TriStatus = '';
   @Input() variant: TriVariant = 'outlined';
+  @Input({ transform: booleanAttribute }) allowClear = false;
+  @Input() clearIcon: TemplateRef<TriSafeAny> | null = null;
   @Output() readonly onSelect = new EventEmitter<TriSafeAny>();
   @Output() readonly onSearchChange = new EventEmitter<MentionOnSearchTypes>();
+  @Output() readonly onClear = new EventEmitter<void>();
 
   @ViewChild(TemplateRef, { static: false }) suggestionsTemp?: TemplateRef<void>;
   @ViewChildren('items', { read: ElementRef })
@@ -180,6 +201,9 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
 
   readonly disabled = computed(() => {
     return this.trigger().disabled();
+  });
+  readonly hasValue = computed(() => {
+    return !!this.trigger()?.value().trim();
   });
 
   private previousValue: string | null = null;
@@ -285,7 +309,7 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   getMentions(): string[] {
-    return this.trigger() ? getMentions(this.trigger().value!, this.prefix) : [];
+    return this.trigger() ? getMentions(this.trigger().value(), this.prefix) : [];
   }
 
   selectSuggestion(suggestion: string | {}): void {
@@ -300,10 +324,16 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
     this.activeIndex = -1;
   }
 
+  clear(): void {
+    this.closeDropdown();
+    this.trigger().clear();
+    this.onClear.emit();
+  }
+
   private handleInput(event: KeyboardEvent): void {
     const target = event.target as HTMLInputElement | HTMLTextAreaElement;
     this.trigger().onChange(target.value);
-    this.trigger().value = target.value;
+    this.trigger().value.set(target.value);
     this.resetDropdown();
   }
 
@@ -484,7 +514,11 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
   private attachOverlay(): void {
     if (!this.overlayRef) {
       this.portal = new TemplatePortal(this.suggestionsTemp!, this.viewContainerRef);
-      this.overlayRef = this.overlay.create(this.getOverlayConfig());
+      this.overlayRef = createOverlayRef(this.injector, {
+        positionStrategy: this.getOverlayPosition(),
+        scrollStrategy: createRepositionScrollStrategy(this.injector),
+        disposeOnNavigation: true
+      });
     }
     if (this.overlayRef && !this.overlayRef.hasAttached()) {
       this.overlayRef.attach(this.portal);
@@ -493,26 +527,14 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
     this.updatePositions();
   }
 
-  private getOverlayConfig(): OverlayConfig {
-    return new OverlayConfig({
-      positionStrategy: this.getOverlayPosition(),
-      scrollStrategy: this.overlay.scrollStrategies.reposition(),
-      disposeOnNavigation: true
-    });
-  }
-
   private getOverlayPosition(): PositionStrategy {
-    const positions = [
-      new ConnectionPositionPair({ originX: 'start', originY: 'bottom' }, { overlayX: 'start', overlayY: 'top' }),
-      new ConnectionPositionPair({ originX: 'start', originY: 'top' }, { overlayX: 'start', overlayY: 'bottom' })
-    ];
-    this.positionStrategy = this.overlay
-      .position()
-      .flexibleConnectedTo(this.trigger().elementRef)
-      .withPositions(positions)
+    return (this.positionStrategy = createFlexibleConnectedPositionStrategy(this.injector, this.trigger().elementRef)
+      .withPositions([
+        new ConnectionPositionPair({ originX: 'start', originY: 'bottom' }, { overlayX: 'start', overlayY: 'top' }),
+        new ConnectionPositionPair({ originX: 'start', originY: 'top' }, { overlayX: 'start', overlayY: 'bottom' })
+      ])
       .withFlexibleDimensions(false)
-      .withPush(false);
-    return this.positionStrategy;
+      .withPush(false));
   }
 
   private setStatusStyles(status: TriValidateStatus, hasFeedback: boolean): void {
