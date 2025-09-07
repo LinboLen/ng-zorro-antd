@@ -66,8 +66,6 @@ export class TriMentionTriggerDirective implements ControlValueAccessor {
 
   readonly disabled = signal(false);
 
-  readonly disabled = signal(false);
-
   constructor() {
     this.destroyRef.onDestroy(() => {
       this.completeEvents();

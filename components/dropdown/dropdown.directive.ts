@@ -178,13 +178,6 @@ export class TriDropDownDirective implements AfterViewInit, OnChanges {
                   this.setDropdownMenuValue('placement', normalizePlacementForClass(placement));
                 }
               });
-              // Listen for placement changes to update the menu classes (arrow position)
-              this.positionStrategy.positionChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(change => {
-                const placement = getPlacementName(change) as TriPlacementType | undefined;
-                if (placement) {
-                  this.setDropdownMenuValue('placement', normalizePlacementForClass(placement));
-                }
-              });
               merge(
                 this.overlayRef.backdropClick(),
                 this.overlayRef.detachments(),
