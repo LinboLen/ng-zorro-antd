@@ -9,8 +9,17 @@ import { DateLocale, TriI18nInterface } from './nz-i18n.interface';
 
 export const TRI_I18N = new InjectionToken<TriI18nInterface>('nz-i18n');
 
-export function provideNzI18n(config: TriI18nInterface): EnvironmentProviders {
-  return makeEnvironmentProviders([{ provide: TRI_I18N, useValue: config }]);
+type FactoryLike<T> = T | (() => T);
+
+/**
+ * Set the locale globally.
+ */
+export function provideNzI18n(config: TriI18nInterface): EnvironmentProviders;
+export function provideNzI18n(factory: () => TriI18nInterface): EnvironmentProviders;
+export function provideNzI18n(config: FactoryLike<TriI18nInterface>): EnvironmentProviders {
+  return makeEnvironmentProviders([
+    typeof config === 'function' ? { provide: TRI_I18N, useFactory: config } : { provide: TRI_I18N, useValue: config }
+  ]);
 }
 
 /** Locale for date operations, should import from date-fns, see example: https://github.com/date-fns/date-fns/blob/v1.30.1/src/locale/zh_cn/index.js */

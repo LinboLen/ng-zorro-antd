@@ -22,14 +22,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 
-import { TriSafeAny } from 'ng-zorro-antd/core/types';
-
 import { TRI_CONFIG, TriConfig, TriConfigKey } from './config';
 import { registerTheme } from './css-variables';
 
-const isDefined = function (value?: TriSafeAny): boolean {
+function isDefined<T>(value?: T): value is Exclude<T, undefined> {
   return value !== undefined;
-};
+}
 
 const defaultPrefixCls = 'ant';
 
@@ -194,11 +192,16 @@ export function WithConfig<This, Value>() {
  * ```
  */
 export function withConfigFactory<T extends TriConfigKey>(componentName: T) {
+  /**
+   * @param name The name of input property.
+   * @param inputSignal The input signal.
+   * @param defaultValue The default value.
+   */
   return <N extends keyof NonNullable<TriConfig[T]>, V = NonNullable<TriConfig[T]>[N]>(
     name: N,
-    inputSignal: InputSignal<V> | InputSignalWithTransform<V, unknown>
+    inputSignal: InputSignal<V | undefined> | InputSignalWithTransform<V | undefined, unknown>,
+    defaultValue: V
   ): Signal<V> => {
-    const originalValue = inputSignal();
     const configValueSignal = inject(TriConfigService)['_getConfigValue'](componentName);
 
     return computed<V>(() => {
@@ -209,11 +212,13 @@ export function withConfigFactory<T extends TriConfigKey>(componentName: T) {
 
       if (assignedByUser) {
         return inputValue;
-      } else if (configValue !== undefined) {
+      }
+
+      if (isDefined(configValue)) {
         return configValue;
       }
 
-      return originalValue;
+      return defaultValue;
     });
   };
 }

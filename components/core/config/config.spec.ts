@@ -32,8 +32,8 @@ class TriWithConfigTestComponent {
 class TriWithConfigSignalTestComponent {
   readonly elementRef = inject(ElementRef);
 
-  readonly size = input<TriButtonSize>('default');
-  readonly innerSize = withConfig('nzSize', this.size);
+  readonly size = input<TriButtonSize>();
+  readonly innerSize = withConfig('nzSize', this.size, 'default');
 }
 
 describe('nz global config', () => {
