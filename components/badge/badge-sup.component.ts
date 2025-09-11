@@ -4,6 +4,7 @@
  */
 
 import {
+  booleanAttribute,
   ChangeDetectionStrategy,
   Component,
   Input,
@@ -49,11 +50,13 @@ import { TriSafeAny, TriSizeDSType } from 'ng-zorro-antd/core/types';
   `,
   host: {
     class: 'tri-scroll-number',
+    '[class]': `isPresetColor ? ('ant-badge-status-' + nzColor) : ''`,
     '[@.disabled]': `disableAnimation`,
     '[@zoomBadgeMotion]': '',
     '[attr.title]': `nzTitle === null ? '' : nzTitle || nzCount`,
     '[style]': `nzStyle`,
     '[style.right.px]': `nzOffset && nzOffset[0] ? -nzOffset[0] : null`,
+    '[style.background]': `isPresetColor ? nzStyle?.background : nzColor`,
     '[style.margin-top.px]': `nzOffset && nzOffset[1] ? nzOffset[1] : null`,
     '[class.tri-badge-count]': `!dot`,
     '[class.tri-badge-count-sm]': `size === 'small'`,
@@ -71,6 +74,8 @@ export class TriBadgeSupComponent implements OnInit, OnChanges {
   @Input() count?: number | TemplateRef<TriSafeAny>;
   @Input() noAnimation = false;
   @Input() size: TriSizeDSType = 'default';
+  @Input({ transform: booleanAttribute }) isPresetColor = false;
+  @Input() color?: string = undefined;
   maxNumberArray: string[] = [];
   countArray: number[] = [];
   _count: number = 0;

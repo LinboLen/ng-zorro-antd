@@ -8,11 +8,13 @@ import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { TriShapeSCType } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
 import { TriFloatButtonComponent } from './float-button.component';
 import { TriFloatButtonModule } from './float-button.module';
+import { TriFloatButtonType } from './typings';
 
 describe('nz-float-button', () => {
   beforeEach(waitForAsync(() => {
@@ -65,8 +67,8 @@ describe('nz-float-button', () => {
     it('should nzIcon support passing nzType string only', () => {
       testComponent.icon = 'file-search';
       fixture.detectChanges();
-      const view = resultEl.nativeElement.getElementsByClassName('anticon-question-circle')[0];
-      expect(view.getAttribute('nztype') === 'file-search').toBe(true);
+      const view = resultEl.nativeElement.querySelector('nz-icon');
+      expect(view.classList).toContain('anticon-file-search');
     });
 
     it('nzOnClick', () => {
@@ -117,8 +119,8 @@ describe('nz-float-button RTL', () => {
 export class TriTestFloatButtonBasicComponent {
   href: string | null = null;
   target: string | null = null;
-  type: 'default' | 'primary' = 'default';
-  shape: 'circle' | 'square' = 'circle';
+  type: TriFloatButtonType = 'default';
+  shape: TriShapeSCType = 'circle';
   icon: string | TemplateRef<void> | null = null;
   description: TemplateRef<void> | null = null;
 

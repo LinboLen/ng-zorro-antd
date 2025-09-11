@@ -3,9 +3,10 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, Input, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, TemplateRef } from '@angular/core';
 
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
+import { TriShapeSCType } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
@@ -16,18 +17,18 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
   template: `
     <div class="tri-float-btn-body">
       <div class="tri-float-btn-content">
-        @if (description || icon) {
-          @if (icon) {
+        @if (description() || icon()) {
+          @if (icon()) {
             <div class="tri-float-btn-icon">
-              <ng-container *stringTemplateOutlet="icon; let icon">
+              <ng-container *stringTemplateOutlet="icon(); let icon">
                 <tri-icon [type]="icon" theme="outline" />
               </ng-container>
             </div>
           }
-          @if (description && shape === 'square') {
+          @if (description() && shape() === 'square') {
             <div class="tri-float-btn-description">
-              <ng-container *stringTemplateOutlet="description">
-                {{ description }}
+              <ng-container *stringTemplateOutlet="description()">
+                {{ description() }}
               </ng-container>
             </div>
           }
@@ -41,7 +42,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
   `
 })
 export class TriFloatButtonContentComponent {
-  @Input() icon: string | TemplateRef<void> | null = null;
-  @Input() description: string | TemplateRef<void> | null = null;
-  @Input() shape: 'circle' | 'square' = 'circle';
+  readonly icon = input<string | TemplateRef<void> | null>(null);
+  readonly description = input<string | TemplateRef<void> | null>(null);
+  readonly shape = input<TriShapeSCType>('circle');
 }

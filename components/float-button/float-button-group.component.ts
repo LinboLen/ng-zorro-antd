@@ -19,10 +19,15 @@ import {
 } from '@angular/core';
 
 import { fadeMotion } from 'ng-zorro-antd/core/animation';
+import { TriFourDirectionType, TriShapeSCType } from 'ng-zorro-antd/core/types';
+import { generateClassName } from 'ng-zorro-antd/core/util';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 import { TriFloatButtonTopComponent } from './float-button-top.component';
 import { TriFloatButtonComponent } from './float-button.component';
+import { TriFloatButtonType } from './typings';
+
+const CLASS_NAME = 'ant-float-btn-group';
 
 @Component({
   selector: 'tri-float-button-group',
@@ -63,13 +68,13 @@ export class TriFloatButtonGroupComponent {
 
   readonly href = input<string | null>(null);
   readonly target = input<string | null>(null);
-  readonly type = input<'default' | 'primary'>('default');
+  readonly type = input<TriFloatButtonType>('default');
   readonly icon = input<string | TemplateRef<void> | null>(null);
-  readonly description = input<TemplateRef<void> | null>(null);
-  readonly shape = input<'circle' | 'square'>('circle');
+  readonly description = input<string | TemplateRef<void> | null>(null);
+  readonly shape = input<TriShapeSCType>('circle');
   readonly trigger = input<'click' | 'hover' | null>(null);
   readonly open = input<boolean | null>(null);
-  readonly placement = input<'top' | 'right' | 'bottom' | 'left'>('top');
+  readonly placement = input<TriFourDirectionType>('top');
   readonly onOpenChange = output<boolean>();
 
   protected dir = inject(Directionality).valueSignal;
@@ -79,7 +84,7 @@ export class TriFloatButtonGroupComponent {
   protected class = computed<string[]>(() => {
     const shape = this.shape();
     const dir = this.dir();
-    const classes = ['ant-float-btn-group', this.generateClass(shape)];
+    const classes = [CLASS_NAME, this.generateClass(shape)];
     if (!this.isMenuMode()) {
       classes.push(this.generateClass(`${shape}-shadow`));
     } else {
@@ -95,13 +100,12 @@ export class TriFloatButtonGroupComponent {
     effect(() => {
       if (this.floatButtonComponents()) {
         this.floatButtonComponents().forEach(item => {
-          item.shape = this.shape();
+          item._shape.set(this.shape());
         });
       }
       if (this.floatButtonTopComponents()) {
         this.floatButtonTopComponents().forEach(item => {
-          item.shape = this.shape();
-          item.detectChanges();
+          item._shape.set(this.shape());
         });
       }
     });
@@ -132,6 +136,6 @@ export class TriFloatButtonGroupComponent {
   }
 
   private generateClass(suffix: string): string {
-    return `ant-float-btn-group-${suffix}`;
+    return generateClassName(CLASS_NAME, suffix);
   }
 }

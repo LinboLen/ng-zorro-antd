@@ -42,9 +42,10 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'badge';
   animations: [zoomBadgeMotion],
   imports: [TriBadgeSupComponent, TriOutletModule],
   template: `
-    @if (status || color) {
+    @if ((status || color) && !showSup && !count) {
       <span
-        class="ant-badge-status-dot ant-badge-status-{{ status || presetColor }}"
+        class="tri-badge-status-dot"
+        [class]="(status || presetColor) && 'ant-badge-status-' + (status || presetColor)"
         [style.background]="!presetColor && color"
         [style]="style"
       ></span>
@@ -56,6 +57,8 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'badge';
     <ng-container *stringTemplateOutlet="count">
       @if (showSup) {
         <tri-badge-sup
+          [isPresetColor]="status || presetColor"
+          [color]="status || presetColor || color"
           [offset]="offset"
           [size]="size"
           [title]="title"
@@ -72,7 +75,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'badge';
   host: {
     class: 'tri-badge',
     '[class.tri-badge-status]': 'status',
-    '[class.tri-badge-not-a-wrapper]': '!!(standalone || status || color)'
+    '[class.tri-badge-not-a-wrapper]': '!!(standalone || ((status || color) && !showSup && !count))'
   }
 })
 export class TriBadgeComponent implements OnChanges, OnInit {

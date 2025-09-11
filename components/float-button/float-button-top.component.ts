@@ -3,26 +3,27 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { normalizePassiveListenerOptions, Platform } from '@angular/cdk/platform';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
+  computed,
   DestroyRef,
   DOCUMENT,
+  effect,
   ElementRef,
-  EventEmitter,
   inject,
-  Input,
+  input,
+  linkedSignal,
   NgZone,
   numberAttribute,
-  OnChanges,
   OnInit,
-  Output,
-  SimpleChanges,
+  output,
+  signal,
   TemplateRef,
-  ViewChild,
+  untracked,
+  viewChild,
   ViewEncapsulation
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -30,14 +31,17 @@ import { Subject, Subscription } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 
 import { fadeMotion } from 'ng-zorro-antd/core/animation';
-import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriConfigService, withConfigFactory } from 'ng-zorro-antd/core/config';
 import { TriScrollService } from 'ng-zorro-antd/core/services';
-import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
+import { TriShapeSCType } from 'ng-zorro-antd/core/types';
+import { fromEventOutsideAngular, generateClassName } from 'ng-zorro-antd/core/util';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 import { TriFloatButtonComponent } from './float-button.component';
+import { TriFloatButtonType } from './typings';
 
-const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'backTop';
+const withConfig = withConfigFactory('backTop');
+const CLASS_NAME = 'ant-float-btn';
 
 const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: true });
 
@@ -49,11 +53,11 @@ const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: t
   template: `
     <div #backTop @fadeMotion>
       <tri-float-button
-        [icon]="icon || top"
-        [description]="description"
-        [href]="href"
-        [type]="type"
-        [shape]="shape"
+        [icon]="icon() || top"
+        [description]="description()"
+        [href]="href()"
+        [type]="type()"
+        [shape]="shape()"
       ></tri-float-button>
       <ng-template #top>
         <tri-icon type="vertical-align-top" theme="outline" />
@@ -61,78 +65,92 @@ const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: t
     </div>
   `,
   host: {
-    class: 'tri-float-btn ant-float-btn-top',
-    '[class.tri-float-btn-circle]': `shape === 'circle'`,
-    '[class.tri-float-btn-hidden]': `!visible`,
-    '[class.tri-float-btn-square]': `shape === 'square'`,
-    '[class.tri-float-btn-rtl]': `dir === 'rtl'`
+    '[class]': 'class()'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class TriFloatButtonTopComponent implements OnInit, OnChanges {
+export class TriFloatButtonTopComponent implements OnInit {
   public configService = inject(TriConfigService);
   private scrollSrv = inject(TriScrollService);
   private platform = inject(Platform);
   private ngZone = inject(NgZone);
-  private cdr = inject(ChangeDetectorRef);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
+  private document = inject(DOCUMENT);
 
-  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
+  readonly backTop = viewChild('backTop', { read: ElementRef });
 
-  private scrollListenerDestroy$ = new Subject<void>();
-  #target?: HTMLElement | null = null;
+  readonly visibilityHeight = input<number>();
+  readonly href = input<string | null>(null);
+  readonly type = input<TriFloatButtonType>('default');
+  readonly shape = input<TriShapeSCType>('circle');
+  readonly icon = input<string | TemplateRef<void> | null>(null);
+  readonly description = input<TemplateRef<void> | null>(null);
+  readonly template = input<TemplateRef<void> | null>(null);
+  readonly target = input<string | HTMLElement | null>(null);
+  readonly duration = input(450, { transform: numberAttribute });
+  readonly onClick = output<boolean>();
 
-  visible: boolean = false;
-  dir: Direction = 'ltr';
-
-  @Input() href: string | null = null;
-  @Input() type: 'default' | 'primary' = 'default';
-  @Input() shape: 'circle' | 'square' = 'circle';
-  @Input() icon: string | TemplateRef<void> | null = null;
-  @Input() description: TemplateRef<void> | null = null;
-
-  @Input() template?: TemplateRef<void>;
-  @Input({ transform: numberAttribute }) @WithConfig() visibilityHeight: number = 400;
-  @Input() target?: string | HTMLElement;
-  @Input({ transform: numberAttribute }) duration: number = 450;
-  @Output() readonly onClick = new EventEmitter<boolean>();
-
-  @ViewChild('backTop', { static: false })
-  set backTop(backTop: ElementRef<HTMLElement> | undefined) {
-    if (backTop) {
-      this.backTopClickSubscription.unsubscribe();
-
-      this.backTopClickSubscription = fromEventOutsideAngular(backTop.nativeElement, 'click')
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe(() => {
-          this.scrollSrv.scrollTo(this.getTarget(), 0, { duration: this.duration });
-          if (this.onClick.observers.length) {
-            this.ngZone.run(() => this.onClick.emit(true));
-          }
-        });
+  // compact global config
+  readonly #visibilityHeight = withConfig('nzVisibilityHeight', this.visibilityHeight, 400);
+  readonly _shape = linkedSignal(() => this.shape());
+  protected readonly dir = this.directionality.valueSignal;
+  protected readonly class = computed<string[]>(() => {
+    const dir = this.dir();
+    const classes = [CLASS_NAME, `${CLASS_NAME}-top`, this.generateClass(this._shape())];
+    if (dir === 'rtl') {
+      classes.push(this.generateClass(dir));
     }
-  }
+    if (!this.visible()) {
+      classes.push(this.generateClass('hidden'));
+    }
+    return classes;
+  });
 
-  private doc = inject(DOCUMENT);
+  #target?: HTMLElement | null = null;
+  private readonly visible = signal<boolean>(false);
   private backTopClickSubscription = Subscription.EMPTY;
+  private scrollListenerDestroy$ = new Subject<void>();
 
   constructor() {
     this.destroyRef.onDestroy(() => {
       this.scrollListenerDestroy$.next();
       this.scrollListenerDestroy$.complete();
     });
+
+    effect(() => {
+      const target = this.target();
+      if (target) {
+        this.#target = typeof target === 'string' ? this.document.querySelector(target) : target;
+        this.registerScrollEvent();
+      }
+    });
+
+    effect(onCleanup => {
+      const backTop = this.backTop();
+      if (backTop) {
+        this.backTopClickSubscription.unsubscribe();
+        this.backTopClickSubscription = fromEventOutsideAngular(backTop.nativeElement, 'click')
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe(() => {
+            this.scrollSrv.scrollTo(this.getTarget(), 0, { duration: this.duration() });
+            this.ngZone.run(() => this.onClick.emit(true));
+          });
+      }
+      return onCleanup(() => {
+        this.backTopClickSubscription.unsubscribe();
+      });
+    });
+
+    effect(() => {
+      this.#visibilityHeight();
+      untracked(() => this.handleScroll());
+    });
   }
 
   ngOnInit(): void {
     this.registerScrollEvent();
-    this.dir = this.directionality.value;
-
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
   }
 
   private getTarget(): HTMLElement | Window {
@@ -140,11 +158,13 @@ export class TriFloatButtonTopComponent implements OnInit, OnChanges {
   }
 
   private handleScroll(): void {
-    if (this.visible === this.scrollSrv.getScroll(this.getTarget()) > this.visibilityHeight) {
+    if (
+      !this.platform.isBrowser ||
+      this.visible() === this.scrollSrv.getScroll(this.getTarget()) > this.#visibilityHeight()
+    ) {
       return;
     }
-    this.visible = !this.visible;
-    this.cdr.detectChanges();
+    this.visible.update(v => !v);
   }
 
   private registerScrollEvent(): void {
@@ -158,15 +178,7 @@ export class TriFloatButtonTopComponent implements OnInit, OnChanges {
       .subscribe(() => this.handleScroll());
   }
 
-  detectChanges(): void {
-    this.cdr.detectChanges();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    const { nzTarget } = changes;
-    if (nzTarget) {
-      this.#target = typeof this.target === 'string' ? this.doc.querySelector(this.target) : this.target;
-      this.registerScrollEvent();
-    }
+  private generateClass(suffix: string): string {
+    return generateClassName(CLASS_NAME, suffix);
   }
 }

@@ -9,6 +9,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
+import { TriFourDirectionType, TriShapeSCType } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
@@ -50,7 +51,7 @@ describe('nz-float-button-group', () => {
         ...groupComponent.floatButtonTopComponents()
       ];
       innerButtons.forEach(btn => {
-        expect(btn.shape).toBe('square');
+        expect(btn._shape()).toBe('square');
       });
     });
 
@@ -190,10 +191,10 @@ describe('nz-float-button-group RTL', () => {
   `
 })
 export class TriTestFloatButtonGroupBasicComponent {
-  shape: 'circle' | 'square' = 'circle';
+  shape: TriShapeSCType = 'circle';
   trigger: 'click' | 'hover' | null = null;
   open: boolean | null = null;
-  placement: 'top' | 'right' | 'bottom' | 'left' = 'top';
+  placement: TriFourDirectionType = 'top';
 
   isClick: boolean = false;
 
