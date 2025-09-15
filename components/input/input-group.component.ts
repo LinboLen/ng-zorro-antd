@@ -177,7 +177,7 @@ export class TriInputGroupComponent implements AfterContentInit, OnChanges, OnIn
 
   updateChildrenInputSize(): void {
     if (this.listOfNzInputDirective) {
-      this.listOfNzInputDirective.forEach(item => item['size'].set(this.size));
+      this.listOfNzInputDirective.forEach(item => item['_size'].set(this.size));
     }
   }
 
@@ -212,7 +212,7 @@ export class TriInputGroupComponent implements AfterContentInit, OnChanges, OnIn
       .pipe(
         switchMap(list => merge(...[listOfInputChange$, ...list.map((input: TriInputDirective) => input.disabled$)])),
         mergeMap(() => listOfInputChange$),
-        map(list => list.some((input: TriInputDirective) => input.disabled)),
+        map(list => list.some((input: TriInputDirective) => input.finalDisabled())),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(disabled => {

@@ -4,174 +4,129 @@
  */
 
 import { FocusMonitor } from '@angular/cdk/a11y';
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import {
+  booleanAttribute,
   ComponentRef,
+  computed,
   DestroyRef,
   Directive,
+  effect,
   ElementRef,
-  Input,
-  OnChanges,
-  OnInit,
-  Renderer2,
-  SimpleChanges,
-  ViewContainerRef,
-  booleanAttribute,
-  computed,
   inject,
-  signal
+  input,
+  linkedSignal,
+  OnInit,
+  signal,
+  ViewContainerRef
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { NgControl } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { distinctUntilChanged, filter } from 'rxjs/operators';
+import { EMPTY } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
-import { NgClassInterface, TriSizeLDSType, TriStatus, TriValidateStatus, TriVariant } from 'ng-zorro-antd/core/types';
+import { TriSizeLDSType, TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
 import { getStatusClassNames } from 'ng-zorro-antd/core/util';
 import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
+
+const PREFIX_CLS = 'ant-input';
 
 @Directive({
   selector: 'input[nz-input],textarea[nz-input]',
   exportAs: 'triInput',
   host: {
     class: 'tri-input',
-    '[class.tri-input-disabled]': 'disabled',
-    '[class.tri-input-borderless]': `variant === 'borderless' || (variant === 'outlined' && borderless)`,
-    '[class.tri-input-filled]': `variant === 'filled'`,
-    '[class.tri-input-underlined]': `variant === 'underlined'`,
+    '[class]': 'classes()',
+    '[class.tri-input-disabled]': 'finalDisabled()',
+    '[class.tri-input-borderless]': `variant() === 'borderless' || (variant() === 'outlined' && borderless())`,
+    '[class.tri-input-filled]': `variant() === 'filled'`,
+    '[class.tri-input-underlined]': `variant() === 'underlined'`,
     '[class.tri-input-lg]': `finalSize() === 'large'`,
     '[class.tri-input-sm]': `finalSize() === 'small'`,
-    '[attr.disabled]': 'disabled || null',
-    '[class.tri-input-rtl]': `dir=== 'rtl'`,
-    '[class.tri-input-stepperless]': `stepperless`,
+    '[attr.disabled]': 'finalDisabled() || null',
+    '[class.tri-input-rtl]': `dir() === 'rtl'`,
+    '[class.tri-input-stepperless]': `stepperless()`,
     '[class.tri-input-focused]': 'focused()'
   },
   hostDirectives: [TriSpaceCompactItemDirective],
   providers: [{ provide: TRI_SPACE_COMPACT_ITEM_TYPE, useValue: 'input' }]
 })
-export class TriInputDirective implements OnChanges, OnInit {
-  private renderer = inject(Renderer2);
+export class TriInputDirective implements OnInit {
   private elementRef = inject(ElementRef);
-  protected hostView = inject(ViewContainerRef);
-  private directionality = inject(Directionality);
   private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private destroyRef = inject(DestroyRef);
   private formStatusService = inject(TriFormStatusService, { optional: true });
   private formNoStatusService = inject(TriFormNoStatusService, { optional: true });
   private focusMonitor = inject(FocusMonitor);
+  protected hostView = inject(ViewContainerRef);
+
+  readonly ngControl = inject(NgControl, { self: true, optional: true });
 
   /**
    * @deprecated Will be removed in v21. It is recommended to use `nzVariant` instead.
    */
-  @Input({ transform: booleanAttribute }) borderless = false;
-  @Input() variant: TriVariant = 'outlined';
-  @Input() size: TriSizeLDSType = 'default';
-  @Input({ transform: booleanAttribute }) stepperless: boolean = true;
-  @Input() status: TriStatus = '';
-  @Input({ transform: booleanAttribute })
-  get disabled(): boolean {
-    if (this.ngControl && this.ngControl.disabled !== null) {
-      return this.ngControl.disabled;
-    }
-    return this._disabled;
-  }
-  set disabled(value: boolean) {
-    this._disabled = value;
-  }
-  _disabled = false;
-  disabled$ = new Subject<boolean>();
+  readonly borderless = input(false, { transform: booleanAttribute });
+  readonly variant = input<TriVariant>('outlined');
+  readonly size = input<TriSizeLDSType>('default');
+  /**
+   * @deprecated Will be removed in v22.
+   */
+  readonly stepperless = input(true, { transform: booleanAttribute });
+  readonly status = input<TriStatus>('');
+  readonly disabled = input(false, { transform: booleanAttribute });
 
-  dir: Direction = 'ltr';
-  // status
-  prefixCls: string = 'ant-input';
-  _status: TriValidateStatus = '';
-  statusCls: NgClassInterface = {};
-  hasFeedback: boolean = false;
-  feedbackRef: ComponentRef<TriFormItemFeedbackIconComponent> | null = null;
-  components: Array<ComponentRef<TriFormItemFeedbackIconComponent>> = [];
-  ngControl = inject(NgControl, { self: true, optional: true });
+  readonly controlDisabled = signal(false);
+  readonly finalDisabled = this.ngControl ? this.controlDisabled : this.disabled;
+  readonly dir = inject(Directionality).valueSignal;
+  // TODO: When the input group is removed, we can remove this.
+  readonly _size = linkedSignal(this.size);
 
-  protected focused = signal<boolean>(false);
-  protected finalSize = computed(() => {
+  readonly _status = this.formStatusService
+    ? toSignal(this.formStatusService.formStatusChanges.pipe(map(value => value.status)), { initialValue: '' })
+    : this.status;
+  readonly hasFeedback = toSignal(
+    this.formStatusService?.formStatusChanges.pipe(map(value => value.hasFeedback)) ?? EMPTY,
+    { initialValue: false }
+  );
+  readonly classes = computed(() => getStatusClassNames(PREFIX_CLS, this._status(), this.hasFeedback()));
+
+  protected readonly focused = signal<boolean>(false);
+  protected readonly finalSize = computed(() => {
     if (this.compactSize) {
       return this.compactSize();
     }
-    return this.#size();
+    return this._size();
   });
 
-  #size = signal<TriSizeLDSType>(this.size);
+  feedbackRef: ComponentRef<TriFormItemFeedbackIconComponent> | null = null;
+  // TODO: When the input group is removed, we can remove this.
+  disabled$ = toObservable(this.finalDisabled);
 
   constructor() {
     this.destroyRef.onDestroy(() => {
       this.focusMonitor.stopMonitoring(this.elementRef);
     });
-  }
-
-  ngOnInit(): void {
-    this.formStatusService?.formStatusChanges
-      .pipe(
-        distinctUntilChanged((pre, cur) => {
-          return pre.status === cur.status && pre.hasFeedback === cur.hasFeedback;
-        }),
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe(({ status, hasFeedback }) => {
-        this.setStatusStyles(status, hasFeedback);
-      });
-
-    if (this.ngControl) {
-      this.ngControl.statusChanges
-        ?.pipe(
-          filter(() => this.ngControl!.disabled !== null),
-          takeUntilDestroyed(this.destroyRef)
-        )
-        .subscribe(() => {
-          this.disabled$.next(this.ngControl!.disabled!);
-        });
-    }
-
-    this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((direction: Direction) => {
-      this.dir = direction;
-    });
 
     this.focusMonitor
       .monitor(this.elementRef, false)
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(takeUntilDestroyed())
       .subscribe(origin => this.focused.set(!!origin));
+
+    effect(() => {
+      this.renderFeedbackIcon();
+    });
   }
 
-  ngOnChanges({ disabled, nzStatus, nzSize }: SimpleChanges): void {
-    if (disabled) {
-      this.disabled$.next(this.disabled);
-    }
-    if (nzStatus) {
-      this.setStatusStyles(this.status, this.hasFeedback);
-    }
-    if (nzSize) {
-      this.#size.set(nzSize.currentValue);
-    }
-  }
-
-  private setStatusStyles(status: TriValidateStatus, hasFeedback: boolean): void {
-    // set inner status
-    this._status = status;
-    this.hasFeedback = hasFeedback;
-    this.renderFeedbackIcon();
-    // render status if nzStatus is set
-    this.statusCls = getStatusClassNames(this.prefixCls, status, hasFeedback);
-    Object.keys(this.statusCls).forEach(status => {
-      if (this.statusCls[status]) {
-        this.renderer.addClass(this.elementRef.nativeElement, status);
-      } else {
-        this.renderer.removeClass(this.elementRef.nativeElement, status);
-      }
+  ngOnInit(): void {
+    // statusChanges is only accessible in onInit
+    this.ngControl?.statusChanges?.pipe(startWith(null), takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      this.controlDisabled.set(!!this.ngControl!.disabled);
     });
   }
 
   private renderFeedbackIcon(): void {
-    if (!this._status || !this.hasFeedback || !!this.formNoStatusService) {
+    if (!this._status() || !this.hasFeedback() || !!this.formNoStatusService) {
       // remove feedback
       this.hostView.clear();
       this.feedbackRef = null;
@@ -180,7 +135,7 @@ export class TriInputDirective implements OnChanges, OnInit {
 
     this.feedbackRef = this.feedbackRef || this.hostView.createComponent(TriFormItemFeedbackIconComponent);
     this.feedbackRef.location.nativeElement.classList.add('ant-input-suffix');
-    this.feedbackRef.instance.status = this._status;
+    this.feedbackRef.instance.status = this._status();
     this.feedbackRef.instance.updateIcon();
   }
 }
