@@ -50,7 +50,16 @@ export interface TriShowUploadList {
   showDownloadIcon?: boolean;
 }
 
+/**
+ * @deprecated will be removed in v22.0.0
+ * Use `NzBeforeUploadFileType` instead.
+ */
 export type TriUploadTransformFileType = string | Blob | TriUploadFile | Observable<string | Blob | File>;
+
+export type TriBeforeUploadFileType =
+  | boolean
+  | Observable<boolean | TriUploadFile | Blob | File | boolean>
+  | Promise<boolean | TriUploadFile | Blob | File | boolean>;
 
 export interface ZipButtonOptions {
   disabled?: boolean;
@@ -58,7 +67,7 @@ export interface ZipButtonOptions {
   action?: string | ((file: TriUploadFile) => string | Observable<string>);
   directory?: boolean;
   openFileDialogOnClick?: boolean;
-  beforeUpload?(file: TriUploadFile, fileList: TriUploadFile[]): boolean | Observable<TriSafeAny>;
+  beforeUpload?(file: TriUploadFile, fileList: TriUploadFile[]): TriBeforeUploadFileType;
   customRequest?(item: TriSafeAny): Subscription;
   data?: {} | ((file: TriUploadFile) => {} | Observable<{}>);
   headers?: {} | ((file: TriUploadFile) => {} | Observable<{}>);

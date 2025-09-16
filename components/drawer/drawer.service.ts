@@ -17,10 +17,12 @@ import { TriDrawerComponent } from './drawer.component';
 
 export class DrawerBuilderForService<T extends {}, R> {
   private drawerRef: TriDrawerComponent<T, R> | null;
-  private overlayRef: OverlayRef = createOverlayRef(inject(Injector));
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private options: TriDrawerOptions) {
+  constructor(
+    private overlayRef: OverlayRef,
+    private options: TriDrawerOptions
+  ) {
     /** pick {@link TriDrawerOptions.nzOnCancel} and omit this option */
     const { nzOnCancel, ...componentOption } = this.options;
     this.drawerRef = this.overlayRef.attach(new ComponentPortal(TriDrawerComponent)).instance;
@@ -61,9 +63,11 @@ export class DrawerBuilderForService<T extends {}, R> {
 
 @Injectable()
 export class TriDrawerService {
+  private injector = inject(Injector);
+
   create<T extends {} = TriSafeAny, D = undefined, R = TriSafeAny>(
     options: TriDrawerOptions<T, D extends undefined ? {} : D>
   ): TriDrawerRef<T, R> {
-    return new DrawerBuilderForService<T, R>(options).getInstance();
+    return new DrawerBuilderForService<T, R>(createOverlayRef(this.injector), options).getInstance();
   }
 }

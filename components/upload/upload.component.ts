@@ -43,7 +43,8 @@ import {
   TriUploadType,
   TriUploadXHRArgs,
   UploadFilter,
-  ZipButtonOptions
+  ZipButtonOptions,
+  type TriBeforeUploadFileType
 } from './interface';
 import { TriUploadBtnComponent } from './upload-btn.component';
 import { TriUploadListComponent } from './upload-list.component';
@@ -84,7 +85,7 @@ export class TriUploadComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() action?: string | ((file: TriUploadFile) => string | Observable<string>);
   @Input({ transform: booleanAttribute }) directory = false;
   @Input({ transform: booleanAttribute }) openFileDialogOnClick = true;
-  @Input() beforeUpload?: (file: TriUploadFile, fileList: TriUploadFile[]) => boolean | Observable<boolean>;
+  @Input() beforeUpload?: (file: TriUploadFile, fileList: TriUploadFile[]) => TriBeforeUploadFileType;
   @Input() customRequest?: (item: TriUploadXHRArgs) => Subscription;
   @Input() data?: {} | ((file: TriUploadFile) => {} | Observable<{}>);
   @Input() filter: UploadFilter[] = [];
@@ -114,6 +115,10 @@ export class TriUploadComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() preview?: (file: TriUploadFile) => void;
   @Input() previewFile?: (file: TriUploadFile) => Observable<string>;
   @Input() previewIsImage?: (file: TriUploadFile) => boolean;
+  /**
+   * @deprecated will be removed in v22.0.0
+   * Use `nzBeforeUpload` instead.
+   */
   @Input() transformFile?: (file: TriUploadFile) => TriUploadTransformFileType;
   @Input() download?: (file: TriUploadFile) => void;
   @Input() iconRender: TriIconRenderTemplate | null = null;
