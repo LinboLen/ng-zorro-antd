@@ -1223,8 +1223,7 @@ export class RouterTabsTestComponent {
     </tri-tabs>
     <router-outlet></router-outlet>
   `,
-  imports: [RouterLink, RouterOutlet, TriTabsModule],
-  standalone: true
+  imports: [RouterLink, RouterOutlet, TriTabsModule]
 })
 export class DynamicRouterTabsTestComponent {
   selectedIdx = 0;
