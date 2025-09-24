@@ -50,11 +50,3 @@ ul.toc > li {
     background: white;
   }
 }
-.toc-affix-bottom {
-  position: absolute;
-  inset-inline-end: 20px;
-  bottom: 88px;
-  .ant-affix {
-    background: $body-background;
-  }
-}
