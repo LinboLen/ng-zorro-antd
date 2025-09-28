@@ -29,6 +29,8 @@ import { TriMessageData } from './typings';
   template: `
     <div
       class="tri-message-notice"
+      [class]="instance.options?.nzClass"
+      [style]="instance.options?.nzStyle"
       [@moveUpMotion]="instance.state"
       (@moveUpMotion.done)="animationStateChanged.next($event)"
       (mouseenter)="onEnter()"

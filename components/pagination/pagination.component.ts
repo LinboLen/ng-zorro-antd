@@ -9,6 +9,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   EventEmitter,
   Input,
   OnChanges,
@@ -18,9 +19,9 @@ import {
   TemplateRef,
   ViewEncapsulation,
   booleanAttribute,
-  numberAttribute,
-  DestroyRef,
-  inject
+  inject,
+  input,
+  numberAttribute
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ReplaySubject } from 'rxjs';
@@ -31,7 +32,7 @@ import { TriI18nService, TriPaginationI18nInterface } from 'ng-zorro-antd/i18n';
 
 import { TriPaginationDefaultComponent } from './pagination-default.component';
 import { TriPaginationSimpleComponent } from './pagination-simple.component';
-import { PaginationItemRenderContext } from './pagination.types';
+import { PaginationItemRenderContext, type TriPaginationAlign } from './pagination.types';
 
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'pagination';
 
@@ -58,7 +59,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'pagination';
       [total]="total"
       [pageIndex]="pageIndex"
       (pageIndexChange)="onPageIndexChange($event)"
-    ></tri-pagination-simple>
+    />
     <tri-pagination-default
       #defaultPagination
       [size]="size"
@@ -74,14 +75,17 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'pagination';
       [pageSizeOptions]="pageSizeOptions"
       (pageIndexChange)="onPageIndexChange($event)"
       (pageSizeChange)="onPageSizeChange($event)"
-    ></tri-pagination-default>
+    />
   `,
   host: {
     class: 'tri-pagination',
     '[class.tri-pagination-simple]': 'simple',
     '[class.tri-pagination-disabled]': 'disabled',
     '[class.tri-pagination-mini]': `!simple && size === 'small'`,
-    '[class.tri-pagination-rtl]': `dir === 'rtl'`
+    '[class.tri-pagination-rtl]': `dir === 'rtl'`,
+    '[class.tri-pagination-start]': 'align() === "start"',
+    '[class.tri-pagination-center]': 'align() === "center"',
+    '[class.tri-pagination-end]': 'align() === "end"'
   },
   imports: [NgTemplateOutlet, TriPaginationSimpleComponent, TriPaginationDefaultComponent]
 })
@@ -110,6 +114,7 @@ export class TriPaginationComponent implements OnInit, OnChanges {
   @Input({ transform: numberAttribute }) total = 0;
   @Input({ transform: numberAttribute }) pageIndex = 1;
   @Input({ transform: numberAttribute }) pageSize = 10;
+  readonly align = input<TriPaginationAlign>('start');
 
   showPagination = true;
   locale!: TriPaginationI18nInterface;

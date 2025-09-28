@@ -35,9 +35,6 @@ $select-prefix-cls: "#{$ant-prefix}-select";
       cursor: auto;
     }
   }
-  .#{$select-prefix-cls}-focused:not(.$select-prefix-cls-disabled) & {
-    @include active;
-  }
   .#{$select-prefix-cls}-disabled#{&} {
     color: $disabled-color;
     background: $input-disabled-bg;
@@ -78,6 +75,9 @@ $select-prefix-cls: "#{$ant-prefix}-select";
   }
   &:not(&-disabled):hover &-selector {
     @include hover;
+  }
+  &:not(&-disabled)#{&}-focused &-selector {
+    @include active;
   }
   // ======================== Selection ========================
   &-selection-item {
@@ -297,43 +297,59 @@ $select-prefix-cls: "#{$ant-prefix}-select";
     font-size: $font-size-lg;
   }
   // no border style
-  &-borderless &-selector {
-    background-color: transparent !important;
-    border-color: transparent !important;
-    box-shadow: none !important;
+  &#{&}-borderless,
+  &#{&}-borderless:hover,
+  &#{&}-borderless:focus,
+  &#{&}-borderless#{&}-focused,
+  &#{&}-borderless#{&}-disabled,
+  &#{&}-borderless#{&}[disabled] {
+    .#{$select-prefix-cls}-selector {
+      background-color: transparent;
+      border-color: transparent;
+      box-shadow: none;
+    }
   }
   // filled style
-  &-filled &-selector {
+  &#{&}-filled &-selector {
     background-color: $input-variant-filled-bg;
-    border-color: transparent !important;
-    box-shadow: none !important;
+    border-color: transparent;
+    box-shadow: none;
   }
-  &-filled:hover &-selector {
+  &#{&}-filled:hover &-selector {
     background-color: $input-variant-filled-hover-bg;
-    border-color: transparent !important;
-    box-shadow: none !important;
+    border-color: transparent;
+    box-shadow: none;
   }
-  &-filled:focus &-selector,
-  &-filled#{&}-focused &-selector {
-    @include active;
-    background-color: transparent !important;
-    box-shadow: none !important;
+  &#{&}-filled:focus,
+  &#{&}-filled#{&}-focused {
+    .#{$select-prefix-cls}-selector {
+      @include active;
+      background-color: transparent;
+      box-shadow: none;
+    }
   }
-  &-filled#{&}-disabled &-selector,
-  &-filled#{&}[disabled] &-selector {
-    @include disabled;
+  &#{&}-filled#{&}-disabled,
+  &#{&}-filled#{&}[disabled] {
+    .#{$select-prefix-cls}-selector {
+      @include disabled;
+    }
   }
   // underlined style
-  &-underlined &-selector,
-  &-underlined:hover &-selector,
-  &-underlined:focus &-selector,
-  &-underlined#{&}-focused &-selector,
-  &-underlined#{&}-disabled &-selector,
-  &-underlined#{&}[disabled] &-selector {
-    background-color: transparent !important;
-    border-width: 0 0 $border-width-base;
-    border-radius: 0 !important;
-    box-shadow: none !important;
+  &#{&}-underlined,
+  &#{&}-underlined:hover,
+  &#{&}-underlined:focus,
+  &#{&}-underlined#{&}-focused,
+  &#{&}-underlined#{&}-disabled,
+  &#{&}-underlined#{&}[disabled] {
+    .#{$select-prefix-cls}-selector {
+      background-color: transparent;
+      border-width: 0 0 $border-width-base;
+      border-radius: 0;
+      box-shadow: none;
+    }
+  }
+  &#{&}-underlined:hover:not(&-focused):not(:focus) &-selector {
+    border-color: $input-border-color;
   }
   &#{&}-in-form-item {
     width: 100%;

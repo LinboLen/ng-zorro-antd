@@ -6,7 +6,7 @@
 import { TemplateRef } from '@angular/core';
 import { Subject } from 'rxjs';
 
-import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny, type NgClassInterface, type NgStyleInterface } from 'ng-zorro-antd/core/types';
 
 import { TriMNComponent } from './base';
 
@@ -19,6 +19,8 @@ export interface TriMessageDataOptions {
   nzAnimate?: boolean;
   nzPauseOnHover?: boolean;
   nzData?: TriSafeAny;
+  nzStyle?: NgStyleInterface | string;
+  nzClass?: NgClassInterface | string;
 }
 
 export interface TriMessageData {

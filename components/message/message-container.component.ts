@@ -31,7 +31,7 @@ const TRI_MESSAGE_DEFAULT_CONFIG: Required<MessageConfig> = {
   template: `
     <div class="tri-message" [class.tri-message-rtl]="dir === 'rtl'" [style.top]="top">
       @for (instance of instances; track instance) {
-        <tri-message [instance]="instance" (destroyed)="remove($event.id, $event.userAction)"></tri-message>
+        <tri-message [instance]="instance" (destroyed)="remove($event.id, $event.userAction)" />
       }
     </div>
   `,

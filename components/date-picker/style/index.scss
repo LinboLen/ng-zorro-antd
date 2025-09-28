@@ -39,26 +39,26 @@ $picker-prefix-cls: "#{$ant-prefix}-picker";
     color: $disabled-color;
   }
   &#{&}-borderless {
-    background-color: transparent !important;
-    border-color: transparent !important;
-    box-shadow: none !important;
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
   }
   // filled style
   &#{&}-filled {
     background-color: $input-variant-filled-bg;
-    border-color: transparent !important;
-    box-shadow: none !important;
+    border-color: transparent;
+    box-shadow: none;
   }
   &#{&}-filled:hover {
     background-color: $input-variant-filled-hover-bg;
-    border-color: transparent !important;
-    box-shadow: none !important;
+    border-color: transparent;
+    box-shadow: none;
   }
   &#{&}-filled:focus,
   &#{&}-filled#{&}-focused {
     @include active;
-    background-color: transparent !important;
-    box-shadow: none !important;
+    background-color: transparent;
+    box-shadow: none;
   }
   &#{&}-filled#{&}-disabled,
   &#{&}-filled#{&}[disabled] {
@@ -71,10 +71,13 @@ $picker-prefix-cls: "#{$ant-prefix}-picker";
   &#{&}-underlined#{&}-focused,
   &#{&}-underlined#{&}-disabled,
   &#{&}-underlined#{&}[disabled] {
-    background-color: transparent !important;
+    background-color: transparent;
     border-width: 0 0 $border-width-base;
-    border-radius: 0 !important;
-    box-shadow: none !important;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  &#{&}-underlined:hover:not(&-focused):not(:focus) {
+    border-color: $input-border-color;
   }
   // ======================== Input =========================
   &-input {

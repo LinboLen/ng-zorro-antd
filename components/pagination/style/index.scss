@@ -4,6 +4,16 @@
 $pagination-prefix-cls: "#{$ant-prefix}-pagination";
 .#{$pagination-prefix-cls} {
   @include reset-component;
+  display: flex;
+  &-start {
+    justify-content: start;
+  }
+  &-center {
+    justify-content: center;
+  }
+  &-end {
+    justify-content: end;
+  }
   ul,
   ol {
     margin: 0;
