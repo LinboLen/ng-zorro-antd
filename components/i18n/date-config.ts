@@ -12,7 +12,9 @@ export interface TriDateConfig {
   firstDayOfWeek?: WeekDayIndex;
 }
 
-export const TRI_DATE_CONFIG = new InjectionToken<TriDateConfig>('date-config');
+export const TRI_DATE_CONFIG = new InjectionToken<TriDateConfig>(
+  typeof ngDevMode !== 'undefined' && ngDevMode ? 'nz-date-config' : ''
+);
 
 export const TRI_DATE_CONFIG_DEFAULT: TriDateConfig = {
   firstDayOfWeek: undefined

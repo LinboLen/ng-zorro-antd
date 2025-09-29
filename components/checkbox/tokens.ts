@@ -7,4 +7,6 @@ import { InjectionToken } from '@angular/core';
 
 import type { TriCheckboxGroupComponent } from './checkbox-group.component';
 
-export const TRI_CHECKBOX_GROUP = new InjectionToken<TriCheckboxGroupComponent>('NZ_CHECKBOX_GROUP');
+export const TRI_CHECKBOX_GROUP = new InjectionToken<TriCheckboxGroupComponent>(
+  typeof ngDevMode !== 'undefined' && ngDevMode ? 'nz-checkbox-group' : ''
+);

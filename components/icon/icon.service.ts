@@ -18,8 +18,12 @@ export interface TriIconfontOption {
   scriptUrl: string;
 }
 
-export const TRI_ICONS = new InjectionToken<IconDefinition[]>('nz_icons');
-export const TRI_ICON_DEFAULT_TWOTONE_COLOR = new InjectionToken('nz_icon_default_twotone_color');
+export const TRI_ICONS = new InjectionToken<IconDefinition[]>(
+  typeof ngDevMode !== 'undefined' && ngDevMode ? 'nz-icons' : ''
+);
+export const TRI_ICON_DEFAULT_TWOTONE_COLOR = new InjectionToken(
+  typeof ngDevMode !== 'undefined' && ngDevMode ? 'nz-icon-default-twotone-color' : ''
+);
 export const DEFAULT_TWOTONE_COLOR = '#1890ff';
 
 /**

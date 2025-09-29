@@ -16,4 +16,6 @@ export type TriEmptySize = 'normal' | 'small' | '';
 
 export type TriEmptyCustomContent = Type<TriSafeAny> | TemplateRef<TriSafeAny> | string | null;
 
-export const TRI_EMPTY_COMPONENT_NAME = new InjectionToken<string>('nz-empty-component-name');
+export const TRI_EMPTY_COMPONENT_NAME = new InjectionToken<string>(
+  typeof ngDevMode !== 'undefined' && ngDevMode ? 'nz-empty-component-name' : ''
+);

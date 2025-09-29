@@ -29,7 +29,9 @@ export const TRI_WAVE_GLOBAL_DEFAULT_CONFIG: TriWaveConfig = {
   disabled: false
 };
 
-export const TRI_WAVE_GLOBAL_CONFIG = new InjectionToken<TriWaveConfig>('nz-wave-global-options');
+export const TRI_WAVE_GLOBAL_CONFIG = new InjectionToken<TriWaveConfig>(
+  typeof ngDevMode !== 'undefined' && ngDevMode ? 'nz-wave-global-options' : ''
+);
 
 export function provideNzWave(config: TriWaveConfig): EnvironmentProviders {
   return makeEnvironmentProviders([{ provide: TRI_WAVE_GLOBAL_CONFIG, useValue: config }]);

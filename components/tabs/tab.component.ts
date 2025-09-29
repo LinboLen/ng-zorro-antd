@@ -31,7 +31,7 @@ import { TriTabDirective } from './tab.directive';
 /**
  * Used to provide a tab set to a tab without causing a circular dependency.
  */
-export const TRI_TAB_SET = new InjectionToken<TriSafeAny>('NZ_TAB_SET');
+export const TRI_TAB_SET = new InjectionToken<TriSafeAny>(typeof ngDevMode !== 'undefined' && ngDevMode ? 'nz-tabs' : '');
 
 @Component({
   selector: 'tri-tab',

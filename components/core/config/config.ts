@@ -385,7 +385,7 @@ export type TriConfigKey = keyof TriConfig;
 /**
  * User should provide an object implements this interface to set global configurations.
  */
-export const TRI_CONFIG = new InjectionToken<TriConfig>('nz-config');
+export const TRI_CONFIG = new InjectionToken<TriConfig>(typeof ngDevMode !== 'undefined' && ngDevMode ? 'nz-config' : '');
 
 export function provideNzConfig(config: TriConfig): EnvironmentProviders {
   return makeEnvironmentProviders([{ provide: TRI_CONFIG, useValue: config }]);

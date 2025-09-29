@@ -7,4 +7,6 @@ import { InjectionToken } from '@angular/core';
 
 import { TriTreeBaseService } from './nz-tree-base.service';
 
-export const TriTreeHigherOrderServiceToken = new InjectionToken<TriTreeBaseService>('NzTreeHigherOrder');
+export const TriTreeHigherOrderServiceToken = new InjectionToken<TriTreeBaseService>(
+  typeof ngDevMode !== 'undefined' && ngDevMode ? 'nz-tree-higher-order' : ''
+);
