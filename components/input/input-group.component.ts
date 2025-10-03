@@ -38,6 +38,9 @@ import { TRI_SPACE_COMPACT_ITEM_TYPE, TriSpaceCompactItemDirective } from 'ng-zo
 import { TriInputGroupSlotComponent } from './input-group-slot.component';
 import { TriInputDirective } from './input.directive';
 
+/**
+ * @deprecated Will be removed in v22.0.0. This component will be removed along with input-group.
+ */
 @Directive({
   selector: `nz-input-group[nzSuffix], nz-input-group[nzPrefix]`
 })
@@ -45,6 +48,9 @@ export class TriInputGroupWhitSuffixOrPrefixDirective {
   public readonly elementRef = inject(ElementRef);
 }
 
+/**
+ * @deprecated Will be removed in v22. It is recommended to use `<nz-input-wrapper>` instead.
+ */
 @Component({
   selector: 'tri-input-group',
   exportAs: 'triInputGroup',

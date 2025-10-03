@@ -8,24 +8,30 @@ import { TriInputModule } from 'ng-zorro-antd/input';
   selector: 'tri-demo-input-allow-clear',
   imports: [FormsModule, TriInputModule, TriIconModule],
   template: `
-    <tri-input-group [suffix]="inputClearTpl">
-      <input type="text" tri-input [(ngModel)]="inputValue" placeholder="input with clear icon" />
-    </tri-input-group>
-    <ng-template #inputClearTpl>
-      @if (inputValue) {
-        <tri-icon class="tri-input-clear-icon" theme="fill" type="close-circle" (click)="inputValue = null" />
-      }
-    </ng-template>
+    <tri-input-wrapper allowClear>
+      <input tri-input [(ngModel)]="inputValue" placeholder="input with clear icon" />
+      <tri-icon
+        inputSuffix
+        class="tri-input-clear-icon"
+        type="close-circle"
+        theme="fill"
+        [hidden]="!inputValue"
+        (click)="inputValue = null"
+      />
+    </tri-input-wrapper>
     <br />
     <br />
-    <tri-input-group [suffix]="textAreaClearTpl" class="tri-input-affix-wrapper-textarea-with-clear-btn">
+    <tri-input-wrapper allowClear class="tri-input-affix-wrapper-textarea-with-clear-btn">
       <textarea tri-input [(ngModel)]="textValue" placeholder="textarea with clear icon"></textarea>
-    </tri-input-group>
-    <ng-template #textAreaClearTpl>
-      @if (textValue) {
-        <tri-icon class="tri-input-clear-icon" theme="fill" type="close-circle" (click)="textValue = null" />
-      }
-    </ng-template>
+      <tri-icon
+        inputSuffix
+        class="tri-input-clear-icon"
+        type="close-circle"
+        theme="fill"
+        [hidden]="!textValue"
+        (click)="inputValue = null"
+      />
+    </tri-input-wrapper>
   `
 })
 export class TriDemoInputAllowClearComponent {

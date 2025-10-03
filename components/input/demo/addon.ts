@@ -1,42 +1,56 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import { TriCascaderModule } from 'ng-zorro-antd/cascader';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriInputModule } from 'ng-zorro-antd/input';
 import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
   selector: 'tri-demo-input-addon',
-  imports: [FormsModule, TriInputModule, TriSelectModule],
+  imports: [TriInputModule, TriIconModule, TriSelectModule, TriCascaderModule, FormsModule],
   template: `
-    <tri-input-group addOnBefore="Http://" addOnAfter=".com">
-      <input type="text" tri-input [(ngModel)]="inputValue" />
-    </tri-input-group>
+    <tri-input-wrapper>
+      <span inputAddonBefore>http://</span>
+      <input tri-input [(ngModel)]="value" />
+      <span inputAddonAfter>.com</span>
+    </tri-input-wrapper>
     <br />
     <br />
-    <tri-input-group [addOnBefore]="addOnBeforeTemplate" [addOnAfter]="addOnAfterTemplate">
-      <input type="text" tri-input [(ngModel)]="inputValue" />
-    </tri-input-group>
-    <ng-template #addOnBeforeTemplate>
-      <tri-select [ngModel]="'Http://'">
+    <tri-input-wrapper>
+      <tri-select inputAddonBefore [ngModel]="'Http://'">
         <tri-option label="Http://" value="Http://"></tri-option>
         <tri-option label="Https://" value="Https://"></tri-option>
       </tri-select>
-    </ng-template>
-    <ng-template #addOnAfterTemplate>
-      <tri-select [ngModel]="'.com'">
+      <input tri-input [(ngModel)]="value" />
+      <tri-select inputAddonAfter [ngModel]="'.com'">
         <tri-option label=".com" value=".com"></tri-option>
         <tri-option label=".jp" value=".jp"></tri-option>
         <tri-option label=".cn" value=".cn"></tri-option>
         <tri-option label=".org" value=".org"></tri-option>
       </tri-select>
-    </ng-template>
+    </tri-input-wrapper>
     <br />
     <br />
-    <tri-input-group addOnAfterIcon="setting">
-      <input type="text" tri-input [(ngModel)]="inputValue" />
-    </tri-input-group>
+    <tri-input-wrapper>
+      <input tri-input [(ngModel)]="value" />
+      <tri-icon inputAddonBefore type="setting" />
+    </tri-input-wrapper>
+    <br />
+    <br />
+    <tri-input-wrapper>
+      <span inputAddonBefore>http://</span>
+      <input tri-input [(ngModel)]="value" />
+      <span inputSuffix>.com</span>
+    </tri-input-wrapper>
+    <br />
+    <br />
+    <tri-input-wrapper>
+      <tri-cascader inputAddonBefore [options]="[]" placeHolder="cascader" [style.width.px]="150" />
+      <input tri-input [(ngModel)]="value" />
+    </tri-input-wrapper>
   `
 })
 export class TriDemoInputAddonComponent {
-  inputValue: string = 'my site';
+  readonly value = signal('mysite');
 }

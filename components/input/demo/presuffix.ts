@@ -1,25 +1,43 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
+import { TriCascaderModule } from 'ng-zorro-antd/cascader';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriInputModule } from 'ng-zorro-antd/input';
-import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
+import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
   selector: 'tri-demo-input-presuffix',
-  imports: [TriInputModule, TriIconModule, TriTooltipModule],
+  imports: [TriInputModule, TriIconModule, TriSelectModule, TriCascaderModule, FormsModule],
   template: `
-    <tri-input-group [suffix]="suffixTemplateInfo" [prefix]="prefixTemplateUser">
-      <input type="text" tri-input placeholder="Enter your username" />
-    </tri-input-group>
-    <ng-template #prefixTemplateUser><tri-icon type="user" /></ng-template>
-    <ng-template #suffixTemplateInfo>
-      <tri-icon tri-tooltip tooltipTitle="Extra information" type="info-circle" />
-    </ng-template>
+    <tri-input-wrapper>
+      <tri-icon inputPrefix type="user" />
+      <input tri-input placeholder="Enter your username" />
+      <tri-icon inputSuffix type="info" />
+    </tri-input-wrapper>
     <br />
     <br />
-    <tri-input-group suffix="RMB" prefix="￥">
-      <input type="text" tri-input />
-    </tri-input-group>
+    <tri-input-wrapper>
+      <span inputPrefix>¥</span>
+      <input tri-input />
+      <span inputSuffix>RMB</span>
+    </tri-input-wrapper>
+    <br />
+    <br />
+    <tri-input-wrapper>
+      <span inputPrefix>¥</span>
+      <input tri-input disabled />
+      <span inputSuffix>RMB</span>
+    </tri-input-wrapper>
+    <br />
+    <br />
+    <tri-input-wrapper>
+      <input tri-input placeholder="input password support suffix" />
+      <tri-icon inputSuffix class="tri-input-password-icon" type="eye-invisible" />
+      <tri-icon inputSuffix type="lock" />
+    </tri-input-wrapper>
   `
 })
-export class TriDemoInputPresuffixComponent {}
+export class TriDemoInputPresuffixComponent {
+  readonly value = signal('mysite');
+}

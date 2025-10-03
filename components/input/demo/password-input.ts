@@ -8,21 +8,37 @@ import { TriInputModule } from 'ng-zorro-antd/input';
   selector: 'tri-demo-input-password-input',
   imports: [FormsModule, TriInputModule, TriIconModule],
   template: `
-    <tri-input-group [suffix]="suffixTemplate">
+    <tri-input-wrapper>
       <input
-        [type]="passwordVisible ? 'text' : 'password'"
         tri-input
+        [type]="passwordVisible ? 'text' : 'password'"
         placeholder="input password"
         [(ngModel)]="password"
       />
-    </tri-input-group>
-    <ng-template #suffixTemplate>
       <tri-icon
+        inputSuffix
         class="tri-input-password-icon"
         [type]="passwordVisible ? 'eye-invisible' : 'eye'"
         (click)="passwordVisible = !passwordVisible"
       />
-    </ng-template>
+    </tri-input-wrapper>
+    <br />
+    <br />
+    <tri-input-wrapper>
+      <input
+        tri-input
+        [type]="passwordVisible ? 'text' : 'password'"
+        placeholder="input password"
+        [(ngModel)]="password"
+        disabled
+      />
+      <tri-icon
+        inputSuffix
+        class="tri-input-password-icon"
+        [type]="passwordVisible ? 'eye-invisible' : 'eye'"
+        (click)="passwordVisible = !passwordVisible"
+      />
+    </tri-input-wrapper>
   `
 })
 export class TriDemoInputPasswordInputComponent {

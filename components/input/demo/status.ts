@@ -12,15 +12,14 @@ import { TriSpaceModule } from 'ng-zorro-antd/space';
     <tri-space direction="vertical" style="width: 100%">
       <input *spaceItem tri-input placeholder="Error" [(ngModel)]="value" status="error" />
       <input *spaceItem tri-input placeholder="Warning" [(ngModel)]="value" status="warning" />
-      <tri-input-group *spaceItem [prefix]="prefixTemplateClock" status="error">
-        <input type="text" tri-input placeholder="Error with prefix" />
-      </tri-input-group>
-      <tri-input-group *spaceItem [prefix]="prefixTemplateClock" status="warning">
-        <input type="text" tri-input placeholder="Warning with prefix" />
-      </tri-input-group>
-      <ng-template #prefixTemplateClock>
-        <tri-icon type="clock-circle" theme="outline" />
-      </ng-template>
+      <tri-input-wrapper *spaceItem>
+        <tri-icon inputPrefix type="clock-circle" theme="outline" />
+        <input type="text" tri-input placeholder="Error with prefix" status="error" />
+      </tri-input-wrapper>
+      <tri-input-wrapper *spaceItem>
+        <tri-icon inputPrefix type="clock-circle" theme="outline" />
+        <input type="text" tri-input placeholder="Warning with prefix" status="warning" />
+      </tri-input-wrapper>
     </tri-space>
   `
 })

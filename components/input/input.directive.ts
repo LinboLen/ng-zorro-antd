@@ -30,6 +30,8 @@ import { TriSizeLDSType, TriStatus, TriVariant } from 'ng-zorro-antd/core/types'
 import { getStatusClassNames } from 'ng-zorro-antd/core/util';
 import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
+import { TRI_INPUT_WRAPPER } from './tokens';
+
 const PREFIX_CLS = 'ant-input';
 
 @Directive({
@@ -45,6 +47,7 @@ const PREFIX_CLS = 'ant-input';
     '[class.tri-input-lg]': `finalSize() === 'large'`,
     '[class.tri-input-sm]': `finalSize() === 'small'`,
     '[attr.disabled]': 'finalDisabled() || null',
+    '[attr.readonly]': 'readonly() || null',
     '[class.tri-input-rtl]': `dir() === 'rtl'`,
     '[class.tri-input-stepperless]': `stepperless()`,
     '[class.tri-input-focused]': 'focused()'
@@ -58,6 +61,7 @@ export class TriInputDirective implements OnInit {
   private destroyRef = inject(DestroyRef);
   private formStatusService = inject(TriFormStatusService, { optional: true });
   private formNoStatusService = inject(TriFormNoStatusService, { optional: true });
+  private inputWrapper = inject(TRI_INPUT_WRAPPER, { host: true, optional: true });
   private focusMonitor = inject(FocusMonitor);
   protected hostView = inject(ViewContainerRef);
 
@@ -75,6 +79,7 @@ export class TriInputDirective implements OnInit {
   readonly stepperless = input(true, { transform: booleanAttribute });
   readonly status = input<TriStatus>('');
   readonly disabled = input(false, { transform: booleanAttribute });
+  readonly readonly = input(false, { transform: booleanAttribute });
 
   readonly controlDisabled = signal(false);
   readonly finalDisabled = this.ngControl ? this.controlDisabled : this.disabled;
@@ -126,7 +131,7 @@ export class TriInputDirective implements OnInit {
   }
 
   private renderFeedbackIcon(): void {
-    if (!this._status() || !this.hasFeedback() || !!this.formNoStatusService) {
+    if (!this._status() || !this.hasFeedback() || this.inputWrapper || !!this.formNoStatusService) {
       // remove feedback
       this.hostView.clear();
       this.feedbackRef = null;
