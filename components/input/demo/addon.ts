@@ -10,10 +10,8 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
   selector: 'tri-demo-input-addon',
   imports: [TriInputModule, TriIconModule, TriSelectModule, TriCascaderModule, FormsModule],
   template: `
-    <tri-input-wrapper>
-      <span inputAddonBefore>http://</span>
+    <tri-input-wrapper addonBefore="http://" addonAfter=".com">
       <input tri-input [(ngModel)]="value" />
-      <span inputAddonAfter>.com</span>
     </tri-input-wrapper>
     <br />
     <br />
@@ -38,10 +36,8 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
     </tri-input-wrapper>
     <br />
     <br />
-    <tri-input-wrapper>
-      <span inputAddonBefore>http://</span>
+    <tri-input-wrapper addonBefore="http://" suffix=".com">
       <input tri-input [(ngModel)]="value" />
-      <span inputSuffix>.com</span>
     </tri-input-wrapper>
     <br />
     <br />

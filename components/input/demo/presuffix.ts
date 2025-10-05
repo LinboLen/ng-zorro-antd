@@ -13,21 +13,17 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
     <tri-input-wrapper>
       <tri-icon inputPrefix type="user" />
       <input tri-input placeholder="Enter your username" />
-      <tri-icon inputSuffix type="info" />
+      <tri-icon inputSuffix type="info-circle" />
     </tri-input-wrapper>
     <br />
     <br />
-    <tri-input-wrapper>
-      <span inputPrefix>¥</span>
+    <tri-input-wrapper prefix="¥" suffix="RMB">
       <input tri-input />
-      <span inputSuffix>RMB</span>
     </tri-input-wrapper>
     <br />
     <br />
-    <tri-input-wrapper>
-      <span inputPrefix>¥</span>
+    <tri-input-wrapper prefix="¥" suffix="RMB">
       <input tri-input disabled />
-      <span inputSuffix>RMB</span>
     </tri-input-wrapper>
     <br />
     <br />

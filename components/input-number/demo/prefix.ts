@@ -8,6 +8,8 @@ import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
   selector: 'tri-demo-input-number-prefix',
   imports: [FormsModule, TriInputNumberModule, TriIconModule],
   template: `
+    <tri-input-number prefix="￥" [style.width.%]="100" />
+
     <tri-input-number [style.width.%]="100">
       <span inputPrefix>￥</span>
     </tri-input-number>
@@ -17,9 +19,7 @@ import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
       <span inputPrefix>￥</span>
     </tri-input-number>
 
-    <tri-input-number disabled [style.width.%]="100">
-      <span inputPrefix>￥</span>
-    </tri-input-number>
+    <tri-input-number prefix="￥" disabled [style.width.%]="100" />
   `,
   styles: [
     `

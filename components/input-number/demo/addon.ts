@@ -10,6 +10,8 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
   selector: 'tri-demo-input-number-addon',
   imports: [FormsModule, TriSelectModule, TriCascaderModule, TriInputNumberModule, TriIconModule],
   template: `
+    <tri-input-number addonBefore="+" addonAfter="$" [(ngModel)]="value" />
+
     <tri-input-number [(ngModel)]="value">
       <span inputAddonBefore>+</span>
       <span inputAddonAfter>$</span>

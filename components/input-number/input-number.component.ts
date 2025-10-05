@@ -66,9 +66,9 @@ import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactIte
 
     <ng-template #inputNumberWithAddonInner>
       <div class="tri-input-number-wrapper tri-input-number-group">
-        @if (addonBefore()) {
+        @if (hasAddonBefore()) {
           <div class="tri-input-number-group-addon">
-            <ng-content select="[nzInputAddonBefore]"></ng-content>
+            <ng-content select="[nzInputAddonBefore]">{{ addonBefore() }}</ng-content>
           </div>
         }
 
@@ -78,9 +78,9 @@ import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactIte
           <ng-template [ngTemplateOutlet]="inputNumber" />
         }
 
-        @if (addonAfter()) {
+        @if (hasAddonAfter()) {
           <div class="tri-input-number-group-addon">
-            <ng-content select="[nzInputAddonAfter]"></ng-content>
+            <ng-content select="[nzInputAddonAfter]">{{ addonAfter() }}</ng-content>
           </div>
         }
       </div>
@@ -93,15 +93,15 @@ import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactIte
     </ng-template>
 
     <ng-template #inputNumberWithAffixInner>
-      @if (prefix()) {
+      @if (hasPrefix()) {
         <span class="tri-input-number-prefix">
-          <ng-content select="[nzInputPrefix]"></ng-content>
+          <ng-content select="[nzInputPrefix]">{{ prefix() }}</ng-content>
         </span>
       }
       <ng-template [ngTemplateOutlet]="inputNumber" />
-      @if (suffix() || hasFeedback()) {
+      @if (hasSuffix()) {
         <span class="tri-input-number-suffix">
-          <ng-content select="[nzInputSuffix]"></ng-content>
+          <ng-content select="[nzInputSuffix]">{{ suffix() }}</ng-content>
           @if (hasFeedback() && finalStatus()) {
             <tri-form-item-feedback-icon [status]="finalStatus()" />
           }
@@ -202,6 +202,10 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
   readonly bordered = input(true, { transform: booleanAttribute });
   readonly keyboard = input(true, { transform: booleanAttribute });
   readonly controls = input(true, { transform: booleanAttribute });
+  readonly prefix = input<string>();
+  readonly suffix = input<string>();
+  readonly addonBefore = input<string>();
+  readonly addonAfter = input<string>();
 
   readonly blur = output<void>();
   readonly focus = output<void>();
@@ -228,23 +232,28 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
     return value.toString();
   };
 
-  protected value = signal<number | null>(null);
-  protected displayValue = signal('');
+  protected readonly value = signal<number | null>(null);
+  protected readonly displayValue = signal('');
 
-  protected dir = toSignal(this.directionality.change, { initialValue: this.directionality.value });
-  protected focused = signal(false);
-  protected hasFeedback = signal(false);
-  protected finalStatus = linkedSignal<TriValidateStatus>(() => this.status());
-  protected finalDisabled = linkedSignal(() => this.disabled());
+  protected readonly dir = toSignal(this.directionality.change, { initialValue: this.directionality.value });
+  protected readonly focused = signal(false);
+  protected readonly hasFeedback = signal(false);
+  protected readonly finalStatus = linkedSignal<TriValidateStatus>(() => this.status());
+  protected readonly finalDisabled = linkedSignal(() => this.disabled());
 
-  protected prefix = contentChild(TriInputPrefixDirective);
-  protected suffix = contentChild(TriInputSuffixDirective);
-  protected addonBefore = contentChild(TriInputAddonBeforeDirective);
-  protected addonAfter = contentChild(TriInputAddonAfterDirective);
-  protected hasAffix = computed(() => !!this.prefix() || !!this.suffix() || this.hasFeedback());
-  protected hasAddon = computed(() => !!this.addonBefore() || !!this.addonAfter());
+  protected readonly _prefix = contentChild(TriInputPrefixDirective);
+  protected readonly _suffix = contentChild(TriInputSuffixDirective);
+  protected readonly _addonBefore = contentChild(TriInputAddonBeforeDirective);
+  protected readonly _addonAfter = contentChild(TriInputAddonAfterDirective);
 
-  protected class = computed(() => {
+  protected readonly hasPrefix = computed(() => !!this.prefix() || !!this._prefix());
+  protected readonly hasSuffix = computed(() => !!this.suffix() || !!this._suffix() || this.hasFeedback());
+  protected readonly hasAffix = computed(() => this.hasPrefix() || this.hasSuffix());
+  protected readonly hasAddonBefore = computed(() => !!this.addonBefore() || !!this._addonBefore());
+  protected readonly hasAddonAfter = computed(() => !!this.addonAfter() || !!this._addonAfter());
+  protected readonly hasAddon = computed(() => this.hasAddonBefore() || this.hasAddonAfter());
+
+  protected readonly class = computed(() => {
     if (this.hasAddon()) {
       return this.groupWrapperClass();
     }
@@ -253,7 +262,7 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
     }
     return this.inputNumberClass();
   });
-  protected inputNumberClass = computed(() => {
+  protected readonly inputNumberClass = computed(() => {
     return {
       'ant-input-number': true,
       'ant-input-number-lg': this.finalSize() === 'large',
@@ -268,7 +277,7 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
       ...getStatusClassNames('ant-input-number', this.finalStatus(), this.hasFeedback())
     };
   });
-  protected affixWrapperClass = computed(() => {
+  protected readonly affixWrapperClass = computed(() => {
     return {
       'ant-input-number-affix-wrapper': true,
       'ant-input-number-affix-wrapper-disabled': this.finalDisabled(),
@@ -279,25 +288,26 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
       ...getVariantClassNames('ant-input-number-affix-wrapper', this.variant(), !this.bordered())
     };
   });
-  protected groupWrapperClass = computed(() => {
+  protected readonly groupWrapperClass = computed(() => {
     return {
       'ant-input-number-group-wrapper': true,
       'ant-input-number-group-wrapper-rtl': this.dir() === 'rtl',
-      ...getStatusClassNames('ant-input-number-group-wrapper', this.finalStatus(), this.hasFeedback())
+      ...getStatusClassNames('ant-input-number-group-wrapper', this.finalStatus(), this.hasFeedback()),
+      ...getVariantClassNames('ant-input-number-group-wrapper', this.variant(), !this.bordered())
     };
   });
 
-  protected finalSize = computed(() => {
+  protected readonly finalSize = computed(() => {
     if (this.compactSize) {
       return this.compactSize();
     }
     return this.size();
   });
 
-  protected upDisabled = computed(() => {
+  protected readonly upDisabled = computed(() => {
     return !isNil(this.value()) && this.value()! >= this.max();
   });
-  protected downDisabled = computed(() => {
+  protected readonly downDisabled = computed(() => {
     return !isNil(this.value()) && this.value()! <= this.min();
   });
 

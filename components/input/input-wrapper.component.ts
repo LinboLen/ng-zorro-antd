@@ -16,6 +16,7 @@ import {
   ElementRef,
   forwardRef,
   inject,
+  input,
   signal,
   ViewEncapsulation
 } from '@angular/core';
@@ -46,9 +47,9 @@ import { TRI_INPUT_WRAPPER } from './tokens';
 
     <ng-template #inputWithAddonInner>
       <span class="tri-input-wrapper tri-input-group">
-        @if (addonBefore()) {
+        @if (hasAddonBefore()) {
           <span class="tri-input-group-addon">
-            <ng-content select="[nzInputAddonBefore]" />
+            <ng-content select="[nzInputAddonBefore]">{{ addonBefore() }}</ng-content>
           </span>
         }
 
@@ -58,9 +59,9 @@ import { TRI_INPUT_WRAPPER } from './tokens';
           <ng-template [ngTemplateOutlet]="input" />
         }
 
-        @if (addonAfter()) {
+        @if (hasAddonAfter()) {
           <span class="tri-input-group-addon">
-            <ng-content select="[nzInputAddonAfter]" />
+            <ng-content select="[nzInputAddonAfter]">{{ addonAfter() }}</ng-content>
           </span>
         }
       </span>
@@ -73,15 +74,15 @@ import { TRI_INPUT_WRAPPER } from './tokens';
     </ng-template>
 
     <ng-template #inputWithAffixInner>
-      @if (prefix()) {
+      @if (hasPrefix()) {
         <span class="tri-input-prefix">
-          <ng-content select="[nzInputPrefix]" />
+          <ng-content select="[nzInputPrefix]">{{ prefix() }}</ng-content>
         </span>
       }
       <ng-template [ngTemplateOutlet]="input" />
-      @if (suffix() || hasFeedback()) {
+      @if (hasSuffix()) {
         <span class="tri-input-suffix">
-          <ng-content select="[nzInputSuffix]" />
+          <ng-content select="[nzInputSuffix]">{{ suffix() }}</ng-content>
           @if (hasFeedback() && status()) {
             <tri-form-item-feedback-icon [status]="status()" />
           }
@@ -110,10 +111,16 @@ export class TriInputWrapperComponent {
 
   private readonly inputDir = contentChild.required(TriInputDirective);
   private readonly inputRef = contentChild.required(TriInputDirective, { read: ElementRef });
-  protected readonly prefix = contentChild(TriInputPrefixDirective);
-  protected readonly suffix = contentChild(TriInputSuffixDirective);
-  protected readonly addonBefore = contentChild(TriInputAddonBeforeDirective);
-  protected readonly addonAfter = contentChild(TriInputAddonAfterDirective);
+
+  protected readonly _prefix = contentChild(TriInputPrefixDirective);
+  protected readonly _suffix = contentChild(TriInputSuffixDirective);
+  protected readonly _addonBefore = contentChild(TriInputAddonBeforeDirective);
+  protected readonly _addonAfter = contentChild(TriInputAddonAfterDirective);
+
+  readonly prefix = input<string>();
+  readonly suffix = input<string>();
+  readonly addonBefore = input<string>();
+  readonly addonAfter = input<string>();
 
   readonly size = computed(() => this.inputDir().size());
   readonly variant = computed(() => this.inputDir().variant());
@@ -122,8 +129,12 @@ export class TriInputWrapperComponent {
   readonly status = computed(() => this.inputDir()._status());
   readonly hasFeedback = computed(() => this.inputDir().hasFeedback());
 
-  protected readonly hasAffix = computed(() => !!this.prefix() || !!this.suffix() || this.hasFeedback());
-  protected readonly hasAddon = computed(() => !!this.addonBefore() || !!this.addonAfter());
+  protected readonly hasPrefix = computed(() => !!this.prefix() || !!this._prefix());
+  protected readonly hasSuffix = computed(() => !!this.suffix() || !!this._suffix() || this.hasFeedback());
+  protected readonly hasAffix = computed(() => this.hasPrefix() || this.hasSuffix());
+  protected readonly hasAddonBefore = computed(() => !!this.addonBefore() || !!this._addonBefore());
+  protected readonly hasAddonAfter = computed(() => !!this.addonAfter() || !!this._addonAfter());
+  protected readonly hasAddon = computed(() => this.hasAddonBefore() || this.hasAddonAfter());
 
   private readonly compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   protected readonly dir = inject(Directionality).valueSignal;
