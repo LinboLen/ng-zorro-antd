@@ -350,10 +350,8 @@
   display: block;
 }
 @media (min-width: 768px) {
-  @at-root #{&} {
-    .algolia-autocomplete .algolia-docsearch-suggestion .algolia-docsearch-suggestion--subcategory-column {
-      display: block;
-    }
+  .algolia-autocomplete .algolia-docsearch-suggestion .algolia-docsearch-suggestion--subcategory-column {
+    display: block;
   }
 }
 @media (max-width: 768px) {

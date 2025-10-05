@@ -89,11 +89,9 @@ $select-prefix-cls: "#{$ant-prefix}-select";
     user-select: none;
     // IE11 css hack. `*::-ms-backdrop,` is a must have
     @media all and (-ms-high-contrast: none) {
-      @at-root #{&} {
-        @at-root *::-ms-backdrop,
-          & {
-          flex: auto;
-        }
+      @at-root *::-ms-backdrop,
+        & {
+        flex: auto;
       }
     }
   }
@@ -107,11 +105,9 @@ $select-prefix-cls: "#{$ant-prefix}-select";
     pointer-events: none;
     // IE11 css hack. `*::-ms-backdrop,` is a must have
     @media all and (-ms-high-contrast: none) {
-      @at-root #{&} {
-        @at-root *::-ms-backdrop,
-          & {
-          flex: auto;
-        }
+      @at-root *::-ms-backdrop,
+        & {
+        flex: auto;
       }
     }
   }

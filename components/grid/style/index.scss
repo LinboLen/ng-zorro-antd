@@ -74,9 +74,7 @@
 
 // to tablets.
 @media (min-width: $screen-sm-min) {
-  @at-root #{&} {
-    @include make-grid(-sm);
-  }
+  @include make-grid(-sm);
 }
 // Medium grid
 
@@ -84,9 +82,7 @@
 
 // Columns, offsets, pushes, and pulls for the desktop device range.
 @media (min-width: $screen-md-min) {
-  @at-root #{&} {
-    @include make-grid(-md);
-  }
+  @include make-grid(-md);
 }
 // Large grid
 
@@ -94,9 +90,7 @@
 
 // Columns, offsets, pushes, and pulls for the large desktop device range.
 @media (min-width: $screen-lg-min) {
-  @at-root #{&} {
-    @include make-grid(-lg);
-  }
+  @include make-grid(-lg);
 }
 // Extra Large grid
 
@@ -104,9 +98,7 @@
 
 // Columns, offsets, pushes, and pulls for the full hd device range.
 @media (min-width: $screen-xl-min) {
-  @at-root #{&} {
-    @include make-grid(-xl);
-  }
+  @include make-grid(-xl);
 }
 // Extra Extra Large grid
 
@@ -114,8 +106,6 @@
 
 // Columns, offsets, pushes, and pulls for the full hd device range.
 @media (min-width: $screen-xxl-min) {
-  @at-root #{&} {
-    @include make-grid(-xxl);
-  }
+  @include make-grid(-xxl);
 }
 @import "./rtl";

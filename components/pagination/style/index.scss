@@ -235,11 +235,9 @@ $pagination-prefix-cls: "#{$ant-prefix}-pagination";
     vertical-align: middle;
     // IE11 css hack. `*::-ms-backdrop,` is a must have
     @media all and (-ms-high-contrast: none) {
-      @at-root #{&} {
-        @at-root *::-ms-backdrop,
-          & {
-          vertical-align: top;
-        }
+      @at-root *::-ms-backdrop,
+        & {
+        vertical-align: top;
       }
     }
     &-size-changer.#{$ant-prefix}-select {
@@ -398,20 +396,16 @@ $pagination-prefix-cls: "#{$ant-prefix}-pagination";
   }
 }
 @media only screen and (max-width: $screen-lg) {
-  @at-root #{&} {
-    .#{$pagination-prefix-cls}-item {
-      &-after-jump-prev,
-      &-before-jump-next {
-        display: none;
-      }
+  .#{$pagination-prefix-cls}-item {
+    &-after-jump-prev,
+    &-before-jump-next {
+      display: none;
     }
   }
 }
 @media only screen and (max-width: $screen-sm) {
-  @at-root #{&} {
-    .#{$pagination-prefix-cls}-options {
-      display: none;
-    }
+  .#{$pagination-prefix-cls}-options {
+    display: none;
   }
 }
 @import "./rtl";

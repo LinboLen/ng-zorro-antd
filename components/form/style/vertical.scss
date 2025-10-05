@@ -59,30 +59,22 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
   }
 }
 @media (max-width: $screen-sm-max) {
-  @at-root #{&} {
-    .#{$ant-prefix}-col-sm-24.#{$form-item-prefix-cls}-label {
-      @include make-vertical-layout-label;
-    }
+  .#{$ant-prefix}-col-sm-24.#{$form-item-prefix-cls}-label {
+    @include make-vertical-layout-label;
   }
 }
 @media (max-width: $screen-md-max) {
-  @at-root #{&} {
-    .#{$ant-prefix}-col-md-24.#{$form-item-prefix-cls}-label {
-      @include make-vertical-layout-label;
-    }
+  .#{$ant-prefix}-col-md-24.#{$form-item-prefix-cls}-label {
+    @include make-vertical-layout-label;
   }
 }
 @media (max-width: $screen-lg-max) {
-  @at-root #{&} {
-    .#{$ant-prefix}-col-lg-24.#{$form-item-prefix-cls}-label {
-      @include make-vertical-layout-label;
-    }
+  .#{$ant-prefix}-col-lg-24.#{$form-item-prefix-cls}-label {
+    @include make-vertical-layout-label;
   }
 }
 @media (max-width: $screen-xl-max) {
-  @at-root #{&} {
-    .#{$ant-prefix}-col-xl-24.#{$form-item-prefix-cls}-label {
-      @include make-vertical-layout-label;
-    }
+  .#{$ant-prefix}-col-xl-24.#{$form-item-prefix-cls}-label {
+    @include make-vertical-layout-label;
   }
 }
