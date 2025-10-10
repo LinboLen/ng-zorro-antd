@@ -8,6 +8,7 @@ import { Directionality } from '@angular/cdk/bidi';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   afterNextRender,
+  booleanAttribute,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -17,6 +18,7 @@ import {
   forwardRef,
   inject,
   input,
+  output,
   signal,
   ViewEncapsulation
 } from '@angular/core';
@@ -82,6 +84,20 @@ import { TRI_INPUT_WRAPPER } from './tokens';
       <ng-template [ngTemplateOutlet]="input" />
       @if (hasSuffix()) {
         <span class="tri-input-suffix">
+          @if (allowClear()) {
+            <span
+              class="tri-input-clear-icon"
+              [class.tri-input-clear-icon-has-suffix]="suffix() || suffix() || hasFeedback()"
+              [class.tri-input-clear-icon-hidden]="!inputDir().value() || disabled() || readOnly()"
+              role="button"
+              tabindex="-1"
+              (click)="clear()"
+            >
+              <ng-content select="[nzInputClearIcon]">
+                <tri-icon type="close-circle" theme="fill" />
+              </ng-content>
+            </span>
+          }
           <ng-content select="[nzInputSuffix]">{{ suffix() }}</ng-content>
           @if (hasFeedback() && status()) {
             <tri-form-item-feedback-icon [status]="status()" />
@@ -103,24 +119,28 @@ import { TRI_INPUT_WRAPPER } from './tokens';
   hostDirectives: [TriSpaceCompactItemDirective],
   host: {
     '[class]': 'class()',
-    '[class.tri-input-disabled]': 'disabled()'
+    '[class.tri-input-disabled]': 'disabled()',
+    '[class.tri-input-affix-wrapper-textarea-with-clear-btn]': 'allowClear() && isTextarea()'
   }
 })
 export class TriInputWrapperComponent {
   private readonly focusMonitor = inject(FocusMonitor);
 
-  private readonly inputDir = contentChild.required(TriInputDirective);
-  private readonly inputRef = contentChild.required(TriInputDirective, { read: ElementRef });
+  protected readonly inputRef = contentChild.required(TriInputDirective, { read: ElementRef });
+  protected readonly inputDir = contentChild.required(TriInputDirective);
 
   protected readonly _prefix = contentChild(TriInputPrefixDirective);
   protected readonly _suffix = contentChild(TriInputSuffixDirective);
   protected readonly _addonBefore = contentChild(TriInputAddonBeforeDirective);
   protected readonly _addonAfter = contentChild(TriInputAddonAfterDirective);
 
+  readonly allowClear = input(false, { transform: booleanAttribute });
   readonly prefix = input<string>();
   readonly suffix = input<string>();
   readonly addonBefore = input<string>();
   readonly addonAfter = input<string>();
+
+  readonly clear = output<void>();
 
   readonly size = computed(() => this.inputDir().size());
   readonly variant = computed(() => this.inputDir().variant());
@@ -130,7 +150,9 @@ export class TriInputWrapperComponent {
   readonly hasFeedback = computed(() => this.inputDir().hasFeedback());
 
   protected readonly hasPrefix = computed(() => !!this.prefix() || !!this._prefix());
-  protected readonly hasSuffix = computed(() => !!this.suffix() || !!this._suffix() || this.hasFeedback());
+  protected readonly hasSuffix = computed(
+    () => !!this.suffix() || !!this._suffix() || this.allowClear() || this.hasFeedback()
+  );
   protected readonly hasAffix = computed(() => this.hasPrefix() || this.hasSuffix());
   protected readonly hasAddonBefore = computed(() => !!this.addonBefore() || !!this._addonBefore());
   protected readonly hasAddonAfter = computed(() => !!this.addonAfter() || !!this._addonAfter());
@@ -139,6 +161,7 @@ export class TriInputWrapperComponent {
   private readonly compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   protected readonly dir = inject(Directionality).valueSignal;
   protected readonly focused = signal(false);
+  protected readonly isTextarea = computed(() => this.inputRef().nativeElement instanceof HTMLTextAreaElement);
 
   protected readonly finalSize = computed(() => {
     if (this.compactSize) {
@@ -196,5 +219,10 @@ export class TriInputWrapperComponent {
         this.focusMonitor.stopMonitoring(element);
       });
     });
+  }
+
+  _clear(): void {
+    this.inputDir().ngControl?.control?.setValue('');
+    this.clear.emit();
   }
 }

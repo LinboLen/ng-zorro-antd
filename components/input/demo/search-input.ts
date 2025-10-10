@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
@@ -10,7 +10,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
   imports: [FormsModule, TriButtonModule, TriInputModule, TriIconModule],
   template: `
     <tri-input-wrapper class="tri-input-search">
-      <input tri-input type="search" placeholder="input search text" />
+      <input tri-input [(ngModel)]="value" type="search" placeholder="input search text" />
       <button inputAddonAfter tri-button class="tri-input-search-button">
         <tri-icon type="search" />
       </button>
@@ -18,7 +18,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
     <br />
     <br />
     <tri-input-wrapper allowClear class="tri-input-search">
-      <input tri-input type="search" placeholder="input search text" />
+      <input tri-input [(ngModel)]="value" type="search" placeholder="input search text" />
       <button inputAddonAfter tri-button class="tri-input-search-button">
         <tri-icon type="search" />
       </button>
@@ -27,7 +27,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
     <br />
     <tri-input-wrapper class="tri-input-search">
       <span inputAddonBefore>https://</span>
-      <input tri-input type="search" placeholder="input search text" />
+      <input tri-input [(ngModel)]="value" type="search" placeholder="input search text" />
       <button inputAddonAfter tri-button class="tri-input-search-button">
         <tri-icon type="search" />
       </button>
@@ -35,7 +35,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
     <br />
     <br />
     <tri-input-wrapper class="tri-input-search tri-input-search-with-button">
-      <input tri-input type="search" placeholder="input search text" />
+      <input tri-input [(ngModel)]="value" type="search" placeholder="input search text" />
       <button inputAddonAfter tri-button type="primary" class="tri-input-search-button">
         <tri-icon type="search" />
       </button>
@@ -43,7 +43,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
     <br />
     <br />
     <tri-input-wrapper class="tri-input-search tri-input-search-large tri-input-search-with-button">
-      <input tri-input type="search" placeholder="input search text" size="large" />
+      <input tri-input [(ngModel)]="value" type="search" placeholder="input search text" size="large" />
       <button inputAddonAfter tri-button type="primary" size="large" class="tri-input-search-button"
         >Submit</button
       >
@@ -51,12 +51,14 @@ import { TriInputModule } from 'ng-zorro-antd/input';
     <br />
     <br />
     <tri-input-wrapper class="tri-input-search tri-input-search-large tri-input-search-with-button">
-      <input tri-input type="search" placeholder="input search text" size="large" />
+      <input tri-input [(ngModel)]="value" type="search" placeholder="input search text" size="large" />
       <tri-icon inputSuffix type="audio" [style.font-size.px]="16" [style.color]="'#1677ff'" />
-      <button inputAddonAfter tri-button type="primary" size="large" class="tri-input-search-button"
-        >Submit</button
-      >
+      <button inputAddonAfter tri-button type="primary" size="large" class="tri-input-search-button">
+        Submit
+      </button>
     </tri-input-wrapper>
   `
 })
-export class TriDemoInputSearchInputComponent {}
+export class TriDemoInputSearchInputComponent {
+  readonly value = signal('');
+}

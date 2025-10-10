@@ -10,27 +10,17 @@ import { TriInputModule } from 'ng-zorro-antd/input';
   template: `
     <tri-input-wrapper allowClear>
       <input tri-input [(ngModel)]="inputValue" placeholder="input with clear icon" />
-      <tri-icon
-        inputSuffix
-        class="tri-input-clear-icon"
-        type="close-circle"
-        theme="fill"
-        [hidden]="!inputValue"
-        (click)="inputValue = null"
-      />
     </tri-input-wrapper>
     <br />
     <br />
-    <tri-input-wrapper allowClear class="tri-input-affix-wrapper-textarea-with-clear-btn">
+    <tri-input-wrapper allowClear>
+      <input tri-input [(ngModel)]="inputValue" placeholder="input with custom clear icon" />
+      <tri-icon inputClearIcon type="close" />
+    </tri-input-wrapper>
+    <br />
+    <br />
+    <tri-input-wrapper allowClear>
       <textarea tri-input [(ngModel)]="textValue" placeholder="textarea with clear icon"></textarea>
-      <tri-icon
-        inputSuffix
-        class="tri-input-clear-icon"
-        type="close-circle"
-        theme="fill"
-        [hidden]="!textValue"
-        (click)="inputValue = null"
-      />
     </tri-input-wrapper>
   `
 })
