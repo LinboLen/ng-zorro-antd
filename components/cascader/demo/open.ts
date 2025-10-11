@@ -52,8 +52,14 @@ const options: TriCascaderOption[] = [
   imports: [FormsModule, TriCascaderModule, TriFlexModule, TriSwitchModule],
   template: `
     <div tri-flex vertical gap="small">
-      <tri-switch size="small" [(ngModel)]="open" checkedChildren="open" unCheckedChildren="close"></tri-switch>
-      <tri-cascader [options]="options" [ngModel]="values" [open]="open"></tri-cascader>
+      <tri-switch [(ngModel)]="open" checkedChildren="open" unCheckedChildren="close"></tri-switch>
+      <tri-cascader
+        [options]="options"
+        [ngModel]="values"
+        [open]="open"
+        (selectionChange)="onSelectionChange($event)"
+        (visibleChange)="onVisibleChange($event)"
+      ></tri-cascader>
     </div>
   `
 })
@@ -61,4 +67,12 @@ export class TriDemoCascaderOpenComponent {
   options = options;
   values = ['zhejiang', 'hangzhou', 'xihu'];
   open = false;
+
+  onSelectionChange(selectedOptions: TriCascaderOption[]): void {
+    console.log(selectedOptions);
+  }
+
+  onVisibleChange(visible: boolean): void {
+    console.log(visible);
+  }
 }
