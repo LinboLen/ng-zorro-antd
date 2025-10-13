@@ -5,14 +5,15 @@
 
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
-  Directive,
-  Input,
-  OnChanges,
-  SimpleChange,
-  SimpleChanges,
   booleanAttribute,
   DestroyRef,
-  inject
+  Directive,
+  inject,
+  Input,
+  input,
+  OnChanges,
+  SimpleChange,
+  SimpleChanges
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable, Subject } from 'rxjs';
@@ -22,6 +23,8 @@ import { ThemeType } from '@ant-design/icons-angular';
 
 import { TriConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
 import { InputObservable } from 'ng-zorro-antd/core/types';
+
+import type { TriRequiredMark } from './types';
 
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'form';
 
@@ -58,6 +61,8 @@ export class TriFormDirective implements OnChanges, InputObservable {
   @Input() @WithConfig() tooltipIcon: string | { type: string; theme: ThemeType } = DefaultTooltipIcon;
   @Input() labelAlign: TriLabelAlignType = 'right';
   @Input({ transform: booleanAttribute }) @WithConfig() labelWrap: boolean = false;
+
+  readonly requiredMark = input<TriRequiredMark>(true);
 
   dir: Direction = 'ltr';
   private inputChanges$ = new Subject<SimpleChanges>();

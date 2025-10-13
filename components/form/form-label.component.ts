@@ -3,14 +3,16 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   Input,
   ViewEncapsulation,
   booleanAttribute,
-  inject,
-  ChangeDetectorRef
+  computed,
+  inject
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs/operators';
@@ -19,6 +21,8 @@ import { ThemeType } from '@ant-design/icons-angular';
 
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriTSType } from 'ng-zorro-antd/core/types';
+import { isTemplateRef } from 'ng-zorro-antd/core/util';
+import { TriI18nModule } from 'ng-zorro-antd/i18n';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriTooltipDirective } from 'ng-zorro-antd/tooltip';
 
@@ -40,14 +44,33 @@ function toTooltipIcon(value: string | TriFormTooltipIcon): Required<TriFormTool
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <label [attr.for]="for" [class.tri-form-item-no-colon]="noColon" [class.tri-form-item-required]="required">
-      <ng-content></ng-content>
-      @if (tooltipTitle) {
-        <span class="tri-form-item-tooltip" tri-tooltip [tooltipTitle]="tooltipTitle">
-          <ng-container *stringTemplateOutlet="tooltipIcon.type; let tooltipIconType">
-            <tri-icon [type]="tooltipIconType" [theme]="tooltipIcon.theme" />
-          </ng-container>
-        </span>
+    <label
+      [attr.for]="for"
+      [class.tri-form-item-no-colon]="noColon"
+      [class.tri-form-item-required]="required"
+      [class.tri-form-item-required-mark-optional]="requiredMark?.() === 'optional' || isNzRequiredMarkTemplate()"
+      [class.tri-form-item-required-mark-hidden]="requiredMark?.() === false"
+    >
+      <ng-template #labelTemplate>
+        <ng-content />
+        @if (tooltipTitle) {
+          <span class="tri-form-item-tooltip" tri-tooltip [tooltipTitle]="tooltipTitle">
+            <ng-container *stringTemplateOutlet="tooltipIcon.type; let tooltipIconType">
+              <tri-icon [type]="tooltipIconType" [theme]="tooltipIcon.theme" />
+            </ng-container>
+          </span>
+        }
+        @if (requiredMark?.() === 'optional' && !required) {
+          <span class="tri-form-item-optional">{{ 'Form.optional' | nzI18n }}</span>
+        }
+      </ng-template>
+
+      @if (isNzRequiredMarkTemplate()) {
+        <ng-container
+          *ngTemplateOutlet="$any(requiredMark!()); context: { required: required, $implicit: labelTemplate }"
+        />
+      } @else {
+        <ng-container *ngTemplateOutlet="labelTemplate" />
       }
     </label>
   `,
@@ -56,7 +79,7 @@ function toTooltipIcon(value: string | TriFormTooltipIcon): Required<TriFormTool
     '[class.tri-form-item-label-left]': `labelAlign === 'left'`,
     '[class.tri-form-item-label-wrap]': `labelWrap`
   },
-  imports: [TriOutletModule, TriTooltipDirective, TriIconModule]
+  imports: [TriOutletModule, TriTooltipDirective, TriIconModule, NgTemplateOutlet, TriI18nModule]
 })
 export class TriFormLabelComponent {
   private cdr = inject(ChangeDetectorRef);
@@ -109,6 +132,10 @@ export class TriFormLabelComponent {
   #labelWrap: boolean | 'default' = 'default';
 
   private formDirective = inject(TriFormDirective, { skipSelf: true, optional: true });
+
+  protected readonly requiredMark = this.formDirective?.requiredMark;
+
+  protected readonly isNzRequiredMarkTemplate = computed(() => isTemplateRef(this.requiredMark?.()));
 
   constructor() {
     if (this.formDirective) {

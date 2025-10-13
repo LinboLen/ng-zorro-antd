@@ -164,6 +164,10 @@ export interface TriCheckListI18nInterface {
   checkListCheckOther: string;
 }
 
+export interface TriFormI18nInterface {
+  optional: string;
+}
+
 export interface TriI18nInterface {
   locale: string;
   Pagination: TriPaginationI18nInterface;
@@ -177,6 +181,7 @@ export interface TriI18nInterface {
   Transfer: TriTransferI18nInterface;
   Upload: TriUploadI18nInterface;
   Empty: TriEmptyI18nInterface;
+  Form: TriFormI18nInterface;
   Text?: TriTextI18nInterface;
   CronExpression?: TriCronExpressionI18nInterface;
   QRCode?: TriQRCodeI18nInterface;

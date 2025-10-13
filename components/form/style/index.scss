@@ -96,7 +96,9 @@ $form-font-height: ceil($font-size-base * $line-height-base);
         vertical-align: top;
       }
       // Required mark
-      &.#{$form-item-prefix-cls}-required:not(.$form-item-prefix-cls-required-mark-optional)::before {
+      &.#{$form-item-prefix-cls}-required:not(.$form-item-prefix-cls-required-mark-optional):not(
+          .$form-item-prefix-cls-required-mark-hidden
+        )::before {
         display: inline-block;
         margin-right: 4px;
         color: $label-required-color;
