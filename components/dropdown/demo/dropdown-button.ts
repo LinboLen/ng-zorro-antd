@@ -25,7 +25,7 @@ import { TriSpaceModule } from 'ng-zorro-antd/space';
       </tri-space-compact>
       <tri-space-compact>
         <button tri-button disabled>DropDown</button>
-        <button tri-button disabled tri-dropdown [dropdownMenu]="menu" placement="bottomRight">
+        <button tri-button disabled tri-dropdown [dropdownMenu]="menu" disabled placement="bottomRight">
           <tri-icon type="ellipsis" />
         </button>
       </tri-space-compact>

@@ -677,7 +677,7 @@ export class TriCascaderComponent
     }
     if (visible) {
       this.cascaderService.$redraw.next();
-      this.updateSelectedNodes(!!this.loadData);
+      this.updateSelectedNodes(true);
       this.scrollToActivatedOptions();
     } else {
       this.inputValue = '';
