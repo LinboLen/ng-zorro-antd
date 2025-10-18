@@ -11,6 +11,7 @@ import { TriInputPrefixDirective, TriInputSuffixDirective } from './input-affix.
 import { TriInputGroupSlotComponent } from './input-group-slot.component';
 import { TriInputGroupComponent, TriInputGroupWhitSuffixOrPrefixDirective } from './input-group.component';
 import { TriInputOtpComponent } from './input-otp.component';
+import { TriInputPasswordDirective, TriInputPasswordIconDirective } from './input-password.directive';
 import { TriInputWrapperComponent } from './input-wrapper.component';
 import { TriInputDirective } from './input.directive';
 import { TriTextareaCountComponent } from './textarea-count.component';
@@ -20,6 +21,8 @@ import { TriTextareaCountComponent } from './textarea-count.component';
     TriTextareaCountComponent,
     TriInputDirective,
     TriInputWrapperComponent,
+    TriInputPasswordDirective,
+    TriInputPasswordIconDirective,
     TriInputAddonBeforeDirective,
     TriInputAddonAfterDirective,
     TriInputPrefixDirective,
@@ -34,6 +37,8 @@ import { TriTextareaCountComponent } from './textarea-count.component';
     TriTextareaCountComponent,
     TriInputDirective,
     TriInputWrapperComponent,
+    TriInputPasswordDirective,
+    TriInputPasswordIconDirective,
     TriInputAddonBeforeDirective,
     TriInputAddonAfterDirective,
     TriInputPrefixDirective,

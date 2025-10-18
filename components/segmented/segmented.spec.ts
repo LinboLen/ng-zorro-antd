@@ -590,6 +590,35 @@ describe('nz-segmented', () => {
       }));
     });
   });
+
+  describe('a11y', () => {
+    let fixture: ComponentFixture<TriSegmentedTestComponent>;
+    let component: TriSegmentedTestComponent;
+    let segmentedComponent: DebugElement;
+
+    function getSegmentedOptionByIndex(index: number): HTMLElement {
+      return segmentedComponent.nativeElement.querySelectorAll('.ant-segmented-item')[index];
+    }
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(TriSegmentedTestComponent);
+      component = fixture.componentInstance;
+      segmentedComponent = fixture.debugElement.query(By.directive(TriSegmentedComponent));
+      fixture.detectChanges();
+    });
+
+    it('should have default radio group name', () => {
+      const theFirstElement = getSegmentedOptionByIndex(0);
+      expect(theFirstElement.querySelector('input')?.getAttribute('name')?.startsWith('segmented_')).toBe(true);
+    });
+
+    it('should support custom radio group name', () => {
+      component.name = 'custom_name';
+      fixture.detectChanges();
+      const theFirstElement = getSegmentedOptionByIndex(0);
+      expect(theFirstElement.querySelector('input')?.getAttribute('name')).toBe('custom_name');
+    });
+  });
 });
 
 @Component({
@@ -602,6 +631,7 @@ describe('nz-segmented', () => {
       [block]="block"
       [vertical]="vertical"
       [shape]="shape"
+      [name]="name"
       (valueChange)="handleValueChange($event)"
     />
   `
@@ -613,6 +643,7 @@ export class TriSegmentedTestComponent {
   disabled = false;
   vertical = false;
   shape: 'default' | 'round' = 'default';
+  name?: string;
 
   handleValueChange(_e: string | number): void {
     // empty
@@ -655,7 +686,7 @@ export class TriSegmentedInReactiveFormTestComponent {
 
 @Component({
   imports: [FormsModule, TriSegmentedModule],
-  template: `<tri-segmented [options]="options" vertical (valueChange)="handleValueChange($event)" /> `
+  template: `<tri-segmented [options]="options" vertical (valueChange)="handleValueChange($event)" />`
 })
 export class TriSegmentedVerticalTestComponent {
   options: TriSegmentedOptions = [1, 2, 3];
@@ -667,7 +698,7 @@ export class TriSegmentedVerticalTestComponent {
 
 @Component({
   imports: [BidiModule, TriSegmentedModule],
-  template: `<tri-segmented [options]="options" dir="rtl" /> `
+  template: `<tri-segmented [options]="options" dir="rtl" />`
 })
 export class TriSegmentedRtlTestComponent {
   options: TriSegmentedOptions = [1, 2, 3];

@@ -21,7 +21,7 @@ $input-prefix-cls: "#{$ant-prefix}-input";
       // https://github.com/ant-design/ant-design/issues/6403
     }
   }
-  &-password-icon.#{$iconfont-css-prefix} {
+  &-password-icon {
     color: $text-color-secondary;
     cursor: pointer;
     transition: all 0.3s;

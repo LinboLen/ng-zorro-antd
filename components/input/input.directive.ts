@@ -30,6 +30,7 @@ import { TriSizeLDSType, TriStatus, TriVariant } from 'ng-zorro-antd/core/types'
 import { getStatusClassNames } from 'ng-zorro-antd/core/util';
 import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
+import { TriInputPasswordDirective } from './input-password.directive';
 import { TRI_INPUT_WRAPPER } from './tokens';
 
 const PREFIX_CLS = 'ant-input';
@@ -39,6 +40,7 @@ const PREFIX_CLS = 'ant-input';
   exportAs: 'triInput',
   host: {
     class: 'tri-input',
+    '[attr.type]': 'type()',
     '[class]': 'classes()',
     '[class.tri-input-disabled]': 'finalDisabled()',
     '[class.tri-input-borderless]': `variant() === 'borderless' || (variant() === 'outlined' && borderless())`,
@@ -64,6 +66,7 @@ export class TriInputDirective implements OnInit {
   private inputWrapper = inject(TRI_INPUT_WRAPPER, { host: true, optional: true });
   private focusMonitor = inject(FocusMonitor);
   protected hostView = inject(ViewContainerRef);
+  protected readonly inputPasswordDir = inject(TriInputPasswordDirective, { host: true, optional: true });
 
   readonly ngControl = inject(NgControl, { self: true, optional: true });
   readonly value = signal<string>(this.elementRef.nativeElement.value);
@@ -96,6 +99,12 @@ export class TriInputDirective implements OnInit {
     { initialValue: false }
   );
   readonly classes = computed(() => getStatusClassNames(PREFIX_CLS, this._status(), this.hasFeedback()));
+  readonly type = computed(() => {
+    if (this.inputPasswordDir) {
+      return this.inputPasswordDir.visible() ? 'text' : 'password';
+    }
+    return this.elementRef.nativeElement.getAttribute('type') || 'text';
+  });
 
   protected readonly focused = signal<boolean>(false);
   protected readonly finalSize = computed(() => {

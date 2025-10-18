@@ -108,9 +108,9 @@ export class TriSegmentedComponent implements OnChanges, ControlValueAccessor {
   @Input() shape: 'default' | 'round' = 'default';
   @Input() @WithConfig() size: TriSizeLDSType = 'default';
 
-  // todo: add a method to generate hash id for the segmented instance as default value of `nzName`
   /**
    * @description set the `name` attribute of the segmented item native `input[type="radio"]`
+   * @since 20.3.0
    */
   @Input() name?: string;
 
@@ -199,7 +199,7 @@ export class TriSegmentedComponent implements OnChanges, ControlValueAccessor {
   ngOnChanges(changes: SimpleChanges): void {
     const { nzName, nzOptions, nzDisabled } = changes;
     if (nzName) {
-      this.service.name.set(this.name || null);
+      this.service.setName(this.name);
     }
     if (nzOptions) {
       this.normalizedOptions = normalizeOptions(nzOptions.currentValue);

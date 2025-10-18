@@ -20,6 +20,7 @@ import {
   input,
   output,
   signal,
+  TemplateRef,
   ViewEncapsulation
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -31,11 +32,12 @@ import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactIte
 
 import { TriInputAddonAfterDirective, TriInputAddonBeforeDirective } from './input-addon.directive';
 import { TriInputPrefixDirective, TriInputSuffixDirective } from './input-affix.directive';
+import { TriInputPasswordDirective, TriInputPasswordIconDirective } from './input-password.directive';
 import { TriInputDirective } from './input.directive';
 import { TRI_INPUT_WRAPPER } from './tokens';
 
 @Component({
-  selector: 'tri-input-wrapper',
+  selector: 'tri-input-wrapper,tri-input-password',
   exportAs: 'triInputWrapper',
   imports: [TriIconModule, TriFormItemFeedbackIconComponent, NgTemplateOutlet],
   template: `
@@ -87,7 +89,9 @@ import { TRI_INPUT_WRAPPER } from './tokens';
           @if (allowClear()) {
             <span
               class="tri-input-clear-icon"
-              [class.tri-input-clear-icon-has-suffix]="suffix() || suffix() || hasFeedback()"
+              [class.tri-input-clear-icon-has-suffix]="
+                nzSuffix() || sufsuffix hasFeedback() || inputPasswordDir?.nzVisibilityToggle()
+              "
               [class.tri-input-clear-icon-hidden]="!inputDir().value() || disabled() || readOnly()"
               role="button"
               tabindex="-1"
@@ -96,6 +100,23 @@ import { TRI_INPUT_WRAPPER } from './tokens';
               <ng-content select="[nzInputClearIcon]">
                 <tri-icon type="close-circle" theme="fill" />
               </ng-content>
+            </span>
+          }
+          @if (inputPasswordDir && visibilityToggle()) {
+            <span
+              class="tri-input-password-icon"
+              role="button"
+              tabindex="-1"
+              (click)="inputPasswordDir.toggleVisible()"
+            >
+              @if (inputPasswordIconTmpl(); as tmpl) {
+                <ng-template
+                  [ngTemplateOutlet]="tmpl"
+                  [ngTemplateOutletContext]="{ $implicit: visible() }"
+                />
+              } @else {
+                <tri-icon [type]="visible() ? 'eye' : 'eye-invisible'" theme="outline" />
+              }
             </span>
           }
           <ng-content select="[nzInputSuffix]">{{ suffix() }}</ng-content>
@@ -120,11 +141,14 @@ import { TRI_INPUT_WRAPPER } from './tokens';
   host: {
     '[class]': 'class()',
     '[class.tri-input-disabled]': 'disabled()',
+    '[class.tri-input-password]': 'inputPasswordDir',
     '[class.tri-input-affix-wrapper-textarea-with-clear-btn]': 'allowClear() && isTextarea()'
   }
 })
 export class TriInputWrapperComponent {
   private readonly focusMonitor = inject(FocusMonitor);
+
+  protected readonly inputPasswordDir = inject(TriInputPasswordDirective, { self: true, optional: true });
 
   protected readonly inputRef = contentChild.required(TriInputDirective, { read: ElementRef });
   protected readonly inputDir = contentChild.required(TriInputDirective);
@@ -133,6 +157,7 @@ export class TriInputWrapperComponent {
   protected readonly _suffix = contentChild(TriInputSuffixDirective);
   protected readonly _addonBefore = contentChild(TriInputAddonBeforeDirective);
   protected readonly _addonAfter = contentChild(TriInputAddonAfterDirective);
+  protected readonly inputPasswordIconTmpl = contentChild(TriInputPasswordIconDirective, { read: TemplateRef });
 
   readonly allowClear = input(false, { transform: booleanAttribute });
   readonly prefix = input<string>();
@@ -151,7 +176,7 @@ export class TriInputWrapperComponent {
 
   protected readonly hasPrefix = computed(() => !!this.prefix() || !!this._prefix());
   protected readonly hasSuffix = computed(
-    () => !!this.suffix() || !!this._suffix() || this.allowClear() || this.hasFeedback()
+    () => !!this.suffix() || !!this._suffix() || this.allowClear() || this.hasFeedback() || this.inputPasswordDir
   );
   protected readonly hasAffix = computed(() => this.hasPrefix() || this.hasSuffix());
   protected readonly hasAddonBefore = computed(() => !!this.addonBefore() || !!this._addonBefore());

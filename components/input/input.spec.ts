@@ -218,6 +218,36 @@ describe('input', () => {
       expect(inputElement.nativeElement.nextSibling?.classList).not.toContain('ant-form-item-feedback-icon');
     });
   });
+
+  describe('input with type', () => {
+    let fixture: ComponentFixture<TriTestInputWithTypeComponent>;
+    let inputElement: DebugElement;
+    let component: TriTestInputWithTypeComponent;
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(TriTestInputWithTypeComponent);
+      fixture.detectChanges();
+      inputElement = fixture.debugElement.query(By.directive(TriInputDirective));
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+
+    it('should type correct', () => {
+      expect(inputElement.nativeElement.type).toEqual('text');
+
+      component.type = 'password';
+      fixture.detectChanges();
+      expect(inputElement.nativeElement.type).toEqual('password');
+
+      component.type = 'number';
+      fixture.detectChanges();
+      expect(inputElement.nativeElement.type).toEqual('number');
+
+      component.type = '';
+      fixture.detectChanges();
+      expect(inputElement.nativeElement.type).toEqual('text');
+    });
+  });
 });
 
 @Component({
@@ -300,4 +330,12 @@ export class TriTestInputWithStatusComponent {
 export class TriTestInputInFormComponent {
   status: TriFormControlStatusType = 'error';
   feedback = true;
+}
+
+@Component({
+  imports: [TriInputModule],
+  template: `<input tri-input [type]="type" />`
+})
+export class TriTestInputWithTypeComponent {
+  type: string | null = null;
 }
