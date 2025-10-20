@@ -44,11 +44,18 @@ description: 用于颜色选择。
 
 ### NzColor
 
-| 参数            | 说明                                            | 类型                                                      | 默认值 |
-|---------------|-----------------------------------------------|---------------------------------------------------------|-----|
-| `toHex`       | 转换成 `hex` 格式字符，返回格式如：`1677ff`                 | `() => string`                                          | -   |
-| `toHexString` | 转换成 `hex` 格式颜色字符串，返回格式如：`#1677ff`             | `() => string`                                          | -   |
-| `toHsb`       | 转换成 `hsb` 对象                                  | `() => ({ h: number, s: number, b: number, a number })` | -   |
-| `toHsbString` | 转换成 `hsb` 格式颜色字符串，返回格式如：`hsb(215, 91%, 100%)` | `() => string`                                          | -   |
-| `toRgb`       | 转换成 `rgb` 对象                                  | `() => ({ r: number, g: number, b: number, a number })` | -   |
-| `toRgbString` | 转换成 `rgb` 格式颜色字符串，返回格式如：`rgb(22, 119, 255)`   | `() => string`                                          | -   |
+| 参数          | 说明                                                           | 类型                                                    | 默认值 |
+| ------------- | -------------------------------------------------------------- | ------------------------------------------------------- | ------ |
+| `toHex`       | 转换成 `hex` 格式字符，返回格式如：`1677ff`                    | `() => string`                                          | -      |
+| `toHexString` | 转换成 `hex` 格式颜色字符串，返回格式如：`#1677ff`             | `() => string`                                          | -      |
+| `toHsb`       | 转换成 `hsb` 对象                                              | `() => ({ h: number, s: number, b: number, a number })` | -      |
+| `toHsbString` | 转换成 `hsb` 格式颜色字符串，返回格式如：`hsb(215, 91%, 100%)` | `() => string`                                          | -      |
+| `toRgb`       | 转换成 `rgb` 对象                                              | `() => ({ r: number, g: number, b: number, a number })` | -      |
+| `toRgbString` | 转换成 `rgb` 格式颜色字符串，返回格式如：`rgb(22, 119, 255)`   | `() => string`                                          | -      |
+
+## FAQ
+
+### Q：滚动时浮层元素没有跟随滚动位置
+
+默认情况下，浮层元素使用 `body` 作为滚动容器，如果使用了其他滚动容器，在自定义滚动容器元素上添加 [CdkScrollable](https://material.angular.dev/cdk/scrolling/api#CdkScrollable) 指令。
+注意：您需要从 `@angular/cdk/scrolling` 导入 `CdkScrollable` 指令或 `ScrollingModule` 模块。

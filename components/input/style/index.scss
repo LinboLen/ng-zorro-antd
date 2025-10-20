@@ -19,6 +19,7 @@ $input-prefix-cls: "#{$ant-prefix}-input";
       text-align: start;
       vertical-align: top;
       // https://github.com/ant-design/ant-design/issues/6403
+      @include input-group-wrapper-compact(("#{$input-prefix-cls}"));
     }
   }
   &-password-icon {
