@@ -6,7 +6,10 @@
 import { Directive, input, model } from '@angular/core';
 
 @Directive({
-  selector: 'tri-input-password'
+  selector: 'tri-input-password',
+  host: {
+    class: 'tri-input-password'
+  }
 })
 export class TriInputPasswordDirective {
   readonly visibilityToggle = input(true);

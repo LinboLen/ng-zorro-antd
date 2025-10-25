@@ -141,7 +141,6 @@ import { TRI_INPUT_WRAPPER } from './tokens';
   host: {
     '[class]': 'class()',
     '[class.tri-input-disabled]': 'disabled()',
-    '[class.tri-input-password]': 'inputPasswordDir',
     '[class.tri-input-affix-wrapper-textarea-with-clear-btn]': 'allowClear() && isTextarea()'
   }
 })
