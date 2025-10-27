@@ -27,7 +27,7 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
         <tri-badge [dot]="dot">
           <a class="head-example"></a>
         </tri-badge>
-        <tri-switch [(ngModel)]="dot"></tri-switch>
+        <tri-switch [(ngModel)]="dot" />
       </div>
     </div>
   `,

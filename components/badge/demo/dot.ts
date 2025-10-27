@@ -10,9 +10,6 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
     <tri-badge dot>
       <tri-icon type="notification" />
     </tri-badge>
-    <tri-badge dot [showDot]="false">
-      <tri-icon type="notification" />
-    </tri-badge>
     <tri-badge dot>
       <a>Link something</a>
     </tri-badge>
@@ -24,9 +21,6 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
       }
 
       nz-icon {
-        width: 16px;
-        height: 16px;
-        line-height: 16px;
         font-size: 16px;
       }
     `

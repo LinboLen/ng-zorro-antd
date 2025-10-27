@@ -1,22 +1,23 @@
 import { Component } from '@angular/core';
 
 import { TriBadgeModule } from 'ng-zorro-antd/badge';
+import { TriDividerModule } from 'ng-zorro-antd/divider';
 
 @Component({
   selector: 'tri-demo-badge-colorful',
-  imports: [TriBadgeModule],
+  imports: [TriBadgeModule, TriDividerModule],
   template: `
-    <h4>Presets:</h4>
+    <tri-divider orientation="left" text="Presets" />
     @for (color of presets; track color) {
       <div>
-        <tri-badge [color]="color" [text]="color"></tri-badge>
+        <tri-badge [color]="color" [text]="color" />
       </div>
     }
-    <br />
-    <h4>Custom:</h4>
+
+    <tri-divider orientation="left" text="Custom" />
     @for (color of customColors; track color) {
       <div>
-        <tri-badge [color]="color" [text]="color"></tri-badge>
+        <tri-badge [color]="color" [text]="color" />
       </div>
     }
   `

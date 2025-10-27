@@ -3,30 +3,24 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  ElementRef,
   Input,
   OnChanges,
-  OnInit,
-  Renderer2,
   SimpleChanges,
   TemplateRef,
   ViewEncapsulation,
   booleanAttribute,
-  inject,
-  DestroyRef
+  inject
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { zoomBadgeMotion } from 'ng-zorro-antd/core/animation';
 import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
 import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
-import { TriSafeAny, TriSizeDSType } from 'ng-zorro-antd/core/types';
+import { NgStyleInterface, TriSafeAny, TriSizeDSType } from 'ng-zorro-antd/core/types';
 
 import { TriBadgeSupComponent } from './badge-sup.component';
 import { badgePresetColors } from './preset-colors';
@@ -46,8 +40,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'badge';
       <span
         class="tri-badge-status-dot"
         [class]="(status || presetColor) && 'ant-badge-status-' + (status || presetColor)"
-        [style.background]="!presetColor && color"
-        [style]="style"
+        [style]="mergedStyle"
       ></span>
       <span class="tri-badge-status-text">
         <ng-container *stringTemplateOutlet="text">{{ text }}</ng-container>
@@ -64,9 +57,9 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'badge';
           [title]="title"
           [style]="style"
           [dot]="dot"
+          [count]="count"
           [overflowCount]="overflowCount"
           [disableAnimation]="!!(standalone || status || color || noAnimation?.nzNoAnimation)"
-          [count]="count"
           [noAnimation]="!!noAnimation?.nzNoAnimation"
         />
       }
@@ -75,30 +68,27 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'badge';
   host: {
     class: 'tri-badge',
     '[class.tri-badge-status]': 'status',
-    '[class.tri-badge-not-a-wrapper]': '!!(standalone || ((status || color) && !showSup && !count))'
+    '[class.tri-badge-not-a-wrapper]': '!!(standalone || ((status || color) && !showSup && !count))',
+    '[class.tri-badge-rtl]': 'dir() === "rtl"'
   }
 })
-export class TriBadgeComponent implements OnChanges, OnInit {
-  public configService = inject(TriConfigService);
-  private renderer = inject(Renderer2);
-  private cdr = inject(ChangeDetectorRef);
-  private elementRef = inject(ElementRef<HTMLElement>);
-  private directionality = inject(Directionality);
-  private destroyRef = inject(DestroyRef);
+export class TriBadgeComponent implements OnChanges {
+  public readonly configService = inject(TriConfigService);
+  protected readonly dir = inject(Directionality).valueSignal;
+  protected readonly noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
 
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   showSup = false;
   presetColor: string | null = null;
-  dir: Direction = 'ltr';
 
-  @Input({ transform: booleanAttribute }) showZero: boolean = false;
+  @Input({ transform: booleanAttribute }) showZero = false;
   @Input({ transform: booleanAttribute }) showDot = true;
   @Input({ transform: booleanAttribute }) standalone = false;
   @Input({ transform: booleanAttribute }) dot = false;
   @Input() @WithConfig() overflowCount: number = 99;
-  @Input() @WithConfig() color?: string = undefined;
-  @Input() style: Record<string, string> | null = null;
+  @Input() @WithConfig() color?: string;
+  @Input() style: NgStyleInterface | null = null;
   @Input() text?: string | TemplateRef<void> | null = null;
   @Input() title?: string | null | undefined;
   @Input() status?: TriBadgeStatusType | string;
@@ -106,16 +96,8 @@ export class TriBadgeComponent implements OnChanges, OnInit {
   @Input() offset?: [number, number];
   @Input() size: TriSizeDSType = 'default';
 
-  noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
-
-  ngOnInit(): void {
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((direction: Direction) => {
-      this.dir = direction;
-      this.prepareBadgeForRtl();
-      this.cdr.detectChanges();
-    });
-    this.dir = this.directionality.value;
-    this.prepareBadgeForRtl();
+  protected get mergedStyle(): NgStyleInterface {
+    return { backgroundColor: !this.presetColor && this.color, ...(this.style ?? {}) };
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -125,21 +107,7 @@ export class TriBadgeComponent implements OnChanges, OnInit {
     }
     if (nzShowDot || nzDot || nzCount || nzShowZero) {
       this.showSup =
-        (this.showDot && this.dot) ||
-        (typeof this.count === 'number' && this.count! > 0) ||
-        (typeof this.count === 'number' && this.count! <= 0 && this.showZero);
+        (this.showDot && this.dot) || (typeof this.count === 'number' && (this.count > 0 || this.showZero));
     }
-  }
-
-  private prepareBadgeForRtl(): void {
-    if (this.isRtlLayout) {
-      this.renderer.addClass(this.elementRef.nativeElement, 'ant-badge-rtl');
-    } else {
-      this.renderer.removeClass(this.elementRef.nativeElement, 'ant-badge-rtl');
-    }
-  }
-
-  get isRtlLayout(): boolean {
-    return this.dir === 'rtl';
   }
 }

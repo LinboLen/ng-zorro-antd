@@ -18,7 +18,7 @@ import {
 
 import { zoomBadgeMotion } from 'ng-zorro-antd/core/animation';
 import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
-import { TriSafeAny, TriSizeDSType } from 'ng-zorro-antd/core/types';
+import { NgStyleInterface, TriSafeAny, TriSizeDSType } from 'ng-zorro-antd/core/types';
 
 @Component({
   selector: 'tri-badge-sup',
@@ -66,16 +66,17 @@ import { TriSafeAny, TriSizeDSType } from 'ng-zorro-antd/core/types';
 })
 export class TriBadgeSupComponent implements OnInit, OnChanges {
   @Input() offset?: [number, number];
-  @Input() title?: string | null | undefined;
-  @Input() style: Record<string, string> | null = null;
+  @Input() title?: string | null;
+  @Input() style: NgStyleInterface | null = null;
   @Input() dot = false;
-  @Input({ transform: numberAttribute }) overflowCount: number = 99;
+  @Input({ transform: numberAttribute }) overflowCount = 99;
   @Input() disableAnimation = false;
   @Input() count?: number | TemplateRef<TriSafeAny>;
   @Input() noAnimation = false;
   @Input() size: TriSizeDSType = 'default';
   @Input({ transform: booleanAttribute }) isPresetColor = false;
-  @Input() color?: string = undefined;
+  @Input() color?: string;
+
   maxNumberArray: string[] = [];
   countArray: number[] = [];
   _count: number = 0;
@@ -85,7 +86,7 @@ export class TriBadgeSupComponent implements OnInit, OnChanges {
     this.maxNumberArray = this.overflowCount
       .toString()
       .split('')
-      .map((value: string, index: number) => `${value}-${index}`);
+      .map((value, index) => `${value}-${index}`);
   }
 
   ngOnInit(): void {

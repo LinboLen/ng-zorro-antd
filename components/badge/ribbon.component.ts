@@ -24,7 +24,7 @@ import { badgePresetColors } from './preset-colors';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TriOutletModule],
   template: `
-    <ng-content></ng-content>
+    <ng-content />
     <div
       class="tri-ribbon"
       [class]="presetColor && 'ant-ribbon-color-' + presetColor"
@@ -41,7 +41,7 @@ import { badgePresetColors } from './preset-colors';
   host: { class: 'tri-ribbon-wrapper' }
 })
 export class TriRibbonComponent implements OnChanges {
-  @Input() color: string | undefined;
+  @Input() color?: string;
   @Input() placement: 'start' | 'end' = 'end';
   @Input() text: string | TemplateRef<void> | null = null;
   presetColor: string | null = null;

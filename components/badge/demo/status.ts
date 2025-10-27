@@ -6,21 +6,21 @@ import { TriBadgeModule } from 'ng-zorro-antd/badge';
   selector: 'tri-demo-badge-status',
   imports: [TriBadgeModule],
   template: `
-    <tri-badge status="success"></tri-badge>
-    <tri-badge status="error"></tri-badge>
-    <tri-badge status="default"></tri-badge>
-    <tri-badge status="processing"></tri-badge>
-    <tri-badge status="warning"></tri-badge>
+    <tri-badge status="success" />
+    <tri-badge status="error" />
+    <tri-badge status="default" />
+    <tri-badge status="processing" />
+    <tri-badge status="warning" />
     <br />
-    <tri-badge status="success" text="Success"></tri-badge>
+    <tri-badge status="success" text="Success" />
     <br />
-    <tri-badge status="error" text="Error"></tri-badge>
+    <tri-badge status="error" text="Error" />
     <br />
-    <tri-badge status="default" text="Default"></tri-badge>
+    <tri-badge status="default" text="Default" />
     <br />
-    <tri-badge status="processing" text="Processing"></tri-badge>
+    <tri-badge status="processing" text="Processing" />
     <br />
-    <tri-badge status="warning" text="Warning"></tri-badge>
+    <tri-badge status="warning" text="Warning" />
     <br />
   `
 })
