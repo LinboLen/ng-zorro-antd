@@ -6,23 +6,26 @@
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   AfterContentInit,
+  afterEveryRender,
   AfterViewInit,
+  booleanAttribute,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  computed,
+  contentChild,
   ContentChild,
   DestroyRef,
   ElementRef,
+  inject,
   Input,
   OnChanges,
   OnInit,
   Renderer2,
+  signal,
   SimpleChanges,
-  ViewEncapsulation,
-  booleanAttribute,
-  computed,
-  inject,
-  signal
+  viewChild,
+  ViewEncapsulation
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Subject } from 'rxjs';
@@ -48,7 +51,9 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'button';
   encapsulation: ViewEncapsulation.None,
   template: `
     @if (loading) {
-      <tri-icon type="loading" />
+      <span class="tri-btn-icon tri-btn-loading-icon">
+        <tri-icon type="loading" />
+      </span>
     }
     <ng-content></ng-content>
   `,
@@ -69,7 +74,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'button';
     '[class.tri-btn-block]': `block`,
     '[class.tri-input-search-button]': `search`,
     '[class.tri-btn-rtl]': `dir === 'rtl'`,
-    '[class.tri-btn-icon-only]': `iconOnly`,
+    '[class.tri-btn-icon-only]': `iconOnly()`,
     '[attr.tabindex]': 'disabled ? -1 : (tabIndex === null ? null : tabIndex)',
     '[attr.disabled]': 'disabled || null'
   },
@@ -77,7 +82,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'button';
   providers: [{ provide: TRI_SPACE_COMPACT_ITEM_TYPE, useValue: 'btn' }]
 })
 export class TriButtonComponent implements OnChanges, AfterViewInit, AfterContentInit, OnInit {
-  private elementRef = inject(ElementRef);
+  private elementRef: ElementRef<HTMLButtonElement | HTMLAnchorElement> = inject(ElementRef);
   private cdr = inject(ChangeDetectorRef);
   private renderer = inject(Renderer2);
   private directionality = inject(Directionality);
@@ -87,6 +92,9 @@ export class TriButtonComponent implements OnChanges, AfterViewInit, AfterConten
   @ContentChild(TriIconDirective, { read: ElementRef }) iconDirectiveElement!: ElementRef;
   @Input({ transform: booleanAttribute }) block: boolean = false;
   @Input({ transform: booleanAttribute }) ghost: boolean = false;
+  /**
+   * @deprecated Will be removed in v22.0.0. Please use `nz-input-search` instead.
+   */
   @Input({ transform: booleanAttribute }) search: boolean = false;
   @Input({ transform: booleanAttribute }) loading: boolean = false;
   @Input({ transform: booleanAttribute }) danger: boolean = false;
@@ -97,20 +105,26 @@ export class TriButtonComponent implements OnChanges, AfterViewInit, AfterConten
   @Input() @WithConfig() size: TriButtonSize = 'default';
   dir: Direction = 'ltr';
 
-  protected finalSize = computed(() => {
+  private readonly elementOnly = signal(false);
+  readonly #size = signal<TriSizeLDSType>(this.size);
+  private readonly compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
+  private readonly loading$ = new Subject<boolean>();
+
+  protected readonly finalSize = computed(() => {
     if (this.compactSize) {
       return this.compactSize();
     }
     return this.#size();
   });
 
-  #size = signal<TriSizeLDSType>(this.size);
-  private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
-  private loading$ = new Subject<boolean>();
+  readonly iconDir = contentChild(TriIconDirective);
+  readonly loadingIconDir = viewChild(TriIconDirective);
+
+  readonly iconOnly = computed(() => this.elementOnly() && (!!this.iconDir() || !!this.loadingIconDir()));
 
   insertSpan(nodes: NodeList, renderer: Renderer2): void {
     nodes.forEach(node => {
-      if (node.nodeName === '#text') {
+      if (node.nodeType === Node.TEXT_NODE && node.textContent!.trim().length > 0) {
         const span = renderer.createElement('span');
         const parent = renderer.parentNode(node);
         renderer.insertBefore(parent, span, node);
@@ -119,21 +133,25 @@ export class TriButtonComponent implements OnChanges, AfterViewInit, AfterConten
     });
   }
 
-  public get iconOnly(): boolean {
-    const listOfNode = Array.from((this.elementRef?.nativeElement as HTMLButtonElement)?.childNodes || []);
-    const noText = listOfNode.every(node => node.nodeName !== '#text');
-    // ignore icon and comment
-    const noSpan =
-      listOfNode.filter(node => {
-        return !(node.nodeName === '#comment' || !!(node as HTMLElement)?.classList?.contains('anticon'));
-      }).length == 0;
-    return !!this.iconDirectiveElement && noSpan && noText;
-  }
-
   constructor() {
     onConfigChangeEventForComponent(TRI_CONFIG_MODULE_NAME, () => {
       this.#size.set(this.size);
       this.cdr.markForCheck();
+    });
+
+    let elementOnly = false;
+    afterEveryRender({
+      read: () => {
+        const { childNodes, children } = this.elementRef.nativeElement;
+        const hasText = Array.from(childNodes).some(
+          node => node.nodeType === Node.TEXT_NODE && node.textContent!.trim().length > 0
+        );
+        const visibleElementCount = Array.from(children).filter(
+          element => (element as HTMLElement).style.display !== 'none'
+        ).length;
+        elementOnly = !hasText && visibleElementCount === 1;
+      },
+      write: () => this.elementOnly.set(elementOnly)
     });
   }
 

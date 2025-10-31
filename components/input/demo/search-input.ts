@@ -1,64 +1,50 @@
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriIconModule } from 'ng-zorro-antd/icon';
-import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriInputModule, TriInputSearchEvent } from 'ng-zorro-antd/input';
 
 @Component({
   selector: 'tri-demo-input-search-input',
-  imports: [FormsModule, TriButtonModule, TriInputModule, TriIconModule],
+  imports: [FormsModule, TriInputModule, TriIconModule],
   template: `
-    <tri-input-wrapper class="tri-input-search">
-      <input tri-input [(ngModel)]="value" type="search" placeholder="input search text" />
-      <button inputAddonAfter tri-button class="tri-input-search-button">
-        <tri-icon type="search" />
-      </button>
-    </tri-input-wrapper>
+    <tri-input-search (search)="onSearch($event)">
+      <input tri-input [(ngModel)]="value" placeholder="input search text" />
+    </tri-input-search>
     <br />
     <br />
-    <tri-input-wrapper allowClear class="tri-input-search">
-      <input tri-input [(ngModel)]="value" type="search" placeholder="input search text" />
-      <button inputAddonAfter tri-button class="tri-input-search-button">
-        <tri-icon type="search" />
-      </button>
-    </tri-input-wrapper>
+    <tri-input-search allowClear (search)="onSearch($event)">
+      <input tri-input [(ngModel)]="value" placeholder="input search text" />
+    </tri-input-search>
     <br />
     <br />
-    <tri-input-wrapper class="tri-input-search">
+    <tri-input-search (search)="onSearch($event)">
       <span inputAddonBefore>https://</span>
-      <input tri-input [(ngModel)]="value" type="search" placeholder="input search text" />
-      <button inputAddonAfter tri-button class="tri-input-search-button">
-        <tri-icon type="search" />
-      </button>
-    </tri-input-wrapper>
+      <input tri-input [(ngModel)]="value" placeholder="input search text" />
+    </tri-input-search>
     <br />
     <br />
-    <tri-input-wrapper class="tri-input-search tri-input-search-with-button">
-      <input tri-input [(ngModel)]="value" type="search" placeholder="input search text" />
-      <button inputAddonAfter tri-button type="primary" class="tri-input-search-button">
-        <tri-icon type="search" />
-      </button>
-    </tri-input-wrapper>
+    <tri-input-search enterButton="Submit" (search)="onSearch($event)">
+      <input tri-input [(ngModel)]="value" placeholder="input search text" />
+    </tri-input-search>
     <br />
     <br />
-    <tri-input-wrapper class="tri-input-search tri-input-search-large tri-input-search-with-button">
-      <input tri-input [(ngModel)]="value" type="search" placeholder="input search text" size="large" />
-      <button inputAddonAfter tri-button type="primary" size="large" class="tri-input-search-button"
-        >Submit</button
-      >
-    </tri-input-wrapper>
+    <tri-input-search enterButton="Submit" (search)="onSearch($event)">
+      <input tri-input [(ngModel)]="value" placeholder="input search text" size="large" />
+    </tri-input-search>
     <br />
     <br />
-    <tri-input-wrapper class="tri-input-search tri-input-search-large tri-input-search-with-button">
-      <input tri-input [(ngModel)]="value" type="search" placeholder="input search text" size="large" />
+    <tri-input-search (search)="onSearch($event)">
+      <input tri-input [(ngModel)]="value" placeholder="input search text" size="large" />
       <tri-icon inputSuffix type="audio" [style.font-size.px]="16" [style.color]="'#1677ff'" />
-      <button inputAddonAfter tri-button type="primary" size="large" class="tri-input-search-button">
-        Submit
-      </button>
-    </tri-input-wrapper>
+      <span inputSearchEnterButton>Custom</span>
+    </tri-input-search>
   `
 })
 export class TriDemoInputSearchInputComponent {
   readonly value = signal('');
+
+  onSearch(event: TriInputSearchEvent): void {
+    console.log(event);
+  }
 }

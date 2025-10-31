@@ -25,6 +25,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
+import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriFormItemFeedbackIconComponent } from 'ng-zorro-antd/core/form';
 import { getStatusClassNames, getVariantClassNames } from 'ng-zorro-antd/core/util';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -33,13 +34,14 @@ import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactIte
 import { TriInputAddonAfterDirective, TriInputAddonBeforeDirective } from './input-addon.directive';
 import { TriInputPrefixDirective, TriInputSuffixDirective } from './input-affix.directive';
 import { TriInputPasswordDirective, TriInputPasswordIconDirective } from './input-password.directive';
+import { TriInputSearchDirective, TriInputSearchEnterButtonDirective } from './input-search.directive';
 import { TriInputDirective } from './input.directive';
 import { TRI_INPUT_WRAPPER } from './tokens';
 
 @Component({
-  selector: 'tri-input-wrapper,tri-input-password',
+  selector: 'tri-input-wrapper,tri-input-password,tri-input-search',
   exportAs: 'triInputWrapper',
-  imports: [TriIconModule, TriFormItemFeedbackIconComponent, NgTemplateOutlet],
+  imports: [TriIconModule, TriButtonModule, TriFormItemFeedbackIconComponent, NgTemplateOutlet],
   template: `
     @if (hasAddon()) {
       <ng-template [ngTemplateOutlet]="inputWithAddonInner" />
@@ -65,6 +67,26 @@ import { TRI_INPUT_WRAPPER } from './tokens';
 
         @if (hasAddonAfter()) {
           <span class="tri-input-group-addon">
+            @if (inputSearchDir) {
+              @let hasEnterButton = inputSearchEnterButton() ?? inputSearchDir.nzEnterButton() !== false;
+              <button
+                tri-button
+                [type]="hasEnterButton ? 'primary' : 'default'"
+                [size]="size()"
+                [loading]="loading()"
+                type="button"
+                class="tri-input-search-button"
+                (click)="inputSearchDir.search($event)"
+              >
+                <ng-content select="[nzInputSearchEnterButton]">
+                  @if (typeof enterButton() === 'string') {
+                    {{ inputSearchDir.nzEnterButton() }}
+                  } @else {
+                    <tri-icon type="search" theme="outline" />
+                  }
+                </ng-content>
+              </button>
+            }
             <ng-content select="[nzInputAddonAfter]">{{ addonAfter() }}</ng-content>
           </span>
         }
@@ -95,7 +117,7 @@ import { TRI_INPUT_WRAPPER } from './tokens';
               [class.tri-input-clear-icon-hidden]="!inputDir().value() || disabled() || readOnly()"
               role="button"
               tabindex="-1"
-              (click)="clear()"
+              (click)="clear(); inputSearchDir?.search($event, 'clear')"
             >
               <ng-content select="[nzInputClearIcon]">
                 <tri-icon type="close-circle" theme="fill" />
@@ -148,6 +170,7 @@ export class TriInputWrapperComponent {
   private readonly focusMonitor = inject(FocusMonitor);
 
   protected readonly inputPasswordDir = inject(TriInputPasswordDirective, { self: true, optional: true });
+  protected readonly inputSearchDir = inject(TriInputSearchDirective, { self: true, optional: true });
 
   protected readonly inputRef = contentChild.required(TriInputDirective, { read: ElementRef });
   protected readonly inputDir = contentChild.required(TriInputDirective);
@@ -157,6 +180,7 @@ export class TriInputWrapperComponent {
   protected readonly _addonBefore = contentChild(TriInputAddonBeforeDirective);
   protected readonly _addonAfter = contentChild(TriInputAddonAfterDirective);
   protected readonly inputPasswordIconTmpl = contentChild(TriInputPasswordIconDirective, { read: TemplateRef });
+  protected readonly inputSearchEnterButton = contentChild(TriInputSearchEnterButtonDirective);
 
   readonly allowClear = input(false, { transform: booleanAttribute });
   readonly prefix = input<string>();
@@ -179,7 +203,9 @@ export class TriInputWrapperComponent {
   );
   protected readonly hasAffix = computed(() => this.hasPrefix() || this.hasSuffix());
   protected readonly hasAddonBefore = computed(() => !!this.addonBefore() || !!this._addonBefore());
-  protected readonly hasAddonAfter = computed(() => !!this.addonAfter() || !!this._addonAfter());
+  protected readonly hasAddonAfter = computed(
+    () => !!this.addonAfter() || !!this._addonAfter() || !!this.inputSearchDir
+  );
   protected readonly hasAddon = computed(() => this.hasAddonBefore() || this.hasAddonAfter());
 
   private readonly compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });

@@ -23,13 +23,10 @@ import { TriSpaceModule } from 'ng-zorro-antd/space';
     <br />
     <br />
     <tri-space-compact>
-      <tri-input-wrapper class="tri-input-search">
+      <tri-input-search>
         <span inputAddonBefore>https://</span>
-        <input tri-input type="search" placeholder="input search text" />
-        <button inputAddonAfter tri-button class="tri-input-search-button">
-          <tri-icon type="search" />
-        </button>
-      </tri-input-wrapper>
+        <input tri-input placeholder="input search text" />
+      </tri-input-search>
     </tri-space-compact>
     <br />
     <br />

@@ -7,6 +7,7 @@ import { Directive, input, model } from '@angular/core';
 
 @Directive({
   selector: 'tri-input-password',
+  exportAs: 'triInputPassword',
   host: {
     class: 'tri-input-password'
   }

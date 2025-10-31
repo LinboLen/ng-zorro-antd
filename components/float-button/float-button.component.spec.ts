@@ -7,6 +7,7 @@ import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
 import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { TriShapeSCType } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -14,12 +15,12 @@ import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
 import { TriFloatButtonComponent } from './float-button.component';
 import { TriFloatButtonModule } from './float-button.module';
-import { TriFloatButtonType } from './typings';
+import { TriFloatButtonBadge, TriFloatButtonType } from './typings';
 
 describe('nz-float-button', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      providers: [provideNzIconsTesting()]
+      providers: [provideNzIconsTesting(), provideNoopAnimations()]
     });
   }));
 
@@ -27,12 +28,14 @@ describe('nz-float-button', () => {
     let fixture: ComponentFixture<TriTestFloatButtonBasicComponent>;
     let testComponent: TriTestFloatButtonBasicComponent;
     let resultEl: DebugElement;
+    let floatButtonComponent: TriFloatButtonComponent;
 
     beforeEach(() => {
       fixture = TestBed.createComponent(TriTestFloatButtonBasicComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
       resultEl = fixture.debugElement.query(By.directive(TriFloatButtonComponent));
+      floatButtonComponent = resultEl.componentInstance;
     });
 
     it('nzType', () => {
@@ -76,6 +79,17 @@ describe('nz-float-button', () => {
       fixture.detectChanges();
       expect(testComponent.isClick).toBe(true);
     });
+
+    it('nzBadge', () => {
+      expect(resultEl.nativeElement.querySelector('.ant-badge')).toBeNull();
+      expect(floatButtonComponent.badge()).toBeNull();
+      testComponent.badge = { nzCount: 5 };
+      fixture.detectChanges();
+      expect(floatButtonComponent.badge()).toEqual({
+        nzCount: 5
+      });
+      expect(resultEl.nativeElement.querySelector('.ant-badge')).toBeTruthy();
+    });
   });
 });
 
@@ -108,6 +122,7 @@ describe('nz-float-button RTL', () => {
       [target]="target"
       [type]="type"
       [shape]="shape"
+      [badge]="badge"
       (onClick)="onClick($event)"
     ></tri-float-button>
     <ng-template #icon>
@@ -123,6 +138,7 @@ export class TriTestFloatButtonBasicComponent {
   shape: TriShapeSCType = 'circle';
   icon: string | TemplateRef<void> | null = null;
   description: TemplateRef<void> | null = null;
+  badge: TriFloatButtonBadge | null = null;
 
   @ViewChild('icon', { static: false }) _icon!: TemplateRef<void>;
   @ViewChild('description', { static: false }) _description!: TemplateRef<void>;

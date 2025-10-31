@@ -4,6 +4,7 @@
  */
 
 import { Directionality } from '@angular/cdk/bidi';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -15,19 +16,20 @@ import {
   TemplateRef
 } from '@angular/core';
 
+import { TriBadgeModule } from 'ng-zorro-antd/badge';
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriShapeSCType } from 'ng-zorro-antd/core/types';
 import { generateClassName } from 'ng-zorro-antd/core/util';
 
 import { TriFloatButtonContentComponent } from './float-button-content.component';
-import { TriFloatButtonType } from './typings';
+import { TriFloatButtonBadge, TriFloatButtonType } from './typings';
 
 const CLASS_NAME = 'ant-float-btn';
 
 @Component({
   selector: 'tri-float-button',
   exportAs: 'triFloatButton',
-  imports: [TriButtonModule, TriFloatButtonContentComponent],
+  imports: [TriButtonModule, TriFloatButtonContentComponent, TriBadgeModule, NgTemplateOutlet],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (!!href()) {
@@ -40,11 +42,7 @@ const CLASS_NAME = 'ant-float-btn';
         class="tri-float-btn-inner"
         (click)="onClick.emit(true)"
       >
-        <tri-float-button-content
-          [icon]="icon()"
-          [description]="description()"
-          [shape]="shape()"
-        ></tri-float-button-content>
+        <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
       </a>
     } @else {
       <button
@@ -54,13 +52,17 @@ const CLASS_NAME = 'ant-float-btn';
         class="tri-float-btn-inner"
         (click)="onClick.emit(true)"
       >
-        <tri-float-button-content
-          [icon]="icon()"
-          [description]="description()"
-          [shape]="shape()"
-        ></tri-float-button-content>
+        <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
       </button>
     }
+    <ng-template #contentTemplate>
+      <tri-float-button-content
+        [badge]="badge()"
+        [icon]="icon()"
+        [description]="description()"
+        [shape]="shape()"
+      ></tri-float-button-content>
+    </ng-template>
   `,
   host: {
     '[class]': 'class()'
@@ -73,6 +75,7 @@ export class TriFloatButtonComponent {
   readonly icon = input<string | TemplateRef<void> | null>(null);
   readonly description = input<string | TemplateRef<void> | null>(null);
   readonly shape = input<TriShapeSCType>('circle');
+  readonly badge = input<TriFloatButtonBadge | null>(null);
   readonly onClick = output<boolean>();
 
   readonly _shape = linkedSignal(() => this.shape());

@@ -38,7 +38,7 @@ import { fromEventOutsideAngular, generateClassName } from 'ng-zorro-antd/core/u
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 import { TriFloatButtonComponent } from './float-button.component';
-import { TriFloatButtonType } from './typings';
+import { TriFloatButtonBadge, TriFloatButtonType } from './typings';
 
 const withConfig = withConfigFactory('backTop');
 const CLASS_NAME = 'ant-float-btn';
@@ -58,6 +58,7 @@ const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: t
         [href]="href()"
         [type]="type()"
         [shape]="shape()"
+        [badge]="badge()"
       ></tri-float-button>
       <ng-template #top>
         <tri-icon type="vertical-align-top" theme="outline" />
@@ -90,6 +91,7 @@ export class TriFloatButtonTopComponent implements OnInit {
   readonly template = input<TemplateRef<void> | null>(null);
   readonly target = input<string | HTMLElement | null>(null);
   readonly duration = input(450, { transform: numberAttribute });
+  readonly badge = input<TriFloatButtonBadge | null>(null);
   readonly onClick = output<boolean>();
 
   // compact global config
