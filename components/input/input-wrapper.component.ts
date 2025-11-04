@@ -68,7 +68,8 @@ import { TRI_INPUT_WRAPPER } from './tokens';
         @if (hasAddonAfter()) {
           <span class="tri-input-group-addon">
             @if (inputSearchDir) {
-              @let hasEnterButton = inputSearchEnterButton() ?? inputSearchDir.nzEnterButton() !== false;
+              @let nzEnterButton = inputSearchDir.nzEnterButton();
+              @let hasEnterButton = inputSearchEnterButton() ?? nzEnterButton !== false;
               <button
                 tri-button
                 [type]="hasEnterButton ? 'primary' : 'default'"
@@ -79,8 +80,8 @@ import { TRI_INPUT_WRAPPER } from './tokens';
                 (click)="inputSearchDir.search($event)"
               >
                 <ng-content select="[nzInputSearchEnterButton]">
-                  @if (typeof enterButton() === 'string') {
-                    {{ inputSearchDir.nzEnterButton() }}
+                  @if (enterButton && typeof enterButton === 'string') {
+                    {{ enterButton }}
                   } @else {
                     <tri-icon type="search" theme="outline" />
                   }

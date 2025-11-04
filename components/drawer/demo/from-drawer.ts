@@ -35,9 +35,9 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
             <tri-form-item>
               <tri-form-label>Url</tri-form-label>
               <tri-form-control>
-                <tri-input-group addOnBefore="http://" addOnAfter=".com">
+                <tri-input-wrapper addonBefore="http://" addonAfter=".com">
                   <input type="text" tri-input placeholder="please enter url" />
-                </tri-input-group>
+                </tri-input-wrapper>
               </tri-form-control>
             </tri-form-item>
           </div>

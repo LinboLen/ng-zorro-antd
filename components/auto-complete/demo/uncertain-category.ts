@@ -11,20 +11,16 @@ import { TriInputModule } from 'ng-zorro-antd/input';
   imports: [FormsModule, TriAutocompleteModule, TriButtonModule, TriIconModule, TriInputModule],
   encapsulation: ViewEncapsulation.None,
   template: `
-    <tri-input-group search size="large" [addOnAfter]="suffixIconButton">
+    <tri-input-search enterButton>
       <input
-        placeholder="input here"
         tri-input
+        placeholder="input here"
+        size="large"
         [(ngModel)]="inputValue"
         (input)="onChange($event)"
         [autocomplete]="auto"
       />
-    </tri-input-group>
-    <ng-template #suffixIconButton>
-      <button tri-button type="primary" size="large" search>
-        <tri-icon type="search" theme="outline" />
-      </button>
-    </ng-template>
+    </tri-input-search>
     <tri-autocomplete #auto>
       @for (option of options; track option.category) {
         <tri-auto-option class="search-item" [value]="option.category">

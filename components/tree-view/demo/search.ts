@@ -76,12 +76,10 @@ function filterTreeData(data: TreeNode[], value: string): FilteredTreeResult {
   selector: 'tri-demo-tree-view-search',
   imports: [FormsModule, TriInputModule, TriIconModule, TriTreeViewModule, TriNoAnimationDirective, TriHighlightPipe],
   template: `
-    <tri-input-group [suffix]="suffixIcon">
+    <tri-input-wrapper>
       <input type="text" tri-input placeholder="Search" ngModel (ngModelChange)="searchValue$.next($event)" />
-    </tri-input-group>
-    <ng-template #suffixIcon>
-      <tri-icon type="search" />
-    </ng-template>
+      <tri-icon inputSuffix type="search" />
+    </tri-input-wrapper>
 
     <tri-tree-view [treeControl]="treeControl" [dataSource]="dataSource" noAnimation>
       <tri-tree-node *treeNodeDef="let node" treeNodePadding>

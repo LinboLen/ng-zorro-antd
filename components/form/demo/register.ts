@@ -68,15 +68,13 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
           [validateStatus]="validateForm.controls['phoneNumber']"
           errorTip="Please input your phone number!"
         >
-          <tri-input-group [addOnBefore]="addOnBeforeTemplate">
-            <ng-template #addOnBeforeTemplate>
-              <tri-select formControlName="phoneNumberPrefix" class="phone-select">
-                <tri-option label="+86" value="+86"></tri-option>
-                <tri-option label="+87" value="+87"></tri-option>
-              </tri-select>
-            </ng-template>
+          <tri-input-wrapper>
+            <tri-select inputAddonBefore formControlName="phoneNumberPrefix" class="phone-select">
+              <tri-option label="+86" value="+86"></tri-option>
+              <tri-option label="+87" value="+87"></tri-option>
+            </tri-select>
             <input formControlName="phoneNumber" id="'phoneNumber'" tri-input />
-          </tri-input-group>
+          </tri-input-wrapper>
         </tri-form-control>
       </tri-form-item>
       <tri-form-item>

@@ -255,9 +255,10 @@ describe('input', () => {
   template: `
     <div [dir]="dir">
       <input tri-input />
-      <tri-input-group addOnAfterIcon="setting">
+      <tri-input-wrapper>
         <input type="text" tri-input />
-      </tri-input-group>
+        <tri-icon inputAddonAfter type="setting" />
+      </tri-input-wrapper>
     </div>
   `
 })

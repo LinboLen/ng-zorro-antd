@@ -9,12 +9,10 @@ import { TriFormatEmitEvent, TriTreeModule } from 'ng-zorro-antd/tree';
   selector: 'tri-demo-tree-search',
   imports: [FormsModule, TriIconModule, TriInputModule, TriTreeModule],
   template: `
-    <tri-input-group [suffix]="suffixIcon">
+    <tri-input-wrapper>
       <input type="text" tri-input placeholder="Search" [(ngModel)]="searchValue" />
-    </tri-input-group>
-    <ng-template #suffixIcon>
-      <tri-icon type="search" />
-    </ng-template>
+      <tri-icon inputSuffix type="search" />
+    </tri-input-wrapper>
     <br />
     <tri-tree
       [data]="nodes"

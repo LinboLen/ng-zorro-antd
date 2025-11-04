@@ -13,16 +13,18 @@ import { TriInputModule } from 'ng-zorro-antd/input';
     <form tri-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
       <tri-form-item>
         <tri-form-control errorTip="Please input your username!">
-          <tri-input-group prefixIcon="user">
+          <tri-input-wrapper>
+            <tri-icon inputPrefix type="user" />
             <input type="text" tri-input formControlName="username" placeholder="Username" />
-          </tri-input-group>
+          </tri-input-wrapper>
         </tri-form-control>
       </tri-form-item>
       <tri-form-item>
         <tri-form-control errorTip="Please input your Password!">
-          <tri-input-group prefixIcon="lock">
-            <input type="password" tri-input formControlName="password" placeholder="Password" />
-          </tri-input-group>
+          <tri-input-password>
+            <tri-icon inputPrefix type="lock" />
+            <input tri-input formControlName="password" placeholder="Password" />
+          </tri-input-password>
         </tri-form-control>
       </tri-form-item>
       <div tri-row class="login-form-margin">

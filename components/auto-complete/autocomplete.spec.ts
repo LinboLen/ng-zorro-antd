@@ -1220,18 +1220,17 @@ class TriTestAutocompleteWithObjectOptionComponent {
 @Component({
   imports: [TriAutocompleteModule, TriInputModule],
   template: `
-    <tri-input-group #inputGroupComponent size="large" [suffix]="suffixIcon">
-      <input placeholder="input here" tri-input [autocomplete]="auto" />
-      <ng-template #suffixIcon></ng-template>
+    <tri-input-wrapper #inputGroupComponent>
+      <input placeholder="input here" tri-input size="large" [autocomplete]="auto" />
       <tri-autocomplete #auto>
         <tri-auto-option value="value">label</tri-auto-option>
       </tri-autocomplete>
-    </tri-input-group>
+    </tri-input-wrapper>
   `
 })
 class TriTestAutocompleteWithGroupInputComponent {
-  @ViewChild(TriAutocompleteTriggerDirective, { static: false }) trigger!: TriAutocompleteTriggerDirective;
-  @ViewChild('inputGroupComponent', { static: false, read: ElementRef }) inputGroupComponent!: ElementRef;
+  @ViewChild(TriAutocompleteTriggerDirective, { static: true }) trigger!: TriAutocompleteTriggerDirective;
+  @ViewChild('inputGroupComponent', { static: true, read: ElementRef }) inputGroupComponent!: ElementRef;
 }
 
 describe('auto-complete', () => {

@@ -365,16 +365,14 @@ declare const locale: TriSafeAny;
           Two Tone
         </label>
       </tri-radio-group>
-      <tri-input-group search [suffix]="suffixIconCamera" [addOnAfter]="addOnAfterIconSearch">
+      <tri-input-search>
         <input
           tri-input
           [placeholder]="localeObj.search"
           [(ngModel)]="searchingString"
           (ngModelChange)="onSearchChange()"
         />
-      </tri-input-group>
-      <ng-template #suffixIconCamera>
-        <div class="icon-pic-searcher">
+        <div inputSuffix class="icon-pic-searcher">
           <tri-icon
             class="icon-pic-btn"
             tri-popover
@@ -390,12 +388,7 @@ declare const locale: TriSafeAny;
             </svg>
           </tri-icon>
         </div>
-      </ng-template>
-      <ng-template #addOnAfterIconSearch>
-        <button tri-button type="default" search>
-          <tri-icon type="search"></tri-icon>
-        </button>
-      </ng-template>
+      </tri-input-search>
     </div>
     @for (category of categoryNames; track category; let i = $index) {
       <h3>{{ localeObj[category] }}</h3>
@@ -504,7 +497,7 @@ declare const locale: TriSafeAny;
         justify-content: space-between;
       }
 
-      nz-input-group {
+      nz-input-search {
         margin-left: 10px;
         flex: 1 1 0;
       }

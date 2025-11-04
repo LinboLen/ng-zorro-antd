@@ -63,30 +63,15 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
     </tri-space-compact>
     <br />
     <tri-space-compact block>
-      <tri-input-group search [addOnAfter]="addonTmpl" [style.width.%]="30">
+      <tri-input-search [style.width.%]="30">
         <input tri-input value="0571" />
-        <ng-template #addonTmpl>
-          <button tri-button class="tri-input-search-button">
-            <tri-icon type="search" />
-          </button>
-        </ng-template>
-      </tri-input-group>
-      <tri-input-group search [addOnAfter]="addonTmpl" [style.width.%]="50">
+      </tri-input-search>
+      <tri-input-search [style.width.%]="50">
         <input tri-input value="26888888" />
-        <ng-template #addonTmpl>
-          <button tri-button class="tri-input-search-button">
-            <tri-icon type="search" />
-          </button>
-        </ng-template>
-      </tri-input-group>
-      <tri-input-group search [addOnAfter]="addonTmpl" [style.width.%]="20">
+      </tri-input-search>
+      <tri-input-search [style.width.%]="20">
         <input tri-input value="+1" />
-        <ng-template #addonTmpl>
-          <button tri-button class="tri-input-search-button">
-            <tri-icon type="search" />
-          </button>
-        </ng-template>
-      </tri-input-group>
+      </tri-input-search>
     </tri-space-compact>
     <br />
     <tri-space-compact block>
@@ -181,9 +166,9 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
     </tri-space-compact>
     <br />
     <tri-space-compact block>
-      <tri-input-group addOnBefore="Http://" addOnAfter=".com" [style.width.%]="50">
+      <tri-input-wrapper addOnBefore="Http://" addOnAfter=".com" [style.width.%]="50">
         <input tri-input placeholder="input here" />
-      </tri-input-group>
+      </tri-input-wrapper>
       <tri-input-number>
         <span inputPrefix>$</span>
       </tri-input-number>

@@ -28,8 +28,8 @@ import {
 } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
 
-import { TriInputDirective, TriInputGroupComponent } from 'ng-zorro-antd/input';
-import { TriInputNumberComponent } from 'ng-zorro-antd/input-number';
+import { TriInputModule } from 'ng-zorro-antd/input';
+import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
 import { TriSelectModule } from 'ng-zorro-antd/select';
 
 import { generateColor } from './src/util/util';
@@ -39,7 +39,7 @@ import { TriColorPickerFormatType, ValidFormKey } from './typings';
   selector: 'tri-color-format',
   exportAs: 'triColorFormat',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, TriSelectModule, TriInputDirective, TriInputGroupComponent, TriInputNumberComponent],
+  imports: [ReactiveFormsModule, TriSelectModule, TriInputModule, TriInputNumberModule],
   template: `
     <div [formGroup]="validateForm" class="tri-color-picker-input-container">
       <div class="tri-color-picker-format-select">
@@ -54,9 +54,9 @@ import { TriColorPickerFormatType, ValidFormKey } from './typings';
         @switch (validateForm.controls.isFormat.value) {
           @case ('hex') {
             <div class="tri-color-picker-hex-input">
-              <tri-input-group prefix="#" size="small">
+              <tri-input-wrapper prefix="#">
                 <input tri-input size="small" formControlName="hex" />
-              </tri-input-group>
+              </tri-input-wrapper>
             </div>
           }
           @case ('hsb') {

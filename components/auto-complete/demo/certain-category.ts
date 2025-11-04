@@ -17,7 +17,7 @@ interface AutocompleteOptionGroups {
   encapsulation: ViewEncapsulation.None,
   template: `
     <div class="example-input">
-      <tri-input-group size="large" [suffix]="suffixIcon">
+      <tri-input-wrapper>
         <input
           placeholder="input here"
           tri-input
@@ -25,10 +25,8 @@ interface AutocompleteOptionGroups {
           (ngModelChange)="onChange($event)"
           [autocomplete]="auto"
         />
-      </tri-input-group>
-      <ng-template #suffixIcon>
-        <tri-icon type="search" />
-      </ng-template>
+        <tri-icon inputSuffix type="search" />
+      </tri-input-wrapper>
       <tri-autocomplete #auto>
         @for (group of optionGroups; track group.title) {
           <tri-auto-optgroup [label]="groupTitle">
