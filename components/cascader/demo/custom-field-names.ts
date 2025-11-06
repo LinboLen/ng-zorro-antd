@@ -63,11 +63,11 @@ const options = [
       [showSearch]="true"
       [(ngModel)]="values"
       (ngModelChange)="onChanges($event)"
-    ></tri-cascader>
+    />
   `
 })
 export class TriDemoCascaderCustomFieldNamesComponent {
-  options: TriCascaderOption[] = options;
+  readonly options: TriCascaderOption[] = options;
   values: string[] | null = null;
 
   onChanges(values: string[]): void {

@@ -52,11 +52,11 @@ const options: TriCascaderOption[] = [
     <tri-segmented [options]="placements" (valueChange)="setPlacement($event)"></tri-segmented>
     <br />
     <br />
-    <tri-cascader [options]="options" [placement]="placement"></tri-cascader>
+    <tri-cascader [options]="options" [placement]="placement" />
   `
 })
 export class TriDemoCascaderPlacementComponent {
-  options: TriCascaderOption[] = options;
+  readonly options: TriCascaderOption[] = options;
   placement: TriCascaderPlacement = 'topLeft';
   readonly placements: TriCascaderPlacement[] = ['topLeft', 'topRight', 'bottomLeft', 'bottomRight'];
 

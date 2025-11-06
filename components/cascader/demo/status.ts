@@ -2,17 +2,18 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriCascaderModule, TriCascaderOption } from 'ng-zorro-antd/cascader';
+import { TriFlexModule } from 'ng-zorro-antd/flex';
 
 @Component({
   selector: 'tri-demo-cascader-status',
-  imports: [FormsModule, TriCascaderModule],
+  imports: [FormsModule, TriCascaderModule, TriFlexModule],
   template: `
-    <tri-cascader [options]="options" status="error"></tri-cascader>
-    <br />
-    <br />
-    <tri-cascader [options]="options" status="warning"></tri-cascader>
+    <tri-flex vertical gap="middle">
+      <tri-cascader [options]="options" status="error" />
+      <tri-cascader [options]="options" status="warning" />
+    </tri-flex>
   `
 })
 export class TriDemoCascaderStatusComponent {
-  options: TriCascaderOption[] = [];
+  readonly options: TriCascaderOption[] = [];
 }

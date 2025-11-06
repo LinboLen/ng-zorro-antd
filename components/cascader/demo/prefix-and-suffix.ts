@@ -51,9 +51,9 @@ const options: TriCascaderOption[] = [
   imports: [TriCascaderModule, TriFlexModule, TriIconModule],
   template: `
     <tri-flex vertical gap="small">
-      <tri-cascader [options]="options" suffixIcon="smile"></tri-cascader>
-      <tri-cascader [options]="options" expandIcon="smile"></tri-cascader>
-      <tri-cascader [options]="options" [prefix]="smile"></tri-cascader>
+      <tri-cascader [options]="options" suffixIcon="smile" />
+      <tri-cascader [options]="options" expandIcon="smile" />
+      <tri-cascader [options]="options" [prefix]="smile" />
     </tri-flex>
     <ng-template #smile><tri-icon type="smile" /></ng-template>
   `

@@ -49,16 +49,11 @@ const options: TriCascaderOption[] = [
   selector: 'tri-demo-cascader-change-on-select',
   imports: [FormsModule, TriCascaderModule],
   template: `
-    <tri-cascader
-      changeOnSelect
-      [options]="options"
-      [(ngModel)]="values"
-      (ngModelChange)="onChanges($event)"
-    ></tri-cascader>
+    <tri-cascader changeOnSelect [options]="options" [(ngModel)]="values" (ngModelChange)="onChanges($event)" />
   `
 })
 export class TriDemoCascaderChangeOnSelectComponent {
-  options: TriCascaderOption[] = options;
+  readonly options: TriCascaderOption[] = options;
   values: string[] | null = null;
 
   onChanges(values: string[]): void {

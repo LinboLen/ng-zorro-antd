@@ -51,11 +51,11 @@ const getOptions = (): TriCascaderOption[] => [
       (ngModelChange)="onChanges($event)"
       multiple
       [maxTagCount]="3"
-    ></tri-cascader>
+    />
   `
 })
 export class TriDemoCascaderMultipleComponent {
-  options: TriCascaderOption[] = getOptions();
+  readonly options: TriCascaderOption[] = getOptions();
   values: TriSafeAny[][] | null = null;
 
   onChanges(values: TriSafeAny[][]): void {

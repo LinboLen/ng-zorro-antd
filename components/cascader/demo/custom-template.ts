@@ -37,12 +37,12 @@ const options: TriCascaderOption[] = [
       [options]="options"
       [(ngModel)]="values"
       (ngModelChange)="onChanges($event)"
-    ></tri-cascader>
+    />
     <ng-template #renderTpl let-option let-index="index">{{ index + 1 }}. {{ option.label }}</ng-template>
   `
 })
 export class TriDemoCascaderCustomTemplateComponent {
-  options = options;
+  readonly options = options;
   values: string[] | null = null;
 
   onChanges(values: string): void {

@@ -50,15 +50,15 @@ const options: TriCascaderOption[] = [
   imports: [FormsModule, TriCascaderModule],
   template: `
     <tri-cascader
-      [expandTrigger]="'hover'"
+      expandTrigger="hover"
       [options]="options"
       [(ngModel)]="values"
       (ngModelChange)="onChanges($event)"
-    ></tri-cascader>
+    />
   `
 })
 export class TriDemoCascaderHoverComponent {
-  options: TriCascaderOption[] = options;
+  readonly options: TriCascaderOption[] = options;
   values: string[] | null = null;
 
   onChanges(values: string[]): void {

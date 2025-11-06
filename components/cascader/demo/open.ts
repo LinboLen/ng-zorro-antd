@@ -59,12 +59,12 @@ const options: TriCascaderOption[] = [
         [open]="open"
         (selectionChange)="onSelectionChange($event)"
         (visibleChange)="onVisibleChange($event)"
-      ></tri-cascader>
+      />
     </div>
   `
 })
 export class TriDemoCascaderOpenComponent {
-  options = options;
+  readonly options = options;
   values = ['zhejiang', 'hangzhou', 'xihu'];
   open = false;
 

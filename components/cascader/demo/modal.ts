@@ -57,12 +57,7 @@ const options: TriCascaderOption[] = [
       (onCancel)="handleCancel($event)"
       (onOk)="handleOk($event)"
     >
-      <tri-cascader
-        *modalContent
-        [options]="options"
-        [(ngModel)]="values"
-        (ngModelChange)="onChanges($event)"
-      ></tri-cascader>
+      <tri-cascader *modalContent [options]="options" [(ngModel)]="values" (ngModelChange)="onChanges($event)" />
     </tri-modal>
 
     <button tri-button (click)="open()">Open Dialog</button>

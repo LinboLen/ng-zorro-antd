@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriCascaderModule, TriCascaderOption } from 'ng-zorro-antd/cascader';
@@ -48,12 +48,10 @@ const options: TriCascaderOption[] = [
 @Component({
   selector: 'tri-demo-cascader-default-value-and-async-options',
   imports: [FormsModule, TriCascaderModule],
-  template: `
-    <tri-cascader [(ngModel)]="values" [options]="options" (ngModelChange)="onChanges($event)"></tri-cascader>
-  `
+  template: `<tri-cascader [(ngModel)]="values" [options]="options()" (ngModelChange)="onChanges($event)" />`
 })
 export class TriDemoCascaderDefaultValueAndAsyncOptionsComponent implements OnInit {
-  options: TriCascaderOption[] | null = null;
+  readonly options = signal<TriCascaderOption[] | null>(null);
   values: string[] = ['zhejiang', 'hangzhou', 'xihu'];
 
   onChanges(values: string[]): void {
@@ -61,8 +59,6 @@ export class TriDemoCascaderDefaultValueAndAsyncOptionsComponent implements OnIn
   }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.options = options;
-    }, 500);
+    setTimeout(() => this.options.set(options), 500);
   }
 }

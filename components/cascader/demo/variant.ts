@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { TriCascaderModule, TriCascaderOption } from 'ng-zorro-antd/cascader';
-import { TriSpaceModule } from 'ng-zorro-antd/space';
+import { TriFlexModule } from 'ng-zorro-antd/flex';
 
 const options: TriCascaderOption[] = [
   {
@@ -47,16 +47,16 @@ const options: TriCascaderOption[] = [
 
 @Component({
   selector: 'tri-demo-cascader-variant',
-  imports: [TriCascaderModule, TriSpaceModule],
+  imports: [TriCascaderModule, TriFlexModule],
   template: `
-    <tri-space direction="vertical" style="width: 100%">
-      <tri-cascader *spaceItem [options]="options" variant="outlined" />
-      <tri-cascader *spaceItem [options]="options" variant="filled" />
-      <tri-cascader *spaceItem [options]="options" variant="borderless" />
-      <tri-cascader *spaceItem [options]="options" variant="underlined" />
-    </tri-space>
+    <tri-flex vertical gap="middle">
+      <tri-cascader [options]="options" variant="outlined" />
+      <tri-cascader [options]="options" variant="filled" />
+      <tri-cascader [options]="options" variant="borderless" />
+      <tri-cascader [options]="options" variant="underlined" />
+    </tri-flex>
   `
 })
 export class TriDemoCascaderVariantComponent {
-  protected readonly options = options;
+  readonly options = options;
 }

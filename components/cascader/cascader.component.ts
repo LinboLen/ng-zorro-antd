@@ -137,7 +137,7 @@ const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
                   [mirrorSync]="true"
                   [disabled]="disabled"
                   [autofocus]="autoFocus"
-                  [focusTrigger]="menuVisible"
+                  [focusTrigger]="menuVisible()"
                 />
               </div>
             </div>
@@ -150,7 +150,7 @@ const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
               [mirrorSync]="false"
               [disabled]="disabled"
               [autofocus]="autoFocus"
-              [focusTrigger]="menuVisible"
+              [focusTrigger]="menuVisible()"
             />
 
             @if (showLabelRender) {
@@ -175,7 +175,7 @@ const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
       @if (showArrow) {
         <span class="tri-select-arrow" [class.tri-select-arrow-loading]="isLoading">
           @if (!isLoading) {
-            <tri-icon [type]="$any(suffixIcon)" [class.tri-cascader-picker-arrow-expand]="menuVisible" />
+            <tri-icon [type]="$any(suffixIcon)" [class.tri-cascader-picker-arrow-expand]="menuVisible()" />
           } @else {
             <tri-icon type="loading" />
           }
@@ -198,7 +198,7 @@ const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
       [cdkConnectedOverlayOrigin]="overlayOrigin"
       [cdkConnectedOverlayPositions]="positions"
       [cdkConnectedOverlayTransformOriginOn]="'.ant-cascader-dropdown'"
-      [cdkConnectedOverlayOpen]="menuVisible"
+      [cdkConnectedOverlayOpen]="menuVisible()"
       (overlayOutsideClick)="onClickOutside($event)"
       (detach)="closeMenu()"
       (positionChange)="onPositionChange($event)"
@@ -220,7 +220,7 @@ const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
           #menu
           class="tri-cascader-menus"
           [class.tri-cascader-rtl]="dir === 'rtl'"
-          [class.tri-cascader-menus-hidden]="!menuVisible"
+          [class.tri-cascader-menus-hidden]="!menuVisible()"
           [class.tri-cascader-menu-empty]="shouldShowEmpty"
           [class]="menuClassName"
           [style]="menuStyle"
@@ -291,7 +291,7 @@ const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
     '[class.tri-select-borderless]': `variant === 'borderless'`,
     '[class.tri-select-filled]': `variant === 'filled'`,
     '[class.tri-select-underlined]': `variant === 'underlined'`,
-    '[class.tri-select-open]': 'menuVisible',
+    '[class.tri-select-open]': 'menuVisible()',
     '[class.tri-select-focused]': 'isFocused',
     '[class.tri-select-multiple]': 'multiple',
     '[class.tri-select-single]': '!multiple',
@@ -416,7 +416,7 @@ export class TriCascaderComponent
   shouldShowEmpty: boolean = false;
 
   el: HTMLElement = this.elementRef.nativeElement;
-  menuVisible = false;
+  readonly menuVisible = signal(false);
   isLoading = false;
   labelRenderText?: string;
   labelRenderContext = {};
@@ -528,9 +528,7 @@ export class TriCascaderComponent
         map(([{ status, hasFeedback }, noStatus]) => ({ status: noStatus ? '' : status, hasFeedback })),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe(({ status, hasFeedback }) => {
-        this.setStatusStyles(status, hasFeedback);
-      });
+      .subscribe(({ status, hasFeedback }) => this.setStatusStyles(status, hasFeedback));
 
     const srv = this.cascaderService;
 
@@ -570,9 +568,9 @@ export class TriCascaderComponent
       this.dropdownWidthStyle = '';
     });
 
-    this.i18nService.localeChange.pipe(startWith(), takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-      this.setLocale();
-    });
+    this.i18nService.localeChange
+      .pipe(startWith(), takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.setLocale());
 
     this.#size.set(this.size);
 
@@ -672,7 +670,7 @@ export class TriCascaderComponent
   }
 
   setMenuVisible(visible: boolean): void {
-    if (this.disabled || this.menuVisible === visible) {
+    if (this.disabled || this.menuVisible() === visible) {
       return;
     }
     if (visible) {
@@ -683,7 +681,7 @@ export class TriCascaderComponent
       this.inputValue = '';
     }
 
-    this.menuVisible = visible;
+    this.menuVisible.set(visible);
     this.visibleChange.emit(visible);
     this.cdr.detectChanges();
   }
@@ -752,7 +750,7 @@ export class TriCascaderComponent
   }
 
   handleInputBlur(): void {
-    this.menuVisible ? this.focus() : this.blur();
+    this.menuVisible() ? this.focus() : this.blur();
   }
 
   handleInputFocus(): void {
@@ -772,7 +770,7 @@ export class TriCascaderComponent
       this.focus();
     }
     if (this.isActionTrigger('click')) {
-      this.delaySetMenuVisible(!this.menuVisible, 100);
+      this.delaySetMenuVisible(!this.menuVisible(), 100);
     }
     this.onTouched();
   }
@@ -790,7 +788,7 @@ export class TriCascaderComponent
   onTriggerMouseLeave(event: MouseEvent): void {
     if (
       this.disabled ||
-      !this.menuVisible ||
+      !this.menuVisible() ||
       this.isOpening ||
       !this.isActionTrigger('hover') ||
       this.openControlled
@@ -1130,7 +1128,7 @@ export class TriCascaderComponent
    * and may exceed the boundary of browser's window.
    */
   private reposition(): void {
-    if (this.overlay && this.overlay.overlayRef && this.menuVisible) {
+    if (this.overlay && this.overlay.overlayRef && this.menuVisible()) {
       Promise.resolve().then(() => {
         this.overlay.overlayRef.updatePosition();
         this.cdr.markForCheck();
@@ -1257,7 +1255,7 @@ export class TriCascaderComponent
         }
 
         // Press any keys above to reopen menu.
-        if (!this.menuVisible && keyCode !== BACKSPACE && keyCode !== ESCAPE && !this.openControlled) {
+        if (!this.menuVisible() && keyCode !== BACKSPACE && keyCode !== ESCAPE && !this.openControlled) {
           // The `setMenuVisible` runs `detectChanges()`, so we don't need to run `markForCheck()` additionally.
           return this.ngZone.run(() => this.setMenuVisible(true));
         }
@@ -1267,7 +1265,7 @@ export class TriCascaderComponent
           return;
         }
 
-        if (!this.menuVisible) {
+        if (!this.menuVisible()) {
           return;
         }
 

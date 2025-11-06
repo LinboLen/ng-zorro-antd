@@ -55,11 +55,11 @@ const options: TriCascaderOption[] = [
       [options]="options"
       [(ngModel)]="values"
       (ngModelChange)="onChanges($event)"
-    ></tri-cascader>
+    />
   `
 })
 export class TriDemoCascaderTriggerActionComponent {
-  options: TriCascaderOption[] = options;
+  readonly options: TriCascaderOption[] = options;
   values: string[] | null = null;
 
   onChanges(values: string[]): void {

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriCascaderModule, TriCascaderOption } from 'ng-zorro-antd/cascader';
+import { TriFlexModule } from 'ng-zorro-antd/flex';
 
 const options: TriCascaderOption[] = [
   {
@@ -47,29 +48,17 @@ const options: TriCascaderOption[] = [
 
 @Component({
   selector: 'tri-demo-cascader-size',
-  imports: [FormsModule, TriCascaderModule],
+  imports: [FormsModule, TriCascaderModule, TriFlexModule],
   template: `
-    <tri-cascader
-      [size]="'large'"
-      [options]="options"
-      [(ngModel)]="value1"
-      (ngModelChange)="onChanges($event)"
-    ></tri-cascader>
-    <br />
-    <br />
-    <tri-cascader [options]="options" [(ngModel)]="value2" (ngModelChange)="onChanges($event)"></tri-cascader>
-    <br />
-    <br />
-    <tri-cascader
-      size="small"
-      [options]="options"
-      [(ngModel)]="value3"
-      (ngModelChange)="onChanges($event)"
-    ></tri-cascader>
+    <tri-flex vertical gap="middle">
+      <tri-cascader size="large" [options]="options" [(ngModel)]="value1" (ngModelChange)="onChanges($event)" />
+      <tri-cascader [options]="options" [(ngModel)]="value2" (ngModelChange)="onChanges($event)" />
+      <tri-cascader size="small" [options]="options" [(ngModel)]="value3" (ngModelChange)="onChanges($event)" />
+    </tri-flex>
   `
 })
 export class TriDemoCascaderSizeComponent {
-  options: TriCascaderOption[] = options;
+  readonly options: TriCascaderOption[] = options;
   value1: string[] | null = null;
   value2: string[] | null = null;
   value3: string[] | null = null;

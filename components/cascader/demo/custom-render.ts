@@ -58,7 +58,7 @@ const options: TriCascaderOption[] = [
       [options]="options"
       [(ngModel)]="values"
       (ngModelChange)="onChanges($event)"
-    ></tri-cascader>
+    />
 
     <ng-template #renderTpl let-labels="labels" let-selectedOptions="selectedOptions">
       @for (label of labels; track label) {
@@ -78,7 +78,7 @@ const options: TriCascaderOption[] = [
   `
 })
 export class TriDemoCascaderCustomRenderComponent {
-  options: TriCascaderOption[] = options;
+  readonly options: TriCascaderOption[] = options;
   values: string[] | null = null;
 
   onChanges(values: string[]): void {

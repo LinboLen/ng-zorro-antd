@@ -1,6 +1,6 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriCascaderModule, TriCascaderOption } from 'ng-zorro-antd/cascader';
@@ -52,7 +52,7 @@ const options: TriCascaderOption[] = [
   imports: [ReactiveFormsModule, TriButtonModule, TriCascaderModule],
   template: `
     <form [formGroup]="form" novalidate>
-      <tri-cascader [options]="options" formControlName="name"></tri-cascader>
+      <tri-cascader [options]="options" formControlName="name" />
     </form>
     <br />
     <button tri-button (click)="reset()">Reset</button>
@@ -66,16 +66,15 @@ const options: TriCascaderOption[] = [
     `
   ]
 })
-export class TriDemoCascaderReactiveFormComponent implements OnDestroy {
+export class TriDemoCascaderReactiveFormComponent {
   private fb = inject(FormBuilder);
   form = this.fb.group({
     name: this.fb.control<string[] | null>(null, Validators.required)
   });
-  options: TriCascaderOption[] = options;
-  changeSubscription: Subscription;
+  readonly options: TriCascaderOption[] = options;
 
   constructor() {
-    this.changeSubscription = this.form.controls.name.valueChanges.subscribe(data => {
+    this.form.controls.name.valueChanges.pipe(takeUntilDestroyed()).subscribe(data => {
       this.onChanges(data);
     });
   }
@@ -91,9 +90,5 @@ export class TriDemoCascaderReactiveFormComponent implements OnDestroy {
 
   onChanges(values: string[] | null): void {
     console.log(values);
-  }
-
-  ngOnDestroy(): void {
-    this.changeSubscription.unsubscribe();
   }
 }

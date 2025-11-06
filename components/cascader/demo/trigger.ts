@@ -62,7 +62,7 @@ const options: TriCascaderOption[] = [
   `
 })
 export class TriDemoCascaderTriggerComponent {
-  options: TriCascaderOption[] = options;
+  readonly options: TriCascaderOption[] = options;
   values: string[] | null = null;
   text = 'Unselect';
 
