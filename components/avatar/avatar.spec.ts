@@ -8,7 +8,7 @@ import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core
 import { By } from '@angular/platform-browser';
 
 import { createFakeEvent } from 'ng-zorro-antd/core/testing';
-import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { TriSafeAny, TriShapeSCType, TriSizeLDSType } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
 import { TriAvatarGroupComponent } from './avatar-group.component';
@@ -119,16 +119,16 @@ describe('avatar', () => {
   });
 
   it('#nzIcon', () => {
-    context.src = null;
-    context.text = null;
+    context.src = undefined;
+    context.text = undefined;
     fixture.detectChanges();
     expect(getType(dl)).toBe('icon');
   });
 
   describe('#nzText', () => {
     beforeEach(() => {
-      context.src = null;
-      context.icon = null;
+      context.src = undefined;
+      context.icon = undefined;
       fixture.detectChanges();
     });
     it('property', () => {
@@ -198,7 +198,7 @@ describe('avatar', () => {
   });
 
   describe('#nzShape', () => {
-    for (const type of ['square', 'circle']) {
+    for (const type of ['square', 'circle'] as const) {
       it(type, () => {
         context.shape = type;
         fixture.detectChanges();
@@ -211,7 +211,7 @@ describe('avatar', () => {
     for (const item of [
       { size: 'large', cls: 'lg' },
       { size: 'small', cls: 'sm' }
-    ]) {
+    ] as const) {
       it(item.size, () => {
         context.size = item.size;
         fixture.detectChanges();
@@ -221,8 +221,8 @@ describe('avatar', () => {
 
     it('custom size', () => {
       context.size = 64;
-      context.icon = null;
-      context.src = null;
+      context.icon = undefined;
+      context.src = undefined;
       fixture.detectChanges();
       const size = `${64}px`;
       const hostStyle = dl.nativeElement.querySelector('nz-avatar').style;
@@ -238,8 +238,8 @@ describe('avatar', () => {
 
     it('should set `lineHeight` on the text element considering `nzSize`', fakeAsync(() => {
       const size = 64;
-      context.icon = null;
-      context.src = null;
+      context.icon = undefined;
+      context.src = undefined;
       context.size = size;
       context.text = 'LongUsername';
       fixture.detectChanges();
@@ -253,8 +253,8 @@ describe('avatar', () => {
 
     it('should have 0 for avatarWidth if element.width is falsy`', fakeAsync(() => {
       const size = 64;
-      context.icon = null;
-      context.src = null;
+      context.icon = undefined;
+      context.src = undefined;
       context.size = size;
       context.text = 'LongUsername';
       context.comp.hasText = true;
@@ -322,7 +322,7 @@ describe('avatar', () => {
     it('should be show text when image loaded error and icon not exists', fakeAsync(() => {
       const event = createFakeEvent('error');
       expect(getType(dl)).toBe('image');
-      context.icon = null;
+      context.icon = undefined;
       fixture.detectChanges();
       context.comp.imgError(event);
       tick();
@@ -332,8 +332,8 @@ describe('avatar', () => {
     it('should be show empty when image loaded error and icon & text not exists', fakeAsync(() => {
       const event = createFakeEvent('error');
       expect(getType(dl)).toBe('image');
-      context.icon = null;
-      context.text = null;
+      context.icon = undefined;
+      context.text = undefined;
       fixture.detectChanges();
       context.comp.imgError(event);
       tick();
@@ -371,12 +371,12 @@ function getScaleFromCSSTransform(transform: string): number {
 })
 class TestAvatarComponent {
   @ViewChild('comp', { static: false }) comp!: TriAvatarComponent;
-  shape = 'square';
-  size: string | number = 'large';
+  shape: TriShapeSCType = 'square';
+  size: TriSizeLDSType | number = 'large';
   gap = 4;
-  icon: string | null = 'user';
-  text: string | null = 'A';
-  src: string | null = imageBase64;
+  icon?: string = 'user';
+  text?: string = 'A';
+  src?: string = imageBase64;
   srcSet?: string;
   alt?: string;
   loading?: 'eager' | 'lazy';

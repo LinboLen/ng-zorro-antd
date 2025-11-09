@@ -246,19 +246,19 @@ export class TriTestSkeletonComponent {
           type="avatar"
           [active]="active"
           [size]="size"
-          [shape]="shape"
+          [shape]="$any(shape)"
         ></tri-skeleton-element>
       }
       @case (2) {
         <tri-skeleton-element
           type="button"
           [active]="active"
-          [size]="size"
+          [size]="$any(size)"
           [shape]="shape"
         ></tri-skeleton-element>
       }
       @case (3) {
-        <tri-skeleton-element type="input" [active]="active" [size]="size"></tri-skeleton-element>
+        <tri-skeleton-element type="input" [active]="active" [size]="$any(size)"></tri-skeleton-element>
       }
       @case (4) {
         <tri-skeleton-element type="image" [active]="active"></tri-skeleton-element>

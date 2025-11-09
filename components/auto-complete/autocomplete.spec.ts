@@ -1048,7 +1048,7 @@ class TriTestAutocompletePropertyComponent {
 
 @Component({
   imports: [TriAutocompleteModule],
-  template: `<input [autocomplete]="auto" />`
+  template: `<input [autocomplete]="null!" />`
 })
 class TriTestAutocompleteWithoutPanelComponent {
   @ViewChild(TriAutocompleteTriggerDirective, { static: false }) trigger!: TriAutocompleteTriggerDirective;

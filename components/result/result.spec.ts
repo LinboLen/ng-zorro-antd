@@ -30,7 +30,7 @@ import { TriResultModule } from './result.module';
 export class TriTestResultBasicComponent {
   icon?: string = 'success';
   title?: string = 'Title';
-  status?: TriResultStatusType = 'error';
+  status: TriResultStatusType = 'error';
   subtitle?: string = 'SubTitle';
   extra?: string = 'Extra';
 }
@@ -81,12 +81,7 @@ describe('nz-result', () => {
     });
 
     it('should content work', () => {
-      testComponent.icon =
-        testComponent.title =
-        testComponent.subtitle =
-        testComponent.status =
-        testComponent.extra =
-          undefined;
+      testComponent.icon = testComponent.title = testComponent.subtitle = testComponent.extra = undefined;
       fixture.detectChanges();
 
       const iconView = resultEl.nativeElement.querySelector('.ant-result-icon');

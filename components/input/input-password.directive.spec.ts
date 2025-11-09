@@ -5,7 +5,6 @@
 
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
 
 import { TriInputModule } from './input.module';
 
@@ -65,10 +64,10 @@ describe('input-password', () => {
 });
 
 @Component({
-  imports: [TriInputModule, FormsModule],
+  imports: [TriInputModule],
   template: `
     <tri-input-password [visibilityToggle]="visibilityToggle" [(visibleChange)]="visible">
-      <input tri-input [(ngModel)]="value" [disabled]="disabled" [readonly]="readonly" />
+      <input tri-input />
       @if (customeIcon) {
         <ng-template inputPasswordIcon let-visible>{{ visible ? 'hide' : 'show' }}</ng-template>
       }
