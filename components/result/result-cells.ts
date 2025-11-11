@@ -24,7 +24,7 @@ export class TriResultTitleDirective {}
 export class TriResultSubtitleDirective {}
 
 @Directive({
-  selector: 'i[nz-result-icon],div[nz-result-icon]',
+  selector: '[tri-result-icon]',
   exportAs: 'triResultIcon'
 })
 export class TriResultIconDirective {}

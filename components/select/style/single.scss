@@ -107,7 +107,7 @@ $select-prefix-cls: "#{$ant-prefix}-select";
   // Shared
 
   // stylelint-disable-next-line less/no-duplicate-variables
-  @include genSizeStyle("-sm", $input-height-sm, $font-size-sm, $border-radius-sm);
+  @include genSizeStyle("-sm", $input-height-sm, $font-size-base, $border-radius-sm);
   // Padding
   &.#{$select-prefix-cls}-sm {
     &:not(.$select-prefix-cls-customize-input) {
