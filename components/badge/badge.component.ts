@@ -55,11 +55,11 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'badge';
           [offset]="offset"
           [size]="size"
           [title]="title"
-          [style]="style"
+          [style]="mergedStyle"
           [dot]="dot"
           [count]="count"
           [overflowCount]="overflowCount"
-          [disableAnimation]="!!(standalone || status || color || noAnimation?.nzNoAnimation)"
+          [disableAnimation]="!!(standalone || status || presetColor || noAnimation?.nzNoAnimation)"
           [noAnimation]="!!noAnimation?.nzNoAnimation"
         />
       }
