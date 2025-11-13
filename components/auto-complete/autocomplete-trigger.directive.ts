@@ -102,7 +102,7 @@ export class TriAutocompleteTriggerDirective implements AfterViewInit, ControlVa
   private selectionChangeSubscription!: Subscription;
   private optionsChangeSubscription!: Subscription;
   private overlayOutsideClickSubscription!: Subscription;
-  private document: Document = inject(DOCUMENT);
+  private document = inject(DOCUMENT);
   private inputGroupWhitSuffixOrPrefixDirective = inject(TriInputGroupWhitSuffixOrPrefixDirective, { optional: true });
 
   constructor() {

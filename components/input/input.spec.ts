@@ -10,8 +10,9 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { TriSizeLDSType, TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
-import { TriInputGroupComponent } from 'ng-zorro-antd/input/input-group.component';
+import { TriInputWrapperComponent } from 'ng-zorro-antd/input/input-wrapper.component';
 
 import { TriFormControlStatusType, TriFormModule } from '../form';
 import { TriInputDirective } from './input.directive';
@@ -144,17 +145,17 @@ describe('input', () => {
       fixture = TestBed.createComponent(TriTestInputWithDirComponent);
       fixture.detectChanges();
       inputElement = fixture.debugElement.query(By.directive(TriInputDirective));
-      inputGroupElement = fixture.debugElement.query(By.directive(TriInputGroupComponent));
+      inputGroupElement = fixture.debugElement.query(By.directive(TriInputWrapperComponent));
     });
 
     it('should className correct on dir change', () => {
       expect(inputElement.nativeElement.classList).not.toContain('ant-input-rtl');
-      expect(inputGroupElement.nativeElement.classList).not.toContain('ant-input-group-rtl');
+      expect(inputGroupElement.nativeElement.classList).not.toContain('ant-input-group-wrapper-rtl');
 
       fixture.componentInstance.dir = 'rtl';
       fixture.detectChanges();
       expect(inputElement.nativeElement.classList).toContain('ant-input-rtl');
-      expect(inputGroupElement.nativeElement.classList).toContain('ant-input-group-rtl');
+      expect(inputGroupElement.nativeElement.classList).toContain('ant-input-group-wrapper-rtl');
     });
   });
 
@@ -251,7 +252,7 @@ describe('input', () => {
 });
 
 @Component({
-  imports: [BidiModule, TriInputModule],
+  imports: [BidiModule, TriInputModule, TriIconModule],
   template: `
     <div [dir]="dir">
       <input tri-input />
@@ -268,14 +269,16 @@ export class TriTestInputWithDirComponent {
 
 @Component({
   imports: [TriInputModule],
-  template: `<input
-    tri-input
-    [size]="size"
-    [disabled]="disabled"
-    [borderless]="borderless"
-    [variant]="variant"
-    [stepperless]="stepperless"
-  />`
+  template: `
+    <input
+      tri-input
+      [size]="size"
+      [disabled]="disabled"
+      [borderless]="borderless"
+      [variant]="variant"
+      [stepperless]="stepperless"
+    />
+  `
 })
 export class TriTestInputWithInputComponent {
   size: TriSizeLDSType = 'default';

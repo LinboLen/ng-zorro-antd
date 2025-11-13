@@ -92,6 +92,7 @@ describe('tree-select', () => {
         fixture.detectChanges();
         expect(treeSelect.nativeElement.classList).toContain('ant-select-filled');
       });
+
       it('borderless', () => {
         fixture.detectChanges();
         expect(treeSelect.nativeElement.classList).not.toContain('ant-select-borderless');
@@ -99,6 +100,7 @@ describe('tree-select', () => {
         fixture.detectChanges();
         expect(treeSelect.nativeElement.classList).toContain('ant-select-borderless');
       });
+
       it('underlined', () => {
         fixture.detectChanges();
         expect(treeSelect.nativeElement.classList).not.toContain('ant-select-underlined');
@@ -122,6 +124,7 @@ describe('tree-select', () => {
 
       expect(nativeElement.querySelector('nz-select-clear')).toBeNull();
     });
+
     it('should click toggle open', () => {
       treeSelect.nativeElement.click();
       fixture.detectChanges();
@@ -130,6 +133,7 @@ describe('tree-select', () => {
       fixture.detectChanges();
       expect(treeSelectComponent.open).toBe(false);
     });
+
     it('should close when the outside clicks', () => {
       treeSelect.nativeElement.click();
       fixture.detectChanges();
@@ -139,6 +143,7 @@ describe('tree-select', () => {
       expect(treeSelectComponent.open).toBe(false);
       fixture.detectChanges();
     });
+
     it('should disabled work', fakeAsync(() => {
       testComponent.disabled = true;
       fixture.detectChanges();
@@ -153,6 +158,7 @@ describe('tree-select', () => {
       fixture.detectChanges();
       tick();
     }));
+
     it('should dropdownMatchSelectWidth work', () => {
       testComponent.dropdownMatchSelectWidth = true;
       fixture.detectChanges();
@@ -170,6 +176,7 @@ describe('tree-select', () => {
       expect(treeSelectComponent.open).toBe(true);
       expect(overlayPane.style.minWidth).toBe('250px');
     });
+
     it('should clear value work', fakeAsync(() => {
       testComponent.allowClear = true;
       fixture.detectChanges();
@@ -182,6 +189,7 @@ describe('tree-select', () => {
       fixture.detectChanges();
       expect(testComponent.value).toBe(null);
     }));
+
     it('should set null value work', fakeAsync(() => {
       fixture.detectChanges();
       expect(testComponent.value).toBe('10001');
@@ -197,6 +205,7 @@ describe('tree-select', () => {
       expect(testComponent.selectTreeComponent.selectedNodes.length).toEqual(0);
       expect(testComponent.selectTreeComponent.value.length).toBe(0);
     }));
+
     it('should dropdown style work', fakeAsync(() => {
       treeSelect.nativeElement.click();
       fixture.detectChanges();
@@ -205,6 +214,7 @@ describe('tree-select', () => {
       const targetElement = overlayContainerElement.querySelector('.ant-select-dropdown') as HTMLElement;
       expect(targetElement.style.height).toBe('120px');
     }));
+
     it('should dropdown classname work', fakeAsync(() => {
       treeSelect.nativeElement.click();
       fixture.detectChanges();
@@ -214,6 +224,7 @@ describe('tree-select', () => {
       expect(targetElement.classList).toContain('class1');
       expect(targetElement.classList).toContain('class2');
     }));
+
     it('should click option close dropdown', fakeAsync(() => {
       treeSelect.nativeElement.click();
       fixture.detectChanges();
@@ -283,6 +294,7 @@ describe('tree-select', () => {
       flush();
       fixture.detectChanges();
     }));
+
     it('should display no data', fakeAsync(() => {
       treeSelectComponent.updateSelectedNodes();
       fixture.detectChanges();
@@ -300,6 +312,7 @@ describe('tree-select', () => {
       expect(overlayContainerElement.querySelector('nz-tree')!.getAttribute('hidden')).toBe('');
       expect(overlayContainerElement.querySelector('.ant-select-not-found')).toBeTruthy();
     }));
+
     it('should clean search value when reopen', fakeAsync(() => {
       testComponent.showSearch = true;
       fixture.detectChanges();
@@ -322,6 +335,7 @@ describe('tree-select', () => {
 
       expect(overlayContainerElement.querySelector('.ant-select-not-found')).toBeFalsy();
     }));
+
     it('should max tag count work', fakeAsync(() => {
       fixture.detectChanges();
       testComponent.multiple = true;
@@ -567,6 +581,7 @@ describe('tree-select', () => {
       treeSelect = fixture.debugElement.query(By.directive(TriTreeSelectComponent));
       treeSelectComponent = treeSelect.componentInstance;
     });
+
     it('should set disabled work', fakeAsync(() => {
       fixture.detectChanges();
       flush();
@@ -649,6 +664,7 @@ describe('tree-select', () => {
       fixture = TestBed.createComponent(TriTestTreeSelectCustomizedIconComponent);
       treeSelect = fixture.debugElement.query(By.directive(TriTreeSelectComponent));
     });
+
     it('should display', fakeAsync(() => {
       fixture.detectChanges();
       treeSelect.nativeElement.click();
@@ -764,8 +780,10 @@ describe('tree-select', () => {
       [maxTagCount]="maxTagCount"
       [dropdownStyle]="{ height: '120px' }"
       [backdrop]="hasBackdrop"
+      [prefix]="prefix"
+      [suffixIcon]="suffixIcon"
       dropdownClassName="class1 class2"
-    ></tri-tree-select>
+    />
     <ng-template #affixTemplate>icon</ng-template>
   `
 })
@@ -854,7 +872,6 @@ export class TriTestTreeSelectBasicComponent {
   imports: [FormsModule, TriTreeSelectModule],
   template: `
     <tri-tree-select
-      style="width: 250px"
       placeHolder="Please select"
       [expandedKeys]="expandKeys"
       [nodes]="nodes"
@@ -862,7 +879,7 @@ export class TriTestTreeSelectBasicComponent {
       [checkable]="true"
       [checkStrictly]="checkStrictly"
       [(ngModel)]="value"
-    ></tri-tree-select>
+    />
   `
 })
 export class TriTestTreeSelectCheckableComponent {
@@ -940,7 +957,7 @@ export class TriTestTreeSelectCheckableComponent {
   imports: [ReactiveFormsModule, TriTreeSelectModule],
   template: `
     <form>
-      <tri-tree-select [formControl]="formControl" style="width: 250px" [nodes]="nodes"></tri-tree-select>
+      <tri-tree-select [formControl]="formControl" [nodes]="nodes" />
     </form>
   `
 })
@@ -1009,13 +1026,12 @@ export class TriTestTreeSelectCustomizedIconComponent {
   imports: [FormsModule, TriTreeSelectModule],
   template: `
     <tri-tree-select
-      style="width:100%;margin:20px 0;"
       [nodes]="nodes"
       showSearch
       [status]="status"
       placeHolder="Please select"
       [(ngModel)]="value"
-    ></tri-tree-select>
+    />
   `
 })
 export class TriTestTreeSelectStatusComponent {
@@ -1050,7 +1066,7 @@ export class TriTestTreeSelectStatusComponent {
     <form tri-form>
       <tri-form-item>
         <tri-form-control [hasFeedback]="feedback" [validateStatus]="status">
-          <tri-tree-select [nodes]="[]"></tri-tree-select>
+          <tri-tree-select [nodes]="[]" />
         </tri-form-control>
       </tri-form-item>
     </form>
@@ -1095,7 +1111,7 @@ function dig(path = '0', level = 3): TriTreeNodeOptions[] {
       virtualHeight="300px"
       hideUnMatched="true"
       [dropdownMatchSelectWidth]="true"
-    ></tri-tree-select>
+    />
   `
 })
 export class TriTestTreeSelectVirtualScrollComponent {

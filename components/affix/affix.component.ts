@@ -16,6 +16,7 @@ import {
   EventEmitter,
   inject,
   Input,
+  NgZone,
   OnChanges,
   OnInit,
   Output,
@@ -25,19 +26,14 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { merge, ReplaySubject, Subscription } from 'rxjs';
+import { fromEvent, merge, ReplaySubject, Subscription } from 'rxjs';
 import { map, throttleTime } from 'rxjs/operators';
 
 import { TriResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
 import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
 import { TriScrollService } from 'ng-zorro-antd/core/services';
 import { NgStyleInterface } from 'ng-zorro-antd/core/types';
-import {
-  fromEventOutsideAngular,
-  getStyleAsText,
-  numberAttributeWithZeroFallback,
-  shallowEqual
-} from 'ng-zorro-antd/core/util';
+import { getStyleAsText, numberAttributeWithZeroFallback, shallowEqual } from 'ng-zorro-antd/core/util';
 
 import { AffixRespondEvents } from './respond-events';
 import { getTargetRect, SimpleRect } from './utils';
@@ -61,6 +57,7 @@ const TRI_AFFIX_DEFAULT_SCROLL_TIME = 20;
 export class TriAffixComponent implements AfterViewInit, OnChanges, OnInit {
   public configService = inject(TriConfigService);
   private scrollSrv = inject(TriScrollService);
+  private ngZone = inject(NgZone);
   private platform = inject(Platform);
   private renderer = inject(Renderer2);
   private resizeObserver = inject(TriResizeObserver);
@@ -139,16 +136,18 @@ export class TriAffixComponent implements AfterViewInit, OnChanges, OnInit {
 
     this.removeListeners();
     const el = this.#target === window ? this.document.body : (this.#target as Element);
-    this.positionChangeSubscription = merge(
-      ...Object.keys(AffixRespondEvents).map(evName => fromEventOutsideAngular(this.#target, evName)),
-      this.offsetChanged$.pipe(map(() => ({}))),
-      this.resizeObserver.observe(el)
-    )
-      .pipe(
-        throttleTime(TRI_AFFIX_DEFAULT_SCROLL_TIME, undefined, { trailing: true }),
-        takeUntilDestroyed(this.destroyRef)
+    this.positionChangeSubscription = this.ngZone.runOutsideAngular(() =>
+      merge(
+        ...Object.keys(AffixRespondEvents).map(evName => fromEvent(this.#target, evName)),
+        this.offsetChanged$.pipe(map(() => ({}))),
+        this.resizeObserver.observe(el)
       )
-      .subscribe(e => this.updatePosition(e as Event));
+        .pipe(
+          throttleTime(TRI_AFFIX_DEFAULT_SCROLL_TIME, undefined, { trailing: true }),
+          takeUntilDestroyed(this.destroyRef)
+        )
+        .subscribe(e => this.updatePosition(e as Event))
+    );
     this.timeout = setTimeout(() => this.updatePosition({} as Event));
   }
 

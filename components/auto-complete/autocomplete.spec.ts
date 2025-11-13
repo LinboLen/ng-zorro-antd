@@ -958,7 +958,7 @@ describe('auto-complete', () => {
     );
   });
 
-  describe('group-input', () => {
+  describe('within input-wrapper', () => {
     let fixture: ComponentFixture<TriTestAutocompleteWithGroupInputComponent>;
     let input: HTMLInputElement;
 
@@ -968,14 +968,13 @@ describe('auto-complete', () => {
       input = fixture.debugElement.query(By.css('input')).nativeElement;
     });
 
-    it('should use the group-input as the dropdown target', () => {
+    it('should use the input element as the dropdown target', () => {
       const componentInstance = fixture.componentInstance;
       fixture.detectChanges();
       dispatchFakeEvent(input, 'blur');
       fixture.detectChanges();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((componentInstance.trigger as any).getConnectedElement().nativeElement).toEqual(
-        componentInstance.inputGroupComponent.nativeElement
+      expect(componentInstance.trigger['getConnectedElement']().nativeElement).toEqual(
+        componentInstance.inputRef.nativeElement
       );
     });
   });
@@ -1221,7 +1220,7 @@ class TriTestAutocompleteWithObjectOptionComponent {
   imports: [TriAutocompleteModule, TriInputModule],
   template: `
     <tri-input-wrapper #inputGroupComponent>
-      <input placeholder="input here" tri-input size="large" [autocomplete]="auto" />
+      <input #input placeholder="input here" tri-input size="large" [autocomplete]="auto" />
       <tri-autocomplete #auto>
         <tri-auto-option value="value">label</tri-auto-option>
       </tri-autocomplete>
@@ -1230,7 +1229,7 @@ class TriTestAutocompleteWithObjectOptionComponent {
 })
 class TriTestAutocompleteWithGroupInputComponent {
   @ViewChild(TriAutocompleteTriggerDirective, { static: true }) trigger!: TriAutocompleteTriggerDirective;
-  @ViewChild('inputGroupComponent', { static: true, read: ElementRef }) inputGroupComponent!: ElementRef;
+  @ViewChild('input', { static: true, read: ElementRef }) inputRef!: ElementRef;
 }
 
 describe('auto-complete', () => {
