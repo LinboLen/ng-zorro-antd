@@ -82,17 +82,19 @@ export class TriDropdownMenuComponent implements AfterContentInit, OnInit {
   public viewContainerRef = inject(ViewContainerRef);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
-  mouseState$ = new BehaviorSubject<boolean>(false);
+  noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
   public menuService = inject(MenuService);
+
   isChildSubMenuOpen$ = this.menuService.isChildSubMenuOpen$;
   descendantMenuItemClick$ = this.menuService.descendantMenuItemClick$;
+  mouseState$ = new BehaviorSubject<boolean>(false);
   animationStateChange$ = new EventEmitter<AnimationEvent>();
+  @ViewChild(TemplateRef, { static: true }) templateRef!: TemplateRef<TriSafeAny>;
+
   overlayClassName: string = '';
   overlayStyle: IndexableObject = {};
   arrow: boolean = false;
   placement: TriPlacementType | 'bottom' | 'top' = 'bottomLeft';
-  @ViewChild(TemplateRef, { static: true }) templateRef!: TemplateRef<TriSafeAny>;
-
   dir: Direction = 'ltr';
 
   onAnimationEvent(event: AnimationEvent): void {
@@ -107,8 +109,6 @@ export class TriDropdownMenuComponent implements AfterContentInit, OnInit {
     this[key] = value;
     this.cdr.markForCheck();
   }
-
-  noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
 
   ngOnInit(): void {
     this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {

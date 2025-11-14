@@ -79,9 +79,6 @@ export class TriDropDownDirective implements AfterViewInit, OnChanges {
   private portal?: TemplatePortal;
   private overlayRef: OverlayRef | null = null;
 
-  private positionStrategy = createFlexibleConnectedPositionStrategy(this.injector, this.elementRef.nativeElement)
-    .withLockedPosition()
-    .withTransformOriginOn('.ant-dropdown');
   private inputVisible$ = new BehaviorSubject<boolean>(false);
   private trigger$ = new BehaviorSubject<'click' | 'hover'>('hover');
   private overlayClose$ = new Subject<boolean>();
@@ -106,9 +103,7 @@ export class TriDropDownDirective implements AfterViewInit, OnChanges {
   }
 
   setDropdownMenuValue<T extends keyof TriDropdownMenuComponent>(key: T, value: TriDropdownMenuComponent[T]): void {
-    if (this.dropdownMenu) {
-      this.dropdownMenu.setValue(key, value);
-    }
+    this.dropdownMenu?.setValue(key, value);
   }
 
   ngAfterViewInit(): void {
@@ -153,37 +148,51 @@ export class TriDropDownDirective implements AfterViewInit, OnChanges {
           filter(() => this.platform.isBrowser),
           takeUntilDestroyed(this.destroyRef)
         )
-        .subscribe((visible: boolean) => {
+        .subscribe(visible => {
           const element = this.matchWidthElement ? this.matchWidthElement.nativeElement : nativeElement;
           const triggerWidth = element.getBoundingClientRect().width;
           if (this.visible !== visible) {
             this.visibleChange.emit(visible);
           }
           this.visible = visible;
+
           if (visible) {
+            const positionStrategy = createFlexibleConnectedPositionStrategy(
+              this.injector,
+              this.elementRef.nativeElement
+            )
+              .withLockedPosition()
+              .withTransformOriginOn('.ant-dropdown');
+
+            // Listen for placement changes to update the menu classes (arrow position)
+            positionStrategy.positionChanges
+              .pipe(
+                filter(() => Boolean(this.overlayRef)),
+                map(change => getPlacementName(change) as TriPlacementType | undefined),
+                takeUntilDestroyed(this.destroyRef)
+              )
+              .subscribe(placement => {
+                if (placement) {
+                  this.setDropdownMenuValue('placement', normalizePlacementForClass(placement));
+                }
+              });
+
             /** set up overlayRef **/
             if (!this.overlayRef) {
               /** new overlay **/
               this.overlayRef = createOverlayRef(this.injector, {
-                positionStrategy: this.positionStrategy,
+                positionStrategy,
                 minWidth: triggerWidth,
                 disposeOnNavigation: true,
                 hasBackdrop: this.backdrop && this.trigger === 'click',
                 scrollStrategy: createRepositionScrollStrategy(this.injector)
-              });
-              // Listen for placement changes to update the menu classes (arrow position)
-              this.positionStrategy.positionChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(change => {
-                const placement = getPlacementName(change) as TriPlacementType | undefined;
-                if (placement) {
-                  this.setDropdownMenuValue('placement', normalizePlacementForClass(placement));
-                }
               });
               merge(
                 this.overlayRef.backdropClick(),
                 this.overlayRef.detachments(),
                 this.overlayRef
                   .outsidePointerEvents()
-                  .pipe(filter((e: MouseEvent) => !this.elementRef.nativeElement.contains(e.target))),
+                  .pipe(filter(e => !this.elementRef.nativeElement.contains(e.target))),
                 this.overlayRef.keydownEvents().pipe(filter(e => e.keyCode === ESCAPE && !hasModifierKey(e)))
               )
                 .pipe(takeUntilDestroyed(this.destroyRef))
@@ -201,7 +210,7 @@ export class TriDropDownDirective implements AfterViewInit, OnChanges {
                 ? setConnectedPositionOffset(POSITION_MAP[position], TOOLTIP_OFFSET_MAP[position])
                 : POSITION_MAP[position];
             });
-            this.positionStrategy.withPositions(positions);
+            positionStrategy.withPositions(positions);
             /** reset portal if needed **/
             if (!this.portal || this.portal.templateRef !== this.dropdownMenu!.templateRef) {
               this.portal = new TemplatePortal(this.dropdownMenu!.templateRef, this.viewContainerRef);
@@ -212,17 +221,13 @@ export class TriDropDownDirective implements AfterViewInit, OnChanges {
             this.overlayRef.attach(this.portal);
           } else {
             /** detach overlayRef if needed **/
-            if (this.overlayRef) {
-              this.overlayRef.detach();
-            }
+            this.overlayRef?.detach();
           }
         });
 
       this.dropdownMenu!.animationStateChange$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(event => {
         if (event.toState === 'void') {
-          if (this.overlayRef) {
-            this.overlayRef.dispose();
-          }
+          this.overlayRef?.dispose();
           this.overlayRef = null;
         }
       });

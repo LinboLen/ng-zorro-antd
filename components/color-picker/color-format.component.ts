@@ -41,9 +41,9 @@ import { TriColorPickerFormatType, ValidFormKey } from './typings';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ReactiveFormsModule, TriSelectModule, TriInputModule, TriInputNumberModule],
   template: `
-    <div [formGroup]="validateForm" class="tri-color-picker-input-container">
+    <div class="tri-color-picker-input-container">
       <div class="tri-color-picker-format-select">
-        <tri-select formControlName="isFormat" borderless size="small">
+        <tri-select [formControl]="validateForm.controls.isFormat" borderless size="small">
           <tri-option value="hex" label="HEX" />
           <tri-option value="hsb" label="HSB" />
           <tri-option value="rgb" label="RGB" />
@@ -55,7 +55,7 @@ import { TriColorPickerFormatType, ValidFormKey } from './typings';
           @case ('hex') {
             <div class="tri-color-picker-hex-input">
               <tri-input-wrapper prefix="#">
-                <input tri-input size="small" formControlName="hex" />
+                <input tri-input size="small" [formControl]="validateForm.controls.hex" />
               </tri-input-wrapper>
             </div>
           }
@@ -63,7 +63,7 @@ import { TriColorPickerFormatType, ValidFormKey } from './typings';
             <div class="tri-color-picker-hsb-input">
               <div class="tri-color-picker-steppers tri-color-picker-hsb-input">
                 <tri-input-number
-                  formControlName="hsbH"
+                  [formControl]="validateForm.controls.hsbH"
                   [min]="0"
                   [max]="360"
                   [step]="1"
@@ -73,7 +73,7 @@ import { TriColorPickerFormatType, ValidFormKey } from './typings';
               </div>
               <div class="tri-color-picker-steppers tri-color-picker-hsb-input">
                 <tri-input-number
-                  formControlName="hsbS"
+                  [formControl]="validateForm.controls.hsbS"
                   [min]="0"
                   [max]="100"
                   [step]="1"
@@ -84,7 +84,7 @@ import { TriColorPickerFormatType, ValidFormKey } from './typings';
               </div>
               <div class="tri-color-picker-steppers tri-color-picker-hsb-input">
                 <tri-input-number
-                  formControlName="hsbB"
+                  [formControl]="validateForm.controls.hsbB"
                   [min]="0"
                   [max]="100"
                   [step]="1"
@@ -98,13 +98,31 @@ import { TriColorPickerFormatType, ValidFormKey } from './typings';
           @default {
             <div class="tri-color-picker-rgb-input">
               <div class="tri-color-picker-steppers tri-color-picker-rgb-input">
-                <tri-input-number formControlName="rgbR" [min]="0" [max]="255" [step]="1" size="small" />
+                <tri-input-number
+                  [formControl]="validateForm.controls.rgbR"
+                  [min]="0"
+                  [max]="255"
+                  [step]="1"
+                  size="small"
+                />
               </div>
               <div class="tri-color-picker-steppers tri-color-picker-rgb-input">
-                <tri-input-number formControlName="rgbG" [min]="0" [max]="255" [step]="1" size="small" />
+                <tri-input-number
+                  [formControl]="validateForm.controls.rgbG"
+                  [min]="0"
+                  [max]="255"
+                  [step]="1"
+                  size="small"
+                />
               </div>
               <div class="tri-color-picker-steppers tri-color-picker-rgb-input">
-                <tri-input-number formControlName="rgbB" [min]="0" [max]="255" [step]="1" size="small" />
+                <tri-input-number
+                  [formControl]="validateForm.controls.rgbB"
+                  [min]="0"
+                  [max]="255"
+                  [step]="1"
+                  size="small"
+                />
               </div>
             </div>
           }
@@ -114,7 +132,7 @@ import { TriColorPickerFormatType, ValidFormKey } from './typings';
       @if (!disabledAlpha) {
         <div class="tri-color-picker-steppers tri-color-picker-alpha-input">
           <tri-input-number
-            formControlName="roundA"
+            [formControl]="validateForm.controls.roundA"
             [min]="0"
             [max]="100"
             [step]="1"
@@ -137,18 +155,6 @@ export class TriColorFormatComponent implements OnChanges, OnInit {
   @Output() readonly formatChange = new EventEmitter<{ color: string; format: TriColorPickerFormatType }>();
   @Output() readonly onFormatChange = new EventEmitter<TriColorPickerFormatType>();
 
-  validatorFn(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const REGEXP = /^[0-9a-fA-F]{6}$/;
-      if (!control.value) {
-        return { error: true };
-      } else if (!REGEXP.test(control.value)) {
-        return { error: true };
-      }
-      return null;
-    };
-  }
-
   validateForm: FormGroup<{
     isFormat: FormControl<TriColorPickerFormatType | null>;
     hex: FormControl<string | null>;
@@ -161,7 +167,7 @@ export class TriColorFormatComponent implements OnChanges, OnInit {
     roundA: FormControl<number>;
   }> = this.formBuilder.nonNullable.group({
     isFormat: this.formBuilder.control<TriColorPickerFormatType>('hex'),
-    hex: this.formBuilder.control<string>('1677FF', this.validatorFn()),
+    hex: this.formBuilder.control<string>('1677FF', hexValidator),
     hsbH: 215,
     hsbS: 91,
     hsbB: 100,
@@ -251,3 +257,13 @@ export class TriColorFormatComponent implements OnChanges, OnInit {
     }
   }
 }
+
+const hexValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  const REGEXP = /^[0-9a-fA-F]{6}$/;
+  if (!control.value) {
+    return { error: true };
+  } else if (!REGEXP.test(control.value)) {
+    return { error: true };
+  }
+  return null;
+};
