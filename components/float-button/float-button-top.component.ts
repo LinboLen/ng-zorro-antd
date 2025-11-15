@@ -31,7 +31,7 @@ import { Subject, Subscription } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 
 import { fadeMotion } from 'ng-zorro-antd/core/animation';
-import { TriConfigService, withConfigFactory } from 'ng-zorro-antd/core/config';
+import { withConfigFactory } from 'ng-zorro-antd/core/config';
 import { TriScrollService } from 'ng-zorro-antd/core/services';
 import { TriShapeSCType } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular, generateClassName } from 'ng-zorro-antd/core/util';
@@ -72,13 +72,12 @@ const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: t
   encapsulation: ViewEncapsulation.None
 })
 export class TriFloatButtonTopComponent implements OnInit {
-  public configService = inject(TriConfigService);
-  private scrollSrv = inject(TriScrollService);
-  private platform = inject(Platform);
-  private ngZone = inject(NgZone);
-  private directionality = inject(Directionality);
-  private destroyRef = inject(DestroyRef);
-  private document = inject(DOCUMENT);
+  private readonly scrollSrv = inject(TriScrollService);
+  private readonly platform = inject(Platform);
+  private readonly ngZone = inject(NgZone);
+  private readonly directionality = inject(Directionality);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly document = inject(DOCUMENT);
 
   readonly backTop = viewChild('backTop', { read: ElementRef });
 

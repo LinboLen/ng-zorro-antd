@@ -8,13 +8,13 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   Input,
   OnInit,
   TemplateRef,
   ViewEncapsulation,
   booleanAttribute,
-  inject,
-  DestroyRef
+  inject
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -22,7 +22,7 @@ import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { NgStyleInterface } from 'ng-zorro-antd/core/types';
 import { TriSkeletonModule } from 'ng-zorro-antd/skeleton';
 
-import { TriStatisticNumberComponent } from './statistic-number.component';
+import { TriStatisticContentValueComponent } from './statistic-content-value.component';
 import { TriStatisticValueType } from './typings';
 
 @Component({
@@ -43,7 +43,7 @@ import { TriStatisticValueType } from './typings';
             <ng-container *stringTemplateOutlet="prefix">{{ prefix }}</ng-container>
           </span>
         }
-        <tri-statistic-number [value]="value" [valueTemplate]="valueTemplate"></tri-statistic-number>
+        <tri-statistic-content-value [value]="value" [valueTemplate]="valueTemplate" />
         @if (suffix) {
           <span class="tri-statistic-content-suffix">
             <ng-container *stringTemplateOutlet="suffix">{{ suffix }}</ng-container>
@@ -56,7 +56,7 @@ import { TriStatisticValueType } from './typings';
     class: 'tri-statistic',
     '[class.tri-statistic-rtl]': `dir === 'rtl'`
   },
-  imports: [TriSkeletonModule, TriStatisticNumberComponent, TriOutletModule]
+  imports: [TriSkeletonModule, TriStatisticContentValueComponent, TriOutletModule]
 })
 export class TriStatisticComponent implements OnInit {
   @Input() prefix?: string | TemplateRef<void>;

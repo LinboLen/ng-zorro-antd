@@ -1,0 +1,43 @@
+/* stylelint-disable less/no-duplicate-variables */
+
+@import "../../style/themes/index";
+$float-btn-prefix-cls: "#{$ant-prefix}-float-btn";
+$animation-duration: 0.3s;
+$slide-distance: 40px;
+@mixin animation($direction, $type) {
+  &-#{$type}-#{$direction} {
+    animation: "#{$type}-#{$direction}" $animation-duration ease-in-out;
+  }
+}
+@mixin keyframes($name, $from-opacity, $to-opacity, $from-transform, $to-transform) {
+  @keyframes $name {
+    from {
+      transform: $from-transform;
+      opacity: $from-opacity;
+    }
+    to {
+      transform: $to-transform;
+      opacity: $to-opacity;
+    }
+  }
+}
+.#{$float-btn-prefix-cls} {
+  // animation class
+  @include animation(top, enter);
+  @include animation(top, leave);
+  @include animation(bottom, enter);
+  @include animation(bottom, leave);
+  @include animation(left, enter);
+  @include animation(left, leave);
+  @include animation(right, enter);
+  @include animation(right, leave);
+  // keyframes
+  @include keyframes((enter-top, 0, 1, translateY($slide-distance), translateY(0)));
+  @include keyframes((leave-top, 1, 0, translateY(0), translateY($slide-distance)));
+  @include keyframes((enter-bottom, 0, 1, translateY(-$slide-distance), translateY(0)));
+  @include keyframes((leave-bottom, 1, 0, translateY(0), translateY(-$slide-distance)));
+  @include keyframes((enter-left, 0, 1, translateX($slide-distance), translateX(0)));
+  @include keyframes((leave-left, 1, 0, translateX(0), translateX($slide-distance)));
+  @include keyframes((enter-right, 0, 1, translateX(-$slide-distance), translateX(0)));
+  @include keyframes((leave-right, 1, 0, translateX(0), translateX(-$slide-distance)));
+}

@@ -6,11 +6,11 @@
 import { NgModule } from '@angular/core';
 
 import { TriCountdownComponent } from './countdown.component';
-import { TriStatisticNumberComponent } from './statistic-number.component';
+import { TriStatisticContentValueComponent } from './statistic-content-value.component';
 import { TriStatisticComponent } from './statistic.component';
 
 @NgModule({
-  imports: [TriStatisticComponent, TriCountdownComponent, TriStatisticNumberComponent],
-  exports: [TriStatisticComponent, TriCountdownComponent, TriStatisticNumberComponent]
+  imports: [TriStatisticComponent, TriCountdownComponent, TriStatisticContentValueComponent],
+  exports: [TriStatisticComponent, TriCountdownComponent, TriStatisticContentValueComponent]
 })
 export class TriStatisticModule {}

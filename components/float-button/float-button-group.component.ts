@@ -18,7 +18,6 @@ import {
   TemplateRef
 } from '@angular/core';
 
-import { fadeMotion } from 'ng-zorro-antd/core/animation';
 import { TriFourDirectionType, TriShapeSCType } from 'ng-zorro-antd/core/types';
 import { generateClassName } from 'ng-zorro-antd/core/util';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -34,13 +33,14 @@ const CLASS_NAME = 'ant-float-btn-group';
   exportAs: 'triFloatButtonGroup',
   imports: [TriFloatButtonComponent, TriIconModule, NgTemplateOutlet],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [fadeMotion],
   template: `
     @if (!isMenuMode()) {
       <ng-container *ngTemplateOutlet="menu"></ng-container>
     } @else {
       @if (open()) {
-        <div class="tri-float-btn-group-wrap" @fadeMotion><ng-container *ngTemplateOutlet="menu"></ng-container></div>
+        <div class="tri-float-btn-group-wrap" [animate.enter]="enterAnimation()" [animate.leave]="leaveAnimation()">
+          <ng-container *ngTemplateOutlet="menu"></ng-container>
+        </div>
       }
       <tri-float-button
         class="tri-float-btn-group-trigger"
@@ -77,11 +77,13 @@ export class TriFloatButtonGroupComponent {
   readonly placement = input<TriFourDirectionType>('top');
   readonly onOpenChange = output<boolean>();
 
-  protected dir = inject(Directionality).valueSignal;
-  protected _open = linkedSignal<boolean>(() => !!this.open());
-  protected isMenuMode = computed(() => !!this.trigger() && ['click', 'hover'].includes(this.trigger() as string));
-  protected isControlledMode = computed(() => this.open() !== null);
-  protected class = computed<string[]>(() => {
+  protected readonly dir = inject(Directionality).valueSignal;
+  protected readonly _open = linkedSignal<boolean>(() => !!this.open());
+  protected readonly isMenuMode = computed(
+    () => !!this.trigger() && ['click', 'hover'].includes(this.trigger() as string)
+  );
+  protected readonly isControlledMode = computed(() => this.open() !== null);
+  protected readonly class = computed<string[]>(() => {
     const shape = this.shape();
     const dir = this.dir();
     const classes = [CLASS_NAME, this.generateClass(shape)];
@@ -95,6 +97,8 @@ export class TriFloatButtonGroupComponent {
     }
     return classes;
   });
+  protected readonly enterAnimation = computed(() => `ant-float-btn-enter-${this.placement()}`);
+  protected readonly leaveAnimation = computed(() => `ant-float-btn-leave-${this.placement()}`);
 
   constructor() {
     effect(() => {

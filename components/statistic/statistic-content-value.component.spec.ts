@@ -10,10 +10,10 @@ import { By } from '@angular/platform-browser';
 
 import { TriStatisticValueType } from 'ng-zorro-antd/statistic/typings';
 
-import { TriStatisticNumberComponent } from './statistic-number.component';
+import { TriStatisticContentValueComponent } from './statistic-content-value.component';
 import { TriStatisticModule } from './statistic.module';
 
-describe('nz-number', () => {
+describe('nz-statistic-content-value', () => {
   let fixture: ComponentFixture<TriTestNumberComponent>;
   let testComponent: TriTestNumberComponent;
   let numberEl: DebugElement;
@@ -22,12 +22,12 @@ describe('nz-number', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(TriTestNumberComponent);
       testComponent = fixture.componentInstance;
-      numberEl = fixture.debugElement.query(By.directive(TriStatisticNumberComponent));
+      numberEl = fixture.debugElement.query(By.directive(TriStatisticContentValueComponent));
     });
 
     it('should have correct class', () => {
       fixture.detectChanges();
-      expect(numberEl.nativeElement.firstElementChild!.classList.contains('ant-statistic-content-value')).toBeTruthy();
+      expect(numberEl.nativeElement.classList.contains('ant-statistic-content-value')).toBeTruthy();
     });
 
     it('should render number', () => {
@@ -52,7 +52,7 @@ describe('nz-number', () => {
 @Component({
   imports: [DecimalPipe, TriStatisticModule],
   template: `
-    <tri-statistic-number [value]="(value | number)!" [valueTemplate]="template"></tri-statistic-number>
+    <tri-statistic-content-value [value]="(value | number)!" [valueTemplate]="template" />
     <ng-template #tpl let-value>It's {{ value }}</ng-template>
   `
 })
