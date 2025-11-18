@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 import { TriFormatEmitEvent, TriTreeComponent, TriTreeModule, TriTreeNodeOptions } from 'ng-zorro-antd/tree';
 
@@ -14,13 +14,14 @@ import { TriFormatEmitEvent, TriTreeComponent, TriTreeModule, TriTreeNodeOptions
       [expandedKeys]="defaultExpandedKeys"
       [selectedKeys]="defaultSelectedKeys"
       (click)="click($event)"
+      (dblClick)="click($event)"
       (contextMenu)="click($event)"
       (checkboxChange)="check($event)"
       (expandChange)="check($event)"
     ></tri-tree>
   `
 })
-export class TriDemoTreeBasicComponent implements AfterViewInit {
+export class TriDemoTreeBasicComponent {
   @ViewChild('nzTreeComponent', { static: false }) treeComponent!: TriTreeComponent;
   defaultCheckedKeys = ['10020'];
   defaultSelectedKeys = ['10010'];
@@ -63,17 +64,5 @@ export class TriDemoTreeBasicComponent implements AfterViewInit {
   // nzSelectedKeys change
   select(keys: string[]): void {
     console.log(keys, this.treeComponent.getSelectedNodeList());
-  }
-
-  ngAfterViewInit(): void {
-    // get node by key: '10011'
-    console.log(this.treeComponent.getTreeNodeByKey('10011'));
-    // use tree methods
-    console.log(
-      this.treeComponent.getTreeNodes(),
-      this.treeComponent.getCheckedNodeList(),
-      this.treeComponent.getSelectedNodeList(),
-      this.treeComponent.getExpandedNodeList()
-    );
   }
 }
