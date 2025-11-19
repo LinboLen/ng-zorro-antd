@@ -22,7 +22,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
-import { TriDropDownDirective, TriDropDownModule, TriDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
+import { TriDropdownDirective, TriDropdownModule, TriDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
 
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'filterTrigger';
 
@@ -48,7 +48,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'filterTrigger';
       <ng-content></ng-content>
     </span>
   `,
-  imports: [TriDropDownModule]
+  imports: [TriDropdownModule]
 })
 export class TriFilterTriggerComponent implements OnInit {
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
@@ -65,7 +65,7 @@ export class TriFilterTriggerComponent implements OnInit {
 
   @Output() readonly visibleChange = new EventEmitter<boolean>();
 
-  @ViewChild(TriDropDownDirective, { static: true, read: ElementRef }) dropdown!: ElementRef<HTMLElement>;
+  @ViewChild(TriDropdownDirective, { static: true, read: ElementRef }) dropdown!: ElementRef<HTMLElement>;
 
   onVisibleChange(visible: boolean): void {
     this.visible = visible;

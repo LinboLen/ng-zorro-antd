@@ -8,19 +8,18 @@ import { NgModule } from '@angular/core';
 import { TriMenuModule } from 'ng-zorro-antd/menu';
 
 import { TriContextMenuServiceModule } from './context-menu.service.module';
-import { TriDropDownADirective } from './dropdown-a.directive';
-import { TriDropdownButtonDirective } from './dropdown-button.directive';
+import { TriDropdownADirective } from './dropdown-a.directive';
 import { TriDropdownMenuComponent } from './dropdown-menu.component';
-import { TriDropDownDirective } from './dropdown.directive';
+import { TriDropdownDirective } from './dropdown.directive';
 
 @NgModule({
-  imports: [
-    TriDropDownDirective,
-    TriDropDownADirective,
-    TriDropdownMenuComponent,
-    TriDropdownButtonDirective,
-    TriContextMenuServiceModule
-  ],
-  exports: [TriMenuModule, TriDropDownDirective, TriDropDownADirective, TriDropdownMenuComponent, TriDropdownButtonDirective]
+  imports: [TriDropdownDirective, TriDropdownADirective, TriDropdownMenuComponent, TriContextMenuServiceModule],
+  exports: [TriMenuModule, TriDropdownDirective, TriDropdownADirective, TriDropdownMenuComponent]
 })
-export class TriDropDownModule {}
+export class TriDropdownModule {}
+
+/**
+ * @deprecated Use {@link TriDropdownModule} instead.
+ * This will be removed in v22.0.0.
+ */
+export const TriDropDownModule = TriDropdownModule;

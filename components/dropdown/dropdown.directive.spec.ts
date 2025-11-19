@@ -14,8 +14,8 @@ import { dispatchFakeEvent, dispatchKeyboardEvent } from 'ng-zorro-antd/core/tes
 import { TriMenuModule } from 'ng-zorro-antd/menu';
 
 import { TriPlacementType } from './dropdown-menu.component';
-import { TriDropDownDirective } from './dropdown.directive';
-import { TriDropDownModule } from './dropdown.module';
+import { TriDropdownDirective } from './dropdown.directive';
+import { TriDropdownModule } from './dropdown.module';
 
 describe('dropdown', () => {
   let overlayContainer: OverlayContainer;
@@ -49,7 +49,7 @@ describe('dropdown', () => {
     it('should render arrow when nzArrow is true and apply placement classes', fakeAsync(() => {
       fixture.componentInstance.placement = 'bottomLeft';
       fixture.detectChanges();
-      const dropdownElement = fixture.debugElement.query(By.directive(TriDropDownDirective)).nativeElement;
+      const dropdownElement = fixture.debugElement.query(By.directive(TriDropdownDirective)).nativeElement;
       dispatchFakeEvent(dropdownElement, 'mouseenter');
       tick(1000);
       fixture.detectChanges();
@@ -70,7 +70,7 @@ describe('dropdown', () => {
     it('should map center placements to top/bottom classes', fakeAsync(() => {
       fixture.componentInstance.placement = 'bottomCenter';
       fixture.detectChanges();
-      const dropdownElement = fixture.debugElement.query(By.directive(TriDropDownDirective)).nativeElement;
+      const dropdownElement = fixture.debugElement.query(By.directive(TriDropdownDirective)).nativeElement;
       dispatchFakeEvent(dropdownElement, 'mouseenter');
       tick(1000);
       fixture.detectChanges();
@@ -102,7 +102,7 @@ describe('dropdown', () => {
     fixture.detectChanges();
     expect(overlayContainerElement.textContent).toBe('');
     expect(() => {
-      const dropdownElement = fixture.debugElement.query(By.directive(TriDropDownDirective)).nativeElement;
+      const dropdownElement = fixture.debugElement.query(By.directive(TriDropdownDirective)).nativeElement;
       dispatchFakeEvent(dropdownElement, 'mouseenter');
       fixture.detectChanges();
       tick(1000);
@@ -117,7 +117,7 @@ describe('dropdown', () => {
     fixture.detectChanges();
     expect(overlayContainerElement.textContent).toBe('');
     expect(() => {
-      const dropdownElement = fixture.debugElement.query(By.directive(TriDropDownDirective)).nativeElement;
+      const dropdownElement = fixture.debugElement.query(By.directive(TriDropdownDirective)).nativeElement;
       dispatchFakeEvent(dropdownElement, 'click');
       fixture.detectChanges();
       tick(1000);
@@ -132,7 +132,7 @@ describe('dropdown', () => {
     fixture.detectChanges();
     expect(overlayContainerElement.textContent).toBe('');
     expect(() => {
-      const dropdownElement = fixture.debugElement.query(By.directive(TriDropDownDirective)).nativeElement;
+      const dropdownElement = fixture.debugElement.query(By.directive(TriDropdownDirective)).nativeElement;
       dispatchFakeEvent(dropdownElement, 'mouseenter');
       fixture.detectChanges();
       tick(1000);
@@ -154,7 +154,7 @@ describe('dropdown', () => {
       fixture.detectChanges();
 
       expect(() => {
-        const dropdownElement = fixture.debugElement.query(By.directive(TriDropDownDirective)).nativeElement;
+        const dropdownElement = fixture.debugElement.query(By.directive(TriDropdownDirective)).nativeElement;
         dispatchFakeEvent(dropdownElement, 'click');
 
         tick(1000);
@@ -179,7 +179,7 @@ describe('dropdown', () => {
     fixture.detectChanges();
 
     expect(() => {
-      const dropdownElement = fixture.debugElement.query(By.directive(TriDropDownDirective)).nativeElement;
+      const dropdownElement = fixture.debugElement.query(By.directive(TriDropdownDirective)).nativeElement;
 
       dispatchFakeEvent(dropdownElement, 'click');
       tick(1000);
@@ -201,7 +201,7 @@ describe('dropdown', () => {
     const fixture = TestBed.createComponent(TriTestDropdownComponent);
     fixture.detectChanges();
     expect(() => {
-      const dropdownElement = fixture.debugElement.query(By.directive(TriDropDownDirective)).nativeElement;
+      const dropdownElement = fixture.debugElement.query(By.directive(TriDropdownDirective)).nativeElement;
       dispatchFakeEvent(dropdownElement, 'mouseenter');
       fixture.detectChanges();
       tick(1000);
@@ -215,7 +215,7 @@ describe('dropdown', () => {
     const fixture = TestBed.createComponent(TriTestDropdownVisibleComponent);
     fixture.detectChanges();
     expect(fixture.componentInstance.triggerVisible).toHaveBeenCalledTimes(0);
-    const dropdownElement = fixture.debugElement.query(By.directive(TriDropDownDirective)).nativeElement;
+    const dropdownElement = fixture.debugElement.query(By.directive(TriDropdownDirective)).nativeElement;
     dispatchFakeEvent(dropdownElement, 'mouseenter');
     fixture.detectChanges();
     tick(1000);
@@ -245,7 +245,7 @@ describe('dropdown', () => {
 });
 
 @Component({
-  imports: [TriDropDownModule, TriMenuModule],
+  imports: [TriDropdownModule, TriMenuModule],
   template: `
     <a
       tri-dropdown
@@ -278,7 +278,7 @@ export class TriTestDropdownComponent {
 }
 
 @Component({
-  imports: [TriDropDownModule, TriMenuModule],
+  imports: [TriDropdownModule, TriMenuModule],
   template: `
     <a
       tri-dropdown
@@ -304,7 +304,7 @@ export class TriTestDropdownVisibleComponent {
 }
 
 @Component({
-  imports: [TriDropDownModule, TriMenuModule],
+  imports: [TriDropdownModule, TriMenuModule],
   template: `
     <a tri-dropdown [dropdownMenu]="menu" [arrow]="arrow" [placement]="placement" [trigger]="'hover'">
       Trigger

@@ -34,12 +34,12 @@ import { TriMenuModeType, TriMenuThemeType, TriSubmenuTrigger } from './menu.typ
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div
-      [class.tri-dropdown-menu]="isMenuInsideDropDown"
-      [class.tri-menu]="!isMenuInsideDropDown"
-      [class.tri-dropdown-menu-vertical]="isMenuInsideDropDown"
-      [class.tri-menu-vertical]="!isMenuInsideDropDown"
-      [class.tri-dropdown-menu-sub]="isMenuInsideDropDown"
-      [class.tri-menu-sub]="!isMenuInsideDropDown"
+      [class.tri-dropdown-menu]="isMenuInsideDropdown"
+      [class.tri-menu]="!isMenuInsideDropdown"
+      [class.tri-dropdown-menu-vertical]="isMenuInsideDropdown"
+      [class.tri-menu-vertical]="!isMenuInsideDropdown"
+      [class.tri-dropdown-menu-sub]="isMenuInsideDropdown"
+      [class.tri-menu-sub]="!isMenuInsideDropdown"
       [class.tri-menu-rtl]="dir === 'rtl'"
       [class]="menuClass"
     >
@@ -68,7 +68,7 @@ export class TriSubmenuNoneInlineChildComponent implements OnInit, OnChanges {
   @Input() menuClass: string = '';
   @Input() theme: TriMenuThemeType = 'light';
   @Input() templateOutlet: TemplateRef<TriSafeAny> | null = null;
-  @Input() isMenuInsideDropDown = false;
+  @Input() isMenuInsideDropdown = false;
   @Input() mode: TriMenuModeType = 'vertical';
   @Input() triggerSubMenuAction: TriSubmenuTrigger = 'hover';
   @Input() position = 'right';

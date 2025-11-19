@@ -20,7 +20,7 @@ import {
 
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
-import { TriDropDownDirective, TriDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
+import { TriDropdownModule } from 'ng-zorro-antd/dropdown';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriMenuModule } from 'ng-zorro-antd/menu';
 
@@ -78,14 +78,7 @@ import { TriTabNavItemDirective } from './tab-nav-item.directive';
     class: 'tri-tabs-nav-operations',
     '[class.tri-tabs-nav-operations-hidden]': 'items.length === 0'
   },
-  imports: [
-    TriIconModule,
-    TriOutletModule,
-    TriTabAddButtonComponent,
-    TriDropdownMenuComponent,
-    TriMenuModule,
-    TriDropDownDirective
-  ]
+  imports: [TriDropdownModule, TriIconModule, TriOutletModule, TriTabAddButtonComponent, TriMenuModule]
 })
 export class TriTabNavOperationComponent implements OnDestroy {
   @Input() items: TriTabNavItemDirective[] = [];

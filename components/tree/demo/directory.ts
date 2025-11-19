@@ -1,13 +1,13 @@
 import { LowerCasePipe } from '@angular/common';
 import { Component } from '@angular/core';
 
-import { TriContextMenuService, TriDropdownMenuComponent, TriDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriContextMenuService, TriDropdownMenuComponent, TriDropdownModule } from 'ng-zorro-antd/dropdown';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriFormatEmitEvent, TriTreeModule, TriTreeNode } from 'ng-zorro-antd/tree';
 
 @Component({
   selector: 'tri-demo-tree-directory',
-  imports: [TriDropDownModule, TriIconModule, TriTreeModule, LowerCasePipe],
+  imports: [TriDropdownModule, TriIconModule, TriTreeModule, LowerCasePipe],
   template: `
     <tri-tree
       blockNode

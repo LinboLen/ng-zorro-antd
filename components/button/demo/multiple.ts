@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
-import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriDropdownModule } from 'ng-zorro-antd/dropdown';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'tri-demo-button-multiple',
-  imports: [TriButtonModule, TriDropDownModule, TriIconModule],
+  imports: [TriButtonModule, TriDropdownModule, TriIconModule],
   template: `
     <button tri-button type="primary">primary</button>
     <button tri-button type="default">secondary</button>

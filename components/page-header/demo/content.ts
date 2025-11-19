@@ -4,7 +4,7 @@ import { TriAvatarModule } from 'ng-zorro-antd/avatar';
 import { TriBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriNoAnimationModule } from 'ng-zorro-antd/core/no-animation';
-import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriDropdownModule } from 'ng-zorro-antd/dropdown';
 import { TriGridModule } from 'ng-zorro-antd/grid';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriPageHeaderModule } from 'ng-zorro-antd/page-header';
@@ -18,7 +18,7 @@ import { TriTypographyModule } from 'ng-zorro-antd/typography';
     TriAvatarModule,
     TriBreadCrumbModule,
     TriButtonModule,
-    TriDropDownModule,
+    TriDropdownModule,
     TriGridModule,
     TriIconModule,
     TriNoAnimationModule,

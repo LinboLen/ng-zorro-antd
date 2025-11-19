@@ -15,7 +15,7 @@ import { defaultColor } from './src/util/util';
   exportAs: 'triColorBlock',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgAntdColorPickerModule],
-  template: `<ng-antd-color-block [color]="color" (onClick)="onClick.emit($event)"></ng-antd-color-block>`,
+  template: `<ng-antd-color-block [color]="color" (onClick)="onClick.emit()" />`,
   host: {
     class: 'tri-color-picker-inline',
     '[class.tri-color-picker-inline-sm]': `size === 'small'`,
@@ -25,5 +25,5 @@ import { defaultColor } from './src/util/util';
 export class TriColorBlockComponent {
   @Input() color: string = defaultColor.toHexString();
   @Input() size: TriSizeLDSType = 'default';
-  @Output() readonly onClick = new EventEmitter<boolean>();
+  @Output() readonly onClick = new EventEmitter<void>();
 }

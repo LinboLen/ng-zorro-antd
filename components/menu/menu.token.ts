@@ -7,9 +7,18 @@ import { InjectionToken } from '@angular/core';
 
 import { MenuService } from './menu.service';
 
-export const TriIsMenuInsideDropDownToken = new InjectionToken<boolean>(
+/**
+ * A flag to mark if the menu is inside a dropdown.
+ * @note Internally used only, please do not use it.
+ */
+export const TriIsMenuInsideDropdownToken = new InjectionToken<boolean>(
   typeof ngDevMode !== 'undefined' && ngDevMode ? 'nz-is-in-dropdown-menu' : ''
 );
+
+/**
+ * A token to hold the local {@link MenuService} instance. This is used for nested menu.
+ * @note Internally used only, please do not use it.
+ */
 export const TriMenuServiceLocalToken = new InjectionToken<MenuService>(
   typeof ngDevMode !== 'undefined' && ngDevMode ? 'nz-menu-service-local' : ''
 );

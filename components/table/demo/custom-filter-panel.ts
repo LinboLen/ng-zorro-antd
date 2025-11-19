@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
-import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriDropdownModule } from 'ng-zorro-antd/dropdown';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriInputModule } from 'ng-zorro-antd/input';
 import { TriTableModule } from 'ng-zorro-antd/table';
@@ -14,7 +14,7 @@ interface DataItem {
 }
 @Component({
   selector: 'tri-demo-table-custom-filter-panel',
-  imports: [FormsModule, TriButtonModule, TriDropDownModule, TriIconModule, TriInputModule, TriTableModule],
+  imports: [FormsModule, TriButtonModule, TriDropdownModule, TriIconModule, TriInputModule, TriTableModule],
   template: `
     <tri-table #nzTable [data]="listOfDisplayData" tableLayout="fixed">
       <thead>

@@ -41,109 +41,110 @@ import { TriColorPickerFormatType, ValidFormKey } from './typings';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ReactiveFormsModule, TriSelectModule, TriInputModule, TriInputNumberModule],
   template: `
-    <div class="tri-color-picker-input-container">
-      <div class="tri-color-picker-format-select">
-        <tri-select [formControl]="validateForm.controls.isFormat" borderless size="small">
-          <tri-option value="hex" label="HEX" />
-          <tri-option value="hsb" label="HSB" />
-          <tri-option value="rgb" label="RGB" />
-        </tri-select>
-      </div>
+    <div class="tri-color-picker-format-select">
+      <tri-select [formControl]="validateForm.controls.isFormat" borderless size="small">
+        <tri-option value="hex" label="HEX" />
+        <tri-option value="hsb" label="HSB" />
+        <tri-option value="rgb" label="RGB" />
+      </tri-select>
+    </div>
 
-      <div class="tri-color-picker-input">
-        @switch (validateForm.controls.isFormat.value) {
-          @case ('hex') {
-            <div class="tri-color-picker-hex-input">
-              <tri-input-wrapper prefix="#">
-                <input tri-input size="small" [formControl]="validateForm.controls.hex" />
-              </tri-input-wrapper>
-            </div>
-          }
-          @case ('hsb') {
-            <div class="tri-color-picker-hsb-input">
-              <div class="tri-color-picker-steppers tri-color-picker-hsb-input">
-                <tri-input-number
-                  [formControl]="validateForm.controls.hsbH"
-                  [min]="0"
-                  [max]="360"
-                  [step]="1"
-                  [precision]="0"
-                  size="small"
-                />
-              </div>
-              <div class="tri-color-picker-steppers tri-color-picker-hsb-input">
-                <tri-input-number
-                  [formControl]="validateForm.controls.hsbS"
-                  [min]="0"
-                  [max]="100"
-                  [step]="1"
-                  [formatter]="formatterPercent"
-                  [parser]="parserPercent"
-                  size="small"
-                />
-              </div>
-              <div class="tri-color-picker-steppers tri-color-picker-hsb-input">
-                <tri-input-number
-                  [formControl]="validateForm.controls.hsbB"
-                  [min]="0"
-                  [max]="100"
-                  [step]="1"
-                  [formatter]="formatterPercent"
-                  [parser]="parserPercent"
-                  size="small"
-                />
-              </div>
-            </div>
-          }
-          @default {
-            <div class="tri-color-picker-rgb-input">
-              <div class="tri-color-picker-steppers tri-color-picker-rgb-input">
-                <tri-input-number
-                  [formControl]="validateForm.controls.rgbR"
-                  [min]="0"
-                  [max]="255"
-                  [step]="1"
-                  size="small"
-                />
-              </div>
-              <div class="tri-color-picker-steppers tri-color-picker-rgb-input">
-                <tri-input-number
-                  [formControl]="validateForm.controls.rgbG"
-                  [min]="0"
-                  [max]="255"
-                  [step]="1"
-                  size="small"
-                />
-              </div>
-              <div class="tri-color-picker-steppers tri-color-picker-rgb-input">
-                <tri-input-number
-                  [formControl]="validateForm.controls.rgbB"
-                  [min]="0"
-                  [max]="255"
-                  [step]="1"
-                  size="small"
-                />
-              </div>
-            </div>
-          }
+    <div class="tri-color-picker-input">
+      @switch (validateForm.controls.isFormat.value) {
+        @case ('hex') {
+          <div class="tri-color-picker-hex-input">
+            <tri-input-wrapper prefix="#">
+              <input tri-input size="small" [formControl]="validateForm.controls.hex" />
+            </tri-input-wrapper>
+          </div>
         }
-      </div>
-
-      @if (!disabledAlpha) {
-        <div class="tri-color-picker-steppers tri-color-picker-alpha-input">
-          <tri-input-number
-            [formControl]="validateForm.controls.roundA"
-            [min]="0"
-            [max]="100"
-            [step]="1"
-            [formatter]="formatterPercent"
-            [parser]="parserPercent"
-            size="small"
-          />
-        </div>
+        @case ('hsb') {
+          <div class="tri-color-picker-hsb-input">
+            <div class="tri-color-picker-steppers tri-color-picker-hsb-input">
+              <tri-input-number
+                [formControl]="validateForm.controls.hsbH"
+                [min]="0"
+                [max]="360"
+                [step]="1"
+                [precision]="0"
+                size="small"
+              />
+            </div>
+            <div class="tri-color-picker-steppers tri-color-picker-hsb-input">
+              <tri-input-number
+                [formControl]="validateForm.controls.hsbS"
+                [min]="0"
+                [max]="100"
+                [step]="1"
+                [formatter]="formatterPercent"
+                [parser]="parserPercent"
+                size="small"
+              />
+            </div>
+            <div class="tri-color-picker-steppers tri-color-picker-hsb-input">
+              <tri-input-number
+                [formControl]="validateForm.controls.hsbB"
+                [min]="0"
+                [max]="100"
+                [step]="1"
+                [formatter]="formatterPercent"
+                [parser]="parserPercent"
+                size="small"
+              />
+            </div>
+          </div>
+        }
+        @default {
+          <div class="tri-color-picker-rgb-input">
+            <div class="tri-color-picker-steppers tri-color-picker-rgb-input">
+              <tri-input-number
+                [formControl]="validateForm.controls.rgbR"
+                [min]="0"
+                [max]="255"
+                [step]="1"
+                size="small"
+              />
+            </div>
+            <div class="tri-color-picker-steppers tri-color-picker-rgb-input">
+              <tri-input-number
+                [formControl]="validateForm.controls.rgbG"
+                [min]="0"
+                [max]="255"
+                [step]="1"
+                size="small"
+              />
+            </div>
+            <div class="tri-color-picker-steppers tri-color-picker-rgb-input">
+              <tri-input-number
+                [formControl]="validateForm.controls.rgbB"
+                [min]="0"
+                [max]="255"
+                [step]="1"
+                size="small"
+              />
+            </div>
+          </div>
+        }
       }
     </div>
-  `
+
+    @if (!disabledAlpha) {
+      <div class="tri-color-picker-steppers tri-color-picker-alpha-input">
+        <tri-input-number
+          [formControl]="validateForm.controls.roundA"
+          [min]="0"
+          [max]="100"
+          [step]="1"
+          [formatter]="formatterPercent"
+          [parser]="parserPercent"
+          size="small"
+        />
+      </div>
+    }
+  `,
+  host: {
+    class: 'tri-color-picker-input-container'
+  }
 })
 export class TriColorFormatComponent implements OnChanges, OnInit {
   private destroyRef = inject(DestroyRef);

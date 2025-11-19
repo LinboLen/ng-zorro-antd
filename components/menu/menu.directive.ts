@@ -25,19 +25,19 @@ import { BehaviorSubject, combineLatest } from 'rxjs';
 
 import { TriMenuItemComponent } from './menu-item.component';
 import { MenuService } from './menu.service';
-import { TriIsMenuInsideDropDownToken, TriMenuServiceLocalToken } from './menu.token';
+import { TriIsMenuInsideDropdownToken, TriMenuServiceLocalToken } from './menu.token';
 import { TriMenuModeType, TriMenuThemeType } from './menu.types';
 import { TriSubMenuComponent } from './submenu.component';
 
-export function MenuServiceFactory(): MenuService {
-  const serviceInsideDropDown = inject(MenuService, { skipSelf: true, optional: true });
-  const serviceOutsideDropDown = inject(TriMenuServiceLocalToken);
-  return serviceInsideDropDown ?? serviceOutsideDropDown;
+function MenuServiceFactory(): MenuService {
+  const serviceInsideDropdown = inject(MenuService, { skipSelf: true, optional: true });
+  const serviceOutsideDropdown = inject(TriMenuServiceLocalToken);
+  return serviceInsideDropdown ?? serviceOutsideDropdown;
 }
 
-export function MenuDropDownTokenFactory(): boolean {
-  const isMenuInsideDropDownToken = inject(TriIsMenuInsideDropDownToken, { skipSelf: true, optional: true });
-  return isMenuInsideDropDownToken ?? false;
+function MenuDropdownTokenFactory(): boolean {
+  const isMenuInsideDropdownToken = inject(TriIsMenuInsideDropdownToken, { skipSelf: true, optional: true });
+  return isMenuInsideDropdownToken ?? false;
 }
 
 @Directive({
@@ -55,27 +55,27 @@ export function MenuDropDownTokenFactory(): boolean {
     },
     /** check if menu inside dropdown-menu component **/
     {
-      provide: TriIsMenuInsideDropDownToken,
-      useFactory: MenuDropDownTokenFactory
+      provide: TriIsMenuInsideDropdownToken,
+      useFactory: MenuDropdownTokenFactory
     }
   ],
   host: {
-    '[class.tri-dropdown-menu]': `isMenuInsideDropDown`,
-    '[class.tri-dropdown-menu-root]': `isMenuInsideDropDown`,
-    '[class.tri-dropdown-menu-light]': `isMenuInsideDropDown && theme === 'light'`,
-    '[class.tri-dropdown-menu-dark]': `isMenuInsideDropDown && theme === 'dark'`,
-    '[class.tri-dropdown-menu-vertical]': `isMenuInsideDropDown && actualMode === 'vertical'`,
-    '[class.tri-dropdown-menu-horizontal]': `isMenuInsideDropDown && actualMode === 'horizontal'`,
-    '[class.tri-dropdown-menu-inline]': `isMenuInsideDropDown && actualMode === 'inline'`,
-    '[class.tri-dropdown-menu-inline-collapsed]': `isMenuInsideDropDown && inlineCollapsed`,
-    '[class.tri-menu]': `!isMenuInsideDropDown`,
-    '[class.tri-menu-root]': `!isMenuInsideDropDown`,
-    '[class.tri-menu-light]': `!isMenuInsideDropDown && theme === 'light'`,
-    '[class.tri-menu-dark]': `!isMenuInsideDropDown && theme === 'dark'`,
-    '[class.tri-menu-vertical]': `!isMenuInsideDropDown && actualMode === 'vertical'`,
-    '[class.tri-menu-horizontal]': `!isMenuInsideDropDown && actualMode === 'horizontal'`,
-    '[class.tri-menu-inline]': `!isMenuInsideDropDown && actualMode === 'inline'`,
-    '[class.tri-menu-inline-collapsed]': `!isMenuInsideDropDown && inlineCollapsed`,
+    '[class.tri-dropdown-menu]': `isMenuInsideDropdown`,
+    '[class.tri-dropdown-menu-root]': `isMenuInsideDropdown`,
+    '[class.tri-dropdown-menu-light]': `isMenuInsideDropdown && theme === 'light'`,
+    '[class.tri-dropdown-menu-dark]': `isMenuInsideDropdown && theme === 'dark'`,
+    '[class.tri-dropdown-menu-vertical]': `isMenuInsideDropdown && actualMode === 'vertical'`,
+    '[class.tri-dropdown-menu-horizontal]': `isMenuInsideDropdown && actualMode === 'horizontal'`,
+    '[class.tri-dropdown-menu-inline]': `isMenuInsideDropdown && actualMode === 'inline'`,
+    '[class.tri-dropdown-menu-inline-collapsed]': `isMenuInsideDropdown && inlineCollapsed`,
+    '[class.tri-menu]': `!isMenuInsideDropdown`,
+    '[class.tri-menu-root]': `!isMenuInsideDropdown`,
+    '[class.tri-menu-light]': `!isMenuInsideDropdown && theme === 'light'`,
+    '[class.tri-menu-dark]': `!isMenuInsideDropdown && theme === 'dark'`,
+    '[class.tri-menu-vertical]': `!isMenuInsideDropdown && actualMode === 'vertical'`,
+    '[class.tri-menu-horizontal]': `!isMenuInsideDropdown && actualMode === 'horizontal'`,
+    '[class.tri-menu-inline]': `!isMenuInsideDropdown && actualMode === 'inline'`,
+    '[class.tri-menu-inline-collapsed]': `!isMenuInsideDropdown && inlineCollapsed`,
     '[class.tri-menu-rtl]': `dir === 'rtl'`
   }
 })
@@ -87,13 +87,13 @@ export class TriMenuDirective implements AfterContentInit, OnInit, OnChanges {
 
   @ContentChildren(TriMenuItemComponent, { descendants: true })
   listOfNzMenuItemDirective!: QueryList<TriMenuItemComponent>;
-  isMenuInsideDropDown = inject(TriIsMenuInsideDropDownToken);
+  isMenuInsideDropdown = inject(TriIsMenuInsideDropdownToken);
   @ContentChildren(TriSubMenuComponent, { descendants: true }) listOfNzSubMenuComponent!: QueryList<TriSubMenuComponent>;
   @Input() inlineIndent = 24;
   @Input() theme: TriMenuThemeType = 'light';
   @Input() mode: TriMenuModeType = 'vertical';
   @Input({ transform: booleanAttribute }) inlineCollapsed = false;
-  @Input({ transform: booleanAttribute }) selectable = !this.isMenuInsideDropDown;
+  @Input({ transform: booleanAttribute }) selectable = !this.isMenuInsideDropdown;
   @Output() readonly click = new EventEmitter<TriMenuItemComponent>();
   actualMode: TriMenuModeType = 'vertical';
   dir: Direction = 'ltr';

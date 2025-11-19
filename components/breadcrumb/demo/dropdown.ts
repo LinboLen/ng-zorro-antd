@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 import { TriBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
-import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriDropdownModule } from 'ng-zorro-antd/dropdown';
 
 @Component({
   selector: 'tri-demo-breadcrumb-dropdown',
-  imports: [TriBreadCrumbModule, TriDropDownModule],
+  imports: [TriBreadCrumbModule, TriDropdownModule],
   template: `
     <tri-breadcrumb>
       <tri-breadcrumb-item>Ant Design</tri-breadcrumb-item>

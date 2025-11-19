@@ -15,7 +15,7 @@ import { TriMenuModule } from 'ng-zorro-antd/menu';
 
 import { TriContextMenuService } from './context-menu.service';
 import { TriDropdownMenuComponent } from './dropdown-menu.component';
-import { TriDropDownModule } from './dropdown.module';
+import { TriDropdownModule } from './dropdown.module';
 
 describe('context-menu', () => {
   let overlayContainer: OverlayContainer;
@@ -156,7 +156,7 @@ describe('context-menu', () => {
 });
 
 @Component({
-  imports: [TriDropDownModule, TriMenuModule],
+  imports: [TriDropdownModule, TriMenuModule],
   template: `
     <tri-dropdown-menu>
       <ul tri-menu>

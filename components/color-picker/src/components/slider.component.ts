@@ -6,6 +6,7 @@
 import {
   AfterViewInit,
   booleanAttribute,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   DOCUMENT,
@@ -20,9 +21,8 @@ import {
   ViewChild
 } from '@angular/core';
 
-import { GradientComponent } from './gradient.component';
-import { HandlerComponent } from './handler.component';
-import { PaletteComponent } from './palette.component';
+import { GradientDirective } from './gradient.directive';
+import { HandlerDirective } from './handler.directive';
 import { Color } from '../interfaces/color';
 import { HsbaColorType, TransformOffset } from '../interfaces/type';
 import { calculateColor, calculateOffset } from '../util/util';
@@ -40,44 +40,30 @@ function getPosition(e: EventType): { pageX: number; pageY: number } {
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
-  selector: '',
-  imports: [PaletteComponent, GradientComponent, HandlerComponent],
+  selector: 'color-slider',
+  imports: [GradientDirective, HandlerDirective],
   template: `
-    <div
-      #slider
-      (mousedown)="dragStartHandle($event)"
-      (touchstart)="dragStartHandle($event)"
-      class="tri-color-picker-slider"
-      [class]="'ant-color-picker-slider-' + type"
-    >
-      <color-palette>
-        <div
-          #transform
-          class="tri-color-picker-transform"
-          [style.left]="offsetValue.x + 'px'"
-          [style.top]="offsetValue.y + 'px'"
-        >
-          <color-handler size="small" [color]="value"></color-handler>
-        </div>
-        <color-gradient [colors]="gradientColors" [direction]="direction" [type]="type"></color-gradient>
-      </color-palette>
+    <div class="tri-color-picker-palette">
+      <div #transform class="tri-color-picker-transform" [style.left.px]="offsetValue.x" [style.top.px]="offsetValue.y">
+        <color-handler size="small" [color]="value" />
+      </div>
+      <color-gradient [colors]="gradientColors" [direction]="direction" [type]="type" />
     </div>
   `,
-  styles: [
-    `
-      :host {
-        display: block;
-        width: 100%;
-      }
-    `
-  ]
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: 'tri-color-picker-slider',
+    '[class]': `'ant-color-picker-slider-' + type`,
+    '(mousedown)': `dragStartHandle($event)`,
+    '(touchstart)': `dragStartHandle($event)`
+  }
 })
 export class SliderComponent implements OnInit, AfterViewInit, OnChanges {
   private document = inject(DOCUMENT);
   private cdr = inject(ChangeDetectorRef);
+  containerRef = inject<ElementRef<HTMLDivElement>>(ElementRef);
 
-  @ViewChild('slider', { static: false }) containerRef!: ElementRef<HTMLDivElement>;
-  @ViewChild('transform', { static: false }) transformRef!: ElementRef<HTMLDivElement>;
+  @ViewChild('transform', { static: true }) transformRef!: ElementRef<HTMLDivElement>;
 
   @Input() gradientColors: string[] = [];
   @Input() direction: string = 'to right';

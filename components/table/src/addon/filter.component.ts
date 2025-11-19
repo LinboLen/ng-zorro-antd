@@ -26,7 +26,7 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { arraysEqual } from 'ng-zorro-antd/core/util';
-import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriDropdownModule } from 'ng-zorro-antd/dropdown';
 import { TriI18nService, TriTableI18nInterface } from 'ng-zorro-antd/i18n';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriRadioComponent } from 'ng-zorro-antd/radio';
@@ -88,7 +88,7 @@ interface TriThItemInterface {
     NgTemplateOutlet,
     TriFilterTriggerComponent,
     TriIconModule,
-    TriDropDownModule,
+    TriDropdownModule,
     TriRadioComponent,
     TriCheckboxModule,
     FormsModule,

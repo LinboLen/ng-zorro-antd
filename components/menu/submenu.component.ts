@@ -37,7 +37,7 @@ import { getPlacementName, POSITION_MAP, POSITION_TYPE_HORIZONTAL } from 'ng-zor
 
 import { TriMenuItemComponent } from './menu-item.component';
 import { MenuService } from './menu.service';
-import { TriIsMenuInsideDropDownToken } from './menu.token';
+import { TriIsMenuInsideDropdownToken } from './menu.token';
 import { TriMenuModeType, TriMenuThemeType, TriSubmenuTrigger } from './menu.types';
 import { TriSubmenuInlineChildComponent } from './submenu-inline-child.component';
 import { TriSubmenuNoneInlineChildComponent } from './submenu-non-inline-child.component';
@@ -74,7 +74,7 @@ const listOfHorizontalPositions = [
       [title]="title"
       [mode]="mode"
       [disabled]="disabled"
-      [isMenuInsideDropDown]="isMenuInsideDropDown"
+      [isMenuInsideDropdown]="isMenuInsideDropdown"
       [paddingLeft]="paddingLeft || inlinePaddingLeft"
       [triggerSubMenuAction]="triggerSubMenuAction"
       (subMenuMouseState)="setMouseEnterState($event)"
@@ -112,7 +112,7 @@ const listOfHorizontalPositions = [
           [open]="open"
           [position]="position"
           [disabled]="disabled"
-          [isMenuInsideDropDown]="isMenuInsideDropDown"
+          [isMenuInsideDropdown]="isMenuInsideDropdown"
           [triggerSubMenuAction]="triggerSubMenuAction"
           [templateOutlet]="subMenuTemplate"
           [menuClass]="menuClassName"
@@ -128,22 +128,22 @@ const listOfHorizontalPositions = [
     </ng-template>
   `,
   host: {
-    '[class.tri-dropdown-menu-submenu]': `isMenuInsideDropDown`,
-    '[class.tri-dropdown-menu-submenu-disabled]': `isMenuInsideDropDown && disabled`,
-    '[class.tri-dropdown-menu-submenu-open]': `isMenuInsideDropDown && open`,
-    '[class.tri-dropdown-menu-submenu-selected]': `isMenuInsideDropDown && isSelected`,
-    '[class.tri-dropdown-menu-submenu-vertical]': `isMenuInsideDropDown && mode === 'vertical'`,
-    '[class.tri-dropdown-menu-submenu-horizontal]': `isMenuInsideDropDown && mode === 'horizontal'`,
-    '[class.tri-dropdown-menu-submenu-inline]': `isMenuInsideDropDown && mode === 'inline'`,
-    '[class.tri-dropdown-menu-submenu-active]': `isMenuInsideDropDown && isActive`,
-    '[class.tri-menu-submenu]': `!isMenuInsideDropDown`,
-    '[class.tri-menu-submenu-disabled]': `!isMenuInsideDropDown && disabled`,
-    '[class.tri-menu-submenu-open]': `!isMenuInsideDropDown && open`,
-    '[class.tri-menu-submenu-selected]': `!isMenuInsideDropDown && isSelected`,
-    '[class.tri-menu-submenu-vertical]': `!isMenuInsideDropDown && mode === 'vertical'`,
-    '[class.tri-menu-submenu-horizontal]': `!isMenuInsideDropDown && mode === 'horizontal'`,
-    '[class.tri-menu-submenu-inline]': `!isMenuInsideDropDown && mode === 'inline'`,
-    '[class.tri-menu-submenu-active]': `!isMenuInsideDropDown && isActive`,
+    '[class.tri-dropdown-menu-submenu]': `isMenuInsideDropdown`,
+    '[class.tri-dropdown-menu-submenu-disabled]': `isMenuInsideDropdown && disabled`,
+    '[class.tri-dropdown-menu-submenu-open]': `isMenuInsideDropdown && open`,
+    '[class.tri-dropdown-menu-submenu-selected]': `isMenuInsideDropdown && isSelected`,
+    '[class.tri-dropdown-menu-submenu-vertical]': `isMenuInsideDropdown && mode === 'vertical'`,
+    '[class.tri-dropdown-menu-submenu-horizontal]': `isMenuInsideDropdown && mode === 'horizontal'`,
+    '[class.tri-dropdown-menu-submenu-inline]': `isMenuInsideDropdown && mode === 'inline'`,
+    '[class.tri-dropdown-menu-submenu-active]': `isMenuInsideDropdown && isActive`,
+    '[class.tri-menu-submenu]': `!isMenuInsideDropdown`,
+    '[class.tri-menu-submenu-disabled]': `!isMenuInsideDropdown && disabled`,
+    '[class.tri-menu-submenu-open]': `!isMenuInsideDropdown && open`,
+    '[class.tri-menu-submenu-selected]': `!isMenuInsideDropdown && isSelected`,
+    '[class.tri-menu-submenu-vertical]': `!isMenuInsideDropdown && mode === 'vertical'`,
+    '[class.tri-menu-submenu-horizontal]': `!isMenuInsideDropdown && mode === 'horizontal'`,
+    '[class.tri-menu-submenu-inline]': `!isMenuInsideDropdown && mode === 'inline'`,
+    '[class.tri-menu-submenu-active]': `!isMenuInsideDropdown && isActive`,
     '[class.tri-menu-submenu-rtl]': `dir === 'rtl'`
   },
   imports: [
@@ -156,7 +156,7 @@ const listOfHorizontalPositions = [
 })
 export class TriSubMenuComponent implements OnInit, AfterContentInit, OnChanges {
   public readonly submenuService = inject(TriSubmenuService);
-  protected readonly isMenuInsideDropDown = inject(TriIsMenuInsideDropDownToken);
+  protected readonly isMenuInsideDropdown = inject(TriIsMenuInsideDropdownToken);
   protected readonly noAnimation = inject(TriNoAnimationDirective, { optional: true, host: true });
   private readonly directionality = inject(Directionality);
   private readonly destroyRef = inject(DestroyRef);

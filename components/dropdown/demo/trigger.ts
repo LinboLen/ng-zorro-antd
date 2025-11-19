@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
-import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriDropdownModule } from 'ng-zorro-antd/dropdown';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'tri-demo-dropdown-trigger',
-  imports: [TriDropDownModule, TriIconModule],
+  imports: [TriDropdownModule, TriIconModule],
   template: `
     <a tri-dropdown trigger="click" [dropdownMenu]="menu">
       Click me

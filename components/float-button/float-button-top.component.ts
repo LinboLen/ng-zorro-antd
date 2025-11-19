@@ -40,7 +40,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriFloatButtonComponent } from './float-button.component';
 import { TriFloatButtonBadge, TriFloatButtonType } from './typings';
 
-const withConfig = withConfigFactory('backTop');
+const withConfig = withConfigFactory('floatButton');
 const CLASS_NAME = 'ant-float-btn';
 
 const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: true });

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
-import { TriDropDownModule, TriPlacementType } from 'ng-zorro-antd/dropdown';
+import { TriDropdownModule, TriPlacementType } from 'ng-zorro-antd/dropdown';
 
 @Component({
   selector: 'tri-demo-dropdown-placement',
-  imports: [TriDropDownModule, TriButtonModule],
+  imports: [TriDropdownModule, TriButtonModule],
   template: `
     <div>
       @for (position of listOfPosition; track position) {

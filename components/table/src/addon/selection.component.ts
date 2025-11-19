@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 
 import { TriCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
-import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriDropdownModule } from 'ng-zorro-antd/dropdown';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
@@ -45,7 +45,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
     }
   `,
   host: { class: 'tri-table-selection' },
-  imports: [FormsModule, TriCheckboxModule, TriDropDownModule, TriIconModule]
+  imports: [FormsModule, TriCheckboxModule, TriDropdownModule, TriIconModule]
 })
 export class TriTableSelectionComponent {
   @Input() listOfSelections: Array<{ text: string; onSelect(...args: TriSafeAny[]): TriSafeAny }> = [];

@@ -37,7 +37,7 @@ import { TriMenuModeType, TriSubmenuTrigger } from './menu.types';
       <span class="tri-menu-title-content">{{ title }}</span>
     </ng-container>
     <ng-content />
-    @if (isMenuInsideDropDown) {
+    @if (isMenuInsideDropdown) {
       <span class="tri-dropdown-menu-submenu-expand-icon">
         @switch (dir) {
           @case ('rtl') {
@@ -53,8 +53,8 @@ import { TriMenuModeType, TriSubmenuTrigger } from './menu.types';
     }
   `,
   host: {
-    '[class.tri-dropdown-menu-submenu-title]': 'isMenuInsideDropDown',
-    '[class.tri-menu-submenu-title]': '!isMenuInsideDropDown',
+    '[class.tri-dropdown-menu-submenu-title]': 'isMenuInsideDropdown',
+    '[class.tri-menu-submenu-title]': '!isMenuInsideDropdown',
     '[style.paddingLeft.px]': `dir === 'rtl' ? null : paddingLeft `,
     '[style.paddingRight.px]': `dir === 'rtl' ? paddingLeft : null`,
     '(click)': 'clickTitle()',
@@ -70,7 +70,7 @@ export class TriSubMenuTitleComponent implements OnInit {
 
   @Input() icon: string | null = null;
   @Input() title: string | TemplateRef<void> | null = null;
-  @Input() isMenuInsideDropDown = false;
+  @Input() isMenuInsideDropdown = false;
   @Input() disabled = false;
   @Input() paddingLeft: number | null = null;
   @Input() mode: TriMenuModeType = 'vertical';

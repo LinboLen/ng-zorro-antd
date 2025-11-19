@@ -11,12 +11,13 @@ import { auditTime, distinctUntilChanged, filter, map, mergeMap } from 'rxjs/ope
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 import { MenuService } from './menu.service';
-import { TriIsMenuInsideDropDownToken } from './menu.token';
+import { TriIsMenuInsideDropdownToken } from './menu.token';
 import { TriMenuModeType } from './menu.types';
 
 @Injectable()
 export class TriSubmenuService {
   public readonly menuService = inject(MenuService);
+  private readonly isMenuInsideDropdown = inject(TriIsMenuInsideDropdownToken);
   private readonly hostSubmenuService = inject(TriSubmenuService, { optional: true, skipSelf: true });
 
   mode$: Observable<TriMenuModeType> = this.menuService.mode$.pipe(
@@ -32,7 +33,6 @@ export class TriSubmenuService {
     })
   );
   level = 1;
-  isMenuInsideDropDown = inject(TriIsMenuInsideDropDownToken);
   isCurrentSubMenuOpen$ = new BehaviorSubject<boolean>(false);
   private isChildSubMenuOpen$ = new BehaviorSubject<boolean>(false);
   /** submenu title & overlay mouse enter status **/
@@ -59,7 +59,7 @@ export class TriSubmenuService {
     /** close if menu item clicked **/
     const isClosedByMenuItemClick = this.childMenuItemClick$.pipe(
       mergeMap(() => this.mode$),
-      filter(mode => mode !== 'inline' || this.isMenuInsideDropDown),
+      filter(mode => mode !== 'inline' || this.isMenuInsideDropdown),
       map(() => false)
     );
     const isCurrentSubmenuOpen$ = merge(this.isMouseEnterTitleOrOverlay$, isClosedByMenuItemClick);

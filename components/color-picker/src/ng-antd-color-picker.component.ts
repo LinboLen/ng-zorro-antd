@@ -5,6 +5,7 @@
 
 import { NgTemplateOutlet } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
@@ -30,45 +31,54 @@ import { defaultColor, generateColor } from './util/util';
   selector: '',
   imports: [PickerComponent, SliderComponent, NgAntdColorBlockComponent, NgTemplateOutlet],
   template: `
-    <div class="tri-color-picker-panel" [class.tri-color-picker-panel-disabled]="disabled">
-      @if (panelRenderHeader) {
-        <ng-template [ngTemplateOutlet]="panelRenderHeader"></ng-template>
-      }
-      <color-picker
-        [color]="colorValue"
-        (onChange)="handleChange($event)"
-        [disabled]="disabled"
-        (onChangeComplete)="onChangeComplete.emit($event)"
-      ></color-picker>
-      <div class="tri-color-picker-slider-container">
-        <div class="tri-color-picker-slider-group" [class.tri-color-picker-slider-group-disabled-alpha]="disabledAlpha">
-          <color-slider
-            [color]="colorValue"
-            [value]="'hsl(' + colorValue?.toHsb()?.h + ',100%, 50%)'"
-            [gradientColors]="hueColor"
-            (onChange)="handleChange($event, 'hue')"
-            [disabled]="disabled"
-            (onChangeComplete)="onChangeComplete.emit($event)"
-          ></color-slider>
-          @if (!disabledAlpha) {
+    <div class="tri-color-picker-inner-content">
+      <div class="tri-color-picker-panel" [class.tri-color-picker-panel-disabled]="disabled">
+        @if (panelRenderHeader) {
+          <ng-template [ngTemplateOutlet]="panelRenderHeader"></ng-template>
+        }
+        <color-picker
+          [color]="colorValue"
+          (onChange)="handleChange($event)"
+          [disabled]="disabled"
+          (onChangeComplete)="onChangeComplete.emit($event)"
+        ></color-picker>
+        <div class="tri-color-picker-slider-container">
+          <div
+            class="tri-color-picker-slider-group"
+            [class.tri-color-picker-slider-group-disabled-alpha]="disabledAlpha"
+          >
             <color-slider
-              type="alpha"
               [color]="colorValue"
-              [value]="toRgbString"
-              [gradientColors]="gradientColors"
-              (onChange)="handleChange($event, 'alpha')"
+              [value]="'hsl(' + colorValue?.toHsb()?.h + ',100%, 50%)'"
+              [gradientColors]="hueColor"
+              (onChange)="handleChange($event, 'hue')"
               [disabled]="disabled"
               (onChangeComplete)="onChangeComplete.emit($event)"
             ></color-slider>
-          }
+            @if (!disabledAlpha) {
+              <color-slider
+                type="alpha"
+                [color]="colorValue"
+                [value]="toRgbString"
+                [gradientColors]="gradientColors"
+                (onChange)="handleChange($event, 'alpha')"
+                [disabled]="disabled"
+                (onChangeComplete)="onChangeComplete.emit($event)"
+              ></color-slider>
+            }
+          </div>
+          <ng-antd-color-block [color]="toRgbString"></ng-antd-color-block>
         </div>
-        <ng-antd-color-block [color]="toRgbString"></ng-antd-color-block>
       </div>
       @if (panelRenderFooter) {
         <ng-template [ngTemplateOutlet]="panelRenderFooter"></ng-template>
       }
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: 'tri-color-picker-inner'
+  }
 })
 export class NgAntdColorPickerComponent implements OnInit, OnChanges {
   private cdr = inject(ChangeDetectorRef);

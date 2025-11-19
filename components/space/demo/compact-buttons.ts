@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
-import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriDropdownModule } from 'ng-zorro-antd/dropdown';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriSpaceModule } from 'ng-zorro-antd/space';
 import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'tri-demo-space-compact-buttons',
-  imports: [TriSpaceModule, TriButtonModule, TriIconModule, TriDropDownModule, TriTooltipModule],
+  imports: [TriSpaceModule, TriButtonModule, TriIconModule, TriDropdownModule, TriTooltipModule],
   template: `
     <tri-space-compact block>
       <button tri-button tri-tooltip tooltipTitle="Like">

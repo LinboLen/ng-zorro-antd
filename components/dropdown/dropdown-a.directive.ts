@@ -11,4 +11,4 @@ import { Directive } from '@angular/core';
     class: 'tri-dropdown-link'
   }
 })
-export class TriDropDownADirective {}
+export class TriDropdownADirective {}

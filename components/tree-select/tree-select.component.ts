@@ -112,7 +112,7 @@ const listOfPositions = [
       [cdkConnectedOverlayMinWidth]="$any(dropdownMatchSelectWidth ? null : triggerWidth)"
       [cdkConnectedOverlayWidth]="$any(dropdownMatchSelectWidth ? triggerWidth : null)"
       (overlayOutsideClick)="onClickOutside($event)"
-      (detach)="closeDropDown()"
+      (detach)="closeDropdown()"
       (positionChange)="onPositionChange($event)"
     >
       <div
@@ -410,7 +410,7 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
     super(inject(TriTreeSelectService));
 
     this.destroyRef.onDestroy(() => {
-      this.closeDropDown();
+      this.closeDropdown();
     });
 
     onConfigChangeEventForComponent(TRI_CONFIG_MODULE_NAME, () => {
@@ -477,7 +477,7 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = (this.isNzDisableFirstChange && this.disabled) || isDisabled;
-    this.closeDropDown();
+    this.closeDropdown();
     this.isNzDisableFirstChange = false;
   }
 
@@ -556,7 +556,7 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
          */
         break;
       case TAB:
-        this.closeDropDown();
+        this.closeDropdown();
         break;
       default:
         if (!this.open) {
@@ -567,7 +567,7 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
 
   trigger(): void {
     if (this.disabled || (!this.disabled && this.open)) {
-      this.closeDropDown();
+      this.closeDropdown();
     } else {
       this.openDropdown();
     }
@@ -584,10 +584,8 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
     }
   }
 
-  closeDropDown(): void {
-    Promise.resolve().then(() => {
-      this.onTouched();
-    });
+  closeDropdown(): void {
+    Promise.resolve().then(() => this.onTouched());
     this.open = false;
     this.inputValue = '';
     this.isNotFound = false;
@@ -677,7 +675,7 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
           this.focusOnInput();
           this.updatePosition();
         } else {
-          this.closeDropDown();
+          this.closeDropdown();
           this.onChange(value.length ? value[0] : null);
         }
       });
@@ -734,7 +732,7 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
   onClickOutside(event: MouseEvent): void {
     const target = _getEventTarget(event);
     if (!this.elementRef.nativeElement.contains(target)) {
-      this.closeDropDown();
+      this.closeDropdown();
     }
   }
 

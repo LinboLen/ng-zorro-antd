@@ -3,25 +3,20 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Directive, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 import { Color } from '../interfaces/color';
 import { HsbaColorType } from '../interfaces/type';
 import { generateColor } from '../util/util';
 
-@Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: '',
-  template: `
-    <div
-      class="tri-color-picker-gradient"
-      [style.background]="'linear-gradient(' + direction + ', ' + gradientColors + ')'"
-    >
-      <ng-content></ng-content>
-    </div>
-  `
+@Directive({
+  selector: 'color-gradient',
+  host: {
+    class: 'tri-color-picker-gradient',
+    '[style.background]': `'linear-gradient(' + direction + ', ' + gradientColors + ')'`
+  }
 })
-export class GradientComponent implements OnInit, OnChanges {
+export class GradientDirective implements OnInit, OnChanges {
   @Input() colors: Color[] | string[] = [];
   @Input() direction: string = 'to right';
   @Input() type: HsbaColorType = 'hue';

@@ -3,12 +3,12 @@ import { FormsModule } from '@angular/forms';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriCronExpressionModule } from 'ng-zorro-antd/cron-expression';
-import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriDropdownModule } from 'ng-zorro-antd/dropdown';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'tri-demo-cron-expression-shortcuts',
-  imports: [FormsModule, TriButtonModule, TriCronExpressionModule, TriDropDownModule, TriIconModule],
+  imports: [FormsModule, TriButtonModule, TriCronExpressionModule, TriDropdownModule, TriIconModule],
   template: `
     <tri-cron-expression
       [extra]="shortcuts"

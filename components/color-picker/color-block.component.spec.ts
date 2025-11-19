@@ -62,16 +62,14 @@ describe('nz-color-block', () => {
 
 @Component({
   imports: [TriColorPickerModule],
-  template: `
-    <tri-color-block [color]="color" [size]="size" (onClick)="clickHandle($event)"></tri-color-block>
-  `
+  template: ` <tri-color-block [color]="color" [size]="size" (onClick)="clickHandle()"></tri-color-block> `
 })
 export class TriTestColorBlockComponent {
   color = '#1677ff';
   size: TriSizeLDSType = 'default';
   isClick: boolean = false;
 
-  clickHandle(value: boolean): void {
-    this.isClick = value;
+  clickHandle(): void {
+    this.isClick = true;
   }
 }

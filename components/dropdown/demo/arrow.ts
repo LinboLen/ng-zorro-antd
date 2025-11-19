@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
-import { TriDropDownModule, TriPlacementType } from 'ng-zorro-antd/dropdown';
+import { TriDropdownModule, TriPlacementType } from 'ng-zorro-antd/dropdown';
 import { TriFlexModule } from 'ng-zorro-antd/flex';
 
 @Component({
   selector: 'tri-demo-dropdown-arrow',
-  imports: [TriDropDownModule, TriButtonModule, TriFlexModule],
+  imports: [TriDropdownModule, TriButtonModule, TriFlexModule],
   template: `
     <div tri-flex [gap]="8" wrap="wrap">
       @for (position of listOfPosition; track position) {

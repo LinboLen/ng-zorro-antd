@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
-import { TriContextMenuService, TriDropdownMenuComponent, TriDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriContextMenuService, TriDropdownMenuComponent, TriDropdownModule } from 'ng-zorro-antd/dropdown';
 
 @Component({
   selector: 'tri-demo-dropdown-context-menu',
-  imports: [TriDropDownModule],
+  imports: [TriDropdownModule],
   template: `
     <div class="context-area" (contextmenu)="contextMenu($event, menu)">Right Click on here</div>
     <tri-dropdown-menu #menu="nzDropdownMenu">

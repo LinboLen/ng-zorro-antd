@@ -18,26 +18,27 @@ import {
 
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 
-import { TriIsMenuInsideDropDownToken } from './menu.token';
+import { TriIsMenuInsideDropdownToken } from './menu.token';
 
-export function MenuGroupFactory(): boolean {
-  const isMenuInsideDropDownToken = inject(TriIsMenuInsideDropDownToken, { optional: true, skipSelf: true });
-  return isMenuInsideDropDownToken ?? false;
+function MenuGroupFactory(): boolean {
+  const isMenuInsideDropdownToken = inject(TriIsMenuInsideDropdownToken, { optional: true, skipSelf: true });
+  return isMenuInsideDropdownToken ?? false;
 }
+
 @Component({
   selector: '[tri-menu-group]',
   exportAs: 'triMenuGroup',
   providers: [
     /** check if menu inside dropdown-menu component **/
     {
-      provide: TriIsMenuInsideDropDownToken,
+      provide: TriIsMenuInsideDropdownToken,
       useFactory: MenuGroupFactory
     }
   ],
   template: `
     <div
-      [class.tri-menu-item-group-title]="!isMenuInsideDropDown"
-      [class.tri-dropdown-menu-item-group-title]="isMenuInsideDropDown"
+      [class.tri-menu-item-group-title]="!isMenuInsideDropdown"
+      [class.tri-dropdown-menu-item-group-title]="isMenuInsideDropdown"
       #titleElement
     >
       <ng-container *stringTemplateOutlet="title">{{ title }}</ng-container>
@@ -49,15 +50,15 @@ export function MenuGroupFactory(): boolean {
   `,
   imports: [TriOutletModule],
   host: {
-    '[class.tri-menu-item-group]': '!isMenuInsideDropDown',
-    '[class.tri-dropdown-menu-item-group]': 'isMenuInsideDropDown'
+    '[class.tri-menu-item-group]': '!isMenuInsideDropdown',
+    '[class.tri-dropdown-menu-item-group]': 'isMenuInsideDropdown'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class TriMenuGroupComponent implements AfterViewInit {
   private readonly renderer = inject(Renderer2);
-  protected readonly isMenuInsideDropDown = inject(TriIsMenuInsideDropDownToken);
+  protected readonly isMenuInsideDropdown = inject(TriIsMenuInsideDropdownToken);
 
   @Input() title?: string | TemplateRef<void>;
   @ViewChild('titleElement') titleElement?: ElementRef;
@@ -66,7 +67,7 @@ export class TriMenuGroupComponent implements AfterViewInit {
     const ulElement = this.titleElement!.nativeElement.nextElementSibling;
     if (ulElement) {
       /** add classname to ul **/
-      const className = this.isMenuInsideDropDown ? 'ant-dropdown-menu-item-group-list' : 'ant-menu-item-group-list';
+      const className = this.isMenuInsideDropdown ? 'ant-dropdown-menu-item-group-list' : 'ant-menu-item-group-list';
       this.renderer.addClass(ulElement, className);
     }
   }

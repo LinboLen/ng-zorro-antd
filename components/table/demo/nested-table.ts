@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { TriBadgeModule } from 'ng-zorro-antd/badge';
 import { TriDividerModule } from 'ng-zorro-antd/divider';
-import { TriDropDownModule } from 'ng-zorro-antd/dropdown';
+import { TriDropdownModule } from 'ng-zorro-antd/dropdown';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriTableModule } from 'ng-zorro-antd/table';
 
@@ -26,7 +26,7 @@ interface ChildrenItemData {
 
 @Component({
   selector: 'tri-demo-table-nested-table',
-  imports: [TriBadgeModule, TriDividerModule, TriDropDownModule, TriIconModule, TriTableModule],
+  imports: [TriBadgeModule, TriDividerModule, TriDropdownModule, TriIconModule, TriTableModule],
   template: `
     <tri-table #nestedTable [data]="listOfParentData" [pageSize]="10">
       <thead>

@@ -28,7 +28,7 @@ import { filter } from 'rxjs/operators';
 import { numberAttributeWithZeroFallback } from 'ng-zorro-antd/core/util';
 
 import { MenuService } from './menu.service';
-import { TriIsMenuInsideDropDownToken } from './menu.token';
+import { TriIsMenuInsideDropdownToken } from './menu.token';
 import { TriSubmenuService } from './submenu.service';
 
 @Component({
@@ -42,14 +42,14 @@ import { TriSubmenuService } from './submenu.service';
     </span>
   `,
   host: {
-    '[class.tri-dropdown-menu-item]': `isMenuInsideDropDown`,
-    '[class.tri-dropdown-menu-item-selected]': `isMenuInsideDropDown && selected`,
-    '[class.tri-dropdown-menu-item-danger]': `isMenuInsideDropDown && danger`,
-    '[class.tri-dropdown-menu-item-disabled]': `isMenuInsideDropDown && disabled`,
-    '[class.tri-menu-item]': `!isMenuInsideDropDown`,
-    '[class.tri-menu-item-selected]': `!isMenuInsideDropDown && selected`,
-    '[class.tri-menu-item-danger]': `!isMenuInsideDropDown && danger`,
-    '[class.tri-menu-item-disabled]': `!isMenuInsideDropDown && disabled`,
+    '[class.tri-dropdown-menu-item]': `isMenuInsideDropdown`,
+    '[class.tri-dropdown-menu-item-selected]': `isMenuInsideDropdown && selected`,
+    '[class.tri-dropdown-menu-item-danger]': `isMenuInsideDropdown && danger`,
+    '[class.tri-dropdown-menu-item-disabled]': `isMenuInsideDropdown && disabled`,
+    '[class.tri-menu-item]': `!isMenuInsideDropdown`,
+    '[class.tri-menu-item-selected]': `!isMenuInsideDropdown && selected`,
+    '[class.tri-menu-item-danger]': `!isMenuInsideDropdown && danger`,
+    '[class.tri-menu-item-disabled]': `!isMenuInsideDropdown && disabled`,
     '[style.paddingLeft.px]': `dir === 'rtl' ? null : nzPaddingLeft || inlinePaddingLeft`,
     '[style.paddingRight.px]': `dir === 'rtl' ? nzPaddingLeft || inlinePaddingLeft : null`,
     '(click)': 'clickMenuItem($event)'
@@ -63,7 +63,7 @@ export class TriMenuItemComponent implements OnInit, OnChanges, AfterContentInit
   private readonly directionality = inject(Directionality);
   private readonly routerLink = inject(RouterLink, { optional: true });
   private readonly router = inject(Router, { optional: true });
-  protected readonly isMenuInsideDropDown = inject(TriIsMenuInsideDropDownToken);
+  protected readonly isMenuInsideDropdown = inject(TriIsMenuInsideDropdownToken);
 
   level = this.submenuService ? this.submenuService.level + 1 : 1;
   selected$ = new Subject<boolean>();
