@@ -146,7 +146,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'timePicker';
     '[class.tri-picker-disabled]': `disabled`,
     '[class.tri-picker-focused]': `focused`,
     '[class.tri-picker-rtl]': `dir === 'rtl'`,
-    '[class.tri-picker-borderless]': `variant === 'borderless' || (variant === 'outlined' && borderless)`,
+    '[class.tri-picker-borderless]': `variant === 'borderless'`,
     '[class.tri-picker-filled]': `variant === 'filled'`,
     '[class.tri-picker-underlined]': `variant === 'underlined'`,
     '(click)': 'open()'
@@ -269,10 +269,6 @@ export class TriTimePickerComponent implements ControlValueAccessor, OnInit, Aft
   @Input({ transform: booleanAttribute }) disabled = false;
   @Input({ transform: booleanAttribute }) autoFocus = false;
   @Input() @WithConfig() backdrop = false;
-  /**
-   * @deprecated Will be removed in v21. It is recommended to use `nzVariant` instead.
-   */
-  @Input({ transform: booleanAttribute }) borderless: boolean = false;
   @Input({ transform: booleanAttribute }) inputReadOnly: boolean = false;
 
   emitValue(value: Date | null): void {

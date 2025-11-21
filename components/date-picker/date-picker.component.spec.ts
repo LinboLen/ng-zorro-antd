@@ -563,12 +563,6 @@ describe('NzDatePickerComponent', () => {
       expect(debugElement.query(By.css(`.anticon-clock-circle`))).toBeDefined();
     }));
 
-    it('should support nzBorderless', fakeAsync(() => {
-      fixtureInstance.borderless = true;
-      fixture.detectChanges();
-      expect(debugElement.query(By.css(`.ant-picker-borderless`))).toBeDefined();
-    }));
-
     describe('should support nzVariant', () => {
       it('borderless', () => {
         fixture.detectChanges();
@@ -1539,7 +1533,6 @@ describe('in form', () => {
           [showTime]="showTime"
           (onOk)="onOk($event)"
           [suffixIcon]="suffixIcon"
-          [borderless]="borderless"
           [variant]="variant"
           [inline]="inline"
           [backdrop]="backdrop"
@@ -1603,7 +1596,6 @@ class TriTestDatePickerComponent {
   showNow = false;
   mode: string = 'date';
   suffixIcon!: string;
-  borderless = false;
   variant: TriVariant = 'outlined';
   inline = false;
   backdrop = false;

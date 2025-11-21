@@ -196,10 +196,6 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly readOnly = input(false, { transform: booleanAttribute });
   readonly autoFocus = input(false, { transform: booleanAttribute });
-  /**
-   * @deprecated Will be removed in v21. It is recommended to use `nzVariant` instead.
-   */
-  readonly bordered = input(true, { transform: booleanAttribute });
   readonly keyboard = input(true, { transform: booleanAttribute });
   readonly controls = input(true, { transform: booleanAttribute });
   readonly prefix = input<string>();
@@ -273,7 +269,7 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
       'ant-input-number-rtl': this.dir() === 'rtl',
       'ant-input-number-in-form-item': !!this.formStatusService,
       'ant-input-number-out-of-range': this.value() !== null && !isInRange(this.value()!, this.min(), this.max()),
-      ...getVariantClassNames('ant-input-number', this.variant(), !this.bordered()),
+      ...getVariantClassNames('ant-input-number', this.variant()),
       ...getStatusClassNames('ant-input-number', this.finalStatus(), this.hasFeedback())
     };
   });
@@ -285,7 +281,7 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
       'ant-input-number-affix-wrapper-focused': this.focused(),
       'ant-input-number-affix-wrapper-rtl': this.dir() === 'rtl',
       ...getStatusClassNames('ant-input-number-affix-wrapper', this.finalStatus(), this.hasFeedback()),
-      ...getVariantClassNames('ant-input-number-affix-wrapper', this.variant(), !this.bordered())
+      ...getVariantClassNames('ant-input-number-affix-wrapper', this.variant())
     };
   });
   protected readonly groupWrapperClass = computed(() => {
@@ -293,7 +289,7 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
       'ant-input-number-group-wrapper': true,
       'ant-input-number-group-wrapper-rtl': this.dir() === 'rtl',
       ...getStatusClassNames('ant-input-number-group-wrapper', this.finalStatus(), this.hasFeedback()),
-      ...getVariantClassNames('ant-input-number-group-wrapper', this.variant(), !this.bordered())
+      ...getVariantClassNames('ant-input-number-group-wrapper', this.variant())
     };
   });
 

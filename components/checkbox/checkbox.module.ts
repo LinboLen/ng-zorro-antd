@@ -6,11 +6,10 @@
 import { NgModule } from '@angular/core';
 
 import { TriCheckboxGroupComponent } from './checkbox-group.component';
-import { TriCheckboxWrapperComponent } from './checkbox-wrapper.component';
 import { TriCheckboxComponent } from './checkbox.component';
 
 @NgModule({
-  imports: [TriCheckboxComponent, TriCheckboxGroupComponent, TriCheckboxWrapperComponent],
-  exports: [TriCheckboxComponent, TriCheckboxGroupComponent, TriCheckboxWrapperComponent]
+  imports: [TriCheckboxComponent, TriCheckboxGroupComponent],
+  exports: [TriCheckboxComponent, TriCheckboxGroupComponent]
 })
 export class TriCheckboxModule {}

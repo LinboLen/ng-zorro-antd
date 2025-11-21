@@ -9,9 +9,6 @@ import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testi
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { TriSafeAny } from 'ng-zorro-antd/core/types';
-
-import { TriCheckboxWrapperComponent } from './checkbox-wrapper.component';
 import { TriCheckboxComponent } from './checkbox.component';
 import { TriCheckboxModule } from './checkbox.module';
 
@@ -212,32 +209,6 @@ describe('checkbox', () => {
     }));
   });
 
-  describe('checkbox wrapper', () => {
-    let fixture: ComponentFixture<TriTestCheckboxWrapperComponent>;
-    let testComponent: TriTestCheckboxWrapperComponent;
-    let checkboxWrapper: DebugElement;
-    let inputElement: HTMLInputElement;
-
-    beforeEach(fakeAsync(() => {
-      fixture = TestBed.createComponent(TriTestCheckboxWrapperComponent);
-      fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
-      testComponent = fixture.debugElement.componentInstance;
-      checkboxWrapper = fixture.debugElement.query(By.directive(TriCheckboxWrapperComponent));
-      inputElement = checkboxWrapper.nativeElement.querySelector('input') as HTMLInputElement;
-    }));
-    it('should className correct', fakeAsync(() => {
-      expect(checkboxWrapper.nativeElement.classList).toContain('ant-checkbox-group');
-    }));
-    it('should onChange correct', fakeAsync(() => {
-      inputElement.click();
-      flush();
-      fixture.detectChanges();
-      expect(testComponent.onChange).toHaveBeenCalledWith([]);
-      expect(testComponent.onChange).toHaveBeenCalledTimes(1);
-    }));
-  });
   describe('RTL', () => {
     it('should single checkbox className correct on dir change', () => {
       const fixture = TestBed.createComponent(TriTestCheckboxSingleRtlComponent);
@@ -275,22 +246,6 @@ export class TriTestCheckboxSingleComponent {
   checked = false;
   indeterminate = false;
   modelChange = jasmine.createSpy('change callback');
-}
-
-@Component({
-  imports: [FormsModule, TriCheckboxModule],
-  template: `
-    <tri-checkbox-wrapper (onChange)="onChange($event)">
-      <div><label tri-checkbox value="A" [ngModel]="true">A</label></div>
-      <div><label tri-checkbox value="B">B</label></div>
-      <div><label tri-checkbox value="C">C</label></div>
-      <div><label tri-checkbox value="D">D</label></div>
-      <div><label tri-checkbox value="E">E</label></div>
-    </tri-checkbox-wrapper>
-  `
-})
-export class TriTestCheckboxWrapperComponent {
-  onChange = jasmine.createSpy('change callback');
 }
 
 @Component({
@@ -346,35 +301,5 @@ describe('checkbox component', () => {
     component.autoFocus = true;
     component.ngAfterViewInit();
     expect(component.focus).toHaveBeenCalled();
-  });
-
-  describe('checkbox wrapper component', () => {
-    let fixture: ComponentFixture<TriCheckboxWrapperComponent>;
-    let component: TriCheckboxWrapperComponent;
-
-    beforeEach(() => {
-      fixture = TestBed.createComponent(TriCheckboxWrapperComponent);
-      component = fixture.componentInstance;
-    });
-
-    it('should emit correct value', () => {
-      (component as TriSafeAny)['checkboxList'] = [
-        {
-          nzChecked: true,
-          nzValue: 'value 1'
-        },
-        {
-          nzChecked: true,
-          nzValue: 'value 2'
-        },
-        {
-          nzChecked: false,
-          nzValue: 'value 3'
-        }
-      ];
-      spyOn(component.onChange, 'emit');
-      component._onChange();
-      expect(component.onChange.emit).toHaveBeenCalledWith(['value 1', 'value 2']);
-    });
   });
 });

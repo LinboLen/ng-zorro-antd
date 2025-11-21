@@ -257,13 +257,6 @@ describe('select', () => {
       expect(selectElement.querySelector('nz-select-item')!.textContent?.trim()).toBe('test_label');
     }));
 
-    it('should nzBorderless works', () => {
-      expect(selectElement.classList).not.toContain('ant-select-borderless');
-      component.borderless = true;
-      fixture.detectChanges();
-      expect(selectElement.classList).toContain('ant-select-borderless');
-    });
-
     describe('should nzVariant works', () => {
       it('filled', () => {
         fixture.detectChanges();
@@ -1649,7 +1642,6 @@ describe('select', () => {
       [filterOption]="filterOption"
       [compareWith]="compareWith"
       [allowClear]="allowClear"
-      [borderless]="borderless"
       [variant]="variant"
       [showSearch]="showSearch"
       [loading]="loading"
@@ -1722,7 +1714,6 @@ export class TestSelectTemplateDefaultComponent {
   };
   compareWith: (o1: TriSafeAny, o2: TriSafeAny) => boolean = (o1: TriSafeAny, o2: TriSafeAny) => o1 === o2;
   allowClear = false;
-  borderless = false;
   variant: TriVariant = 'outlined';
   showSearch = false;
   loading = false;
@@ -1821,7 +1812,6 @@ export class TestSelectTemplateTagsComponent {
       [filterOption]="filterOption"
       [compareWith]="compareWith"
       [allowClear]="allowClear"
-      [borderless]="borderless"
       [showSearch]="showSearch"
       [loading]="loading"
       [autoFocus]="autoFocus"
@@ -1866,7 +1856,6 @@ export class TestSelectReactiveDefaultComponent {
   };
   compareWith: (o1: TriSafeAny, o2: TriSafeAny) => boolean = (o1: TriSafeAny, o2: TriSafeAny) => o1 === o2;
   allowClear = false;
-  borderless = false;
   showSearch = false;
   loading = false;
   autoFocus = false;

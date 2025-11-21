@@ -10,7 +10,6 @@ import {
   Directive,
   ElementRef,
   EventEmitter,
-  ExistingProvider,
   forwardRef,
   inject,
   NgZone,
@@ -26,19 +25,16 @@ import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 import { TRI_MENTION_CONFIG } from './config';
 import { Mention } from './mention.component';
 
-/**
- * @deprecated Internally used, will be removed in v21, please do not use it.
- */
-export const TRI_MENTION_TRIGGER_ACCESSOR: ExistingProvider = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => TriMentionTriggerDirective),
-  multi: true
-};
-
 @Directive({
   selector: 'input[nzMentionTrigger],textarea[nzMentionTrigger]',
   exportAs: 'triMentionTrigger',
-  providers: [TRI_MENTION_TRIGGER_ACCESSOR],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => TriMentionTriggerDirective),
+      multi: true
+    }
+  ],
   host: {
     autocomplete: 'off'
   }

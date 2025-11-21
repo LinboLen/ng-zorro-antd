@@ -319,12 +319,6 @@ describe('time-picker', () => {
       expect(result.getSeconds()).toEqual(30);
     }));
 
-    it('should support nzBorderless', fakeAsync(() => {
-      fixture.componentInstance.borderless = true;
-      fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css(`.ant-picker-borderless`))).toBeDefined();
-    }));
-
     describe('should nzVariant works', () => {
       it('filled', () => {
         fixture.detectChanges();
@@ -501,7 +495,6 @@ describe('time-picker', () => {
       [suffixIcon]="suffixIcon"
       [backdrop]="backdrop"
       [defaultOpenValue]="defaultOpenValue"
-      [borderless]="borderless"
       [variant]="variant"
     ></tri-time-picker>
   `
@@ -516,7 +509,6 @@ export class TriTestTimePickerComponent {
   use12Hours = false;
   suffixIcon: string = 'close-circle';
   backdrop = false;
-  borderless = false;
   variant: TriVariant = 'outlined';
   defaultOpenValue: Date = new Date('2020-03-27T00:00:00');
   onChange(_: Date | null): void {}

@@ -251,7 +251,7 @@ export type TriPlacement = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight'
     '[class.tri-picker-small]': `finalSize() === 'small'`,
     '[class.tri-picker-disabled]': `disabled`,
     '[class.tri-picker-rtl]': `dir === 'rtl'`,
-    '[class.tri-picker-borderless]': `variant === 'borderless' || (variant === 'outlined' && borderless)`,
+    '[class.tri-picker-borderless]': `variant === 'borderless'`,
     '[class.tri-picker-filled]': `variant === 'filled'`,
     '[class.tri-picker-underlined]': `variant === 'underlined'`,
     '[class.tri-picker-inline]': `inline`,
@@ -316,10 +316,6 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
   @Input({ transform: booleanAttribute }) allowClear: boolean = true;
   @Input({ transform: booleanAttribute }) autoFocus: boolean = false;
   @Input({ transform: booleanAttribute }) disabled: boolean = false;
-  /**
-   * @deprecated Will be removed in v21. It is recommended to use `nzVariant` instead.
-   */
-  @Input({ transform: booleanAttribute }) borderless: boolean = false;
   @Input({ transform: booleanAttribute }) inputReadOnly: boolean = false;
   @Input({ transform: booleanAttribute }) inline: boolean = false;
   @Input({ transform: booleanAttribute }) open?: boolean;

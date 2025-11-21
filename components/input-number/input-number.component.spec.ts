@@ -371,12 +371,6 @@ describe('input-number', () => {
     expect(document.activeElement).not.toBe(hostElement.querySelector('input'));
   });
 
-  it('should be set bordered', () => {
-    component.bordered = false;
-    fixture.detectChanges();
-    expect(hostElement.classList).toContain('ant-input-number-borderless');
-  });
-
   describe('should nzVariant work', () => {
     it('filled', () => {
       fixture.detectChanges();
@@ -549,7 +543,7 @@ describe('input-number with affixes or addons', () => {
   });
 
   it('should be apply borderless class', () => {
-    component.bordered = false;
+    component.variant = 'borderless';
     fixture.detectChanges();
     expect(component.withContentAffixes().nativeElement.classList).toContain(
       'ant-input-number-affix-wrapper-borderless'
@@ -607,7 +601,6 @@ describe('input-number with affixes or addons', () => {
       [precision]="precision"
       [disabled]="disabled"
       [readOnly]="readonly"
-      [bordered]="bordered"
       [variant]="variant"
       [keyboard]="keyboard"
       [controls]="controls"
@@ -629,7 +622,6 @@ class InputNumberTestComponent {
   precision: null | number = null;
   disabled = false;
   readonly = false;
-  bordered = true;
   variant: TriVariant = 'outlined';
   keyboard = true;
   controls = true;
@@ -654,17 +646,10 @@ class InputNumberTestComponent {
       suffix="Suffix"
       [disabled]="disabled"
       [readOnly]="readonly"
-      [bordered]="bordered"
       [variant]="variant"
     />
 
-    <tri-input-number
-      #withContentAffixes
-      [disabled]="disabled"
-      [readOnly]="readonly"
-      [bordered]="bordered"
-      [variant]="variant"
-    >
+    <tri-input-number #withContentAffixes [disabled]="disabled" [readOnly]="readonly" [variant]="variant">
       <span inputPrefix>Prefix</span>
       <span inputSuffix>Suffix</span>
     </tri-input-number>
@@ -675,17 +660,10 @@ class InputNumberTestComponent {
       addonAfter="After"
       [disabled]="disabled"
       [readOnly]="readonly"
-      [bordered]="bordered"
       [variant]="variant"
     />
 
-    <tri-input-number
-      #withContentAddons
-      [disabled]="disabled"
-      [readOnly]="readonly"
-      [bordered]="bordered"
-      [variant]="variant"
-    >
+    <tri-input-number #withContentAddons [disabled]="disabled" [readOnly]="readonly" [variant]="variant">
       <span inputAddonBefore>Before</span>
       <span inputAddonAfter>After</span>
     </tri-input-number>
@@ -698,17 +676,10 @@ class InputNumberTestComponent {
       addonAfter="After"
       [disabled]="disabled"
       [readOnly]="readonly"
-      [bordered]="bordered"
       [variant]="variant"
     />
 
-    <tri-input-number
-      #withContentMix
-      [disabled]="disabled"
-      [readOnly]="readonly"
-      [bordered]="bordered"
-      [variant]="variant"
-    >
+    <tri-input-number #withContentMix [disabled]="disabled" [readOnly]="readonly" [variant]="variant">
       <span inputPrefix>Prefix</span>
       <span inputSuffix>Suffix</span>
       <span inputAddonBefore>Before</span>
@@ -719,7 +690,6 @@ class InputNumberTestComponent {
 class InputNumberWithAffixesAndAddonsTestComponent {
   disabled = false;
   readonly = false;
-  bordered = true;
   variant: TriVariant = 'outlined';
 
   readonly withPropAffixes = viewChild.required('withPropAffixes', { read: ElementRef });

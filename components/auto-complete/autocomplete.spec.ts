@@ -46,7 +46,7 @@ import {
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { TriInputModule } from 'ng-zorro-antd/input';
 
-import { getNzAutocompleteMissingPanelError } from './autocomplete-trigger.directive';
+import { getNzAutocompleteMissingPanelError } from './error';
 import {
   TriAutocompleteComponent,
   TriAutocompleteModule,
@@ -933,29 +933,25 @@ describe('auto-complete', () => {
       }).toThrow(getNzAutocompleteMissingPanelError());
     }));
 
-    it(
-      'should show the panel when the options are initialized later within a component with ' +
-        'OnPush change detection',
-      fakeAsync(() => {
-        fixture = TestBed.createComponent(TriTestAutocompleteWithOnPushDelayComponent);
-        fixture.detectChanges();
+    it('should show the panel when the options are initialized later within a component with OnPush change detection', fakeAsync(() => {
+      fixture = TestBed.createComponent(TriTestAutocompleteWithOnPushDelayComponent);
+      fixture.detectChanges();
 
-        dispatchFakeEvent(fixture.debugElement.query(By.css('input')).nativeElement, 'focusin');
-        fixture.detectChanges();
-        tick(1000);
+      dispatchFakeEvent(fixture.debugElement.query(By.css('input')).nativeElement, 'focusin');
+      fixture.detectChanges();
+      tick(1000);
 
-        fixture.detectChanges();
-        tick();
+      fixture.detectChanges();
+      tick();
 
-        Promise.resolve().then(() => {
-          fixture.detectChanges();
-          flush();
-          fixture.detectChanges();
-          const panel = overlayContainerElement.querySelector('.ant-select-dropdown') as HTMLElement;
-          expect(panel.classList).not.toContain('ant-select-dropdown-hidden');
-        });
-      })
-    );
+      Promise.resolve().then(() => {
+        fixture.detectChanges();
+        flush();
+        fixture.detectChanges();
+        const panel = overlayContainerElement.querySelector('.ant-select-dropdown') as HTMLElement;
+        expect(panel.classList).not.toContain('ant-select-dropdown-hidden');
+      });
+    }));
   });
 
   describe('within input-wrapper', () => {

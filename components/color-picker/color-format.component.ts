@@ -42,7 +42,7 @@ import { TriColorPickerFormatType, ValidFormKey } from './typings';
   imports: [ReactiveFormsModule, TriSelectModule, TriInputModule, TriInputNumberModule],
   template: `
     <div class="tri-color-picker-format-select">
-      <tri-select [formControl]="validateForm.controls.isFormat" borderless size="small">
+      <tri-select [formControl]="validateForm.controls.isFormat" variant="borderless" size="small">
         <tri-option value="hex" label="HEX" />
         <tri-option value="hsb" label="HSB" />
         <tri-option value="rgb" label="RGB" />

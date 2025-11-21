@@ -26,13 +26,11 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Subject } from 'rxjs';
 
 import { TriFormStatusService } from 'ng-zorro-antd/core/form';
 import { TriSafeAny, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 
-import { TriCheckboxWrapperComponent } from './checkbox-wrapper.component';
 import { TRI_CHECKBOX_GROUP } from './tokens';
 
 @Component({
@@ -89,11 +87,8 @@ export class TriCheckboxComponent implements OnInit, ControlValueAccessor, After
   private destroyRef = inject(DestroyRef);
   protected checkboxGroupComponent = inject(TRI_CHECKBOX_GROUP, { optional: true });
   protected formStatusService = inject(TriFormStatusService, { optional: true });
-  /** @deprecated */
-  private checkboxWrapperComponent = inject(TriCheckboxWrapperComponent, { optional: true });
 
   dir: Direction = 'ltr';
-  private destroy$ = new Subject<void>();
   private isNzDisableFirstChange: boolean = true;
 
   onChange: OnChangeType = () => {};
@@ -111,7 +106,6 @@ export class TriCheckboxComponent implements OnInit, ControlValueAccessor, After
   innerCheckedChange(checked: boolean): void {
     if (!this.disabled && !this.checkboxGroupComponent?.finalDisabled()) {
       this.setValue(checked);
-      this.checkboxWrapperComponent?._onChange();
       this.checkboxGroupComponent?.onCheckedChange(this.value, checked);
     }
   }
@@ -146,7 +140,6 @@ export class TriCheckboxComponent implements OnInit, ControlValueAccessor, After
   constructor() {
     this.destroyRef.onDestroy(() => {
       this.focusMonitor.stopMonitoring(this.elementRef);
-      this.checkboxWrapperComponent?.removeCheckbox(this);
     });
     if (this.checkboxGroupComponent) {
       effect(() => {
@@ -166,8 +159,6 @@ export class TriCheckboxComponent implements OnInit, ControlValueAccessor, After
           Promise.resolve().then(() => this.onTouched());
         }
       });
-
-    this.checkboxWrapperComponent?.addCheckbox(this);
 
     this.directionality.change.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
       this.dir = direction;

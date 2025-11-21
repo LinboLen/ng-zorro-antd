@@ -44,7 +44,7 @@ const PREFIX_CLS = 'ant-input';
     '[attr.type]': 'type()',
     '[class]': 'classes()',
     '[class.tri-input-disabled]': 'finalDisabled()',
-    '[class.tri-input-borderless]': `variant() === 'borderless' || (variant() === 'outlined' && borderless())`,
+    '[class.tri-input-borderless]': `variant() === 'borderless'`,
     '[class.tri-input-filled]': `variant() === 'filled'`,
     '[class.tri-input-underlined]': `variant() === 'underlined'`,
     '[class.tri-input-lg]': `finalSize() === 'large'`,
@@ -73,10 +73,6 @@ export class TriInputDirective implements OnInit {
   readonly ngControl = inject(NgControl, { self: true, optional: true });
   readonly value = signal<string>(this.elementRef.nativeElement.value);
 
-  /**
-   * @deprecated Will be removed in v21. It is recommended to use `nzVariant` instead.
-   */
-  readonly borderless = input(false, { transform: booleanAttribute });
   readonly variant = input<TriVariant>('outlined');
   readonly size = input<TriSizeLDSType>('default');
   /**

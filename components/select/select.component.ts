@@ -207,7 +207,7 @@ export type TriSelectSizeType = TriSizeLDSType;
     '[class.tri-select-disabled]': 'disabled',
     '[class.tri-select-show-search]': `(showSearch || mode !== 'default') && !disabled`,
     '[class.tri-select-allow-clear]': 'allowClear',
-    '[class.tri-select-borderless]': `variant === 'borderless' || (variant === 'outlined' && borderless)`,
+    '[class.tri-select-borderless]': `variant === 'borderless'`,
     '[class.tri-select-filled]': `variant === 'filled'`,
     '[class.tri-select-underlined]': `variant === 'underlined'`,
     '[class.tri-select-open]': 'open',
@@ -270,10 +270,6 @@ export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterCo
   @Input() filterOption: TriFilterOptionType = defaultFilterOption;
   @Input() compareWith: (o1: TriSafeAny, o2: TriSafeAny) => boolean = (o1: TriSafeAny, o2: TriSafeAny) => o1 === o2;
   @Input({ transform: booleanAttribute }) allowClear = false;
-  /**
-   * @deprecated Will be removed in v21. It is recommended to use `nzVariant` instead.
-   */
-  @Input({ transform: booleanAttribute }) @WithConfig() borderless = false;
   @Input({ transform: booleanAttribute }) showSearch = false;
   @Input({ transform: booleanAttribute }) loading = false;
   @Input({ transform: booleanAttribute }) autoFocus = false;
