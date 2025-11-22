@@ -8,10 +8,10 @@ import { TriInputModule } from 'ng-zorro-antd/input';
 import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
 import { TriSliderModule } from 'ng-zorro-antd/slider';
 import { TriTypographyModule } from 'ng-zorro-antd/typography';
-import { FontType, TriWaterMarkModule } from 'ng-zorro-antd/water-mark';
+import { FontType, TriWatermarkModule } from 'ng-zorro-antd/watermark';
 
 @Component({
-  selector: 'tri-demo-water-mark-custom',
+  selector: 'tri-demo-watermark-custom',
   imports: [
     ReactiveFormsModule,
     TriColorPickerModule,
@@ -21,11 +21,11 @@ import { FontType, TriWaterMarkModule } from 'ng-zorro-antd/water-mark';
     TriInputNumberModule,
     TriSliderModule,
     TriTypographyModule,
-    TriWaterMarkModule
+    TriWatermarkModule
   ],
   template: `
     <div style="display: flex;">
-      <tri-water-mark
+      <tri-watermark
         [content]="form.value.content!"
         [rotate]="form.value.rotate!"
         [zIndex]="form.value.zIndex!"
@@ -57,7 +57,7 @@ import { FontType, TriWaterMarkModule } from 'ng-zorro-antd/water-mark';
           src="https://gw.alipayobjects.com/mdn/rms_08e378/afts/img/A*zx7LTI_ECSAAAAAAAAAAAABkARQnAQ"
           alt="示例图片"
         />
-      </tri-water-mark>
+      </tri-watermark>
       <tri-divider type="vertical"></tri-divider>
       <form tri-form layout="vertical" [formGroup]="form">
         <tri-form-item>
@@ -109,7 +109,7 @@ import { FontType, TriWaterMarkModule } from 'ng-zorro-antd/water-mark';
   `,
   styles: [
     `
-      nz-water-mark {
+      nz-watermark {
         flex: 1 1 auto;
       }
 
@@ -129,7 +129,7 @@ import { FontType, TriWaterMarkModule } from 'ng-zorro-antd/water-mark';
     `
   ]
 })
-export class TriDemoWaterMarkCustomComponent implements OnInit {
+export class TriDemoWatermarkCustomComponent implements OnInit {
   private fb = inject(NonNullableFormBuilder);
 
   form = this.fb.group({

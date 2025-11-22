@@ -5,10 +5,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { TriWaterMarkComponent } from './water-mark.component';
+import { TriWatermarkComponent } from './watermark.component';
 
 @NgModule({
-  exports: [TriWaterMarkComponent],
-  imports: [TriWaterMarkComponent]
+  exports: [TriWatermarkComponent],
+  imports: [TriWatermarkComponent]
 })
-export class TriWaterMarkModule {}
+export class TriWatermarkModule {}

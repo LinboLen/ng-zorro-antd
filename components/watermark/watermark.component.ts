@@ -32,15 +32,24 @@ const BaseSize = 2;
 const FontGap = 3;
 
 @Component({
-  selector: 'tri-water-mark',
-  exportAs: 'triWaterMark',
+  selector: 'tri-watermark',
+  exportAs: 'triWatermark',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<ng-content></ng-content>`,
-  host: {
-    class: 'tri-water-mark'
-  }
+  template: `<ng-content />`,
+  styles: `
+    :host {
+      position: relative;
+      display: block;
+      overflow: hidden;
+    }
+  `
 })
-export class TriWaterMarkComponent implements OnInit, OnChanges {
+export class TriWatermarkComponent implements OnInit, OnChanges {
+  private isServer = isPlatformServer(inject(PLATFORM_ID));
+  private document = inject(DOCUMENT);
+  private el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
+  private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
+
   @Input({ transform: numberAttribute }) width: number = 120;
   @Input({ transform: numberAttribute }) height: number = 64;
   @Input({ transform: numberAttribute }) rotate: number = -22;
@@ -51,15 +60,8 @@ export class TriWaterMarkComponent implements OnInit, OnChanges {
   @Input() gap: [number, number] = [100, 100];
   @Input() offset: [number, number] = [this.gap[0] / 2, this.gap[1] / 2];
 
-  private isServer = isPlatformServer(inject(PLATFORM_ID));
-
-  private document: Document = inject(DOCUMENT);
-  private el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
-  private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
-
-  waterMarkElement: HTMLDivElement = this.document.createElement('div');
+  watermarkElement: HTMLDivElement = this.document.createElement('div');
   stopObservation: boolean = false;
-
   private observer: MutationObserver | null = null;
 
   constructor() {
@@ -72,16 +74,14 @@ export class TriWaterMarkComponent implements OnInit, OnChanges {
         return;
       }
       mutations.forEach(mutation => {
-        if (reRendering(mutation, this.waterMarkElement)) {
+        if (reRendering(mutation, this.watermarkElement)) {
           this.destroyWatermark();
           this.renderWatermark();
         }
       });
     }));
 
-    afterNextRender(() => {
-      this.renderWatermark();
-    });
+    afterNextRender(() => this.renderWatermark());
 
     inject(DestroyRef).onDestroy(() => observer.disconnect());
   }
@@ -160,14 +160,14 @@ export class TriWaterMarkComponent implements OnInit, OnChanges {
   }
 
   destroyWatermark(): void {
-    if (this.waterMarkElement) {
-      this.waterMarkElement.remove();
+    if (this.watermarkElement) {
+      this.watermarkElement.remove();
     }
   }
 
   appendWatermark(base64Url: string, markWidth: number): void {
     this.stopObservation = true;
-    this.waterMarkElement.setAttribute(
+    this.watermarkElement.setAttribute(
       'style',
       getStyleStr({
         ...this.getMarkStyle(),
@@ -175,7 +175,7 @@ export class TriWaterMarkComponent implements OnInit, OnChanges {
         backgroundSize: `${(this.gap[0] + markWidth) * BaseSize}px`
       })
     );
-    this.el.append(this.waterMarkElement);
+    this.el.append(this.watermarkElement);
     this.cdr.markForCheck();
 
     // Delayed execution
@@ -246,8 +246,8 @@ export class TriWaterMarkComponent implements OnInit, OnChanges {
     const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 
     if (ctx) {
-      if (!this.waterMarkElement) {
-        this.waterMarkElement = this.document.createElement('div');
+      if (!this.watermarkElement) {
+        this.watermarkElement = this.document.createElement('div');
       }
       this.getFont();
       const ratio = getPixelRatio();
