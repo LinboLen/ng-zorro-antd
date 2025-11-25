@@ -1,3 +1,4 @@
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -8,14 +9,16 @@ import { TriTabsModule } from 'ng-zorro-antd/tabs';
 
 @Component({
   selector: 'tri-demo-mention-preview',
-  imports: [FormsModule, TriInputModule, TriMentionModule, TriTabsModule],
+  imports: [FormsModule, TriInputModule, TriMentionModule, TriTabsModule, CdkTextareaAutosize],
   template: `
     <tri-tabs>
       <tri-tab title="Write">
         <tri-mention [suggestions]="suggestions">
           <textarea
             tri-input
-            [autosize]="{ minRows: 4, maxRows: 4 }"
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="4"
+            cdkAutosizeMaxRows="4"
             [(ngModel)]="inputValue"
             (ngModelChange)="renderPreView()"
             mentionTrigger

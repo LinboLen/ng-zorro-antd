@@ -1,3 +1,4 @@
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Component } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
@@ -9,7 +10,15 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
   selector: 'tri-demo-drawer-from-drawer',
-  imports: [TriButtonModule, TriDrawerModule, TriDatePickerModule, TriFormModule, TriInputModule, TriSelectModule],
+  imports: [
+    TriButtonModule,
+    TriDrawerModule,
+    TriDatePickerModule,
+    TriFormModule,
+    TriInputModule,
+    TriSelectModule,
+    CdkTextareaAutosize
+  ],
   template: `
     <button tri-button type="primary" (click)="open()">Create</button>
     <tri-drawer
@@ -86,7 +95,9 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
                 <textarea
                   tri-input
                   placeholder="please enter url description"
-                  [autosize]="{ minRows: 4, maxRows: 4 }"
+                  cdkTextareaAutosize
+                  cdkAutosizeMinRows="4"
+                  cdkAutosizeMaxRows="4"
                 ></textarea>
               </tri-form-control>
             </tri-form-item>

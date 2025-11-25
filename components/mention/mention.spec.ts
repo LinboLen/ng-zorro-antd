@@ -750,12 +750,7 @@ describe('mention', () => {
   template: `
     <tri-mention [suggestions]="suggestions">
       @if (!inputTrigger) {
-        <textarea
-          tri-input
-          [autosize]="{ minRows: 4, maxRows: 4 }"
-          [(ngModel)]="inputValue"
-          mentionTrigger
-        ></textarea>
+        <textarea tri-input [(ngModel)]="inputValue" mentionTrigger></textarea>
       } @else {
         <textarea rows="1" tri-input [(ngModel)]="inputValue" mentionTrigger></textarea>
       }
@@ -781,7 +776,7 @@ class TriTestSimpleMentionComponent {
       [loading]="loading"
       (onSearchChange)="onSearchChange()"
     >
-      <textarea tri-input [autosize]="{ minRows: 4, maxRows: 4 }" [(ngModel)]="inputValue" mentionTrigger></textarea>
+      <textarea tri-input [(ngModel)]="inputValue" mentionTrigger></textarea>
       <ng-container *mentionSuggestion="let framework">
         <span class="custom">{{ framework.name }} - {{ framework.type }}</span>
       </ng-container>
@@ -874,7 +869,7 @@ class TriTestMentionInFormComponent {
   imports: [FormsModule, TriInputModule, TriMentionModule],
   template: `
     <tri-mention [suggestions]="suggestions" [variant]="variant">
-      <textarea tri-input [autosize]="{ minRows: 4, maxRows: 4 }" [(ngModel)]="inputValue" mentionTrigger></textarea>
+      <textarea tri-input [(ngModel)]="inputValue" mentionTrigger></textarea>
     </tri-mention>
   `
 })
@@ -894,7 +889,7 @@ class TriTestVariantMentionComponent {
       [clearIcon]="useCustomClearIcon ? clearIconTemplate : null"
       (onClear)="onClear()"
     >
-      <textarea tri-input [autosize]="{ minRows: 4, maxRows: 4 }" [(ngModel)]="inputValue" mentionTrigger></textarea>
+      <textarea tri-input [(ngModel)]="inputValue" mentionTrigger></textarea>
       <ng-template #clearIconTemplate>
         <span class="custom-clear-icon">×</span>
       </ng-template>
