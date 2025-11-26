@@ -6,6 +6,7 @@
 import { ChangeDetectionStrategy, Component, Input, booleanAttribute } from '@angular/core';
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tri-tree-node-checkbox[builtin]',
   template: `
     <span [class.tri-tree-checkbox-inner]="!selectMode" [class.tri-select-tree-checkbox-inner]="selectMode"></span>

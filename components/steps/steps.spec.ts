@@ -11,10 +11,11 @@ import {
   Component,
   DebugElement,
   OnInit,
+  provideZoneChangeDetection,
   TemplateRef,
   ViewChild
 } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { BooleanInput, TriDirectionVHType, TriSizeDSType } from 'ng-zorro-antd/core/types';
@@ -28,11 +29,13 @@ import { TriProgressDotTemplate, TriStatusType, TriStepsComponent } from './step
 import { TriStepsModule } from './steps.module';
 
 describe('steps', () => {
-  beforeEach(waitForAsync(() => {
+  beforeEach(() => {
+    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideNzIconsTesting()]
+      providers: [provideNzIconsTesting(), provideZoneChangeDetection()]
     });
-  }));
+  });
+
   describe('outer steps', () => {
     let fixture: ComponentFixture<TriTestOuterStepsComponent>;
     let testComponent: TriTestOuterStepsComponent;

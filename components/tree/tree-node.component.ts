@@ -41,6 +41,7 @@ import { TriTreeNodeSwitcherComponent } from './tree-node-switcher.component';
 import { TriTreeNodeTitleComponent } from './tree-node-title.component';
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tri-tree-node[builtin]',
   exportAs: 'triTreeBuiltinNode',
   template: `

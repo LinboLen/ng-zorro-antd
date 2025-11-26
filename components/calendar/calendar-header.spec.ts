@@ -5,8 +5,8 @@
 
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
-import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import { Component, provideZoneChangeDetection, TemplateRef, ViewChild } from '@angular/core';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule, NgModel } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -20,21 +20,22 @@ import { TriSelectComponent as Select } from '../select/select.component';
 
 registerLocaleData(zh);
 
-describe('Calendar Header', () => {
-  beforeEach(waitForAsync(() => {
+describe('calendar Header', () => {
+  beforeEach(() => {
+    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideNoopAnimations()]
+      providers: [provideNoopAnimations(), provideZoneChangeDetection()]
     });
-  }));
+  });
 
   describe('mode', () => {
     let fixture: ComponentFixture<TriTestCalendarHeaderModeComponent>;
     let component: TriTestCalendarHeaderModeComponent;
 
-    beforeEach(waitForAsync(() => {
+    beforeEach(() => {
       fixture = TestBed.createComponent(TriTestCalendarHeaderModeComponent);
       component = fixture.componentInstance;
-    }));
+    });
 
     it('should be month by default', () => {
       fixture.detectChanges();
@@ -77,10 +78,10 @@ describe('Calendar Header', () => {
     let fixture: ComponentFixture<TriTestCalendarHeaderFullscreenComponent>;
     let component: TriTestCalendarHeaderFullscreenComponent;
 
-    beforeEach(waitForAsync(() => {
+    beforeEach(() => {
       fixture = TestBed.createComponent(TriTestCalendarHeaderFullscreenComponent);
       component = fixture.componentInstance;
-    }));
+    });
 
     it('should be true by default', () => {
       fixture.detectChanges();
@@ -112,9 +113,9 @@ describe('Calendar Header', () => {
   describe('activeDate', () => {
     let fixture: ComponentFixture<TriTestCalendarHeaderActiveDateComponent>;
 
-    beforeEach(waitForAsync(() => {
+    beforeEach(() => {
       fixture = TestBed.createComponent(TriTestCalendarHeaderActiveDateComponent);
-    }));
+    });
 
     it('should be now by default', () => {
       const now = new Date();
@@ -145,10 +146,10 @@ describe('Calendar Header', () => {
     let fixture: ComponentFixture<TriTestCalendarHeaderChangesComponent>;
     let component: TriTestCalendarHeaderChangesComponent;
 
-    beforeEach(waitForAsync(() => {
+    beforeEach(() => {
       fixture = TestBed.createComponent(TriTestCalendarHeaderChangesComponent);
       component = fixture.componentInstance;
-    }));
+    });
 
     it('should emit yearChange when year changed', fakeAsync(() => {
       tick(1);
@@ -187,9 +188,9 @@ describe('Calendar Header', () => {
   describe('custom Header', () => {
     let fixture: ComponentFixture<TriTestCalendarHeaderChangesComponent>;
 
-    beforeEach(waitForAsync(() => {
+    beforeEach(() => {
       fixture = TestBed.createComponent(TriTestCalendarHeaderChangesComponent);
-    }));
+    });
 
     it('should have the default header if custom header is not passed', fakeAsync(() => {
       fixture.componentInstance.customHeader = undefined;

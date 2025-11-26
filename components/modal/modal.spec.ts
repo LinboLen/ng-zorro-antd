@@ -17,7 +17,8 @@ import {
   TemplateRef,
   ViewChild,
   ViewContainerRef,
-  inject
+  inject,
+  provideZoneChangeDetection
 } from '@angular/core';
 import {
   ComponentFixture,
@@ -44,17 +45,18 @@ import { TriModalComponent } from './modal.component';
 import { TriModalModule } from './modal.module';
 import { TriModalService } from './modal.service';
 
-describe('Animation', () => {
+describe('modal with animation', () => {
   let modalService: TriModalService;
   let overlayContainer: OverlayContainer;
   let overlayContainerElement: HTMLElement;
   let fixture: ComponentFixture<TestWithServiceComponent>;
 
-  beforeEach(fakeAsync(() => {
+  beforeEach(() => {
+    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [TriModalService, provideAnimations()]
+      providers: [TriModalService, provideAnimations(), provideZoneChangeDetection()]
     });
-  }));
+  });
 
   beforeEach(
     testingInject([TriModalService, OverlayContainer], (m: TriModalService, oc: OverlayContainer) => {
@@ -95,7 +97,7 @@ describe('Animation', () => {
   }));
 });
 
-describe('NzModal', () => {
+describe('modal', () => {
   let modalService: TriModalService;
   let overlayContainer: OverlayContainer;
   let overlayContainerElement: HTMLElement;
@@ -105,7 +107,13 @@ describe('NzModal', () => {
 
   beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
-      providers: [TriModalService, provideNoopAnimations(), { provide: Location, useClass: SpyLocation }]
+      providers: [
+        // todo: use zoneless
+        provideZoneChangeDetection(),
+        TriModalService,
+        provideNoopAnimations(),
+        { provide: Location, useClass: SpyLocation }
+      ]
     });
   }));
 

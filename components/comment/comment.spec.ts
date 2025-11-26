@@ -4,8 +4,8 @@
  */
 
 import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
-import { Component, NO_ERRORS_SCHEMA, ViewChild } from '@angular/core';
-import { fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import { Component, NO_ERRORS_SCHEMA, provideZoneChangeDetection, ViewChild } from '@angular/core';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
@@ -16,13 +16,14 @@ import { TriDemoCommentEditorComponent } from './demo/editor';
 import { TriDemoCommentListComponent } from './demo/list';
 import { TriDemoCommentNestedComponent } from './demo/nested';
 
-describe('NzCommentComponent', () => {
-  beforeEach(waitForAsync(() => {
+describe('comment', () => {
+  beforeEach(() => {
+    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideNzIconsTesting()],
+      providers: [provideNzIconsTesting(), provideZoneChangeDetection()],
       schemas: [NO_ERRORS_SCHEMA]
     });
-  }));
+  });
 
   describe('default', () => {
     it('should basic work', () => {

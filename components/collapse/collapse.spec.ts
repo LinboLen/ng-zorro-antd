@@ -4,8 +4,8 @@
  */
 
 import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
-import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { Component, DebugElement, provideZoneChangeDetection, TemplateRef, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
@@ -18,11 +18,13 @@ import { TriCollapseComponent } from './collapse.component';
 import { TriCollapseModule } from './collapse.module';
 
 describe('collapse', () => {
-  beforeEach(waitForAsync(() => {
+  beforeEach(() => {
+    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideNzIconsTesting(), provideNoopAnimations()]
+      providers: [provideNzIconsTesting(), provideNoopAnimations(), provideZoneChangeDetection()]
     });
-  }));
+  });
+
   describe('collapse basic', () => {
     let fixture: ComponentFixture<TriTestCollapseBasicComponent>;
     let testComponent: TriTestCollapseBasicComponent;
@@ -36,11 +38,13 @@ describe('collapse', () => {
       collapse = fixture.debugElement.query(By.directive(TriCollapseComponent));
       panels = fixture.debugElement.queryAll(By.directive(TriCollapsePanelComponent));
     });
+
     it('should className correct', () => {
       fixture.detectChanges();
       expect(collapse.nativeElement!.classList).toContain('ant-collapse');
       expect(panels.every(panel => panel.nativeElement.classList.contains('ant-collapse-item'))).toBe(true);
     });
+
     it('should border work', () => {
       fixture.detectChanges();
       expect(collapse.nativeElement!.classList).not.toContain('ant-collapse-borderless');
@@ -48,6 +52,7 @@ describe('collapse', () => {
       fixture.detectChanges();
       expect(collapse.nativeElement!.classList).toContain('ant-collapse-borderless');
     });
+
     it('should showArrow work', () => {
       fixture.detectChanges();
       expect(panels[0].nativeElement.querySelector('.ant-collapse-arrow').firstElementChild).toBeDefined();
@@ -55,6 +60,7 @@ describe('collapse', () => {
       fixture.detectChanges();
       expect(panels[0].nativeElement.querySelector('.ant-collapse-arrow')).toBeNull();
     });
+
     it('should active work', () => {
       fixture.detectChanges();
       expect(panels[0].nativeElement.classList).not.toContain('ant-collapse-item-active');
@@ -63,6 +69,7 @@ describe('collapse', () => {
       expect(panels[0].nativeElement.classList).toContain('ant-collapse-item-active');
       expect(testComponent.active01Change).toHaveBeenCalledTimes(0);
     });
+
     it('should click work', () => {
       fixture.detectChanges();
       expect(panels[0].nativeElement.classList).not.toContain('ant-collapse-item-active');
@@ -73,6 +80,7 @@ describe('collapse', () => {
       expect(panels[0].nativeElement.classList).toContain('ant-collapse-item-active');
       expect(testComponent.active01Change).toHaveBeenCalledTimes(1);
     });
+
     it('should disabled work', () => {
       testComponent.disabled = true;
       fixture.detectChanges();
@@ -85,6 +93,7 @@ describe('collapse', () => {
       expect(panels[1].nativeElement.classList).not.toContain('ant-collapse-item-active');
       expect(testComponent.active02Change).toHaveBeenCalledTimes(0);
     });
+
     it('should accordion work', () => {
       testComponent.accordion = true;
       fixture.detectChanges();
@@ -107,6 +116,7 @@ describe('collapse', () => {
       expect(testComponent.active01Change).toHaveBeenCalledTimes(2);
       expect(testComponent.active02Change).toHaveBeenCalledTimes(1);
     });
+
     it('should click to fold up work with accordion', () => {
       testComponent.accordion = true;
       fixture.detectChanges();
@@ -133,10 +143,12 @@ describe('collapse', () => {
       expect(testComponent.active01Change).toHaveBeenCalledTimes(4);
       expect(testComponent.active02Change).toHaveBeenCalledTimes(2);
     });
+
     it('should header work', () => {
       fixture.detectChanges();
       expect(panels[0].nativeElement.querySelector('.ant-collapse-header').innerText).toBe('string');
     });
+
     it('should extra work', () => {
       fixture.detectChanges();
       expect(panels[0].nativeElement.querySelector('.ant-collapse-extra')).toBeFalsy();
@@ -148,6 +160,7 @@ describe('collapse', () => {
       expect(extraEl!.innerText).toBe('Extra');
     });
   });
+
   describe('collapse template', () => {
     let fixture: ComponentFixture<TriTestCollapseTemplateComponent>;
     let panels: DebugElement[];
@@ -156,6 +169,7 @@ describe('collapse', () => {
       fixture.detectChanges();
       panels = fixture.debugElement.queryAll(By.directive(TriCollapsePanelComponent));
     });
+
     it('should header work', () => {
       fixture.detectChanges();
       expect(panels[0].nativeElement.querySelector('.ant-collapse-header').innerText).toBe('template');
@@ -170,6 +184,7 @@ describe('collapse', () => {
       fixture.detectChanges();
       panels = fixture.debugElement.queryAll(By.directive(TriCollapsePanelComponent));
     });
+
     it('should icon work', () => {
       fixture.detectChanges();
       expect(panels[0].nativeElement.querySelector('.anticon-right')).toBeDefined();

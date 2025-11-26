@@ -5,7 +5,7 @@
 
 import { Directionality } from '@angular/cdk/bidi';
 import { ENTER, LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, provideZoneChangeDetection, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
@@ -22,7 +22,14 @@ import { TriCarouselTransformNoLoopStrategy } from './strategies/experimental/tr
 import { TRI_CAROUSEL_CUSTOM_STRATEGIES } from './typings';
 
 describe('carousel', () => {
-  describe('carousel basic', () => {
+  beforeEach(() => {
+    // todo: use zoneless
+    TestBed.configureTestingModule({
+      providers: [provideZoneChangeDetection()]
+    });
+  });
+
+  describe('basic', () => {
     let fixture: ComponentFixture<TriTestCarouselBasicComponent>;
     let testComponent: TriTestCarouselBasicComponent;
     let carouselWrapper: DebugElement;
@@ -366,9 +373,11 @@ describe('carousel custom strategies', () => {
   let carouselWrapper: DebugElement;
   let carouselContents: DebugElement[];
 
-  beforeEach(fakeAsync(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        // todo: use zoneless
+        provideZoneChangeDetection(),
         {
           provide: TRI_CAROUSEL_CUSTOM_STRATEGIES,
           useValue: [
@@ -384,7 +393,7 @@ describe('carousel custom strategies', () => {
         }
       ]
     });
-  }));
+  });
 
   it('could use custom strategies', fakeAsync(() => {
     fixture = TestBed.createComponent(TriTestCarouselBasicComponent);
@@ -428,6 +437,13 @@ describe('carousel arrows', () => {
   let testComponent: TriTestCarouselArrowsComponent;
   let carouselWrapper: DebugElement;
   let carouselContents: DebugElement[];
+
+  beforeEach(() => {
+    // todo: use zoneless
+    TestBed.configureTestingModule({
+      providers: [provideZoneChangeDetection()]
+    });
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TriTestCarouselArrowsComponent);
@@ -638,6 +654,8 @@ describe('carousel', () => {
 
     TestBed.configureTestingModule({
       providers: [
+        // todo: use zoneless
+        provideZoneChangeDetection(),
         {
           provide: Directionality,
           useClass: MockDirectionality

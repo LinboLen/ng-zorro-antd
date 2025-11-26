@@ -4,8 +4,8 @@
  */
 
 import { BidiModule, Direction } from '@angular/cdk/bidi';
-import { Component, DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
@@ -17,13 +17,14 @@ import { TriFloatButtonGroupComponent } from './float-button-group.component';
 import { TriFloatButtonModule } from './float-button.module';
 
 describe('nz-float-button-group', () => {
-  beforeEach(waitForAsync(() => {
+  beforeEach(() => {
+    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideNoopAnimations(), provideNzIconsTesting()]
+      providers: [provideNoopAnimations(), provideNzIconsTesting(), provideZoneChangeDetection()]
     });
-  }));
+  });
 
-  describe('float-button-group basic', () => {
+  describe('basic', () => {
     let fixture: ComponentFixture<TriTestFloatButtonGroupBasicComponent>;
     let testComponent: TriTestFloatButtonGroupBasicComponent;
     let resultEl: DebugElement;
@@ -163,27 +164,24 @@ describe('nz-float-button-group', () => {
       });
     });
   });
-});
 
-describe('nz-float-button-group RTL', () => {
-  let fixture: ComponentFixture<TriTestFloatButtonRtlComponent>;
-  let resultEl: DebugElement;
-  let groupComponent: TriFloatButtonGroupComponent;
+  describe('RTL', () => {
+    let fixture: ComponentFixture<TriTestFloatButtonRtlComponent>;
+    let resultEl: DebugElement;
+    let groupComponent: TriFloatButtonGroupComponent;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      providers: [provideNoopAnimations(), provideNzIconsTesting()]
+    beforeEach(() => {
+      fixture = TestBed.createComponent(TriTestFloatButtonRtlComponent);
+      resultEl = fixture.debugElement.query(By.directive(TriFloatButtonGroupComponent));
+      groupComponent = resultEl.componentInstance;
     });
-    fixture = TestBed.createComponent(TriTestFloatButtonRtlComponent);
-    resultEl = fixture.debugElement.query(By.directive(TriFloatButtonGroupComponent));
-    groupComponent = resultEl.componentInstance;
-  }));
 
-  it('rtl', () => {
-    fixture.detectChanges();
-    // @ts-ignore
-    expect(groupComponent.dir()).toBe('rtl');
-    expect(resultEl.nativeElement.classList).toContain('ant-float-btn-group-rtl');
+    it('rtl', () => {
+      fixture.detectChanges();
+      // @ts-ignore
+      expect(groupComponent.dir()).toBe('rtl');
+      expect(resultEl.nativeElement.classList).toContain('ant-float-btn-group-rtl');
+    });
   });
 });
 
@@ -198,8 +196,7 @@ describe('nz-float-button-group RTL', () => {
       [open]="open"
       [placement]="placement"
       (onOpenChange)="onClick($event)"
-    >
-    </tri-float-button-group>
+    />
   `
 })
 export class TriTestFloatButtonGroupBasicComponent {
@@ -219,7 +216,7 @@ export class TriTestFloatButtonGroupBasicComponent {
   imports: [BidiModule, TriFloatButtonModule],
   template: `
     <div [dir]="direction">
-      <tri-float-button-group></tri-float-button-group>
+      <tri-float-button-group />
     </div>
   `
 })

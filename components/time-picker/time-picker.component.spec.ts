@@ -7,8 +7,8 @@ import { BidiModule, Direction } from '@angular/cdk/bidi';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
-import { Component, DebugElement, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, inject, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import { Component, DebugElement, provideZoneChangeDetection, ViewChild } from '@angular/core';
+import { ComponentFixture, fakeAsync, flush, inject, TestBed, tick } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -28,11 +28,12 @@ describe('time-picker', () => {
   let overlayContainer: OverlayContainer;
   let overlayContainerElement: HTMLElement;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(() => {
+    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideNoopAnimations()]
+      providers: [provideNoopAnimations(), provideZoneChangeDetection()]
     });
-  }));
+  });
 
   beforeEach(inject([OverlayContainer], (oc: OverlayContainer) => {
     overlayContainer = oc;
@@ -48,6 +49,7 @@ describe('time-picker', () => {
     let testComponent: TriTestTimePickerComponent;
     let fixture: ComponentFixture<TriTestTimePickerComponent>;
     let timeElement: DebugElement;
+
     beforeEach(() => {
       fixture = TestBed.createComponent(TriTestTimePickerComponent);
       testComponent = fixture.debugElement.componentInstance;
@@ -216,7 +218,8 @@ describe('time-picker', () => {
       fixture.detectChanges();
       tick(500);
       fixture.detectChanges();
-      expect(overlayContainerElement.children[0].classList).toContain('cdk-overlay-backdrop');
+      const boundingBox = overlayContainerElement.children[0];
+      expect(boundingBox.children[0].classList).toContain('cdk-overlay-backdrop');
     }));
 
     it('should open with click and close with tab', fakeAsync(() => {
@@ -387,6 +390,7 @@ describe('time-picker', () => {
     let testComponent: TriTestTimePickerStatusComponent;
     let fixture: ComponentFixture<TriTestTimePickerStatusComponent>;
     let timeElement: DebugElement;
+
     beforeEach(() => {
       fixture = TestBed.createComponent(TriTestTimePickerStatusComponent);
       testComponent = fixture.debugElement.componentInstance;
@@ -430,6 +434,7 @@ describe('time-picker', () => {
   describe('in form', () => {
     let testComponent: TriTestTimePickerInFormComponent;
     let fixture: ComponentFixture<TriTestTimePickerInFormComponent>;
+
     beforeEach(() => {
       fixture = TestBed.createComponent(TriTestTimePickerInFormComponent);
       testComponent = fixture.debugElement.componentInstance;
@@ -496,7 +501,7 @@ describe('time-picker', () => {
       [backdrop]="backdrop"
       [defaultOpenValue]="defaultOpenValue"
       [variant]="variant"
-    ></tri-time-picker>
+    />
   `
 })
 export class TriTestTimePickerComponent {
@@ -517,7 +522,7 @@ export class TriTestTimePickerComponent {
 
 @Component({
   imports: [TriTimePickerComponent],
-  template: `<tri-time-picker [status]="status"></tri-time-picker>`
+  template: `<tri-time-picker [status]="status" />`
 })
 export class TriTestTimePickerStatusComponent {
   status: TriStatus = 'error';
@@ -527,7 +532,7 @@ export class TriTestTimePickerStatusComponent {
   imports: [TriTimePickerComponent, BidiModule],
   template: `
     <div [dir]="dir">
-      <tri-time-picker></tri-time-picker>
+      <tri-time-picker />
     </div>
   `
 })
@@ -541,7 +546,7 @@ export class TriTestTimePickerDirComponent {
     <form tri-form [formGroup]="timePickerForm">
       <tri-form-item>
         <tri-form-control [hasFeedback]="feedback" [validateStatus]="status">
-          <tri-time-picker formControlName="time" [disabled]="disabled"></tri-time-picker>
+          <tri-time-picker formControlName="time" [disabled]="disabled" />
         </tri-form-control>
       </tri-form-item>
     </form>

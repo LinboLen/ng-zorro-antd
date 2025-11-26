@@ -3,35 +3,20 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Component, DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-
-import { TriFormModule } from 'ng-zorro-antd/form/form.module';
+import { TestBed } from '@angular/core/testing';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { TriFormSplitComponent } from './form-split.component';
 
-const testBedOptions = { imports: [NoopAnimationsModule] };
-
 describe('nz-form-split', () => {
-  describe('default', () => {
-    let fixture: ComponentFixture<TriTestFormSplitComponent>;
-    let split: DebugElement;
-    beforeEach(() => {
-      TestBed.configureTestingModule(testBedOptions);
-      fixture = TestBed.createComponent(TriTestFormSplitComponent);
-      fixture.detectChanges();
-      split = fixture.debugElement.query(By.directive(TriFormSplitComponent));
-    });
-    it('should className correct', () => {
-      expect(split.nativeElement.classList).toContain('ant-form-split');
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [provideNoopAnimations()]
     });
   });
-});
 
-@Component({
-  imports: [TriFormModule],
-  template: `<tri-form-split></tri-form-split>`
-})
-export class TriTestFormSplitComponent {}
+  it('should className correct', () => {
+    const fixture = TestBed.createComponent(TriFormSplitComponent);
+    expect(fixture.nativeElement.classList).toContain('ant-form-split');
+  });
+});

@@ -4,7 +4,7 @@
  */
 
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, provideZoneChangeDetection, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
@@ -15,15 +15,16 @@ import { TriTooltipBaseDirective, TriTooltipTrigger } from './base';
 import { TriTooltipDirective } from './tooltip';
 import { TriTooltipModule } from './tooltip.module';
 
-describe('nz-tooltip', () => {
+describe('tooltip', () => {
   let fixture: ComponentFixture<TriTooltipTestComponent>;
   let component: TriTooltipTestComponent;
   let overlayContainer: OverlayContainer;
   let overlayContainerElement: HTMLElement;
 
   beforeEach(fakeAsync(() => {
+    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideNoopAnimations()]
+      providers: [provideZoneChangeDetection(), provideNoopAnimations()]
     });
     fixture = TestBed.createComponent(TriTooltipTestComponent);
     component = fixture.componentInstance;

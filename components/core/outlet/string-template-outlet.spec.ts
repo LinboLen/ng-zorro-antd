@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, provideZoneChangeDetection, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
@@ -14,6 +14,13 @@ import { TriStringTemplateOutletDirective } from './string-template-outlet.direc
 describe('string template outlet', () => {
   let fixture: ComponentFixture<StringTemplateOutletTestComponent>;
   let component: StringTemplateOutletTestComponent;
+
+  beforeEach(() => {
+    // todo: use zoneless
+    TestBed.configureTestingModule({
+      providers: [provideZoneChangeDetection()]
+    });
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(StringTemplateOutletTestComponent);

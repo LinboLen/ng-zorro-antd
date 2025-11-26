@@ -37,6 +37,7 @@ export class TriSkeletonElementDirective {
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tri-skeleton-element[nzType="button"]',
   template: `
     <span
@@ -56,6 +57,7 @@ export class TriSkeletonElementButtonComponent {
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tri-skeleton-element[nzType="avatar"]',
   template: `
     <span
@@ -86,6 +88,7 @@ export class TriSkeletonElementAvatarComponent implements OnChanges {
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tri-skeleton-element[nzType="input"]',
   template: `
     <span
@@ -101,6 +104,7 @@ export class TriSkeletonElementInputComponent {
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tri-skeleton-element[nzType="image"]',
   template: `
     <span class="tri-skeleton-image">

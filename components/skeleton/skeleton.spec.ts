@@ -3,9 +3,11 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Component, DebugElement } from '@angular/core';
+import { Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+
+import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
 import { TriSkeletonModule } from './skeleton.module';
 import {
@@ -23,6 +25,13 @@ describe('skeleton', () => {
   let fixture: ComponentFixture<TriTestSkeletonComponent>;
   let testComp: TriTestSkeletonComponent;
   let dl: DebugElement;
+
+  beforeEach(() => {
+    // todo: use zoneless
+    TestBed.configureTestingModule({
+      providers: [provideNzIconsTesting(), provideZoneChangeDetection()]
+    });
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TriTestSkeletonComponent);
@@ -158,6 +167,13 @@ describe('skeleton element', () => {
   let fixture: ComponentFixture<TriTestSkeletonElementComponent>;
   let testComp: TriTestSkeletonElementComponent;
   let dl: DebugElement;
+
+  beforeEach(() => {
+    // todo: use zoneless
+    TestBed.configureTestingModule({
+      providers: [provideNzIconsTesting(), provideZoneChangeDetection()]
+    });
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TriTestSkeletonElementComponent);

@@ -4,8 +4,8 @@
  */
 
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, inject, TestBed, waitForAsync } from '@angular/core/testing';
+import { Component, provideZoneChangeDetection, TemplateRef, ViewChild } from '@angular/core';
+import { ComponentFixture, fakeAsync, flush, inject, TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
@@ -22,11 +22,12 @@ describe('modal title directive', () => {
   let testComponent: TestDirectiveTitleComponent;
   let modalService: TriModalService;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(() => {
+    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [TriModalService, provideNoopAnimations()]
+      providers: [TriModalService, provideNoopAnimations(), provideZoneChangeDetection()]
     });
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestDirectiveTitleComponent);

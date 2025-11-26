@@ -4,8 +4,8 @@
  */
 
 import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
-import { Component, NO_ERRORS_SCHEMA, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import { Component, NO_ERRORS_SCHEMA, provideZoneChangeDetection, ViewChild } from '@angular/core';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Subject } from 'rxjs';
@@ -28,12 +28,14 @@ import { TriDemoCardSimpleComponent } from './demo/simple';
 import { TriDemoCardTabsComponent } from './demo/tabs';
 
 describe('card', () => {
-  beforeEach(waitForAsync(() => {
+  beforeEach(() => {
+    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideNoopAnimations(), provideNzIconsTesting()],
+      providers: [provideNoopAnimations(), provideNzIconsTesting(), provideZoneChangeDetection()],
       schemas: [NO_ERRORS_SCHEMA]
     });
-  }));
+  });
+
   it('should basic work', () => {
     const fixture = TestBed.createComponent(TriDemoCardBasicComponent);
     const card = fixture.debugElement.query(By.directive(TriCardComponent));
@@ -43,19 +45,22 @@ describe('card', () => {
     expect(card.nativeElement.querySelector('.ant-card-head-title').innerText).toBe('Card title');
     expect(card.nativeElement.querySelector('.ant-card-extra').innerText).toBe('More');
   });
-  it('should border-less work', () => {
+
+  it('should borderless work', () => {
     const fixture = TestBed.createComponent(TriDemoCardBorderLessComponent);
     const card = fixture.debugElement.query(By.directive(TriCardComponent));
     fixture.detectChanges();
     expect(card.nativeElement.classList).toContain('ant-card');
     expect(card.nativeElement.classList).not.toContain('ant-card-bordered');
   });
+
   it('should simple work', () => {
     const fixture = TestBed.createComponent(TriDemoCardSimpleComponent);
     const card = fixture.debugElement.query(By.directive(TriCardComponent));
     fixture.detectChanges();
     expect(card.nativeElement.firstElementChild!.classList).toContain('ant-card-body');
   });
+
   it('should flexible content work', () => {
     const fixture = TestBed.createComponent(TriDemoCardFlexibleContentComponent);
     const card = fixture.debugElement.query(By.directive(TriCardComponent));
@@ -65,12 +70,14 @@ describe('card', () => {
     expect(card.nativeElement.querySelector('.ant-card-meta-title').innerText).toBe('Europe Street beat');
     expect(card.nativeElement.querySelector('.ant-card-meta-description').innerText).toBe('www.instagram.com');
   });
+
   it('should in column work', () => {
     const fixture = TestBed.createComponent(TriDemoCardInColumnComponent);
     const card = fixture.debugElement.query(By.directive(TriCardComponent));
     fixture.detectChanges();
     expect(card.nativeElement.classList).toContain('ant-card');
   });
+
   it('should loading work', () => {
     const fixture = TestBed.createComponent(TriDemoCardLoadingComponent);
     const card = fixture.debugElement.query(By.directive(TriCardComponent));
@@ -80,6 +87,7 @@ describe('card', () => {
     expect(skeleton).toBeTruthy();
     expect(skeleton.classList).toContain('ant-skeleton-active');
   });
+
   it('should grid work', () => {
     const fixture = TestBed.createComponent(TriDemoCardGridCardComponent);
     const card = fixture.debugElement.query(By.directive(TriCardComponent));
@@ -87,6 +95,7 @@ describe('card', () => {
     expect(card.nativeElement.classList).toContain('ant-card-contain-grid');
     expect(card.nativeElement.querySelector('.ant-card-body').firstElementChild!.classList).toContain('ant-card-grid');
   });
+
   it('should inner work', () => {
     const fixture = TestBed.createComponent(TriDemoCardInnerComponent);
     const card = fixture.debugElement.query(By.directive(TriCardComponent));
@@ -94,6 +103,7 @@ describe('card', () => {
     expect(card.nativeElement.classList).not.toContain('ant-card-type-inner');
     expect(card.nativeElement.querySelectorAll('.ant-card-type-inner').length).toBe(2);
   });
+
   it('should card work', () => {
     const fixture = TestBed.createComponent(TriDemoCardTabsComponent);
     const cards = fixture.debugElement.queryAll(By.directive(TriCardComponent));
@@ -103,12 +113,14 @@ describe('card', () => {
     expect(cards[1].nativeElement.classList).toContain('ant-card-contain-tabs');
     expect(cards[1].nativeElement.firstElementChild.firstElementChild!.classList).toContain('ant-card-head-wrapper');
   });
+
   it('should meta work', () => {
     const fixture = TestBed.createComponent(TriDemoCardMetaComponent);
     const card = fixture.debugElement.query(By.directive(TriCardComponent));
     fixture.detectChanges();
     expect(card.nativeElement.querySelector('.ant-card-actions').children.length).toBe(3);
   });
+
   it('should size work', () => {
     const fixture = TestBed.createComponent(TestCardSizeComponent);
     const card = fixture.debugElement.query(By.directive(TriCardComponent));

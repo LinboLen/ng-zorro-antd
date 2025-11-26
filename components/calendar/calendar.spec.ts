@@ -6,11 +6,11 @@
 import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
-import { Component, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync, flush, waitForAsync } from '@angular/core/testing';
+import { Component, provideZoneChangeDetection, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
 import { FormsModule, NgModel } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { CandyDate } from 'ng-zorro-antd/core/time';
 import { TRI_DATE_CONFIG } from 'ng-zorro-antd/i18n/date-config';
@@ -21,22 +21,26 @@ import { TriCalendarModule } from './calendar.module';
 
 registerLocaleData(zh);
 
-describe('Calendar', () => {
-  beforeEach(waitForAsync(() => {
+describe('calendar', () => {
+  beforeEach(() => {
+    // todo: use zoneless
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule],
-      providers: [{ provide: TRI_DATE_CONFIG, useValue: { firstDayOfWeek: 0 } }]
+      providers: [
+        provideZoneChangeDetection(),
+        provideNoopAnimations(),
+        { provide: TRI_DATE_CONFIG, useValue: { firstDayOfWeek: 0 } }
+      ]
     });
-  }));
+  });
 
   describe('mode', () => {
     let fixture: ComponentFixture<TriTestCalendarModeComponent>;
     let component: TriTestCalendarModeComponent;
 
-    beforeEach(waitForAsync(() => {
+    beforeEach(() => {
       fixture = TestBed.createComponent(TriTestCalendarModeComponent);
       component = fixture.componentInstance;
-    }));
+    });
 
     it('should be month by default', () => {
       fixture.detectChanges();
@@ -96,15 +100,14 @@ describe('Calendar', () => {
     let fixture: ComponentFixture<TriTestCalendarValueComponent>;
     let component: TriTestCalendarValueComponent;
 
-    beforeEach(waitForAsync(() => {
+    beforeEach(() => {
       fixture = TestBed.createComponent(TriTestCalendarValueComponent);
       component = fixture.componentInstance;
-    }));
+    });
 
     it('should be now by default', () => {
-      const now = new Date();
-
       fixture.detectChanges();
+      const now = new Date();
 
       const host = fixture.debugElement.queryAll(By.directive(Calendar))[0];
       const header = host.query(By.directive(CalendarHeader)).injector.get(CalendarHeader);
@@ -227,10 +230,10 @@ describe('Calendar', () => {
     let fixture: ComponentFixture<TriTestCalendarFullscreenComponent>;
     let component: TriTestCalendarFullscreenComponent;
 
-    beforeEach(waitForAsync(() => {
+    beforeEach(() => {
       fixture = TestBed.createComponent(TriTestCalendarFullscreenComponent);
       component = fixture.componentInstance;
-    }));
+    });
 
     it('should be true by default', () => {
       fixture.detectChanges();
@@ -266,9 +269,9 @@ describe('Calendar', () => {
   describe('dateCell', () => {
     let fixture: ComponentFixture<TriTestCalendarDateCellComponent>;
 
-    beforeEach(waitForAsync(() => {
+    beforeEach(() => {
       fixture = TestBed.createComponent(TriTestCalendarDateCellComponent);
-    }));
+    });
 
     it('should work when passed via property', () => {
       fixture.detectChanges();
@@ -292,9 +295,9 @@ describe('Calendar', () => {
   describe('dateFullCell', () => {
     let fixture: ComponentFixture<TriTestCalendarDateFullCellComponent>;
 
-    beforeEach(waitForAsync(() => {
+    beforeEach(() => {
       fixture = TestBed.createComponent(TriTestCalendarDateFullCellComponent);
-    }));
+    });
 
     it('should work when passed via property', () => {
       fixture.detectChanges();
@@ -317,9 +320,9 @@ describe('Calendar', () => {
   describe('monthCell', () => {
     let fixture: ComponentFixture<TriTestCalendarMonthCellComponent>;
 
-    beforeEach(waitForAsync(() => {
+    beforeEach(() => {
       fixture = TestBed.createComponent(TriTestCalendarMonthCellComponent);
-    }));
+    });
 
     it('should work when passed via property', () => {
       fixture.detectChanges();
@@ -341,9 +344,9 @@ describe('Calendar', () => {
   describe('monthFullCell', () => {
     let fixture: ComponentFixture<TriTestCalendarMonthFullCellComponent>;
 
-    beforeEach(waitForAsync(() => {
+    beforeEach(() => {
       fixture = TestBed.createComponent(TriTestCalendarMonthFullCellComponent);
-    }));
+    });
 
     it('should work when passed via property', () => {
       fixture.detectChanges();
@@ -366,12 +369,12 @@ describe('Calendar', () => {
     let fixture: ComponentFixture<TriTestCalendarChangesComponent>;
     let component: TriTestCalendarChangesComponent;
 
-    beforeEach(waitForAsync(() => {
+    beforeEach(() => {
       fixture = TestBed.createComponent(TriTestCalendarChangesComponent);
       component = fixture.componentInstance;
-    }));
+    });
 
-    it('should panelChange work', fakeAsync(() => {
+    it('should panelChange work', () => {
       fixture.detectChanges();
 
       expect(component.panelChange).toHaveBeenCalledTimes(0);
@@ -381,7 +384,7 @@ describe('Calendar', () => {
       fixture.detectChanges();
 
       expect(component.panelChange).toHaveBeenCalledTimes(1);
-    }));
+    });
 
     it('should selectChange work', () => {
       fixture.detectChanges();
@@ -405,18 +408,18 @@ describe('Calendar', () => {
     let fixture: ComponentFixture<TriTestCalendarRtlComponent>;
     let componentElement: HTMLElement;
 
-    beforeEach(waitForAsync(() => {
+    beforeEach(() => {
       fixture = TestBed.createComponent(TriTestCalendarRtlComponent);
       componentElement = fixture.debugElement.query(By.directive(Calendar)).nativeElement;
       fixture.detectChanges();
-    }));
+    });
 
-    it('should className correct on dir change', fakeAsync(() => {
+    it('should className correct on dir change', () => {
       expect(componentElement.classList).toContain('ant-picker-calendar-rtl');
       fixture.componentInstance.direction = 'ltr';
       fixture.detectChanges();
       expect(componentElement.classList).not.toContain('ant-picker-calendar-rtl');
-    }));
+    });
   });
 });
 
