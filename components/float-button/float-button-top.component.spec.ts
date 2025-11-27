@@ -243,24 +243,6 @@ describe('nz-float-button-top RTL', () => {
   });
 });
 
-describe('nz-float-button-top RTL', () => {
-  let fixture: ComponentFixture<TestFloatButtonTopRtlComponent>;
-  let resultEl: DebugElement;
-
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      providers: [provideNoopAnimations(), provideNzIconsTesting()]
-    });
-    fixture = TestBed.createComponent(TestFloatButtonTopRtlComponent);
-    resultEl = fixture.debugElement.query(By.directive(TriFloatButtonTopComponent));
-  }));
-
-  it('rtl', () => {
-    fixture.detectChanges();
-    expect(resultEl.nativeElement.classList).toContain('ant-float-btn-rtl');
-  });
-});
-
 @Component({
   imports: [TriFloatButtonModule],
   template: `
