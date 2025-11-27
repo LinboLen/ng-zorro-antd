@@ -3,4 +3,6 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-@import "index.less";
+export function generateClassName(prefix: string, suffix: string): string {
+  return `${prefix}-${suffix}`;
+}
