@@ -41,10 +41,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject, combineLatest, merge, of as observableOf } from 'rxjs';
 import { distinctUntilChanged, filter, map, startWith, tap, withLatestFrom } from 'rxjs/operators';
 
-import { slideMotion } from 'ng-zorro-antd/core/animation';
+import { slideMotion, TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
 import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
-import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
 import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import { TriOverlayModule, POSITION_MAP } from 'ng-zorro-antd/core/overlay';
 import { requestAnimationFrame } from 'ng-zorro-antd/core/polyfill';

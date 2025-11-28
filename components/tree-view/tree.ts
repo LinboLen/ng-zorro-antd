@@ -21,7 +21,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable, Subject } from 'rxjs';
 
-import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 @Component({

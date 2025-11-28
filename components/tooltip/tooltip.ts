@@ -16,9 +16,8 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { zoomBigMotion } from 'ng-zorro-antd/core/animation';
+import { zoomBigMotion, TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { isPresetColor, TriPresetColor } from 'ng-zorro-antd/core/color';
-import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriOverlayModule } from 'ng-zorro-antd/core/overlay';
 import { NgStyleInterface, TriTSType } from 'ng-zorro-antd/core/types';

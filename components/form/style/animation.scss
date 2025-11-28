@@ -1,0 +1,32 @@
+@import "../../style/themes/index";
+// ================================================================
+
+// =                    Form Validate Animation                   =
+
+// ================================================================
+$form-prefix-cls: "#{$ant-prefix}-form";
+$animation-duration: $animation-duration-slow;
+$animate-distance: -5px;
+@mixin animation($type) {
+  &-#{$type} {
+    animation: "#{$type}" $animation-duration $ease-in-out;
+  }
+}
+@mixin keyframes($name, $from-opacity, $to-opacity, $from-transform, $to-transform) {
+  @keyframes $name {
+    from {
+      transform: $from-transform;
+      opacity: $from-opacity;
+    }
+    to {
+      transform: $to-transform;
+      opacity: $to-opacity;
+    }
+  }
+}
+.#{$form-prefix-cls}-validate_animation {
+  @include animation(enter);
+  @include animation(leave);
+  @include keyframes((enter, 0, 1, translateY($animate-distance), translateY(0)));
+  @include keyframes((leave, 1, 0, translateY(0), translateY($animate-distance)));
+}

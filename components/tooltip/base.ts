@@ -29,8 +29,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Subject, asapScheduler } from 'rxjs';
 import { delay, distinctUntilChanged, filter } from 'rxjs/operators';
 
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { TriConfigService, PopConfirmConfig, PopoverConfig } from 'ng-zorro-antd/core/config';
-import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
 import {
   DEFAULT_TOOLTIP_POSITIONS,
   POSITION_MAP,

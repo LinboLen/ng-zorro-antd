@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { auditTime, map } from 'rxjs/operators';
 
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { TriHighlightPipe } from 'ng-zorro-antd/core/highlight';
-import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriInputModule } from 'ng-zorro-antd/input';
 import { TriTreeFlatDataSource, TriTreeFlattener, TriTreeViewModule } from 'ng-zorro-antd/tree-view';

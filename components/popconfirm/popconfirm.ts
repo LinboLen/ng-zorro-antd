@@ -29,9 +29,8 @@ import { filter, Observable, Subject } from 'rxjs';
 import { finalize, first } from 'rxjs/operators';
 
 import { TriButtonModule, TriButtonType } from 'ng-zorro-antd/button';
-import { zoomBigMotion } from 'ng-zorro-antd/core/animation';
+import { zoomBigMotion, TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { TriConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
-import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriOverlayModule } from 'ng-zorro-antd/core/overlay';
 import { NgStyleInterface, TriTSType } from 'ng-zorro-antd/core/types';

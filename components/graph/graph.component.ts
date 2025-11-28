@@ -32,7 +32,7 @@ import { finalize, take } from 'rxjs/operators';
 
 import { buildGraph } from 'dagre-compound';
 
-import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { cancelAnimationFrame } from 'ng-zorro-antd/core/polyfill';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 

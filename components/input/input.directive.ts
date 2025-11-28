@@ -31,8 +31,7 @@ import { getStatusClassNames } from 'ng-zorro-antd/core/util';
 import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
 import { TriInputPasswordDirective } from './input-password.directive';
-import { TriInputSearchDirective } from './input-search.directive';
-import { TRI_INPUT_WRAPPER } from './tokens';
+import { TRI_INPUT_SEARCH, TRI_INPUT_WRAPPER } from './tokens';
 
 const PREFIX_CLS = 'ant-input';
 
@@ -66,9 +65,9 @@ export class TriInputDirective implements OnInit {
   private formNoStatusService = inject(TriFormNoStatusService, { optional: true });
   private inputWrapper = inject(TRI_INPUT_WRAPPER, { host: true, optional: true });
   private focusMonitor = inject(FocusMonitor);
-  protected hostView = inject(ViewContainerRef);
-  protected readonly inputPasswordDir = inject(TriInputPasswordDirective, { host: true, optional: true });
-  protected readonly inputSearchDir = inject(TriInputSearchDirective, { host: true, optional: true });
+  private hostView = inject(ViewContainerRef);
+  private readonly inputPasswordDir = inject(TriInputPasswordDirective, { host: true, optional: true });
+  private readonly inputSearchDir = inject(TRI_INPUT_SEARCH, { host: true, optional: true });
 
   readonly ngControl = inject(NgControl, { self: true, optional: true });
   readonly value = signal<string>(this.elementRef.nativeElement.value);

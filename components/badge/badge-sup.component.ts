@@ -16,8 +16,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { zoomBadgeMotion } from 'ng-zorro-antd/core/animation';
-import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { zoomBadgeMotion, TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { NgStyleInterface, TriSafeAny, TriSizeDSType } from 'ng-zorro-antd/core/types';
 
 @Component({

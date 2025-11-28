@@ -16,9 +16,8 @@ import {
   inject
 } from '@angular/core';
 
-import { zoomBadgeMotion } from 'ng-zorro-antd/core/animation';
+import { zoomBadgeMotion, TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
-import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { NgStyleInterface, TriSafeAny, TriSizeDSType } from 'ng-zorro-antd/core/types';
 

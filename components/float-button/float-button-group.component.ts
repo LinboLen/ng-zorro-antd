@@ -18,6 +18,7 @@ import {
   TemplateRef
 } from '@angular/core';
 
+import { withAnimationCheck } from 'ng-zorro-antd/core/animation';
 import { TriFourDirectionType, TriShapeSCType } from 'ng-zorro-antd/core/types';
 import { generateClassName } from 'ng-zorro-antd/core/util';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -97,8 +98,8 @@ export class TriFloatButtonGroupComponent {
     }
     return classes;
   });
-  protected readonly enterAnimation = computed(() => `ant-float-btn-enter-${this.placement()}`);
-  protected readonly leaveAnimation = computed(() => `ant-float-btn-leave-${this.placement()}`);
+  protected readonly enterAnimation = withAnimationCheck(() => `ant-float-btn-enter-${this.placement()}`);
+  protected readonly leaveAnimation = withAnimationCheck(() => `ant-float-btn-leave-${this.placement()}`);
 
   constructor() {
     effect(() => {

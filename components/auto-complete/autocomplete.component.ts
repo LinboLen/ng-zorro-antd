@@ -33,8 +33,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable, Subscription, defer, merge } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 
-import { slideMotion } from 'ng-zorro-antd/core/animation';
-import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { slideMotion, TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { TRI_AFTER_NEXT_RENDER$ } from 'ng-zorro-antd/core/render';
 import { CompareWith, TriSafeAny } from 'ng-zorro-antd/core/types';
 import { numberAttributeWithZeroFallback } from 'ng-zorro-antd/core/util';

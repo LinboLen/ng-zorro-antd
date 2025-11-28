@@ -16,9 +16,8 @@ import {
   booleanAttribute
 } from '@angular/core';
 
-import { zoomBigMotion } from 'ng-zorro-antd/core/animation';
+import { zoomBigMotion, TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { TriConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
-import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriOverlayModule } from 'ng-zorro-antd/core/overlay';
 import { NgStyleInterface, TriSafeAny, TriTSType } from 'ng-zorro-antd/core/types';

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TriAvatarModule } from 'ng-zorro-antd/avatar';
 import { TriBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { TriButtonModule } from 'ng-zorro-antd/button';
-import { TriNoAnimationModule } from 'ng-zorro-antd/core/no-animation';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { TriDropdownModule } from 'ng-zorro-antd/dropdown';
 import { TriGridModule } from 'ng-zorro-antd/grid';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -21,11 +21,11 @@ import { TriTypographyModule } from 'ng-zorro-antd/typography';
     TriDropdownModule,
     TriGridModule,
     TriIconModule,
-    TriNoAnimationModule,
     TriPageHeaderModule,
     TriSpaceModule,
     TriTagModule,
-    TriTypographyModule
+    TriTypographyModule,
+    TriNoAnimationDirective
   ],
   template: `
     <tri-page-header>

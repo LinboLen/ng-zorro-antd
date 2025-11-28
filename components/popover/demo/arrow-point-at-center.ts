@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
-import { TriNoAnimationModule } from 'ng-zorro-antd/core/no-animation';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { TriPopoverModule } from 'ng-zorro-antd/popover';
 
 @Component({
   selector: 'tri-demo-popover-arrow-point-at-center',
-  imports: [TriButtonModule, TriPopoverModule, TriNoAnimationModule],
+  imports: [TriButtonModule, TriPopoverModule, TriNoAnimationDirective],
   template: `
     <button tri-button popoverTitle="Title" popoverContent="Content" popoverPlacement="topLeft" tri-popover>
       Align edge / 边缘对齐

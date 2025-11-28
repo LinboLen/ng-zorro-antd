@@ -43,9 +43,8 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable, Subject } from 'rxjs';
 
-import { drawerMaskMotion } from 'ng-zorro-antd/core/animation';
+import { drawerMaskMotion, TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
-import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { overlayZIndexSetter } from 'ng-zorro-antd/core/overlay';
 import { NgStyleInterface, TriSafeAny } from 'ng-zorro-antd/core/types';

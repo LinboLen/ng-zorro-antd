@@ -3,13 +3,24 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { booleanAttribute, computed, contentChild, Directive, ElementRef, input, output } from '@angular/core';
+import {
+  booleanAttribute,
+  computed,
+  contentChild,
+  Directive,
+  ElementRef,
+  forwardRef,
+  input,
+  output
+} from '@angular/core';
 
 import { TriInputDirective } from './input.directive';
+import { TRI_INPUT_SEARCH } from './tokens';
 
 @Directive({
   selector: 'tri-input-search',
   exportAs: 'triInputSearch',
+  providers: [{ provide: TRI_INPUT_SEARCH, useExisting: forwardRef(() => TriInputSearchDirective) }],
   host: {
     class: 'tri-input-search',
     '[class.tri-input-search-large]': `size() === 'large'`,

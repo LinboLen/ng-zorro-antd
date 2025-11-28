@@ -15,7 +15,6 @@ import {
   Validators
 } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { en_US, TriI18nService } from 'ng-zorro-antd/i18n';
@@ -37,7 +36,7 @@ describe('form-control', () => {
   beforeEach(() => {
     // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideZoneChangeDetection(), provideNoopAnimations()]
+      providers: [provideZoneChangeDetection()]
     });
   });
 
@@ -65,6 +64,11 @@ describe('form-control', () => {
         fixture.detectChanges();
         expect(formItem.nativeElement.classList).toContain(statusMap[status]);
       });
+    });
+
+    it('should get correct form validate animation class', () => {
+      expect(formControl.componentInstance.nzValidateAnimationEnter()).toBe('ant-form-validate_animation-enter');
+      expect(formControl.componentInstance.nzValidateAnimationLeave()).toBe('ant-form-validate_animation-leave');
     });
   });
 

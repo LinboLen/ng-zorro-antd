@@ -9,7 +9,7 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { By } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
-import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { NgStyleInterface, TriSizeDSType } from 'ng-zorro-antd/core/types';
 
 import { TriBadgeComponent } from './badge.component';

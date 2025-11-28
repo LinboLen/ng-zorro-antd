@@ -24,7 +24,7 @@ import { AbstractControl, FormControlDirective, FormControlName, NgControl, NgMo
 import { Observable, Subscription } from 'rxjs';
 import { filter, startWith, tap } from 'rxjs/operators';
 
-import { helpMotion } from 'ng-zorro-antd/core/animation';
+import { withAnimationCheck } from 'ng-zorro-antd/core/animation';
 import { TriFormStatusService } from 'ng-zorro-antd/core/form';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
@@ -37,7 +37,6 @@ import { TriFormDirective } from './form.directive';
 @Component({
   selector: 'tri-form-control',
   exportAs: 'triFormControl',
-  animations: [helpMotion],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
@@ -47,7 +46,11 @@ import { TriFormDirective } from './form.directive';
       </div>
     </div>
     @if (innerTip) {
-      <div @helpMotion class="tri-form-item-explain tri-form-item-explain-connected">
+      <div
+        [animate.enter]="validateAnimationEnter()"
+        [animate.leave]="validateAnimationLeave()"
+        class="tri-form-item-explain tri-form-item-explain-connected"
+      >
         <div role="alert" [class]="['ant-form-item-explain-' + status]">
           <ng-container *stringTemplateOutlet="innerTip; stringTemplateOutletContext: { $implicit: validateControl }">{{
             innerTip
@@ -85,6 +88,9 @@ export class TriFormControlComponent implements OnChanges, OnInit, AfterContentI
       ? toBoolean(this.disableAutoTips)
       : !!this.formDirective?.disableAutoTips;
   }
+
+  protected readonly validateAnimationEnter = withAnimationCheck(() => 'ant-form-validate_animation-enter');
+  protected readonly validateAnimationLeave = withAnimationCheck(() => 'ant-form-validate_animation-leave');
 
   status: TriFormControlStatusType = '';
   validateControl: AbstractControl | NgModel | null = null;

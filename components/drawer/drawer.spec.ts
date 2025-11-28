@@ -11,7 +11,7 @@ import { ComponentFixture, TestBed, fakeAsync, inject as testingInject, tick } f
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
-import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { dispatchKeyboardEvent } from 'ng-zorro-antd/core/testing';
 import { TRI_DRAWER_DATA, TriDrawerPlacement } from 'ng-zorro-antd/drawer/drawer-options';
 import { TriIconModule } from 'ng-zorro-antd/icon';

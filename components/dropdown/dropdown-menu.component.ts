@@ -24,8 +24,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject } from 'rxjs';
 
-import { slideMotion } from 'ng-zorro-antd/core/animation';
-import { TriNoAnimationDirective } from 'ng-zorro-antd/core/no-animation';
+import { slideMotion, TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { IndexableObject, TriSafeAny } from 'ng-zorro-antd/core/types';
 import { MenuService, TriIsMenuInsideDropdownToken } from 'ng-zorro-antd/menu';
 
