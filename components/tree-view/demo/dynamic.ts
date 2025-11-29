@@ -1,11 +1,10 @@
 import { CollectionViewer, DataSource, SelectionChange } from '@angular/cdk/collections';
-import { FlatTreeControl, TreeControl } from '@angular/cdk/tree';
-import { Component } from '@angular/core';
-import { BehaviorSubject, Observable, merge, of } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { BehaviorSubject, merge, Observable, of } from 'rxjs';
 import { delay, map, tap } from 'rxjs/operators';
 
 import { TriIconModule } from 'ng-zorro-antd/icon';
-import { TriTreeViewModule } from 'ng-zorro-antd/tree-view';
+import { TriTreeView, TriTreeViewComponent, TriTreeViewModule } from 'ng-zorro-antd/tree-view';
 
 interface FlatNode {
   expandable: boolean;
@@ -58,41 +57,20 @@ class DynamicDatasource implements DataSource<FlatNode> {
   private childrenLoadedSet = new Set<FlatNode>();
 
   constructor(
-    private treeControl: TreeControl<FlatNode>,
+    private tree: TriTreeView<FlatNode>,
     initData: FlatNode[]
   ) {
     this.flattenedData = new BehaviorSubject<FlatNode[]>(initData);
-    treeControl.dataNodes = initData;
+    tree.dataNodes = initData;
   }
 
   connect(collectionViewer: CollectionViewer): Observable<FlatNode[]> {
     const changes = [
       collectionViewer.viewChange,
-      this.treeControl.expansionModel.changed.pipe(tap(change => this.handleExpansionChange(change))),
+      this.tree._getExpansionModel().changed.pipe(tap(change => this.handleExpansionChange(change))),
       this.flattenedData.asObservable()
     ];
-    return merge(...changes).pipe(map(() => this.expandFlattenedNodes(this.flattenedData.getValue())));
-  }
-
-  expandFlattenedNodes(nodes: FlatNode[]): FlatNode[] {
-    const treeControl = this.treeControl;
-    const results: FlatNode[] = [];
-    const currentExpand: boolean[] = [];
-    currentExpand[0] = true;
-
-    nodes.forEach(node => {
-      let expand = true;
-      for (let i = 0; i <= treeControl.getLevel(node); i++) {
-        expand = expand && currentExpand[i];
-      }
-      if (expand) {
-        results.push(node);
-      }
-      if (treeControl.isExpandable(node)) {
-        currentExpand[treeControl.getLevel(node) + 1] = treeControl.isExpanded(node);
-      }
-    });
-    return results;
+    return merge(...changes).pipe(map(() => this.flattenedData.value));
   }
 
   handleExpansionChange(change: SelectionChange<FlatNode>): void {
@@ -115,6 +93,8 @@ class DynamicDatasource implements DataSource<FlatNode> {
         this.childrenLoadedSet.add(node);
       }
       this.flattenedData.next(flattenedData);
+      // save flattened data into tree instance
+      this.tree.dataNodes = flattenedData;
     });
   }
 
@@ -127,12 +107,12 @@ class DynamicDatasource implements DataSource<FlatNode> {
   selector: 'tri-demo-tree-view-dynamic',
   imports: [TriIconModule, TriTreeViewModule],
   template: `
-    <tri-tree-view [treeControl]="treeControl" [dataSource]="dataSource">
-      <tri-tree-node *treeNodeDef="let node" treeNodePadding>
+    <tri-tree-view [dataSource]="dataSource" [levelAccessor]="levelAccessor">
+      <tri-tree-node *treeNodeDef="let node" treeNodePadding [expandable]="false">
         {{ node.label }}
       </tri-tree-node>
 
-      <tri-tree-node *treeNodeDef="let node; treeNodeDefWhen: hasChild" treeNodePadding>
+      <tri-tree-node *treeNodeDef="let node; treeNodeDefWhen: hasChild" treeNodePadding [expandable]="true">
         @if (!node.loading) {
           <tri-tree-node-toggle>
             <tri-icon type="caret-down" treeNodeToggleRotateIcon />
@@ -147,13 +127,16 @@ class DynamicDatasource implements DataSource<FlatNode> {
     </tri-tree-view>
   `
 })
-export class TriDemoTreeViewDynamicComponent {
-  treeControl = new FlatTreeControl<FlatNode>(
-    node => node.level,
-    node => node.expandable
-  );
+export class TriDemoTreeViewDynamicComponent implements OnInit {
+  @ViewChild(TriTreeViewComponent, { static: true }) tree!: TriTreeViewComponent<FlatNode>;
 
-  dataSource = new DynamicDatasource(this.treeControl, TREE_DATA);
+  readonly levelAccessor = (dataNode: FlatNode): number => dataNode.level;
 
-  hasChild = (_: number, node: FlatNode): boolean => node.expandable;
+  readonly hasChild = (_: number, node: FlatNode): boolean => node.expandable;
+
+  dataSource!: DynamicDatasource;
+
+  ngOnInit(): void {
+    this.dataSource = new DynamicDatasource(this.tree, TREE_DATA);
+  }
 }

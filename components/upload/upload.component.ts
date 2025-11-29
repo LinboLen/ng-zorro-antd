@@ -16,6 +16,7 @@ import {
   DOCUMENT,
   EventEmitter,
   inject,
+  input,
   Input,
   numberAttribute,
   OnChanges,
@@ -124,6 +125,8 @@ export class TriUploadComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() iconRender: TriIconRenderTemplate | null = null;
   @Input() fileListRender: TemplateRef<{ $implicit: TriUploadFile[] }> | null = null;
 
+  readonly maxCount = input<number>();
+
   @Output() readonly change: EventEmitter<TriUploadChangeParam> = new EventEmitter<TriUploadChangeParam>();
   @Output() readonly fileListChange: EventEmitter<TriUploadFile[]> = new EventEmitter<TriUploadFile[]>();
 
@@ -211,12 +214,17 @@ export class TriUploadComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   private onStart = (file: TriUploadFile): void => {
+    const maxCount = this.maxCount();
     if (!this.fileList) {
       this.fileList = [];
     }
     const targetItem = this.fileToObject(file);
     targetItem.status = 'uploading';
-    this.fileList = this.fileList.concat(targetItem);
+    if (maxCount === 1) {
+      this.fileList = [targetItem];
+    } else if (!maxCount || maxCount <= 0 || this.fileList.length < maxCount) {
+      this.fileList = [...this.fileList, targetItem];
+    }
     this.fileListChange.emit(this.fileList);
     this.change.emit({ file: targetItem, fileList: this.fileList, type: 'start' });
     this.detectChangesList();
@@ -225,10 +233,15 @@ export class TriUploadComponent implements OnInit, AfterViewInit, OnChanges {
   private onProgress = (e: { percent: number }, file: TriUploadFile): void => {
     const fileList = this.fileList;
     const targetItem = this.getFileItem(file, fileList);
+
+    if (!targetItem) {
+      return;
+    }
+
     targetItem.percent = e.percent;
     this.change.emit({
       event: e,
-      file: { ...targetItem },
+      file: targetItem,
       fileList: this.fileList,
       type: 'progress'
     });
@@ -238,10 +251,13 @@ export class TriUploadComponent implements OnInit, AfterViewInit, OnChanges {
   private onSuccess = (res: {}, file: TriUploadFile): void => {
     const fileList = this.fileList;
     const targetItem = this.getFileItem(file, fileList);
+    if (!targetItem) {
+      return;
+    }
     targetItem.status = 'done';
     targetItem.response = res;
     this.change.emit({
-      file: { ...targetItem },
+      file: targetItem,
       fileList,
       type: 'success'
     });
@@ -251,6 +267,11 @@ export class TriUploadComponent implements OnInit, AfterViewInit, OnChanges {
   private onError = (err: {}, file: TriUploadFile): void => {
     const fileList = this.fileList;
     const targetItem = this.getFileItem(file, fileList);
+
+    if (!targetItem) {
+      return;
+    }
+
     targetItem.error = err;
     targetItem.status = 'error';
     this.change.emit({

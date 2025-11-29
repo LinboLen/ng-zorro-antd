@@ -1,5 +1,4 @@
-import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { auditTime, map } from 'rxjs/operators';
@@ -8,7 +7,12 @@ import { TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { TriHighlightPipe } from 'ng-zorro-antd/core/highlight';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriInputModule } from 'ng-zorro-antd/input';
-import { TriTreeFlatDataSource, TriTreeFlattener, TriTreeViewModule } from 'ng-zorro-antd/tree-view';
+import {
+  TriTreeFlattener,
+  TriTreeViewComponent,
+  TriTreeViewFlatDataSource,
+  TriTreeViewModule
+} from 'ng-zorro-antd/tree-view';
 
 interface TreeNode {
   name: string;
@@ -81,13 +85,13 @@ function filterTreeData(data: TreeNode[], value: string): FilteredTreeResult {
       <tri-icon inputSuffix type="search" />
     </tri-input-wrapper>
 
-    <tri-tree-view [treeControl]="treeControl" [dataSource]="dataSource" noAnimation>
-      <tri-tree-node *treeNodeDef="let node" treeNodePadding>
+    <tri-tree-view [dataSource]="dataSource" [levelAccessor]="levelAccessor" noAnimation>
+      <tri-tree-node *treeNodeDef="let node" treeNodePadding [expandable]="false">
         <tri-tree-node-toggle treeNodeNoopToggle></tri-tree-node-toggle>
         <span [innerHTML]="node.name | nzHighlight: searchValue : 'i' : 'highlight'"></span>
       </tri-tree-node>
 
-      <tri-tree-node *treeNodeDef="let node; treeNodeDefWhen: hasChild" treeNodePadding>
+      <tri-tree-node *treeNodeDef="let node; treeNodeDefWhen: hasChild" treeNodePadding [expandable]="true">
         <tri-tree-node-toggle>
           <tri-icon type="caret-down" treeNodeToggleRotateIcon />
         </tri-tree-node-toggle>
@@ -97,7 +101,7 @@ function filterTreeData(data: TreeNode[], value: string): FilteredTreeResult {
   `,
   styles: [
     `
-      nz-input-group {
+      nz-input-wrapper {
         margin-bottom: 8px;
       }
 
@@ -107,7 +111,13 @@ function filterTreeData(data: TreeNode[], value: string): FilteredTreeResult {
     `
   ]
 })
-export class TriDemoTreeViewSearchComponent {
+export class TriDemoTreeViewSearchComponent implements OnInit {
+  @ViewChild(TriTreeViewComponent, { static: true }) tree!: TriTreeViewComponent<FlatNode>;
+
+  readonly levelAccessor = (dataNode: FlatNode): number => dataNode.level;
+
+  readonly hasChild = (_: number, node: FlatNode): boolean => node.expandable;
+
   flatNodeMap = new Map<FlatNode, TreeNode>();
   nestedNodeMap = new Map<TreeNode, FlatNode>();
   expandedNodes: TreeNode[] = [];
@@ -130,22 +140,12 @@ export class TriDemoTreeViewSearchComponent {
     return flatNode;
   };
 
-  treeControl = new FlatTreeControl<FlatNode, TreeNode>(
-    node => node.level,
-    node => node.expandable,
-    {
-      trackBy: flatNode => this.flatNodeMap.get(flatNode)!
-    }
-  );
-
-  treeFlattener = new TriTreeFlattener<TreeNode, FlatNode, TreeNode>(
+  treeFlattener = new TriTreeFlattener<TreeNode, FlatNode>(
     this.transformer,
     node => node.level,
     node => node.expandable,
     node => node.children
   );
-
-  dataSource = new TriTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   filteredData$ = combineLatest([
     this.originData$,
@@ -155,26 +155,32 @@ export class TriDemoTreeViewSearchComponent {
     )
   ]).pipe(map(([data, value]) => (value ? filterTreeData(data, value) : new FilteredTreeResult(data))));
 
-  constructor() {
+  dataSource!: TriTreeViewFlatDataSource<TreeNode, FlatNode>;
+
+  ngOnInit(): void {
+    this.dataSource = new TriTreeViewFlatDataSource(this.tree, this.treeFlattener);
+
     this.filteredData$.subscribe(result => {
       this.dataSource.setData(result.treeData);
 
       const hasSearchValue = !!this.searchValue;
+      // trans nested nodes to flat nodes
+      const needsToExpanded = result.needsToExpanded.map(node => this.nestedNodeMap.get(node)!);
+      const expandedNodes = this.expandedNodes.map(node => this.nestedNodeMap.get(node)!);
+      // expand nodes
       if (hasSearchValue) {
         if (this.expandedNodes.length === 0) {
-          this.expandedNodes = this.treeControl.expansionModel.selected;
-          this.treeControl.expansionModel.clear();
+          this.expandedNodes = this.tree._getExpansionModel().selected;
+          this.tree._getExpansionModel().clear();
         }
-        this.treeControl.expansionModel.select(...result.needsToExpanded);
+        this.tree._getExpansionModel().select(...needsToExpanded);
       } else {
         if (this.expandedNodes.length) {
-          this.treeControl.expansionModel.clear();
-          this.treeControl.expansionModel.select(...this.expandedNodes);
+          this.tree._getExpansionModel().clear();
+          this.tree._getExpansionModel().select(...expandedNodes);
           this.expandedNodes = [];
         }
       }
     });
   }
-
-  hasChild = (_: number, node: FlatNode): boolean => node.expandable;
 }

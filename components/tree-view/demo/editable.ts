@@ -1,11 +1,15 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriInputModule } from 'ng-zorro-antd/input';
-import { TriTreeFlatDataSource, TriTreeFlattener, TriTreeViewModule } from 'ng-zorro-antd/tree-view';
+import {
+  getParentForNestedData,
+  TriTreeViewComponent,
+  TriTreeViewModule,
+  TriTreeViewNestedDataSource
+} from 'ng-zorro-antd/tree-view';
 
 interface TreeNode {
   name: string;
@@ -40,19 +44,12 @@ const TREE_DATA: TreeNode[] = [
   }
 ];
 
-interface FlatNode {
-  expandable: boolean;
-  name: string;
-  key: string;
-  level: number;
-}
-
 @Component({
   selector: 'tri-demo-tree-view-editable',
   imports: [TriButtonModule, TriInputModule, TriIconModule, TriTreeViewModule],
   template: `
-    <tri-tree-view [treeControl]="treeControl" [dataSource]="dataSource" [trackBy]="trackBy">
-      <tri-tree-node *treeNodeDef="let node" treeNodeIndentLine>
+    <tri-tree-view [dataSource]="dataSource" [childrenAccessor]="childrenAccessor" [trackBy]="trackBy">
+      <tri-tree-node *treeNodeDef="let node" treeNodeIndentLine [expandable]="false">
         <tri-tree-node-option
           [disabled]="node.disabled"
           [selected]="selectListSelection.isSelected(node)"
@@ -65,13 +62,13 @@ interface FlatNode {
         </button>
       </tri-tree-node>
 
-      <tri-tree-node *treeNodeDef="let node; treeNodeDefWhen: hasNoContent" treeNodeIndentLine>
+      <tri-tree-node *treeNodeDef="let node; treeNodeDefWhen: hasNoContent" treeNodeIndentLine [expandable]="false">
         <input tri-input placeholder="Input node name" size="small" #inputElement />
         &nbsp;
         <button tri-button size="small" (click)="saveNode(node, inputElement.value)">Add</button>
       </tri-tree-node>
 
-      <tri-tree-node *treeNodeDef="let node; treeNodeDefWhen: hasChild" treeNodeIndentLine>
+      <tri-tree-node *treeNodeDef="let node; treeNodeDefWhen: hasChild" treeNodeIndentLine [expandable]="true">
         <tri-tree-node-toggle>
           <tri-icon type="caret-down" treeNodeToggleRotateIcon />
         </tri-tree-node-toggle>
@@ -81,98 +78,54 @@ interface FlatNode {
         </button>
       </tri-tree-node>
     </tri-tree-view>
-  `,
-  styles: [``]
+  `
 })
-export class TriDemoTreeViewEditableComponent {
-  private transformer = (node: TreeNode, level: number): FlatNode => {
-    const existingNode = this.nestedNodeMap.get(node);
-    const flatNode =
-      existingNode && existingNode.key === node.key
-        ? existingNode
-        : {
-            expandable: !!node.children && node.children.length > 0,
-            name: node.name,
-            level,
-            key: node.key
-          };
-    flatNode.name = node.name;
-    this.flatNodeMap.set(flatNode, node);
-    this.nestedNodeMap.set(node, flatNode);
-    return flatNode;
-  };
+export class TriDemoTreeViewEditableComponent implements OnInit, AfterViewInit {
+  @ViewChild(TriTreeViewComponent, { static: true }) tree!: TriTreeViewComponent<TreeNode>;
+
+  readonly childrenAccessor = (dataNode: TreeNode): TreeNode[] => dataNode.children ?? [];
+
+  readonly hasChild = (_: number, node: TreeNode): boolean => !!node.children?.length;
+
+  readonly hasNoContent = (_: number, node: TreeNode): boolean => node.name === '';
+
+  readonly trackBy = (_: number, node: TreeNode): string => `${node.key}-${node.name}`;
+
+  selectListSelection = new SelectionModel<TreeNode>(true);
 
   treeData = TREE_DATA;
-  flatNodeMap = new Map<FlatNode, TreeNode>();
-  nestedNodeMap = new Map<TreeNode, FlatNode>();
-  selectListSelection = new SelectionModel<FlatNode>(true);
 
-  treeControl = new FlatTreeControl<FlatNode>(
-    node => node.level,
-    node => node.expandable
-  );
-  treeFlattener = new TriTreeFlattener(
-    this.transformer,
-    node => node.level,
-    node => node.expandable,
-    node => node.children
-  );
+  dataSource!: TriTreeViewNestedDataSource<TreeNode>;
 
-  dataSource = new TriTreeFlatDataSource(this.treeControl, this.treeFlattener);
-
-  constructor() {
-    this.dataSource.setData(this.treeData);
-    this.treeControl.expandAll();
+  ngOnInit(): void {
+    this.dataSource = new TriTreeViewNestedDataSource<TreeNode>(this.tree, this.treeData);
   }
 
-  hasChild = (_: number, node: FlatNode): boolean => node.expandable;
-  hasNoContent = (_: number, node: FlatNode): boolean => node.name === '';
-  trackBy = (_: number, node: FlatNode): string => `${node.key}-${node.name}`;
+  ngAfterViewInit(): void {
+    this.tree.expandAll();
+  }
 
-  delete(node: FlatNode): void {
-    const originNode = this.flatNodeMap.get(node);
-
-    const dfsParentNode = (): TreeNode | null => {
-      const stack = [...this.treeData];
-      while (stack.length > 0) {
-        const n = stack.pop()!;
-        if (n.children) {
-          if (n.children.find(e => e === originNode)) {
-            return n;
-          }
-
-          for (let i = n.children.length - 1; i >= 0; i--) {
-            stack.push(n.children[i]);
-          }
-        }
-      }
-      return null;
-    };
-
-    const parentNode = dfsParentNode();
+  delete(node: TreeNode): void {
+    const parentNode = getParentForNestedData(this.treeData, node, this.childrenAccessor);
     if (parentNode && parentNode.children) {
-      parentNode.children = parentNode.children.filter(e => e !== originNode);
+      parentNode.children = parentNode.children.filter(e => e !== node);
     }
 
     this.dataSource.setData(this.treeData);
   }
-  addNewNode(node: FlatNode): void {
-    const parentNode = this.flatNodeMap.get(node);
-    if (parentNode) {
-      parentNode.children = parentNode.children || [];
-      parentNode.children.push({
-        name: '',
-        key: `${parentNode.key}-${parentNode.children.length}`
-      });
-      this.dataSource.setData(this.treeData);
-      this.treeControl.expand(node);
-    }
+  addNewNode(node: TreeNode): void {
+    node.children = node.children || [];
+    node.children.push({
+      name: '',
+      key: `${node.key}-${node.children.length}`
+    });
+    this.dataSource.setData(this.treeData);
+    this.tree.expand(node);
   }
 
-  saveNode(node: FlatNode, value: string): void {
-    const nestedNode = this.flatNodeMap.get(node);
-    if (nestedNode) {
-      nestedNode.name = value;
+  saveNode(node: TreeNode, value: string): void {
+    if (node) {
+      node.name = value;
       this.dataSource.setData(this.treeData);
     }
   }

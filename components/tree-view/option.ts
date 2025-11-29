@@ -7,16 +7,14 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  EventEmitter,
-  Input,
   NgZone,
-  OnChanges,
   OnInit,
-  Output,
-  SimpleChanges,
   booleanAttribute,
   inject,
-  DestroyRef
+  DestroyRef,
+  input,
+  output,
+  effect
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs/operators';
@@ -32,46 +30,45 @@ import { TriTreeNodeComponent } from './node';
   host: {
     class: 'tri-tree-node-content-wrapper',
     '[class.tri-tree-node-content-wrapper-open]': 'isExpanded',
-    '[class.tri-tree-node-selected]': 'selected'
+    '[class.tri-tree-node-selected]': 'selected()'
   }
 })
-export class TriTreeNodeOptionComponent<T> implements OnChanges, OnInit {
-  private ngZone = inject(NgZone);
-  private el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
-  private destroyRef = inject(DestroyRef);
-  private treeNode = inject(TriTreeNodeComponent<T>);
+export class TriTreeNodeOptionComponent<T> implements OnInit {
+  readonly selected = input(false, { transform: booleanAttribute });
+  readonly disabled = input(false, { transform: booleanAttribute });
+  readonly click = output<MouseEvent>();
 
-  @Input({ transform: booleanAttribute }) selected = false;
-  @Input({ transform: booleanAttribute }) disabled = false;
-  @Output() readonly click = new EventEmitter<MouseEvent>();
+  private readonly ngZone = inject(NgZone);
+  private readonly element: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly treeNode = inject(TriTreeNodeComponent<T>);
 
   get isExpanded(): boolean {
     return this.treeNode.isExpanded;
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    const { nzDisabled, nzSelected } = changes;
-    if (nzDisabled) {
-      if (nzDisabled.currentValue) {
-        this.treeNode.disable();
-      } else {
-        this.treeNode.enable();
-      }
-    }
-
-    if (nzSelected) {
-      if (nzSelected.currentValue) {
+  constructor() {
+    effect(() => {
+      if (this.selected()) {
         this.treeNode.select();
       } else {
         this.treeNode.deselect();
       }
-    }
+    });
+
+    effect(() => {
+      if (this.disabled()) {
+        this.treeNode.disable();
+      } else {
+        this.treeNode.enable();
+      }
+    });
   }
 
   ngOnInit(): void {
-    fromEventOutsideAngular<MouseEvent>(this.el, 'click')
+    fromEventOutsideAngular<MouseEvent>(this.element, 'click')
       .pipe(
-        filter(() => !this.disabled && this.click.observers.length > 0),
+        filter(() => !this.disabled()),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(event => {

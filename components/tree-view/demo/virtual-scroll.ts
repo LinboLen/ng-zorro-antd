@@ -1,19 +1,23 @@
-import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 
 import { TriIconModule } from 'ng-zorro-antd/icon';
-import { TriTreeFlatDataSource, TriTreeFlattener, TriTreeViewModule } from 'ng-zorro-antd/tree-view';
+import {
+  TriTreeFlattener,
+  TriTreeViewFlatDataSource,
+  TriTreeViewModule,
+  TriTreeVirtualScrollViewComponent
+} from 'ng-zorro-antd/tree-view';
 
-interface FoodNode {
+interface TreeNode {
   name: string;
-  children?: FoodNode[];
+  children?: TreeNode[];
 }
 
-function dig(path: string = '0', level: number = 3): FoodNode[] {
-  const list: FoodNode[] = [];
+function dig(path: string = '0', level: number = 3): TreeNode[] {
+  const list: TreeNode[] = [];
   for (let i = 0; i < 10; i += 1) {
     const name = `${path}-${i}`;
-    const treeNode: FoodNode = {
+    const treeNode: TreeNode = {
       name
     };
 
@@ -26,10 +30,10 @@ function dig(path: string = '0', level: number = 3): FoodNode[] {
   return list;
 }
 
-const TREE_DATA: FoodNode[] = dig();
+const TREE_DATA: TreeNode[] = dig();
 
 /** Flat node with expandable and level information */
-interface ExampleFlatNode {
+interface FlatNode {
   expandable: boolean;
   name: string;
   level: number;
@@ -39,13 +43,17 @@ interface ExampleFlatNode {
   selector: 'tri-demo-tree-view-virtual-scroll',
   imports: [TriIconModule, TriTreeViewModule],
   template: `
-    <tri-tree-virtual-scroll-view class="virtual-scroll-tree" [treeControl]="treeControl" [dataSource]="dataSource">
-      <tri-tree-node *treeNodeDef="let node" treeNodePadding>
+    <tri-tree-virtual-scroll-view
+      class="virtual-scroll-tree"
+      [dataSource]="dataSource"
+      [levelAccessor]="levelAccessor"
+    >
+      <tri-tree-node *treeNodeDef="let node" treeNodePadding [expandable]="false">
         <tri-tree-node-toggle treeNodeNoopToggle></tri-tree-node-toggle>
         {{ node.name }}
       </tri-tree-node>
 
-      <tri-tree-node *treeNodeDef="let node; treeNodeDefWhen: hasChild" treeNodePadding>
+      <tri-tree-node *treeNodeDef="let node; treeNodeDefWhen: hasChild" treeNodePadding [expandable]="true">
         <tri-tree-node-toggle>
           <tri-icon type="caret-down" treeNodeToggleRotateIcon />
         </tri-tree-node-toggle>
@@ -61,17 +69,18 @@ interface ExampleFlatNode {
     `
   ]
 })
-export class TriDemoTreeViewVirtualScrollComponent {
-  private transformer = (node: FoodNode, level: number): ExampleFlatNode => ({
+export class TriDemoTreeViewVirtualScrollComponent implements OnInit, AfterViewInit {
+  @ViewChild(TriTreeVirtualScrollViewComponent, { static: true }) tree!: TriTreeVirtualScrollViewComponent<FlatNode>;
+
+  readonly levelAccessor = (dataNode: FlatNode): number => dataNode.level;
+
+  readonly hasChild = (_: number, node: FlatNode): boolean => node.expandable;
+
+  private transformer = (node: TreeNode, level: number): FlatNode => ({
     expandable: !!node.children && node.children.length > 0,
     name: node.name,
     level
   });
-
-  treeControl = new FlatTreeControl<ExampleFlatNode>(
-    node => node.level,
-    node => node.expandable
-  );
 
   treeFlattener = new TriTreeFlattener(
     this.transformer,
@@ -80,12 +89,15 @@ export class TriDemoTreeViewVirtualScrollComponent {
     node => node.children
   );
 
-  dataSource = new TriTreeFlatDataSource(this.treeControl, this.treeFlattener);
+  dataSource!: TriTreeViewFlatDataSource<TreeNode, FlatNode>;
 
-  constructor() {
-    this.dataSource.setData(TREE_DATA);
-    this.treeControl.expandAll();
+  ngOnInit(): void {
+    this.dataSource = new TriTreeViewFlatDataSource(this.tree, this.treeFlattener, TREE_DATA);
   }
 
-  hasChild = (_: number, node: ExampleFlatNode): boolean => node.expandable;
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.tree.expandAll();
+    });
+  }
 }

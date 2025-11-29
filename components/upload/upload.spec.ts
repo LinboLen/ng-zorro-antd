@@ -765,6 +765,154 @@ describe('upload', () => {
         expect(el != null).toBe(true);
         expect((el.nativeElement as HTMLElement).textContent).toBe('asdf');
       });
+
+      describe('[nzMaxCount]', () => {
+        it('should replace existing file when nzMaxCount is 1', () => {
+          instance.maxCount = 1;
+          instance.fileList = [
+            {
+              uid: 1,
+              name: 'existing.png',
+              status: 'done'
+            } as TriSafeAny
+          ];
+          fixture.detectChanges();
+
+          expect(instance.fileList.length).toBe(1);
+          expect(instance.fileList[0].name).toBe('existing.png');
+
+          // Upload a new file
+          pageObject.postSmall();
+          const req = httpMock.expectOne(instance.action as string);
+          req.flush({});
+
+          // Should replace the existing file
+          expect(instance.fileList.length).toBe(1);
+          expect(instance.fileList[0].name).toBe('test.png');
+        });
+
+        it('should limit files when nzMaxCount is greater than 1', () => {
+          instance.maxCount = 2;
+          instance.fileList = [];
+          fixture.detectChanges();
+
+          // Upload first file
+          pageObject.postSmall();
+          let req = httpMock.expectOne(instance.action as string);
+          req.flush({});
+          expect(instance.fileList.length).toBe(1);
+
+          // Upload second file
+          pageObject.postFile([new File(['content'], 'second.png', { type: 'image/png' })]);
+          req = httpMock.expectOne(instance.action as string);
+          req.flush({});
+          expect(instance.fileList.length).toBe(2);
+
+          // Upload third file - upload happens but file is not added to list due to max count
+          pageObject.postFile([new File(['content'], 'third.png', { type: 'image/png' })]);
+          req = httpMock.expectOne(instance.action as string);
+          req.flush({});
+          // File list should still be 2 because max count prevents adding more files
+          expect(instance.fileList.length).toBe(2);
+        });
+
+        it('should allow unlimited files when nzMaxCount is undefined', () => {
+          instance.maxCount = undefined;
+          instance.fileList = [];
+          fixture.detectChanges();
+
+          // Upload multiple files
+          for (let i = 0; i < 5; i++) {
+            pageObject.postFile([new File(['content'], `file${i}.png`, { type: 'image/png' })]);
+            const req = httpMock.expectOne(instance.action as string);
+            req.flush({});
+          }
+
+          expect(instance.fileList.length).toBe(5);
+        });
+
+        it('should only accept positive values for nzMaxCount', () => {
+          // Test with positive value (should limit)
+          instance.maxCount = 2;
+          instance.fileList = [];
+          fixture.detectChanges();
+
+          // Upload first file
+          pageObject.postSmall();
+          let req = httpMock.expectOne(instance.action as string);
+          req.flush({});
+          expect(instance.fileList.length).toBe(1);
+
+          // Upload second file
+          pageObject.postFile([new File(['content'], 'second.png', { type: 'image/png' })]);
+          req = httpMock.expectOne(instance.action as string);
+          req.flush({});
+          expect(instance.fileList.length).toBe(2);
+
+          // Upload third file - should not be added due to limit
+          pageObject.postFile([new File(['content'], 'third.png', { type: 'image/png' })]);
+          req = httpMock.expectOne(instance.action as string);
+          req.flush({});
+          expect(instance.fileList.length).toBe(2); // Still 2, not 3
+        });
+
+        it('should handle edge cases for nzMaxCount', () => {
+          // Test with 0 (should behave like undefined - no limit)
+          instance.maxCount = 0;
+          instance.fileList = [];
+          fixture.detectChanges();
+
+          pageObject.postSmall();
+          let req = httpMock.expectOne(instance.action as string);
+          req.flush({});
+          expect(instance.fileList.length).toBe(1);
+
+          // Add another file to confirm no limit with 0
+          pageObject.postFile([new File(['content'], 'second.png', { type: 'image/png' })]);
+          req = httpMock.expectOne(instance.action as string);
+          req.flush({});
+          expect(instance.fileList.length).toBe(2);
+
+          // Test with negative value (should behave like undefined - no limit)
+          instance.maxCount = -1;
+          fixture.detectChanges();
+
+          pageObject.postFile([new File(['content'], 'third.png', { type: 'image/png' })]);
+          req = httpMock.expectOne(instance.action as string);
+          req.flush({});
+          expect(instance.fileList.length).toBe(3);
+        });
+
+        it('should work with existing nzLimit when both are set', () => {
+          instance.maxCount = 3;
+          instance.limit = 2; // This should be overridden by nzMaxCount logic
+          instance.multiple = true;
+          fixture.detectChanges();
+
+          // Upload files one by one to test the maxCount behavior
+          pageObject.postSmall();
+          let req = httpMock.expectOne(instance.action as string);
+          req.flush({});
+          expect(instance.fileList.length).toBe(1);
+
+          pageObject.postFile([new File(['content'], 'second.png', { type: 'image/png' })]);
+          req = httpMock.expectOne(instance.action as string);
+          req.flush({});
+          expect(instance.fileList.length).toBe(2);
+
+          pageObject.postFile([new File(['content'], 'third.png', { type: 'image/png' })]);
+          req = httpMock.expectOne(instance.action as string);
+          req.flush({});
+          expect(instance.fileList.length).toBe(3);
+
+          // Fourth file - upload happens but file is not added to list due to max count
+          pageObject.postFile([new File(['content'], 'fourth.png', { type: 'image/png' })]);
+          req = httpMock.expectOne(instance.action as string);
+          req.flush({});
+          // File list should still be 3 because max count prevents adding more files
+          expect(instance.fileList.length).toBe(3);
+        });
+      });
     });
 
     describe('CORS', () => {
@@ -1562,6 +1710,7 @@ describe('upload', () => {
         [transformFile]="transformFile"
         [iconRender]="iconRender"
         [fileListRender]="fileListRender"
+        [maxCount]="maxCount"
         (fileListChange)="fileListChange($event)"
         (change)="change($event)"
       >
@@ -1612,6 +1761,7 @@ class TestUploadComponent {
   transformFile!: (file: TriUploadFile) => TriUploadTransformFileType;
   iconRender: TriIconRenderTemplate | null = null;
   fileListRender: TemplateRef<{ $implicit: TriUploadFile[] }> | null = null;
+  maxCount: number | undefined = undefined;
   _onPreview = false;
   onPreview = (): void => {
     this._onPreview = true;

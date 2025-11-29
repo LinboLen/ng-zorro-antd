@@ -9,6 +9,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   forwardRef,
+  signal,
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
@@ -21,10 +22,11 @@ import { TriTreeView } from './tree';
 @Component({
   selector: 'tri-tree-view',
   exportAs: 'triTreeView',
+  imports: [TriTreeNodeOutletDirective],
   template: `
     <div class="tri-tree-list-holder">
       <div
-        [@.disabled]="!_afterViewInit || !!noAnimation?.nzNoAnimation"
+        [@.disabled]="!afterViewInit() || !!noAnimation?.nzNoAnimation"
         [@treeCollapseMotion]="_nodeOutlet.viewContainer.length"
         class="tri-tree-list-holder-inner"
       >
@@ -42,19 +44,20 @@ import { TriTreeView } from './tree';
     class: 'tri-tree',
     '[class.tri-tree-block-node]': 'directoryTree || blockNode',
     '[class.tri-tree-directory]': 'directoryTree',
-    '[class.tri-tree-rtl]': `dir === 'rtl'`
+    '[class.tri-tree-rtl]': `dir() === 'rtl'`
   },
-  animations: [treeCollapseMotion],
-  imports: [TriTreeNodeOutletDirective]
+  animations: [treeCollapseMotion]
 })
 export class TriTreeViewComponent<T> extends TriTreeView<T> implements AfterViewInit {
   @ViewChild(TriTreeNodeOutletDirective, { static: true }) nodeOutlet!: TriTreeNodeOutletDirective;
-  _afterViewInit = false;
+
+  protected readonly afterViewInit = signal(false);
 
   override ngAfterViewInit(): void {
+    super.ngAfterViewInit();
+
     Promise.resolve().then(() => {
-      this._afterViewInit = true;
-      this.cdr.markForCheck();
+      this.afterViewInit.set(true);
     });
   }
 }

@@ -8,16 +8,16 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  EventEmitter,
-  Input,
   NgZone,
   OnInit,
-  Output,
   booleanAttribute,
   inject,
-  DestroyRef
+  DestroyRef,
+  input,
+  output
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { filter } from 'rxjs/operators';
 
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 
@@ -27,32 +27,32 @@ import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'tri-tree-checkbox',
-    '[class.tri-tree-checkbox-checked]': `checked`,
-    '[class.tri-tree-checkbox-indeterminate]': `indeterminate`,
-    '[class.tri-tree-checkbox-disabled]': `disabled`
+    '[class.tri-tree-checkbox-checked]': `checked()`,
+    '[class.tri-tree-checkbox-indeterminate]': `indeterminate()`,
+    '[class.tri-tree-checkbox-disabled]': `disabled()`
   }
 })
 export class TriTreeNodeCheckboxComponent implements OnInit {
-  private ngZone = inject(NgZone);
-  private ref = inject(ChangeDetectorRef);
-  private el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
-  private destroyRef = inject(DestroyRef);
+  readonly checked = input(false, { transform: booleanAttribute });
+  readonly indeterminate = input(false, { transform: booleanAttribute });
+  readonly disabled = input(false, { transform: booleanAttribute });
+  readonly click = output<MouseEvent>();
 
-  @Input({ transform: booleanAttribute }) checked?: boolean;
-  @Input({ transform: booleanAttribute }) indeterminate?: boolean;
-  @Input({ transform: booleanAttribute }) disabled?: boolean;
-  @Output() readonly click = new EventEmitter<MouseEvent>();
+  protected readonly cdr = inject(ChangeDetectorRef);
+  protected readonly destroyRef = inject(DestroyRef);
+  protected readonly elementRef = inject(ElementRef);
+  protected readonly ngZone = inject(NgZone);
 
   ngOnInit(): void {
-    fromEventOutsideAngular<MouseEvent>(this.el, 'click')
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(event => {
-        if (!this.disabled && this.click.observers.length) {
-          this.ngZone.run(() => {
-            this.click.emit(event);
-            this.ref.markForCheck();
-          });
-        }
+    fromEventOutsideAngular<MouseEvent>(this.elementRef.nativeElement, 'click')
+      .pipe(
+        filter(() => !this.disabled()),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((event: MouseEvent) => {
+        this.ngZone.run(() => {
+          this.click.emit(event);
+        });
       });
   }
 }
