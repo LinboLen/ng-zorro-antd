@@ -68,7 +68,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'collapsePanel';
     <div
       class="tri-collapse-content"
       [class.tri-collapse-content-active]="active"
-      [@.disabled]="!!noAnimation?.nzNoAnimation"
+      [@.disabled]="!!noAnimation?.nzNoAnimation?.()"
       [@collapseMotion]="active ? 'expanded' : 'hidden'"
     >
       <div class="tri-collapse-content-box">

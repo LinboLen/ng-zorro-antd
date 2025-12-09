@@ -70,7 +70,7 @@ export class TriPopconfirmDirective extends TriTooltipBaseDirective {
   @Input('nzPopconfirmOverlayStyle') override overlayStyle?: NgStyleInterface;
   @Input('nzPopconfirmVisible') override visible?: boolean;
   @Input() beforeConfirm?: () => Observable<boolean> | Promise<boolean> | boolean;
-  @Input() icon?: string | TemplateRef<void>;
+  @Input() icon?: string | TemplateRef<void> | null;
   @Input({ transform: booleanAttribute }) condition: boolean = false;
   @Input({ transform: booleanAttribute }) popconfirmShowArrow: boolean = true;
   @Input() @WithConfig() popconfirmBackdrop?: boolean = false;
@@ -172,8 +172,8 @@ export class TriPopconfirmDirective extends TriTooltipBaseDirective {
         [class]="_classMap"
         [class.tri-popover-rtl]="dir === 'rtl'"
         [style]="overlayStyle"
-        [@.disabled]="!!noAnimation?.nzNoAnimation"
-        [noAnimation]="noAnimation?.nzNoAnimation"
+        [@.disabled]="!!noAnimation?.nzNoAnimation?.()"
+        [noAnimation]="noAnimation?.nzNoAnimation?.()"
         [@zoomBigMotion]="'active'"
       >
         @if (popconfirmShowArrow) {

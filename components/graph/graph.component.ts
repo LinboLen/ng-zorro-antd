@@ -3,18 +3,21 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet, isPlatformBrowser } from '@angular/common';
 import {
   AfterContentChecked,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ContentChild,
+  DestroyRef,
   ElementRef,
   EventEmitter,
   Input,
   OnChanges,
   OnInit,
   Output,
+  PLATFORM_ID,
   QueryList,
   SimpleChanges,
   TemplateRef,
@@ -22,9 +25,7 @@ import {
   ViewEncapsulation,
   booleanAttribute,
   forwardRef,
-  inject,
-  DestroyRef,
-  ChangeDetectorRef
+  inject
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable, ReplaySubject, Subscription, forkJoin } from 'rxjs';
@@ -33,7 +34,7 @@ import { finalize, take } from 'rxjs/operators';
 import { buildGraph } from 'dagre-compound';
 
 import { TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
-import { cancelAnimationFrame } from 'ng-zorro-antd/core/polyfill';
+import { cancelAnimationFrame, requestAnimationFrame } from 'ng-zorro-antd/core/polyfill';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 import { calculateTransform } from './core/utils';
@@ -133,6 +134,7 @@ export function isDataSource(value: TriSafeAny): value is TriGraphData {
 export class TriGraphComponent implements OnInit, OnChanges, AfterContentChecked, TriGraph {
   private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
   private elementRef: ElementRef = inject(ElementRef);
+  private platformId = inject(PLATFORM_ID);
   private destroyRef = inject(DestroyRef);
 
   @ViewChildren(TriGraphNodeComponent, { read: ElementRef }) listOfNodeElement!: QueryList<ElementRef>;
@@ -270,6 +272,9 @@ export class TriGraphComponent implements OnInit, OnChanges, AfterContentChecked
    */
   drawGraph(data: TriGraphDataDef, options: TriGraphOption, needResize: boolean = false): Promise<void> {
     return new Promise(resolve => {
+      if (!isPlatformBrowser(this.platformId)) {
+        return resolve();
+      }
       this.requestId = requestAnimationFrame(() => {
         const renderInfo = this.buildGraphInfo(data, options);
         // TODO
@@ -277,7 +282,7 @@ export class TriGraphComponent implements OnInit, OnChanges, AfterContentChecked
         this.renderInfo = renderInfo;
         this.cdr.markForCheck();
         this.requestId = requestAnimationFrame(() => {
-          this.drawNodes(!this.noAnimation?.noAnimation).then(() => {
+          this.drawNodes(!this.noAnimation?.noAnimation?.()).then(() => {
             // Update element
             this.cdr.markForCheck();
             if (needResize) {

@@ -4,7 +4,7 @@
  */
 
 import {
-  AfterViewInit,
+  afterNextRender,
   ChangeDetectorRef,
   DestroyRef,
   Directive,
@@ -29,7 +29,7 @@ import { TriZoomTransform, RelativePositionInfo } from './interface';
   selector: '[tri-graph-zoom]',
   exportAs: 'triGraphZoom'
 })
-export class TriGraphZoomDirective implements AfterViewInit {
+export class TriGraphZoomDirective {
   private destroyRef = inject(DestroyRef);
   private cdr = inject(ChangeDetectorRef);
   private element = inject(ElementRef);
@@ -53,10 +53,10 @@ export class TriGraphZoomDirective implements AfterViewInit {
     this.destroyRef.onDestroy(() => {
       this.unbind();
     });
-  }
 
-  ngAfterViewInit(): void {
-    this.bind();
+    afterNextRender(() => {
+      this.bind();
+    });
   }
 
   bind(): void {

@@ -89,8 +89,8 @@ const listOfHorizontalPositions = [
         tri-submenu-inline-child
         [mode]="mode"
         [open]="open"
-        [@.disabled]="!!noAnimation?.nzNoAnimation"
-        [noAnimation]="noAnimation?.nzNoAnimation"
+        [@.disabled]="!!noAnimation?.nzNoAnimation?.()"
+        [noAnimation]="noAnimation?.nzNoAnimation?.()"
         [menuClass]="menuClassName"
         [templateOutlet]="subMenuTemplate"
       ></div>
@@ -116,8 +116,8 @@ const listOfHorizontalPositions = [
           [triggerSubMenuAction]="triggerSubMenuAction"
           [templateOutlet]="subMenuTemplate"
           [menuClass]="menuClassName"
-          [@.disabled]="!!noAnimation?.nzNoAnimation"
-          [noAnimation]="noAnimation?.nzNoAnimation"
+          [@.disabled]="!!noAnimation?.nzNoAnimation?.()"
+          [noAnimation]="noAnimation?.nzNoAnimation?.()"
           (subMenuMouseState)="setMouseEnterState($event)"
         ></div>
       </ng-template>

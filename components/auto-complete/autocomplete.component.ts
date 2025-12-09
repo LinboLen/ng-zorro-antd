@@ -74,10 +74,10 @@ function normalizeDataSource(value: AutocompleteDataSource): AutocompleteDataSou
         [class.tri-select-dropdown-rtl]="dir === 'rtl'"
         [class]="overlayClassName"
         [style]="overlayStyle"
-        [noAnimation]="noAnimation?.nzNoAnimation"
+        [noAnimation]="noAnimation?.nzNoAnimation?.()"
         @slideMotion
         (@slideMotion.done)="onAnimationEvent($event)"
-        [@.disabled]="!!noAnimation?.nzNoAnimation"
+        [@.disabled]="!!noAnimation?.nzNoAnimation?.()"
       >
         <div class="tri-select-dropdown-content-wrapper">
           <div class="tri-select-dropdown-content">

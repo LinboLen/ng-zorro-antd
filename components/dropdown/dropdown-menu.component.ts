@@ -58,8 +58,8 @@ export type TriPlacementType = 'bottomLeft' | 'bottomCenter' | 'bottomRight' | '
         [style]="overlayStyle"
         @slideMotion
         (@slideMotion.done)="onAnimationEvent($event)"
-        [@.disabled]="!!noAnimation?.nzNoAnimation"
-        [noAnimation]="noAnimation?.nzNoAnimation"
+        [@.disabled]="!!noAnimation?.nzNoAnimation?.()"
+        [noAnimation]="noAnimation?.nzNoAnimation?.()"
         (mouseenter)="setMouseState(true)"
         (mouseleave)="setMouseState(false)"
       >

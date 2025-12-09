@@ -1,13 +1,8 @@
 @import "../../style/themes/index";
 $drawer-prefix-cls: "#{$ant-prefix}-drawer";
-$picker-prefix-cls: "#{$ant-prefix}-picker";
-$drawer-animation-ease: $ease-out-quint;
 .#{$drawer-prefix-cls} {
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
   z-index: $zindex-modal;
   pointer-events: none;
   &-inline {
@@ -16,10 +11,7 @@ $drawer-animation-ease: $ease-out-quint;
   // ====================== Mask ======================
   &-mask {
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    inset: 0;
     z-index: $zindex-modal;
     background: $modal-mask-bg;
     pointer-events: auto;

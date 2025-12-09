@@ -235,7 +235,7 @@ export type TriPlacement = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight'
     >
       <div
         class="tri-picker-wrapper"
-        [noAnimation]="!!noAnimation?.nzNoAnimation"
+        [noAnimation]="!!noAnimation?.nzNoAnimation?.()"
         [@slideMotion]="'enter'"
         [style.position]="'relative'"
       >

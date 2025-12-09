@@ -43,8 +43,8 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable, Subject } from 'rxjs';
 
-import { drawerMaskMotion, TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
-import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriNoAnimationDirective, withAnimationCheck } from 'ng-zorro-antd/core/animation';
+import { TriConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { overlayZIndexSetter } from 'ng-zorro-antd/core/overlay';
 import { NgStyleInterface, TriSafeAny } from 'ng-zorro-antd/core/types';
@@ -86,7 +86,13 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'drawer';
         [style.zIndex]="zIndex"
       >
         @if (mask && isOpen) {
-          <div @drawerMaskMotion class="tri-drawer-mask" (click)="maskClick()" [style]="maskStyle"></div>
+          <div
+            class="tri-drawer-mask"
+            [animate.enter]="maskAnimationEnter()"
+            [animate.leave]="maskAnimationLeave()"
+            (click)="maskClick()"
+            [style]="maskStyle"
+          ></div>
         }
         <div
           class="ant-drawer-content-wrapper {{ wrapClassName }}"
@@ -127,10 +133,8 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'drawer';
                   @if (isTemplateRef(content)) {
                     <ng-container *ngTemplateOutlet="content; context: templateContext" />
                   }
-                } @else {
-                  @if (contentFromContentChild && (isOpen || inAnimation)) {
-                    <ng-template [ngTemplateOutlet]="contentFromContentChild" />
-                  }
+                } @else if (contentFromContentChild && (isOpen || inAnimation)) {
+                  <ng-template [ngTemplateOutlet]="contentFromContentChild" />
                 }
               </div>
               @if (footer) {
@@ -145,7 +149,6 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'drawer';
     </ng-template>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [drawerMaskMotion],
   imports: [TriNoAnimationDirective, TriOutletModule, TriIconModule, PortalModule, NgTemplateOutlet, CdkScrollable]
 })
 export class TriDrawerComponent<T extends {} = TriSafeAny, R = TriSafeAny, D extends Partial<T> = TriSafeAny>
@@ -153,7 +156,6 @@ export class TriDrawerComponent<T extends {} = TriSafeAny, R = TriSafeAny, D ext
   implements OnInit, AfterViewInit, OnChanges, TriDrawerOptionsOfComponent
 {
   private cdr = inject(ChangeDetectorRef);
-  public configService = inject(TriConfigService);
   private renderer = inject(Renderer2);
   private injector = inject(Injector);
   private changeDetectorRef = inject(ChangeDetectorRef);
@@ -162,6 +164,8 @@ export class TriDrawerComponent<T extends {} = TriSafeAny, R = TriSafeAny, D ext
   private overlayKeyboardDispatcher = inject(OverlayKeyboardDispatcher);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
+  private document = inject(DOCUMENT);
+
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   @Input() content!: TemplateRef<{ $implicit: D; drawerRef: TriDrawerRef<R> }> | Type<T>;
@@ -221,6 +225,8 @@ export class TriDrawerComponent<T extends {} = TriSafeAny, R = TriSafeAny, D ext
     drawerRef: this as TriDrawerRef<R>
   };
   protected isTemplateRef = isTemplateRef;
+  protected readonly maskAnimationEnter = withAnimationCheck(() => 'ant-drawer-mask_animation-enter');
+  protected readonly maskAnimationLeave = withAnimationCheck(() => 'ant-drawer-mask_animation-leave');
 
   get offsetTransform(): string | null {
     if (!this.isOpen || this.offsetX + this.offsetY === 0) {
@@ -294,7 +300,6 @@ export class TriDrawerComponent<T extends {} = TriSafeAny, R = TriSafeAny, D ext
   @WithConfig() direction?: Direction = undefined;
 
   dir: Direction = 'ltr';
-  private document: Document = inject(DOCUMENT);
 
   constructor() {
     super();

@@ -104,8 +104,8 @@ export class TriPopoverDirective extends TriTooltipBaseDirective {
         [class.tri-popover-rtl]="dir === 'rtl'"
         [class]="_classMap"
         [style]="overlayStyle"
-        [@.disabled]="!!noAnimation?.nzNoAnimation"
-        [noAnimation]="noAnimation?.nzNoAnimation"
+        [@.disabled]="!!noAnimation?.nzNoAnimation?.()"
+        [noAnimation]="noAnimation?.nzNoAnimation?.()"
         [@zoomBigMotion]="'active'"
       >
         <div class="tri-popover-arrow"></div>

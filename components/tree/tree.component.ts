@@ -89,8 +89,8 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'tree';
         <div
           [class.tri-select-tree-list-holder-inner]="selectMode"
           [class.tri-tree-list-holder-inner]="!selectMode"
-          [@.disabled]="beforeInit || !!noAnimation?.nzNoAnimation"
-          [noAnimation]="noAnimation?.nzNoAnimation"
+          [@.disabled]="beforeInit || !!noAnimation?.nzNoAnimation?.()"
+          [noAnimation]="noAnimation?.nzNoAnimation?.()"
           [@treeCollapseMotion]="flattenNodes.length"
         >
           @for (node of flattenNodes; track trackByFlattenNode($index, node)) {

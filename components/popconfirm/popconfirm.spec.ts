@@ -64,6 +64,14 @@ describe('popconfirm', () => {
     expect(overlayContainerElement.querySelector('.anticon-exclamation-circle')).toBeFalsy();
   }));
 
+  it('should hide icon when nzIcon is set to null', fakeAsync(() => {
+    component.icon = null;
+    const triggerElement = component.iconTemplate.nativeElement;
+    dispatchMouseEvent(triggerElement, 'click');
+    waitingForTooltipToggling();
+    expect(overlayContainerElement.querySelector('.ant-popover-message-icon')).toBeFalsy();
+  }));
+
   it('should nzOk work', () => {
     const triggerElement = component.stringTemplate.nativeElement;
     dispatchMouseEvent(triggerElement, 'click');
@@ -354,7 +362,7 @@ export class TriPopconfirmTestNewComponent {
   okButtonProps = signal<TriPopConfirmButtonProps>({ nzDisabled: false });
   cancelButtonProps = signal<TriPopConfirmButtonProps>({ nzDisabled: false });
   popconfirmShowArrow = true;
-  icon: string | undefined = undefined;
+  icon: string | null | undefined = undefined;
   popconfirmBackdrop = false;
   autoFocus: TriAutoFocusType = null;
   beforeConfirm?: () => Observable<boolean> | Promise<boolean> | boolean = undefined;

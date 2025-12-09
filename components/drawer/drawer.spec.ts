@@ -8,34 +8,34 @@ import { ESCAPE } from '@angular/cdk/keycodes';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, Input, TemplateRef, ViewChild, inject, provideZoneChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, inject as testingInject, tick } from '@angular/core/testing';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
-import { TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { dispatchKeyboardEvent } from 'ng-zorro-antd/core/testing';
-import { TRI_DRAWER_DATA, TriDrawerPlacement } from 'ng-zorro-antd/drawer/drawer-options';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
+import { TRI_DRAWER_DATA, TriDrawerPlacement } from './drawer-options';
 import { TriDrawerRef } from './drawer-ref';
 import { TriDrawerComponent } from './drawer.component';
 import { TriDrawerModule } from './drawer.module';
 import { TriDrawerService } from './drawer.service';
 
 describe('NzDrawerComponent', () => {
-  beforeEach(() => {
-    // todo: use zoneless
-    TestBed.configureTestingModule({
-      providers: [provideNoopAnimations(), provideNzIconsTesting(), provideZoneChangeDetection()]
-    });
-  });
-
   describe('default', () => {
     let component: TriTestDrawerComponent;
     let fixture: ComponentFixture<TriTestDrawerComponent>;
     let overlayContainer: OverlayContainer;
     let overlayContainerElement: HTMLElement;
     let forceScrollElement: HTMLElement;
+
+    beforeEach(() => {
+      // todo: use zoneless
+      TestBed.configureTestingModule({
+        providers: [provideNzNoAnimation(), provideNzIconsTesting(), provideZoneChangeDetection()]
+      });
+    });
 
     beforeEach(() => {
       fixture = TestBed.createComponent(TriTestDrawerComponent);
@@ -60,10 +60,6 @@ describe('NzDrawerComponent', () => {
       document.body.removeChild(forceScrollElement);
       window.scroll(0, 0);
       overlayContainer.ngOnDestroy();
-    });
-
-    it('should create', () => {
-      expect(component).toBeTruthy();
     });
 
     it('should open work', () => {
@@ -646,6 +642,13 @@ describe('NzDrawerComponent', () => {
     let overlayContainerElement: HTMLElement;
 
     beforeEach(() => {
+      // todo: use zoneless
+      TestBed.configureTestingModule({
+        providers: [provideNzNoAnimation(), provideNzIconsTesting(), provideZoneChangeDetection()]
+      });
+    });
+
+    beforeEach(() => {
       fixture = TestBed.createComponent(TriTestDrawerRtlComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
@@ -670,6 +673,20 @@ describe('NzDrawerComponent', () => {
       expect(overlayContainerElement.querySelector('.ant-drawer')!.classList.contains('ant-drawer-rtl')).toBe(false);
     });
   });
+  describe('animation', () => {
+    beforeEach(() => {
+      // todo: use zoneless
+      TestBed.configureTestingModule({
+        providers: [provideNzIconsTesting(), provideZoneChangeDetection()]
+      });
+    });
+
+    it('should get correct mask animation class', () => {
+      const fixture = TestBed.createComponent(TriDrawerComponent);
+      expect(fixture.componentInstance['maskAnimationEnter']()).toBe('ant-drawer-mask_animation-enter');
+      expect(fixture.componentInstance['maskAnimationLeave']()).toBe('ant-drawer-mask_animation-leave');
+    });
+  });
 });
 
 describe('NzDrawerService', () => {
@@ -681,7 +698,7 @@ describe('NzDrawerService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [TriDrawerService, provideNoopAnimations()]
+      providers: [TriDrawerService, provideNzNoAnimation()]
     });
   });
 
@@ -799,7 +816,7 @@ describe('NzDrawerService', () => {
 });
 
 @Component({
-  imports: [TriDrawerModule, TriIconModule, TriNoAnimationDirective],
+  imports: [TriDrawerModule, TriIconModule],
   template: `
     <button (click)="open()">Open</button>
     <ng-template #closeIconTemplate>
@@ -916,7 +933,7 @@ class TriTestDrawerWithServiceComponent {
   `
 })
 export class TriDrawerCustomComponent {
-  @Input() value: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  @Input() value: TriSafeAny;
   data: { value: string } = inject(TRI_DRAWER_DATA);
 
   constructor(private drawerRef: TriDrawerRef) {}

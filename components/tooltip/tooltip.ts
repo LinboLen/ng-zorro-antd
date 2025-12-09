@@ -100,8 +100,8 @@ export class TriTooltipDirective extends TriTooltipBaseDirective {
         [class.tri-tooltip-rtl]="dir === 'rtl'"
         [class]="_classMap"
         [style]="overlayStyle"
-        [@.disabled]="!!noAnimation?.nzNoAnimation"
-        [noAnimation]="noAnimation?.nzNoAnimation"
+        [@.disabled]="!!noAnimation?.nzNoAnimation?.()"
+        [noAnimation]="noAnimation?.nzNoAnimation?.()"
         [@zoomBigMotion]="'active'"
       >
         <div class="tri-tooltip-arrow" [style]="_arrowStyleMap"></div>

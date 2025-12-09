@@ -26,7 +26,7 @@ import { TriTreeView } from './tree';
   template: `
     <div class="tri-tree-list-holder">
       <div
-        [@.disabled]="!afterViewInit() || !!noAnimation?.nzNoAnimation"
+        [@.disabled]="!afterViewInit() || !!noAnimation?.nzNoAnimation?.()"
         [@treeCollapseMotion]="_nodeOutlet.viewContainer.length"
         class="tri-tree-list-holder-inner"
       >

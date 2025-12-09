@@ -44,7 +44,9 @@ const ExceptionStatus = ['404', '500', '403'];
             <tri-icon [type]="icon" theme="fill" />
           </ng-container>
         } @else {
-          <ng-content select="[nz-result-icon]"></ng-content>
+          <ng-content select="[nz-result-icon]">
+            <tri-icon [type]="defaultIcon()" theme="fill" />
+          </ng-content>
         }
       } @else {
         @switch (status()) {
@@ -119,4 +121,5 @@ export class TriResultComponent {
     const icon = this.icon();
     return typeof icon === 'string' ? IconMap[icon as TriResultIconType] || icon : icon;
   });
+  readonly defaultIcon = computed(() => IconMap[this.status() as TriResultIconType]);
 }

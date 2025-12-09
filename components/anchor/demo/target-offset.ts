@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { afterNextRender, Component, signal } from '@angular/core';
 
 import { TriAnchorModule } from 'ng-zorro-antd/anchor';
 
@@ -6,7 +6,7 @@ import { TriAnchorModule } from 'ng-zorro-antd/anchor';
   selector: 'tri-demo-anchor-target-offset',
   imports: [TriAnchorModule],
   template: `
-    <tri-anchor [targetOffset]="targetOffset">
+    <tri-anchor [targetOffset]="targetOffset()">
       <tri-link href="#components-anchor-demo-basic" title="Basic demo"></tri-link>
       <tri-link href="#components-anchor-demo-static" title="Static demo"></tri-link>
       <tri-link href="#api" title="API">
@@ -16,10 +16,12 @@ import { TriAnchorModule } from 'ng-zorro-antd/anchor';
     </tri-anchor>
   `
 })
-export class TriDemoAnchorTargetOffsetComponent implements OnInit {
-  targetOffset?: number;
+export class TriDemoAnchorTargetOffsetComponent {
+  readonly targetOffset = signal(0);
 
-  ngOnInit(): void {
-    this.targetOffset = window.innerHeight / 2;
+  constructor() {
+    afterNextRender(() => {
+      this.targetOffset.set(window.innerHeight / 2);
+    });
   }
 }

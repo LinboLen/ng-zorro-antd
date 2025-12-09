@@ -58,8 +58,8 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'badge';
           [dot]="dot"
           [count]="count"
           [overflowCount]="overflowCount"
-          [disableAnimation]="!!(standalone || status || presetColor || noAnimation?.nzNoAnimation)"
-          [noAnimation]="!!noAnimation?.nzNoAnimation"
+          [disableAnimation]="!!(standalone || status || presetColor || noAnimation?.nzNoAnimation?.())"
+          [noAnimation]="!!noAnimation?.nzNoAnimation?.()"
         />
       }
     </ng-container>

@@ -210,8 +210,8 @@ const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
         [class.tri-select-dropdown-placement-topRight]="dropdownPosition === 'topRight'"
         [class.tri-cascader-dropdown-rtl]="dir === 'rtl'"
         [@slideMotion]="'enter'"
-        [@.disabled]="!!noAnimation?.nzNoAnimation"
-        [noAnimation]="noAnimation?.nzNoAnimation"
+        [@.disabled]="!!noAnimation?.nzNoAnimation?.()"
+        [noAnimation]="noAnimation?.nzNoAnimation?.()"
         (mouseenter)="onTriggerMouseEnter()"
         (mouseleave)="onTriggerMouseLeave($event)"
       >

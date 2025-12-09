@@ -117,8 +117,8 @@ const listOfPositions = [
       <div
         [@slideMotion]="'enter'"
         [class]="dropdownClassName"
-        [@.disabled]="!!noAnimation?.nzNoAnimation"
-        [noAnimation]="noAnimation?.nzNoAnimation"
+        [@.disabled]="!!noAnimation?.nzNoAnimation?.()"
+        [noAnimation]="noAnimation?.nzNoAnimation?.()"
         [class.tri-select-dropdown-placement-bottomLeft]="dropdownPosition === 'bottom'"
         [class.tri-select-dropdown-placement-topLeft]="dropdownPosition === 'top'"
         [class.tri-tree-select-dropdown-rtl]="dir === 'rtl'"
