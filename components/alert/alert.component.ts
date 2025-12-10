@@ -5,24 +5,26 @@
 
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
+  ANIMATION_MODULE_TYPE,
+  AnimationCallbackEvent,
+  booleanAttribute,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   EventEmitter,
+  inject,
   Input,
   OnChanges,
   OnInit,
   Output,
   SimpleChanges,
   TemplateRef,
-  ViewEncapsulation,
-  booleanAttribute,
-  inject,
-  DestroyRef
+  ViewEncapsulation
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { slideAlertMotion } from 'ng-zorro-antd/core/animation';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -33,12 +35,12 @@ export type TriAlertType = 'success' | 'info' | 'warning' | 'error';
 @Component({
   selector: 'tri-alert',
   exportAs: 'triAlert',
-  animations: [slideAlertMotion],
-  imports: [TriIconModule, TriOutletModule],
+  imports: [TriIconModule, TriOutletModule, TriNoAnimationDirective],
   template: `
     @if (!closed) {
       <div
         class="tri-alert"
+        [noAnimation]="noAnimation"
         [class.tri-alert-rtl]="dir === 'rtl'"
         [class.tri-alert-success]="type === 'success'"
         [class.tri-alert-info]="type === 'info'"
@@ -48,9 +50,7 @@ export type TriAlertType = 'success' | 'info' | 'warning' | 'error';
         [class.tri-alert-banner]="banner"
         [class.tri-alert-closable]="closeable"
         [class.tri-alert-with-description]="!!description"
-        [@.disabled]="noAnimation"
-        [@slideAlertMotion]
-        (@slideAlertMotion.done)="onFadeAnimationDone()"
+        (animate.leave)="onLeaveAnimationDone($event)"
       >
         @if (showIcon) {
           <div class="tri-alert-icon">
@@ -104,6 +104,7 @@ export class TriAlertComponent implements OnChanges, OnInit {
   private cdr = inject(ChangeDetectorRef);
   private directionality = inject(Directionality);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly animationType = inject(ANIMATION_MODULE_TYPE, { optional: true });
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   @Input() action: string | TemplateRef<void> | null = null;
@@ -140,12 +141,32 @@ export class TriAlertComponent implements OnChanges, OnInit {
 
   closeAlert(): void {
     this.closed = true;
-  }
-
-  onFadeAnimationDone(): void {
-    if (this.closed) {
+    // When animations are disabled, emit immediately since animate.leave won't trigger
+    if (this.noAnimation || this.animationType === 'NoopAnimations') {
       this.onClose.emit(true);
     }
+  }
+
+  onLeaveAnimationDone(event: AnimationCallbackEvent): void {
+    const element = event.target as HTMLElement;
+
+    // If animations are disabled, complete immediately (nzOnClose already emitted in closeAlert)
+    if (this.noAnimation || this.animationType === 'NoopAnimations') {
+      event.animationComplete();
+      return;
+    }
+
+    // Apply animation classes
+    element.classList.add('ant-alert-motion-leave', 'ant-alert-motion-leave-active');
+
+    // Listen for transition end to complete the animation
+    const onTransitionEnd = (): void => {
+      element.removeEventListener('transitionend', onTransitionEnd);
+      this.onClose.emit(true);
+      event.animationComplete();
+    };
+
+    element.addEventListener('transitionend', onTransitionEnd);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
