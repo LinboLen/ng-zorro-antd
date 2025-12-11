@@ -161,6 +161,7 @@ import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactIte
           [disabled]="finalDisabled()"
           [readOnly]="readOnly()"
           (input)="onInput(input.value)"
+          (wheel)="onWheel($event)"
         />
       </div>
     </ng-template>
@@ -198,6 +199,7 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
   readonly autoFocus = input(false, { transform: booleanAttribute });
   readonly keyboard = input(true, { transform: booleanAttribute });
   readonly controls = input(true, { transform: booleanAttribute });
+  readonly changeOnWheel = input(true, { transform: booleanAttribute });
   readonly prefix = input<string>();
   readonly suffix = input<string>();
   readonly addonBefore = input<string>();
@@ -417,8 +419,8 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
       value &&= +value.toFixed(precision);
     }
 
-    const formatedValue = isNil(value) ? '' : formatter(value);
-    this.displayValue.set(formatedValue);
+    const formattedValue = isNil(value) ? '' : formatter(value);
+    this.displayValue.set(formattedValue);
     this.updateValue(value);
   }
 
@@ -529,6 +531,15 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
 
   protected onInput(value: string): void {
     this.setValueByTyping(value);
+  }
+
+  protected onWheel(event: WheelEvent): void {
+    if (this.disabled() || !this.changeOnWheel()) {
+      return;
+    }
+
+    event.preventDefault();
+    this.#step(event, event.deltaY < 0);
   }
 }
 
