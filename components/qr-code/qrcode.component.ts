@@ -5,26 +5,20 @@
 
 import { isPlatformBrowser } from '@angular/common';
 import {
-  AfterViewInit,
-  booleanAttribute,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  DestroyRef,
-  ElementRef,
-  EventEmitter,
+  computed,
+  effect,
   inject,
-  Input,
-  numberAttribute,
-  OnChanges,
-  OnInit,
-  Output,
+  input,
+  output,
   PLATFORM_ID,
-  SimpleChanges,
-  TemplateRef,
-  ViewChild
+  signal,
+  Signal,
+  TemplateRef
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs/operators';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
@@ -32,35 +26,39 @@ import { TriI18nService, TriQRCodeI18nInterface } from 'ng-zorro-antd/i18n';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriSpinModule } from 'ng-zorro-antd/spin';
 
-import { drawCanvas, ERROR_LEVEL_MAP, plotQRCodeData } from './qrcode';
+import { TriQrcodeCanvasComponent } from './qrcode-canvas.component';
+import { createQRCodeData } from './qrcode-data';
+import { TriQrcodeSvgComponent } from './qrcode-svg.component';
+import { CrossOrigin, ErrorCorrectionLevel, Excavation, ImageSettings, Modules } from './typing';
+import { DEFAULT_BACKGROUND_COLOR, DEFAULT_FRONT_COLOR, DEFAULT_MINVERSION } from './utils';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'tri-qrcode',
   exportAs: 'triQRCode',
   template: `
-    @if (!!statusRender) {
+    @if (!!statusRender()) {
       <div class="tri-qrcode-mask">
-        <ng-container *stringTemplateOutlet="statusRender">{{ statusRender }}</ng-container>
+        <ng-container *stringTemplateOutlet="statusRender()">{{ statusRender() }}</ng-container>
       </div>
-    } @else if (status !== 'active') {
+    } @else if (status() !== 'active') {
       <div class="tri-qrcode-mask">
-        @switch (status) {
+        @switch (status()) {
           @case ('loading') {
             <tri-spin />
           }
           @case ('expired') {
             <div>
-              <p class="tri-qrcode-expired">{{ locale.expired }}</p>
+              <p class="tri-qrcode-expired">{{ locale().expired }}</p>
               <button tri-button type="link" (click)="reloadQRCode()">
                 <tri-icon type="reload" theme="outline" />
-                <span>{{ locale.refresh }}</span>
+                <span>{{ locale().refresh }}</span>
               </button>
             </div>
           }
           @case ('scanned') {
             <div>
-              <p class="tri-qrcode-expired">{{ locale.scanned }}</p>
+              <p class="tri-qrcode-expired">{{ locale().scanned }}</p>
             </div>
           }
         }
@@ -68,82 +66,126 @@ import { drawCanvas, ERROR_LEVEL_MAP, plotQRCodeData } from './qrcode';
     }
 
     @if (isBrowser) {
-      <canvas #canvas></canvas>
+      @switch (type()) {
+        @case ('canvas') {
+          <tri-qrcode-canvas
+            [icon]="icon()"
+            [margin]="margin()"
+            [cells]="cells()"
+            [numCells]="numCells()"
+            [calculatedImageSettings]="calculatedImageSettings()"
+            [size]="size()"
+            [color]="color()"
+            [bgColor]="bgColor()"
+          >
+          </tri-qrcode-canvas>
+        }
+        @case ('svg') {
+          <tri-qrcode-svg
+            [color]="color()"
+            [bgColor]="bgColor()"
+            [icon]="icon()"
+            [margin]="margin()"
+            [cells]="cells()"
+            [numCells]="numCells()"
+            [imageSettings]="imageSettings()"
+            [calculatedImageSettings]="
+              calculatedImageSettings() || { x: 0, y: 0, h: 0, w: 0, excavation: null, opacity: 1, crossOrigin: '' }
+            "
+            [size]="size()"
+          ></tri-qrcode-svg>
+        }
+      }
     }
   `,
   host: {
     class: 'tri-qrcode',
-    '[class.tri-qrcode-border]': `bordered`
+    '[class.tri-qrcode-border]': `bordered()`,
+    '[style.background-color]': `nzBgColor()`
   },
-  imports: [TriSpinModule, TriButtonModule, TriIconModule, TriStringTemplateOutletDirective]
+  imports: [
+    TriSpinModule,
+    TriButtonModule,
+    TriIconModule,
+    TriStringTemplateOutletDirective,
+    TriQrcodeSvgComponent,
+    TriQrcodeCanvasComponent
+  ]
 })
-export class TriQRCodeComponent implements OnInit, AfterViewInit, OnChanges {
+export class TriQRCodeComponent {
   private i18n = inject(TriI18nService);
-  private el = inject(ElementRef);
-  private cdr = inject(ChangeDetectorRef);
-  private destroyRef = inject(DestroyRef);
+  locale = toSignal<TriQRCodeI18nInterface>(this.i18n.localeChange.pipe(map(() => this.i18n.getLocaleData('QRCode'))), {
+    requireSync: true
+  });
   // https://github.com/angular/universal-starter/issues/538#issuecomment-365518693
   // canvas is not supported by the SSR DOM
   protected isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
-  @ViewChild('canvas', { static: false }) canvas!: ElementRef<HTMLCanvasElement>;
-  @Input() value: string = '';
-  @Input() padding: number | number[] = 0;
-  @Input() color: string = '#000000';
-  @Input() bgColor: string = '#FFFFFF';
-  @Input({ transform: numberAttribute }) size: number = 160;
-  @Input() icon: string = '';
-  @Input({ transform: numberAttribute }) iconSize: number = 40;
-  @Input({ transform: booleanAttribute }) bordered: boolean = true;
-  @Input() status: 'active' | 'expired' | 'loading' | 'scanned' = 'active';
-  @Input() level: keyof typeof ERROR_LEVEL_MAP = 'M';
-  @Input() statusRender?: TemplateRef<void> | string | null = null;
+  readonly value = input<string | string[]>('');
+  readonly type = input<'svg' | 'canvas'>('canvas');
+  readonly color = input<string>(DEFAULT_FRONT_COLOR);
+  readonly bgColor = input<string>(DEFAULT_BACKGROUND_COLOR);
+  readonly size = input<number>(160);
+  readonly icon = input<string>('');
+  readonly iconSize = input<number>(40);
+  readonly bordered = input<boolean>(true);
+  readonly status = input<'active' | 'expired' | 'loading' | 'scanned'>('active');
+  readonly level = input<ErrorCorrectionLevel>('M');
+  readonly statusRender = input<TemplateRef<void> | string | null>(null);
+  readonly boostLevel = input<boolean>(true);
+  readonly padding = input<number>(0);
 
-  @Output() readonly refresh = new EventEmitter<string>();
+  readonly refresh = output<string>();
 
-  locale!: TriQRCodeI18nInterface;
+  margin = signal<number>(0);
+  cells = signal<Modules>([]);
+  numCells = signal<number>(0);
+  calculatedImageSettings = signal<null | {
+    x: number;
+    y: number;
+    h: number;
+    w: number;
+    excavation: Excavation | null;
+    opacity: number;
+    crossOrigin: CrossOrigin;
+  }>(null);
 
-  ngOnInit(): void {
-    this.el.nativeElement.style.backgroundColor = this.bgColor;
-    this.i18n.localeChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-      this.locale = this.i18n.getLocaleData('QRCode');
-      this.cdr.markForCheck();
+  protected imageSettings: Signal<ImageSettings> = computed(() => {
+    return {
+      src: this.icon(),
+      x: undefined,
+      y: undefined,
+      height: this.iconSize() ?? 40,
+      width: this.iconSize() ?? 40,
+      excavate: true,
+      crossOrigin: 'anonymous'
+    };
+  });
+
+  constructor() {
+    effect(() => {
+      this.updateQRCodeData();
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    const { nzValue, nzIcon, nzLevel, nzSize, nzIconSize, nzColor, nzPadding, nzBgColor } = changes;
-    if ((nzValue || nzIcon || nzLevel || nzSize || nzIconSize || nzColor || nzPadding || nzBgColor) && this.canvas) {
-      this.drawCanvasQRCode();
-    }
-
-    if (nzBgColor) {
-      this.el.nativeElement.style.backgroundColor = this.bgColor;
-    }
-  }
-
-  ngAfterViewInit(): void {
-    this.drawCanvasQRCode();
-  }
-
   reloadQRCode(): void {
-    this.drawCanvasQRCode();
+    this.updateQRCodeData();
     this.refresh.emit('refresh');
   }
 
-  drawCanvasQRCode(): void {
-    if (this.canvas) {
-      drawCanvas(
-        this.canvas.nativeElement,
-        plotQRCodeData(this.value, this.level),
-        this.size,
-        10,
-        this.padding,
-        this.color,
-        this.bgColor,
-        this.iconSize,
-        this.icon
-      );
-    }
+  updateQRCodeData(): void {
+    const { margin, cells, numCells, calculatedImageSettings } = createQRCodeData(
+      this.value(),
+      this.level(),
+      DEFAULT_MINVERSION,
+      this.size(),
+      this.boostLevel(),
+      this.padding(),
+      this.imageSettings()
+    );
+    this.margin.set(margin);
+    this.cells.set(cells);
+    this.numCells.set(numCells);
+    this.calculatedImageSettings.set(calculatedImageSettings);
   }
 }
