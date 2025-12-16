@@ -25,9 +25,6 @@ $float-button-icon-size: $font-size-sm * 1.5;
   box-shadow: $shadow-2;
   cursor: pointer;
   inset-inline-end: $float-button-inset-inline-end;
-  &-hidden {
-    display: none;
-  }
   &-pure {
     position: relative;
     inset: auto;

@@ -1,16 +1,10 @@
-@mixin fade-motion($className, $keyframeName) {
-  $name: "#{$ant-prefix}-#{$className}";
-  @include make-motion($name, $keyframeName);
-  .#{$name}-enter,
-  .#{$name}-appear {
-    opacity: 0;
-    animation-timing-function: linear;
-  }
-  .#{$name}-leave {
-    animation-timing-function: linear;
-  }
+@import "../../themes/index";
+@import "./util";
+@mixin fade-motion($className, $timing-function, $duration: $animation-duration-base) {
+  $name: "#{$ant-prefix}-#{$className}-motion";
+  @include make-motion-enter($name, antFadeIn, $timing-function, $duration);
+  @include make-motion-leave($name, antFadeOut, $timing-function, $duration);
 }
-@include fade-motion(fade, antFade);
 @keyframes antFadeIn {
   0% {
     opacity: 0;

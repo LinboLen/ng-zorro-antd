@@ -3,23 +3,20 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { BidiModule, Direction, Directionality } from '@angular/cdk/bidi';
-import { Platform, PlatformModule } from '@angular/cdk/platform';
+import { Directionality } from '@angular/cdk/bidi';
+import { Platform } from '@angular/cdk/platform';
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   DestroyRef,
   DOCUMENT,
+  effect,
   ElementRef,
-  EventEmitter,
   inject,
   Input,
   NgZone,
   OnChanges,
-  OnInit,
-  Output,
+  output,
   Renderer2,
   SimpleChanges,
   ViewChild,
@@ -30,7 +27,7 @@ import { fromEvent, merge, ReplaySubject, Subscription } from 'rxjs';
 import { map, throttleTime } from 'rxjs/operators';
 
 import { TriResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
-import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
 import { TriScrollService } from 'ng-zorro-antd/core/services';
 import { NgStyleInterface } from 'ng-zorro-antd/core/types';
 import { getStyleAsText, numberAttributeWithZeroFallback, shallowEqual } from 'ng-zorro-antd/core/util';
@@ -41,11 +38,11 @@ import { getTargetRect, SimpleRect } from './utils';
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'affix';
 const TRI_AFFIX_CLS_PREFIX = 'ant-affix';
 const TRI_AFFIX_DEFAULT_SCROLL_TIME = 20;
+const NOOP_EVENT = {} as Event;
 
 @Component({
   selector: 'tri-affix',
   exportAs: 'triAffix',
-  imports: [BidiModule, PlatformModule],
   template: `
     <div #fixedEl>
       <ng-content></ng-content>
@@ -54,16 +51,16 @@ const TRI_AFFIX_DEFAULT_SCROLL_TIME = 20;
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class TriAffixComponent implements AfterViewInit, OnChanges, OnInit {
-  public configService = inject(TriConfigService);
-  private scrollSrv = inject(TriScrollService);
-  private ngZone = inject(NgZone);
-  private platform = inject(Platform);
-  private renderer = inject(Renderer2);
-  private resizeObserver = inject(TriResizeObserver);
-  private cdr = inject(ChangeDetectorRef);
-  private directionality = inject(Directionality);
-  private destroyRef = inject(DestroyRef);
+export class TriAffixComponent implements OnChanges {
+  private readonly scrollSrv = inject(TriScrollService);
+  private readonly ngZone = inject(NgZone);
+  private readonly platform = inject(Platform);
+  private readonly renderer = inject(Renderer2);
+  private readonly resizeObserver = inject(TriResizeObserver);
+  private readonly directionality = inject(Directionality);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly document = inject(DOCUMENT);
+  private readonly placeholderNode: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
 
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
@@ -79,18 +76,13 @@ export class TriAffixComponent implements AfterViewInit, OnChanges, OnInit {
   @WithConfig()
   offsetBottom?: null | number;
 
-  @Output() readonly change = new EventEmitter<boolean>();
-
-  dir: Direction = 'ltr';
-
-  private readonly placeholderNode: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
+  readonly change = output<boolean>();
 
   private affixStyle?: NgStyleInterface;
   private placeholderStyle?: NgStyleInterface;
-  private positionChangeSubscription: Subscription = Subscription.EMPTY;
+  private positionChangeSubscription = Subscription.EMPTY;
   private offsetChanged$ = new ReplaySubject<void>(1);
   private timeout?: ReturnType<typeof setTimeout>;
-  private document: Document = inject(DOCUMENT);
 
   get #target(): Element | Window {
     const el = this.target;
@@ -98,20 +90,15 @@ export class TriAffixComponent implements AfterViewInit, OnChanges, OnInit {
   }
 
   constructor() {
+    effect(() => {
+      this.directionality.valueSignal();
+      this.registerListeners();
+      this.updatePosition(NOOP_EVENT);
+    });
+
     this.destroyRef.onDestroy(() => {
       this.removeListeners();
     });
-  }
-
-  ngOnInit(): void {
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((direction: Direction) => {
-      this.dir = direction;
-      this.registerListeners();
-      this.updatePosition({} as Event);
-      this.cdr.detectChanges();
-    });
-
-    this.dir = this.directionality.value;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -125,10 +112,6 @@ export class TriAffixComponent implements AfterViewInit, OnChanges, OnInit {
     }
   }
 
-  ngAfterViewInit(): void {
-    this.registerListeners();
-  }
-
   private registerListeners(): void {
     if (!this.platform.isBrowser) {
       return;
@@ -139,7 +122,7 @@ export class TriAffixComponent implements AfterViewInit, OnChanges, OnInit {
     this.positionChangeSubscription = this.ngZone.runOutsideAngular(() =>
       merge(
         ...Object.keys(AffixRespondEvents).map(evName => fromEvent(this.#target, evName)),
-        this.offsetChanged$.pipe(map(() => ({}))),
+        this.offsetChanged$.pipe(map(() => NOOP_EVENT)),
         this.resizeObserver.observe(el)
       )
         .pipe(
@@ -148,7 +131,7 @@ export class TriAffixComponent implements AfterViewInit, OnChanges, OnInit {
         )
         .subscribe(e => this.updatePosition(e as Event))
     );
-    this.timeout = setTimeout(() => this.updatePosition({} as Event));
+    this.timeout = setTimeout(() => this.updatePosition(NOOP_EVENT));
   }
 
   private removeListeners(): void {
@@ -177,8 +160,7 @@ export class TriAffixComponent implements AfterViewInit, OnChanges, OnInit {
 
   private setAffixStyle(e: Event, affixStyle?: NgStyleInterface): void {
     const originalAffixStyle = this.affixStyle;
-    const isWindow = this.#target === window;
-    if (e.type === 'scroll' && originalAffixStyle && affixStyle && isWindow) {
+    if (e.type === 'scroll' && originalAffixStyle && affixStyle && this.#target === window) {
       return;
     }
     if (shallowEqual(originalAffixStyle, affixStyle)) {
@@ -252,7 +234,7 @@ export class TriAffixComponent implements AfterViewInit, OnChanges, OnInit {
       offsetMode.top = typeof offsetTop === 'number';
       offsetMode.bottom = typeof this.offsetBottom === 'number';
     }
-    const targetRect = getTargetRect(targetNode as Window);
+    const targetRect = getTargetRect(targetNode);
     const targetInnerHeight = (targetNode as Window).innerHeight || (targetNode as HTMLElement).clientHeight;
     if (scrollTop >= elemOffset.top - (offsetTop as number) && offsetMode.top) {
       const width = elemOffset.width;
@@ -307,12 +289,8 @@ export class TriAffixComponent implements AfterViewInit, OnChanges, OnInit {
 
   private updateRtlClass(): void {
     const wrapEl = this.fixedEl.nativeElement;
-    if (this.dir === 'rtl') {
-      if (wrapEl.classList.contains(TRI_AFFIX_CLS_PREFIX)) {
-        wrapEl.classList.add(`${TRI_AFFIX_CLS_PREFIX}-rtl`);
-      } else {
-        wrapEl.classList.remove(`${TRI_AFFIX_CLS_PREFIX}-rtl`);
-      }
+    if (this.directionality.valueSignal() === 'rtl' && wrapEl.classList.contains(TRI_AFFIX_CLS_PREFIX)) {
+      wrapEl.classList.add(`${TRI_AFFIX_CLS_PREFIX}-rtl`);
     } else {
       wrapEl.classList.remove(`${TRI_AFFIX_CLS_PREFIX}-rtl`);
     }

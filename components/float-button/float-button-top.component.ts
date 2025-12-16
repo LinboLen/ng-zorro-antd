@@ -30,12 +30,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 
-import { fadeMotion } from 'ng-zorro-antd/core/animation';
+import { withAnimationCheck } from 'ng-zorro-antd/core/animation';
 import { withConfigFactory } from 'ng-zorro-antd/core/config';
 import { TriScrollService } from 'ng-zorro-antd/core/services';
 import { TriShapeSCType } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular, generateClassName } from 'ng-zorro-antd/core/util';
-import { TriIconModule } from 'ng-zorro-antd/icon';
 
 import { TriFloatButtonComponent } from './float-button.component';
 import { TriFloatButtonBadge, TriFloatButtonType } from './typings';
@@ -48,22 +47,21 @@ const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: t
 @Component({
   selector: 'tri-float-button-top',
   exportAs: 'triFloatButtonTop',
-  imports: [TriFloatButtonComponent, TriIconModule],
-  animations: [fadeMotion],
+  imports: [TriFloatButtonComponent],
   template: `
-    <div #backTop @fadeMotion>
+    @if (visible()) {
       <tri-float-button
-        [icon]="icon() || top"
+        #backTop
+        [icon]="icon() || 'vertical-align-top'"
         [description]="description()"
         [href]="href()"
         [type]="type()"
         [shape]="shape()"
         [badge]="badge()"
-      ></tri-float-button>
-      <ng-template #top>
-        <tri-icon type="vertical-align-top" theme="outline" />
-      </ng-template>
-    </div>
+        [animate.enter]="fadeAnimationEnter()"
+        [animate.leave]="fadeAnimationLeave()"
+      />
+    }
   `,
   host: {
     '[class]': 'class()'
@@ -93,24 +91,23 @@ export class TriFloatButtonTopComponent implements OnInit {
   readonly badge = input<TriFloatButtonBadge | null>(null);
   readonly onClick = output<boolean>();
 
+  protected readonly visible = signal<boolean>(false);
   // compact global config
   readonly #visibilityHeight = withConfig('nzVisibilityHeight', this.visibilityHeight, 400);
   readonly _shape = linkedSignal(() => this.shape());
-  protected readonly dir = this.directionality.valueSignal;
   protected readonly class = computed<string[]>(() => {
-    const dir = this.dir();
+    const dir = this.directionality.valueSignal();
     const classes = [CLASS_NAME, `${CLASS_NAME}-top`, this.generateClass(this._shape())];
     if (dir === 'rtl') {
       classes.push(this.generateClass(dir));
     }
-    if (!this.visible()) {
-      classes.push(this.generateClass('hidden'));
-    }
     return classes;
   });
 
+  protected readonly fadeAnimationEnter = withAnimationCheck(() => `${CLASS_NAME}-top-motion-enter`);
+  protected readonly fadeAnimationLeave = withAnimationCheck(() => `${CLASS_NAME}-top-motion-leave`);
+
   #target?: HTMLElement | null = null;
-  private readonly visible = signal<boolean>(false);
   private backTopClickSubscription = Subscription.EMPTY;
   private scrollListenerDestroy$ = new Subject<void>();
 

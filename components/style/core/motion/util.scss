@@ -1,0 +1,17 @@
+@import "../../themes/index";
+@mixin make-motion-enter($name, $keyframeName, $timing-function, $duration: $animation-duration-base) {
+  .#{$name}-enter {
+    animation-name: $keyframeName;
+    animation-duration: $duration;
+    animation-timing-function: $timing-function;
+    animation-fill-mode: both;
+  }
+}
+@mixin make-motion-leave($name, $keyframeName, $timing-function, $duration: $animation-duration-base) {
+  .#{$name}-leave {
+    animation-name: $keyframeName;
+    animation-duration: $duration;
+    animation-timing-function: $timing-function;
+    animation-fill-mode: both;
+  }
+}

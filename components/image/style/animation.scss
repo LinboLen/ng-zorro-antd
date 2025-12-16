@@ -1,0 +1,3 @@
+@import "../../style/themes/index";
+@import "../../style/core/motion/fade";
+@include fade-motion("image-preview-fade", linear);
