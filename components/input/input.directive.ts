@@ -27,7 +27,7 @@ import { map, startWith } from 'rxjs/operators';
 
 import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
 import { TriSizeLDSType, TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
-import { getStatusClassNames } from 'ng-zorro-antd/core/util';
+import { getStatusClassNames, InputFocusOptions, triggerFocus } from 'ng-zorro-antd/core/util';
 import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
 import { TriInputPasswordDirective } from './input-password.directive';
@@ -58,7 +58,7 @@ const PREFIX_CLS = 'ant-input';
   providers: [{ provide: TRI_SPACE_COMPACT_ITEM_TYPE, useValue: 'input' }]
 })
 export class TriInputDirective implements OnInit {
-  private elementRef = inject(ElementRef);
+  private elementRef = inject<ElementRef<HTMLInputElement | HTMLTextAreaElement>>(ElementRef);
   private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private destroyRef = inject(DestroyRef);
   private formStatusService = inject(TriFormStatusService, { optional: true });
@@ -156,5 +156,13 @@ export class TriInputDirective implements OnInit {
     this.feedbackRef.location.nativeElement.classList.add('ant-input-suffix');
     this.feedbackRef.instance.status = this._status();
     this.feedbackRef.instance.updateIcon();
+  }
+
+  focus(options?: InputFocusOptions): void {
+    triggerFocus(this.elementRef.nativeElement, options);
+  }
+
+  blur(): void {
+    this.elementRef.nativeElement.blur();
   }
 }
