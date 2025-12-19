@@ -12,7 +12,12 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriColorPickerComponent, TriColorPickerModule } from 'ng-zorro-antd/color-picker';
-import { TriColor, TriColorPickerFormatType, TriColorPickerTriggerType } from 'ng-zorro-antd/color-picker/typings';
+import {
+  TriColor,
+  TriColorPickerFormatType,
+  TriColorPickerTriggerType,
+  TriPresetColor
+} from 'ng-zorro-antd/color-picker/typings';
 import { dispatchMouseEvent } from 'ng-zorro-antd/core/testing';
 import { TriSizeLDSType } from 'ng-zorro-antd/core/types';
 import { TriFormModule } from 'ng-zorro-antd/form';
@@ -324,6 +329,104 @@ describe('nz-color-picker form', () => {
   }));
 });
 
+describe('nz-color-picker with presets', () => {
+  let fixture: ComponentFixture<TriTestColorPickerPresetsComponent>;
+  let testComponent: TriTestColorPickerPresetsComponent;
+  let resultEl: DebugElement;
+  let overlayContainer: OverlayContainer;
+  let overlayContainerElement: HTMLElement;
+
+  function waitingForTooltipToggling(): void {
+    fixture.detectChanges();
+    tick(500);
+    fixture.detectChanges();
+  }
+
+  beforeEach(fakeAsync(() => {
+    TestBed.configureTestingModule({
+      providers: [provideNoopAnimations(), provideZoneChangeDetection()]
+    });
+    fixture = TestBed.createComponent(TriTestColorPickerPresetsComponent);
+    fixture.detectChanges();
+    testComponent = fixture.componentInstance;
+    resultEl = fixture.debugElement.query(By.directive(TriColorPickerComponent));
+  }));
+
+  beforeEach(inject([OverlayContainer], (oc: OverlayContainer) => {
+    overlayContainer = oc;
+    overlayContainerElement = oc.getContainerElement();
+  }));
+
+  afterEach(() => {
+    overlayContainer.ngOnDestroy();
+  });
+
+  it('should render presets when provided', fakeAsync(() => {
+    const trigger = resultEl.nativeElement.querySelector('.ant-color-picker-trigger');
+    dispatchMouseEvent(trigger, 'click');
+    waitingForTooltipToggling();
+
+    const presetWrapper = overlayContainerElement.querySelector('.ant-color-picker-presets-wrapper');
+    expect(presetWrapper).toBeTruthy();
+
+    const collapseItems = overlayContainerElement.querySelectorAll('.ant-collapse-item');
+    expect(collapseItems.length).toBe(2);
+  }));
+
+  it('should not render presets when null', fakeAsync(() => {
+    testComponent.presets = null;
+    fixture.detectChanges();
+
+    const trigger = resultEl.nativeElement.querySelector('.ant-color-picker-trigger');
+    dispatchMouseEvent(trigger, 'click');
+    waitingForTooltipToggling();
+
+    const presetWrapper = overlayContainerElement.querySelector('.ant-color-picker-presets-wrapper');
+    expect(presetWrapper).toBeFalsy();
+  }));
+
+  it('should handle preset color selection', fakeAsync(() => {
+    spyOn(testComponent, 'onColorChange');
+
+    const trigger = resultEl.nativeElement.querySelector('.ant-color-picker-trigger');
+    dispatchMouseEvent(trigger, 'click');
+    waitingForTooltipToggling();
+
+    const firstPresetColor = overlayContainerElement.querySelector(
+      '.ant-color-picker-presets-items .ant-color-picker-color-block'
+    );
+    expect(firstPresetColor).toBeTruthy();
+
+    dispatchMouseEvent(firstPresetColor as Element, 'click');
+    fixture.detectChanges();
+    tick(0);
+    fixture.detectChanges();
+
+    expect(testComponent.onColorChange).toHaveBeenCalled();
+  }));
+
+  it('should toggle preset groups', fakeAsync(() => {
+    const trigger = resultEl.nativeElement.querySelector('.ant-color-picker-trigger');
+    dispatchMouseEvent(trigger, 'click');
+    waitingForTooltipToggling();
+
+    const collapseItems = overlayContainerElement.querySelectorAll('.ant-collapse-item');
+    const secondPanel = collapseItems[1] as HTMLElement;
+
+    // Initially, second group should be collapsed (no active class)
+    expect(secondPanel.classList.contains('ant-collapse-item-active')).toBeFalse();
+
+    // Find and click the collapse header to toggle
+    const collapseHeader = secondPanel.querySelector('.ant-collapse-header');
+    if (collapseHeader) {
+      dispatchMouseEvent(collapseHeader, 'click');
+      fixture.detectChanges();
+      tick(300); // Wait for collapse animation
+      fixture.detectChanges();
+    }
+  }));
+});
+
 @Component({
   imports: [TriColorPickerModule, TriFormModule, ReactiveFormsModule],
   template: `
@@ -348,5 +451,33 @@ export class TriTestColorPickerFormComponent {
 
   enable(): void {
     this.validateForm.enable();
+  }
+}
+
+@Component({
+  imports: [TriColorPickerModule],
+  template: `
+    <tri-color-picker [presets]="presets" [value]="'#1677ff'" (onChange)="onColorChange($event)">
+    </tri-color-picker>
+  `
+})
+export class TriTestColorPickerPresetsComponent {
+  presets: TriPresetColor[] | null = [
+    {
+      label: 'Basic Colors',
+      colors: ['#ff0000', '#00ff00', '#0000ff'],
+      defaultOpen: true,
+      key: 'basic'
+    },
+    {
+      label: 'Advanced Colors',
+      colors: ['#ffff00', '#ff00ff', '#00ffff'],
+      defaultOpen: false,
+      key: 'advanced'
+    }
+  ];
+
+  onColorChange(event: { color: TriColor; format: string }): void {
+    console.log('Color changed:', event);
   }
 }

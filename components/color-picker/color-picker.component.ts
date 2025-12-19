@@ -31,7 +31,7 @@ import { TriColorBlockComponent } from './color-block.component';
 import { TriColorFormatComponent } from './color-format.component';
 import { NgAntdColorPickerModule } from './src/ng-antd-color-picker.module';
 import { defaultColor, generateColor } from './src/util/util';
-import { TriColor, TriColorPickerFormatType, TriColorPickerTriggerType } from './typings';
+import { TriColor, TriColorPickerFormatType, TriColorPickerTriggerType, TriPresetColor } from './typings';
 
 @Component({
   selector: 'tri-color-picker',
@@ -69,12 +69,13 @@ import { TriColor, TriColorPickerFormatType, TriColorPickerTriggerType } from '.
     </div>
     <ng-template #colorPicker>
       <ng-antd-color-picker
-        [value]="value"
+        [value]="blockColor"
         [defaultValue]="defaultValue"
         [disabled]="disabled"
         [panelRenderHeader]="panelRenderHeader"
         [panelRenderFooter]="panelRenderFooter"
         [disabledAlpha]="disabledAlpha"
+        [presets]="presets"
         (onChange)="colorChange($event)"
       />
     </ng-template>
@@ -130,6 +131,7 @@ export class TriColorPickerComponent implements OnInit, OnChanges, ControlValueA
   @Input({ transform: booleanAttribute }) allowClear: boolean = false;
   @Input({ transform: booleanAttribute }) disabled: boolean = false;
   @Input({ transform: booleanAttribute }) disabledAlpha: boolean = false;
+  @Input() presets: TriPresetColor[] | null = null;
   @Output() readonly onChange = new EventEmitter<{ color: TriColor; format: string }>();
   @Output() readonly onFormatChange = new EventEmitter<TriColorPickerFormatType>();
   @Output() readonly onClear = new EventEmitter<boolean>();
@@ -209,6 +211,7 @@ export class TriColorPickerComponent implements OnInit, OnChanges, ControlValueA
   colorChange(value: { color: TriColor }): void {
     this.blockColor = value.color.getAlpha() < 1 ? value.color.toHex8String() : value.color.toHexString();
     this.clearColor = false;
+    this.onChange.emit({ color: value.color, format: this.format ?? 'hex' });
     this.cdr.markForCheck();
   }
 
