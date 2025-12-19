@@ -559,7 +559,7 @@ export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterCo
 
   onOpenChange(): void {
     this.updateCdkConnectedOverlayStatus();
-    if (this.autoClearSearchValue) {
+    if (this.autoClearSearchValue || !this.isMultiple) {
       this.clearInput();
     }
   }

@@ -1048,6 +1048,25 @@ describe('select', () => {
       expect(document.querySelectorAll('nz-option-item')[0].textContent?.trim()).toBe('change-label');
     }));
 
+    it('should nzAutoClearSearchValue in default mode not work when set to false', fakeAsync(() => {
+      component.open = true;
+      component.listOfOption = [
+        { value: 'test_01', label: 'test_01' },
+        { value: 'test_02', label: 'test_02' }
+      ];
+      component.autoClearSearchValue = false;
+      flushChanges();
+      const listOfContainerItem = document.querySelectorAll('nz-option-item');
+      const inputElement = selectElement.querySelector('input')!;
+
+      flushChanges();
+      inputElement.value = 'test';
+      dispatchFakeEvent(inputElement, 'input');
+      dispatchMouseEvent(listOfContainerItem[0], 'click');
+      flushChanges();
+      expect(inputElement.value).toBe('');
+    }));
+
     it('should group item sort be right', fakeAsync(() => {
       component.listOfOption = [
         { value: 'value_01', label: 'label_01', groupLabel: 'group-1' },
@@ -1819,6 +1838,7 @@ export class TestSelectTemplateTagsComponent {
       [autoFocus]="autoFocus"
       [serverSearch]="serverSearch"
       [disabled]="disabled"
+      [autoClearSearchValue]="autoClearSearchValue"
       [(openChange)]="open"
       (ngModelChange)="valueChange($event)"
       (onSearch)="searchValueChange($event)"
@@ -1837,6 +1857,7 @@ export class TestSelectReactiveDefaultComponent {
   value: TriSafeAny | null = null;
   valueChange = jasmine.createSpy<TriSafeAny>('valueChange');
   openChange = jasmine.createSpy<TriSafeAny>('openChange');
+  autoClearSearchValue = true;
 
   onClear = jasmine.createSpy<TriSafeAny>('onClear');
   searchValueChange = jasmine.createSpy<TriSafeAny>('searchValueChange');
