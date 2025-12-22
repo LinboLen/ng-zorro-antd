@@ -6,8 +6,7 @@
 import { Directive, inject, input, TemplateRef } from '@angular/core';
 
 @Directive({
-  // TODO: Remove `nz-tabset` in 21.0.0
-  selector: ''
+  selector: '[nzTabBarExtraContent]:not(nz-tabs)'
 })
 export class TriTabBarExtraContentDirective {
   readonly position = input<'start' | 'end'>('end', { alias: 'nzTabBarExtraContent' });

@@ -3,8 +3,6 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-/** get some code from https://github.com/angular/material2 */
-
 import { A11yModule } from '@angular/cdk/a11y';
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
@@ -21,7 +19,6 @@ import {
   DestroyRef,
   EventEmitter,
   forwardRef,
-  HOST_TAG_NAME,
   inject,
   Input,
   NgZone,
@@ -38,7 +35,7 @@ import { merge, Observable, of, Subscription } from 'rxjs';
 import { delay, filter, first, startWith } from 'rxjs/operators';
 
 import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
-import { PREFIX, warn } from 'ng-zorro-antd/core/logger';
+import { PREFIX } from 'ng-zorro-antd/core/logger';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriSafeAny, TriSizeLDSType } from 'ng-zorro-antd/core/types';
 import { wrapIntoObservable } from 'ng-zorro-antd/core/util';
@@ -65,7 +62,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'tabs';
 let nextId = 0;
 
 @Component({
-  selector: 'tri-tabs,tri-tabset',
+  selector: 'tri-tabs',
   exportAs: 'triTabs',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.Default,
@@ -281,11 +278,6 @@ export class TriTabsComponent implements OnInit, AfterContentChecked, AfterConte
 
   constructor() {
     this.tabSetId = nextId++;
-
-    // TODO: Remove this warning in 21.0.0
-    if (inject(HOST_TAG_NAME) === 'nz-tabset') {
-      warn(`${PREFIX} <nz-tabset> is deprecated, please use <nz-tabs> instead.`);
-    }
 
     this.destroyRef.onDestroy(() => {
       this.tabs.destroy();
@@ -526,8 +518,3 @@ export class TriTabsComponent implements OnInit, AfterContentChecked, AfterConte
         : false;
   }
 }
-
-/**
- * @deprecated Use `NzTabsComponent` instead. This will be removed in 21.0.0.
- */
-export const TriTabSetComponent = TriTabsComponent;

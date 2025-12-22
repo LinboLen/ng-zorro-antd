@@ -185,28 +185,24 @@ export class TriDemoModalServiceComponent {
   selector: 'tri-modal-custom-component',
   imports: [TriButtonModule],
   template: `
-    <div>
-      <h2>{{ title }}</h2>
-      <h4>{{ subtitle }}</h4>
-      <p
-        >My favorite framework is {{ modalData.favoriteFramework }} and my favorite library is
-        {{ modalData.favoriteLibrary }}
-      </p>
-      <p>
-        <span>Get Modal instance in component</span>
-        <button tri-button [type]="'primary'" (click)="destroyModal()">destroy modal in the component</button>
-      </p>
-    </div>
+    <h2>{{ title }}</h2>
+    <h4>{{ subtitle }}</h4>
+    <p>
+      My favorite framework is {{ modalData.favoriteFramework }} and my favorite library is
+      {{ modalData.favoriteLibrary }}
+    </p>
+    <br />
+    <button tri-button (click)="destroyModal()">destroy modal in the component</button>
   `
 })
 export class TriModalCustomComponent {
   @Input() title?: string;
   @Input() subtitle?: string;
 
-  readonly #modal = inject(TriModalRef);
-  readonly modalData: IModalData = inject(TRI_MODAL_DATA);
+  readonly modalRef = inject(TriModalRef);
+  readonly modalData = inject<IModalData>(TRI_MODAL_DATA);
 
   destroyModal(): void {
-    this.#modal.destroy({ data: 'this the result data' });
+    this.modalRef.destroy({ data: 'this the result data' });
   }
 }

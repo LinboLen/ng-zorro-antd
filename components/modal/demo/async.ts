@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, model, signal } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriModalModule } from 'ng-zorro-antd/modal';
@@ -11,33 +11,33 @@ import { TriModalModule } from 'ng-zorro-antd/modal';
       <span>Show Modal</span>
     </button>
     <tri-modal
-      [(visibleChange)]="isVisible"
+      [(visibleChange)]="visible"
       title="Modal Title"
       (onCancel)="handleCancel()"
       (onOk)="handleOk()"
-      [okLoading]="isOkLoading"
+      [okLoading]="loading()"
     >
       <p *modalContent>Modal Content</p>
     </tri-modal>
   `
 })
 export class TriDemoModalAsyncComponent {
-  isVisible = false;
-  isOkLoading = false;
+  visible = model(false);
+  loading = signal(false);
 
   showModal(): void {
-    this.isVisible = true;
+    this.visible.set(true);
   }
 
   handleOk(): void {
-    this.isOkLoading = true;
+    this.loading.set(true);
     setTimeout(() => {
-      this.isVisible = false;
-      this.isOkLoading = false;
+      this.visible.set(false);
+      this.loading.set(false);
     }, 3000);
   }
 
   handleCancel(): void {
-    this.isVisible = false;
+    this.visible.set(false);
   }
 }
