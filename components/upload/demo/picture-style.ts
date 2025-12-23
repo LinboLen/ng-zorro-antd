@@ -9,66 +9,36 @@ import { TriUploadFile, TriUploadModule } from 'ng-zorro-antd/upload';
   imports: [TriButtonModule, TriIconModule, TriUploadModule],
   template: `
     <tri-upload
-      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+      action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
       listType="picture"
-      [(fileListChange)]="fileList1"
+      [(fileListChange)]="fileList"
     >
       <button tri-button>
         <tri-icon type="upload" />
         Upload
       </button>
     </tri-upload>
-    <br />
-    <br />
-    <tri-upload
-      class="upload-list-inline"
-      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-      listType="picture"
-      [(fileListChange)]="fileList2"
-    >
-      <button tri-button>
-        <span>
-          <tri-icon type="upload" />
-          Upload
-        </span>
-      </button>
-    </tri-upload>
-  `,
-  styles: [
-    `
-      :host ::ng-deep .upload-list-inline .ant-upload-list-item {
-        float: left;
-        width: 200px;
-        margin-right: 8px;
-      }
-      :host ::ng-deep .upload-list-inline [class*='-upload-list-rtl'] .ant-upload-list-item {
-        float: right;
-      }
-      :host ::ng-deep .upload-list-inline .ant-upload-animate-enter {
-        animation-name: uploadAnimateInlineIn;
-      }
-      :host ::ng-deep .upload-list-inline .ant-upload-animate-leave {
-        animation-name: uploadAnimateInlineOut;
-      }
-    `
-  ]
+  `
 })
 export class TriDemoUploadPictureStyleComponent {
-  defaultFileList: TriUploadFile[] = [
+  fileList: TriUploadFile[] = [
+    {
+      uid: '0',
+      name: 'xxx.png',
+      status: 'uploading',
+      percent: 33
+    },
     {
       uid: '-1',
-      name: 'xxx.png',
+      name: 'yyy.png',
       status: 'done',
       url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
       thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
     },
     {
       uid: '-2',
-      name: 'yyy.png',
+      name: 'zzz.png',
       status: 'error'
     }
   ];
-
-  fileList1 = [...this.defaultFileList];
-  fileList2 = [...this.defaultFileList];
 }

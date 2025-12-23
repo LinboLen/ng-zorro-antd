@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { Platform } from '@angular/cdk/platform';
 import { NgTemplateOutlet } from '@angular/common';
 import {
@@ -22,6 +22,7 @@ import {
   OnChanges,
   OnInit,
   Output,
+  signal,
   TemplateRef,
   ViewChild,
   ViewEncapsulation
@@ -31,7 +32,7 @@ import { Observable, of, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { BooleanInput, TriSafeAny } from 'ng-zorro-antd/core/types';
-import { fromEventOutsideAngular, toBoolean } from 'ng-zorro-antd/core/util';
+import { fromEventOutsideAngular, generateClassName, toBoolean } from 'ng-zorro-antd/core/util';
 import { TriI18nService, TriUploadI18nInterface } from 'ng-zorro-antd/i18n';
 
 import {
@@ -50,6 +51,8 @@ import {
 import { TriUploadBtnComponent } from './upload-btn.component';
 import { TriUploadListComponent } from './upload-list.component';
 
+const CLASS_NAME = 'ant-upload';
+
 @Component({
   selector: 'tri-upload',
   exportAs: 'triUpload',
@@ -64,16 +67,17 @@ import { TriUploadListComponent } from './upload-list.component';
 export class TriUploadComponent implements OnInit, AfterViewInit, OnChanges {
   static ngAcceptInputType_nzShowUploadList: BooleanInput | TriShowUploadList;
 
-  private cdr = inject(ChangeDetectorRef);
-  private i18n = inject(TriI18nService);
-  private directionality = inject(Directionality);
-  private destroyRef = inject(DestroyRef);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly i18n = inject(TriI18nService);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly document = inject(DOCUMENT);
+  private readonly platform = inject(Platform);
+  protected readonly dir = inject(Directionality).valueSignal;
 
   @ViewChild('uploadComp', { static: false }) uploadComp!: TriUploadBtnComponent;
   @ViewChild('listComp', { static: false }) listComp!: TriUploadListComponent;
 
   locale!: TriUploadI18nInterface;
-  dir: Direction = 'ltr';
 
   // #region fields
 
@@ -98,7 +102,6 @@ export class TriUploadComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() name = 'file';
 
   private _showUploadList: boolean | TriShowUploadList = true;
-  private document: Document = inject(DOCUMENT);
 
   @Input()
   set showUploadList(value: boolean | TriShowUploadList) {
@@ -183,8 +186,6 @@ export class TriUploadComponent implements OnInit, AfterViewInit, OnChanges {
     };
     return this;
   }
-
-  private readonly platform = inject(Platform);
 
   // #endregion
 
@@ -327,43 +328,31 @@ export class TriUploadComponent implements OnInit, AfterViewInit, OnChanges {
 
   // #region styles
 
-  private prefixCls = 'ant-upload';
-  classList: string[] = [];
+  protected readonly classList = signal<string[]>([]);
 
   private setClassMap(): void {
     let subCls: string[] = [];
     if (this.type === 'drag') {
       if (this.fileList.some(file => file.status === 'uploading')) {
-        subCls.push(`${this.prefixCls}-drag-uploading`);
+        subCls.push(this.generateClass('drag-uploading'));
       }
       if (this.dragState === 'dragover') {
-        subCls.push(`${this.prefixCls}-drag-hover`);
+        subCls.push(this.generateClass('drag-hover'));
       }
     } else {
-      subCls = [`${this.prefixCls}-select-${this.listType}`];
+      subCls = [this.generateClass(`select-${this.listType}`)];
     }
 
-    this.classList = [
-      this.prefixCls,
-      `${this.prefixCls}-${this.type}`,
-      ...subCls,
-      (this.disabled && `${this.prefixCls}-disabled`) || '',
-      (this.dir === 'rtl' && `${this.prefixCls}-rtl`) || ''
-    ].filter(item => !!item);
+    if (this.disabled) {
+      subCls.push(this.generateClass('disabled'));
+    }
 
-    this.cdr.detectChanges();
+    this.classList.set([CLASS_NAME, this.generateClass(this.type), ...subCls]);
   }
 
   // #endregion
 
   ngOnInit(): void {
-    this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.setClassMap();
-      this.cdr.detectChanges();
-    });
-
     this.i18n.localeChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.locale = this.i18n.getLocaleData('Upload');
       this.detectChangesList();
@@ -384,5 +373,9 @@ export class TriUploadComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnChanges(): void {
     this.zipOptions().setClassMap();
+  }
+
+  private generateClass(suffix: string): string {
+    return generateClassName(CLASS_NAME, suffix);
   }
 }
