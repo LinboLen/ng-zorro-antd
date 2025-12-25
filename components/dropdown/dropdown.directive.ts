@@ -26,7 +26,8 @@ import {
   Output,
   Renderer2,
   SimpleChanges,
-  ViewContainerRef
+  ViewContainerRef,
+  type AnimationCallbackEvent
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject, combineLatest, EMPTY, fromEvent, merge, Subject } from 'rxjs';
@@ -225,12 +226,13 @@ export class TriDropdownDirective implements AfterViewInit, OnChanges {
           }
         });
 
-      this.dropdownMenu!.animationStateChange$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(event => {
-        if (event.toState === 'void') {
+      this.dropdownMenu!.animationStateChange$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
+        (event: AnimationCallbackEvent) => {
           this.overlayRef?.dispose();
           this.overlayRef = null;
+          event.animationComplete();
         }
-      });
+      );
     }
   }
 

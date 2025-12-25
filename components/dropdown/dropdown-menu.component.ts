@@ -3,7 +3,6 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { AnimationEvent } from '@angular/animations';
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   AfterContentInit,
@@ -19,12 +18,13 @@ import {
   ViewChild,
   ViewContainerRef,
   ViewEncapsulation,
-  inject
+  inject,
+  type AnimationCallbackEvent
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject } from 'rxjs';
 
-import { slideMotion, TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
+import { TriNoAnimationDirective, slideAnimationEnter, slideAnimationLeave } from 'ng-zorro-antd/core/animation';
 import { IndexableObject, TriSafeAny } from 'ng-zorro-antd/core/types';
 import { MenuService, TriIsMenuInsideDropdownToken } from 'ng-zorro-antd/menu';
 
@@ -33,7 +33,6 @@ export type TriPlacementType = 'bottomLeft' | 'bottomCenter' | 'bottomRight' | '
 @Component({
   selector: `nz-dropdown-menu`,
   exportAs: `nzDropdownMenu`,
-  animations: [slideMotion],
   providers: [
     MenuService,
     /** menu is inside dropdown-menu component **/
@@ -56,10 +55,10 @@ export type TriPlacementType = 'bottomLeft' | 'bottomCenter' | 'bottomRight' | '
         [class.tri-dropdown-placement-top]="placement === 'top'"
         [class]="overlayClassName"
         [style]="overlayStyle"
-        @slideMotion
-        (@slideMotion.done)="onAnimationEvent($event)"
-        [@.disabled]="!!noAnimation?.nzNoAnimation?.()"
-        [noAnimation]="noAnimation?.nzNoAnimation?.()"
+        [animate.enter]="dropdownAnimationEnter()"
+        [animate.leave]="dropdownAnimationLeave()"
+        (animate.leave)="onAnimationEvent($event)"
+        [noAnimation]="!!noAnimation?.nzNoAnimation?.()"
         (mouseenter)="setMouseState(true)"
         (mouseleave)="setMouseState(false)"
       >
@@ -87,7 +86,7 @@ export class TriDropdownMenuComponent implements AfterContentInit, OnInit {
   isChildSubMenuOpen$ = this.menuService.isChildSubMenuOpen$;
   descendantMenuItemClick$ = this.menuService.descendantMenuItemClick$;
   mouseState$ = new BehaviorSubject<boolean>(false);
-  animationStateChange$ = new EventEmitter<AnimationEvent>();
+  animationStateChange$ = new EventEmitter<AnimationCallbackEvent>();
   @ViewChild(TemplateRef, { static: true }) templateRef!: TemplateRef<TriSafeAny>;
 
   overlayClassName: string = '';
@@ -96,8 +95,16 @@ export class TriDropdownMenuComponent implements AfterContentInit, OnInit {
   placement: TriPlacementType | 'bottom' | 'top' = 'bottomLeft';
   dir: Direction = 'ltr';
 
-  onAnimationEvent(event: AnimationEvent): void {
-    this.animationStateChange$.emit(event);
+  protected readonly dropdownAnimationEnter = slideAnimationEnter();
+  protected readonly dropdownAnimationLeave = slideAnimationLeave();
+
+  onAnimationEvent(event: AnimationCallbackEvent): void {
+    const element = event.target as HTMLElement;
+    const onAnimationEnd = (): void => {
+      element.removeEventListener('animationend', onAnimationEnd);
+      this.animationStateChange$.emit(event);
+    };
+    element.addEventListener('animationend', onAnimationEnd);
   }
 
   setMouseState(visible: boolean): void {
