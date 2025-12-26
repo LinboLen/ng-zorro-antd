@@ -45,7 +45,7 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/f
 import { BehaviorSubject, merge, Observable, of } from 'rxjs';
 import { distinctUntilChanged, map, startWith, switchMap, withLatestFrom } from 'rxjs/operators';
 
-import { slideMotion, TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
+import { TriNoAnimationDirective, slideAnimationEnter, slideAnimationLeave } from 'ng-zorro-antd/core/animation';
 import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
 import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
 import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
@@ -209,8 +209,8 @@ const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
         [class.tri-select-dropdown-placement-topLeft]="dropdownPosition === 'topLeft'"
         [class.tri-select-dropdown-placement-topRight]="dropdownPosition === 'topRight'"
         [class.tri-cascader-dropdown-rtl]="dir === 'rtl'"
-        [@slideMotion]="'enter'"
-        [@.disabled]="!!noAnimation?.nzNoAnimation?.()"
+        [animate.enter]="cascaderAnimationEnter()"
+        [animate.leave]="cascaderAnimationLeave()"
         [noAnimation]="noAnimation?.nzNoAnimation?.()"
         (mouseenter)="onTriggerMouseEnter()"
         (mouseleave)="onTriggerMouseLeave($event)"
@@ -267,7 +267,6 @@ const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
       </div>
     </ng-template>
   `,
-  animations: [slideMotion],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -329,6 +328,8 @@ export class TriCascaderComponent
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   @ViewChild('selectContainer', { static: false }) selectContainer!: ElementRef;
+  protected readonly cascaderAnimationEnter = slideAnimationEnter();
+  protected readonly cascaderAnimationLeave = slideAnimationLeave();
 
   @ViewChild(TriSelectSearchComponent)
   set input(inputComponent: TriSelectSearchComponent | undefined) {
