@@ -6,7 +6,6 @@
 import { DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  ANIMATION_MODULE_TYPE,
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
@@ -63,7 +62,7 @@ import { TriSegmentedService } from './segmented.service';
   `,
   host: {
     class: 'tri-segmented-item',
-    '[class.tri-segmented-item-selected]': 'isChecked()',
+    '[class.tri-segmented-item-selected]': '!showThumb() && isChecked()',
     '[class.tri-segmented-item-disabled]': 'finalDisabled()',
     '(click)': 'handleClick()',
     '(keydown)': 'handleKeydown($event)'
@@ -72,7 +71,6 @@ import { TriSegmentedService } from './segmented.service';
   encapsulation: ViewEncapsulation.None
 })
 export class TriSegmentedItemComponent implements OnInit {
-  private readonly animationType = inject(ANIMATION_MODULE_TYPE, { optional: true });
   private readonly service = inject(TriSegmentedService);
   private readonly elementRef = inject(ElementRef);
   private readonly destroyRef = inject(DestroyRef);
@@ -87,6 +85,7 @@ export class TriSegmentedItemComponent implements OnInit {
       .rootNodes.some(node => node.textContent.trim().length > 0)
   );
 
+  protected readonly showThumb = this.service.showThumb;
   protected readonly name = this.service.name.asReadonly();
   protected readonly isChecked = signal(false);
   protected readonly parentDisabled = toSignal(this.service.disabled$, { initialValue: false });
@@ -102,11 +101,11 @@ export class TriSegmentedItemComponent implements OnInit {
           }
         }),
         switchMap(value => {
-          if (this.animationType === 'NoopAnimations') {
+          if (!this.service.animationEnabled()) {
             return of(value);
           }
-          return this.service.animationDone$.pipe(
-            filter(event => event.toState === 'to' || event.toState === 'toVertical'),
+          return this.service.animating$.pipe(
+            filter(animating => !animating), // done
             take(1),
             map(() => value)
           );

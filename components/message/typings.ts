@@ -29,6 +29,9 @@ export interface TriMessageData {
   messageId?: string;
   createdAt?: Date;
   options?: TriMessageDataOptions;
+  /**
+   * @deprecated Will be removed in v22.0.0
+   */
   state?: 'enter' | 'leave';
   onClose?: Subject<boolean>;
 }

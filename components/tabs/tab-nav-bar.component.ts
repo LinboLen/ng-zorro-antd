@@ -55,8 +55,13 @@ const CSS_TRANSFORM_TIME = 150;
 @Component({
   selector: 'tri-tabs-nav',
   exportAs: 'triTabsNav',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  imports: [
+    TriTabScrollListDirective,
+    TriTabAddButtonComponent,
+    TriTabsInkBarDirective,
+    TriTabNavOperationComponent,
+    NgTemplateOutlet
+  ],
   template: `
     @if (startExtraContent()) {
       <div class="tri-tabs-extra-content">
@@ -113,13 +118,8 @@ const CSS_TRANSFORM_TIME = 150;
     class: 'tri-tabs-nav',
     '(keydown)': 'handleKeydown($event)'
   },
-  imports: [
-    TriTabScrollListDirective,
-    TriTabAddButtonComponent,
-    TriTabsInkBarDirective,
-    TriTabNavOperationComponent,
-    NgTemplateOutlet
-  ]
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 export class TriTabNavBarComponent implements AfterViewInit, AfterContentChecked, OnChanges {
   private cdr = inject(ChangeDetectorRef);

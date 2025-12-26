@@ -3,14 +3,12 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { AnimationEvent } from '@angular/animations';
 import { Directionality } from '@angular/cdk/bidi';
 import { DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 import {
   afterNextRender,
   booleanAttribute,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   computed,
   contentChildren,
@@ -22,18 +20,20 @@ import {
   Input,
   OnChanges,
   Output,
+  signal,
   SimpleChanges,
   viewChildren,
   ViewEncapsulation
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { bufferCount, filter } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 
-import { ThumbAnimationProps, thumbMotion } from 'ng-zorro-antd/core/animation';
-import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
+import { withAnimationCheck } from 'ng-zorro-antd/core/animation';
+import { TriConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
-import { TriSizeLDSType, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
+import { requestAnimationFrame } from 'ng-zorro-antd/core/polyfill';
+import { NgStyleInterface, TriSizeLDSType, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 import { TriSegmentedItemComponent } from './segmented-item.component';
@@ -50,11 +50,12 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'segmented';
   template: `
     <!-- thumb motion div -->
     <div class="tri-segmented-group">
-      @if (animationState) {
+      @if (showThumb()) {
         <div
-          class="tri-segmented-thumb tri-segmented-thumb-motion"
-          [@thumbMotion]="animationState"
-          (@thumbMotion.done)="handleThumbAnimationDone($event)"
+          class="tri-segmented-thumb"
+          [style]="thumbStyle()"
+          [animate.enter]="thumbAnimationEnter()"
+          (transitionend)="handleTransitionEnd($event)"
         ></div>
       }
 
@@ -89,14 +90,11 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'segmented';
       multi: true
     }
   ],
-  animations: [thumbMotion],
   imports: [TriIconModule, TriOutletModule, TriSegmentedItemComponent]
 })
 export class TriSegmentedComponent implements OnChanges, ControlValueAccessor {
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
-  public readonly configService = inject(TriConfigService);
-  private readonly cdr = inject(ChangeDetectorRef);
   private readonly service = inject(TriSegmentedService);
   private readonly injector = inject(Injector);
   protected readonly dir = inject(Directionality).valueSignal;
@@ -122,10 +120,9 @@ export class TriSegmentedComponent implements OnChanges, ControlValueAccessor {
   private isDisabledFirstChange = true;
 
   protected value?: number | string;
-  protected animationState: null | { value: string; params: ThumbAnimationProps } = {
-    value: 'to',
-    params: thumbAnimationParamsOf()
-  };
+  protected readonly thumbStyle = signal<NgStyleInterface | null>(null);
+  protected readonly thumbAnimationEnter = withAnimationCheck(() => 'ant-segmented-thumb-motion-appear-active');
+  protected readonly showThumb = this.service.showThumb;
   protected normalizedOptions: TriSegmentedOption[] = [];
   protected onChange: OnChangeType = () => {};
   protected onTouched: OnTouchedType = () => {};
@@ -135,37 +132,26 @@ export class TriSegmentedComponent implements OnChanges, ControlValueAccessor {
       this.value = value;
     });
 
+    this.service.activated$.pipe(takeUntilDestroyed()).subscribe(element => {
+      this.thumbStyle.update(prevStyle => {
+        const nextStyle = this.calcThumbStyle(element);
+
+        if (prevStyle && nextStyle) {
+          // Trigger animation to end position
+          requestAnimationFrame(() => {
+            this.thumbStyle.set(this.getThumbStyle(nextStyle));
+          });
+        } else if (nextStyle) {
+          return this.getThumbStyle(nextStyle);
+        }
+        return prevStyle;
+      });
+    });
+
     this.service.change$.pipe(takeUntilDestroyed()).subscribe(value => {
       this.valueChange.emit(value);
       this.onChange(value);
-    });
-
-    this.service.activated$.pipe(bufferCount(2, 1), takeUntilDestroyed()).subscribe(elements => {
-      if (this.vertical) {
-        this.animationState = {
-          value: 'fromVertical',
-          params: thumbAnimationParamsOf(elements[0], true)
-        };
-        this.cdr.detectChanges();
-
-        this.animationState = {
-          value: 'toVertical',
-          params: thumbAnimationParamsOf(elements[1], true)
-        };
-        this.cdr.detectChanges();
-      } else {
-        this.animationState = {
-          value: 'from',
-          params: thumbAnimationParamsOf(elements[0])
-        };
-        this.cdr.detectChanges();
-
-        this.animationState = {
-          value: 'to',
-          params: thumbAnimationParamsOf(elements[1])
-        };
-        this.cdr.detectChanges();
-      }
+      this.service.animating$.next(true);
     });
 
     this.service.keydown$
@@ -209,11 +195,44 @@ export class TriSegmentedComponent implements OnChanges, ControlValueAccessor {
     }
   }
 
-  handleThumbAnimationDone(event: AnimationEvent): void {
-    if (event.toState === 'to' || event.toState === 'toVertical') {
-      this.animationState = null;
+  private onOffset(offset: number): void {
+    const items = this.renderedItemCmps();
+    const total = items.length;
+    const originIndex = items.findIndex(item => item.value() === this.value);
+    let nextIndex = (originIndex + offset + total) % total;
+
+    // find out the next non-disabled item
+    while (items[nextIndex].disabled()) {
+      nextIndex = (nextIndex + Math.sign(offset) + total) % total;
+      // avoid circular loop
+      if (nextIndex === originIndex) {
+        break;
+      }
     }
-    this.service.animationDone$.next(event);
+
+    const nextOption = items[nextIndex];
+    if (nextOption) {
+      this.service.selected$.next(nextOption.value());
+      this.service.change$.next(nextOption.value());
+    }
+  }
+
+  // change selected item by direction keyboard interaction
+  private onKeyDown(event: KeyboardEvent): void {
+    switch (event.keyCode) {
+      case UP_ARROW:
+        this.onOffset(-1);
+        break;
+      case LEFT_ARROW:
+        this.onOffset(this.dir() === 'rtl' ? 1 : -1);
+        break;
+      case DOWN_ARROW:
+        this.onOffset(1);
+        break;
+      case RIGHT_ARROW:
+        this.onOffset(this.dir() === 'rtl' ? -1 : 1);
+        break;
+    }
   }
 
   private onOffset(offset: number): void {
@@ -272,19 +291,71 @@ export class TriSegmentedComponent implements OnChanges, ControlValueAccessor {
     this.disabled = (this.isDisabledFirstChange && this.disabled) || disabled;
     this.isDisabledFirstChange = false;
   }
-}
 
-function thumbAnimationParamsOf(element?: HTMLElement, vertical: boolean = false): ThumbAnimationProps {
-  if (vertical) {
+  /************* Thumb Animation *************/
+
+  private calcThumbStyle(element?: HTMLElement): NgStyleInterface | null {
+    if (!element || !element.offsetParent) {
+      return null;
+    }
+
+    const parentElement = element.parentElement;
+    if (!parentElement) {
+      return null;
+    }
+
+    const style: NgStyleInterface = {
+      left: element.offsetLeft,
+      right: parentElement.clientWidth - element.clientWidth - element.offsetLeft,
+      width: element.clientWidth,
+      top: element.offsetTop,
+      bottom: parentElement.clientHeight - element.clientHeight - element.offsetTop,
+      height: element.clientHeight
+    };
+
+    if (this.vertical) {
+      return {
+        left: 0,
+        right: 0,
+        width: 0,
+        top: style.top,
+        bottom: style.bottom,
+        height: style.height
+      };
+    }
+
     return {
-      transform: element?.offsetTop ?? 0,
-      width: element?.clientWidth ?? 0,
-      height: element?.clientHeight ?? 0,
-      vertical
+      left: style.left,
+      right: style.right,
+      width: style.width,
+      top: 0,
+      bottom: 0,
+      height: 0
     };
   }
-  return {
-    transform: element?.offsetLeft ?? 0,
-    width: element?.clientWidth ?? 0
-  };
+
+  private getThumbStyle(targetStyle: NgStyleInterface): NgStyleInterface {
+    if (this.vertical) {
+      return {
+        transform: `translateY(${targetStyle.top}px)`,
+        width: '100%',
+        height: `${targetStyle.height}px`
+      };
+    }
+
+    const isRtl = this.dir() === 'rtl';
+    const transformValue = isRtl ? -targetStyle.right : targetStyle.left;
+
+    return {
+      transform: `translateX(${transformValue}px)`,
+      width: `${targetStyle.width}px`,
+      height: '100%'
+    };
+  }
+
+  protected handleTransitionEnd(event: TransitionEvent): void {
+    if (event.propertyName === 'transform') {
+      this.service.animating$.next(false);
+    }
+  }
 }

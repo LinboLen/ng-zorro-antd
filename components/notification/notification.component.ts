@@ -4,9 +4,17 @@
  */
 
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  viewChild,
+  ViewEncapsulation
+} from '@angular/core';
 
-import { notificationMotion } from 'ng-zorro-antd/core/animation';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriMNComponent } from 'ng-zorro-antd/message';
@@ -14,17 +22,15 @@ import { TriMNComponent } from 'ng-zorro-antd/message';
 import { TriNotificationData } from './typings';
 
 @Component({
-  encapsulation: ViewEncapsulation.None,
   selector: 'tri-notification',
   exportAs: 'triNotification',
-  animations: [notificationMotion],
+  imports: [TriIconModule, TriOutletModule, NgTemplateOutlet],
   template: `
     <div
+      #animationElement
       class="tri-notification-notice tri-notification-notice-closable"
       [style]="instance.options?.nzStyle || null"
       [class]="instance.options?.nzClass || ''"
-      [@notificationMotion]="state"
-      (@notificationMotion.done)="animationStateChanged.next($event)"
       (click)="onClick($event)"
       (mouseenter)="onEnter()"
       (mouseleave)="onLeave()"
@@ -101,13 +107,29 @@ import { TriNotificationData } from './typings';
       </a>
     </div>
   `,
-  imports: [TriIconModule, TriOutletModule, NgTemplateOutlet]
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 export class TriNotificationComponent extends TriMNComponent {
   @Input() instance!: Required<TriNotificationData>;
   @Input() index!: number;
   @Input() placement?: string;
   @Output() readonly destroyed = new EventEmitter<{ id: string; userAction: boolean }>();
+
+  readonly animationElement = viewChild.required('animationElement', { read: ElementRef });
+  protected readonly _animationKeyframeMap = {
+    enter: [
+      'antNotificationFadeIn',
+      'antNotificationTopFadeIn',
+      'antNotificationBottomFadeIn',
+      'antNotificationLeftFadeIn'
+    ],
+    leave: 'antNotificationFadeOut'
+  };
+  protected readonly _animationClassMap = {
+    enter: 'ant-notification-fade-enter',
+    leave: 'ant-notification-fade-leave'
+  };
 
   constructor() {
     super();
@@ -122,26 +144,5 @@ export class TriNotificationComponent extends TriMNComponent {
 
   close(): void {
     this.destroy(true);
-  }
-
-  get state(): string | undefined {
-    if (this.instance.state === 'enter') {
-      switch (this.placement) {
-        case 'topLeft':
-        case 'bottomLeft':
-          return 'enterLeft';
-        case 'topRight':
-        case 'bottomRight':
-          return 'enterRight';
-        case 'top':
-          return 'enterTop';
-        case 'bottom':
-          return 'enterBottom';
-        default:
-          return 'enterRight';
-      }
-    } else {
-      return this.instance.state;
-    }
   }
 }
