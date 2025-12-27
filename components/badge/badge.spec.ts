@@ -7,9 +7,8 @@ import { BidiModule, Direction } from '@angular/cdk/bidi';
 import { Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
-import { TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
+import { TriNoAnimationDirective, provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { NgStyleInterface, TriSizeDSType } from 'ng-zorro-antd/core/types';
 
 import { TriBadgeComponent } from './badge.component';
@@ -18,11 +17,11 @@ import { badgePresetColors } from './preset-colors';
 import { TriRibbonComponent } from './ribbon.component';
 import { TriBadgeStatusType } from './types';
 
-describe('nz-badge', () => {
+describe('badge', () => {
   beforeEach(() => {
     // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideAnimationsAsync(), provideZoneChangeDetection()]
+      providers: [provideNzNoAnimation(), provideZoneChangeDetection()]
     });
   });
 

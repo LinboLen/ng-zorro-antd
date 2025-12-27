@@ -7,6 +7,7 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  inject,
   Input,
   numberAttribute,
   OnChanges,
@@ -16,7 +17,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { zoomBadgeMotion, TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { NgStyleInterface, TriSafeAny, TriSizeDSType } from 'ng-zorro-antd/core/types';
 
 @Component({
@@ -24,13 +25,12 @@ import { NgStyleInterface, TriSafeAny, TriSizeDSType } from 'ng-zorro-antd/core/
   exportAs: 'triBadgeSup',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [zoomBadgeMotion],
   imports: [TriNoAnimationDirective],
   template: `
     @if (count <= overflowCount) {
       @for (n of maxNumberArray; track n; let i = $index) {
         <span
-          [noAnimation]="noAnimation"
+          [noAnimation]="!!noAnimation?.nzNoAnimation?.()"
           class="tri-scroll-number-only"
           [style.transform]="'translateY(' + -countArray[i] * 100 + '%)'"
         >
@@ -50,8 +50,6 @@ import { NgStyleInterface, TriSafeAny, TriSizeDSType } from 'ng-zorro-antd/core/
   host: {
     class: 'tri-scroll-number',
     '[class]': `isPresetColor ? ('ant-badge-status-' + nzColor) : ''`,
-    '[@.disabled]': `disableAnimation`,
-    '[@zoomBadgeMotion]': '',
     '[attr.title]': `nzTitle === null ? '' : nzTitle || nzCount`,
     '[style]': `nzStyle`,
     '[style.right.px]': `nzOffset && nzOffset[0] ? -nzOffset[0] : null`,
@@ -64,14 +62,14 @@ import { NgStyleInterface, TriSafeAny, TriSizeDSType } from 'ng-zorro-antd/core/
   }
 })
 export class TriBadgeSupComponent implements OnInit, OnChanges {
+  protected readonly noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
+
   @Input() offset?: [number, number];
   @Input() title?: string | null;
   @Input() style: NgStyleInterface | null = null;
   @Input() dot = false;
   @Input({ transform: numberAttribute }) overflowCount = 99;
-  @Input() disableAnimation = false;
   @Input() count?: number | TemplateRef<TriSafeAny>;
-  @Input() noAnimation = false;
   @Input() size: TriSizeDSType = 'default';
   @Input({ transform: booleanAttribute }) isPresetColor = false;
   @Input() color?: string;
@@ -79,9 +77,9 @@ export class TriBadgeSupComponent implements OnInit, OnChanges {
   maxNumberArray: string[] = [];
   countArray: number[] = [];
   _count: number = 0;
-  countSingleArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  protected readonly countSingleArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-  generateMaxNumberArray(): void {
+  private generateMaxNumberArray(): void {
     this.maxNumberArray = this.overflowCount
       .toString()
       .split('')

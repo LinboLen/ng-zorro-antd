@@ -3,14 +3,13 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import {
   CdkConnectedOverlay,
   ConnectedOverlayPositionChange,
   ConnectionPositionPair,
-  HorizontalConnectionPos,
-  VerticalConnectionPos
+  OriginConnectionPosition
 } from '@angular/cdk/overlay';
 import { Platform } from '@angular/cdk/platform';
 import { NgTemplateOutlet } from '@angular/common';
@@ -27,6 +26,7 @@ import {
   EventEmitter,
   forwardRef,
   inject,
+  input,
   Input,
   OnChanges,
   OnInit,
@@ -46,7 +46,7 @@ import { of } from 'rxjs';
 import { distinctUntilChanged, map, withLatestFrom } from 'rxjs/operators';
 
 import { TriResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
-import { slideMotion, TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
+import { slideAnimationEnter, slideAnimationLeave } from 'ng-zorro-antd/core/animation';
 import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
 import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
@@ -64,7 +64,13 @@ import {
   OnChangeType,
   OnTouchedType
 } from 'ng-zorro-antd/core/types';
-import { fromEventOutsideAngular, getStatusClassNames, toBoolean, valueFunctionProp } from 'ng-zorro-antd/core/util';
+import {
+  fromEventOutsideAngular,
+  generateClassName,
+  getStatusClassNames,
+  toBoolean,
+  valueFunctionProp
+} from 'ng-zorro-antd/core/util';
 import {
   DateHelperService,
   TriDatePickerI18nInterface,
@@ -102,7 +108,7 @@ export type TriPlacement = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight'
   selector: 'tri-date-picker,tri-week-picker,tri-month-picker,tri-quarter-picker,tri-year-picker,tri-range-picker',
   exportAs: 'triDatePicker',
   template: `
-    @if (!inline) {
+    @if (!inline()) {
       @if (!isRange) {
         <div class="{{ prefixCls }}-input">
           <input
@@ -185,20 +191,17 @@ export type TriPlacement = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight'
 
     <ng-template #inlineMode>
       <div
-        class="{{ prefixCls }}-dropdown {{ dropdownClassName }}"
-        [class.tri-picker-dropdown-rtl]="dir === 'rtl'"
-        [class.tri-picker-dropdown-placement-bottomLeft]="currentPositionY === 'bottom' && currentPositionX === 'start'"
-        [class.tri-picker-dropdown-placement-topLeft]="currentPositionY === 'top' && currentPositionX === 'start'"
-        [class.tri-picker-dropdown-placement-bottomRight]="currentPositionY === 'bottom' && currentPositionX === 'end'"
-        [class.tri-picker-dropdown-placement-topRight]="currentPositionY === 'top' && currentPositionX === 'end'"
-        [class.tri-picker-dropdown-range]="isRange"
+        [class]="dropdownClass()"
+        [class.tri-picker-dropdown-range]="!inline() && isRange"
         [class.tri-picker-active-left]="datePickerService.activeInput === 'left'"
         [class.tri-picker-active-right]="datePickerService.activeInput === 'right'"
         [style]="popupStyle"
+        [animate.enter]="$any(!inline() && datepickerAnimationEnter())"
+        [animate.leave]="$any(!inline() && datepickerAnimationLeave())"
       >
         <date-range-popup
           [isRange]="isRange"
-          [inline]="inline"
+          [inline]="inline()"
           [defaultPickerValue]="defaultPickerValue"
           [showWeek]="showWeekNumber || mode === 'week'"
           [panelMode]="panelMode"
@@ -213,7 +216,7 @@ export type TriPlacement = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight'
           [disabledTime]="disabledTime"
           [extraFooter]="extraFooter"
           [ranges]="ranges"
-          [dir]="dir"
+          [dir]="dir()"
           [format]="format"
           (resultOk)="onResultOk()"
         />
@@ -224,23 +227,16 @@ export type TriPlacement = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight'
     <ng-template
       cdkConnectedOverlay
       connectedOverlay
+      cdkConnectedOverlayTransformOriginOn=".{{ prefixCls }}-dropdown"
       [cdkConnectedOverlayHasBackdrop]="backdrop"
       [cdkConnectedOverlayOrigin]="origin"
       [cdkConnectedOverlayOpen]="realOpenState"
       [cdkConnectedOverlayPositions]="overlayPositions"
-      [cdkConnectedOverlayTransformOriginOn]="'.ant-picker-wrapper'"
       (positionChange)="onPositionChange($event)"
       (detach)="close()"
       (overlayKeydown)="onOverlayKeydown($event)"
     >
-      <div
-        class="tri-picker-wrapper"
-        [noAnimation]="!!noAnimation?.nzNoAnimation?.()"
-        [@slideMotion]="'enter'"
-        [style.position]="'relative'"
-      >
-        <ng-container *ngTemplateOutlet="inlineMode"></ng-container>
-      </div>
+      <ng-container *ngTemplateOutlet="inlineMode"></ng-container>
     </ng-template>
   `,
   host: {
@@ -249,11 +245,11 @@ export type TriPlacement = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight'
     '[class.tri-picker-large]': `finalSize() === 'large'`,
     '[class.tri-picker-small]': `finalSize() === 'small'`,
     '[class.tri-picker-disabled]': `disabled`,
-    '[class.tri-picker-rtl]': `dir === 'rtl'`,
+    '[class.tri-picker-rtl]': `dir() === 'rtl'`,
     '[class.tri-picker-borderless]': `variant === 'borderless'`,
     '[class.tri-picker-filled]': `variant === 'filled'`,
     '[class.tri-picker-underlined]': `variant === 'underlined'`,
-    '[class.tri-picker-inline]': `inline`,
+    '[class.tri-picker-inline]': `inline()`,
     '(click)': 'onClickInputBox($event)'
   },
   hostDirectives: [TriSpaceCompactItemDirective],
@@ -266,7 +262,6 @@ export type TriPlacement = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight'
       useExisting: forwardRef(() => TriDatePickerComponent)
     }
   ],
-  animations: [slideMotion],
   imports: [
     FormsModule,
     NgTemplateOutlet,
@@ -275,8 +270,7 @@ export type TriPlacement = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight'
     TriFormItemFeedbackIconComponent,
     DateRangePopupComponent,
     CdkConnectedOverlay,
-    TriOverlayModule,
-    TriNoAnimationDirective
+    TriOverlayModule
   ]
 })
 export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit, ControlValueAccessor {
@@ -289,8 +283,8 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
   private dateHelper = inject(DateHelperService);
   private resizeObserver = inject(TriResizeObserver);
   private platform = inject(Platform);
-  private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
+  protected readonly dir = inject(Directionality).valueSignal;
 
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
@@ -299,7 +293,6 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
 
   isRange: boolean = false; // Indicate whether the value is a range value
   extraFooter?: TemplateRef<TriSafeAny> | string;
-  dir: Direction = 'ltr';
 
   // status
   statusCls: NgClassInterface = {};
@@ -312,17 +305,17 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
   #showTime: SupportTimeOptions | boolean = false;
   private isNzDisableFirstChange: boolean = true;
   // --- Common API
+  readonly inline = input(false, { transform: booleanAttribute });
   @Input({ transform: booleanAttribute }) allowClear: boolean = true;
   @Input({ transform: booleanAttribute }) autoFocus: boolean = false;
   @Input({ transform: booleanAttribute }) disabled: boolean = false;
   @Input({ transform: booleanAttribute }) inputReadOnly: boolean = false;
-  @Input({ transform: booleanAttribute }) inline: boolean = false;
   @Input({ transform: booleanAttribute }) open?: boolean;
   @Input() disabledDate?: (d: Date) => boolean;
   @Input() locale!: TriDatePickerI18nInterface;
   @Input() placeHolder: string | string[] = '';
   @Input() popupStyle: object = POPUP_STYLE_PATCH;
-  @Input() dropdownClassName?: string;
+  readonly dropdownClassName = input<string>();
   @Input() size: TriDatePickerSizeType = 'default';
   @Input() status: TriStatus = '';
   @Input() format!: string;
@@ -375,8 +368,40 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
   activeBarStyle: object = {};
   overlayOpen: boolean = false; // Available when "nzOpen" = undefined
   overlayPositions: ConnectionPositionPair[] = [...DEFAULT_DATE_PICKER_POSITIONS];
-  currentPositionX: HorizontalConnectionPos = 'start';
-  currentPositionY: VerticalConnectionPos = 'bottom';
+
+  private readonly currentPosition = signal<OriginConnectionPosition>({ originX: 'start', originY: 'bottom' });
+
+  protected readonly datepickerAnimationEnter = slideAnimationEnter();
+  protected readonly datepickerAnimationLeave = slideAnimationLeave();
+
+  protected readonly dropdownClass = computed(() => {
+    const cls: string[] = [];
+    if (!this.inline()) {
+      cls.push(this.generateClass('dropdown'));
+
+      const customCls = this.dropdownClassName();
+      if (customCls) {
+        cls.push(customCls);
+      }
+
+      const { originX, originY } = this.currentPosition();
+
+      if (originX === 'start' && originY === 'bottom') {
+        cls.push(this.generateClass('dropdown-placement-bottomLeft'));
+      } else if (originX === 'start' && originY === 'top') {
+        cls.push(this.generateClass('dropdown-placement-topLeft'));
+      } else if (originX === 'end' && originY === 'bottom') {
+        cls.push(this.generateClass('dropdown-placement-bottomRight'));
+      } else if (originX === 'end' && originY === 'top') {
+        cls.push(this.generateClass('dropdown-placement-topRight'));
+      }
+
+      if (this.dir() === 'rtl') {
+        cls.push(this.generateClass('dropdown-rtl'));
+      }
+    }
+    return cls;
+  });
 
   get realOpenState(): boolean {
     // The value that really decide the open state of overlay
@@ -438,7 +463,7 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
         ? 0
         : this.inputWidth + this.separatorElement?.nativeElement.offsetWidth || 0;
 
-    if (this.dir === 'rtl') {
+    if (this.dir() === 'rtl') {
       this.activeBarStyle = { ...baseStyle, right: `${this.datePickerService.arrowLeft}px` };
     } else {
       this.activeBarStyle = { ...baseStyle, left: `${this.datePickerService.arrowLeft}px` };
@@ -448,7 +473,7 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
   }
 
   getInput(partType?: RangePartType): HTMLInputElement | undefined {
-    if (this.inline) {
+    if (this.inline()) {
       return undefined;
     }
     return this.isRange
@@ -485,7 +510,7 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
 
   // Show overlay content
   _open(): void {
-    if (this.inline) {
+    if (this.inline()) {
       return;
     }
     if (!this.realOpenState && !this.disabled) {
@@ -498,7 +523,7 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
   }
 
   close(): void {
-    if (this.inline) {
+    if (this.inline()) {
       return;
     }
     if (this.realOpenState) {
@@ -545,14 +570,8 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
     }
   }
 
-  // NOTE: A issue here, the first time position change, the animation will not be triggered.
-  // Because the overlay's "positionChange" event is emitted after the content's full shown up.
-  // All other components like "nz-dropdown" which depends on overlay also has the same issue.
-  // See: https://github.com/NG-ZORRO/ng-zorro-antd/issues/1429
   onPositionChange(position: ConnectedOverlayPositionChange): void {
-    this.currentPositionX = position.connectionPair.originX;
-    this.currentPositionY = position.connectionPair.originY;
-    this.cdr.detectChanges(); // Take side effects to position styles
+    this.currentPosition.set(position.connectionPair);
   }
 
   onClickClear(event: MouseEvent): void {
@@ -633,7 +652,6 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
     return this.open !== undefined;
   }
 
-  noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
   private formStatusService = inject(TriFormStatusService, { optional: true });
   private formNoStatusService = inject(TriFormNoStatusService, { optional: true });
 
@@ -710,11 +728,6 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
       this.close();
     });
 
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-    this.dir = this.directionality.value;
     this.inputValue = this.isRange ? ['', ''] : '';
     this.setModeAndFormat();
 
@@ -943,7 +956,10 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
   private setPlacement(placement: TriPlacement): void {
     const position: ConnectionPositionPair = DATE_PICKER_POSITION_MAP[placement];
     this.overlayPositions = [position, ...DEFAULT_DATE_PICKER_POSITIONS];
-    this.currentPositionX = position.originX;
-    this.currentPositionY = position.originY;
+    this.currentPosition.set(position);
+  }
+
+  private generateClass(suffix: string): string {
+    return generateClassName(this.prefixCls, suffix);
   }
 }

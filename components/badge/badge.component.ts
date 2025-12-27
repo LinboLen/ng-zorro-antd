@@ -16,8 +16,8 @@ import {
   inject
 } from '@angular/core';
 
-import { zoomBadgeMotion, TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
-import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
+import { withAnimationCheck } from 'ng-zorro-antd/core/animation';
+import { TriConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { NgStyleInterface, TriSafeAny, TriSizeDSType } from 'ng-zorro-antd/core/types';
 
@@ -32,7 +32,6 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'badge';
   exportAs: 'triBadge',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [zoomBadgeMotion],
   imports: [TriBadgeSupComponent, TriOutletModule],
   template: `
     @if ((status || color) && !showSup && !count) {
@@ -58,8 +57,8 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'badge';
           [dot]="dot"
           [count]="count"
           [overflowCount]="overflowCount"
-          [disableAnimation]="!!(standalone || status || presetColor || noAnimation?.nzNoAnimation?.())"
-          [noAnimation]="!!noAnimation?.nzNoAnimation?.()"
+          [animate.enter]="supAnimationEnter()"
+          [animate.leave]="supAnimationLeave()"
         />
       }
     </ng-container>
@@ -72,13 +71,13 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'badge';
   }
 })
 export class TriBadgeComponent implements OnChanges {
-  public readonly configService = inject(TriConfigService);
   protected readonly dir = inject(Directionality).valueSignal;
-  protected readonly noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
 
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
-  showSup = false;
+  protected showSup = false;
+  protected readonly supAnimationEnter = withAnimationCheck(() => 'ant-badge-zoom-enter');
+  protected readonly supAnimationLeave = withAnimationCheck(() => 'ant-badge-zoom-leave');
   presetColor: string | null = null;
 
   @Input({ transform: booleanAttribute }) showZero = false;
