@@ -235,46 +235,6 @@ export class TriSegmentedComponent implements OnChanges, ControlValueAccessor {
     }
   }
 
-  private onOffset(offset: number): void {
-    const items = this.renderedItemCmps();
-    const total = items.length;
-    const originIndex = items.findIndex(item => item.value() === this.value);
-    let nextIndex = (originIndex + offset + total) % total;
-
-    // find out the next non-disabled item
-    while (items[nextIndex].disabled()) {
-      nextIndex = (nextIndex + Math.sign(offset) + total) % total;
-      // avoid circular loop
-      if (nextIndex === originIndex) {
-        break;
-      }
-    }
-
-    const nextOption = items[nextIndex];
-    if (nextOption) {
-      this.service.selected$.next(nextOption.value());
-      this.service.change$.next(nextOption.value());
-    }
-  }
-
-  // change selected item by direction keyboard interaction
-  private onKeyDown(event: KeyboardEvent): void {
-    switch (event.keyCode) {
-      case UP_ARROW:
-        this.onOffset(-1);
-        break;
-      case LEFT_ARROW:
-        this.onOffset(this.dir() === 'rtl' ? 1 : -1);
-        break;
-      case DOWN_ARROW:
-        this.onOffset(1);
-        break;
-      case RIGHT_ARROW:
-        this.onOffset(this.dir() === 'rtl' ? -1 : 1);
-        break;
-    }
-  }
-
   writeValue(value: number | string): void {
     this.service.selected$.next(value);
   }
