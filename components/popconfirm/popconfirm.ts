@@ -29,7 +29,7 @@ import { filter, Observable, Subject } from 'rxjs';
 import { finalize, first } from 'rxjs/operators';
 
 import { TriButtonModule, TriButtonType } from 'ng-zorro-antd/button';
-import { zoomBigMotion, TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { TriConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriOverlayModule } from 'ng-zorro-antd/core/overlay';
@@ -149,7 +149,6 @@ export class TriPopconfirmDirective extends TriTooltipBaseDirective {
 @Component({
   selector: 'tri-popconfirm',
   exportAs: 'triPopconfirmComponent',
-  animations: [zoomBigMotion],
   template: `
     <ng-template
       #overlay="cdkConnectedOverlay"
@@ -170,11 +169,11 @@ export class TriPopconfirmDirective extends TriTooltipBaseDirective {
         [cdkTrapFocusAutoCapture]="autoFocus !== null"
         class="tri-popover"
         [class]="_classMap"
-        [class.tri-popover-rtl]="dir === 'rtl'"
+        [class.tri-popover-rtl]="dir() === 'rtl'"
         [style]="overlayStyle"
-        [@.disabled]="!!noAnimation?.nzNoAnimation?.()"
-        [noAnimation]="noAnimation?.nzNoAnimation?.()"
-        [@zoomBigMotion]="'active'"
+        [noAnimation]="!!noAnimation?.nzNoAnimation?.()"
+        [animate.enter]="zoomAnimationEnter()"
+        [animate.leave]="zoomAnimationLeave()"
       >
         @if (popconfirmShowArrow) {
           <div class="tri-popover-arrow"></div>
@@ -246,6 +245,7 @@ export class TriPopconfirmDirective extends TriTooltipBaseDirective {
   encapsulation: ViewEncapsulation.None
 })
 export class TriPopconfirmComponent extends TriTooltipComponent {
+  protected override _animationPrefix = 'ant-zoom-big';
   @ViewChildren('okBtn', { read: ElementRef }) okBtn!: QueryList<ElementRef>;
   @ViewChildren('cancelBtn', { read: ElementRef }) cancelBtn!: QueryList<ElementRef>;
 

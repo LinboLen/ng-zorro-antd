@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { CdkConnectedOverlay, ConnectedOverlayPositionChange, ConnectionPositionPair } from '@angular/cdk/overlay';
 import { _getEventTarget } from '@angular/cdk/platform';
 import { isPlatformBrowser } from '@angular/common';
@@ -15,7 +15,6 @@ import {
   ElementRef,
   EventEmitter,
   OnChanges,
-  OnInit,
   PLATFORM_ID,
   Renderer2,
   SimpleChanges,
@@ -199,7 +198,7 @@ export abstract class TriTooltipBaseDirective implements AfterViewInit, OnChange
 
     const visibleChange$ = this.component.visibleChange.pipe(distinctUntilChanged());
 
-    visibleChange$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((visible: boolean) => {
+    visibleChange$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(visible => {
       this.internalVisible = visible;
       this.visibleChange.emit(visible);
     });
@@ -209,7 +208,7 @@ export abstract class TriTooltipBaseDirective implements AfterViewInit, OnChange
     // To avoid this, after placing the `arrow` in the correct position, we should `re-calculate` the position of the `overlay`.
     visibleChange$
       .pipe(
-        filter((visible: boolean) => visible),
+        filter(Boolean),
         delay(0, asapScheduler),
         filter(() => Boolean(this.component?.overlay?.overlayRef)),
         takeUntilDestroyed(this.destroyRef)
@@ -342,14 +341,14 @@ export abstract class TriTooltipBaseDirective implements AfterViewInit, OnChange
 }
 
 @Directive()
-export abstract class TriTooltipBaseComponent implements OnInit {
+export abstract class TriTooltipBaseComponent {
   @ViewChild('overlay', { static: false }) overlay!: CdkConnectedOverlay;
 
-  noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
-  protected directionality = inject(Directionality);
-  protected cdr = inject(ChangeDetectorRef);
-  protected elementRef = inject(ElementRef);
-  protected destroyRef = inject(DestroyRef);
+  protected readonly noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
+  protected readonly dir = inject(Directionality).valueSignal;
+  protected readonly cdr = inject(ChangeDetectorRef);
+  protected readonly elementRef = inject(ElementRef);
+  protected readonly destroyRef = inject(DestroyRef);
 
   title: TriTSType | null = null;
   content: TriTSType | null = null;
@@ -400,8 +399,6 @@ export abstract class TriTooltipBaseComponent implements OnInit {
 
   origin!: ElementRef<TriSafeAny>;
 
-  public dir: Direction = 'ltr';
-
   _classMap: NgClassInterface = {};
 
   _prefix = 'ant-tooltip';
@@ -412,15 +409,6 @@ export abstract class TriTooltipBaseComponent implements OnInit {
     this.destroyRef.onDestroy(() => {
       this.visibleChange.complete();
     });
-  }
-
-  ngOnInit(): void {
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-
-    this.dir = this.directionality.value;
   }
 
   show(): void {

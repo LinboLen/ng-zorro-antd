@@ -8,7 +8,7 @@ import { Component, ElementRef, provideZoneChangeDetection, ViewChild } from '@a
 import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { TriElementPatchModule } from 'ng-zorro-antd/core/element-patch';
+import { TriElementPatchDirective } from 'ng-zorro-antd/core/element-patch';
 import { dispatchMouseEvent } from 'ng-zorro-antd/core/testing';
 
 import { TriTooltipBaseDirective, TriTooltipTrigger } from './base';
@@ -454,7 +454,7 @@ export class TriTooltipTestComponent {
 }
 
 @Component({
-  imports: [TriElementPatchModule, TriTooltipModule],
+  imports: [TriElementPatchDirective, TriTooltipModule],
   template: `
     <button tri-element #button="nzElement">Action</button>
     <a tri-tooltip tooltipTitle="This action could not be revoked!" [tooltipOrigin]="button.elementRef">Notice</a>

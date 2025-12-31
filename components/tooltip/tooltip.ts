@@ -16,7 +16,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { zoomBigMotion, TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
+import { TriNoAnimationDirective, withAnimationCheck } from 'ng-zorro-antd/core/animation';
 import { isPresetColor, TriPresetColor } from 'ng-zorro-antd/core/color';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriOverlayModule } from 'ng-zorro-antd/core/overlay';
@@ -79,8 +79,6 @@ export class TriTooltipDirective extends TriTooltipBaseDirective {
   exportAs: 'triTooltipComponent',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  // todo: currently the animation will cause small shake for the arrow (< 1px) when the tooltip is shown
-  animations: [zoomBigMotion],
   template: `
     <ng-template
       #overlay="cdkConnectedOverlay"
@@ -97,12 +95,12 @@ export class TriTooltipDirective extends TriTooltipBaseDirective {
     >
       <div
         class="tri-tooltip"
-        [class.tri-tooltip-rtl]="dir === 'rtl'"
+        [class.tri-tooltip-rtl]="dir() === 'rtl'"
         [class]="_classMap"
         [style]="overlayStyle"
-        [@.disabled]="!!noAnimation?.nzNoAnimation?.()"
-        [noAnimation]="noAnimation?.nzNoAnimation?.()"
-        [@zoomBigMotion]="'active'"
+        [noAnimation]="!!noAnimation?.nzNoAnimation?.()"
+        [animate.enter]="zoomAnimationEnter()"
+        [animate.leave]="zoomAnimationLeave()"
       >
         <div class="tri-tooltip-arrow" [style]="_arrowStyleMap"></div>
         <div class="tri-tooltip-content">
@@ -116,13 +114,20 @@ export class TriTooltipDirective extends TriTooltipBaseDirective {
   imports: [OverlayModule, TriNoAnimationDirective, TriOutletModule, TriOverlayModule]
 })
 export class TriTooltipComponent extends TriTooltipBaseComponent {
+  protected _animationPrefix = 'ant-zoom-big-fast';
   override title: TriTSType | null = null;
   titleContext: object | null = null;
-
   color?: string | TriPresetColor;
 
   protected _arrowStyleMap: NgStyleInterface = {};
   protected _contentStyleMap: NgStyleInterface = {};
+
+  protected readonly zoomAnimationEnter = withAnimationCheck(
+    () => `${this._animationPrefix}-enter ${this._animationPrefix}-enter-active`
+  );
+  protected readonly zoomAnimationLeave = withAnimationCheck(
+    () => `${this._animationPrefix}-leave ${this._animationPrefix}-leave-active`
+  );
 
   protected isEmpty(): boolean {
     return isTooltipEmpty(this.title);

@@ -7,6 +7,9 @@ import { NgModule } from '@angular/core';
 
 import { TriElementPatchDirective } from './element-patch.directive';
 
+/**
+ * @deprecated Will be removed in v23, please use {@link TriElementPatchDirective} instead.
+ */
 @NgModule({
   imports: [TriElementPatchDirective],
   exports: [TriElementPatchDirective]

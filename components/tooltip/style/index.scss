@@ -1,5 +1,6 @@
 @import "../../style/themes/index";
 @import "../../style/mixins/index";
+@import "../../style/core/motion/zoom";
 $tooltip-prefix-cls: "#{$ant-prefix}-tooltip";
 // Base class
 .#{$tooltip-prefix-cls} {
@@ -49,4 +50,6 @@ $tooltip-prefix-cls: "#{$ant-prefix}-tooltip";
   }
 }
 @include generator-tooltip-preset-color;
+// Animations
+@include zoom-motion("zoom-big-fast", antZoomBig, $animation-duration-fast);
 @import "./rtl";

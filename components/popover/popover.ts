@@ -16,7 +16,7 @@ import {
   booleanAttribute
 } from '@angular/core';
 
-import { zoomBigMotion, TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
+import { TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { TriConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriOverlayModule } from 'ng-zorro-antd/core/overlay';
@@ -81,7 +81,6 @@ export class TriPopoverDirective extends TriTooltipBaseDirective {
 @Component({
   selector: 'tri-popover',
   exportAs: 'triPopoverComponent',
-  animations: [zoomBigMotion],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
@@ -101,12 +100,12 @@ export class TriPopoverDirective extends TriTooltipBaseDirective {
     >
       <div
         class="tri-popover"
-        [class.tri-popover-rtl]="dir === 'rtl'"
+        [class.tri-popover-rtl]="dir() === 'rtl'"
         [class]="_classMap"
         [style]="overlayStyle"
-        [@.disabled]="!!noAnimation?.nzNoAnimation?.()"
-        [noAnimation]="noAnimation?.nzNoAnimation?.()"
-        [@zoomBigMotion]="'active'"
+        [noAnimation]="!!noAnimation?.nzNoAnimation?.()"
+        [animate.enter]="zoomAnimationEnter()"
+        [animate.leave]="zoomAnimationLeave()"
       >
         <div class="tri-popover-arrow"></div>
         <div class="tri-popover-content">
@@ -133,6 +132,7 @@ export class TriPopoverDirective extends TriTooltipBaseDirective {
   imports: [OverlayModule, TriOverlayModule, TriNoAnimationDirective, TriOutletModule]
 })
 export class TriPopoverComponent extends TriTooltipComponent {
+  override _animationPrefix = 'ant-zoom-big';
   override _prefix = 'ant-popover';
   contentContext: object | null = null;
 
