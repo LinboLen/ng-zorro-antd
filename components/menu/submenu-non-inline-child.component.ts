@@ -3,113 +3,105 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
-import { NgTemplateOutlet } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DestroyRef,
-  EventEmitter,
-  inject,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-  TemplateRef,
-  ViewEncapsulation
-} from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Directionality } from '@angular/cdk/bidi';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output, ViewEncapsulation } from '@angular/core';
 
-import { slideMotion, zoomBigMotion } from 'ng-zorro-antd/core/animation';
-import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { SLIDE_ANIMATION_CLASS, withAnimationCheck } from 'ng-zorro-antd/core/animation';
+import { generateClassName, getClassListFromValue } from 'ng-zorro-antd/core/util';
 
-import { TriMenuModeType, TriMenuThemeType, TriSubmenuTrigger } from './menu.types';
+import { TriIsMenuInsideDropdownToken } from './menu.token';
+import { TriMenuThemeType, TriSubmenuTrigger } from './menu.types';
+
+const ANT_PREFIX = 'ant';
+const MENU_PREFIX = `${ANT_PREFIX}-menu`;
+const SUBMENU_PREFIX = `${MENU_PREFIX}-submenu`;
+const DROPDOWN_PREFIX = `${ANT_PREFIX}-dropdown`;
+const ANIMATION_PREFIX = `${ANT_PREFIX}-zoom-big`;
+
+const ANIMATION_CLASS = {
+  vertical: {
+    enter: `${ANIMATION_PREFIX}-enter ${ANIMATION_PREFIX}-enter-active`,
+    leave: `${ANIMATION_PREFIX}-leave ${ANIMATION_PREFIX}-leave-active`
+  },
+  horizontal: SLIDE_ANIMATION_CLASS
+};
 
 @Component({
   selector: '[tri-submenu-none-inline-child]',
   exportAs: 'triSubmenuNoneInlineChild',
   encapsulation: ViewEncapsulation.None,
-  animations: [zoomBigMotion, slideMotion],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div
-      [class.tri-dropdown-menu]="isMenuInsideDropdown"
-      [class.tri-menu]="!isMenuInsideDropdown"
-      [class.tri-dropdown-menu-vertical]="isMenuInsideDropdown"
-      [class.tri-menu-vertical]="!isMenuInsideDropdown"
-      [class.tri-dropdown-menu-sub]="isMenuInsideDropdown"
-      [class.tri-menu-sub]="!isMenuInsideDropdown"
-      [class.tri-menu-rtl]="dir === 'rtl'"
-      [class]="menuClass"
-    >
-      <ng-template [ngTemplateOutlet]="templateOutlet"></ng-template>
+    <div [class]="mergedMenuClass()">
+      <ng-content />
     </div>
   `,
   host: {
-    class: 'tri-menu-submenu ant-menu-submenu-popup',
-    '[class.tri-menu-light]': "theme === 'light'",
-    '[class.tri-menu-dark]': "theme === 'dark'",
-    '[class.tri-menu-submenu-placement-bottom]': "mode === 'horizontal'",
-    '[class.tri-menu-submenu-placement-right]': "mode === 'vertical' && position === 'right'",
-    '[class.tri-menu-submenu-placement-left]': "mode === 'vertical' && position === 'left'",
-    '[class.tri-menu-submenu-rtl]': 'dir ==="rtl"',
-    '[@slideMotion]': 'expandState',
-    '[@zoomBigMotion]': 'expandState',
+    '[class]': 'submenuClass()',
     '(mouseenter)': 'setMouseState(true)',
-    '(mouseleave)': 'setMouseState(false)'
-  },
-  imports: [NgTemplateOutlet]
+    '(mouseleave)': 'setMouseState(false)',
+    '[animate.enter]': `animationEnter()`,
+    '[animate.leave]': `animationLeave()`
+  }
 })
-export class TriSubmenuNoneInlineChildComponent implements OnInit, OnChanges {
-  private readonly directionality = inject(Directionality);
-  private readonly destroyRef = inject(DestroyRef);
+export class TriSubmenuNoneInlineChildComponent {
+  protected readonly isMenuInsideDropdown = inject(TriIsMenuInsideDropdownToken);
+  protected readonly dir = inject(Directionality).valueSignal;
 
-  @Input() menuClass: string = '';
-  @Input() theme: TriMenuThemeType = 'light';
-  @Input() templateOutlet: TemplateRef<TriSafeAny> | null = null;
-  @Input() isMenuInsideDropdown = false;
-  @Input() mode: TriMenuModeType = 'vertical';
-  @Input() triggerSubMenuAction: TriSubmenuTrigger = 'hover';
-  @Input() position = 'right';
-  @Input() disabled = false;
-  @Input() open = false;
-  @Output() readonly subMenuMouseState = new EventEmitter<boolean>();
+  readonly menuClass = input<string>('');
+  readonly theme = input<TriMenuThemeType>('light');
+  readonly mode = input<'vertical' | 'horizontal'>('vertical');
+  readonly position = input<'right' | 'left'>('right');
+  readonly open = input<boolean>(false);
+  readonly disabled = input<boolean>(false);
+  readonly triggerSubMenuAction = input<TriSubmenuTrigger>('hover');
+  readonly subMenuMouseState = output<boolean>();
 
-  expandState = 'collapsed';
-  dir: Direction = 'ltr';
+  protected readonly animationEnter = withAnimationCheck(() => ANIMATION_CLASS[this.mode()].enter);
+  protected readonly animationLeave = withAnimationCheck(() => ANIMATION_CLASS[this.mode()].leave);
 
-  setMouseState(state: boolean): void {
-    if (!this.disabled && this.triggerSubMenuAction === 'hover') {
-      this.subMenuMouseState.next(state);
+  protected readonly submenuClass = computed(() => {
+    const cls = [
+      SUBMENU_PREFIX,
+      generateClassName(SUBMENU_PREFIX, 'popup'),
+      generateClassName(MENU_PREFIX, this.theme() === 'dark' ? 'dark' : 'light')
+    ];
+
+    const mode = this.mode();
+    const position = this.position() === 'left' ? 'left' : 'right';
+    if (mode === 'horizontal') {
+      cls.push(generateClassName(SUBMENU_PREFIX, 'placement-bottom'));
+    } else if (mode === 'vertical') {
+      cls.push(generateClassName(SUBMENU_PREFIX, `placement-${position}`));
     }
-  }
 
-  calcMotionState(): void {
-    if (this.open) {
-      if (this.mode === 'horizontal') {
-        this.expandState = 'bottom';
-      } else if (this.mode === 'vertical') {
-        this.expandState = 'active';
-      }
+    if (this.dir() === 'rtl') {
+      cls.push(generateClassName(SUBMENU_PREFIX, 'rtl'));
+    }
+    return cls;
+  });
+
+  protected readonly mergedMenuClass = computed(() => {
+    const cls = getClassListFromValue(this.menuClass()) || [];
+    if (this.isMenuInsideDropdown) {
+      cls.push(
+        generateClassName(DROPDOWN_PREFIX, 'menu'),
+        generateClassName(DROPDOWN_PREFIX, 'menu-sub'),
+        generateClassName(DROPDOWN_PREFIX, 'menu-vertical')
+      );
     } else {
-      this.expandState = 'collapsed';
+      cls.push(MENU_PREFIX, generateClassName(MENU_PREFIX, 'sub'), generateClassName(MENU_PREFIX, 'vertical'));
     }
-  }
 
-  ngOnInit(): void {
-    this.calcMotionState();
+    if (this.dir() === 'rtl') {
+      cls.push(generateClassName(MENU_PREFIX, 'rtl'));
+    }
+    return cls;
+  });
 
-    this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-    });
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    const { mode, nzOpen } = changes;
-    if (mode || nzOpen) {
-      this.calcMotionState();
+  protected setMouseState(state: boolean): void {
+    if (!this.disabled() && this.triggerSubMenuAction() === 'hover') {
+      this.subMenuMouseState.emit(state);
     }
   }
 }

@@ -3,12 +3,13 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { Component, DebugElement, provideZoneChangeDetection, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
+import { provideMockDirectionality } from 'ng-zorro-antd/core/testing';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
@@ -21,7 +22,12 @@ describe('collapse', () => {
   beforeEach(() => {
     // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideNzIconsTesting(), provideNoopAnimations(), provideZoneChangeDetection()]
+      providers: [
+        provideNzIconsTesting(),
+        provideNzNoAnimation(),
+        provideZoneChangeDetection(),
+        provideMockDirectionality()
+      ]
     });
   });
 
@@ -275,14 +281,46 @@ describe('collapse', () => {
 
   describe('RTL', () => {
     it('should className correct on dir change', () => {
-      const fixture = TestBed.createComponent(TriTestCollapseRtlComponent);
-      const collapse = fixture.debugElement.query(By.directive(TriCollapseComponent));
-      fixture.detectChanges();
-      expect(collapse.nativeElement!.classList).toContain('ant-collapse-rtl');
+      const fixture = TestBed.createComponent(TriTestCollapseBasicComponent);
+      const directionality = TestBed.inject(Directionality);
 
-      fixture.componentInstance.direction = 'ltr';
+      const collapse = fixture.debugElement.query(By.directive(TriCollapseComponent));
+
       fixture.detectChanges();
       expect(collapse.nativeElement!.classList).not.toContain('ant-collapse-rtl');
+
+      directionality.valueSignal.set('rtl');
+      fixture.detectChanges();
+      expect(collapse.nativeElement!.classList).toContain('ant-collapse-rtl');
+    });
+  });
+
+  describe('collapse size', () => {
+    let fixture: ComponentFixture<TriTestCollapseSizeSpecComponent>;
+    let collapse: DebugElement;
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(TriTestCollapseSizeSpecComponent);
+      fixture.detectChanges();
+      collapse = fixture.debugElement.query(By.directive(TriCollapseComponent));
+    });
+
+    it('should apply correct host classes for nzSize', () => {
+      // default is middle: no small/large classes
+      expect(collapse.nativeElement!.classList).not.toContain('ant-collapse-small');
+      expect(collapse.nativeElement!.classList).not.toContain('ant-collapse-large');
+
+      // small
+      fixture.componentInstance.size = 'small';
+      fixture.detectChanges();
+      expect(collapse.nativeElement!.classList).toContain('ant-collapse-small');
+      expect(collapse.nativeElement!.classList).not.toContain('ant-collapse-large');
+
+      // large
+      fixture.componentInstance.size = 'large';
+      fixture.detectChanges();
+      expect(collapse.nativeElement!.classList).toContain('ant-collapse-large');
+      expect(collapse.nativeElement!.classList).not.toContain('ant-collapse-small');
     });
   });
 
@@ -407,16 +445,17 @@ export class TriTestCollapseCollapsibleComponent {
 }
 
 @Component({
-  imports: [BidiModule, TriTestCollapseBasicComponent],
+  imports: [TriCollapseModule],
   template: `
-    <div [dir]="direction">
-      <tri-test-basic-collapse></tri-test-basic-collapse>
-    </div>
+    <tri-collapse [size]="size">
+      <tri-collapse-panel header="header" active>
+        <p>content</p>
+      </tri-collapse-panel>
+    </tri-collapse>
   `
 })
-export class TriTestCollapseRtlComponent {
-  @ViewChild(Dir) dir!: Dir;
-  direction: Direction = 'rtl';
+export class TriTestCollapseSizeSpecComponent {
+  size: 'small' | 'middle' | 'large' = 'middle';
 }
 
 @Component({

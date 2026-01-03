@@ -3,13 +3,6 @@ import { Component } from '@angular/core';
 import { TriCollapseModule } from 'ng-zorro-antd/collapse';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
-interface Panel {
-  active: boolean;
-  disabled: boolean;
-  name: string;
-  icon?: string;
-}
-
 @Component({
   selector: 'tri-demo-collapse-custom',
   imports: [TriIconModule, TriCollapseModule],
@@ -20,21 +13,32 @@ interface Panel {
           #p
           [header]="panel.name"
           [active]="panel.active"
-          [style]="customStyle"
           [expandedIcon]="!$first ? panel.icon || expandedIcon : undefined"
         >
           <p>{{ panel.name }} content</p>
           <ng-template #expandedIcon let-active>
             {{ active }}
-            <tri-icon type="caret-right" class="tri-collapse-arrow" [rotate]="active ? 90 : -90" />
+            <tri-icon type="caret-right" class="tri-collapse-arrow" [rotate]="p.active() ? 90 : -90" />
           </ng-template>
         </tri-collapse-panel>
       }
     </tri-collapse>
+  `,
+  styles: `
+    nz-collapse {
+      background: transparent;
+    }
+
+    nz-collapse-panel {
+      margin-bottom: 24px;
+      background: rgba(0, 0, 0, 0.02);
+      border-radius: 8px !important;
+      border: none !important;
+    }
   `
 })
 export class TriDemoCollapseCustomComponent {
-  readonly panels: Panel[] = [
+  readonly panels = [
     {
       active: true,
       disabled: false,
@@ -52,10 +56,4 @@ export class TriDemoCollapseCustomComponent {
       name: 'This is panel header 3'
     }
   ];
-  readonly customStyle = {
-    background: '#f7f7f7',
-    'border-radius': '4px',
-    'margin-bottom': '24px',
-    border: '0px'
-  };
 }

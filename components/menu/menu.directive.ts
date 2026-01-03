@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import {
   AfterContentInit,
   ChangeDetectorRef,
@@ -76,18 +76,18 @@ function MenuDropdownTokenFactory(): boolean {
     '[class.tri-menu-horizontal]': `!isMenuInsideDropdown && actualMode === 'horizontal'`,
     '[class.tri-menu-inline]': `!isMenuInsideDropdown && actualMode === 'inline'`,
     '[class.tri-menu-inline-collapsed]': `!isMenuInsideDropdown && inlineCollapsed`,
-    '[class.tri-menu-rtl]': `dir === 'rtl'`
+    '[class.tri-menu-rtl]': `dir() === 'rtl'`
   }
 })
 export class TriMenuDirective implements AfterContentInit, OnInit, OnChanges {
   private readonly menuService = inject(MenuService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly cdr = inject(ChangeDetectorRef);
-  private readonly directionality = inject(Directionality);
+  protected readonly dir = inject(Directionality).valueSignal;
+  protected readonly isMenuInsideDropdown = inject(TriIsMenuInsideDropdownToken);
 
   @ContentChildren(TriMenuItemComponent, { descendants: true })
   listOfNzMenuItemDirective!: QueryList<TriMenuItemComponent>;
-  isMenuInsideDropdown = inject(TriIsMenuInsideDropdownToken);
   @ContentChildren(TriSubMenuComponent, { descendants: true }) listOfNzSubMenuComponent!: QueryList<TriSubMenuComponent>;
   @Input() inlineIndent = 24;
   @Input() theme: TriMenuThemeType = 'light';
@@ -95,8 +95,8 @@ export class TriMenuDirective implements AfterContentInit, OnInit, OnChanges {
   @Input({ transform: booleanAttribute }) inlineCollapsed = false;
   @Input({ transform: booleanAttribute }) selectable = !this.isMenuInsideDropdown;
   @Output() readonly click = new EventEmitter<TriMenuItemComponent>();
+
   actualMode: TriMenuModeType = 'vertical';
-  dir: Direction = 'ltr';
   private inlineCollapsed$ = new BehaviorSubject<boolean>(this.inlineCollapsed);
   private mode$ = new BehaviorSubject<TriMenuModeType>(this.mode);
   private listOfOpenedNzSubMenuComponent: TriSubMenuComponent[] = [];
@@ -131,13 +131,6 @@ export class TriMenuDirective implements AfterContentInit, OnInit, OnChanges {
       if (this.selectable && !menu.nzMatchRouter) {
         this.listOfNzMenuItemDirective.forEach(item => item.setSelectedState(item === menu));
       }
-    });
-
-    this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.menuService.setMode(this.actualMode);
-      this.cdr.markForCheck();
     });
   }
 

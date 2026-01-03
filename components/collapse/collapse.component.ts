@@ -3,19 +3,16 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  DestroyRef,
   inject,
   Input,
-  OnInit,
   ViewEncapsulation
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
 import type { TriSizeLMSType } from 'ng-zorro-antd/core/types';
@@ -36,15 +33,14 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'collapse';
     '[class.tri-collapse-icon-position-end]': `expandIconPosition === 'end'`,
     '[class.tri-collapse-ghost]': `ghost`,
     '[class.tri-collapse-borderless]': '!bordered',
-    '[class.tri-collapse-rtl]': "dir === 'rtl'",
+    '[class.tri-collapse-rtl]': `dir() === 'rtl'`,
     '[class.tri-collapse-small]': `size === 'small'`,
     '[class.tri-collapse-large]': `size === 'large'`
   }
 })
-export class TriCollapseComponent implements OnInit {
+export class TriCollapseComponent {
   private cdr = inject(ChangeDetectorRef);
-  private directionality = inject(Directionality);
-  private destroyRef = inject(DestroyRef);
+  protected readonly dir = inject(Directionality).valueSignal;
 
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
@@ -54,21 +50,10 @@ export class TriCollapseComponent implements OnInit {
   @Input() expandIconPosition: 'start' | 'end' = 'start';
   @Input() size: TriSizeLMSType = 'middle';
 
-  dir: Direction = 'ltr';
-
   private listOfNzCollapsePanelComponent: TriCollapsePanelComponent[] = [];
 
   constructor() {
     onConfigChangeEventForComponent(TRI_CONFIG_MODULE_NAME, () => this.cdr.markForCheck());
-  }
-
-  ngOnInit(): void {
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-
-    this.dir = this.directionality.value;
   }
 
   addPanel(value: TriCollapsePanelComponent): void {
@@ -80,18 +65,13 @@ export class TriCollapseComponent implements OnInit {
   }
 
   click(collapse: TriCollapsePanelComponent): void {
-    if (this.accordion && !collapse.active) {
+    const active = collapse._active();
+    // if accordion mode, close all panels except the clicked one
+    if (this.accordion && !active) {
       this.listOfNzCollapsePanelComponent
-        .filter(item => item !== collapse)
-        .forEach(item => {
-          if (item.active) {
-            item.active = false;
-            item.activeChange.emit(item.active);
-            item.markForCheck();
-          }
-        });
+        .filter(item => item !== collapse && item._active())
+        .forEach(item => item.activate(false));
     }
-    collapse.active = !collapse.active;
-    collapse.activeChange.emit(collapse.active);
+    collapse.activate(!active);
   }
 }

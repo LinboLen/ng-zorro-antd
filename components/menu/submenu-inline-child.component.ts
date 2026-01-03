@@ -3,91 +3,48 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
-import { NgTemplateOutlet } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DestroyRef,
-  ElementRef,
-  inject,
-  Input,
-  OnChanges,
-  OnInit,
-  Renderer2,
-  SimpleChanges,
-  TemplateRef,
-  ViewEncapsulation
-} from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Directionality } from '@angular/cdk/bidi';
+import { ChangeDetectionStrategy, Component, computed, inject, input, ViewEncapsulation } from '@angular/core';
 
-import { collapseMotion } from 'ng-zorro-antd/core/animation';
-import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { TriAnimationCollapseDirective } from 'ng-zorro-antd/core/animation';
+import { generateClassName, getClassListFromValue } from 'ng-zorro-antd/core/util';
 
-import { TriMenuModeType } from './menu.types';
+const MENU_PREFIX = 'ant-menu';
 
 @Component({
   selector: '[tri-submenu-inline-child]',
-  animations: [collapseMotion],
   exportAs: 'triSubmenuInlineChild',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<ng-template [ngTemplateOutlet]="templateOutlet"></ng-template>`,
+  template: `<ng-content />`,
+  hostDirectives: [
+    {
+      directive: TriAnimationCollapseDirective,
+      inputs: ['open', 'leavedClassName']
+    }
+  ],
   host: {
-    class: 'tri-menu ant-menu-inline ant-menu-sub',
-    '[class.tri-menu-rtl]': `dir === 'rtl'`,
-    '[@collapseMotion]': 'expandState'
-  },
-  imports: [NgTemplateOutlet]
+    '[class]': 'mergedClass()'
+  }
 })
-export class TriSubmenuInlineChildComponent implements OnInit, OnChanges {
-  private readonly elementRef = inject(ElementRef);
-  private readonly renderer = inject(Renderer2);
-  private readonly directionality = inject(Directionality);
-  private readonly destroyRef = inject(DestroyRef);
+export class TriSubmenuInlineChildComponent {
+  protected readonly dir = inject(Directionality).valueSignal;
 
-  @Input() templateOutlet: TemplateRef<TriSafeAny> | null = null;
-  @Input() menuClass: string = '';
-  @Input() mode: TriMenuModeType = 'vertical';
-  @Input() open = false;
-  listOfCacheClassName: string[] = [];
-  expandState = 'collapsed';
-  dir: Direction = 'ltr';
+  readonly menuClass = input<string>('');
+  readonly open = input(false);
+  readonly leavedClassName = input(generateClassName(MENU_PREFIX, 'submenu-hidden'));
 
-  calcMotionState(): void {
-    this.expandState = this.open ? 'expanded' : 'collapsed';
-  }
-
-  ngOnInit(): void {
-    this.calcMotionState();
-
-    this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-    });
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    const { mode, nzOpen, menuClass } = changes;
-    if (mode || nzOpen) {
-      this.calcMotionState();
+  protected readonly mergedClass = computed(() => {
+    const customCls = getClassListFromValue(this.menuClass()) || [];
+    const cls = [
+      MENU_PREFIX,
+      generateClassName(MENU_PREFIX, 'inline'),
+      generateClassName(MENU_PREFIX, 'sub'),
+      ...customCls
+    ];
+    if (this.dir() === 'rtl') {
+      cls.push(generateClassName(MENU_PREFIX, 'rtl'));
     }
-    if (menuClass) {
-      if (this.listOfCacheClassName.length) {
-        this.listOfCacheClassName.forEach(className => {
-          if (className) {
-            this.renderer.removeClass(this.elementRef.nativeElement, className);
-          }
-        });
-      }
-      if (this.menuClass) {
-        this.listOfCacheClassName = this.menuClass.split(' ');
-        this.listOfCacheClassName.forEach(className => {
-          if (className) {
-            this.renderer.addClass(this.elementRef.nativeElement, className);
-          }
-        });
-      }
-    }
-  }
+    return cls;
+  });
 }

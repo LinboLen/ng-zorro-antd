@@ -3,9 +3,10 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { CdkOverlayOrigin, ConnectedOverlayPositionChange, OverlayModule } from '@angular/cdk/overlay';
 import { Platform } from '@angular/cdk/platform';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterContentInit,
   booleanAttribute,
@@ -74,7 +75,6 @@ const listOfHorizontalPositions = [
       [title]="title"
       [mode]="mode"
       [disabled]="disabled"
-      [isMenuInsideDropdown]="isMenuInsideDropdown"
       [paddingLeft]="paddingLeft || inlinePaddingLeft"
       [triggerSubMenuAction]="triggerSubMenuAction"
       (subMenuMouseState)="setMouseEnterState($event)"
@@ -87,13 +87,12 @@ const listOfHorizontalPositions = [
     @if (mode === 'inline') {
       <div
         tri-submenu-inline-child
-        [mode]="mode"
         [open]="open"
-        [@.disabled]="!!noAnimation?.nzNoAnimation?.()"
-        [noAnimation]="noAnimation?.nzNoAnimation?.()"
         [menuClass]="menuClassName"
-        [templateOutlet]="subMenuTemplate"
-      ></div>
+        leavedClassName="ant-menu-submenu-hidden"
+      >
+        <ng-template [ngTemplateOutlet]="subMenuTemplate" />
+      </div>
     } @else {
       <ng-template
         cdkConnectedOverlay
@@ -111,15 +110,14 @@ const listOfHorizontalPositions = [
           [mode]="mode"
           [open]="open"
           [position]="position"
-          [disabled]="disabled"
-          [isMenuInsideDropdown]="isMenuInsideDropdown"
-          [triggerSubMenuAction]="triggerSubMenuAction"
-          [templateOutlet]="subMenuTemplate"
           [menuClass]="menuClassName"
-          [@.disabled]="!!noAnimation?.nzNoAnimation?.()"
+          [disabled]="disabled"
+          [triggerSubMenuAction]="triggerSubMenuAction"
           [noAnimation]="noAnimation?.nzNoAnimation?.()"
           (subMenuMouseState)="setMouseEnterState($event)"
-        ></div>
+        >
+          <ng-template [ngTemplateOutlet]="subMenuTemplate" />
+        </div>
       </ng-template>
     }
 
@@ -144,9 +142,10 @@ const listOfHorizontalPositions = [
     '[class.tri-menu-submenu-horizontal]': `!isMenuInsideDropdown && mode === 'horizontal'`,
     '[class.tri-menu-submenu-inline]': `!isMenuInsideDropdown && mode === 'inline'`,
     '[class.tri-menu-submenu-active]': `!isMenuInsideDropdown && isActive`,
-    '[class.tri-menu-submenu-rtl]': `dir === 'rtl'`
+    '[class.tri-menu-submenu-rtl]': `dir() === 'rtl'`
   },
   imports: [
+    NgTemplateOutlet,
     TriSubMenuTitleComponent,
     TriSubmenuInlineChildComponent,
     TriNoAnimationDirective,
@@ -158,7 +157,7 @@ export class TriSubMenuComponent implements OnInit, AfterContentInit, OnChanges 
   public readonly submenuService = inject(TriSubmenuService);
   protected readonly isMenuInsideDropdown = inject(TriIsMenuInsideDropdownToken);
   protected readonly noAnimation = inject(TriNoAnimationDirective, { optional: true, host: true });
-  private readonly directionality = inject(Directionality);
+  protected readonly dir = inject(Directionality).valueSignal;
   private readonly destroyRef = inject(DestroyRef);
   private readonly menuService = inject(MenuService);
   private readonly cdr = inject(ChangeDetectorRef);
@@ -182,7 +181,7 @@ export class TriSubMenuComponent implements OnInit, AfterContentInit, OnChanges 
   listOfNzMenuItemDirective: QueryList<TriMenuItemComponent> | null = null;
 
   private level = this.submenuService.level;
-  position = 'right';
+  position: 'left' | 'right' = 'right';
   triggerWidth: number | null = null;
   theme: TriMenuThemeType = 'light';
   mode: TriMenuModeType = 'vertical';
@@ -190,7 +189,6 @@ export class TriSubMenuComponent implements OnInit, AfterContentInit, OnChanges 
   overlayPositions = listOfVerticalPositions;
   isSelected = false;
   isActive = false;
-  dir: Direction = 'ltr';
 
   /** set the submenu host open status directly **/
   setOpenStateWithoutDebounce(open: boolean): void {
@@ -264,12 +262,6 @@ export class TriSubMenuComponent implements OnInit, AfterContentInit, OnChanges 
         this.openChange.emit(this.open);
         this.cdr.markForCheck();
       }
-    });
-
-    this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.markForCheck();
     });
   }
 

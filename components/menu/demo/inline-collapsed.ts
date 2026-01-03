@@ -28,35 +28,34 @@ import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
           <ul>
             <li tri-menu-item>Option 5</li>
             <li tri-menu-item>Option 6</li>
-            <li tri-submenu title="Submenu">
-              <ul>
-                <li tri-menu-item>Option 7</li>
-                <li tri-menu-item>Option 8</li>
-              </ul>
-            </li>
+            <li tri-menu-item>Option 7</li>
+            <li tri-menu-item>Option 8</li>
           </ul>
         </li>
         <li tri-submenu title="Navigation Three" icon="setting">
           <ul>
             <li tri-menu-item>Option 9</li>
             <li tri-menu-item>Option 10</li>
-            <li tri-menu-item>Option 11</li>
+            <li tri-submenu title="Submenu">
+              <ul>
+                <li tri-menu-item>Option 11</li>
+                <li tri-menu-item>Option 12</li>
+              </ul>
+            </li>
           </ul>
         </li>
       </ul>
     </div>
   `,
-  styles: [
-    `
-      .wrapper {
-        width: 240px;
-      }
+  styles: `
+    .wrapper {
+      width: 256px;
+    }
 
-      button {
-        margin-bottom: 12px;
-      }
-    `
-  ]
+    button {
+      margin-bottom: 12px;
+    }
+  `
 })
 export class TriDemoMenuInlineCollapsedComponent {
   isCollapsed = false;
