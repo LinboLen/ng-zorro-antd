@@ -1,8 +1,8 @@
-/*
+/**
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export function generateClassName(prefix: string, suffix: string): string {
-  return `${prefix}-${suffix}`;
-}
+import { TemplateRef } from '@angular/core';
+
+export type TriRequiredMark = boolean | 'optional' | TemplateRef<{ $implicit: TemplateRef<void>; required: boolean }>;
