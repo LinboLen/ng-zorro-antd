@@ -9,6 +9,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   forwardRef,
+  inject,
   Input,
   OnChanges,
   SimpleChanges,
@@ -17,6 +18,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
+import { TriAnimationTreeCollapseService } from 'ng-zorro-antd/core/animation';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 import { TriTreeVirtualNodeData, TriTreeVirtualScrollNodeOutletDirective } from './node';
@@ -46,6 +48,7 @@ const DEFAULT_SIZE = 28;
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
+    TriAnimationTreeCollapseService,
     { provide: TriTreeView, useExisting: forwardRef(() => TriTreeVirtualScrollViewComponent) },
     { provide: CdkTree, useExisting: forwardRef(() => TriTreeVirtualScrollViewComponent) }
   ],
@@ -75,6 +78,12 @@ export class TriTreeVirtualScrollViewComponent<T> extends TriTreeView<T> impleme
   nodes: Array<TriTreeVirtualNodeData<T>> = [];
 
   innerTrackBy: TrackByFunction<TriTreeVirtualNodeData<T>> = i => i;
+
+  constructor() {
+    super();
+    const treeCollapseService = inject(TriAnimationTreeCollapseService);
+    treeCollapseService.virtualScroll = true;
+  }
 
   ngOnChanges({ trackBy }: SimpleChanges): void {
     if (trackBy) {

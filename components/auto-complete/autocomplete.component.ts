@@ -3,10 +3,10 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { AnimationEvent } from '@angular/animations';
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import { NgTemplateOutlet } from '@angular/common';
 import {
+  ANIMATION_MODULE_TYPE,
   AfterContentInit,
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -27,13 +27,19 @@ import {
   ViewChildren,
   ViewEncapsulation,
   booleanAttribute,
-  inject
+  inject,
+  type AnimationCallbackEvent
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable, Subscription, defer, merge } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 
-import { slideMotion, TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
+import {
+  TriNoAnimationDirective,
+  isAnimationEnabled,
+  slideAnimationEnter,
+  slideAnimationLeave
+} from 'ng-zorro-antd/core/animation';
 import { TRI_AFTER_NEXT_RENDER$ } from 'ng-zorro-antd/core/render';
 import { CompareWith, TriSafeAny } from 'ng-zorro-antd/core/types';
 import { numberAttributeWithZeroFallback } from 'ng-zorro-antd/core/util';
@@ -74,10 +80,10 @@ function normalizeDataSource(value: AutocompleteDataSource): AutocompleteDataSou
         [class.tri-select-dropdown-rtl]="dir === 'rtl'"
         [class]="overlayClassName"
         [style]="overlayStyle"
-        [noAnimation]="noAnimation?.nzNoAnimation?.()"
-        @slideMotion
-        (@slideMotion.done)="onAnimationEvent($event)"
-        [@.disabled]="!!noAnimation?.nzNoAnimation?.()"
+        [noAnimation]="!animationEnabled()"
+        [animate.enter]="autoCompleteAnimationEnter()"
+        [animate.leave]="autoCompleteAnimationLeave()"
+        (animate.leave)="onAnimationEvent($event)"
       >
         <div class="tri-select-dropdown-content-wrapper">
           <div class="tri-select-dropdown-content">
@@ -96,13 +102,13 @@ function normalizeDataSource(value: AutocompleteDataSource): AutocompleteDataSou
         }
       </ng-template>
     </ng-template>
-  `,
-  animations: [slideMotion]
+  `
 })
 export class TriAutocompleteComponent implements AfterContentInit, AfterViewInit, OnInit, OnChanges {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
+  private animationType = inject(ANIMATION_MODULE_TYPE, { optional: true });
   @Input({ transform: numberAttributeWithZeroFallback }) width?: number;
   @Input() overlayClassName = '';
   @Input() overlayStyle: Record<string, string> = {};
@@ -119,7 +125,7 @@ export class TriAutocompleteComponent implements AfterContentInit, AfterViewInit
   activeItem: TriAutocompleteOptionComponent | null = null;
   dir: Direction = 'ltr';
   normalizedDataSource: AutocompleteDataSourceItem[] = [];
-  animationStateChange = new EventEmitter<AnimationEvent>();
+  animationStateChange = new EventEmitter<AnimationCallbackEvent>();
 
   /**
    * Options accessor, its source may be content or dataSource
@@ -168,6 +174,10 @@ export class TriAutocompleteComponent implements AfterContentInit, AfterViewInit
 
   private afterNextRender$ = inject(TRI_AFTER_NEXT_RENDER$);
 
+  protected readonly autoCompleteAnimationEnter = slideAnimationEnter();
+  protected readonly autoCompleteAnimationLeave = slideAnimationLeave();
+  protected readonly animationEnabled = isAnimationEnabled(() => !this.noAnimation?.noAnimation());
+
   noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
 
   constructor() {
@@ -198,8 +208,20 @@ export class TriAutocompleteComponent implements AfterContentInit, AfterViewInit
     }
   }
 
-  onAnimationEvent(event: AnimationEvent): void {
-    this.animationStateChange.emit(event);
+  onAnimationEvent(event: AnimationCallbackEvent): void {
+    const element = event.target as HTMLElement;
+    // If animations are disabled, complete immediately
+    if (!this.animationEnabled()) {
+      this.animationStateChange.emit(event);
+      event.animationComplete();
+      return;
+    }
+    const onAnimationEnd = (): void => {
+      element.removeEventListener('animationend', onAnimationEnd);
+      this.animationStateChange.emit(event);
+      event.animationComplete();
+    };
+    element.addEventListener('animationend', onAnimationEnd);
   }
 
   ngAfterContentInit(): void {

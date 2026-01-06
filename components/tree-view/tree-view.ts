@@ -4,17 +4,9 @@
  */
 
 import { CdkTree } from '@angular/cdk/tree';
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  forwardRef,
-  signal,
-  ViewChild,
-  ViewEncapsulation
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, ViewChild, ViewEncapsulation } from '@angular/core';
 
-import { treeCollapseMotion } from 'ng-zorro-antd/core/animation';
+import { TriAnimationTreeCollapseService } from 'ng-zorro-antd/core/animation';
 
 import { TriTreeNodeOutletDirective } from './outlet';
 import { TriTreeView } from './tree';
@@ -25,11 +17,7 @@ import { TriTreeView } from './tree';
   imports: [TriTreeNodeOutletDirective],
   template: `
     <div class="tri-tree-list-holder">
-      <div
-        [@.disabled]="!afterViewInit() || !!noAnimation?.nzNoAnimation?.()"
-        [@treeCollapseMotion]="_nodeOutlet.viewContainer.length"
-        class="tri-tree-list-holder-inner"
-      >
+      <div class="tri-tree-list-holder-inner">
         <ng-container treeNodeOutlet></ng-container>
       </div>
     </div>
@@ -37,6 +25,7 @@ import { TriTreeView } from './tree';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
+    TriAnimationTreeCollapseService,
     { provide: CdkTree, useExisting: forwardRef(() => TriTreeViewComponent) },
     { provide: TriTreeView, useExisting: forwardRef(() => TriTreeViewComponent) }
   ],
@@ -45,19 +34,8 @@ import { TriTreeView } from './tree';
     '[class.tri-tree-block-node]': 'directoryTree || blockNode',
     '[class.tri-tree-directory]': 'directoryTree',
     '[class.tri-tree-rtl]': `dir() === 'rtl'`
-  },
-  animations: [treeCollapseMotion]
-})
-export class TriTreeViewComponent<T> extends TriTreeView<T> implements AfterViewInit {
-  @ViewChild(TriTreeNodeOutletDirective, { static: true }) nodeOutlet!: TriTreeNodeOutletDirective;
-
-  protected readonly afterViewInit = signal(false);
-
-  override ngAfterViewInit(): void {
-    super.ngAfterViewInit();
-
-    Promise.resolve().then(() => {
-      this.afterViewInit.set(true);
-    });
   }
+})
+export class TriTreeViewComponent<T> extends TriTreeView<T> {
+  @ViewChild(TriTreeNodeOutletDirective, { static: true }) nodeOutlet!: TriTreeNodeOutletDirective;
 }

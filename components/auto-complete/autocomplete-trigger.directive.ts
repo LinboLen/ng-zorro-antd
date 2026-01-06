@@ -100,11 +100,10 @@ export class TriAutocompleteTriggerDirective implements AfterViewInit, ControlVa
   ngAfterViewInit(): void {
     if (this.autocomplete) {
       this.autocomplete.animationStateChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(event => {
-        if (event.toState === 'void') {
-          if (this.overlayRef) {
-            this.overlayRef.dispose();
-            this.overlayRef = null;
-          }
+        if (this.overlayRef) {
+          this.overlayRef.dispose();
+          this.overlayRef = null;
+          event.animationComplete();
         }
       });
     }

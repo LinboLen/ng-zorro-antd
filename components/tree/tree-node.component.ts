@@ -25,7 +25,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import {
   TriFormatBeforeDropEvent,
   TriFormatEmitEvent,
@@ -126,8 +125,7 @@ import { TriTreeNodeTitleComponent } from './tree-node-title.component';
   ]
 })
 export class TriTreeNodeBuiltinComponent implements OnInit, OnChanges {
-  _noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
-  treeService = inject(TriTreeBaseService);
+  private treeService = inject(TriTreeBaseService);
   private ngZone = inject(NgZone);
   private renderer = inject(Renderer2);
   private el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;

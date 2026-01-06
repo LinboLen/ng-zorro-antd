@@ -41,7 +41,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject, combineLatest, merge, of as observableOf } from 'rxjs';
 import { distinctUntilChanged, filter, map, startWith, tap, withLatestFrom } from 'rxjs/operators';
 
-import { slideMotion, TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
+import { TriNoAnimationDirective, slideAnimationEnter, slideAnimationLeave } from 'ng-zorro-antd/core/animation';
 import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
 import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
 import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
@@ -98,7 +98,6 @@ const listOfPositions = [
     TriFormItemFeedbackIconComponent,
     TriStringTemplateOutletDirective
   ],
-  animations: [slideMotion],
   template: `
     <ng-template
       cdkConnectedOverlay
@@ -115,10 +114,10 @@ const listOfPositions = [
       (positionChange)="onPositionChange($event)"
     >
       <div
-        [@slideMotion]="'enter'"
         [class]="dropdownClassName"
-        [@.disabled]="!!noAnimation?.nzNoAnimation?.()"
-        [noAnimation]="noAnimation?.nzNoAnimation?.()"
+        [noAnimation]="!!noAnimation?.nzNoAnimation?.()"
+        [animate.enter]="slideAnimationEnter()"
+        [animate.leave]="slideAnimationLeave()"
         [class.tri-select-dropdown-placement-bottomLeft]="dropdownPosition === 'bottom'"
         [class.tri-select-dropdown-placement-topLeft]="dropdownPosition === 'top'"
         [class.tri-tree-select-dropdown-rtl]="dir === 'rtl'"
@@ -294,6 +293,9 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
   private directionality = inject(Directionality);
   private focusMonitor = inject(FocusMonitor);
   private destroyRef = inject(DestroyRef);
+
+  protected readonly slideAnimationEnter = slideAnimationEnter();
+  protected readonly slideAnimationLeave = slideAnimationLeave();
 
   @Input() id: string | null = null;
   @Input({ transform: booleanAttribute }) allowClear: boolean = true;

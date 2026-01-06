@@ -21,6 +21,7 @@ import {
   ViewContainerRef
 } from '@angular/core';
 
+import { TriAnimationTreeCollapseDirective } from 'ng-zorro-antd/core/animation';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 import { TriTreeNodeIndentsComponent } from './indent';
@@ -61,6 +62,7 @@ export interface TriTreeVirtualNodeData<T> {
     <ng-content select="nz-tree-node-option"></ng-content>
     <ng-content></ng-content>
   `,
+  hostDirectives: [TriAnimationTreeCollapseDirective],
   host: {
     class: 'tri-tree-treenode',
     '[class.tri-tree-treenode-switcher-open]': 'isExpanded',

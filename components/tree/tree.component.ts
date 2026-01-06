@@ -3,11 +3,9 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { NgTemplateOutlet } from '@angular/common';
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -29,8 +27,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Observable } from 'rxjs';
 
-import { treeCollapseMotion, TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
-import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriAnimationTreeCollapseDirective, TriAnimationTreeCollapseService } from 'ng-zorro-antd/core/animation';
+import { TriConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
 import {
   TriFormatBeforeDropEvent,
   TriFormatEmitEvent,
@@ -58,7 +56,6 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'tree';
 @Component({
   selector: 'tri-tree',
   exportAs: 'triTree',
-  animations: [treeCollapseMotion],
   template: `
     <div>
       <input [style]="HIDDEN_STYLE" />
@@ -79,77 +76,108 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'tree';
           [style.height]="virtualHeight"
         >
           <ng-container *cdkVirtualFor="let node of flattenNodes; trackBy: trackByFlattenNode">
-            <ng-template
-              [ngTemplateOutlet]="nodeTemplate"
-              [ngTemplateOutletContext]="{ $implicit: node }"
-            ></ng-template>
+            <tri-tree-node
+              builtin
+              [icon]="node.icon"
+              [title]="node.title"
+              [isLoading]="node.isLoading"
+              [isSelected]="node.isSelected"
+              [isDisabled]="node.isDisabled"
+              [isMatched]="node.isMatched"
+              [isExpanded]="node.isExpanded"
+              [isLeaf]="node.isLeaf"
+              [isStart]="node.isStart ?? []"
+              [isEnd]="node.isEnd ?? []"
+              [isChecked]="node.isChecked"
+              [isHalfChecked]="node.isHalfChecked"
+              [isDisableCheckbox]="node.isDisableCheckbox"
+              [isSelectable]="node.isSelectable"
+              [canHide]="node.canHide"
+              [treeNode]="node"
+              [selectMode]="selectMode"
+              [showLine]="showLine"
+              [expandedIcon]="expandedIcon"
+              [draggable]="draggable"
+              [checkable]="checkable"
+              [showExpand]="showExpand"
+              [asyncData]="asyncData"
+              [searchValue]="searchValue"
+              [hideUnMatched]="hideUnMatched"
+              [beforeDrop]="beforeDrop"
+              [showIcon]="showIcon"
+              [treeTemplate]="treeTemplate || treeTemplateChild"
+              (expandChange)="eventTriggerChanged($event)"
+              (click)="eventTriggerChanged($event)"
+              (dblClick)="eventTriggerChanged($event)"
+              (contextMenu)="eventTriggerChanged($event)"
+              (checkboxChange)="eventTriggerChanged($event)"
+              (onDragStart)="eventTriggerChanged($event)"
+              (onDragEnter)="eventTriggerChanged($event)"
+              (onDragOver)="eventTriggerChanged($event)"
+              (onDragLeave)="eventTriggerChanged($event)"
+              (onDragEnd)="eventTriggerChanged($event)"
+              (onDrop)="eventTriggerChanged($event)"
+            />
           </ng-container>
         </cdk-virtual-scroll-viewport>
       } @else {
         <div
           [class.tri-select-tree-list-holder-inner]="selectMode"
           [class.tri-tree-list-holder-inner]="!selectMode"
-          [@.disabled]="beforeInit || !!noAnimation?.nzNoAnimation?.()"
-          [noAnimation]="noAnimation?.nzNoAnimation?.()"
-          [@treeCollapseMotion]="flattenNodes.length"
         >
           @for (node of flattenNodes; track trackByFlattenNode($index, node)) {
-            <ng-template
-              [ngTemplateOutlet]="nodeTemplate"
-              [ngTemplateOutletContext]="{ $implicit: node }"
-            ></ng-template>
+            <tri-tree-node
+              builtin
+              animation-tree-collapse
+              [icon]="node.icon"
+              [title]="node.title"
+              [isLoading]="node.isLoading"
+              [isSelected]="node.isSelected"
+              [isDisabled]="node.isDisabled"
+              [isMatched]="node.isMatched"
+              [isExpanded]="node.isExpanded"
+              [isLeaf]="node.isLeaf"
+              [isStart]="node.isStart ?? []"
+              [isEnd]="node.isEnd ?? []"
+              [isChecked]="node.isChecked"
+              [isHalfChecked]="node.isHalfChecked"
+              [isDisableCheckbox]="node.isDisableCheckbox"
+              [isSelectable]="node.isSelectable"
+              [canHide]="node.canHide"
+              [treeNode]="node"
+              [selectMode]="selectMode"
+              [showLine]="showLine"
+              [expandedIcon]="expandedIcon"
+              [draggable]="draggable"
+              [checkable]="checkable"
+              [showExpand]="showExpand"
+              [asyncData]="asyncData"
+              [searchValue]="searchValue"
+              [hideUnMatched]="hideUnMatched"
+              [beforeDrop]="beforeDrop"
+              [showIcon]="showIcon"
+              [treeTemplate]="treeTemplate || treeTemplateChild"
+              (expandChange)="eventTriggerChanged($event)"
+              (click)="eventTriggerChanged($event)"
+              (dblClick)="eventTriggerChanged($event)"
+              (contextMenu)="eventTriggerChanged($event)"
+              (checkboxChange)="eventTriggerChanged($event)"
+              (onDragStart)="eventTriggerChanged($event)"
+              (onDragEnter)="eventTriggerChanged($event)"
+              (onDragOver)="eventTriggerChanged($event)"
+              (onDragLeave)="eventTriggerChanged($event)"
+              (onDragEnd)="eventTriggerChanged($event)"
+              (onDrop)="eventTriggerChanged($event)"
+            />
           }
         </div>
       }
     </div>
-    <ng-template #nodeTemplate let-treeNode>
-      <tri-tree-node
-        builtin
-        [icon]="treeNode.icon"
-        [title]="treeNode.title"
-        [isLoading]="treeNode.isLoading"
-        [isSelected]="treeNode.isSelected"
-        [isDisabled]="treeNode.isDisabled"
-        [isMatched]="treeNode.isMatched"
-        [isExpanded]="treeNode.isExpanded"
-        [isLeaf]="treeNode.isLeaf"
-        [isStart]="treeNode.isStart"
-        [isEnd]="treeNode.isEnd"
-        [isChecked]="treeNode.isChecked"
-        [isHalfChecked]="treeNode.isHalfChecked"
-        [isDisableCheckbox]="treeNode.isDisableCheckbox"
-        [isSelectable]="treeNode.isSelectable"
-        [canHide]="treeNode.canHide"
-        [treeNode]="treeNode"
-        [selectMode]="selectMode"
-        [showLine]="showLine"
-        [expandedIcon]="expandedIcon"
-        [draggable]="draggable"
-        [checkable]="checkable"
-        [showExpand]="showExpand"
-        [asyncData]="asyncData"
-        [searchValue]="searchValue"
-        [hideUnMatched]="hideUnMatched"
-        [beforeDrop]="beforeDrop"
-        [showIcon]="showIcon"
-        [treeTemplate]="treeTemplate || treeTemplateChild"
-        (expandChange)="eventTriggerChanged($event)"
-        (click)="eventTriggerChanged($event)"
-        (dblClick)="eventTriggerChanged($event)"
-        (contextMenu)="eventTriggerChanged($event)"
-        (checkboxChange)="eventTriggerChanged($event)"
-        (onDragStart)="eventTriggerChanged($event)"
-        (onDragEnter)="eventTriggerChanged($event)"
-        (onDragOver)="eventTriggerChanged($event)"
-        (onDragLeave)="eventTriggerChanged($event)"
-        (onDragEnd)="eventTriggerChanged($event)"
-        (onDrop)="eventTriggerChanged($event)"
-      ></tri-tree-node>
-    </ng-template>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     TriTreeService,
+    TriAnimationTreeCollapseService,
     {
       provide: TriTreeBaseService,
       useFactory: NzTreeServiceFactory
@@ -166,7 +194,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'tree';
     '[class.tri-select-tree-icon-hide]': `selectMode && !showIcon`,
     '[class.tri-select-tree-block-node]': `selectMode && blockNode`,
     '[class.tri-tree]': `!selectMode`,
-    '[class.tri-tree-rtl]': `dir === 'rtl'`,
+    '[class.tri-tree-rtl]': `dir() === 'rtl'`,
     '[class.tri-tree-show-line]': `!selectMode && showLine`,
     '[class.tri-tree-icon-hide]': `!selectMode && !showIcon`,
     '[class.tri-tree-block-node]': `!selectMode && blockNode`,
@@ -176,19 +204,16 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'tree';
     CdkVirtualScrollViewport,
     CdkFixedSizeVirtualScroll,
     CdkVirtualForOf,
-    NgTemplateOutlet,
-    TriNoAnimationDirective,
+    TriAnimationTreeCollapseDirective,
     TriTreeNodeBuiltinComponent
   ]
 })
-export class TriTreeComponent extends TriTreeBase implements OnInit, ControlValueAccessor, OnChanges, AfterViewInit {
+export class TriTreeComponent extends TriTreeBase implements OnInit, OnChanges, ControlValueAccessor {
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
-  noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
-  configService = inject(TriConfigService);
-  private cdr = inject(ChangeDetectorRef);
-  private directionality = inject(Directionality);
-  private destroyRef = inject(DestroyRef);
+  protected readonly dir = inject(Directionality).valueSignal;
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly destroyRef = inject(DestroyRef);
 
   @Input({ transform: booleanAttribute }) @WithConfig() showIcon: boolean = false;
   @Input({ transform: booleanAttribute }) @WithConfig() hideUnMatched: boolean = false;
@@ -222,8 +247,6 @@ export class TriTreeComponent extends TriTreeBase implements OnInit, ControlValu
   @ViewChild(CdkVirtualScrollViewport, { read: CdkVirtualScrollViewport })
   cdkVirtualScrollViewport!: CdkVirtualScrollViewport;
   flattenNodes: TriTreeNode[] = [];
-  beforeInit = true;
-  dir: Direction = 'ltr';
 
   @Output() readonly expandedKeysChange: EventEmitter<string[]> = new EventEmitter<string[]>();
   @Output() readonly selectedKeysChange: EventEmitter<string[]> = new EventEmitter<string[]>();
@@ -487,19 +510,9 @@ export class TriTreeComponent extends TriTreeBase implements OnInit, ControlValu
           : data;
       this.cdr.markForCheck();
     });
-
-    this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((direction: Direction) => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.renderTreeProperties(changes);
-  }
-
-  ngAfterViewInit(): void {
-    this.beforeInit = false;
   }
 }
