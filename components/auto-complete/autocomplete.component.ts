@@ -108,7 +108,7 @@ export class TriAutocompleteComponent implements AfterContentInit, AfterViewInit
   private changeDetectorRef = inject(ChangeDetectorRef);
   private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
-  private animationType = inject(ANIMATION_MODULE_TYPE, { optional: true });
+
   @Input({ transform: numberAttributeWithZeroFallback }) width?: number;
   @Input() overlayClassName = '';
   @Input() overlayStyle: Record<string, string> = {};
