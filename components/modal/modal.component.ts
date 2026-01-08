@@ -82,12 +82,16 @@ export class TriModalComponent<T extends ModalOptions = TriSafeAny, R = TriSafeA
   @Input() modalType: ModalTypes = 'default';
   @Input() autofocus: 'ok' | 'cancel' | 'auto' | null = 'auto';
 
-  // TODO(@hsuanxyz) Input will not be supported
+  /**
+   * @note The input usage will be removed in v22.
+   */
   @Input()
   @Output()
   readonly onOk: EventEmitter<T> | OnClickCallback<T> | TriSafeAny = new EventEmitter<T>();
 
-  // TODO(@hsuanxyz) Input will not be supported
+  /**
+   * @note The input usage will be removed in v22.
+   */
   @Input()
   @Output()
   readonly onCancel: EventEmitter<T> | OnClickCallback<T> | TriSafeAny = new EventEmitter<T>();

@@ -3,9 +3,10 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { NgTemplateOutlet, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
 import {
   AfterContentChecked,
+  booleanAttribute,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -13,6 +14,8 @@ import {
   DestroyRef,
   ElementRef,
   EventEmitter,
+  forwardRef,
+  inject,
   Input,
   OnChanges,
   OnInit,
@@ -22,14 +25,11 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChildren,
-  ViewEncapsulation,
-  booleanAttribute,
-  forwardRef,
-  inject
+  ViewEncapsulation
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Observable, ReplaySubject, Subscription, forkJoin } from 'rxjs';
-import { finalize, take } from 'rxjs/operators';
+import { Observable, ReplaySubject, Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 import { buildGraph } from 'dagre-compound';
 
@@ -63,7 +63,7 @@ import {
 } from './interface';
 
 /** Checks whether an object is a data source. */
-export function isDataSource(value: TriSafeAny): value is TriGraphData {
+function isDataSource(value: TriSafeAny): value is TriGraphData {
   // Check if the value is a DataSource by observing if it has a connect function. Cannot
   // be checked as an `instanceof DataSource` since people could create their own sources
   // that match the interface, but don't extend DataSource.
@@ -92,7 +92,7 @@ export function isDataSource(value: TriSafeAny): value is TriGraphData {
       <svg:g [attr.transform]="type === 'sub' ? subGraphTransform(renderNode) : null">
         <svg:g class="core" [attr.transform]="coreTransform(renderNode)">
           <svg:g class="nz-graph-edges">
-            @for (edge of $asNzGraphEdges(renderNode.edges); track edgeTrackByFun(edge)) {
+            @for (edge of asNzGraphEdges(renderNode.edges); track edgeTrackByFun(edge)) {
               <g
                 class="nz-graph-edge"
                 tri-graph-edge
@@ -126,16 +126,18 @@ export function isDataSource(value: TriSafeAny): value is TriGraphData {
     </ng-template>
   `,
   host: {
-    '[class.nz-graph]': 'true',
+    class: 'nz-graph',
     '[class.nz-graph-auto-size]': 'nzAutoSize'
   },
   imports: [NgTemplateOutlet, TriGraphEdgeComponent, TriGraphNodeComponent, TriGraphDefsComponent]
 })
 export class TriGraphComponent implements OnInit, OnChanges, AfterContentChecked, TriGraph {
-  private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
-  private elementRef: ElementRef = inject(ElementRef);
-  private platformId = inject(PLATFORM_ID);
-  private destroyRef = inject(DestroyRef);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly elementRef = inject(ElementRef);
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
+  private readonly graphZoom = inject(TriGraphZoomDirective, { optional: true });
 
   @ViewChildren(TriGraphNodeComponent, { read: ElementRef }) listOfNodeElement!: QueryList<ElementRef>;
   @ViewChildren(TriGraphNodeComponent) listOfNodeComponent!: QueryList<TriGraphNodeComponent>;
@@ -162,7 +164,7 @@ export class TriGraphComponent implements OnInit, OnChanges, AfterContentChecked
   @Output() readonly graphRendered = new EventEmitter<TriGraphComponent>();
   @Output() readonly nodeClick = new EventEmitter<TriGraphNode | TriGraphGroupNode>();
 
-  requestId: number = -1;
+  private requestId: number = -1;
   transformStyle = '';
   graphRenderedSubject$ = new ReplaySubject<void>(1);
   renderInfo: TriGraphGroupNode = { labelHeight: 0 } as TriGraphGroupNode;
@@ -170,26 +172,22 @@ export class TriGraphComponent implements OnInit, OnChanges, AfterContentChecked
   mapOfEdgeAttr: Record<string, TriGraphEdgeDef> = {};
   zoom = 1;
 
-  public readonly typedNodes = nzTypeDefinition<Array<TriGraphNode | TriGraphGroupNode>>();
   private dataSource?: TriGraphData;
   private layoutSetting: TriLayoutSetting = TRI_GRAPH_LAYOUT_SETTING;
-  /** Data subscription */
   private _dataSubscription?: Subscription | null;
 
-  edgeTrackByFun = (edge: TriGraphEdge): string => `${edge.v}-${edge.w}`;
+  // type guards
+  protected readonly typedNodes = nzTypeDefinition<Array<TriGraphNode | TriGraphGroupNode>>();
+  protected readonly asNzGraphEdges = (data: unknown): TriGraphEdge[] => data as TriGraphEdge[];
 
-  subGraphTransform = (node: TriGraphGroupNode): string => {
+  protected readonly edgeTrackByFun = (edge: TriGraphEdge): string => `${edge.v}-${edge.w}`;
+  protected readonly subGraphTransform = (node: TriGraphGroupNode): string => {
     const x = node.x - node.coreBox.width / 2.0;
     const y = node.y - node.height / 2.0 + node.paddingTop;
     return `translate(${x}, ${y})`;
   };
-
-  $asNzGraphEdges = (data: unknown): TriGraphEdge[] => data as TriGraphEdge[];
-
-  coreTransform = (node: TriGraphGroupNode): string => `translate(0, ${node.parentNodeName ? node.labelHeight : 0})`;
-
-  noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
-  graphZoom = inject(TriGraphZoomDirective, { optional: true });
+  protected readonly coreTransform = (node: TriGraphGroupNode): string =>
+    `translate(0, ${node.parentNodeName ? node.labelHeight : 0})`;
 
   constructor() {
     this.destroyRef.onDestroy(() => {
@@ -271,34 +269,36 @@ export class TriGraphComponent implements OnInit, OnChanges, AfterContentChecked
    * @param needResize
    */
   drawGraph(data: TriGraphDataDef, options: TriGraphOption, needResize: boolean = false): Promise<void> {
+    if (!isPlatformBrowser(this.platformId)) {
+      return Promise.resolve();
+    }
+
+    const animationEnabled = !this.noAnimation?.noAnimation?.();
+
     return new Promise(resolve => {
       if (!isPlatformBrowser(this.platformId)) {
         return resolve();
       }
       this.requestId = requestAnimationFrame(() => {
-        const renderInfo = this.buildGraphInfo(data, options);
-        // TODO
-        // Need better performance
-        this.renderInfo = renderInfo;
+        // TODO: Need better performance
+        this.renderInfo = this.buildGraphInfo(data, options);
         this.cdr.markForCheck();
-        this.requestId = requestAnimationFrame(() => {
-          this.drawNodes(!this.noAnimation?.noAnimation?.()).then(() => {
-            // Update element
-            this.cdr.markForCheck();
-            if (needResize) {
-              this.resizeNodeSize().then(() => {
-                const dataSource: TriGraphDataDef = this.dataSource!.dataSource!;
-                this.drawGraph(dataSource, options, false).then(() => resolve());
-              });
-            } else {
-              this.graphRenderedSubject$.next();
-              this.graphRendered.emit(this);
-              resolve();
-            }
-          });
+        this.requestId = requestAnimationFrame(async () => {
+          await this.drawNodes(animationEnabled);
+          // Update element
+          this.cdr.markForCheck();
+
+          if (needResize) {
+            await this.resizeNodeSize();
+            await this.drawGraph(this.dataSource!.dataSource!, options, false);
+          } else {
+            this.graphRenderedSubject$.next();
+            this.graphRendered.emit(this);
+          }
+
+          resolve();
         });
       });
-      this.cdr.markForCheck();
     });
   }
 
@@ -307,19 +307,12 @@ export class TriGraphComponent implements OnInit, OnChanges, AfterContentChecked
    *
    * @param animate
    */
-  drawNodes(animate: boolean = true): Promise<void> {
-    return new Promise(resolve => {
-      if (animate) {
-        this.makeNodesAnimation().subscribe(() => {
-          resolve();
-        });
-      } else {
-        this.listOfNodeComponent.map(node => {
-          node.makeNoAnimation();
-        });
-        resolve();
-      }
-    });
+  async drawNodes(animate: boolean = true): Promise<void> {
+    if (animate) {
+      return this.makeNodesAnimation();
+    }
+
+    this.listOfNodeComponent.forEach(node => node.makeNoAnimation());
   }
 
   private resizeNodeSize(): Promise<void> {
@@ -358,7 +351,7 @@ export class TriGraphComponent implements OnInit, OnChanges, AfterContentChecked
   /**
    * Switch to the provided data source by resetting the data and unsubscribing from the current
    * render change subscription if one exists. If the data source is null, interpret this by
-   * clearing the node outlet. Otherwise start listening for new data.
+   * clearing the node outlet. Otherwise, start listening for new data.
    */
   private _switchDataSource(dataSource: TriGraphData): void {
     if (this.dataSource && typeof this.dataSource.disconnect === 'function') {
@@ -438,15 +431,9 @@ export class TriGraphComponent implements OnInit, OnChanges, AfterContentChecked
 
   /**
    * Play with animation
-   *
-   * @private
    */
-  private makeNodesAnimation(): Observable<void[]> {
-    return forkJoin(this.listOfNodeComponent.map(node => node.makeAnimation())).pipe(
-      finalize(() => {
-        this.cdr.detectChanges();
-      })
-    );
+  private async makeNodesAnimation(): Promise<void> {
+    await Promise.all(this.listOfNodeComponent.map(node => node.makeAnimation()));
   }
 
   private parseInfo(data: TriGraphDataDef): void {

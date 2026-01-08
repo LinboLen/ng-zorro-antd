@@ -23,7 +23,6 @@ import { TriI18nService, TriModalI18nInterface } from 'ng-zorro-antd/i18n';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriPipesModule } from 'ng-zorro-antd/pipes';
 
-import { nzModalAnimations } from './modal-animations';
 import { TriModalCloseComponent } from './modal-close.component';
 import { BaseModalContainerComponent } from './modal-container.directive';
 
@@ -92,7 +91,6 @@ import { BaseModalContainerComponent } from './modal-container.directive';
     </div>
   `,
   hostDirectives: [CdkScrollable],
-  animations: [nzModalAnimations.modalContainer],
   // Using OnPush for modal caused footer can not to detect changes. we can fix it when 8.x.
   changeDetection: ChangeDetectionStrategy.Default,
   host: {
@@ -102,10 +100,6 @@ import { BaseModalContainerComponent } from './modal-container.directive';
     '[class.tri-modal-wrap-rtl]': `dir === 'rtl'`,
     '[class.tri-modal-centered]': 'centered',
     '[style.zIndex]': 'config.nzZIndex',
-    '[@.disabled]': 'config.nzNoAnimation',
-    '[@modalContainer]': 'state',
-    '(@modalContainer.start)': 'onAnimationStart($event)',
-    '(@modalContainer.done)': 'onAnimationDone($event)',
     '(click)': 'onContainerClick($event)'
   },
   imports: [TriPipesModule, TriIconModule, TriModalCloseComponent, TriOutletModule, PortalModule, TriButtonModule]

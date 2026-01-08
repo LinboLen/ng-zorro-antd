@@ -1,6 +1,9 @@
 @import "../../style/themes/index";
 @import "../../style/mixins/index";
+@import "../../style/core/motion/zoom";
 @import "./modal";
 @import "./confirm";
 @import "./rtl";
 @include popover-customize-bg($dialog-prefix-cls, $popover-background);
+// Animations
+@include zoom-motion("zoom", antZoom);

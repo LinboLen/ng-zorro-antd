@@ -39,8 +39,6 @@ export class TriModalRef<T = TriSafeAny, R = TriSafeAny> implements TriModalLega
   _afterClose = new Subject<R | undefined>();
   _afterOpen = new Subject<void>();
 
-  private closeTimeout?: ReturnType<typeof setTimeout>;
-
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -50,7 +48,7 @@ export class TriModalRef<T = TriSafeAny, R = TriSafeAny> implements TriModalLega
   ) {
     containerInstance.animationStateChanged
       .pipe(
-        filter(event => event.phaseName === 'done' && event.toState === 'enter'),
+        filter(event => event === 'enter-active'),
         take(1)
       )
       .subscribe(() => {
@@ -63,13 +61,10 @@ export class TriModalRef<T = TriSafeAny, R = TriSafeAny> implements TriModalLega
 
     containerInstance.animationStateChanged
       .pipe(
-        filter(event => event.phaseName === 'done' && event.toState === 'exit'),
+        filter(event => event === 'leave-active'),
         take(1)
       )
-      .subscribe(() => {
-        clearTimeout(this.closeTimeout);
-        this._finishDialogClose();
-      });
+      .subscribe(() => this._finishDialogClose());
 
     containerInstance.containerClick.pipe(takeUntil(this.destroy$)).subscribe(() => {
       const cancelable = !this.config.cancelLoading && !this.config.okLoading;
@@ -81,14 +76,8 @@ export class TriModalRef<T = TriSafeAny, R = TriSafeAny> implements TriModalLega
     overlayRef
       .keydownEvents()
       .pipe(
-        filter(
-          event =>
-            (this.config.keyboard as boolean) &&
-            !this.config.cancelLoading &&
-            !this.config.okLoading &&
-            event.keyCode === ESCAPE &&
-            !hasModifierKey(event)
-        )
+        filter(() => (this.config.keyboard as boolean) && !this.config.cancelLoading && !this.config.okLoading),
+        filter(event => event.keyCode === ESCAPE && !hasModifierKey(event))
       )
       .subscribe(event => {
         event.preventDefault();
@@ -142,20 +131,11 @@ export class TriModalRef<T = TriSafeAny, R = TriSafeAny> implements TriModalLega
       return;
     }
     this.result = result;
-    this.containerInstance.animationStateChanged
-      .pipe(
-        filter(event => event.phaseName === 'start'),
-        take(1)
-      )
-      .subscribe(event => {
-        this.overlayRef.detachBackdrop();
-        this.closeTimeout = setTimeout(() => {
-          this._finishDialogClose();
-        }, event.totalTime + 100);
-      });
-
-    this.containerInstance.startExitAnimation();
     this.state = TriModalState.CLOSING;
+    this.containerInstance._startLeaveAnimation(() => {
+      this.overlayRef.detachBackdrop();
+      this._finishDialogClose();
+    });
   }
 
   updateConfig(config: ModalOptions): void {
