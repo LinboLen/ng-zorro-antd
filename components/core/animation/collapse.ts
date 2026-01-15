@@ -78,6 +78,9 @@ export class TriAnimationCollapseDirective {
         } else {
           element.style.height = coerceCssPixelValue(0);
           element.style.opacity = '0';
+          if (leavedClassName) {
+            element.classList.add(leavedClassName);
+          }
         }
       }
 
