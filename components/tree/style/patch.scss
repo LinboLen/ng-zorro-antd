@@ -3,6 +3,9 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { TriPresetColor, TriStatusColor } from 'ng-zorro-antd/core/color';
-
-export type TriTagColor = TriPresetColor | TriStatusColor | (string & {});
+.font-highlight {
+  color: $highlight-color;
+}
+nz-tree {
+  display: block;
+}
