@@ -5,26 +5,27 @@
 
 import {
   AfterContentInit,
+  AnimationCallbackEvent,
+  booleanAttribute,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ContentChild,
+  DestroyRef,
+  inject,
   Input,
   OnChanges,
   OnInit,
   SimpleChanges,
   TemplateRef,
-  ViewEncapsulation,
-  booleanAttribute,
-  inject,
-  DestroyRef,
-  ChangeDetectorRef
+  ViewEncapsulation
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AbstractControl, FormControlDirective, FormControlName, NgControl, NgModel } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { filter, startWith, tap } from 'rxjs/operators';
 
-import { withAnimationCheck } from 'ng-zorro-antd/core/animation';
+import { isAnimationEnabled, TriNoAnimationDirective, withAnimationCheck } from 'ng-zorro-antd/core/animation';
 import { TriFormStatusService } from 'ng-zorro-antd/core/form';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
@@ -49,6 +50,7 @@ import { TriFormDirective } from './form.directive';
       <div
         [animate.enter]="validateAnimationEnter()"
         [animate.leave]="validateAnimationLeave()"
+        (animate.leave)="onAnimationLeave($event)"
         class="tri-form-item-explain tri-form-item-explain-connected"
       >
         <div role="alert" [class]="['ant-form-item-explain-' + status]">
@@ -89,6 +91,8 @@ export class TriFormControlComponent implements OnChanges, OnInit, AfterContentI
       : !!this.formDirective?.disableAutoTips;
   }
 
+  private readonly noAnimation = inject(TriNoAnimationDirective, { optional: true, host: true });
+  private readonly animationEnabled = isAnimationEnabled(() => !this.noAnimation?.noAnimation());
   protected readonly validateAnimationEnter = withAnimationCheck(() => 'ant-form-validate_animation-enter');
   protected readonly validateAnimationLeave = withAnimationCheck(() => 'ant-form-validate_animation-leave');
 
@@ -278,5 +282,18 @@ export class TriFormControlComponent implements OnChanges, OnInit, AfterContentI
         this.validateStatus = this.defaultValidateControl!;
       }
     }
+  }
+
+  protected onAnimationLeave(event: AnimationCallbackEvent): void {
+    if (!this.animationEnabled()) {
+      return event.animationComplete();
+    }
+
+    const element = event.target as HTMLElement;
+    const onTransitionEnd = (): void => {
+      element.removeEventListener('transitionend', onTransitionEnd);
+      event.animationComplete();
+    };
+    element.addEventListener('transitionend', onTransitionEnd);
   }
 }

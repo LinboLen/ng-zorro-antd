@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
+import { AnimationCallbackEvent, Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import {
   AbstractControl,
@@ -16,6 +16,7 @@ import {
 } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { en_US, TriI18nService } from 'ng-zorro-antd/i18n';
 import { TriInputModule } from 'ng-zorro-antd/input';
@@ -392,6 +393,43 @@ describe('form-control', () => {
       );
     });
   });
+
+  describe('NoopAnimations', () => {
+    let fixture: ComponentFixture<TriTestNoopAnimationsFormControlComponent>;
+    let formGroup: FormGroup<{ input: FormControl<string | null> }>;
+    let formControl: DebugElement;
+
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        providers: [provideZoneChangeDetection(), provideNzNoAnimation()]
+      });
+      fixture = TestBed.createComponent(TriTestNoopAnimationsFormControlComponent);
+      formGroup = fixture.componentInstance.formGroup;
+      formControl = fixture.debugElement.query(By.directive(TriFormControlComponent));
+    });
+
+    it('should call animationComplete immediately when animations are disabled', () => {
+      formGroup.get('input')!.markAsDirty();
+      formGroup.get('input')!.updateValueAndValidity();
+      fixture.detectChanges();
+
+      expect(formControl.nativeElement.querySelector('.ant-form-item-explain')).not.toBeNull();
+
+      const mockEvent: AnimationCallbackEvent = {
+        target: formControl.nativeElement.querySelector('.ant-form-item-explain'),
+        animationComplete: jasmine.createSpy('animationComplete')
+      };
+
+      formControl.componentInstance.onAnimationLeave(mockEvent);
+
+      expect(mockEvent.animationComplete).toHaveBeenCalled();
+    });
+
+    it('should return nz-animate-disabled class when animations are disabled', () => {
+      expect(formControl.componentInstance.nzValidateAnimationEnter()).toBe('nz-animate-disabled');
+      expect(formControl.componentInstance.nzValidateAnimationLeave()).toBe('nz-animate-disabled');
+    });
+  });
 });
 
 @Component({
@@ -587,4 +625,26 @@ function isEmptyInputValue(value: TriSafeAny): boolean {
 
 function isMobile(value: string): boolean {
   return typeof value === 'string' && /(^1\d{10}$)/.test(value);
+}
+
+@Component({
+  imports: [ReactiveFormsModule, TriFormModule],
+  template: `
+    <form [formGroup]="formGroup">
+      <tri-form-item>
+        <tri-form-control errorTip="This field is required">
+          <input formControlName="input" />
+        </tri-form-control>
+      </tri-form-item>
+    </form>
+  `
+})
+export class TriTestNoopAnimationsFormControlComponent {
+  formGroup: FormGroup<{ input: FormControl<string | null> }>;
+
+  constructor(private formBuilder: FormBuilder) {
+    this.formGroup = this.formBuilder.group({
+      input: this.formBuilder.control('', [Validators.required])
+    });
+  }
 }
