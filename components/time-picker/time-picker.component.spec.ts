@@ -18,6 +18,7 @@ import { TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
 import { PREFIX_CLASS } from 'ng-zorro-antd/date-picker';
 import { getPickerInput, getPickerOkButton } from 'ng-zorro-antd/date-picker/testing/util';
 import { TriFormControlStatusType, TriFormModule } from 'ng-zorro-antd/form';
+import { TriIconModule } from 'ng-zorro-antd/icon';
 
 import { en_GB, TriI18nService } from '../i18n';
 import { TriTimePickerComponent } from './time-picker.component';
@@ -211,6 +212,33 @@ describe('time-picker', () => {
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css(`.anticon-calendar`))).toBeDefined();
     }));
+
+    it('should display string prefix as text content', () => {
+      testComponent.prefix = 'Time';
+      fixture.detectChanges();
+      const prefixElement = fixture.debugElement.query(By.css('.ant-picker-prefix'));
+      expect(prefixElement).not.toBeNull();
+      expect(prefixElement.nativeElement.textContent.trim()).toBe('Time');
+    });
+
+    it('should not display prefix element when nzPrefix is not set', () => {
+      testComponent.prefix = undefined;
+      fixture.detectChanges();
+      const prefixElement = fixture.debugElement.query(By.css('.ant-picker-prefix'));
+      expect(prefixElement).toBeNull();
+    });
+
+    it('should update prefix when nzPrefix changes', () => {
+      testComponent.prefix = 'Start';
+      fixture.detectChanges();
+      let prefixElement = fixture.debugElement.query(By.css('.ant-picker-prefix'));
+      expect(prefixElement.nativeElement.textContent.trim()).toBe('Start');
+
+      testComponent.prefix = 'End';
+      fixture.detectChanges();
+      prefixElement = fixture.debugElement.query(By.css('.ant-picker-prefix'));
+      expect(prefixElement.nativeElement.textContent.trim()).toBe('End');
+    });
 
     it('should backdrop work', fakeAsync(() => {
       testComponent.backdrop = true;
@@ -431,6 +459,21 @@ describe('time-picker', () => {
     });
   });
 
+  describe('prefix with template', () => {
+    let fixture: ComponentFixture<TriTestTimePickerPrefixTemplateComponent>;
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(TriTestTimePickerPrefixTemplateComponent);
+      fixture.detectChanges();
+    });
+
+    it('should render prefix template with icon', () => {
+      const prefixElement = fixture.debugElement.query(By.css('.ant-picker-prefix'));
+      expect(prefixElement).not.toBeNull();
+      expect(prefixElement.query(By.css('.anticon-clock-circle'))).not.toBeNull();
+    });
+  });
+
   describe('in form', () => {
     let testComponent: TriTestTimePickerInFormComponent;
     let fixture: ComponentFixture<TriTestTimePickerInFormComponent>;
@@ -498,6 +541,7 @@ describe('time-picker', () => {
       [inputReadOnly]="inputReadOnly"
       [use12Hours]="use12Hours"
       [suffixIcon]="suffixIcon"
+      [prefix]="prefix"
       [backdrop]="backdrop"
       [defaultOpenValue]="defaultOpenValue"
       [variant]="variant"
@@ -513,6 +557,7 @@ export class TriTestTimePickerComponent {
   inputReadOnly = false;
   use12Hours = false;
   suffixIcon: string = 'close-circle';
+  prefix?: string;
   backdrop = false;
   variant: TriVariant = 'outlined';
   defaultOpenValue: Date = new Date('2020-03-27T00:00:00');
@@ -564,3 +609,14 @@ export class TriTestTimePickerInFormComponent {
     this.timePickerForm.disable();
   }
 }
+
+@Component({
+  imports: [TriTimePickerComponent, TriIconModule],
+  template: `
+    <tri-time-picker [prefix]="prefixTemplate" />
+    <ng-template #prefixTemplate>
+      <tri-icon type="clock-circle" />
+    </ng-template>
+  `
+})
+export class TriTestTimePickerPrefixTemplateComponent {}

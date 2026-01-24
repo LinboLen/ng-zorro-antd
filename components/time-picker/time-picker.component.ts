@@ -33,6 +33,7 @@ import {
   computed,
   forwardRef,
   inject,
+  input,
   signal
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -71,6 +72,11 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'timePicker';
   selector: 'tri-time-picker',
   exportAs: 'triTimePicker',
   template: `
+    @if (prefix(); as prefix) {
+      <span class="tri-picker-prefix">
+        <ng-container *stringTemplateOutlet="prefix">{{ prefix }}</ng-container>
+      </span>
+    }
     <div class="tri-picker-input">
       <input
         #inputElement
@@ -283,6 +289,8 @@ export class TriTimePickerComponent implements ControlValueAccessor, OnInit, Aft
   @Input({ transform: booleanAttribute }) autoFocus = false;
   @Input() @WithConfig() backdrop = false;
   @Input({ transform: booleanAttribute }) inputReadOnly: boolean = false;
+
+  readonly prefix = input<string | TemplateRef<void>>();
 
   protected readonly timepickerAnimationEnter = slideAnimationEnter();
   protected readonly timepickerAnimationLeave = slideAnimationLeave();

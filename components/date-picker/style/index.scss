@@ -124,6 +124,10 @@ $picker-prefix-cls: "#{$ant-prefix}-picker";
   &-small {
     @include picker-padding($input-height-sm, $font-size-base, $input-padding-horizontal-sm);
   }
+  &-prefix {
+    flex: 0 0 auto;
+    margin-right: ($padding-xs / 2);
+  }
   &-suffix {
     display: flex;
     flex: none;

@@ -21,6 +21,7 @@ import {
   booleanAttribute,
   inject
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { merge } from 'rxjs';
 import { startWith, switchMap } from 'rxjs/operators';
 
@@ -29,13 +30,22 @@ import { TriCheckboxComponent, TriCheckboxModule } from 'ng-zorro-antd/checkbox'
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 import { TriEmptyModule } from 'ng-zorro-antd/empty';
 import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TriInputModule } from 'ng-zorro-antd/input';
 
 import { RenderListContext, TransferDirection, TransferItem, TransferStat } from './interface';
-import { TriTransferSearchComponent } from './transfer-search.component';
 
 @Component({
   selector: 'tri-transfer-list',
   exportAs: 'triTransferList',
+  imports: [
+    TriInputModule,
+    FormsModule,
+    TriCheckboxModule,
+    NgTemplateOutlet,
+    TriEmptyModule,
+    TriIconModule,
+    TriButtonModule
+  ],
   template: `
     <div class="tri-transfer-list-header">
       @if (showSelectAll && !oneWay) {
@@ -66,15 +76,16 @@ import { TriTransferSearchComponent } from './transfer-search.component';
     <div class="tri-transfer-list-body" [class.tri-transfer-list-body-with-search]="showSearch">
       @if (showSearch) {
         <div class="tri-transfer-list-body-search-wrapper">
-          <span
-            tri-transfer-search
-            class="tri-input-affix-wrapper tri-transfer-list-search"
-            (valueChanged)="handleFilter($event)"
-            (valueClear)="handleClear()"
-            [placeholder]="searchPlaceholder"
-            [disabled]="disabled"
-            [value]="filter"
-          ></span>
+          <tri-input-wrapper class="tri-transfer-list-search" allowClear>
+            <tri-icon inputPrefix type="search" />
+            <input
+              tri-input
+              [placeholder]="searchPlaceholder"
+              [disabled]="disabled"
+              [(ngModel)]="filter"
+              (ngModelChange)="handleFilter($event)"
+            />
+          </tri-input-wrapper>
         </div>
       }
       @if (renderList) {
@@ -159,8 +170,7 @@ import { TriTransferSearchComponent } from './transfer-search.component';
   host: {
     class: 'tri-transfer-list',
     '[class.tri-transfer-list-with-footer]': '!!footer'
-  },
-  imports: [TriCheckboxModule, NgTemplateOutlet, TriEmptyModule, TriTransferSearchComponent, TriIconModule, TriButtonModule]
+  }
 })
 export class TriTransferListComponent implements AfterViewInit {
   // #region fields
@@ -260,17 +270,12 @@ export class TriTransferListComponent implements AfterViewInit {
   // #region search
 
   handleFilter(value: string): void {
-    this.filter = value;
     this.dataSource.forEach(item => {
       item.hide = value.length > 0 && !this.matchFilter(value, item);
     });
     this.stat.shownCount = this.validData.length;
     this.stat.availableCount = this.availableData.length;
     this.filterChange.emit({ direction: this.direction, value });
-  }
-
-  handleClear(): void {
-    this.handleFilter('');
   }
 
   deleteItem(item: TransferItem): void {
