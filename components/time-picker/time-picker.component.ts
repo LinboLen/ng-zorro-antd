@@ -150,7 +150,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'timePicker';
               [(ngModel)]="value"
               (ngModelChange)="onPanelValueChange($event)"
               (closePanel)="closePanel()"
-            ></tri-time-picker-panel>
+            />
           </div>
         </div>
       </div>
@@ -292,6 +292,9 @@ export class TriTimePickerComponent implements ControlValueAccessor, OnInit, Aft
 
   readonly prefix = input<string | TemplateRef<void>>();
 
+  readonly needConfirm = input(false, { transform: booleanAttribute });
+  private hasConfirmed = false;
+
   protected readonly timepickerAnimationEnter = slideAnimationEnter();
   protected readonly timepickerAnimationLeave = slideAnimationLeave();
 
@@ -402,11 +405,17 @@ export class TriTimePickerComponent implements ControlValueAccessor, OnInit, Aft
   }
 
   closePanel(): void {
+    this.hasConfirmed = true;
     this.inputRef.nativeElement.blur();
   }
 
   setCurrentValueAndClose(): void {
-    this.emitValue(this.value);
+    if (this.hasConfirmed || !this.needConfirm()) {
+      this.emitValue(this.value);
+      this.hasConfirmed = false;
+    } else {
+      this.setValue(this.preValue);
+    }
     this.close();
   }
 

@@ -515,6 +515,215 @@ describe('time-picker', () => {
     });
   });
 
+  describe('confirmation', () => {
+    let testComponent: TriTestTimePickerConfirmationComponent;
+    let fixture: ComponentFixture<TriTestTimePickerConfirmationComponent>;
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(TriTestTimePickerConfirmationComponent);
+      testComponent = fixture.debugElement.componentInstance;
+      fixture.detectChanges();
+    });
+
+    it('should emit value when OK button is clicked with nzNeedConfirm enabled', fakeAsync(() => {
+      const onChange = spyOn(testComponent, 'onChange');
+      testComponent.needConfirm = true;
+      testComponent.date = new Date('2020-03-27T10:30:00');
+      fixture.detectChanges();
+      tick(500);
+      fixture.detectChanges();
+
+      dispatchMouseEvent(getPickerInput(fixture.debugElement), 'click');
+      fixture.detectChanges();
+      tick(500);
+      fixture.detectChanges();
+
+      expect(getPickerContainer()).not.toBeNull();
+
+      // Select a different time
+      const timeCell = overlayContainerElement.querySelector('.ant-picker-time-panel-cell:nth-child(3)');
+      dispatchMouseEvent(timeCell!, 'click');
+      fixture.detectChanges();
+
+      // Click OK button
+      const okButton = getPickerOkButton(fixture.debugElement);
+      expect(okButton).not.toBeNull();
+      dispatchFakeEvent(okButton, 'click');
+      fixture.detectChanges();
+      tick(500);
+      fixture.detectChanges();
+
+      expect(onChange).toHaveBeenCalled();
+      expect(getPickerContainer()).toBeNull();
+    }));
+
+    it('should revert to previous value when tabbing out without OK click with nzNeedConfirm enabled', fakeAsync(() => {
+      const onChange = spyOn(testComponent, 'onChange');
+      testComponent.needConfirm = true;
+      testComponent.date = new Date('2020-03-27T10:30:00');
+      fixture.detectChanges();
+      tick(500);
+      fixture.detectChanges();
+
+      const originalValue = testComponent.date;
+
+      dispatchMouseEvent(getPickerInput(fixture.debugElement), 'click');
+      fixture.detectChanges();
+      tick(500);
+      fixture.detectChanges();
+
+      expect(getPickerContainer()).not.toBeNull();
+
+      // Select a different time
+      const timeCell = overlayContainerElement.querySelector('.ant-picker-time-panel-cell:nth-child(5)');
+      dispatchMouseEvent(timeCell!, 'click');
+      fixture.detectChanges();
+
+      // Tab out without clicking OK
+      triggerInputBlur(fixture.debugElement);
+      fixture.detectChanges();
+      tick(500);
+      fixture.detectChanges();
+
+      expect(onChange).not.toHaveBeenCalled();
+      expect(getPickerContainer()).toBeNull();
+      // Value should revert to original
+      expect(testComponent.timePickerComponent.value?.getTime()).toBe((originalValue as Date).getTime());
+    }));
+
+    it('should revert to previous value when pressing Enter without OK click with nzNeedConfirm enabled', fakeAsync(() => {
+      const onChange = spyOn(testComponent, 'onChange');
+      testComponent.needConfirm = true;
+      testComponent.date = new Date('2020-03-27T10:30:00');
+      fixture.detectChanges();
+      tick(500);
+      fixture.detectChanges();
+
+      const originalValue = testComponent.date;
+
+      dispatchMouseEvent(getPickerInput(fixture.debugElement), 'click');
+      fixture.detectChanges();
+      tick(500);
+      fixture.detectChanges();
+
+      expect(getPickerContainer()).not.toBeNull();
+
+      // Select a different time
+      const timeCell = overlayContainerElement.querySelector('.ant-picker-time-panel-cell:nth-child(8)');
+      dispatchMouseEvent(timeCell!, 'click');
+      fixture.detectChanges();
+
+      // Press Enter without clicking OK
+      getPickerInput(fixture.debugElement).dispatchEvent(new KeyboardEvent('keyup', { key: 'enter' }));
+      fixture.detectChanges();
+      tick(500);
+      fixture.detectChanges();
+
+      expect(onChange).not.toHaveBeenCalled();
+      expect(getPickerContainer()).toBeNull();
+      // Value should revert to original
+      expect(testComponent.timePickerComponent.value?.getTime()).toBe((originalValue as Date).getTime());
+    }));
+
+    it('should emit value when tabbing out without nzNeedConfirm (default behavior)', fakeAsync(() => {
+      const onChange = spyOn(testComponent, 'onChange');
+      testComponent.needConfirm = false;
+      testComponent.date = new Date('2020-03-27T10:30:00');
+      fixture.detectChanges();
+      tick(500);
+      fixture.detectChanges();
+
+      dispatchMouseEvent(getPickerInput(fixture.debugElement), 'click');
+      fixture.detectChanges();
+      tick(500);
+      fixture.detectChanges();
+
+      expect(getPickerContainer()).not.toBeNull();
+
+      // Select a different time
+      const timeCell = overlayContainerElement.querySelector('.ant-picker-time-panel-cell:nth-child(10)');
+      dispatchMouseEvent(timeCell!, 'click');
+      fixture.detectChanges();
+
+      // Tab out
+      triggerInputBlur(fixture.debugElement);
+      fixture.detectChanges();
+      tick(500);
+      fixture.detectChanges();
+
+      expect(onChange).toHaveBeenCalled();
+      expect(getPickerContainer()).toBeNull();
+    }));
+
+    it('should emit value when OK button is clicked without nzNeedConfirm', fakeAsync(() => {
+      const onChange = spyOn(testComponent, 'onChange');
+      testComponent.needConfirm = false;
+      fixture.detectChanges();
+
+      dispatchMouseEvent(getPickerInput(fixture.debugElement), 'click');
+      fixture.detectChanges();
+      tick(500);
+      fixture.detectChanges();
+
+      expect(getPickerContainer()).not.toBeNull();
+
+      const okButton = getPickerOkButton(fixture.debugElement);
+      expect(okButton).not.toBeNull();
+      dispatchFakeEvent(okButton, 'click');
+      fixture.detectChanges();
+      tick(500);
+      fixture.detectChanges();
+
+      expect(onChange).toHaveBeenCalled();
+      expect(getPickerContainer()).toBeNull();
+    }));
+
+    it('should handle multiple open/close cycles correctly with nzNeedConfirm', fakeAsync(() => {
+      const onChange = spyOn(testComponent, 'onChange');
+      testComponent.needConfirm = true;
+      testComponent.date = new Date('2020-03-27T10:30:00');
+      fixture.detectChanges();
+      tick(500);
+      fixture.detectChanges();
+
+      // First cycle: select and confirm
+      dispatchMouseEvent(getPickerInput(fixture.debugElement), 'click');
+      fixture.detectChanges();
+      tick(500);
+      fixture.detectChanges();
+
+      const timeCell1 = overlayContainerElement.querySelector('.ant-picker-time-panel-cell:nth-child(5)');
+      dispatchMouseEvent(timeCell1!, 'click');
+      fixture.detectChanges();
+
+      const okButton1 = getPickerOkButton(fixture.debugElement);
+      dispatchFakeEvent(okButton1, 'click');
+      fixture.detectChanges();
+      tick(500);
+      fixture.detectChanges();
+
+      expect(onChange).toHaveBeenCalledTimes(1);
+      onChange.calls.reset();
+
+      // Second cycle: select but don't confirm
+      dispatchMouseEvent(getPickerInput(fixture.debugElement), 'click');
+      fixture.detectChanges();
+      tick(500);
+      fixture.detectChanges();
+
+      const timeCell2 = overlayContainerElement.querySelector('.ant-picker-time-panel-cell:nth-child(10)');
+      dispatchMouseEvent(timeCell2!, 'click');
+      fixture.detectChanges();
+
+      triggerInputBlur(fixture.debugElement);
+      fixture.detectChanges();
+      tick(500);
+      fixture.detectChanges();
+
+      expect(onChange).not.toHaveBeenCalled();
+    }));
+  });
+
   function queryFromOverlay(selector: string): HTMLElement {
     return overlayContainerElement.querySelector(selector) as HTMLElement;
   }
@@ -620,3 +829,22 @@ export class TriTestTimePickerInFormComponent {
   `
 })
 export class TriTestTimePickerPrefixTemplateComponent {}
+
+@Component({
+  imports: [TriTimePickerComponent, FormsModule],
+  template: `
+    <tri-time-picker
+      [(ngModel)]="date"
+      (ngModelChange)="onChange($event)"
+      [needConfirm]="needConfirm"
+      [defaultOpenValue]="defaultOpenValue"
+    />
+  `
+})
+export class TriTestTimePickerConfirmationComponent {
+  date: Date | null = null;
+  needConfirm = false;
+  defaultOpenValue: Date = new Date('2020-03-27T00:00:00');
+  onChange(_: Date | null): void {}
+  @ViewChild(TriTimePickerComponent, { static: false }) timePickerComponent!: TriTimePickerComponent;
+}
