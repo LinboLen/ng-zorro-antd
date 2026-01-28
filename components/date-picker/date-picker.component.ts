@@ -62,7 +62,8 @@ import {
   TriValidateStatus,
   TriVariant,
   OnChangeType,
-  OnTouchedType
+  OnTouchedType,
+  type TriPlacement
 } from 'ng-zorro-antd/core/types';
 import {
   fromEventOutsideAngular,
@@ -97,7 +98,6 @@ const POPUP_STYLE_PATCH = { position: 'relative' }; // Aim to override antd's st
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'datePicker';
 
 export type TriDatePickerSizeType = 'large' | 'default' | 'small';
-export type TriPlacement = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight'; // todo: export it in public API
 
 /**
  * The base picker for all common APIs

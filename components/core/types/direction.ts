@@ -5,3 +5,4 @@
 
 export type TriDirectionVHType = 'vertical' | 'horizontal';
 export type TriFourDirectionType = 'top' | 'bottom' | 'left' | 'right';
+export type TriPlacement = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';

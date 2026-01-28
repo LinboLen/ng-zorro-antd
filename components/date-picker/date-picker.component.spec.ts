@@ -16,7 +16,7 @@ import {
   TemplateRef,
   ViewChild
 } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, inject as testingInject, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flush, TestBed, inject as testingInject, tick } from '@angular/core/testing';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -31,12 +31,12 @@ import {
   dispatchMouseEvent,
   typeInElement
 } from 'ng-zorro-antd/core/testing';
-import { NgStyleInterface, TriSafeAny, TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
+import { NgStyleInterface, TriSafeAny, TriStatus, TriVariant, type TriPlacement } from 'ng-zorro-antd/core/types';
 import { TriFormModule } from 'ng-zorro-antd/form';
 import { TRI_DATE_LOCALE, TriI18nService } from 'ng-zorro-antd/i18n';
 import en_US from 'ng-zorro-antd/i18n/languages/en_US';
 
-import { TriDatePickerComponent, TriDatePickerSizeType, TriPlacement } from './date-picker.component';
+import { TriDatePickerComponent, TriDatePickerSizeType } from './date-picker.component';
 import { TriDatePickerModule } from './date-picker.module';
 import { CompatibleDate, TriPanelChangeType } from './standard-types';
 import { ENTER_EVENT, getPickerAbstract, getPickerInput } from './testing/util';

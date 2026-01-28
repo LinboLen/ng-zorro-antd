@@ -4,12 +4,7 @@
  */
 
 import { Directionality } from '@angular/cdk/bidi';
-import {
-  ConnectedOverlayPositionChange,
-  ConnectionPositionPair,
-  OriginConnectionPosition,
-  OverlayModule
-} from '@angular/cdk/overlay';
+import { ConnectedOverlayPositionChange, OverlayModule } from '@angular/cdk/overlay';
 import { Platform, _getEventTarget } from '@angular/cdk/platform';
 import { AsyncPipe } from '@angular/common';
 import {
@@ -34,6 +29,7 @@ import {
   forwardRef,
   inject,
   input,
+  linkedSignal,
   signal
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -48,9 +44,10 @@ import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/c
 import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
 import { warn } from 'ng-zorro-antd/core/logger';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
-import { TriOverlayModule } from 'ng-zorro-antd/core/overlay';
+import { DATE_PICKER_POSITION_MAP, DEFAULT_DATE_PICKER_POSITIONS, TriOverlayModule } from 'ng-zorro-antd/core/overlay';
 import {
   NgClassInterface,
+  TriPlacement,
   TriSafeAny,
   TriSizeLDSType,
   TriStatus,
@@ -112,11 +109,11 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'timePicker';
     <ng-template
       cdkConnectedOverlay
       connectedOverlay
+      cdkConnectedOverlayTransformOriginOn=".ant-picker-dropdown"
       [cdkConnectedOverlayHasBackdrop]="backdrop"
-      [cdkConnectedOverlayPositions]="overlayPositions"
+      [cdkConnectedOverlayPositions]="overlayPositions()"
       [cdkConnectedOverlayOrigin]="origin"
       [cdkConnectedOverlayOpen]="open"
-      [cdkConnectedOverlayTransformOriginOn]="'.ant-picker-dropdown'"
       (detach)="close()"
       (overlayOutsideClick)="onClickOutside($event)"
       (positionChange)="onPositionChange($event)"
@@ -208,7 +205,6 @@ export class TriTimePickerComponent implements ControlValueAccessor, OnInit, Aft
   private _onChange?: (value: Date | null) => void;
   private _onTouched?: () => void;
   private isNzDisableFirstChange: boolean = true;
-  private readonly currentPosition = signal<OriginConnectionPosition>({ originX: 'start', originY: 'bottom' });
 
   isInit = false;
   focused = false;
@@ -217,36 +213,6 @@ export class TriTimePickerComponent implements ControlValueAccessor, OnInit, Aft
   preValue: Date | null = null;
   inputSize?: number;
   i18nPlaceHolder$: Observable<string | undefined> = of(undefined);
-  overlayPositions: ConnectionPositionPair[] = [
-    {
-      offsetY: 3,
-      originX: 'start',
-      originY: 'bottom',
-      overlayX: 'start',
-      overlayY: 'top'
-    },
-    {
-      offsetY: -3,
-      originX: 'start',
-      originY: 'top',
-      overlayX: 'start',
-      overlayY: 'bottom'
-    },
-    {
-      offsetY: 3,
-      originX: 'end',
-      originY: 'bottom',
-      overlayX: 'end',
-      overlayY: 'top'
-    },
-    {
-      offsetY: -3,
-      originX: 'end',
-      originY: 'top',
-      overlayX: 'end',
-      overlayY: 'bottom'
-    }
-  ] as ConnectionPositionPair[];
 
   // status
   prefixCls: string = 'ant-picker';
@@ -290,11 +256,14 @@ export class TriTimePickerComponent implements ControlValueAccessor, OnInit, Aft
   @Input() @WithConfig() backdrop = false;
   @Input({ transform: booleanAttribute }) inputReadOnly: boolean = false;
 
-  readonly prefix = input<string | TemplateRef<void>>();
-
-  readonly needConfirm = input(false, { transform: booleanAttribute });
   private hasConfirmed = false;
 
+  readonly prefix = input<string | TemplateRef<void>>();
+  readonly needConfirm = input(false, { transform: booleanAttribute });
+  readonly placement = input<TriPlacement>('bottomLeft');
+
+  protected readonly currentPosition = linkedSignal(() => DATE_PICKER_POSITION_MAP[this.placement()]);
+  protected readonly overlayPositions = computed(() => [this.currentPosition(), ...DEFAULT_DATE_PICKER_POSITIONS]);
   protected readonly timepickerAnimationEnter = slideAnimationEnter();
   protected readonly timepickerAnimationLeave = slideAnimationLeave();
 

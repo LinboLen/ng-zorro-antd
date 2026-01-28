@@ -7,14 +7,14 @@ import { BidiModule, Direction } from '@angular/cdk/bidi';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
-import { Component, DebugElement, provideZoneChangeDetection, ViewChild } from '@angular/core';
+import { Component, DebugElement, provideZoneChangeDetection, viewChild, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, inject, TestBed, tick } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { dispatchFakeEvent, dispatchMouseEvent, typeInElement } from 'ng-zorro-antd/core/testing';
-import { TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
+import { TriPlacement, TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
 import { PREFIX_CLASS } from 'ng-zorro-antd/date-picker';
 import { getPickerInput, getPickerOkButton } from 'ng-zorro-antd/date-picker/testing/util';
 import { TriFormControlStatusType, TriFormModule } from 'ng-zorro-antd/form';
@@ -414,6 +414,189 @@ describe('time-picker', () => {
     });
   });
 
+  describe('placement', () => {
+    let fixture: ComponentFixture<TriTestTimePickerPlacementComponent>;
+    let fixtureInstance: TriTestTimePickerPlacementComponent;
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(TriTestTimePickerPlacementComponent);
+      fixtureInstance = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+
+    function openTimePicker(): void {
+      dispatchMouseEvent(getPickerInput(fixture.debugElement), 'click');
+      fixture.detectChanges();
+      tick(500);
+      fixture.detectChanges();
+    }
+
+    function closeTimePicker(): void {
+      triggerInputBlur(fixture.debugElement);
+      fixture.detectChanges();
+      tick(500);
+      fixture.detectChanges();
+    }
+
+    it('should default to bottomLeft placement', fakeAsync(() => {
+      expect(fixtureInstance.timePickerComponent().placement()).toBe('bottomLeft');
+    }));
+
+    it('should support bottomLeft placement', fakeAsync(() => {
+      fixtureInstance.placement = 'bottomLeft';
+      fixture.detectChanges();
+      openTimePicker();
+
+      const dropdown = queryFromOverlay('.ant-picker-dropdown');
+      expect(dropdown).toBeTruthy();
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-bottomLeft')).toBe(true);
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-topLeft')).toBe(false);
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-bottomRight')).toBe(false);
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-topRight')).toBe(false);
+
+      closeTimePicker();
+    }));
+
+    it('should support bottomRight placement', fakeAsync(() => {
+      fixtureInstance.placement = 'bottomRight';
+      fixture.detectChanges();
+      openTimePicker();
+
+      const dropdown = queryFromOverlay('.ant-picker-dropdown');
+      expect(dropdown).toBeTruthy();
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-bottomLeft')).toBe(false);
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-topLeft')).toBe(false);
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-bottomRight')).toBe(true);
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-topRight')).toBe(false);
+
+      closeTimePicker();
+    }));
+
+    it('should support topLeft placement', fakeAsync(() => {
+      fixtureInstance.placement = 'topLeft';
+      fixture.detectChanges();
+      openTimePicker();
+
+      const dropdown = queryFromOverlay('.ant-picker-dropdown');
+      expect(dropdown).toBeTruthy();
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-bottomLeft')).toBe(false);
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-topLeft')).toBe(true);
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-bottomRight')).toBe(false);
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-topRight')).toBe(false);
+
+      closeTimePicker();
+    }));
+
+    it('should support topRight placement', fakeAsync(() => {
+      fixtureInstance.placement = 'topRight';
+      fixture.detectChanges();
+      openTimePicker();
+
+      const dropdown = queryFromOverlay('.ant-picker-dropdown');
+      expect(dropdown).toBeTruthy();
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-bottomLeft')).toBe(false);
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-topLeft')).toBe(false);
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-bottomRight')).toBe(false);
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-topRight')).toBe(true);
+
+      closeTimePicker();
+    }));
+
+    it('should dynamically change placement', fakeAsync(() => {
+      // Start with bottomLeft
+      fixtureInstance.placement = 'bottomLeft';
+      fixture.detectChanges();
+      openTimePicker();
+
+      let dropdown = queryFromOverlay('.ant-picker-dropdown');
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-bottomLeft')).toBe(true);
+
+      closeTimePicker();
+
+      // Change to topRight
+      fixtureInstance.placement = 'topRight';
+      fixture.detectChanges();
+      openTimePicker();
+
+      dropdown = queryFromOverlay('.ant-picker-dropdown');
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-bottomLeft')).toBe(false);
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-topRight')).toBe(true);
+
+      closeTimePicker();
+    }));
+
+    it('should update placement when input changes without reopening', fakeAsync(() => {
+      // Start with bottomLeft
+      fixtureInstance.placement = 'bottomLeft';
+      fixture.detectChanges();
+      expect(fixtureInstance.timePickerComponent()?.placement()).toBe('bottomLeft');
+
+      // Change to topRight
+      fixtureInstance.placement = 'topRight';
+      fixture.detectChanges();
+      expect(fixtureInstance.timePickerComponent().placement()).toBe('topRight');
+
+      // Open and verify the correct class is applied
+      openTimePicker();
+      const dropdown = queryFromOverlay('.ant-picker-dropdown');
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-topRight')).toBe(true);
+
+      closeTimePicker();
+    }));
+
+    it('should change placement while picker is open', fakeAsync(() => {
+      fixtureInstance.placement = 'bottomLeft';
+      fixture.detectChanges();
+      openTimePicker();
+
+      let dropdown = queryFromOverlay('.ant-picker-dropdown');
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-bottomLeft')).toBe(true);
+
+      // Change placement while open
+      fixtureInstance.placement = 'topLeft';
+      fixture.detectChanges();
+      tick(100);
+      fixture.detectChanges();
+
+      dropdown = queryFromOverlay('.ant-picker-dropdown');
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-topLeft')).toBe(true);
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-bottomLeft')).toBe(false);
+
+      closeTimePicker();
+    }));
+
+    it('should maintain placement when selecting a time', fakeAsync(() => {
+      fixtureInstance.placement = 'topLeft';
+      fixture.detectChanges();
+      openTimePicker();
+
+      const dropdown = queryFromOverlay('.ant-picker-dropdown');
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-topLeft')).toBe(true);
+
+      // Select a time
+      dispatchMouseEvent(overlayContainerElement.querySelector('.ant-picker-time-panel-cell')!, 'click');
+      fixture.detectChanges();
+
+      // Dropdown should still have the correct placement class
+      const dropdownAfterSelect = queryFromOverlay('.ant-picker-dropdown');
+      expect(dropdownAfterSelect.classList.contains('ant-picker-dropdown-placement-topLeft')).toBe(true);
+
+      closeTimePicker();
+    }));
+
+    it('should work with disabled state', fakeAsync(() => {
+      fixtureInstance.placement = 'topRight';
+      fixture.detectChanges();
+
+      // Open and verify placement
+      openTimePicker();
+      const dropdown = queryFromOverlay('.ant-picker-dropdown');
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-topRight')).toBe(true);
+
+      closeTimePicker();
+    }));
+  });
+
   describe('status', () => {
     let testComponent: TriTestTimePickerStatusComponent;
     let fixture: ComponentFixture<TriTestTimePickerStatusComponent>;
@@ -457,6 +640,26 @@ describe('time-picker', () => {
       fixture.detectChanges();
       expect(timeElement.nativeElement.classList).toContain('ant-picker-rtl');
     });
+
+    it('should work correctly with placement in RTL mode', fakeAsync(() => {
+      testComponent.dir = 'rtl';
+      testComponent.placement = 'bottomLeft';
+      fixture.detectChanges();
+
+      dispatchMouseEvent(getPickerInput(fixture.debugElement), 'click');
+      fixture.detectChanges();
+      tick(500);
+      fixture.detectChanges();
+
+      const dropdown = queryFromOverlay('.ant-picker-dropdown');
+      expect(dropdown.classList.contains('ant-picker-dropdown-rtl')).toBe(true);
+      expect(dropdown.classList.contains('ant-picker-dropdown-placement-bottomLeft')).toBe(true);
+
+      triggerInputBlur(fixture.debugElement);
+      fixture.detectChanges();
+      tick(500);
+      fixture.detectChanges();
+    }));
   });
 
   describe('prefix with template', () => {
@@ -786,12 +989,13 @@ export class TriTestTimePickerStatusComponent {
   imports: [TriTimePickerComponent, BidiModule],
   template: `
     <div [dir]="dir">
-      <tri-time-picker />
+      <tri-time-picker [placement]="placement" />
     </div>
   `
 })
 export class TriTestTimePickerDirComponent {
   dir: Direction = 'ltr';
+  placement: TriPlacement = 'bottomLeft';
 }
 
 @Component({
@@ -847,4 +1051,14 @@ export class TriTestTimePickerConfirmationComponent {
   defaultOpenValue: Date = new Date('2020-03-27T00:00:00');
   onChange(_: Date | null): void {}
   @ViewChild(TriTimePickerComponent, { static: false }) timePickerComponent!: TriTimePickerComponent;
+}
+
+@Component({
+  imports: [TriTimePickerComponent, FormsModule],
+  template: ` <tri-time-picker [placement]="placement" [(ngModel)]="date" /> `
+})
+export class TriTestTimePickerPlacementComponent {
+  placement: TriPlacement = 'bottomLeft';
+  date: Date | null = null;
+  timePickerComponent = viewChild.required<TriTimePickerComponent>(TriTimePickerComponent);
 }
