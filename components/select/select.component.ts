@@ -4,7 +4,7 @@
  */
 
 import { FocusMonitor } from '@angular/cdk/a11y';
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { DOWN_ARROW, ENTER, ESCAPE, SPACE, TAB, UP_ARROW } from '@angular/cdk/keycodes';
 import {
   CdkConnectedOverlay,
@@ -47,7 +47,12 @@ import { distinctUntilChanged, map, startWith, switchMap, withLatestFrom } from 
 
 import { TriNoAnimationDirective, slideAnimationEnter, slideAnimationLeave } from 'ng-zorro-antd/core/animation';
 import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
-import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
+import {
+  TRI_FORM_SIZE,
+  TriFormItemFeedbackIconComponent,
+  TriFormNoStatusService,
+  TriFormStatusService
+} from 'ng-zorro-antd/core/form';
 import { getPlacementName, TriOverlayModule, POSITION_MAP, POSITION_TYPE } from 'ng-zorro-antd/core/overlay';
 import { cancelAnimationFrame, requestAnimationFrame } from 'ng-zorro-antd/core/polyfill';
 import {
@@ -211,7 +216,7 @@ export type TriSelectSizeType = TriSizeLDSType;
     '[class.tri-select-focused]': 'open || focused',
     '[class.tri-select-single]': `mode === 'default'`,
     '[class.tri-select-multiple]': `mode !== 'default'`,
-    '[class.tri-select-rtl]': `dir === 'rtl'`
+    '[class.tri-select-rtl]': `dir() === 'rtl'`
   },
   hostDirectives: [TriSpaceCompactItemDirective],
   imports: [
@@ -235,7 +240,6 @@ export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterCo
   private readonly renderer = inject(Renderer2);
   private readonly platform = inject(Platform);
   private readonly focusMonitor = inject(FocusMonitor);
-  private readonly directionality = inject(Directionality);
   private readonly destroyRef = inject(DestroyRef);
 
   noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
@@ -316,6 +320,9 @@ export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterCo
   selectTopControlComponentElement!: ElementRef;
 
   protected finalSize = computed(() => {
+    if (this.formSize?.()) {
+      return this.formSize();
+    }
     if (this.compactSize) {
       return this.compactSize();
     }
@@ -323,6 +330,7 @@ export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterCo
   });
 
   #size = signal<TriSizeLDSType>(this.size);
+  private readonly formSize = inject(TRI_FORM_SIZE, { optional: true });
   private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private listOfValue$ = new BehaviorSubject<TriSafeAny[]>([]);
   private listOfTemplateItem$ = new BehaviorSubject<TriSelectItemInterface[]>([]);
@@ -342,7 +350,7 @@ export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterCo
   activatedValue: TriSafeAny | null = null;
   listOfValue: TriSafeAny[] = [];
   focused = false;
-  dir: Direction = 'ltr';
+  protected readonly dir = inject(Directionality).valueSignal;
   positions: ConnectionPositionPair[] = [];
 
   protected readonly selectAnimationEnter = slideAnimationEnter();
@@ -767,13 +775,6 @@ export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterCo
           .filter(item => !!item);
         this.updateListOfContainerItem();
       });
-
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((direction: Direction) => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-
-    this.dir = this.directionality.value;
 
     fromEventOutsideAngular(this.host.nativeElement, 'click')
       .pipe(takeUntilDestroyed(this.destroyRef))

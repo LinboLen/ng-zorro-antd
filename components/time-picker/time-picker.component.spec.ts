@@ -7,18 +7,28 @@ import { BidiModule, Direction } from '@angular/cdk/bidi';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
-import { Component, DebugElement, provideZoneChangeDetection, viewChild, ViewChild } from '@angular/core';
+import {
+  Component,
+  DebugElement,
+  provideZoneChangeDetection,
+  signal,
+  viewChild,
+  ViewChild,
+  type WritableSignal
+} from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, inject, TestBed, tick } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
+import { TRI_FORM_SIZE } from 'ng-zorro-antd/core/form';
 import { dispatchFakeEvent, dispatchMouseEvent, typeInElement } from 'ng-zorro-antd/core/testing';
-import { TriPlacement, TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
+import { TriPlacement, TriStatus, TriVariant, type TriSizeLDSType } from 'ng-zorro-antd/core/types';
 import { PREFIX_CLASS } from 'ng-zorro-antd/date-picker';
 import { getPickerInput, getPickerOkButton } from 'ng-zorro-antd/date-picker/testing/util';
 import { TriFormControlStatusType, TriFormModule } from 'ng-zorro-antd/form';
 import { TriIconModule } from 'ng-zorro-antd/icon';
+import { TRI_SPACE_COMPACT_SIZE } from 'ng-zorro-antd/space';
 
 import { en_GB, TriI18nService } from '../i18n';
 import { TriTimePickerComponent } from './time-picker.component';
@@ -940,6 +950,51 @@ describe('time-picker', () => {
   }
 });
 
+describe('time-picker size', () => {
+  let fixture: ComponentFixture<TriTestTimePickerSizeComponent>;
+  let timePickerElement: HTMLElement;
+  let compactSizeSignal: WritableSignal<TriSizeLDSType>;
+  let formSizeSignal: WritableSignal<TriSizeLDSType>;
+
+  beforeEach(() => {
+    compactSizeSignal = signal<TriSizeLDSType>('large');
+    formSizeSignal = signal<TriSizeLDSType>('default');
+  });
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+  it('should set correctly the size from the formSize signal', () => {
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: TRI_FORM_SIZE, useValue: formSizeSignal },
+        { provide: TRI_SPACE_COMPACT_SIZE, useValue: compactSizeSignal }
+      ]
+    });
+    fixture = TestBed.createComponent(TriTestTimePickerSizeComponent);
+    timePickerElement = fixture.debugElement.query(By.directive(TriTimePickerComponent)).nativeElement;
+    fixture.detectChanges();
+    formSizeSignal.set('large');
+    fixture.detectChanges();
+    expect(timePickerElement.classList).toContain('ant-picker-large');
+  });
+  it('should set correctly the size from the compactSize signal', () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: TRI_SPACE_COMPACT_SIZE, useValue: compactSizeSignal }]
+    });
+    fixture = TestBed.createComponent(TriTestTimePickerSizeComponent);
+    timePickerElement = fixture.debugElement.query(By.directive(TriTimePickerComponent)).nativeElement;
+    fixture.detectChanges();
+    expect(timePickerElement.classList).toContain('ant-picker-large');
+  });
+  it('should set correctly the size from the component input', () => {
+    fixture = TestBed.createComponent(TriTestTimePickerSizeComponent);
+    timePickerElement = fixture.debugElement.query(By.directive(TriTimePickerComponent)).nativeElement;
+    fixture.componentInstance.size = 'large';
+    fixture.detectChanges();
+    expect(timePickerElement.classList).toContain('ant-picker-large');
+  });
+});
+
 @Component({
   imports: [TriTimePickerComponent, FormsModule],
   template: `
@@ -1061,4 +1116,12 @@ export class TriTestTimePickerPlacementComponent {
   placement: TriPlacement = 'bottomLeft';
   date: Date | null = null;
   timePickerComponent = viewChild.required<TriTimePickerComponent>(TriTimePickerComponent);
+}
+
+@Component({
+  imports: [TriTimePickerComponent],
+  template: ` <tri-time-picker [size]="size" /> `
+})
+class TriTestTimePickerSizeComponent {
+  size: TriSizeLDSType = 'default';
 }

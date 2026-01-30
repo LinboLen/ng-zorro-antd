@@ -3,12 +3,15 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ApplicationRef, Component, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationRef, Component, provideZoneChangeDetection, signal, type WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriCascaderModule } from 'ng-zorro-antd/cascader';
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
+import { TRI_FORM_SIZE } from 'ng-zorro-antd/core/form';
 import { TriSizeLDSType } from 'ng-zorro-antd/core/types';
 import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { TriInputModule } from 'ng-zorro-antd/input';
@@ -17,6 +20,7 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
 import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
 import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
+import { TriSpaceCompactComponent } from './space-compact.component';
 import { TriSpaceModule } from './space.module';
 import { TriSpaceDirection } from './types';
 
@@ -275,3 +279,80 @@ class SpaceCompactTestComponent {
 class SpaceCompactDirectionTestComponent {
   direction: TriSpaceDirection = 'horizontal';
 }
+
+describe('finalSize', () => {
+  let fixture: ComponentFixture<SpaceCompactTestComponent>;
+  let spaceCompactElement: HTMLElement;
+  let formSizeSignal: WritableSignal<TriSizeLDSType>;
+
+  beforeEach(() => {
+    formSizeSignal = signal<TriSizeLDSType>('default');
+  });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+
+  it('should set correctly the size from the formSize signal', () => {
+    TestBed.configureTestingModule({
+      providers: [
+        provideNzNoAnimation(),
+        provideZoneChangeDetection(),
+        { provide: TRI_FORM_SIZE, useValue: formSizeSignal }
+      ]
+    });
+    fixture = TestBed.createComponent(SpaceCompactTestComponent);
+    spaceCompactElement = fixture.debugElement.query(By.directive(TriSpaceCompactComponent)).nativeElement;
+    fixture.detectChanges();
+
+    formSizeSignal.set('small');
+    fixture.detectChanges();
+
+    const nzInput = spaceCompactElement.querySelector('input[nz-input]');
+    const nzButton = spaceCompactElement.querySelector('button[nz-button]');
+
+    expect(nzInput!.classList).toContain('ant-input-sm');
+    expect(nzButton!.classList).toContain('ant-btn-sm');
+  });
+
+  it('should set correctly the size from the component input', () => {
+    TestBed.configureTestingModule({
+      providers: [provideNzNoAnimation(), provideZoneChangeDetection()]
+    });
+    fixture = TestBed.createComponent(SpaceCompactTestComponent);
+    spaceCompactElement = fixture.debugElement.query(By.directive(TriSpaceCompactComponent)).nativeElement;
+    fixture.componentInstance.size = 'large';
+    fixture.detectChanges();
+
+    const nzInput = spaceCompactElement.querySelector('input[nz-input]');
+    const nzButton = spaceCompactElement.querySelector('button[nz-button]');
+
+    expect(nzInput!.classList).toContain('ant-input-lg');
+    expect(nzButton!.classList).toContain('ant-btn-lg');
+  });
+
+  it('should prioritize formSize over component input size', () => {
+    TestBed.configureTestingModule({
+      providers: [
+        provideNzNoAnimation(),
+        provideZoneChangeDetection(),
+        { provide: TRI_FORM_SIZE, useValue: formSizeSignal }
+      ]
+    });
+    fixture = TestBed.createComponent(SpaceCompactTestComponent);
+    spaceCompactElement = fixture.debugElement.query(By.directive(TriSpaceCompactComponent)).nativeElement;
+    fixture.componentInstance.size = 'large';
+    fixture.detectChanges();
+
+    formSizeSignal.set('small');
+    fixture.detectChanges();
+
+    const nzInput = spaceCompactElement.querySelector('input[nz-input]');
+    const nzButton = spaceCompactElement.querySelector('button[nz-button]');
+
+    expect(nzInput!.classList).toContain('ant-input-sm');
+    expect(nzInput!.classList).not.toContain('ant-input-lg');
+    expect(nzButton!.classList).toContain('ant-btn-sm');
+    expect(nzButton!.classList).not.toContain('ant-btn-lg');
+  });
+});

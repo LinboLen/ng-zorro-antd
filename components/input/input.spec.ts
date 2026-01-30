@@ -4,15 +4,24 @@
  */
 
 import { BidiModule, Direction } from '@angular/cdk/bidi';
-import { Component, DebugElement, provideZoneChangeDetection, viewChild } from '@angular/core';
+import {
+  Component,
+  DebugElement,
+  provideZoneChangeDetection,
+  signal,
+  viewChild,
+  type WritableSignal
+} from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
+import { TRI_FORM_SIZE } from 'ng-zorro-antd/core/form';
 import { TriSizeLDSType, TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 import { TriInputWrapperComponent } from 'ng-zorro-antd/input/input-wrapper.component';
+import { TRI_SPACE_COMPACT_SIZE } from 'ng-zorro-antd/space';
 
 import { TriFormControlStatusType, TriFormModule } from '../form';
 import { TriInputDirective } from './input.directive';
@@ -276,6 +285,61 @@ describe('input', () => {
       expect(inputElement.nativeElement.type).toEqual('text');
     });
   });
+
+  describe('finalSize', () => {
+    let fixture: ComponentFixture<TestInputFinalSizeComponent>;
+    let inputElement: HTMLButtonElement;
+    let component: TestInputFinalSizeComponent;
+    let formSizeSignal: WritableSignal<TriSizeLDSType | undefined>;
+    let compactSizeSignal: WritableSignal<TriSizeLDSType>;
+
+    beforeEach(() => {
+      compactSizeSignal = signal<TriSizeLDSType>('large');
+      formSizeSignal = signal<TriSizeLDSType | undefined>('default');
+    });
+
+    afterEach(() => {
+      TestBed.resetTestingModule();
+    });
+
+    it('should set correctly the size from the formSize signal', () => {
+      TestBed.configureTestingModule({
+        providers: [
+          { provide: TRI_FORM_SIZE, useValue: formSizeSignal },
+          { provide: TRI_SPACE_COMPACT_SIZE, useValue: compactSizeSignal }
+        ]
+      });
+      fixture = TestBed.createComponent(TestInputFinalSizeComponent);
+      component = fixture.componentInstance;
+      inputElement = fixture.debugElement.query(By.directive(TriInputDirective)).nativeElement;
+      fixture.detectChanges();
+      formSizeSignal.set('large');
+      fixture.detectChanges();
+      expect(inputElement.classList).toContain('ant-input-lg');
+    });
+    it('should set correctly the size from the compactSize signal', () => {
+      TestBed.configureTestingModule({
+        providers: [{ provide: TRI_SPACE_COMPACT_SIZE, useValue: compactSizeSignal }]
+      });
+      fixture = TestBed.createComponent(TestInputFinalSizeComponent);
+      component = fixture.componentInstance;
+      inputElement = fixture.debugElement.query(By.directive(TriInputDirective)).nativeElement;
+      fixture.detectChanges();
+      compactSizeSignal.set('large');
+      fixture.detectChanges();
+      expect(inputElement.classList).toContain('ant-input-lg');
+    });
+    it('should set correctly the size from the nzSize input', () => {
+      TestBed.configureTestingModule({});
+      fixture = TestBed.createComponent(TestInputFinalSizeComponent);
+      component = fixture.componentInstance;
+      inputElement = fixture.debugElement.query(By.directive(TriInputDirective)).nativeElement;
+      fixture.detectChanges();
+      component.size = 'large';
+      fixture.detectChanges();
+      expect(inputElement.classList).toContain('ant-input-lg');
+    });
+  });
 });
 
 @Component({
@@ -370,4 +434,12 @@ export class TriTestInputInFormComponent {
 })
 export class TriTestInputWithTypeComponent {
   type: string | null = null;
+}
+
+@Component({
+  imports: [TriInputModule],
+  template: `<input tri-input [size]="size" />`
+})
+export class TestInputFinalSizeComponent {
+  size: TriSizeLDSType = 'default';
 }

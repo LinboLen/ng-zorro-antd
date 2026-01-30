@@ -25,23 +25,34 @@ import {
   ZERO
 } from '@angular/cdk/keycodes';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, DebugElement, inject, provideZoneChangeDetection, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  DebugElement,
+  inject,
+  provideZoneChangeDetection,
+  signal,
+  TemplateRef,
+  ViewChild,
+  type WritableSignal
+} from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, inject as testingInject, tick } from '@angular/core/testing';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { TriDemoCascaderMultipleComponent } from 'ng-zorro-antd/cascader/demo/multiple';
 import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
+import { TRI_FORM_SIZE } from 'ng-zorro-antd/core/form';
 import {
   createFakeEvent,
   dispatchFakeEvent,
   dispatchKeyboardEvent,
   dispatchMouseEvent
 } from 'ng-zorro-antd/core/testing';
-import { TriSafeAny, TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
+import { TriSafeAny, TriStatus, TriVariant, type TriSizeLDSType } from 'ng-zorro-antd/core/types';
 import { TriFormModule } from 'ng-zorro-antd/form';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 import { TriSelectItemComponent } from 'ng-zorro-antd/select';
+import { TRI_SPACE_COMPACT_SIZE } from 'ng-zorro-antd/space';
 
 import { TriCascaderComponent } from './cascader.component';
 import { TriCascaderModule } from './cascader.module';
@@ -2457,6 +2468,52 @@ describe('cascader', () => {
         'ant-form-item-feedback-icon-success'
       );
     });
+  });
+});
+
+describe('finalSize', () => {
+  let fixture: ComponentFixture<TriDemoCascaderDefaultComponent>;
+  let cascaderElement: HTMLElement;
+  let compactSizeSignal: WritableSignal<TriSizeLDSType>;
+  let formSizeSignal: WritableSignal<TriSizeLDSType>;
+
+  beforeEach(() => {
+    compactSizeSignal = signal<TriSizeLDSType>('large');
+    formSizeSignal = signal<TriSizeLDSType>('default');
+  });
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+
+  it('should set correctly the size from the formSize signal', () => {
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: TRI_FORM_SIZE, useValue: formSizeSignal },
+        { provide: TRI_SPACE_COMPACT_SIZE, useValue: compactSizeSignal }
+      ]
+    });
+    fixture = TestBed.createComponent(TriDemoCascaderDefaultComponent);
+    cascaderElement = fixture.debugElement.query(By.directive(TriCascaderComponent)).nativeElement;
+    fixture.detectChanges();
+    formSizeSignal.set('large');
+    fixture.detectChanges();
+    expect(cascaderElement.classList).toContain('ant-select-lg');
+  });
+  it('should set correctly the size from the compactSize signal', () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: TRI_SPACE_COMPACT_SIZE, useValue: compactSizeSignal }]
+    });
+    fixture = TestBed.createComponent(TriDemoCascaderDefaultComponent);
+    cascaderElement = fixture.debugElement.query(By.directive(TriCascaderComponent)).nativeElement;
+    fixture.detectChanges();
+    expect(cascaderElement.classList).toContain('ant-select-lg');
+  });
+  it('should set correctly the size from the component input', () => {
+    fixture = TestBed.createComponent(TriDemoCascaderDefaultComponent);
+    cascaderElement = fixture.debugElement.query(By.directive(TriCascaderComponent)).nativeElement;
+    fixture.componentInstance.size = 'large';
+    fixture.detectChanges();
+    expect(cascaderElement.classList).toContain('ant-select-lg');
   });
 });
 

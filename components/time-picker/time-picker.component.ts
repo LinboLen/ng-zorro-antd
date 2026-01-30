@@ -41,7 +41,12 @@ import { isValid } from 'date-fns';
 
 import { slideAnimationEnter, slideAnimationLeave } from 'ng-zorro-antd/core/animation';
 import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
-import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
+import {
+  TRI_FORM_SIZE,
+  TriFormItemFeedbackIconComponent,
+  TriFormNoStatusService,
+  TriFormStatusService
+} from 'ng-zorro-antd/core/form';
 import { warn } from 'ng-zorro-antd/core/logger';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { DATE_PICKER_POSITION_MAP, DEFAULT_DATE_PICKER_POSITIONS, TriOverlayModule } from 'ng-zorro-antd/core/overlay';
@@ -256,6 +261,7 @@ export class TriTimePickerComponent implements ControlValueAccessor, OnInit, Aft
   @Input() @WithConfig() backdrop = false;
   @Input({ transform: booleanAttribute }) inputReadOnly: boolean = false;
 
+  private readonly formSize = inject(TRI_FORM_SIZE, { optional: true });
   private hasConfirmed = false;
 
   readonly prefix = input<string | TemplateRef<void>>();
@@ -264,6 +270,7 @@ export class TriTimePickerComponent implements ControlValueAccessor, OnInit, Aft
 
   protected readonly currentPosition = linkedSignal(() => DATE_PICKER_POSITION_MAP[this.placement()]);
   protected readonly overlayPositions = computed(() => [this.currentPosition(), ...DEFAULT_DATE_PICKER_POSITIONS]);
+
   protected readonly timepickerAnimationEnter = slideAnimationEnter();
   protected readonly timepickerAnimationLeave = slideAnimationLeave();
 
@@ -393,6 +400,9 @@ export class TriTimePickerComponent implements ControlValueAccessor, OnInit, Aft
   }
 
   protected finalSize = computed(() => {
+    if (this.formSize?.()) {
+      return this.formSize();
+    }
     if (this.compactSize) {
       return this.compactSize();
     }

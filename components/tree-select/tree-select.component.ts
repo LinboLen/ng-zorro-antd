@@ -4,7 +4,7 @@
  */
 
 import { FocusMonitor } from '@angular/cdk/a11y';
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { BACKSPACE, ESCAPE, TAB } from '@angular/cdk/keycodes';
 import {
   CdkConnectedOverlay,
@@ -18,6 +18,7 @@ import {
   ChangeDetectorRef,
   Component,
   ContentChild,
+  DestroyRef,
   ElementRef,
   EventEmitter,
   Input,
@@ -33,8 +34,7 @@ import {
   forwardRef,
   inject,
   numberAttribute,
-  signal,
-  DestroyRef
+  signal
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -42,8 +42,13 @@ import { Subject, combineLatest, merge, of as observableOf } from 'rxjs';
 import { distinctUntilChanged, filter, map, startWith, tap, withLatestFrom } from 'rxjs/operators';
 
 import { TriNoAnimationDirective, slideAnimationEnter, slideAnimationLeave } from 'ng-zorro-antd/core/animation';
-import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
-import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
+import { TriConfigKey, WithConfig, onConfigChangeEventForComponent } from 'ng-zorro-antd/core/config';
+import {
+  TRI_FORM_SIZE,
+  TriFormItemFeedbackIconComponent,
+  TriFormNoStatusService,
+  TriFormStatusService
+} from 'ng-zorro-antd/core/form';
 import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import { TriOverlayModule, POSITION_MAP } from 'ng-zorro-antd/core/overlay';
 import { requestAnimationFrame } from 'ng-zorro-antd/core/polyfill';
@@ -120,8 +125,8 @@ const listOfPositions = [
         [animate.leave]="slideAnimationLeave()"
         [class.tri-select-dropdown-placement-bottomLeft]="dropdownPosition === 'bottom'"
         [class.tri-select-dropdown-placement-topLeft]="dropdownPosition === 'top'"
-        [class.tri-tree-select-dropdown-rtl]="dir === 'rtl'"
-        [dir]="dir"
+        [class.tri-tree-select-dropdown-rtl]="dir() === 'rtl'"
+        [dir]="dir()"
         [style]="dropdownStyle"
       >
         <tri-tree
@@ -265,7 +270,7 @@ const listOfPositions = [
   host: {
     class: 'tri-select ant-tree-select',
     '[class.tri-select-in-form-item]': '!!formStatusService',
-    '[class.tri-select-rtl]': 'dir==="rtl"',
+    '[class.tri-select-rtl]': 'dir()==="rtl"',
     '[class.tri-select-lg]': 'finalSize() === "large"',
     '[class.tri-select-sm]': 'finalSize() === "small"',
     '[class.tri-select-disabled]': 'disabled',
@@ -290,7 +295,6 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
   private renderer = inject(Renderer2);
   private cdr = inject(ChangeDetectorRef);
   private elementRef = inject(ElementRef);
-  private directionality = inject(Directionality);
   private focusMonitor = inject(FocusMonitor);
   private destroyRef = inject(DestroyRef);
 
@@ -376,10 +380,13 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
   selectedNodes: TriTreeNode[] = [];
   _expandedKeys: string[] = [];
   value: string[] = [];
-  dir: Direction = 'ltr';
+  protected readonly dir = inject(Directionality).valueSignal;
   positions: ConnectionPositionPair[] = [];
 
   protected finalSize = computed(() => {
+    if (this.formSize?.()) {
+      return this.formSize();
+    }
     if (this.compactSize) {
       return this.compactSize();
     }
@@ -387,6 +394,9 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
   });
 
   #size = signal<TriSizeLDSType>(this.size);
+
+  private readonly formSize = inject(TRI_FORM_SIZE, { optional: true });
+
   private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private isNzDisableFirstChange: boolean = true;
   private isComposingChange$ = new Subject<boolean>();
@@ -437,12 +447,6 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
       });
 
     this.subscribeSelectionChange();
-
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-    this.dir = this.directionality.value;
 
     this.focusMonitor
       .monitor(this.elementRef, true)

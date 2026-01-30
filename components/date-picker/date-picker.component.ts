@@ -48,7 +48,12 @@ import { distinctUntilChanged, map, withLatestFrom } from 'rxjs/operators';
 import { TriResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
 import { slideAnimationEnter, slideAnimationLeave } from 'ng-zorro-antd/core/animation';
 import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
-import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
+import {
+  TRI_FORM_SIZE,
+  TriFormItemFeedbackIconComponent,
+  TriFormNoStatusService,
+  TriFormStatusService
+} from 'ng-zorro-antd/core/form';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { DATE_PICKER_POSITION_MAP, DEFAULT_DATE_PICKER_POSITIONS, TriOverlayModule } from 'ng-zorro-antd/core/overlay';
 import { CandyDate, cloneDate, CompatibleValue, wrongSortOrder } from 'ng-zorro-antd/core/time';
@@ -409,6 +414,9 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
   }
 
   protected finalSize = computed(() => {
+    if (this.formSize?.()) {
+      return this.formSize();
+    }
     if (this.compactSize) {
       return this.compactSize();
     }
@@ -416,6 +424,9 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
   });
 
   #size = signal<TriSizeLDSType>(this.size);
+
+  private readonly formSize = inject(TRI_FORM_SIZE, { optional: true });
+
   private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private document: Document = inject(DOCUMENT);
 

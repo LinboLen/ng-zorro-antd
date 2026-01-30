@@ -7,12 +7,22 @@ import { BACKSPACE } from '@angular/cdk/keycodes';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { TestKey } from '@angular/cdk/testing';
 import { UnitTestElement } from '@angular/cdk/testing/testbed';
-import { Component, DebugElement, NgZone, provideZoneChangeDetection, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  DebugElement,
+  NgZone,
+  provideZoneChangeDetection,
+  signal,
+  TemplateRef,
+  ViewChild,
+  WritableSignal
+} from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, inject, TestBed, tick } from '@angular/core/testing';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
+import { TRI_FORM_SIZE } from 'ng-zorro-antd/core/form';
 import {
   createKeyboardEvent,
   dispatchFakeEvent,
@@ -23,6 +33,7 @@ import {
 import { TriTreeNode, TriTreeNodeOptions } from 'ng-zorro-antd/core/tree';
 import { TriSizeLDSType, TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
 import { TriFormControlStatusType, TriFormModule } from 'ng-zorro-antd/form';
+import { TRI_SPACE_COMPACT_SIZE } from 'ng-zorro-antd/space';
 
 import { TriTreeSelectComponent } from './tree-select.component';
 import { TriTreeSelectModule } from './tree-select.module';
@@ -765,6 +776,52 @@ describe('tree-select', () => {
   });
 });
 
+describe('tree-select finalSize', () => {
+  let fixture: ComponentFixture<TestTreeSelectFinalSizeComponent>;
+  let treeSelectElement: HTMLElement;
+  let compactSizeSignal: WritableSignal<TriSizeLDSType>;
+  let formSizeSignal: WritableSignal<TriSizeLDSType>;
+
+  beforeEach(() => {
+    compactSizeSignal = signal<TriSizeLDSType>('large');
+    formSizeSignal = signal<TriSizeLDSType>('default');
+  });
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+
+  it('should set correctly the size from the formSize signal', () => {
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: TRI_FORM_SIZE, useValue: formSizeSignal },
+        { provide: TRI_SPACE_COMPACT_SIZE, useValue: compactSizeSignal }
+      ]
+    });
+    fixture = TestBed.createComponent(TestTreeSelectFinalSizeComponent);
+    treeSelectElement = fixture.debugElement.query(By.directive(TriTreeSelectComponent)).nativeElement;
+    fixture.detectChanges();
+    formSizeSignal.set('large');
+    fixture.detectChanges();
+    expect(treeSelectElement.classList).toContain('ant-select-lg');
+  });
+  it('should set correctly the size from the compactSize signal', () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: TRI_SPACE_COMPACT_SIZE, useValue: compactSizeSignal }]
+    });
+    fixture = TestBed.createComponent(TestTreeSelectFinalSizeComponent);
+    treeSelectElement = fixture.debugElement.query(By.directive(TriTreeSelectComponent)).nativeElement;
+    fixture.detectChanges();
+    expect(treeSelectElement.classList).toContain('ant-select-lg');
+  });
+  it('should set correctly the size from the component input', () => {
+    fixture = TestBed.createComponent(TestTreeSelectFinalSizeComponent);
+    treeSelectElement = fixture.debugElement.query(By.directive(TriTreeSelectComponent)).nativeElement;
+    fixture.componentInstance.size = 'large';
+    fixture.detectChanges();
+    expect(treeSelectElement.classList).toContain('ant-select-lg');
+  });
+});
+
 @Component({
   imports: [TriTreeSelectModule, FormsModule],
   template: `
@@ -1120,4 +1177,12 @@ function dig(path = '0', level = 3): TriTreeNodeOptions[] {
 })
 export class TriTestTreeSelectVirtualScrollComponent {
   nodes: TriTreeNodeOptions[] = dig();
+}
+
+@Component({
+  imports: [TriTreeSelectModule],
+  template: `<tri-tree-select [nodes]="[]" [size]="size" />`
+})
+export class TestTreeSelectFinalSizeComponent {
+  size: TriSizeLDSType = 'default';
 }

@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import {
   AfterContentInit,
   afterEveryRender,
@@ -32,6 +32,7 @@ import { Subject } from 'rxjs';
 import { filter, startWith } from 'rxjs/operators';
 
 import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
+import { TRI_FORM_SIZE } from 'ng-zorro-antd/core/form';
 import { TriSizeLDSType } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 import { TriIconDirective, TriIconModule } from 'ng-zorro-antd/icon';
@@ -73,7 +74,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'button';
     '[class.tri-btn-background-ghost]': `ghost`,
     '[class.tri-btn-block]': `block`,
     '[class.tri-input-search-button]': `search`,
-    '[class.tri-btn-rtl]': `dir === 'rtl'`,
+    '[class.tri-btn-rtl]': `dir() === 'rtl'`,
     '[class.tri-btn-icon-only]': `iconOnly()`,
     '[attr.tabindex]': 'disabled ? -1 : (tabIndex === null ? null : tabIndex)',
     '[attr.disabled]': 'disabled || null'
@@ -85,7 +86,6 @@ export class TriButtonComponent implements OnChanges, AfterViewInit, AfterConten
   private elementRef: ElementRef<HTMLButtonElement | HTMLAnchorElement> = inject(ElementRef);
   private cdr = inject(ChangeDetectorRef);
   private renderer = inject(Renderer2);
-  private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
@@ -103,14 +103,20 @@ export class TriButtonComponent implements OnChanges, AfterViewInit, AfterConten
   @Input() type: TriButtonType = null;
   @Input() shape: TriButtonShape = null;
   @Input() @WithConfig() size: TriButtonSize = 'default';
-  dir: Direction = 'ltr';
+  protected readonly dir = inject(Directionality).valueSignal;
 
   private readonly elementOnly = signal(false);
   readonly #size = signal<TriSizeLDSType>(this.size);
+
+  private readonly formSize = inject(TRI_FORM_SIZE, { optional: true });
+
   private readonly compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private readonly loading$ = new Subject<boolean>();
 
   protected readonly finalSize = computed(() => {
+    if (this.formSize?.()) {
+      return this.formSize();
+    }
     if (this.compactSize) {
       return this.compactSize();
     }
@@ -141,13 +147,6 @@ export class TriButtonComponent implements OnChanges, AfterViewInit, AfterConten
 
   ngOnInit(): void {
     this.#size.set(this.size);
-
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((direction: Direction) => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-
-    this.dir = this.directionality.value;
 
     // Caretaker note: this event listener could've been added through `host.click` or `HostListener`.
     // The compiler generates the `ɵɵlistener` instruction which wraps the actual listener internally into the

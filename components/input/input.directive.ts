@@ -25,7 +25,12 @@ import { NgControl } from '@angular/forms';
 import { EMPTY } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
-import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
+import {
+  TRI_FORM_SIZE,
+  TriFormItemFeedbackIconComponent,
+  TriFormNoStatusService,
+  TriFormStatusService
+} from 'ng-zorro-antd/core/form';
 import { TriSizeLDSType, TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
 import { getStatusClassNames, InputFocusOptions, triggerFocus } from 'ng-zorro-antd/core/util';
 import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
@@ -88,6 +93,8 @@ export class TriInputDirective implements OnInit {
   // TODO: When the input group is removed, we can remove this.
   readonly _size = linkedSignal(this.size);
 
+  private readonly formSize = inject(TRI_FORM_SIZE, { optional: true });
+
   readonly _status = this.formStatusService
     ? toSignal(this.formStatusService.formStatusChanges.pipe(map(value => value.status)), { initialValue: '' })
     : this.status;
@@ -108,6 +115,9 @@ export class TriInputDirective implements OnInit {
 
   protected readonly focused = signal<boolean>(false);
   protected readonly finalSize = computed(() => {
+    if (this.formSize?.()) {
+      return this.formSize();
+    }
     if (this.compactSize) {
       return this.compactSize();
     }

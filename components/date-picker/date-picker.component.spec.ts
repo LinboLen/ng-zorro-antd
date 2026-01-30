@@ -13,8 +13,10 @@ import {
   DebugElement,
   inject,
   provideZoneChangeDetection,
+  signal,
   TemplateRef,
-  ViewChild
+  ViewChild,
+  WritableSignal
 } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, inject as testingInject, tick } from '@angular/core/testing';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -25,16 +27,25 @@ import isEqual from 'date-fns/isEqual';
 import isSameDay from 'date-fns/isSameDay';
 import { enUS } from 'date-fns/locale';
 
+import { TRI_FORM_SIZE } from 'ng-zorro-antd/core/form';
 import {
   dispatchFakeEvent,
   dispatchKeyboardEvent,
   dispatchMouseEvent,
   typeInElement
 } from 'ng-zorro-antd/core/testing';
-import { NgStyleInterface, TriSafeAny, TriStatus, TriVariant, type TriPlacement } from 'ng-zorro-antd/core/types';
+import {
+  NgStyleInterface,
+  TriSafeAny,
+  TriSizeLDSType,
+  TriStatus,
+  TriVariant,
+  type TriPlacement
+} from 'ng-zorro-antd/core/types';
 import { TriFormModule } from 'ng-zorro-antd/form';
 import { TRI_DATE_LOCALE, TriI18nService } from 'ng-zorro-antd/i18n';
 import en_US from 'ng-zorro-antd/i18n/languages/en_US';
+import { TRI_SPACE_COMPACT_SIZE } from 'ng-zorro-antd/space';
 
 import { TriDatePickerComponent, TriDatePickerSizeType } from './date-picker.component';
 import { TriDatePickerModule } from './date-picker.module';
@@ -1517,6 +1528,51 @@ describe('in form', () => {
   });
 });
 
+describe('finalSize', () => {
+  let fixture: ComponentFixture<TestDatePickerFinalSizeComponent>;
+  let datePickerElement: HTMLElement;
+  let compactSizeSignal: WritableSignal<TriSizeLDSType>;
+  let formSizeSignal: WritableSignal<TriSizeLDSType | undefined>;
+
+  beforeEach(() => {
+    compactSizeSignal = signal<TriSizeLDSType>('large');
+    formSizeSignal = signal<TriSizeLDSType>('default');
+  });
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+  it('should set correctly the size from the formSize signal', () => {
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: TRI_FORM_SIZE, useValue: formSizeSignal },
+        { provide: TRI_SPACE_COMPACT_SIZE, useValue: compactSizeSignal }
+      ]
+    });
+    fixture = TestBed.createComponent(TestDatePickerFinalSizeComponent);
+    datePickerElement = fixture.debugElement.query(By.directive(TriDatePickerComponent)).nativeElement;
+    fixture.detectChanges();
+    formSizeSignal.set('large');
+    fixture.detectChanges();
+    expect(datePickerElement.classList).toContain('ant-picker-large');
+  });
+  it('should set correctly the size from the compactSize signal', () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: TRI_SPACE_COMPACT_SIZE, useValue: compactSizeSignal }]
+    });
+    fixture = TestBed.createComponent(TestDatePickerFinalSizeComponent);
+    datePickerElement = fixture.debugElement.query(By.directive(TriDatePickerComponent)).nativeElement;
+    fixture.detectChanges();
+    expect(datePickerElement.classList).toContain('ant-picker-large');
+  });
+  it('should set correctly the size from the component input', () => {
+    fixture = TestBed.createComponent(TestDatePickerFinalSizeComponent);
+    datePickerElement = fixture.debugElement.query(By.directive(TriDatePickerComponent)).nativeElement;
+    fixture.componentInstance.size = 'large';
+    fixture.detectChanges();
+    expect(datePickerElement.classList).toContain('ant-picker-large');
+  });
+});
+
 @Component({
   imports: [ReactiveFormsModule, FormsModule, TriDatePickerModule],
   template: `
@@ -1662,4 +1718,12 @@ class TriTestDatePickerInFormComponent {
   validateForm = this.fb.group({
     demo: this.fb.control<Date | null>(null, Validators.required)
   });
+}
+
+@Component({
+  imports: [TriDatePickerModule],
+  template: `<tri-date-picker [size]="size" />`
+})
+export class TestDatePickerFinalSizeComponent {
+  size: TriDatePickerSizeType = 'default';
 }

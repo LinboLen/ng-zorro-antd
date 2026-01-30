@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import {
   booleanAttribute,
   DestroyRef,
@@ -15,14 +15,14 @@ import {
   SimpleChange,
   SimpleChanges
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable, Subject } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 
 import { ThemeType } from '@ant-design/icons-angular';
 
 import { TriConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
-import { InputObservable } from 'ng-zorro-antd/core/types';
+import { TRI_FORM_SIZE } from 'ng-zorro-antd/core/form';
+import { InputObservable, type TriSizeLDSType } from 'ng-zorro-antd/core/types';
 
 import type { TriRequiredMark } from './types';
 
@@ -45,12 +45,14 @@ export const DefaultTooltipIcon = {
     '[class.tri-form-horizontal]': `layout === 'horizontal'`,
     '[class.tri-form-vertical]': `layout === 'vertical'`,
     '[class.tri-form-inline]': `layout === 'inline'`,
-    '[class.tri-form-rtl]': `dir === 'rtl'`
-  }
+    '[class.tri-form-rtl]': `dir() === 'rtl'`,
+    '[class.tri-form-small]': `size() === 'small'`,
+    '[class.tri-form-large]': `size() === 'large'`
+  },
+  providers: [{ provide: TRI_FORM_SIZE, useFactory: () => inject(TriFormDirective).size }]
 })
 export class TriFormDirective implements OnChanges, InputObservable {
   private destroyRef = inject(DestroyRef);
-  private directionality = inject(Directionality);
 
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
@@ -62,9 +64,11 @@ export class TriFormDirective implements OnChanges, InputObservable {
   @Input() labelAlign: TriLabelAlignType = 'right';
   @Input({ transform: booleanAttribute }) @WithConfig() labelWrap: boolean = false;
 
+  readonly size = input<TriSizeLDSType>();
+
   readonly requiredMark = input<TriRequiredMark>(true);
 
-  dir: Direction = 'ltr';
+  dir = inject(Directionality).valueSignal;
   private inputChanges$ = new Subject<SimpleChanges>();
 
   getInputObservable<K extends keyof this>(changeType: K): Observable<SimpleChange> {
@@ -75,10 +79,6 @@ export class TriFormDirective implements OnChanges, InputObservable {
   }
 
   constructor() {
-    this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntilDestroyed()).subscribe(direction => {
-      this.dir = direction;
-    });
     this.destroyRef.onDestroy(() => {
       this.inputChanges$.complete();
     });

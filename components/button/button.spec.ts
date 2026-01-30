@@ -4,13 +4,23 @@
  */
 
 import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
-import { ApplicationRef, Component, Input, provideZoneChangeDetection, ViewChild } from '@angular/core';
+import {
+  ApplicationRef,
+  Component,
+  Input,
+  provideZoneChangeDetection,
+  signal,
+  ViewChild,
+  WritableSignal
+} from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { TRI_FORM_SIZE } from 'ng-zorro-antd/core/form';
+import { TriSafeAny, TriSizeLDSType } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
+import { TRI_SPACE_COMPACT_SIZE } from 'ng-zorro-antd/space';
 
 import { TriButtonComponent, TriButtonModule, TriButtonShape, TriButtonSize, TriButtonType } from './index';
 
@@ -297,6 +307,52 @@ describe('anchor', () => {
   });
 });
 
+describe('finalSize', () => {
+  let fixture: ComponentFixture<TestButtonFinalSizeComponent>;
+  let buttonElement: HTMLButtonElement;
+  let compactSizeSignal: WritableSignal<TriSizeLDSType>;
+  let formSizeSignal: WritableSignal<TriSizeLDSType>;
+
+  beforeEach(() => {
+    compactSizeSignal = signal<TriSizeLDSType>('large');
+    formSizeSignal = signal<TriSizeLDSType>('default');
+  });
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+
+  it('should set correctly the size from the formSize signal', () => {
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: TRI_FORM_SIZE, useValue: formSizeSignal },
+        { provide: TRI_SPACE_COMPACT_SIZE, useValue: compactSizeSignal }
+      ]
+    });
+    fixture = TestBed.createComponent(TestButtonFinalSizeComponent);
+    buttonElement = fixture.debugElement.query(By.directive(TriButtonComponent)).nativeElement;
+    fixture.detectChanges();
+    formSizeSignal.set('large');
+    fixture.detectChanges();
+    expect(buttonElement.classList).toContain('ant-btn-lg');
+  });
+  it('should set correctly the size from the compactSize signal', () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: TRI_SPACE_COMPACT_SIZE, useValue: compactSizeSignal }]
+    });
+    fixture = TestBed.createComponent(TestButtonFinalSizeComponent);
+    buttonElement = fixture.debugElement.query(By.directive(TriButtonComponent)).nativeElement;
+    fixture.detectChanges();
+    expect(buttonElement.classList).toContain('ant-btn-lg');
+  });
+  it('should set correctly the size from the component input', () => {
+    fixture = TestBed.createComponent(TestButtonFinalSizeComponent);
+    buttonElement = fixture.debugElement.query(By.directive(TriButtonComponent)).nativeElement;
+    fixture.componentInstance.size = 'large';
+    fixture.detectChanges();
+    expect(buttonElement.classList).toContain('ant-btn-lg');
+  });
+});
+
 @Component({
   imports: [TriButtonModule],
   template: `
@@ -449,4 +505,12 @@ export class TestButtonRtlComponent extends TestButtonComponent {
 })
 export class TestAnchorComponent {
   disabled = false;
+}
+
+@Component({
+  imports: [TriButtonModule],
+  template: ` <button tri-button [size]="size">Button</button> `
+})
+export class TestButtonFinalSizeComponent {
+  size: TriButtonSize = 'default';
 }

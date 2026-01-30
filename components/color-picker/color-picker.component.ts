@@ -9,6 +9,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  computed,
   DestroyRef,
   EventEmitter,
   forwardRef,
@@ -17,12 +18,14 @@ import {
   OnChanges,
   OnInit,
   Output,
+  signal,
   SimpleChanges,
   TemplateRef
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, FormBuilder, NG_VALUE_ACCESSOR } from '@angular/forms';
 
+import { TRI_FORM_SIZE } from 'ng-zorro-antd/core/form';
 import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import { TriSafeAny, TriSizeLDSType } from 'ng-zorro-antd/core/types';
 import { TriPopoverDirective } from 'ng-zorro-antd/popover';
@@ -48,8 +51,8 @@ import { TriColor, TriColorPickerFormatType, TriColorPickerTriggerType, TriPrese
   template: `
     <div
       [class.tri-color-picker-trigger]="!flipFlop"
-      [class.tri-color-picker-sm]="size === 'small'"
-      [class.tri-color-picker-lg]="size === 'large'"
+      [class.tri-color-picker-sm]="finalSize() === 'small'"
+      [class.tri-color-picker-lg]="finalSize() === 'large'"
       tri-popover
       [popoverContent]="colorPicker"
       [popoverTrigger]="!disabled ? trigger : null"
@@ -57,7 +60,7 @@ import { TriColor, TriColorPickerFormatType, TriColorPickerTriggerType, TriPrese
       (popoverVisibleChange)="onOpenChange.emit($event)"
     >
       @if (!flipFlop) {
-        <tri-color-block [color]="blockColor" [size]="size" />
+        <tri-color-block [color]="blockColor" [size]="finalSize()" />
       } @else {
         <ng-template [ngTemplateOutlet]="flipFlop" />
       }
@@ -119,6 +122,8 @@ export class TriColorPickerComponent implements OnInit, OnChanges, ControlValueA
   private destroyRef = inject(DestroyRef);
   private formBuilder = inject(FormBuilder);
 
+  private readonly formSize = inject(TRI_FORM_SIZE, { optional: true });
+
   @Input() format: TriColorPickerFormatType | null = null;
   @Input() value: string | TriColor = '';
   @Input() size: TriSizeLDSType = 'default';
@@ -142,6 +147,9 @@ export class TriColorPickerComponent implements OnInit, OnChanges, ControlValueA
   clearColor: boolean = false;
   _showText: string = defaultColor.toHexString();
   formControl = this.formBuilder.control('');
+  readonly #size = signal(this.size);
+
+  protected readonly finalSize = computed(() => this.formSize?.() || this.#size());
 
   _onChange: (value: string) => void = () => {};
 
@@ -186,9 +194,12 @@ export class TriColorPickerComponent implements OnInit, OnChanges, ControlValueA
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const { nzValue, nzDefaultValue } = changes;
+    const { nzValue, nzDefaultValue, nzSize } = changes;
     if (nzValue || nzDefaultValue) {
       this.getBlockColor();
+    }
+    if (nzSize) {
+      this.#size.set(nzSize.currentValue);
     }
   }
 

@@ -47,7 +47,12 @@ import { distinctUntilChanged, map, startWith, switchMap, withLatestFrom } from 
 
 import { TriNoAnimationDirective, slideAnimationEnter, slideAnimationLeave } from 'ng-zorro-antd/core/animation';
 import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
-import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
+import {
+  TRI_FORM_SIZE,
+  TriFormItemFeedbackIconComponent,
+  TriFormNoStatusService,
+  TriFormStatusService
+} from 'ng-zorro-antd/core/form';
 import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import {
   DEFAULT_CASCADER_POSITIONS,
@@ -442,6 +447,9 @@ export class TriCascaderComponent
   }
 
   protected finalSize = computed(() => {
+    if (this.formSize?.()) {
+      return this.formSize();
+    }
     if (this.compactSize) {
       return this.compactSize();
     }
@@ -449,6 +457,8 @@ export class TriCascaderComponent
   });
 
   #size = signal<TriSizeLDSType>(this.size);
+
+  private readonly formSize = inject(TRI_FORM_SIZE, { optional: true });
   private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private inputString = '';
   private isOpening = false;

@@ -4,13 +4,14 @@
  */
 
 import { FocusMonitor } from '@angular/cdk/a11y';
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { ENTER, LEFT_ARROW, RIGHT_ARROW, SPACE } from '@angular/cdk/keycodes';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   ElementRef,
   Input,
   NgZone,
@@ -19,14 +20,18 @@ import {
   ViewChild,
   ViewEncapsulation,
   booleanAttribute,
+  computed,
   forwardRef,
   inject,
-  DestroyRef
+  signal,
+  type OnChanges,
+  type SimpleChanges
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
+import { TRI_FORM_SIZE } from 'ng-zorro-antd/core/form';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriSizeDSType, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
@@ -58,8 +63,8 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'switch';
       [class.tri-switch-checked]="isChecked"
       [class.tri-switch-loading]="loading"
       [class.tri-switch-disabled]="disabled"
-      [class.tri-switch-small]="size === 'small'"
-      [class.tri-switch-rtl]="dir === 'rtl'"
+      [class.tri-switch-small]="finalSize() === 'small'"
+      [class.tri-switch-rtl]="dir() === 'rtl'"
       [waveExtraNode]="true"
     >
       <span class="tri-switch-handle">
@@ -79,7 +84,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'switch';
   `,
   imports: [TriWaveModule, TriIconModule, TriOutletModule]
 })
-export class TriSwitchComponent implements ControlValueAccessor, AfterViewInit, OnInit {
+export class TriSwitchComponent implements ControlValueAccessor, AfterViewInit, OnInit, OnChanges {
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   configService = inject(TriConfigService);
@@ -87,7 +92,6 @@ export class TriSwitchComponent implements ControlValueAccessor, AfterViewInit, 
   private ngZone = inject(NgZone);
   private cdr = inject(ChangeDetectorRef);
   private focusMonitor = inject(FocusMonitor);
-  private directionality = inject(Directionality);
   private destroyRef = inject(DestroyRef);
 
   isChecked = false;
@@ -102,9 +106,15 @@ export class TriSwitchComponent implements ControlValueAccessor, AfterViewInit, 
   @Input() @WithConfig() size: TriSizeDSType = 'default';
   @Input() id: string | null = null;
 
-  dir: Direction = 'ltr';
+  protected readonly dir = inject(Directionality).valueSignal;
 
   private isNzDisableFirstChange = true;
+
+  readonly #size = signal<TriSizeDSType>(this.size);
+
+  private readonly formSize = inject(TRI_FORM_SIZE, { optional: true });
+
+  protected readonly finalSize = computed(() => this.formSize?.() || this.#size());
 
   updateValue(value: boolean): void {
     if (this.isChecked !== value) {
@@ -127,14 +137,14 @@ export class TriSwitchComponent implements ControlValueAccessor, AfterViewInit, 
     });
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    const { nzSize } = changes;
+    if (nzSize) {
+      this.#size.set(nzSize.currentValue);
+    }
+  }
+
   ngOnInit(): void {
-    this.directionality.change.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-
-    this.dir = this.directionality.value;
-
     fromEventOutsideAngular(this.el, 'click')
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(event => {
