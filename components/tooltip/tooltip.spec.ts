@@ -405,13 +405,7 @@ function getOverlayElementForTooltip(tooltip: TriTooltipBaseDirective): HTMLElem
       Manually
     </a>
 
-    <a
-      #alwaysShow
-      tri-tooltip
-      [tooltipTrigger]="trigger"
-      [tooltipTitle]="'always show'"
-      [tooltipVisible]="visible"
-    >
+    <a #alwaysShow tri-tooltip [tooltipTrigger]="trigger" tooltipTitle="always show" [tooltipVisible]="visible">
       Always Show
     </a>
 

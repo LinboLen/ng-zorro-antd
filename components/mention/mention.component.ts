@@ -84,7 +84,7 @@ export type MentionPlacement = 'top' | 'bottom';
   selector: 'tri-mention',
   exportAs: 'triMention',
   template: `
-    <ng-content></ng-content>
+    <ng-content />
     <ng-template #suggestions>
       <div class="tri-mentions-dropdown">
         <ul class="tri-mentions-dropdown-menu" role="menu" tabindex="0">
@@ -104,9 +104,7 @@ export type MentionPlacement = 'top' | 'bottom';
                 {{ valueWith(suggestion) }}
               }
             </li>
-          }
-
-          @if (filteredSuggestions.length === 0) {
+          } @empty {
             <li class="tri-mentions-dropdown-menu-item tri-mentions-dropdown-menu-item-disabled">
               @if (loading) {
                 <span><tri-icon type="loading" /></span>

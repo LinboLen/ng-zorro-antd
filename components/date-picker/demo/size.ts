@@ -15,24 +15,22 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
     </tri-radio-group>
     <br />
     <br />
-    <tri-date-picker [size]="size"></tri-date-picker>
+    <tri-date-picker [size]="size" />
     <br />
-    <tri-date-picker mode="week" [size]="size"></tri-date-picker>
+    <tri-date-picker mode="week" [size]="size" />
     <br />
-    <tri-date-picker mode="month" [size]="size"></tri-date-picker>
+    <tri-date-picker mode="month" [size]="size" />
     <br />
-    <tri-date-picker mode="quarter" [size]="size"></tri-date-picker>
+    <tri-date-picker mode="quarter" [size]="size" />
     <br />
-    <tri-range-picker [size]="size"></tri-range-picker>
+    <tri-range-picker [size]="size" />
   `,
-  styles: [
-    `
-      nz-date-picker,
-      nz-range-picker {
-        margin: 0 8px 12px 0;
-      }
-    `
-  ]
+  styles: `
+    nz-date-picker,
+    nz-range-picker {
+      margin: 0 8px 12px 0;
+    }
+  `
 })
 export class TriDemoDatePickerSizeComponent {
   size: TriDatePickerSizeType = 'default';

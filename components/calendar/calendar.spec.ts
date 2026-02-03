@@ -426,8 +426,8 @@ describe('calendar', () => {
 @Component({
   imports: [TriCalendarModule],
   template: `
-    <tri-calendar></tri-calendar>
-    <tri-calendar [(modeChange)]="mode"></tri-calendar>
+    <tri-calendar />
+    <tri-calendar [(modeChange)]="mode" />
   `
 })
 class TriTestCalendarModeComponent {
@@ -437,10 +437,10 @@ class TriTestCalendarModeComponent {
 @Component({
   imports: [FormsModule, TriCalendarModule],
   template: `
-    <tri-calendar></tri-calendar>
-    <tri-calendar [(valueChange)]="date0"></tri-calendar>
-    <tri-calendar [(ngModel)]="date1"></tri-calendar>
-    <tri-calendar [(valueChange)]="date2" [(modeChange)]="mode"></tri-calendar>
+    <tri-calendar />
+    <tri-calendar [(valueChange)]="date0" />
+    <tri-calendar [(ngModel)]="date1" />
+    <tri-calendar [(valueChange)]="date2" [(modeChange)]="mode" />
   `
 })
 class TriTestCalendarValueComponent {
@@ -453,8 +453,8 @@ class TriTestCalendarValueComponent {
 @Component({
   imports: [TriCalendarModule],
   template: `
-    <tri-calendar></tri-calendar>
-    <tri-calendar [fullscreen]="fullscreen"></tri-calendar>
+    <tri-calendar />
+    <tri-calendar [fullscreen]="fullscreen" />
   `
 })
 class TriTestCalendarFullscreenComponent {
@@ -465,7 +465,7 @@ class TriTestCalendarFullscreenComponent {
 @Component({
   imports: [TriCalendarModule],
   template: `
-    <tri-calendar [dateCell]="tpl"></tri-calendar>
+    <tri-calendar [dateCell]="tpl" />
     <ng-template #tpl>Foo</ng-template>
     <tri-calendar>
       <ng-container *dateCell>Bar</ng-container>
@@ -477,7 +477,7 @@ class TriTestCalendarDateCellComponent {}
 @Component({
   imports: [TriCalendarModule],
   template: `
-    <tri-calendar [dateFullCell]="tpl"></tri-calendar>
+    <tri-calendar [dateFullCell]="tpl" />
     <ng-template #tpl>Foo</ng-template>
     <tri-calendar>
       <ng-container *dateFullCell>Bar</ng-container>
@@ -489,7 +489,7 @@ class TriTestCalendarDateFullCellComponent {}
 @Component({
   imports: [TriCalendarModule],
   template: `
-    <tri-calendar mode="year" [monthCell]="tpl"></tri-calendar>
+    <tri-calendar mode="year" [monthCell]="tpl" />
     <ng-template #tpl>Foo</ng-template>
     <tri-calendar mode="year">
       <ng-container *monthCell>Bar</ng-container>
@@ -501,7 +501,7 @@ class TriTestCalendarMonthCellComponent {}
 @Component({
   imports: [TriCalendarModule],
   template: `
-    <tri-calendar mode="year" [monthFullCell]="tpl"></tri-calendar>
+    <tri-calendar mode="year" [monthFullCell]="tpl" />
     <ng-template #tpl>Foo</ng-template>
     <tri-calendar mode="year">
       <ng-container *monthFullCell>Bar</ng-container>
@@ -518,7 +518,7 @@ class TriTestCalendarMonthFullCellComponent {}
       [(ngModel)]="date0"
       (panelChange)="panelChange($event)"
       (selectChange)="selectChange($event)"
-    ></tri-calendar>
+    />
   `
 })
 class TriTestCalendarChangesComponent {
@@ -532,7 +532,7 @@ class TriTestCalendarChangesComponent {
   imports: [BidiModule, TriCalendarModule],
   template: `
     <div [dir]="direction">
-      <tri-calendar></tri-calendar>
+      <tri-calendar />
     </div>
   `
 })

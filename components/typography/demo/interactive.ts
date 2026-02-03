@@ -31,13 +31,11 @@ import { TriTypographyModule } from 'ng-zorro-antd/typography';
     </ng-template>
     <p tri-typography copyable [copyTooltips]="null" content="Hide copy tooltips."></p>
   `,
-  styles: [
-    `
-      p[nz-typography] {
-        margin-bottom: 1em;
-      }
-    `
-  ]
+  styles: `
+    p[nz-typography] {
+      margin-bottom: 1em;
+    }
+  `
 })
 export class TriDemoTypographyInteractiveComponent {
   editStr = 'This is an editable text.';

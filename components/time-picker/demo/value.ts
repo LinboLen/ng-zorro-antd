@@ -6,7 +6,7 @@ import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
 @Component({
   selector: 'tri-demo-time-picker-value',
   imports: [FormsModule, TriTimePickerModule],
-  template: `<tri-time-picker [(ngModel)]="time"></tri-time-picker>`
+  template: `<tri-time-picker [(ngModel)]="time" />`
 })
 export class TriDemoTimePickerValueComponent {
   time: Date | null = null;

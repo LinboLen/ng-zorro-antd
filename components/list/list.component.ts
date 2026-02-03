@@ -56,7 +56,7 @@ import {
         }
         @if (grid && dataSource) {
           <div tri-row [gutter]="grid.gutter || null">
-            @for (item of dataSource; track item; let index = $index) {
+            @for (item of dataSource; track item) {
               <div
                 tri-col
                 [span]="grid.span || null"
@@ -69,18 +69,18 @@ import {
               >
                 <ng-template
                   [ngTemplateOutlet]="renderItem"
-                  [ngTemplateOutletContext]="{ $implicit: item, index: index }"
+                  [ngTemplateOutletContext]="{ $implicit: item, index: $index }"
                 />
               </div>
             }
           </div>
         } @else {
           <div class="tri-list-items">
-            @for (item of dataSource; track item; let index = $index) {
+            @for (item of dataSource; track item) {
               <ng-container>
                 <ng-template
                   [ngTemplateOutlet]="renderItem"
-                  [ngTemplateOutletContext]="{ $implicit: item, index: index }"
+                  [ngTemplateOutletContext]="{ $implicit: item, index: $index }"
                 />
               </ng-container>
             }
@@ -102,7 +102,7 @@ import {
 
     <ng-content select="nz-list-footer, [nz-list-footer]" />
 
-    <ng-template [ngTemplateOutlet]="loadMore"></ng-template>
+    <ng-template [ngTemplateOutlet]="loadMore" />
     <ng-content select="nz-list-load-more, [nz-list-load-more]" />
 
     @if (pagination) {

@@ -42,7 +42,7 @@ const TREE_DATA: TreeNode[] = [
   imports: [FormsModule, TriIconModule, TriSwitchModule, TriTreeViewModule],
   template: `
     Show Leaf Icon:
-    <tri-switch [(ngModel)]="showLeafIcon"></tri-switch>
+    <tri-switch [(ngModel)]="showLeafIcon" />
 
     <tri-tree-view [dataSource]="dataSource" [childrenAccessor]="childrenAccessor">
       <tri-tree-node *treeNodeDef="let node" treeNodeIndentLine [expandable]="false">

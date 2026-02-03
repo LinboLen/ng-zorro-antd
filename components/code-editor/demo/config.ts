@@ -18,7 +18,7 @@ import { TriTypographyModule } from 'ng-zorro-antd/typography';
         (ngModelChange)="onDarkModeChange($event)"
         [unCheckedChildren]="unchecked"
         [checkedChildren]="checked"
-      ></tri-switch>
+      />
     </p>
     <ng-template #unchecked>
       <tri-icon type="bulb" />
@@ -26,7 +26,7 @@ import { TriTypographyModule } from 'ng-zorro-antd/typography';
     <ng-template #checked>
       <tri-icon type="poweroff" />
     </ng-template>
-    <tri-code-editor style="height: 200px" [ngModel]="code" [editorOption]="{ language: 'markdown' }"></tri-code-editor>
+    <tri-code-editor style="height: 200px" [ngModel]="code" [editorOption]="{ language: 'markdown' }" />
   `
 })
 export class TriDemoCodeEditorConfigComponent {

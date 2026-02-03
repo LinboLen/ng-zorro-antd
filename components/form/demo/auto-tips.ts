@@ -65,13 +65,11 @@ import { TriInputModule } from 'ng-zorro-antd/input';
       </tri-form-item>
     </form>
   `,
-  styles: [
-    `
-      [nz-form] {
-        max-width: 600px;
-      }
-    `
-  ]
+  styles: `
+    [nz-form] {
+      max-width: 600px;
+    }
+  `
 })
 export class TriDemoFormAutoTipsComponent implements OnInit, OnDestroy {
   private fb = inject(NonNullableFormBuilder);

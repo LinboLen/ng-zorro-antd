@@ -39,7 +39,7 @@ import { TriTypographyModule } from 'ng-zorro-antd/typography';
       </tri-breadcrumb>
 
       <!--avatar-->
-      <tri-avatar tri-page-header-avatar src="https://avatars0.githubusercontent.com/u/22736418?s=88&v=4"></tri-avatar>
+      <tri-avatar tri-page-header-avatar src="https://avatars0.githubusercontent.com/u/22736418?s=88&v=4" />
 
       <!--title-->
       <tri-page-header-title>Title</tri-page-header-title>
@@ -49,7 +49,7 @@ import { TriTypographyModule } from 'ng-zorro-antd/typography';
 
       <!--tags-->
       <tri-page-header-tags>
-        <tri-tag [color]="'blue'">Running</tri-tag>
+        <tri-tag color="blue">Running</tri-tag>
       </tri-page-header-tags>
 
       <!--extra-->
@@ -114,41 +114,39 @@ import { TriTypographyModule } from 'ng-zorro-antd/typography';
       </tri-page-header-content>
     </tri-page-header>
   `,
-  styles: [
-    `
-      .content {
-        flex: 1;
-      }
+  styles: `
+    .content {
+      flex: 1;
+    }
 
-      .content p {
-        margin-bottom: 1em;
-      }
+    .content p {
+      margin-bottom: 1em;
+    }
 
-      .content-link a {
-        margin-right: 16px;
-      }
+    .content-link a {
+      margin-right: 16px;
+    }
 
-      .content-link a img {
-        margin-right: 8px;
-      }
+    .content-link a img {
+      margin-right: 8px;
+    }
 
+    .content-image {
+      margin: 0 0 0 60px;
+      display: flex;
+      align-items: center;
+    }
+
+    .content-image img {
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
       .content-image {
-        margin: 0 0 0 60px;
-        display: flex;
-        align-items: center;
+        flex: 100%;
+        margin: 24px 0 0;
       }
-
-      .content-image img {
-        width: 100%;
-      }
-
-      @media (max-width: 768px) {
-        .content-image {
-          flex: 100%;
-          margin: 24px 0 0;
-        }
-      }
-    `
-  ]
+    }
+  `
 })
 export class TriDemoPageHeaderContentComponent {}

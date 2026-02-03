@@ -528,13 +528,13 @@ describe('steps', () => {
       [progressDot]="progressDot"
       [startIndex]="startIndex"
     >
-      <tri-step title="0title" [subtitle]="subtitle" description="0description"></tri-step>
-      <tri-step title="1title" description="1description"></tri-step>
-      <tri-step title="2title" description="2description"></tri-step>
+      <tri-step title="0title" [subtitle]="subtitle" description="0description" />
+      <tri-step title="1title" description="1description" />
+      <tri-step title="2title" description="2description" />
     </tri-steps>
     <ng-template #progressTemplate let-dot let-status="status" let-index="index">
       <span class="insert-span">{{ status }}{{ index }}</span>
-      <ng-template [ngTemplateOutlet]="dot"></ng-template>
+      <ng-template [ngTemplateOutlet]="dot" />
     </ng-template>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -556,9 +556,9 @@ export class TriTestOuterStepsComponent {
   imports: [TriIconModule, TriStepsModule],
   template: `
     <tri-steps [current]="current">
-      <tri-step [title]="title" [description]="description" [icon]="icon" [status]="status"></tri-step>
-      <tri-step [title]="title" [description]="description" [icon]="icon" [status]="status"></tri-step>
-      <tri-step [title]="title" [description]="description" [icon]="icon" [status]="status"></tri-step>
+      <tri-step [title]="title" [description]="description" [icon]="icon" [status]="status" />
+      <tri-step [title]="title" [description]="description" [icon]="icon" [status]="status" />
+      <tri-step [title]="title" [description]="description" [icon]="icon" [status]="status" />
     </tri-steps>
     <ng-template #titleTemplate>titleTemplate</ng-template>
     <ng-template #descriptionTemplate>descriptionTemplate</ng-template>
@@ -580,9 +580,9 @@ export class TriTestInnerStepStringComponent {
   imports: [TriIconModule, TriStepsModule],
   template: `
     <tri-steps [current]="1">
-      <tri-step [title]="titleTemplate" [description]="descriptionTemplate" [icon]="iconTemplate"></tri-step>
-      <tri-step [title]="titleTemplate" [description]="descriptionTemplate" [icon]="iconTemplate"></tri-step>
-      <tri-step [title]="titleTemplate" [description]="descriptionTemplate" [icon]="iconTemplate"></tri-step>
+      <tri-step [title]="titleTemplate" [description]="descriptionTemplate" [icon]="iconTemplate" />
+      <tri-step [title]="titleTemplate" [description]="descriptionTemplate" [icon]="iconTemplate" />
+      <tri-step [title]="titleTemplate" [description]="descriptionTemplate" [icon]="iconTemplate" />
     </tri-steps>
     <ng-template #titleTemplate>titleTemplate</ng-template>
     <ng-template #descriptionTemplate>descriptionTemplate</ng-template>
@@ -596,7 +596,7 @@ export class TriTestInnerStepTemplateComponent {}
   template: `
     <tri-steps>
       @for (step of steps; track step) {
-        <tri-step></tri-step>
+        <tri-step />
       }
     </tri-steps>
   `
@@ -613,7 +613,7 @@ export class TriTestStepForComponent {
   template: `
     <tri-steps [current]="1">
       @for (step of steps; track step) {
-        <tri-step></tri-step>
+        <tri-step />
       }
     </tri-steps>
   `
@@ -630,7 +630,7 @@ export class TriTestStepAsyncComponent implements OnInit {
 
 @Component({
   imports: [BidiModule, TriTestOuterStepsComponent],
-  template: `<tri-test-outer-steps [dir]="direction"></tri-test-outer-steps>`
+  template: `<tri-test-outer-steps [dir]="direction" />`
 })
 export class TriTestOuterStepsRtlComponent {
   @ViewChild(Dir) dir!: Dir;

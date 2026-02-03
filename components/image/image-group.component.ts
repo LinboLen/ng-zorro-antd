@@ -10,7 +10,7 @@ import { TriImageDirective } from './image.directive';
 @Component({
   selector: 'tri-image-group',
   exportAs: 'triImageGroup',
-  template: '<ng-content></ng-content>',
+  template: '<ng-content />',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })

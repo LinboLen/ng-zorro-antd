@@ -65,7 +65,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'table';
   template: `
     <tri-spin [delay]="loadingDelay" [spinning]="loading" [indicator]="loadingIndicator">
       @if (paginationPosition === 'both' || paginationPosition === 'top') {
-        <ng-template [ngTemplateOutlet]="paginationTemplate"></ng-template>
+        <ng-template [ngTemplateOutlet]="paginationTemplate" />
       }
       <div
         #tableMainElement
@@ -81,7 +81,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'table';
         [class.tri-table-small]="size === 'small'"
       >
         @if (title) {
-          <tri-table-title-footer [title]="title"></tri-table-title-footer>
+          <tri-table-title-footer [title]="title" />
         }
         @if (scrollY || scrollX) {
           <tri-table-inner-scroll
@@ -101,7 +101,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'table';
             [tableMainElement]="tableMainElement"
             [virtualForTrackBy]="virtualForTrackBy"
             [noDataVirtualHeight]="noDataVirtualHeight"
-          ></tri-table-inner-scroll>
+          />
         } @else {
           <tri-table-inner-default
             [tableLayout]="tableLayout"
@@ -109,14 +109,14 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'table';
             [theadTemplate]="theadTemplate"
             [contentTemplate]="contentTemplate"
             [tfootTemplate]="tfootTemplate"
-          ></tri-table-inner-default>
+          />
         }
         @if (footer) {
-          <tri-table-title-footer [footer]="footer"></tri-table-title-footer>
+          <tri-table-title-footer [footer]="footer" />
         }
       </div>
       @if (paginationPosition === 'both' || paginationPosition === 'bottom') {
-        <ng-template [ngTemplateOutlet]="paginationTemplate"></ng-template>
+        <ng-template [ngTemplateOutlet]="paginationTemplate" />
       }
     </tri-spin>
     <ng-template #paginationTemplate>
@@ -137,11 +137,11 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'table';
           [pageIndex]="pageIndex"
           (pageSizeChange)="onPageSizeChange($event)"
           (pageIndexChange)="onPageIndexChange($event)"
-        ></tri-pagination>
+        />
       }
     </ng-template>
     <ng-template #contentTemplate>
-      <ng-content></ng-content>
+      <ng-content />
     </ng-template>
   `,
   host: {

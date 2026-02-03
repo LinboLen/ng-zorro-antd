@@ -142,13 +142,7 @@ describe('divider', () => {
 @Component({
   imports: [TriDividerModule],
   template: `
-    <tri-divider
-      #comp
-      [dashed]="dashed"
-      [type]="type"
-      [text]="text"
-      [orientation]="orientation"
-    ></tri-divider>
+    <tri-divider #comp [dashed]="dashed" [type]="type" [text]="text" [orientation]="orientation" />
   `
 })
 class TestDividerComponent {

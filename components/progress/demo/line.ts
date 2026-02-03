@@ -6,11 +6,11 @@ import { TriProgressModule } from 'ng-zorro-antd/progress';
   selector: 'tri-demo-progress-line',
   imports: [TriProgressModule],
   template: `
-    <tri-progress [percent]="30"></tri-progress>
-    <tri-progress [percent]="50" status="active"></tri-progress>
-    <tri-progress [percent]="70" status="exception"></tri-progress>
-    <tri-progress [percent]="100"></tri-progress>
-    <tri-progress [percent]="50" [showInfo]="false"></tri-progress>
+    <tri-progress [percent]="30" />
+    <tri-progress [percent]="50" status="active" />
+    <tri-progress [percent]="70" status="exception" />
+    <tri-progress [percent]="100" />
+    <tri-progress [percent]="50" [showInfo]="false" />
   `
 })
 export class TriDemoProgressLineComponent {}

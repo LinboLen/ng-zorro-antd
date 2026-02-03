@@ -25,38 +25,36 @@ function alphabet(): string[] {
     <br />
     <tri-select [(ngModel)]="singleValue" [size]="size">
       @for (option of listOfOption; track option) {
-        <tri-option [label]="option" [value]="option"></tri-option>
+        <tri-option [label]="option" [value]="option" />
       }
     </tri-select>
     <br />
     <br />
     <tri-select [(ngModel)]="singleValue" [size]="size" showSearch>
       @for (option of listOfOption; track option) {
-        <tri-option [label]="option" [value]="option"></tri-option>
+        <tri-option [label]="option" [value]="option" />
       }
     </tri-select>
     <br />
     <br />
     <tri-select [(ngModel)]="multipleValue" [size]="size" mode="multiple" placeHolder="Please select">
       @for (option of listOfOption; track option) {
-        <tri-option [label]="option" [value]="option"></tri-option>
+        <tri-option [label]="option" [value]="option" />
       }
     </tri-select>
     <br />
     <br />
     <tri-select [(ngModel)]="tagValue" [size]="size" mode="tags" placeHolder="Please select">
       @for (option of listOfOption; track option) {
-        <tri-option [label]="option" [value]="option"></tri-option>
+        <tri-option [label]="option" [value]="option" />
       }
     </tri-select>
   `,
-  styles: [
-    `
-      nz-select {
-        width: 100%;
-      }
-    `
-  ]
+  styles: `
+    nz-select {
+      width: 100%;
+    }
+  `
 })
 export class TriDemoSelectSizeComponent {
   readonly listOfOption: string[] = alphabet();

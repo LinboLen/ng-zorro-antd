@@ -26,19 +26,17 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
     </tri-breadcrumb>
     <ng-template #iconTemplate><tri-icon type="arrow-right" /></ng-template>
   `,
-  styles: [
-    `
-      h4:first-child {
-        margin-top: 0;
-      }
+  styles: `
+    h4:first-child {
+      margin-top: 0;
+    }
 
-      h4 {
-        margin: 16px 0;
-        font-size: 14px;
-        line-height: 1;
-        font-weight: normal;
-      }
-    `
-  ]
+    h4 {
+      margin: 16px 0;
+      font-size: 14px;
+      line-height: 1;
+      font-weight: normal;
+    }
+  `
 })
 export class TriDemoBreadcrumbSeparatorComponent {}

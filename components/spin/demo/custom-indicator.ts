@@ -8,14 +8,12 @@ import { TriSpinModule } from 'ng-zorro-antd/spin';
   imports: [TriIconModule, TriSpinModule],
   template: `
     <ng-template #indicatorTemplate><tri-icon type="loading" /></ng-template>
-    <tri-spin simple [indicator]="indicatorTemplate"></tri-spin>
+    <tri-spin simple [indicator]="indicatorTemplate" />
   `,
-  styles: [
-    `
-      nz-icon {
-        font-size: 24px;
-      }
-    `
-  ]
+  styles: `
+    nz-icon {
+      font-size: 24px;
+    }
+  `
 })
 export class TriDemoSpinCustomIndicatorComponent {}

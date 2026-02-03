@@ -56,7 +56,7 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
             <tri-form-item>
               <tri-form-label>Owner</tri-form-label>
               <tri-form-control>
-                <tri-select placeHolder="Please select an owner"></tri-select>
+                <tri-select placeHolder="Please select an owner" />
               </tri-form-control>
             </tri-form-item>
           </div>
@@ -64,7 +64,7 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
             <tri-form-item>
               <tri-form-label>Type</tri-form-label>
               <tri-form-control>
-                <tri-select placeHolder="Please choose the type"></tri-select>
+                <tri-select placeHolder="Please choose the type" />
               </tri-form-control>
             </tri-form-item>
           </div>
@@ -74,7 +74,7 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
             <tri-form-item>
               <tri-form-label>Approver</tri-form-label>
               <tri-form-control>
-                <tri-select placeHolder="Please choose the approver"></tri-select>
+                <tri-select placeHolder="Please choose the approver" />
               </tri-form-control>
             </tri-form-item>
           </div>
@@ -82,7 +82,7 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
             <tri-form-item>
               <tri-form-label>DateTime</tri-form-label>
               <tri-form-control>
-                <tri-range-picker></tri-range-picker>
+                <tri-range-picker />
               </tri-form-control>
             </tri-form-item>
           </div>

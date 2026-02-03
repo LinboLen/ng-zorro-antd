@@ -46,14 +46,12 @@ import { TriTableModule } from 'ng-zorro-antd/table';
       </tbody>
     </tri-table>
   `,
-  styles: [
-    `
-      .nz-resizable-preview {
-        border-width: 0;
-        border-right-width: 1px;
-      }
-    `
-  ]
+  styles: `
+    .nz-resizable-preview {
+      border-width: 0;
+      border-right-width: 1px;
+    }
+  `
 })
 export class TriDemoResizableTableComponent {
   cols: Array<{ title: string; width?: string }> = [

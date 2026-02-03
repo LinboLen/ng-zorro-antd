@@ -12,13 +12,11 @@ import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
     <br />
     <tri-segmented [options]="options" size="large" />
   `,
-  styles: [
-    `
-      .ant-segmented {
-        margin-bottom: 10px;
-      }
-    `
-  ]
+  styles: `
+    .ant-segmented {
+      margin-bottom: 10px;
+    }
+  `
 })
 export class TriDemoSegmentedSizeComponent {
   options = ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly'];

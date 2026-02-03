@@ -11,13 +11,11 @@ import { TriMessageService } from 'ng-zorro-antd/message';
     <button tri-button (click)="createMessage('error')">Error</button>
     <button tri-button (click)="createMessage('warning')">Warning</button>
   `,
-  styles: [
-    `
-      [nz-button] {
-        margin-right: 8px;
-      }
-    `
-  ]
+  styles: `
+    [nz-button] {
+      margin-right: 8px;
+    }
+  `
 })
 export class TriDemoMessageOtherComponent {
   createMessage(type: string): void {

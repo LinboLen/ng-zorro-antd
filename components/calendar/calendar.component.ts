@@ -53,7 +53,7 @@ type TriCalendarDateTemplate = TemplateRef<{ $implicit: Date }>;
       (modeChange)="onModeChange($event)"
       (yearChange)="onYearSelect($event)"
       (monthChange)="onMonthSelect($event)"
-    ></tri-calendar-header>
+    />
 
     <div class="tri-picker-panel">
       <div class="ant-picker-{{ mode === 'month' ? 'date' : 'month' }}-panel">
@@ -68,7 +68,7 @@ type TriCalendarDateTemplate = TemplateRef<{ $implicit: Date }>;
               [fullCellRender]="$any(dateFullCell)"
               [disabledDate]="disabledDate"
               (valueChange)="onDateSelect($event)"
-            ></date-table>
+            />
           } @else {
             <month-table
               [prefixCls]="prefixCls"
@@ -77,7 +77,7 @@ type TriCalendarDateTemplate = TemplateRef<{ $implicit: Date }>;
               [cellRender]="$any(monthCell)"
               [fullCellRender]="$any(monthFullCell)"
               (valueChange)="onDateSelect($event)"
-            ></month-table>
+            />
           }
         </div>
       </div>

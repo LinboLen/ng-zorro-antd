@@ -30,10 +30,10 @@ import { TriFloatButtonBadge } from './typings';
         [offset]="badge()?.nzOffset"
         [size]="badge()?.nzSize || 'default'"
       >
-        <ng-container *ngTemplateOutlet="button"></ng-container>
+        <ng-container *ngTemplateOutlet="button" />
       </tri-badge>
     } @else {
-      <ng-container *ngTemplateOutlet="button"></ng-container>
+      <ng-container *ngTemplateOutlet="button" />
     }
     <ng-template #button>
       <div class="tri-float-btn-body">

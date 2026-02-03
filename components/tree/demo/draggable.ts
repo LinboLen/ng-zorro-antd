@@ -5,7 +5,7 @@ import { TriFormatEmitEvent, TriTreeModule } from 'ng-zorro-antd/tree';
 @Component({
   selector: 'tri-demo-tree-draggable',
   imports: [TriTreeModule],
-  template: `<tri-tree [data]="nodes" draggable blockNode (onDrop)="event($event)"></tri-tree>`
+  template: `<tri-tree [data]="nodes" draggable blockNode (onDrop)="event($event)" />`
 })
 export class TriDemoTreeDraggableComponent {
   readonly nodes = [

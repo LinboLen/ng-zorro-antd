@@ -6,18 +6,16 @@ import { TriProgressModule } from 'ng-zorro-antd/progress';
   selector: 'tri-demo-progress-circle-mini',
   imports: [TriProgressModule],
   template: `
-    <tri-progress [percent]="75" type="circle" [width]="80"></tri-progress>
-    <tri-progress [percent]="70" type="circle" [width]="80" status="exception"></tri-progress>
-    <tri-progress [percent]="100" type="circle" [width]="80"></tri-progress>
+    <tri-progress [percent]="75" type="circle" [width]="80" />
+    <tri-progress [percent]="70" type="circle" [width]="80" status="exception" />
+    <tri-progress [percent]="100" type="circle" [width]="80" />
   `,
-  styles: [
-    `
-      nz-progress {
-        margin-right: 8px;
-        margin-bottom: 8px;
-        display: inline-block;
-      }
-    `
-  ]
+  styles: `
+    nz-progress {
+      margin-right: 8px;
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+  `
 })
 export class TriDemoProgressCircleMiniComponent {}

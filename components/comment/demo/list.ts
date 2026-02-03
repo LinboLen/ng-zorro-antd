@@ -10,10 +10,10 @@ import { TriListModule } from 'ng-zorro-antd/list';
   selector: 'tri-demo-comment-list',
   imports: [TriAvatarModule, TriCommentModule, TriListModule],
   template: `
-    <tri-list [dataSource]="data" [renderItem]="item" [itemLayout]="'horizontal'">
+    <tri-list [dataSource]="data" [renderItem]="item" itemLayout="horizontal">
       <ng-template #item let-item>
         <tri-comment [author]="item.author" [datetime]="item.datetime">
-          <tri-avatar tri-comment-avatar icon="user" [src]="item.avatar"></tri-avatar>
+          <tri-avatar tri-comment-avatar icon="user" [src]="item.avatar" />
           <tri-comment-content>
             <p>{{ item.content }}</p>
           </tri-comment-content>

@@ -48,7 +48,7 @@ const TREE_DATA: FoodNode[] = [
   template: `
     <tri-tree-view [dataSource]="dataSource" [levelAccessor]="levelAccessor" [directoryTree]="true">
       <tri-tree-node *treeNodeDef="let node" treeNodePadding [expandable]="false">
-        <tri-tree-node-toggle treeNodeNoopToggle></tri-tree-node-toggle>
+        <tri-tree-node-toggle treeNodeNoopToggle />
         <tri-tree-node-option
           [disabled]="node.disabled"
           [selected]="selectListSelection.isSelected(node)"

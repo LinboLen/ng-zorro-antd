@@ -15,7 +15,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
       showSearch
       checkable
       placeHolder="Please select"
-    ></tri-tree-select>
+    />
   `
 })
 export class TriDemoTreeSelectCheckableComponent {

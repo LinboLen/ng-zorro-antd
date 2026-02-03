@@ -6,13 +6,13 @@ import { TriColorPickerModule } from 'ng-zorro-antd/color-picker';
   selector: 'tri-demo-color-picker-size',
   imports: [TriColorPickerModule],
   template: `
-    <tri-color-picker size="large"></tri-color-picker>
+    <tri-color-picker size="large" />
     <br />
     <br />
-    <tri-color-picker></tri-color-picker>
+    <tri-color-picker />
     <br />
     <br />
-    <tri-color-picker size="small"></tri-color-picker>
+    <tri-color-picker size="small" />
   `
 })
 export class TriDemoColorPickerSizeComponent {}

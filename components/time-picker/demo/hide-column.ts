@@ -6,7 +6,7 @@ import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
 @Component({
   selector: 'tri-demo-time-picker-hide-column',
   imports: [FormsModule, TriTimePickerModule],
-  template: `<tri-time-picker [(ngModel)]="time" format="HH:mm"></tri-time-picker>`
+  template: `<tri-time-picker [(ngModel)]="time" format="HH:mm" />`
 })
 export class TriDemoTimePickerHideColumnComponent {
   time = new Date();

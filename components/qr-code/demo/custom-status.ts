@@ -7,8 +7,8 @@ import { TriQRCodeModule } from 'ng-zorro-antd/qr-code';
   selector: 'tri-demo-qr-code-custom-status',
   imports: [TriQRCodeModule, TriIconModule],
   template: `
-    <tri-qrcode value="https://ng.ant.design/" statusRender="NgZorro"></tri-qrcode>
-    <tri-qrcode value="https://ng.ant.design/" [statusRender]="customTemplate"></tri-qrcode>
+    <tri-qrcode value="https://ng.ant.design/" statusRender="NgZorro" />
+    <tri-qrcode value="https://ng.ant.design/" [statusRender]="customTemplate" />
     <ng-template #customTemplate>
       <div>
         <tri-icon type="check-circle" theme="outline" style="color: red" />
@@ -16,12 +16,10 @@ import { TriQRCodeModule } from 'ng-zorro-antd/qr-code';
       </div>
     </ng-template>
   `,
-  styles: [
-    `
-      nz-qrcode {
-        margin-right: 12px;
-      }
-    `
-  ]
+  styles: `
+    nz-qrcode {
+      margin-right: 12px;
+    }
+  `
 })
 export class TriDemoQrCodeCustomStatusComponent {}

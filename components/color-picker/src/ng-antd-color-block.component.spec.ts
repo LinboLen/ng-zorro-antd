@@ -45,7 +45,7 @@ describe('NgxColorBlockComponent', () => {
 
 @Component({
   imports: [NgAntdColorBlockComponent],
-  template: `<ng-antd-color-block [color]="color" (onClick)="clickHandle()"></ng-antd-color-block>`
+  template: `<ng-antd-color-block [color]="color" (onClick)="clickHandle()" />`
 })
 export class NzxTestColorBlockComponent {
   color = '#1677ff';

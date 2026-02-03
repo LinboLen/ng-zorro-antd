@@ -9,10 +9,10 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   selector: 'tri-demo-menu-switch-mode',
   imports: [FormsModule, TriDividerModule, TriMenuModule, TriSwitchModule],
   template: `
-    <tri-switch [(ngModel)]="mode"></tri-switch>
+    <tri-switch [(ngModel)]="mode" />
     Change Mode
-    <tri-divider type="vertical"></tri-divider>
-    <tri-switch [(ngModel)]="dark"></tri-switch>
+    <tri-divider type="vertical" />
+    <tri-switch [(ngModel)]="dark" />
     Change Theme
     <br />
     <br />
@@ -54,13 +54,11 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
       </li>
     </ul>
   `,
-  styles: [
-    `
-      [nz-menu] {
-        width: 240px;
-      }
-    `
-  ]
+  styles: `
+    [nz-menu] {
+      width: 240px;
+    }
+  `
 })
 export class TriDemoMenuSwitchModeComponent {
   mode = false;

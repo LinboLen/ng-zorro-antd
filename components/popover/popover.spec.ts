@@ -202,8 +202,8 @@ describe('popover', () => {
       tri-popover
       [popoverTitle]="templateTitleContext"
       [popoverContent]="templateContentContext"
-      [popoverTitleContext]="'titleContextTest'"
-      [popoverContentContext]="'contentContextTest'"
+      popoverTitleContext="titleContextTest"
+      popoverContentContext="contentContextTest"
     >
     </a>
     <ng-template #templateTitleContext let-item>{{ item }}</ng-template>

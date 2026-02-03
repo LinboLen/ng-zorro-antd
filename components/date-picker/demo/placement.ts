@@ -17,18 +17,16 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
     </tri-radio-group>
     <br />
     <br />
-    <tri-date-picker [placement]="placement"></tri-date-picker>
+    <tri-date-picker [placement]="placement" />
     <br />
-    <tri-range-picker [placement]="placement"></tri-range-picker>
+    <tri-range-picker [placement]="placement" />
   `,
-  styles: [
-    `
-      nz-date-picker,
-      nz-range-picker {
-        margin: 0 8px 12px 0;
-      }
-    `
-  ]
+  styles: `
+    nz-date-picker,
+    nz-range-picker {
+      margin: 0 8px 12px 0;
+    }
+  `
 })
 export class TriDemoDatePickerPlacementComponent {
   placement: TriPlacement = 'bottomLeft';

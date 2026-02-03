@@ -32,7 +32,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
   template: `
     <div class="tri-select-item-option-content">
       @if (customContent) {
-        <ng-template [ngTemplateOutlet]="template"></ng-template>
+        <ng-template [ngTemplateOutlet]="template" />
       } @else {
         {{ label }}
       }
@@ -42,7 +42,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
         @if (!icon) {
           <tri-icon type="check" class="tri-select-selected-icon" />
         } @else {
-          <ng-template [ngTemplateOutlet]="icon"></ng-template>
+          <ng-template [ngTemplateOutlet]="icon" />
         }
       </div>
     }

@@ -22,14 +22,12 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
     <button tri-button loading shape="circle"></button>
     <button tri-button loading type="primary" shape="circle"></button>
   `,
-  styles: [
-    `
-      [nz-button] {
-        margin-right: 8px;
-        margin-bottom: 12px;
-      }
-    `
-  ]
+  styles: `
+    [nz-button] {
+      margin-right: 8px;
+      margin-bottom: 12px;
+    }
+  `
 })
 export class TriDemoButtonLoadingComponent {
   isLoadingOne = false;

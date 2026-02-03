@@ -153,7 +153,7 @@ describe('watermark (SSR)', () => {
       [gap]="gap"
       [offset]="offset"
       class="watermark"
-    ></tri-watermark>
+    />
   `
 })
 export class TriTestWatermarkBasicComponent {

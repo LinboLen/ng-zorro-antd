@@ -42,7 +42,7 @@ const CLASS_NAME = 'ant-float-btn';
         class="tri-float-btn-inner"
         (click)="onClick.emit(true)"
       >
-        <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+        <ng-container *ngTemplateOutlet="contentTemplate" />
       </a>
     } @else {
       <button
@@ -52,7 +52,7 @@ const CLASS_NAME = 'ant-float-btn';
         class="tri-float-btn-inner"
         (click)="onClick.emit(true)"
       >
-        <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+        <ng-container *ngTemplateOutlet="contentTemplate" />
       </button>
     }
     <ng-template #contentTemplate>
@@ -61,7 +61,7 @@ const CLASS_NAME = 'ant-float-btn';
         [icon]="icon()"
         [description]="description()"
         [shape]="shape()"
-      ></tri-float-button-content>
+      />
     </ng-template>
   `,
   host: {

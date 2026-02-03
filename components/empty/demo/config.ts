@@ -30,25 +30,25 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
   ],
   template: `
     <tri-switch
-      [unCheckedChildren]="'default'"
-      [checkedChildren]="'customize'"
+      unCheckedChildren="default"
+      checkedChildren="customize"
       [(ngModel)]="customize"
       (ngModelChange)="onConfigChange()"
-    ></tri-switch>
+    />
 
-    <tri-divider></tri-divider>
+    <tri-divider />
 
     <h3>Select</h3>
-    <tri-select style="width: 200px"></tri-select>
+    <tri-select style="width: 200px" />
 
     <h3>TreeSelect</h3>
-    <tri-tree-select style="width: 200px;"></tri-tree-select>
+    <tri-tree-select style="width: 200px;" />
 
     <h3>Cascader</h3>
-    <tri-cascader style="width: 200px;" [showSearch]="true" [options]="[]"></tri-cascader>
+    <tri-cascader style="width: 200px;" [showSearch]="true" [options]="[]" />
 
     <h3>Transfer</h3>
-    <tri-transfer></tri-transfer>
+    <tri-transfer />
 
     <h3>Table</h3>
     <tri-table [data]="[]">
@@ -62,7 +62,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
     </tri-table>
 
     <h3>List</h3>
-    <tri-list [dataSource]="[]"></tri-list>
+    <tri-list [dataSource]="[]" />
 
     <ng-template #customTpl let-name>
       <div style="text-align: center;">
@@ -71,14 +71,12 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
       </div>
     </ng-template>
   `,
-  styles: [
-    `
-      h3 {
-        font-size: inherit;
-        margin: 16px 0 8px 0;
-      }
-    `
-  ]
+  styles: `
+    h3 {
+      font-size: inherit;
+      margin: 16px 0 8px 0;
+    }
+  `
 })
 export class TriDemoEmptyConfigComponent {
   @ViewChild('customTpl', { static: false }) customTpl?: TemplateRef<any>; // eslint-disable-line @typescript-eslint/no-explicit-any

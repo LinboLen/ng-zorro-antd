@@ -16,13 +16,11 @@ import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
       [parser]="parserPercent"
     />
   `,
-  styles: [
-    `
-      nz-input-number {
-        margin-right: 8px;
-      }
-    `
-  ]
+  styles: `
+    nz-input-number {
+      margin-right: 8px;
+    }
+  `
 })
 export class TriDemoInputNumberFormatterComponent {
   dollarValue = 1000;

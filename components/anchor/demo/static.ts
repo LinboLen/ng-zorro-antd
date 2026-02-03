@@ -8,11 +8,11 @@ import { TriAnchorModule } from 'ng-zorro-antd/anchor';
   encapsulation: ViewEncapsulation.None,
   template: `
     <tri-anchor [affix]="false">
-      <tri-link href="#components-anchor-demo-basic" title="Basic demo"></tri-link>
-      <tri-link href="#components-anchor-demo-static" title="Static demo"></tri-link>
+      <tri-link href="#components-anchor-demo-basic" title="Basic demo" />
+      <tri-link href="#components-anchor-demo-static" title="Static demo" />
       <tri-link href="#api" title="API">
-        <tri-link href="#nz-anchor" title="nz-anchor"></tri-link>
-        <tri-link href="#nz-link" title="nz-link"></tri-link>
+        <tri-link href="#nz-anchor" title="nz-anchor" />
+        <tri-link href="#nz-link" title="nz-link" />
       </tri-link>
     </tri-anchor>
   `

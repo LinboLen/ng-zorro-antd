@@ -12,7 +12,7 @@ import { TriAvatarModule } from 'ng-zorro-antd/avatar';
   exportAs: 'triListItemMetaTitle',
   template: `
     <h4 class="tri-list-item-meta-title">
-      <ng-content></ng-content>
+      <ng-content />
     </h4>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -24,7 +24,7 @@ export class TriListItemMetaTitleComponent {}
   exportAs: 'triListItemMetaDescription',
   template: `
     <div class="tri-list-item-meta-description">
-      <ng-content></ng-content>
+      <ng-content />
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush

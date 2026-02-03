@@ -11,17 +11,17 @@ import { TriDividerModule } from 'ng-zorro-antd/divider';
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae
         sunt a te dicta? Refert tamen, quo modo.
       </p>
-      <tri-divider text="Text"></tri-divider>
+      <tri-divider text="Text" />
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae
         sunt a te dicta? Refert tamen, quo modo.
       </p>
-      <tri-divider text="Left Text" orientation="left"></tri-divider>
+      <tri-divider text="Left Text" orientation="left" />
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae
         sunt a te dicta? Refert tamen, quo modo.
       </p>
-      <tri-divider text="Right Text" orientation="right"></tri-divider>
+      <tri-divider text="Right Text" orientation="right" />
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae
         sunt a te dicta? Refert tamen, quo modo.

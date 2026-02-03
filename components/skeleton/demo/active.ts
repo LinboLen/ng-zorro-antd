@@ -5,6 +5,6 @@ import { TriSkeletonModule } from 'ng-zorro-antd/skeleton';
 @Component({
   selector: 'tri-demo-skeleton-active',
   imports: [TriSkeletonModule],
-  template: `<tri-skeleton [active]="true"></tri-skeleton>`
+  template: `<tri-skeleton [active]="true" />`
 })
 export class TriDemoSkeletonActiveComponent {}

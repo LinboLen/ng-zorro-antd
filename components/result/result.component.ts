@@ -67,7 +67,7 @@ const ExceptionStatus = ['404', '500', '403'];
         {{ title() }}
       </div>
     } @else {
-      <ng-content select="div[nz-result-title]"></ng-content>
+      <ng-content select="div[nz-result-title]" />
     }
 
     @if (subTitle()) {
@@ -75,15 +75,15 @@ const ExceptionStatus = ['404', '500', '403'];
         {{ subTitle() }}
       </div>
     } @else {
-      <ng-content select="div[nz-result-subtitle]"></ng-content>
+      <ng-content select="div[nz-result-subtitle]" />
     }
-    <ng-content select="nz-result-content, [nz-result-content]"></ng-content>
+    <ng-content select="nz-result-content, [nz-result-content]" />
     @if (extra()) {
       <div class="tri-result-extra" *stringTemplateOutlet="extra()">
         {{ extra() }}
       </div>
     } @else {
-      <ng-content select="div[nz-result-extra]"></ng-content>
+      <ng-content select="div[nz-result-extra]" />
     }
   `,
   host: {

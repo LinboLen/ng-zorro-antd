@@ -16,7 +16,7 @@ import { TriFormatEmitEvent, TriTreeModule } from 'ng-zorro-antd/tree';
       (click)="event($event)"
       (expandChange)="event($event)"
       (checkboxChange)="event($event)"
-    ></tri-tree>
+    />
   `
 })
 export class TriDemoTreeBasicControlledComponent {

@@ -10,18 +10,16 @@ import { TriCodeEditorModule } from 'ng-zorro-antd/code-editor';
     <tri-code-editor
       class="editor"
       [originalText]="originalCode"
-      [editorMode]="'diff'"
+      editorMode="diff"
       [ngModel]="code"
       [editorOption]="{ language: 'typescript' }"
-    ></tri-code-editor>
+    />
   `,
-  styles: [
-    `
-      .editor {
-        height: 200px;
-      }
-    `
-  ]
+  styles: `
+    .editor {
+      height: 200px;
+    }
+  `
 })
 export class TriDemoCodeEditorDiffComponent {
   originalCode = `import { NzCodeEditorModule } from 'ng-zorro-antd/code-editor';

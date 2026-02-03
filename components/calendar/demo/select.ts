@@ -9,8 +9,8 @@ import { TriCalendarModule } from 'ng-zorro-antd/calendar';
   selector: 'tri-demo-calendar-select',
   imports: [DatePipe, FormsModule, TriAlertModule, TriCalendarModule],
   template: `
-    <tri-alert message="Your selected date: {{ selectedValue | date: 'yyyy-MM-dd' }}"></tri-alert>
-    <tri-calendar [(ngModel)]="selectedValue" (selectChange)="selectChange($event)"></tri-calendar>
+    <tri-alert message="Your selected date: {{ selectedValue | date: 'yyyy-MM-dd' }}" />
+    <tri-calendar [(ngModel)]="selectedValue" (selectChange)="selectChange($event)" />
   `
 })
 export class TriDemoCalendarSelectComponent {

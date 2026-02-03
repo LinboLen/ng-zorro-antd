@@ -36,49 +36,47 @@ import { TriTabsModule } from 'ng-zorro-antd/tabs';
           </div>
           <div class="extra">
             <div>
-              <tri-statistic title="Status" value="Pending"></tri-statistic>
-              <tri-statistic title="Price" [value]="568.08" prefix="$" style="margin: 0 32px"></tri-statistic>
+              <tri-statistic title="Status" value="Pending" />
+              <tri-statistic title="Price" [value]="568.08" prefix="$" style="margin: 0 32px" />
             </div>
           </div>
         </div>
       </tri-page-header-content>
       <tri-page-header-footer>
         <tri-tabs [selectedIndex]="1">
-          <tri-tab title="Details"></tri-tab>
-          <tri-tab title="Rule"></tri-tab>
+          <tri-tab title="Details" />
+          <tri-tab title="Rule" />
         </tri-tabs>
       </tri-page-header-footer>
     </tri-page-header>
   `,
-  styles: [
-    `
+  styles: `
+    .content {
+      display: flex;
+    }
+
+    .extra > div {
+      display: flex;
+      width: max-content;
+      justify-content: flex-end;
+    }
+
+    @media (max-width: 576px) {
       .content {
-        display: flex;
+        display: block;
       }
 
-      .extra > div {
-        display: flex;
-        width: max-content;
-        justify-content: flex-end;
+      .main {
+        width: 100%;
+        margin-bottom: 12px;
       }
 
-      @media (max-width: 576px) {
-        .content {
-          display: block;
-        }
-
-        .main {
-          width: 100%;
-          margin-bottom: 12px;
-        }
-
-        .extra {
-          width: 100%;
-          margin-left: 0;
-          text-align: left;
-        }
+      .extra {
+        width: 100%;
+        margin-left: 0;
+        text-align: left;
       }
-    `
-  ]
+    }
+  `
 })
 export class TriDemoPageHeaderResponsiveComponent {}

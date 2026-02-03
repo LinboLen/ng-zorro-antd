@@ -14,22 +14,20 @@ const colorList = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'];
   template: `
     <div>
       <label>Gap: </label>
-      <tri-input-number [min]="0" [max]="16" [step]="1" [(ngModel)]="gap"></tri-input-number>
+      <tri-input-number [min]="0" [max]="16" [step]="1" [(ngModel)]="gap" />
       <button tri-button (click)="change()">Change Text</button>
     </div>
 
-    <tri-avatar [gap]="gap()" [text]="text()" size="large" [style.background-color]="color()"></tri-avatar>
+    <tri-avatar [gap]="gap()" [text]="text()" size="large" [style.background-color]="color()" />
   `,
-  styles: [
-    `
-      div {
-        margin-bottom: 16px;
-      }
-      button {
-        margin-left: 8px;
-      }
-    `
-  ]
+  styles: `
+    div {
+      margin-bottom: 16px;
+    }
+    button {
+      margin-left: 8px;
+    }
+  `
 })
 export class TriDemoAvatarDynamicComponent {
   index = signal(3);

@@ -13,7 +13,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
     <br />
     <br />
     <input tri-input [(ngModel)]="value" [autocomplete]="auto" status="warning" />
-    <tri-autocomplete [dataSource]="['12345', '23456', '34567']" #auto></tri-autocomplete>
+    <tri-autocomplete [dataSource]="['12345', '23456', '34567']" #auto />
   `
 })
 export class TriDemoAutoCompleteStatusComponent {

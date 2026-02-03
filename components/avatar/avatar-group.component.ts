@@ -8,7 +8,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 @Component({
   selector: 'tri-avatar-group',
   exportAs: 'triAvatarGroup',
-  template: `<ng-content></ng-content>`,
+  template: `<ng-content />`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'tri-avatar-group'

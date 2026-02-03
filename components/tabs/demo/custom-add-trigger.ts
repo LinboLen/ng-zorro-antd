@@ -11,8 +11,8 @@ import { TriTabsModule } from 'ng-zorro-antd/tabs';
       <button tri-button (click)="newTab()">ADD</button>
     </div>
     <tri-tabs [(selectedIndexChange)]="index" type="editable-card" hideAdd (close)="closeTab($event)">
-      @for (tab of tabs; track tab; let i = $index) {
-        <tri-tab [closable]="i > 1" [title]="tab">Content of {{ tab }}</tri-tab>
+      @for (tab of tabs; track tab) {
+        <tri-tab [closable]="$index > 1" [title]="tab">Content of {{ tab }}</tri-tab>
       }
     </tri-tabs>
   `

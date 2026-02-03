@@ -6,9 +6,9 @@ import { TriPaginationModule } from 'ng-zorro-antd/pagination';
   selector: 'tri-demo-pagination-jump',
   imports: [TriPaginationModule],
   template: `
-    <tri-pagination [pageIndex]="2" [total]="500" showQuickJumper></tri-pagination>
+    <tri-pagination [pageIndex]="2" [total]="500" showQuickJumper />
     <br />
-    <tri-pagination [pageIndex]="2" [total]="500" showQuickJumper disabled></tri-pagination>
+    <tri-pagination [pageIndex]="2" [total]="500" showQuickJumper disabled />
   `
 })
 export class TriDemoPaginationJumpComponent {}

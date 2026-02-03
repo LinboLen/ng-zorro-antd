@@ -10,7 +10,7 @@ import { TriListModule } from 'ng-zorro-antd/list';
   selector: 'tri-demo-drawer-user-profile',
   imports: [TriButtonModule, TriDescriptionsModule, TriDividerModule, TriDrawerModule, TriListModule],
   template: `
-    <tri-list [dataSource]="data" [renderItem]="item" [itemLayout]="'horizontal'">
+    <tri-list [dataSource]="data" [renderItem]="item" itemLayout="horizontal">
       <ng-template #item let-item>
         <tri-list-item [actions]="[viewAction]">
           <ng-template #viewAction>
@@ -42,7 +42,7 @@ import { TriListModule } from 'ng-zorro-antd/list';
             Make things as simple as possible but no simpler.
           </tri-descriptions-item>
         </tri-descriptions>
-        <tri-divider></tri-divider>
+        <tri-divider />
         <tri-descriptions [column]="2" title="Company">
           <tri-descriptions-item title="Position" [span]="1">Programmer</tri-descriptions-item>
           <tri-descriptions-item title="Responsibilities" [span]="1">Coding</tri-descriptions-item>
@@ -54,7 +54,7 @@ import { TriListModule } from 'ng-zorro-antd/list';
             ASP, etc.
           </tri-descriptions-item>
         </tri-descriptions>
-        <tri-divider></tri-divider>
+        <tri-divider />
         <tri-descriptions [column]="2" title="Contacts">
           <tri-descriptions-item title="Email" [span]="1">AntDesign&#64;example.com</tri-descriptions-item>
           <tri-descriptions-item title="Phone Number" [span]="1">+86 181 0000 0000</tri-descriptions-item>
@@ -65,17 +65,15 @@ import { TriListModule } from 'ng-zorro-antd/list';
       </ng-container>
     </tri-drawer>
   `,
-  styles: [
-    `
-      .title {
-        font-size: 16px;
-        color: rgba(0, 0, 0, 0.85);
-        line-height: 24px;
-        display: block;
-        margin-bottom: 24px;
-      }
-    `
-  ]
+  styles: `
+    .title {
+      font-size: 16px;
+      color: rgba(0, 0, 0, 0.85);
+      line-height: 24px;
+      display: block;
+      margin-bottom: 24px;
+    }
+  `
 })
 export class TriDemoDrawerUserProfileComponent {
   data = [

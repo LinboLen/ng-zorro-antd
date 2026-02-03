@@ -21,12 +21,10 @@ import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
 
     <tri-input-number prefix="￥" disabled [style.width.%]="100" />
   `,
-  styles: [
-    `
-      nz-input-number {
-        margin-bottom: 8px;
-      }
-    `
-  ]
+  styles: `
+    nz-input-number {
+      margin-bottom: 8px;
+    }
+  `
 })
 export class TriDemoInputNumberPrefixComponent {}

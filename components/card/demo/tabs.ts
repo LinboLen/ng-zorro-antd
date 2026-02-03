@@ -10,8 +10,8 @@ import { TriTabsModule } from 'ng-zorro-antd/tabs';
     <tri-card style="width: 100%;" title="Card title" [extra]="extraTemplate">
       <tri-card-tab>
         <tri-tabs size="large" [(selectedIndexChange)]="index1">
-          <tri-tab title="tab1"></tri-tab>
-          <tri-tab title="tab2"></tri-tab>
+          <tri-tab title="tab1" />
+          <tri-tab title="tab2" />
         </tri-tabs>
       </tri-card-tab>
       content{{ index1 }}
@@ -24,9 +24,9 @@ import { TriTabsModule } from 'ng-zorro-antd/tabs';
     <tri-card style="width: 100%;">
       <tri-card-tab>
         <tri-tabs size="large" [(selectedIndexChange)]="index2">
-          <tri-tab title="article"></tri-tab>
-          <tri-tab title="app"></tri-tab>
-          <tri-tab title="project"></tri-tab>
+          <tri-tab title="article" />
+          <tri-tab title="app" />
+          <tri-tab title="project" />
         </tri-tabs>
       </tri-card-tab>
       content{{ index2 }}

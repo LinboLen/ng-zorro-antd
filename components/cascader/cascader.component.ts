@@ -193,7 +193,7 @@ const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
         <tri-select-clear (clear)="clearSelection($event)" />
       }
     }
-    <ng-content></ng-content>
+    <ng-content />
 
     <ng-template
       cdkConnectedOverlay
@@ -201,7 +201,7 @@ const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
       [cdkConnectedOverlayHasBackdrop]="backdrop"
       [cdkConnectedOverlayOrigin]="overlayOrigin"
       [cdkConnectedOverlayPositions]="positions"
-      [cdkConnectedOverlayTransformOriginOn]="'.ant-cascader-dropdown'"
+      cdkConnectedOverlayTransformOriginOn=".ant-cascader-dropdown"
       [cdkConnectedOverlayOpen]="menuVisible()"
       (overlayOutsideClick)="onClickOutside($event)"
       (detach)="closeMenu()"
@@ -234,7 +234,7 @@ const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
               <li class="tri-cascader-menu-item tri-cascader-menu-item-disabled">
                 <tri-embed-empty
                   class="tri-cascader-menu-item-content"
-                  [componentName]="'cascader'"
+                  componentName="cascader"
                   [specificContent]="notFoundContent"
                 />
               </li>

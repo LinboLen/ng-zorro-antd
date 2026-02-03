@@ -15,12 +15,10 @@ import { TriCardModule } from 'ng-zorro-antd/card';
       <a>More</a>
     </ng-template>
   `,
-  styles: [
-    `
-      p {
-        margin: 0;
-      }
-    `
-  ]
+  styles: `
+    p {
+      margin: 0;
+    }
+  `
 })
 export class TriDemoCardBasicComponent {}

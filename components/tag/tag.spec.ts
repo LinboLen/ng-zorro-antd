@@ -193,7 +193,7 @@ export class TriTestTagPreventComponent {
   imports: [BidiModule, TriTestTagBasicComponent],
   template: `
     <div [dir]="direction">
-      <tri-test-basic-tag></tri-test-basic-tag>
+      <tri-test-basic-tag />
     </div>
   `
 })

@@ -179,7 +179,7 @@ describe('alert', () => {
       [type]="type"
       [action]="action"
       (onClose)="onClose($event)"
-    ></tri-alert>
+    />
   `
 })
 export class TriDemoTestBasicComponent {
@@ -198,7 +198,7 @@ export class TriDemoTestBasicComponent {
 
 @Component({
   imports: [TriAlertModule],
-  template: `<tri-alert banner></tri-alert>`
+  template: `<tri-alert banner />`
 })
 export class TriDemoTestBannerComponent {}
 
@@ -206,7 +206,7 @@ export class TriDemoTestBannerComponent {}
   imports: [TriDemoTestBasicComponent, BidiModule],
   template: `
     <div [dir]="direction">
-      <tri-test-basic-alert></tri-test-basic-alert>
+      <tri-test-basic-alert />
     </div>
   `
 })
@@ -224,7 +224,7 @@ export class TriTestAlertRtlComponent {
       description="Detailed description and advices about successful copywriting."
       [icon]="customIconTemplate"
       showIcon
-    ></tri-alert>
+    />
 
     <ng-template #customIconTemplate>
       <div> S </div>

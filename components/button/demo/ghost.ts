@@ -13,17 +13,15 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
       <a tri-button type="link" ghost>Link</a>
     </div>
   `,
-  styles: [
-    `
-      .ghost-background {
-        padding: 8px;
-        background: rgb(190, 200, 200);
-      }
+  styles: `
+    .ghost-background {
+      padding: 8px;
+      background: rgb(190, 200, 200);
+    }
 
-      [nz-button] {
-        margin-right: 8px;
-      }
-    `
-  ]
+    [nz-button] {
+      margin-right: 8px;
+    }
+  `
 })
 export class TriDemoButtonGhostComponent {}

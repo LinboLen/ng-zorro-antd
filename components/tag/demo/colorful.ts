@@ -20,13 +20,11 @@ import { TriTagModule } from 'ng-zorro-antd/tag';
       }
     </div>
   `,
-  styles: [
-    `
-      .ant-tag {
-        margin-bottom: 8px;
-      }
-    `
-  ]
+  styles: `
+    .ant-tag {
+      margin-bottom: 8px;
+    }
+  `
 })
 export class TriDemoTagColorfulComponent {
   readonly presetColors = presetColors;

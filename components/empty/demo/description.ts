@@ -5,6 +5,6 @@ import { TriEmptyModule } from 'ng-zorro-antd/empty';
 @Component({
   selector: 'tri-demo-empty-description',
   imports: [TriEmptyModule],
-  template: `<tri-empty [notFoundContent]="null"></tri-empty>`
+  template: `<tri-empty [notFoundContent]="null" />`
 })
 export class TriDemoEmptyDescriptionComponent {}

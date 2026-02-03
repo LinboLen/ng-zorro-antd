@@ -107,8 +107,7 @@ describe('hash-code', () => {
       [mode]="mode"
       [type]="type"
       (onCopy)="onCopy($event)"
-    >
-    </tri-hash-code>
+    />
   `
 })
 export class TriTestHashCodeBasicComponent {

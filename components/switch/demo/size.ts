@@ -7,10 +7,10 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   selector: 'tri-demo-switch-size',
   imports: [FormsModule, TriSwitchModule],
   template: `
-    <tri-switch [ngModel]="true"></tri-switch>
+    <tri-switch [ngModel]="true" />
     <br />
     <br />
-    <tri-switch size="small" [ngModel]="true"></tri-switch>
+    <tri-switch size="small" [ngModel]="true" />
   `
 })
 export class TriDemoSwitchSizeComponent {}

@@ -9,7 +9,7 @@ import { TriSpaceModule } from 'ng-zorro-antd/space';
   template: `
     <tri-space [split]="spaceSplit">
       <ng-template #spaceSplit>
-        <tri-divider type="vertical"></tri-divider>
+        <tri-divider type="vertical" />
       </ng-template>
 
       <a *spaceItem>Link</a>

@@ -44,14 +44,12 @@ import { TriMentionComponent, TriMentionModule } from 'ng-zorro-antd/mention';
       </tri-form-item>
     </form>
   `,
-  styles: [
-    `
-      .cta-wrapper {
-        display: flex;
-        gap: 1rem;
-      }
-    `
-  ]
+  styles: `
+    .cta-wrapper {
+      display: flex;
+      gap: 1rem;
+    }
+  `
 })
 export class TriDemoMentionFormComponent {
   readonly suggestions = ['afc163', 'benjycui', 'yiminghe', 'RaoHai', '中文', 'にほんご', 'ParsaArvaneh'];

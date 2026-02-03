@@ -22,8 +22,7 @@ import { TriListModule } from 'ng-zorro-antd/list';
             </tri-list-item-meta-title>
           </tri-list-item-meta>
         </tri-list-item>
-      }
-      @if (data.length === 0) {
+      } @empty {
         <tri-list-empty />
       }
     </tri-list>

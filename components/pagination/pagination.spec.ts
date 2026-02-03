@@ -453,7 +453,7 @@ describe('pagination', () => {
       [pageSizeOptions]="pageSizeOptions"
       [showSizeChanger]="showSizeChanger"
       [showQuickJumper]="showQuickJumper"
-    ></tri-pagination>
+    />
   `
 })
 export class TriTestPaginationComponent {
@@ -475,12 +475,7 @@ export class TriTestPaginationComponent {
 @Component({
   imports: [TriPaginationModule],
   template: `
-    <tri-pagination
-      [pageIndex]="1"
-      [total]="50"
-      [itemRender]="renderItemTemplate"
-      [align]="align()"
-    ></tri-pagination>
+    <tri-pagination [pageIndex]="1" [total]="50" [itemRender]="renderItemTemplate" [align]="align()" />
     <ng-template #renderItemTemplate let-type let-page="page">
       @switch (type) {
         @case ('prev') {
@@ -503,12 +498,7 @@ export class TriTestPaginationRenderComponent {
 @Component({
   imports: [TriPaginationModule],
   template: `
-    <tri-pagination
-      [(pageIndexChange)]="pageIndex"
-      [total]="85"
-      [pageSize]="20"
-      [showTotal]="rangeTemplate"
-    ></tri-pagination>
+    <tri-pagination [(pageIndexChange)]="pageIndex" [total]="85" [pageSize]="20" [showTotal]="rangeTemplate" />
     <ng-template #rangeTemplate let-range="range" let-total>
       {{ range[0] }}-{{ range[1] }} of {{ total }} items
     </ng-template>
@@ -520,7 +510,7 @@ export class TriTestPaginationTotalComponent {
 
 @Component({
   imports: [TriPaginationModule],
-  template: `<tri-pagination responsive></tri-pagination>`
+  template: `<tri-pagination responsive />`
 })
 export class TriTestPaginationAutoResizeComponent {}
 
@@ -528,12 +518,7 @@ export class TriTestPaginationAutoResizeComponent {}
   imports: [BidiModule, TriPaginationModule],
   template: `
     <div [dir]="direction">
-      <tri-pagination
-        [simple]="false"
-        [(pageIndexChange)]="pageIndex"
-        [total]="total"
-        [(pageSizeChange)]="pageSize"
-      ></tri-pagination>
+      <tri-pagination [simple]="false" [(pageIndexChange)]="pageIndex" [total]="total" [(pageSizeChange)]="pageSize" />
     </div>
   `
 })

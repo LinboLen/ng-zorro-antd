@@ -775,7 +775,7 @@ class TriTestSimpleMentionComponent {
       [suggestions]="webFrameworks"
       [valueWith]="valueWith"
       [prefix]="prefix"
-      [placement]="'top'"
+      placement="top"
       [loading]="loading"
       (onSearchChange)="onSearchChange()"
     >

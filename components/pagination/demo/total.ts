@@ -6,9 +6,9 @@ import { TriPaginationModule } from 'ng-zorro-antd/pagination';
   selector: 'tri-demo-pagination-total',
   imports: [TriPaginationModule],
   template: `
-    <tri-pagination [pageIndex]="1" [total]="85" [pageSize]="20" [showTotal]="totalTemplate"></tri-pagination>
+    <tri-pagination [pageIndex]="1" [total]="85" [pageSize]="20" [showTotal]="totalTemplate" />
     <br />
-    <tri-pagination [pageIndex]="1" [total]="85" [pageSize]="20" [showTotal]="rangeTemplate"></tri-pagination>
+    <tri-pagination [pageIndex]="1" [total]="85" [pageSize]="20" [showTotal]="rangeTemplate" />
     <ng-template #totalTemplate let-total>Total {{ total }} items</ng-template>
     <ng-template #rangeTemplate let-range="range" let-total>
       {{ range[0] }}-{{ range[1] }} of {{ total }} items

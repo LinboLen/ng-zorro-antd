@@ -64,7 +64,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'carousel';
     <div
       class="slick-initialized slick-slider"
       [class.slick-vertical]="dotPosition === 'left' || dotPosition === 'right'"
-      [dir]="'ltr'"
+      dir="ltr"
     >
       @if (arrows) {
         <button
@@ -84,7 +84,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'carousel';
       >
         <!-- Render carousel items. -->
         <div class="slick-track" #slickTrack>
-          <ng-content></ng-content>
+          <ng-content />
         </div>
       </div>
       @if (arrows) {
@@ -110,7 +110,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'carousel';
               <ng-template
                 [ngTemplateOutlet]="dotRender || renderDotTemplate"
                 [ngTemplateOutletContext]="{ $implicit: $index }"
-              ></ng-template>
+              />
             </li>
           }
         </ul>

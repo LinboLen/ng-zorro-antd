@@ -6,7 +6,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
   selector: 'tri-demo-tree-select-status',
   imports: [TriTreeSelectModule],
   template: `
-    <tri-tree-select [nodes]="[]" status="error" placeHolder="Error" style="width:100%;"></tri-tree-select>
+    <tri-tree-select [nodes]="[]" status="error" placeHolder="Error" style="width:100%;" />
     <br />
     <br />
     <tri-tree-select
@@ -16,7 +16,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
       status="warning"
       placeHolder="Warning multiple"
       style="width:100%;"
-    ></tri-tree-select>
+    />
   `
 })
 export class TriDemoTreeSelectStatusComponent {}

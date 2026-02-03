@@ -31,10 +31,10 @@ import { TriTrMeasureComponent } from './tr-measure.component';
         ></tr>
       }
     }
-    <ng-content></ng-content>
+    <ng-content />
     @if (showEmpty$ | async) {
       <tr class="tri-table-placeholder" tri-table-fixed-row>
-        <tri-embed-empty componentName="table" [specificContent]="(noResult$ | async)!"></tri-embed-empty>
+        <tri-embed-empty componentName="table" [specificContent]="(noResult$ | async)!" />
       </tr>
     }
   `,

@@ -13,29 +13,27 @@ import { DisabledTimeFn, DisabledTimePartial, TriDatePickerModule } from 'ng-zor
       [disabledDate]="disabledDate"
       [disabledTime]="disabledDateTime"
       [showTime]="{ nzDefaultOpenValue: timeDefaultValue }"
-    ></tri-date-picker>
+    />
     <br />
-    <tri-date-picker mode="month" [disabledDate]="disabledDate"></tri-date-picker>
+    <tri-date-picker mode="month" [disabledDate]="disabledDate" />
     <br />
-    <tri-date-picker mode="quarter" [disabledDate]="disabledDate"></tri-date-picker>
+    <tri-date-picker mode="quarter" [disabledDate]="disabledDate" />
     <br />
-    <tri-date-picker mode="year" [disabledDate]="disabledDate"></tri-date-picker>
+    <tri-date-picker mode="year" [disabledDate]="disabledDate" />
     <br />
     <tri-range-picker
       [disabledDate]="disabledDate"
       [disabledTime]="disabledRangeTime"
       [showTime]="{ nzHideDisabledOptions: true, nzDefaultOpenValue: timeDefaultValue }"
       format="yyyy-MM-dd HH:mm:ss"
-    ></tri-range-picker>
+    />
   `,
-  styles: [
-    `
-      nz-date-picker,
-      nz-range-picker {
-        margin: 0 8px 12px 0;
-      }
-    `
-  ]
+  styles: `
+    nz-date-picker,
+    nz-range-picker {
+      margin: 0 8px 12px 0;
+    }
+  `
 })
 export class TriDemoDatePickerDisabledDateComponent {
   today = new Date();

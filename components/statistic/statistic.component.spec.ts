@@ -74,13 +74,7 @@ describe('statistic', () => {
 @Component({
   imports: [TriStatisticModule],
   template: `
-    <tri-statistic
-      [value]="123.45"
-      [title]="title"
-      [suffix]="suffix"
-      [prefix]="prefix"
-      [loading]="loading"
-    ></tri-statistic>
+    <tri-statistic [value]="123.45" [title]="title" [suffix]="suffix" [prefix]="prefix" [loading]="loading" />
   `
 })
 export class TriTestStatisticComponent {
@@ -94,7 +88,7 @@ export class TriTestStatisticComponent {
   imports: [BidiModule, TriStatisticModule],
   template: `
     <div [dir]="direction">
-      <tri-statistic [value]="123.45" title="test title"></tri-statistic>
+      <tri-statistic [value]="123.45" title="test title" />
     </div>
   `
 })

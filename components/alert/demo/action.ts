@@ -8,7 +8,7 @@ import { TriSpaceModule } from 'ng-zorro-antd/space';
   selector: 'tri-demo-alert-action',
   imports: [TriAlertModule, TriButtonModule, TriSpaceModule],
   template: `
-    <tri-alert showIcon type="success" message="Success Text" [action]="actionTemplate1"></tri-alert>
+    <tri-alert showIcon type="success" message="Success Text" [action]="actionTemplate1" />
     <ng-template #actionTemplate1>
       <button tri-button size="small" type="text" (click)="doAction('undo')">Undo</button></ng-template
     >
@@ -19,7 +19,7 @@ import { TriSpaceModule } from 'ng-zorro-antd/space';
       message="Error Text"
       [description]="descriptionTemplate1"
       [action]="actionTemplate2"
-    ></tri-alert>
+    />
     <ng-template #descriptionTemplate1>
       <p>Error Description Error Description Error Description Error Description</p>
     </ng-template>
@@ -27,7 +27,7 @@ import { TriSpaceModule } from 'ng-zorro-antd/space';
       <button tri-button size="small" type="default" danger (click)="doAction('detail')">Detail</button>
     </ng-template>
     <br />
-    <tri-alert closeable type="warning" message="Warning Text" [action]="actionTemplate3"></tri-alert>
+    <tri-alert closeable type="warning" message="Warning Text" [action]="actionTemplate3" />
     <ng-template #actionTemplate3>
       <button tri-button size="small" type="primary" ghost (click)="doAction('ignore')">Ignore</button>
     </ng-template>
@@ -38,7 +38,7 @@ import { TriSpaceModule } from 'ng-zorro-antd/space';
       message="Info Text"
       [description]="descriptionTemplate2"
       [action]="actionTemplate4"
-    ></tri-alert>
+    />
     <ng-template #descriptionTemplate2>
       <p>Info Description Info Description Info Description Info Description</p>
     </ng-template>

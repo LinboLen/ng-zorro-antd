@@ -12,13 +12,11 @@ import { TriModalModule, TriModalService } from 'ng-zorro-antd/modal';
     <button tri-button (click)="error()">Error</button>
     <button tri-button (click)="warning()">Warning</button>
   `,
-  styles: [
-    `
-      button {
-        margin-right: 8px;
-      }
-    `
-  ]
+  styles: `
+    button {
+      margin-right: 8px;
+    }
+  `
 })
 export class TriDemoModalInfoComponent {
   constructor(private modal: TriModalService) {}

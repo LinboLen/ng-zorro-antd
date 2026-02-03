@@ -10,14 +10,12 @@ import { TriIconModule, TriIconService } from 'ng-zorro-antd/icon';
     <tri-icon iconfont="icon-facebook" />
     <tri-icon iconfont="icon-twitter" />
   `,
-  styles: [
-    `
-      nz-icon {
-        margin-right: 6px;
-        font-size: 24px;
-      }
-    `
-  ]
+  styles: `
+    nz-icon {
+      margin-right: 6px;
+      font-size: 24px;
+    }
+  `
 })
 export class TriDemoIconIconfontComponent {
   constructor(private iconService: TriIconService) {

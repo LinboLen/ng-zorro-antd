@@ -17,7 +17,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
         (input)="onInput($event)"
         [autocomplete]="auto"
       />
-      <tri-autocomplete [dataSource]="options" backfill #auto></tri-autocomplete>
+      <tri-autocomplete [dataSource]="options" backfill #auto />
     </div>
   `
 })

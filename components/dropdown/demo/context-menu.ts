@@ -27,17 +27,15 @@ import { TriContextMenuService, TriDropdownMenuComponent, TriDropdownModule } fr
       </ul>
     </tri-dropdown-menu>
   `,
-  styles: [
-    `
-      .context-area {
-        background: #f7f7f7;
-        color: #777;
-        text-align: center;
-        height: 200px;
-        line-height: 200px;
-      }
-    `
-  ]
+  styles: `
+    .context-area {
+      background: #f7f7f7;
+      color: #777;
+      text-align: center;
+      height: 200px;
+      line-height: 200px;
+    }
+  `
 })
 export class TriDemoDropdownContextMenuComponent {
   contextMenu($event: MouseEvent, menu: TriDropdownMenuComponent): void {

@@ -23,7 +23,7 @@ import { TriTreeSelectModule, TriPlacementType } from 'ng-zorro-antd/tree-select
       [dropdownStyle]="{ width: '300px' }"
       defaultExpandAll
       (ngModelChange)="onChange($event)"
-    ></tri-tree-select>
+    />
   `
 })
 export class TriDemoTreeSelectPlacementComponent {

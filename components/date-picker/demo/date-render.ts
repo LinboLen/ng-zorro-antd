@@ -6,31 +6,29 @@ import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
   selector: 'tri-demo-date-picker-date-render',
   imports: [TriDatePickerModule],
   template: `
-    <tri-date-picker [dateRender]="tplRender"></tri-date-picker>
-    <tri-range-picker [dateRender]="tplRender"></tri-range-picker>
+    <tri-date-picker [dateRender]="tplRender" />
+    <tri-range-picker [dateRender]="tplRender" />
 
     <ng-template #tplRender let-current>
       <div class="tri-picker-cell-inner" [class.border]="current.getDate() === 1"> {{ current.getDate() }} </div>
     </ng-template>
 
     <br />
-    <tri-date-picker mode="quarter" format="yyyy年Q季度" [dateRender]="tplQuarterRender"></tri-date-picker>
+    <tri-date-picker mode="quarter" format="yyyy年Q季度" [dateRender]="tplQuarterRender" />
     <ng-template #tplQuarterRender let-current>
       <div class="tri-picker-cell-inner">{{ getQuarter(current) }}</div>
     </ng-template>
   `,
-  styles: [
-    `
-      nz-date-picker,
-      nz-range-picker {
-        margin: 0 8px 12px 0;
-      }
-      .border {
-        border: 1px solid #1890ff;
-        border-radius: 50%;
-      }
-    `
-  ]
+  styles: `
+    nz-date-picker,
+    nz-range-picker {
+      margin: 0 8px 12px 0;
+    }
+    .border {
+      border: 1px solid #1890ff;
+      border-radius: 50%;
+    }
+  `
 })
 export class TriDemoDatePickerDateRenderComponent {
   getQuarter(date: Date): string {

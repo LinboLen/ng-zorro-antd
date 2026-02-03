@@ -21,7 +21,7 @@ import { TriSiderComponent } from './sider.component';
 @Component({
   selector: 'tri-layout',
   exportAs: 'triLayout',
-  template: `<ng-content></ng-content>`,
+  template: `<ng-content />`,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {

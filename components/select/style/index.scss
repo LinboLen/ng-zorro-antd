@@ -81,6 +81,7 @@ $select-prefix-cls: "#{$ant-prefix}-select";
   }
   // ======================== Selection ========================
   &-selection-item {
+    position: relative;
     flex: 1;
     overflow: hidden;
     font-weight: normal;

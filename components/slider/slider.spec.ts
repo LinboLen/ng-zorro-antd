@@ -1032,7 +1032,7 @@ const styles = `
 
 @Component({
   imports: [TriSliderModule],
-  template: `<tri-slider [disabled]="disabled"></tri-slider>`,
+  template: `<tri-slider [disabled]="disabled" />`,
   styles: [styles]
 })
 class TriTestSliderComponent {
@@ -1041,7 +1041,7 @@ class TriTestSliderComponent {
 
 @Component({
   imports: [TriSliderModule],
-  template: `<tri-slider [min]="min" [max]="max"></tri-slider>`,
+  template: `<tri-slider [min]="min" [max]="max" />`,
   styles: [styles]
 })
 class SliderWithMinAndMaxComponent {
@@ -1051,14 +1051,14 @@ class SliderWithMinAndMaxComponent {
 
 @Component({
   imports: [FormsModule, TriSliderModule],
-  template: `<tri-slider [ngModel]="26"></tri-slider>`,
+  template: `<tri-slider [ngModel]="26" />`,
   styles: [styles]
 })
 class SliderWithValueComponent {}
 
 @Component({
   imports: [TriSliderModule],
-  template: `<tri-slider [marks]="marks"></tri-slider>`
+  template: `<tri-slider [marks]="marks" />`
 })
 class SliderWithMarksComponent {
   marks: Record<number, string> = { 100: '(100%)', 0: '(0%)' };
@@ -1066,7 +1066,7 @@ class SliderWithMarksComponent {
 
 @Component({
   imports: [TriSliderModule],
-  template: `<tri-slider [step]="step"></tri-slider>`,
+  template: `<tri-slider [step]="step" />`,
   styles: [styles]
 })
 class SliderWithStepComponent {
@@ -1075,28 +1075,28 @@ class SliderWithStepComponent {
 
 @Component({
   imports: [FormsModule, TriSliderModule],
-  template: `<tri-slider [ngModel]="3" [min]="4" [max]="6"></tri-slider>`,
+  template: `<tri-slider [ngModel]="3" [min]="4" [max]="6" />`,
   styles: [styles]
 })
 class SliderWithValueSmallerThanMinComponent {}
 
 @Component({
   imports: [FormsModule, TriSliderModule],
-  template: `<tri-slider [ngModel]="0" [min]="-5" [max]="5"></tri-slider>`,
+  template: `<tri-slider [ngModel]="0" [min]="-5" [max]="5" />`,
   styles: [styles]
 })
 class SliderWithValueZeroComponent {}
 
 @Component({
   imports: [FormsModule, TriSliderModule],
-  template: `<tri-slider [ngModel]="7" [min]="4" [max]="6"></tri-slider>`,
+  template: `<tri-slider [ngModel]="7" [min]="4" [max]="6" />`,
   styles: [styles]
 })
 class SliderWithValueGreaterThanMaxComponent {}
 
 @Component({
   imports: [TriSliderModule],
-  template: `<tri-slider vertical></tri-slider>`,
+  template: `<tri-slider vertical />`,
   styles: [styles]
 })
 class VerticalSliderComponent {}
@@ -1104,9 +1104,9 @@ class VerticalSliderComponent {}
 @Component({
   imports: [TriSliderModule],
   template: `
-    <tri-slider reverse [marks]="marks"></tri-slider>
-    <tri-slider reverse range></tri-slider>
-    <tri-slider vertical reverse></tri-slider>
+    <tri-slider reverse [marks]="marks" />
+    <tri-slider reverse range />
+    <tri-slider vertical reverse />
   `
 })
 class ReverseSliderComponent {
@@ -1115,7 +1115,7 @@ class ReverseSliderComponent {
 
 @Component({
   imports: [TriSliderModule],
-  template: `<tri-slider [min]="4" [max]="6" reverse></tri-slider>`,
+  template: `<tri-slider [min]="4" [max]="6" reverse />`,
   styles: [styles]
 })
 class ReverseSliderWithMinAndMaxComponent {}
@@ -1132,7 +1132,7 @@ class ReverseSliderWithMinAndMaxComponent {}
       [tipFormatter]="tipFormatter"
       [min]="min"
       [max]="max"
-    ></tri-slider>
+    />
   `,
   styles: [styles]
 })
@@ -1154,7 +1154,7 @@ class MixedSliderComponent {
   imports: [ReactiveFormsModule, TriSliderModule],
   template: `
     <form>
-      <tri-slider [formControl]="formControl" [disabled]="disabled"></tri-slider>
+      <tri-slider [formControl]="formControl" [disabled]="disabled" />
     </form>
   `,
   styles: [styles]
@@ -1175,7 +1175,7 @@ class SliderWithFormControlComponent {
 
 @Component({
   imports: [FormsModule, TriSliderModule],
-  template: `<tri-slider [tooltipVisible]="show" [ngModel]="value"></tri-slider>`
+  template: `<tri-slider [tooltipVisible]="show" [ngModel]="value" />`
 })
 class SliderShowTooltipComponent {
   show: TriSliderShowTooltip = 'default';
@@ -1185,7 +1185,7 @@ class SliderShowTooltipComponent {
 
 @Component({
   imports: [TriSliderModule],
-  template: `<tri-slider [range]="range" [disabled]="disabled"></tri-slider>`
+  template: `<tri-slider [range]="range" [disabled]="disabled" />`
 })
 class TriTestSliderKeyboardComponent {
   range = false;
@@ -1195,7 +1195,7 @@ class TriTestSliderKeyboardComponent {
 @Component({
   imports: [FormsModule, TriSliderModule],
   template: `
-    <tri-slider [tooltipVisible]="show" [ngModel]="value" [tipFormatter]="titleTemplate"></tri-slider>
+    <tri-slider [tooltipVisible]="show" [ngModel]="value" [tipFormatter]="titleTemplate" />
     <ng-template #titleTemplate let-value>
       <span>Slider value: {{ value }}</span>
     </ng-template>
@@ -1314,7 +1314,7 @@ function dispatchMouseenterEvent(element: HTMLElement): void {
   imports: [BidiModule, TriSliderModule],
   template: `
     <div [dir]="direction">
-      <tri-slider></tri-slider>
+      <tri-slider />
     </div>
   `
 })

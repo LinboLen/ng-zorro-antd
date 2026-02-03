@@ -47,7 +47,7 @@ import { TriTagModule } from 'ng-zorro-antd/tag';
       <tri-drawer [closable]="false" [visible]="childrenVisible" title="Food" (onClose)="closeChildren()">
         <tri-list *drawerContent [dataSource]="vegetables" [renderItem]="item">
           <ng-template #item let-item>
-            <tri-list-item [content]="item"></tri-list-item>
+            <tri-list-item [content]="item" />
           </ng-template>
         </tri-list>
       </tri-drawer>

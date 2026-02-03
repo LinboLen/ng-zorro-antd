@@ -295,7 +295,7 @@ export class TriEmptyTestBasicComponent {
 @Component({
   imports: [TriListModule],
   template: `
-    <tri-list [dataSource]="[]" [noResult]="noResult"></tri-list>
+    <tri-list [dataSource]="[]" [noResult]="noResult" />
     <ng-template #tpl let-component>
       <div>I am in template {{ component }}</div>
     </ng-template>

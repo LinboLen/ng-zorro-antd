@@ -56,8 +56,8 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
     <br />
     <tri-space-compact block>
       <tri-select ngModel="Zhejianggggg">
-        <tri-option label="Zhejianggggg" value="Zhejianggggg"></tri-option>
-        <tri-option label="Jiangsu" value="Jiangsu"></tri-option>
+        <tri-option label="Zhejianggggg" value="Zhejianggggg" />
+        <tri-option label="Jiangsu" value="Jiangsu" />
       </tri-select>
       <input tri-input value="Xihu District, Hangzhou" [style.width.%]="50" />
     </tri-space-compact>
@@ -76,16 +76,16 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
     <br />
     <tri-space-compact block>
       <tri-select mode="multiple" [ngModel]="['Zhejianggggg']" [style.width.%]="50">
-        <tri-option label="Zhejianggggg" value="Zhejianggggg"></tri-option>
-        <tri-option label="Jiangsu" value="Jiangsu"></tri-option>
+        <tri-option label="Zhejianggggg" value="Zhejianggggg" />
+        <tri-option label="Jiangsu" value="Jiangsu" />
       </tri-select>
       <input tri-input value="Xihu District, Hangzhou" [style.width.%]="50" />
     </tri-space-compact>
     <br />
     <tri-space-compact block>
       <tri-select ngModel="Option1">
-        <tri-option label="Option1" value="Option1"></tri-option>
-        <tri-option label="Option2" value="Option2"></tri-option>
+        <tri-option label="Option1" value="Option1" />
+        <tri-option label="Option2" value="Option2" />
       </tri-select>
       <input tri-input value="input content" [style.width.%]="50" />
       <tri-input-number [ngModel]="12" />
@@ -109,19 +109,19 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
     <br />
     <tri-space-compact block>
       <tri-select ngModel="Option1-1">
-        <tri-option label="Option1-1" value="Option1-1"></tri-option>
-        <tri-option label="Option2-1" value="Option2-1"></tri-option>
+        <tri-option label="Option1-1" value="Option1-1" />
+        <tri-option label="Option2-1" value="Option2-1" />
       </tri-select>
       <tri-select ngModel="Option1-2">
-        <tri-option label="Option1-2" value="Option1-2"></tri-option>
-        <tri-option label="Option2-2" value="Option2-2"></tri-option>
+        <tri-option label="Option1-2" value="Option1-2" />
+        <tri-option label="Option2-2" value="Option2-2" />
       </tri-select>
     </tri-space-compact>
     <br />
     <tri-space-compact block>
       <tri-select ngModel="1">
-        <tri-option label="Between" value="1"></tri-option>
-        <tri-option label="Except" value="2"></tri-option>
+        <tri-option label="Between" value="1" />
+        <tri-option label="Except" value="2" />
       </tri-select>
       <input tri-input placeholder="Minimum" style="width: 100px; text-align: center" />
       <input
@@ -141,8 +141,8 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
     <br />
     <tri-space-compact block>
       <tri-select ngModel="Sign Up" [style.width.%]="30">
-        <tri-option label="Sign Up" value="Sign Up"></tri-option>
-        <tri-option label="Sign In" value="Sign In"></tri-option>
+        <tri-option label="Sign Up" value="Sign Up" />
+        <tri-option label="Sign In" value="Sign In" />
       </tri-select>
       <tri-autocomplete #auto [dataSource]="['text 1', 'text 2']" />
       <input tri-input placeholder="Email" [autocomplete]="auto" [style.width.%]="70" />
@@ -161,7 +161,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
         ngModel="10010"
         defaultExpandAll
         [style.width.%]="60"
-      ></tri-tree-select>
+      />
       <button tri-button type="primary">Submit</button>
     </tri-space-compact>
     <br />
@@ -177,31 +177,29 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
       </tri-input-number>
     </tri-space-compact>
   `,
-  styles: [
-    `
-      .site-input-split {
-        background-color: #fff;
-      }
+  styles: `
+    .site-input-split {
+      background-color: #fff;
+    }
 
-      .site-input-right:not(.ant-input-rtl) {
-        border-left-width: 0;
-      }
+    .site-input-right:not(.ant-input-rtl) {
+      border-left-width: 0;
+    }
 
-      .site-input-right:not(.ant-input-rtl):hover,
-      .site-input-right:not(.ant-input-rtl):focus {
-        border-left-width: 1px;
-      }
+    .site-input-right:not(.ant-input-rtl):hover,
+    .site-input-right:not(.ant-input-rtl):focus {
+      border-left-width: 1px;
+    }
 
-      .site-input-right.ant-input-rtl {
-        border-right-width: 0;
-      }
+    .site-input-right.ant-input-rtl {
+      border-right-width: 0;
+    }
 
-      .site-input-right.ant-input-rtl:hover,
-      .site-input-right.ant-input-rtl:focus {
-        border-right-width: 1px;
-      }
-    `
-  ]
+    .site-input-right.ant-input-rtl:hover,
+    .site-input-right.ant-input-rtl:focus {
+      border-right-width: 1px;
+    }
+  `
 })
 export class TriDemoSpaceCompactComponent {
   cascaderOptions: TriCascaderOption[] = [

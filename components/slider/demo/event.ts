@@ -7,18 +7,14 @@ import { TriSliderModule } from 'ng-zorro-antd/slider';
   selector: 'tri-demo-slider-event',
   imports: [FormsModule, TriSliderModule],
   template: `
-    <tri-slider
-      [(ngModel)]="singleValue"
-      (ngModelChange)="onChange($event)"
-      (onAfterChange)="onAfterChange($event)"
-    ></tri-slider>
+    <tri-slider [(ngModel)]="singleValue" (ngModelChange)="onChange($event)" (onAfterChange)="onAfterChange($event)" />
     <tri-slider
       range
       [step]="10"
       [(ngModel)]="rangeValue"
       (ngModelChange)="onChange($event)"
       (onAfterChange)="onAfterChange($event)"
-    ></tri-slider>
+    />
   `
 })
 export class TriDemoSliderEventComponent {

@@ -16,16 +16,16 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
     <br />
     <br />
     <tri-input-wrapper>
-      <tri-select inputAddonBefore [ngModel]="'Http://'">
-        <tri-option label="Http://" value="Http://"></tri-option>
-        <tri-option label="Https://" value="Https://"></tri-option>
+      <tri-select inputAddonBefore ngModel="Http://">
+        <tri-option label="Http://" value="Http://" />
+        <tri-option label="Https://" value="Https://" />
       </tri-select>
       <input tri-input [(ngModel)]="value" />
-      <tri-select inputAddonAfter [ngModel]="'.com'">
-        <tri-option label=".com" value=".com"></tri-option>
-        <tri-option label=".jp" value=".jp"></tri-option>
-        <tri-option label=".cn" value=".cn"></tri-option>
-        <tri-option label=".org" value=".org"></tri-option>
+      <tri-select inputAddonAfter ngModel=".com">
+        <tri-option label=".com" value=".com" />
+        <tri-option label=".jp" value=".jp" />
+        <tri-option label=".cn" value=".cn" />
+        <tri-option label=".org" value=".org" />
       </tri-select>
     </tri-input-wrapper>
     <br />

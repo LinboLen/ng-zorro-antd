@@ -6,22 +6,20 @@ import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
   selector: 'tri-demo-date-picker-format',
   imports: [TriDatePickerModule],
   template: `
-    <tri-date-picker [format]="dateFormat"></tri-date-picker>
+    <tri-date-picker [format]="dateFormat" />
     <br />
-    <tri-date-picker mode="month" [format]="monthFormat"></tri-date-picker>
+    <tri-date-picker mode="month" [format]="monthFormat" />
     <br />
-    <tri-date-picker mode="quarter" [format]="quarterFormat"></tri-date-picker>
+    <tri-date-picker mode="quarter" [format]="quarterFormat" />
     <br />
-    <tri-range-picker [format]="dateFormat"></tri-range-picker>
+    <tri-range-picker [format]="dateFormat" />
   `,
-  styles: [
-    `
-      nz-date-picker,
-      nz-range-picker {
-        margin: 0 8px 12px 0;
-      }
-    `
-  ]
+  styles: `
+    nz-date-picker,
+    nz-range-picker {
+      margin: 0 8px 12px 0;
+    }
+  `
 })
 export class TriDemoDatePickerFormatComponent {
   dateFormat = 'yyyy/MM/dd';

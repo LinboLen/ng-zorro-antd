@@ -44,7 +44,7 @@ import { TriAnchorComponent } from './anchor.component';
       }
     </a>
     @if (direction === 'vertical') {
-      <ng-content></ng-content>
+      <ng-content />
     }
   `,
   encapsulation: ViewEncapsulation.None,

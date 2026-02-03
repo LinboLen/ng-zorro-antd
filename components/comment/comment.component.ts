@@ -29,7 +29,7 @@ import { TriCommentActionComponent as CommentAction, TriCommentActionHostDirecti
   template: `
     <div class="tri-comment-inner">
       <div class="tri-comment-avatar">
-        <ng-content select="nz-avatar[nz-comment-avatar]"></ng-content>
+        <ng-content select="nz-avatar[nz-comment-avatar]" />
       </div>
       <div class="tri-comment-content">
         <div class="tri-comment-content-author">

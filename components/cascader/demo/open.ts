@@ -52,7 +52,7 @@ const options: TriCascaderOption[] = [
   imports: [FormsModule, TriCascaderModule, TriFlexModule, TriSwitchModule],
   template: `
     <div tri-flex vertical gap="small">
-      <tri-switch [(ngModel)]="open" checkedChildren="open" unCheckedChildren="close"></tri-switch>
+      <tri-switch [(ngModel)]="open" checkedChildren="open" unCheckedChildren="close" />
       <tri-cascader
         [options]="options"
         [ngModel]="values"

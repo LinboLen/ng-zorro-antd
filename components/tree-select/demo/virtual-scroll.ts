@@ -37,7 +37,7 @@ function dig(path = '0', level = 3): TriTreeNodeOptions[] {
       placeHolder="Please select"
       virtualHeight="300px"
       hideUnMatched="true"
-    ></tri-tree-select>
+    />
   `
 })
 export class TriDemoTreeSelectVirtualScrollComponent {

@@ -11,11 +11,11 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
   template: `
     <tri-select showSearch allowClear [dropdownRender]="renderTemplate" placeHolder="custom dropdown render">
       @for (item of listOfItem; track item) {
-        <tri-option [label]="item" [value]="item"></tri-option>
+        <tri-option [label]="item" [value]="item" />
       }
     </tri-select>
     <ng-template #renderTemplate>
-      <tri-divider></tri-divider>
+      <tri-divider />
       <div class="container">
         <input type="text" tri-input #inputElement />
         <a class="add-item" (click)="addItem(inputElement)">
@@ -25,26 +25,24 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
       </div>
     </ng-template>
   `,
-  styles: [
-    `
-      nz-select {
-        width: 240px;
-      }
-      nz-divider {
-        margin: 4px 0;
-      }
-      .container {
-        display: flex;
-        flex-wrap: nowrap;
-        padding: 8px;
-      }
-      .add-item {
-        flex: 0 0 auto;
-        padding: 8px;
-        display: block;
-      }
-    `
-  ]
+  styles: `
+    nz-select {
+      width: 240px;
+    }
+    nz-divider {
+      margin: 4px 0;
+    }
+    .container {
+      display: flex;
+      flex-wrap: nowrap;
+      padding: 8px;
+    }
+    .add-item {
+      flex: 0 0 auto;
+      padding: 8px;
+      display: block;
+    }
+  `
 })
 export class TriDemoSelectCustomDropdownMenuComponent {
   listOfItem = ['jack', 'lucy'];

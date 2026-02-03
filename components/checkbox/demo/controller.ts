@@ -13,20 +13,18 @@ import { TriCheckboxModule } from 'ng-zorro-antd/checkbox';
     </label>
     <br />
     <br />
-    <button tri-button [type]="'primary'" (click)="checkButton()" [size]="'small'">
+    <button tri-button type="primary" (click)="checkButton()" size="small">
       {{ !isCheckedButton ? 'Checked' : 'Unchecked' }}
     </button>
-    <button tri-button [type]="'primary'" (click)="disableButton()" [size]="'small'">
+    <button tri-button type="primary" (click)="disableButton()" size="small">
       {{ isDisabledButton ? 'Enabled' : 'Disabled' }}
     </button>
   `,
-  styles: [
-    `
-      button {
-        margin-right: 8px;
-      }
-    `
-  ]
+  styles: `
+    button {
+      margin-right: 8px;
+    }
+  `
 })
 export class TriDemoCheckboxControllerComponent {
   isCheckedButton = true;

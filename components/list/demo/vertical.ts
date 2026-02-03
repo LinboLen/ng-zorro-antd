@@ -19,7 +19,7 @@ interface ItemData {
       @for (item of data; track item) {
         <tri-list-item>
           <tri-list-item-meta>
-            <tri-list-item-meta-avatar [src]="item.avatar"></tri-list-item-meta-avatar>
+            <tri-list-item-meta-avatar [src]="item.avatar" />
             <tri-list-item-meta-title>
               <a href="{{ item.href }}">{{ item.title }}</a>
             </tri-list-item-meta-title>

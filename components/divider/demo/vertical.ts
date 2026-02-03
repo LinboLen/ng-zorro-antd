@@ -8,9 +8,9 @@ import { TriDividerModule } from 'ng-zorro-antd/divider';
   template: `
     <div>
       Text
-      <tri-divider type="vertical"></tri-divider>
+      <tri-divider type="vertical" />
       <a href="#">Link</a>
-      <tri-divider type="vertical"></tri-divider>
+      <tri-divider type="vertical" />
       <a href="#">Link</a>
     </div>
   `

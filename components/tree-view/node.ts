@@ -50,17 +50,17 @@ export interface TriTreeVirtualNodeData<T> {
   ],
   template: `
     @if (indents().length) {
-      <tri-tree-node-indents [indents]="indents()"></tri-tree-node-indents>
+      <tri-tree-node-indents [indents]="indents()" />
     }
-    <ng-content select="nz-tree-node-toggle, [nz-tree-node-toggle]"></ng-content>
+    <ng-content select="nz-tree-node-toggle, [nz-tree-node-toggle]" />
     @if (indents().length && isLeaf) {
       <tri-tree-node-toggle class="nz-tree-leaf-line-icon" treeNodeNoopToggle>
         <span class="tri-tree-switcher-leaf-line"></span>
       </tri-tree-node-toggle>
     }
-    <ng-content select="nz-tree-node-checkbox"></ng-content>
-    <ng-content select="nz-tree-node-option"></ng-content>
-    <ng-content></ng-content>
+    <ng-content select="nz-tree-node-checkbox" />
+    <ng-content select="nz-tree-node-option" />
+    <ng-content />
   `,
   hostDirectives: [TriAnimationTreeCollapseDirective],
   host: {

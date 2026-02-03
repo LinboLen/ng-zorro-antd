@@ -9,25 +9,23 @@ import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
   selector: 'tri-demo-date-picker-range-picker',
   imports: [FormsModule, TriDatePickerModule],
   template: `
-    <tri-range-picker [(ngModel)]="date" (ngModelChange)="onChange($event)"></tri-range-picker>
+    <tri-range-picker [(ngModel)]="date" (ngModelChange)="onChange($event)" />
     <br />
-    <tri-range-picker [showTime]="true" [(ngModel)]="date" (ngModelChange)="onChange($event)"></tri-range-picker>
+    <tri-range-picker [showTime]="true" [(ngModel)]="date" (ngModelChange)="onChange($event)" />
     <br />
-    <tri-range-picker mode="week" [(ngModel)]="date" (ngModelChange)="getWeek($event)"></tri-range-picker>
+    <tri-range-picker mode="week" [(ngModel)]="date" (ngModelChange)="getWeek($event)" />
     <br />
-    <tri-range-picker mode="month" [(ngModel)]="date" (ngModelChange)="onChange($event)"></tri-range-picker>
+    <tri-range-picker mode="month" [(ngModel)]="date" (ngModelChange)="onChange($event)" />
     <br />
-    <tri-range-picker mode="quarter" [(ngModel)]="date" (ngModelChange)="onChange($event)"></tri-range-picker>
+    <tri-range-picker mode="quarter" [(ngModel)]="date" (ngModelChange)="onChange($event)" />
     <br />
-    <tri-range-picker mode="year" [(ngModel)]="date" (ngModelChange)="onChange($event)"></tri-range-picker>
+    <tri-range-picker mode="year" [(ngModel)]="date" (ngModelChange)="onChange($event)" />
   `,
-  styles: [
-    `
-      nz-range-picker {
-        margin: 0 8px 12px 0;
-      }
-    `
-  ]
+  styles: `
+    nz-range-picker {
+      margin: 0 8px 12px 0;
+    }
+  `
 })
 export class TriDemoDatePickerRangePickerComponent {
   date = null;

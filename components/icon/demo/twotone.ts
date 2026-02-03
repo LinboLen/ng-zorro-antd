@@ -10,13 +10,11 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
     <tri-icon type="heart" theme="twotone" twotoneColor="#eb2f96" />
     <tri-icon type="check-circle" theme="twotone" twotoneColor="#52c41a" />
   `,
-  styles: [
-    `
-      nz-icon {
-        margin-right: 6px;
-        font-size: 24px;
-      }
-    `
-  ]
+  styles: `
+    nz-icon {
+      margin-right: 6px;
+      font-size: 24px;
+    }
+  `
 })
 export class TriDemoIconTwotoneComponent {}

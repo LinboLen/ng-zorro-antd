@@ -27,7 +27,7 @@ import { TriSafeAny } from 'ng-zorro-antd/core/types';
   selector: 'tri-list-item-extra,[tri-list-item-extra]',
   exportAs: 'triListItemExtra',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<ng-content></ng-content>`,
+  template: `<ng-content />`,
   host: {
     class: 'tri-list-item-extra'
   }
@@ -38,7 +38,7 @@ export class TriListItemExtraComponent {}
   selector: 'tri-list-item-action',
   exportAs: 'triListItemAction',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<ng-template><ng-content></ng-content></ng-template>`
+  template: `<ng-template><ng-content /></ng-template>`
 })
 export class TriListItemActionComponent {
   @ViewChild(TemplateRef, { static: true }) templateRef?: TemplateRef<void>;

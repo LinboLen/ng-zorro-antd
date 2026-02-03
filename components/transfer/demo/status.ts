@@ -6,9 +6,9 @@ import { TriTransferModule } from 'ng-zorro-antd/transfer';
   selector: 'tri-demo-transfer-status',
   imports: [TriTransferModule],
   template: `
-    <tri-transfer [dataSource]="[]" status="error"></tri-transfer>
+    <tri-transfer [dataSource]="[]" status="error" />
     <br />
-    <tri-transfer [dataSource]="[]" status="warning" showSearch></tri-transfer>
+    <tri-transfer [dataSource]="[]" status="warning" showSearch />
   `
 })
 export class TriDemoTransferStatusComponent {}

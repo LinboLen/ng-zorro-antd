@@ -683,7 +683,7 @@ export class TriTestRadioGroupLabelNgModelComponent {
   imports: [BidiModule, TriTestRadioSingleComponent],
   template: `
     <div [dir]="direction">
-      <tri-test-radio-single></tri-test-radio-single>
+      <tri-test-radio-single />
     </div>
   `
 })
@@ -709,7 +709,7 @@ export class TriTestRadioButtonRtlComponent {
   imports: [BidiModule, TriTestRadioGroupComponent],
   template: `
     <div [dir]="direction">
-      <tri-test-radio-group></tri-test-radio-group>
+      <tri-test-radio-group />
     </div>
   `
 })
@@ -720,7 +720,7 @@ export class TriTestRadioGroupRtlComponent {
 
 @Component({
   imports: [TriRadioModule],
-  template: `<tri-radio-group [size]="size"></tri-radio-group>`
+  template: `<tri-radio-group [size]="size" />`
 })
 export class TestRadioGroupFinalSizeComponent {
   size: TriSizeLDSType = 'default';

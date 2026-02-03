@@ -11,19 +11,19 @@ import { TriSliderModule } from 'ng-zorro-antd/slider';
   template: `
     <tri-row gutter="8">
       <tri-col span="12">
-        <tri-slider [min]="1" [max]="20" [(ngModel)]="value1"></tri-slider>
+        <tri-slider [min]="1" [max]="20" [(ngModel)]="value1" />
       </tri-col>
       <div tri-col span="4">
-        <tri-input-number [min]="1" [max]="20" [(ngModel)]="value1"></tri-input-number>
+        <tri-input-number [min]="1" [max]="20" [(ngModel)]="value1" />
       </div>
     </tri-row>
 
     <tri-row gutter="8">
       <tri-col span="12">
-        <tri-slider [min]="0" [max]="1" [step]="0.01" [(ngModel)]="value2"></tri-slider>
+        <tri-slider [min]="0" [max]="1" [step]="0.01" [(ngModel)]="value2" />
       </tri-col>
       <tri-col span="4">
-        <tri-input-number [min]="0" [max]="1" [step]="0.01" [(ngModel)]="value2"></tri-input-number>
+        <tri-input-number [min]="0" [max]="1" [step]="0.01" [(ngModel)]="value2" />
       </tri-col>
     </tri-row>
   `

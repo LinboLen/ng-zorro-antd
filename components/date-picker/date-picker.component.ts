@@ -241,7 +241,7 @@ export type TriDatePickerSizeType = 'large' | 'default' | 'small';
       (detach)="close()"
       (overlayKeydown)="onOverlayKeydown($event)"
     >
-      <ng-container *ngTemplateOutlet="inlineMode"></ng-container>
+      <ng-container *ngTemplateOutlet="inlineMode" />
     </ng-template>
   `,
   host: {

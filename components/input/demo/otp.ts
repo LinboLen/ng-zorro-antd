@@ -10,22 +10,22 @@ import { TriTypographyComponent } from 'ng-zorro-antd/typography';
     <tri-flex vertical [gap]="16">
       <tri-flex vertical>
         <h5 tri-typography>With Formatter (Uppercase)</h5>
-        <tri-input-otp [formatter]="formatter"></tri-input-otp>
+        <tri-input-otp [formatter]="formatter" />
       </tri-flex>
 
       <tri-flex vertical>
         <h5 tri-typography>With Disabled</h5>
-        <tri-input-otp [disabled]="true"></tri-input-otp>
+        <tri-input-otp [disabled]="true" />
       </tri-flex>
 
       <tri-flex vertical>
         <h5 tri-typography>With Length (8)</h5>
-        <tri-input-otp [length]="8"></tri-input-otp>
+        <tri-input-otp [length]="8" />
       </tri-flex>
 
       <tri-flex vertical>
         <h5 tri-typography>With custom display character</h5>
-        <tri-input-otp [mask]="'🔒'"></tri-input-otp>
+        <tri-input-otp mask="🔒" />
       </tri-flex>
     </tri-flex>
   `,

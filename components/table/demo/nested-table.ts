@@ -72,7 +72,7 @@ interface ChildrenItemData {
                     <td>{{ data.date }}</td>
                     <td>{{ data.name }}</td>
                     <td>
-                      <tri-badge [status]="'success'" [text]="'Finished'"></tri-badge>
+                      <tri-badge status="success" text="Finished" />
                     </td>
                     <td>{{ data.upgradeNum }}</td>
                     <td>
@@ -91,9 +91,9 @@ interface ChildrenItemData {
                             </li>
                           </ul>
                         </tri-dropdown-menu>
-                        <tri-divider type="vertical"></tri-divider>
+                        <tri-divider type="vertical" />
                         <a class="operation">Stop</a>
-                        <tri-divider type="vertical"></tri-divider>
+                        <tri-divider type="vertical" />
                         <a>More</a>
                       </span>
                     </td>

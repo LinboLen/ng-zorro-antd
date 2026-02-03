@@ -213,8 +213,8 @@ describe('calendar Header', () => {
 @Component({
   imports: [FormsModule, TriCalendarHeaderComponent],
   template: `
-    <tri-calendar-header></tri-calendar-header>
-    <tri-calendar-header [(mode)]="mode"></tri-calendar-header>
+    <tri-calendar-header />
+    <tri-calendar-header [(mode)]="mode" />
   `
 })
 class TriTestCalendarHeaderModeComponent {
@@ -224,8 +224,8 @@ class TriTestCalendarHeaderModeComponent {
 @Component({
   imports: [TriCalendarHeaderComponent],
   template: `
-    <tri-calendar-header></tri-calendar-header>
-    <tri-calendar-header [fullscreen]="fullscreen"></tri-calendar-header>
+    <tri-calendar-header />
+    <tri-calendar-header [fullscreen]="fullscreen" />
   `
 })
 class TriTestCalendarHeaderFullscreenComponent {
@@ -235,8 +235,8 @@ class TriTestCalendarHeaderFullscreenComponent {
 @Component({
   imports: [TriCalendarHeaderComponent],
   template: `
-    <tri-calendar-header></tri-calendar-header>
-    <tri-calendar-header [activeDate]="activeDate"></tri-calendar-header>
+    <tri-calendar-header />
+    <tri-calendar-header [activeDate]="activeDate" />
   `
 })
 class TriTestCalendarHeaderActiveDateComponent {
@@ -246,11 +246,7 @@ class TriTestCalendarHeaderActiveDateComponent {
 @Component({
   imports: [TriCalendarHeaderComponent],
   template: `
-    <tri-calendar-header
-      [customHeader]="customHeader"
-      (yearChange)="year = $event"
-      (monthChange)="month = $event"
-    ></tri-calendar-header>
+    <tri-calendar-header [customHeader]="customHeader" (yearChange)="year = $event" (monthChange)="month = $event" />
 
     <ng-template #customHeaderElement>
       <p>custom header</p>

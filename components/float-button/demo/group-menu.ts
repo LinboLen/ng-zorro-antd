@@ -15,8 +15,8 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
         style="right: 24px"
         (onOpenChange)="openChange($event)"
       >
-        <tri-float-button></tri-float-button>
-        <tri-float-button icon="comment"></tri-float-button>
+        <tri-float-button />
+        <tri-float-button icon="comment" />
       </tri-float-button-group>
       <tri-float-button-group
         icon="customer-service"
@@ -25,22 +25,20 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
         style="right: 94px"
         (onOpenChange)="openChange($event)"
       >
-        <tri-float-button></tri-float-button>
-        <tri-float-button icon="comment"></tri-float-button>
+        <tri-float-button />
+        <tri-float-button icon="comment" />
       </tri-float-button-group>
     </div>
   `,
-  styles: [
-    `
-      .menu {
-        height: 300px;
-        position: relative;
-      }
-      nz-float-button-group {
-        position: absolute;
-      }
-    `
-  ]
+  styles: `
+    .menu {
+      height: 300px;
+      position: relative;
+    }
+    nz-float-button-group {
+      position: absolute;
+    }
+  `
 })
 export class TriDemoFloatButtonGroupMenuComponent {
   openChange(status: boolean): void {

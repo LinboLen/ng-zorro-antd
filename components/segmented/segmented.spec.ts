@@ -720,7 +720,7 @@ export class TriSegmentedNgModelTestComponent {
 
 @Component({
   imports: [ReactiveFormsModule, TriSegmentedModule],
-  template: `<tri-segmented [options]="options" [formControl]="formControl"></tri-segmented>`
+  template: `<tri-segmented [options]="options" [formControl]="formControl" />`
 })
 export class TriSegmentedInReactiveFormTestComponent {
   options = ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly'];

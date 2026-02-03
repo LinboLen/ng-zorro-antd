@@ -54,7 +54,7 @@ function isDefaultColor(color?: string): boolean {
           <ng-container *stringTemplateOutlet="dot">{{ dot }}</ng-container>
         </div>
         <div class="tri-timeline-item-content">
-          <ng-content></ng-content>
+          <ng-content />
         </div>
       </li>
     </ng-template>

@@ -40,7 +40,7 @@ export class TriOptionSelectionChange {
   encapsulation: ViewEncapsulation.None,
   template: `
     <div class="tri-select-item-option-content">
-      <ng-content></ng-content>
+      <ng-content />
     </div>
   `,
   host: {

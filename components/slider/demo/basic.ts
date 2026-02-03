@@ -8,10 +8,10 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   selector: 'tri-demo-slider-basic',
   imports: [FormsModule, TriSliderModule, TriSwitchModule],
   template: `
-    <tri-slider [(ngModel)]="value1" [disabled]="disabled"></tri-slider>
-    <tri-slider range [(ngModel)]="value2" [disabled]="disabled"></tri-slider>
+    <tri-slider [(ngModel)]="value1" [disabled]="disabled" />
+    <tri-slider range [(ngModel)]="value2" [disabled]="disabled" />
     Disabled:
-    <tri-switch size="small" [(ngModel)]="disabled"></tri-switch>
+    <tri-switch size="small" [(ngModel)]="disabled" />
   `
 })
 export class TriDemoSliderBasicComponent {

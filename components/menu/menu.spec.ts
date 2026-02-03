@@ -612,7 +612,7 @@ describe('menu', () => {
   selector: 'tri-test-menu-horizontal',
   imports: [TriIconModule, TriMenuModule],
   template: `
-    <ul tri-menu [mode]="'horizontal'">
+    <ul tri-menu mode="horizontal">
       <li
         tri-submenu
         [triggerSubMenuAction]="triggerSubMenuAction"
@@ -672,7 +672,7 @@ export class TriTestMenuHorizontalComponent {
 @Component({
   imports: [TriIconModule, TriMenuModule],
   template: `
-    <ul tri-menu [mode]="'inline'" [inlineCollapsed]="collapse">
+    <ul tri-menu mode="inline" [inlineCollapsed]="collapse">
       <li tri-submenu [menuClassName]="submenuClassName" [disabled]="disabled">
         <span title>
           <tri-icon type="mail" />

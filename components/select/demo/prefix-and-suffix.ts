@@ -9,20 +9,8 @@ import { TriSelectModule, TriSelectOptionInterface } from 'ng-zorro-antd/select'
   imports: [FormsModule, TriSelectModule, TriFlexModule],
   template: `
     <tri-flex wrap="wrap" gap="small">
-      <tri-select
-        [(ngModel)]="value"
-        allowClear
-        [style.width.px]="200"
-        prefix="User"
-        [options]="options"
-      ></tri-select>
-      <tri-select
-        [(ngModel)]="value"
-        allowClear
-        [style.width.px]="120"
-        suffixIcon="smile"
-        [options]="options"
-      ></tri-select>
+      <tri-select [(ngModel)]="value" allowClear [style.width.px]="200" prefix="User" [options]="options" />
+      <tri-select [(ngModel)]="value" allowClear [style.width.px]="120" suffixIcon="smile" [options]="options" />
       <tri-select
         [(ngModel)]="value"
         allowClear
@@ -30,7 +18,7 @@ import { TriSelectModule, TriSelectOptionInterface } from 'ng-zorro-antd/select'
         suffixIcon="meh"
         disabled
         [options]="options"
-      ></tri-select>
+      />
       <br />
       <tri-select
         [(ngModel)]="multipleValue"
@@ -39,7 +27,7 @@ import { TriSelectModule, TriSelectOptionInterface } from 'ng-zorro-antd/select'
         mode="tags"
         prefix="User"
         [options]="options"
-      ></tri-select>
+      />
       <tri-select
         [(ngModel)]="multipleValue"
         allowClear
@@ -47,7 +35,7 @@ import { TriSelectModule, TriSelectOptionInterface } from 'ng-zorro-antd/select'
         mode="tags"
         suffixIcon="smile"
         [options]="options"
-      ></tri-select>
+      />
       <tri-select
         [(ngModel)]="multipleValue"
         allowClear
@@ -56,7 +44,7 @@ import { TriSelectModule, TriSelectOptionInterface } from 'ng-zorro-antd/select'
         suffixIcon="meh"
         disabled
         [options]="options"
-      ></tri-select>
+      />
     </tri-flex>
   `
 })

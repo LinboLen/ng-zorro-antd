@@ -20,7 +20,7 @@ declare const monaco: any;
       [ngModel]="code"
       [fullControl]="true"
       (editorInitialized)="onEditorInit($event)"
-    ></tri-code-editor>
+    />
   `
 })
 export class TriTestCodeEditorFullControlComponent {

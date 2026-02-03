@@ -52,7 +52,7 @@ import { TriTypographyModule } from 'ng-zorro-antd/typography';
         to exist...
       </p>
     </article>
-    <tri-divider></tri-divider>
+    <tri-divider />
     <article tri-typography>
       <h1 tri-typography>介绍</h1>
       <p tri-typography>

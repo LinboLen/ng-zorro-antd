@@ -49,7 +49,7 @@ import { TriTreeNodeTitleComponent } from './tree-node-title.component';
       [selectMode]="selectMode"
       [isStart]="isStart"
       [isEnd]="isEnd"
-    ></tri-tree-indent>
+    />
     @if (showExpand) {
       <tri-tree-node-switcher
         [showExpand]="showExpand"
@@ -61,7 +61,7 @@ import { TriTreeNodeTitleComponent } from './tree-node-title.component';
         [isExpanded]="isExpanded"
         [isLoading]="isLoading"
         (click)="clickExpand($event)"
-      ></tri-tree-node-switcher>
+      />
     }
     @if (checkable) {
       <tri-tree-node-checkbox
@@ -72,7 +72,7 @@ import { TriTreeNodeTitleComponent } from './tree-node-title.component';
         [isHalfChecked]="isHalfChecked"
         [isDisabled]="isDisabled"
         [isDisableCheckbox]="isDisableCheckbox"
-      ></tri-tree-node-checkbox>
+      />
     }
     <tri-tree-node-title
       [icon]="icon"
@@ -94,7 +94,7 @@ import { TriTreeNodeTitleComponent } from './tree-node-title.component';
       (dblclick)="dblClick($event)"
       (click)="clickSelect($event)"
       (contextmenu)="contextMenu($event)"
-    ></tri-tree-node-title>
+    />
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {

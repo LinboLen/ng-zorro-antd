@@ -87,12 +87,12 @@ function normalizeDataSource(value: AutocompleteDataSource): AutocompleteDataSou
       >
         <div class="tri-select-dropdown-content-wrapper">
           <div class="tri-select-dropdown-content">
-            <ng-template *ngTemplateOutlet="dataSource ? optionsTemplate : contentTemplate"></ng-template>
+            <ng-template *ngTemplateOutlet="dataSource ? optionsTemplate : contentTemplate" />
           </div>
         </div>
       </div>
       <ng-template #contentTemplate>
-        <ng-content></ng-content>
+        <ng-content />
       </ng-template>
       <ng-template #optionsTemplate>
         @for (option of normalizedDataSource; track option.value) {

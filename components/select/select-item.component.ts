@@ -36,7 +36,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
         @if (!removeIcon) {
           <tri-icon type="close" />
         } @else {
-          <ng-template [ngTemplateOutlet]="removeIcon"></ng-template>
+          <ng-template [ngTemplateOutlet]="removeIcon" />
         }
       </span>
     }

@@ -12,26 +12,26 @@ import { TriInputModule } from 'ng-zorro-antd/input';
   template: `
     <form tri-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
       <ng-container formArrayName="names">
-        @for (control of listOfControl.controls; track control; let i = $index) {
+        @for (control of listOfControl.controls; track control) {
           <tri-form-item>
-            @if (i === 0) {
-              <tri-form-label [xs]="24" [sm]="4" [for]="'passenger' + i"> Passengers </tri-form-label>
+            @if ($first) {
+              <tri-form-label [xs]="24" [sm]="4" [for]="'passenger' + $index"> Passengers </tri-form-label>
             }
             <tri-form-control
               [xs]="24"
               [sm]="20"
-              [offset]="i === 0 ? 0 : 4"
+              [offset]="$first ? 0 : 4"
               errorTip="Please input passenger's name or delete this field."
             >
               <input
                 class="passenger-input"
                 tri-input
                 placeholder="placeholder"
-                [attr.id]="'passenger' + i"
-                [formControlName]="i"
+                [attr.id]="'passenger' + $index"
+                [formControlName]="$index"
               />
-              @if (listOfControl.controls.length > 1) {
-                <tri-icon type="minus-circle-o" class="dynamic-delete-button" (click)="removeField(i, $event)" />
+              @if ($count > 1) {
+                <tri-icon type="minus-circle-o" class="dynamic-delete-button" (click)="removeField($index, $event)" />
               }
             </tri-form-control>
           </tri-form-item>
@@ -61,35 +61,33 @@ import { TriInputModule } from 'ng-zorro-antd/input';
       </ng-container>
     </form>
   `,
-  styles: [
-    `
-      .dynamic-delete-button {
-        cursor: pointer;
-        position: relative;
-        top: 4px;
-        font-size: 24px;
-        color: #999;
-        transition: all 0.3s;
-      }
+  styles: `
+    .dynamic-delete-button {
+      cursor: pointer;
+      position: relative;
+      top: 4px;
+      font-size: 24px;
+      color: #999;
+      transition: all 0.3s;
+    }
 
-      .dynamic-delete-button:hover {
-        color: #777;
-      }
+    .dynamic-delete-button:hover {
+      color: #777;
+    }
 
-      .passenger-input {
-        width: 60%;
-        margin-right: 8px;
-      }
+    .passenger-input {
+      width: 60%;
+      margin-right: 8px;
+    }
 
-      [nz-form] {
-        max-width: 600px;
-      }
+    [nz-form] {
+      max-width: 600px;
+    }
 
-      .add-button {
-        width: 60%;
-      }
-    `
-  ]
+    .add-button {
+      width: 60%;
+    }
+  `
 })
 export class TriDemoFormDynamicFormItemComponent implements OnInit {
   private fb = inject(NonNullableFormBuilder);

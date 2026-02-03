@@ -29,7 +29,7 @@ interface Data extends User {
       <tri-list [dataSource]="data" [renderItem]="item" itemLayout="horizontal">
         <ng-template #item let-item>
           <tri-comment [author]="item.author" [datetime]="item.displayTime">
-            <tri-avatar tri-comment-avatar icon="user" [src]="item.avatar"></tri-avatar>
+            <tri-avatar tri-comment-avatar icon="user" [src]="item.avatar" />
             <tri-comment-content>
               <p>{{ item.content }}</p>
             </tri-comment-content>
@@ -39,7 +39,7 @@ interface Data extends User {
     }
 
     <tri-comment>
-      <tri-avatar tri-comment-avatar icon="user" [src]="user.avatar"></tri-avatar>
+      <tri-avatar tri-comment-avatar icon="user" [src]="user.avatar" />
       <tri-comment-content>
         <tri-form-item>
           <textarea [(ngModel)]="inputValue" tri-input rows="4"></textarea>

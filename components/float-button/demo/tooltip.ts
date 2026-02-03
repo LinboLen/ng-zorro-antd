@@ -14,23 +14,21 @@ import { TriTooltipDirective } from 'ng-zorro-antd/tooltip';
         tooltipTitle="Documents"
         tooltipPlacement="top"
         tooltipColor="blue"
-      ></tri-float-button>
-      <tri-float-button tri-tooltip [tooltipTitle]="titleTemplate"></tri-float-button>
+      />
+      <tri-float-button tri-tooltip [tooltipTitle]="titleTemplate" />
       <ng-template #titleTemplate>
         <div>Documents</div>
       </ng-template>
     </div>
   `,
-  styles: [
-    `
-      .tooltip {
-        height: 300px;
-        position: relative;
-      }
-      nz-float-button {
-        position: absolute;
-      }
-    `
-  ]
+  styles: `
+    .tooltip {
+      height: 300px;
+      position: relative;
+    }
+    nz-float-button {
+      position: absolute;
+    }
+  `
 })
 export class TriDemoFloatButtonTooltipComponent {}

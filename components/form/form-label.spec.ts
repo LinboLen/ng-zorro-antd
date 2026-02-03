@@ -245,7 +245,7 @@ describe('form-label', () => {
       [tooltipIcon]="tooltipIcon"
       [labelAlign]="align"
       [labelWrap]="labelWrap"
-    ></tri-form-label>
+    />
   `
 })
 export class TriTestFormLabelComponent {

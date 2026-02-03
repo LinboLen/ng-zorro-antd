@@ -281,7 +281,7 @@ describe('list RTL', () => {
             title="title"
             avatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
             description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-          ></tri-list-item-meta>
+          />
           <ul tri-list-item-actions>
             @for (action of actions$ | async; track action) {
               <tri-list-item-action>{{ action }}</tri-list-item-action>
@@ -341,7 +341,7 @@ class TestListWithTemplateComponent {
   imports: [TriIconModule, TriListModule],
   template: `
     <tri-list id="item-string">
-      <tri-list-item [content]="'content'" [actions]="[action]" [extra]="extra" [noFlex]="noFlex">
+      <tri-list-item content="content" [actions]="[action]" [extra]="extra" [noFlex]="noFlex">
         <ng-template #action>
           <tri-icon type="star-o" style="margin-right: 8px;" />
           156
@@ -358,7 +358,7 @@ class TestListWithTemplateComponent {
           title="title"
           avatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
           description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-        ></tri-list-item-meta>
+        />
       </tri-list-item>
     </tri-list>
     <tri-list id="item-template">
@@ -381,7 +381,7 @@ class TestListItemComponent {
   imports: [BidiModule, TestListComponent],
   template: `
     <div [dir]="direction">
-      <tri-test-list></tri-test-list>
+      <tri-test-list />
     </div>
   `
 })

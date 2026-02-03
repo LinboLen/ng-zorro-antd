@@ -9,13 +9,13 @@ import { TriSliderModule } from 'ng-zorro-antd/slider';
   template: `
     <div [style]="{ height: '300px' }">
       <div [style]="style">
-        <tri-slider vertical [ngModel]="30"></tri-slider>
+        <tri-slider vertical [ngModel]="30" />
       </div>
       <div [style]="style">
-        <tri-slider vertical range [step]="10" [ngModel]="[20, 50]"></tri-slider>
+        <tri-slider vertical range [step]="10" [ngModel]="[20, 50]" />
       </div>
       <div [style]="style">
-        <tri-slider vertical range [marks]="marks" [ngModel]="[26, 37]"></tri-slider>
+        <tri-slider vertical range [marks]="marks" [ngModel]="[26, 37]" />
       </div>
     </div>
   `

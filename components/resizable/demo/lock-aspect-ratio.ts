@@ -14,25 +14,23 @@ import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
       [style.height.px]="height"
       [style.width.px]="width"
     >
-      <tri-resize-handles></tri-resize-handles>
+      <tri-resize-handles />
       content
     </div>
   `,
-  styles: [
-    `
-      :host {
-        display: block;
-        height: 200px;
-      }
-      .box {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #eee;
-        border: 1px solid #ddd;
-      }
-    `
-  ]
+  styles: `
+    :host {
+      display: block;
+      height: 200px;
+    }
+    .box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #eee;
+      border: 1px solid #ddd;
+    }
+  `
 })
 export class TriDemoResizableLockAspectRatioComponent {
   width = 400;

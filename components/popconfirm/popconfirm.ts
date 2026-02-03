@@ -200,7 +200,7 @@ export class TriPopconfirmDirective extends TriTooltipBaseDirective {
                   <button
                     tri-button
                     #cancelBtn
-                    [size]="'small'"
+                    size="small"
                     [danger]="cancelButtonProps()?.nzDanger"
                     (click)="onCancel()"
                     [disabled]="cancelButtonProps()?.nzDisabled"
@@ -212,7 +212,7 @@ export class TriPopconfirmDirective extends TriTooltipBaseDirective {
                   <button
                     tri-button
                     #okBtn
-                    [size]="'small'"
+                    size="small"
         okButtonPropspe]="type"
           okButtonPropser]="danger"
                     [loading]="confirmLoading"

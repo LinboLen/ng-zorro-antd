@@ -12,13 +12,11 @@ import { TriNotificationService } from 'ng-zorro-antd/notification';
     <button tri-button (click)="createNotification('warning')">Warning</button>
     <button tri-button (click)="createNotification('error')">Error</button>
   `,
-  styles: [
-    `
-      button {
-        margin-right: 1em;
-      }
-    `
-  ]
+  styles: `
+    button {
+      margin-right: 1em;
+    }
+  `
 })
 export class TriDemoNotificationWithIconComponent {
   constructor(private notification: TriNotificationService) {}

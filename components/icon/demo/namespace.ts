@@ -9,14 +9,12 @@ const ngZorroIconLiteral =
   selector: 'tri-demo-icon-namespace',
   imports: [TriIconModule],
   template: `<tri-icon type="ng-zorro:antd" />`,
-  styles: [
-    `
-      nz-icon {
-        margin-right: 6px;
-        font-size: 24px;
-      }
-    `
-  ]
+  styles: `
+    nz-icon {
+      margin-right: 6px;
+      font-size: 24px;
+    }
+  `
 })
 export class TriDemoIconNamespaceComponent {
   constructor(private iconService: TriIconService) {

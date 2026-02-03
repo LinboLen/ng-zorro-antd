@@ -7,7 +7,7 @@ import { TriModalModule } from 'ng-zorro-antd/modal';
   selector: 'tri-demo-modal-basic',
   imports: [TriButtonModule, TriModalModule],
   template: `
-    <button tri-button [type]="'primary'" (click)="showModal()"><span>Show Modal</span></button>
+    <button tri-button type="primary" (click)="showModal()"><span>Show Modal</span></button>
     <tri-modal [(visibleChange)]="isVisible" title="The first Modal" (onCancel)="handleCancel()" (onOk)="handleOk()">
       <ng-container *modalContent>
         <p>Content one</p>

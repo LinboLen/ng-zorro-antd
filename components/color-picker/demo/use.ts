@@ -20,7 +20,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
       <tri-form-item>
         <tri-form-label [span]="4">color</tri-form-label>
         <tri-form-control [span]="16">
-          <tri-color-picker formControlName="colorPicker" showText></tri-color-picker>
+          <tri-color-picker formControlName="colorPicker" showText />
         </tri-form-control>
       </tri-form-item>
       <tri-form-item>

@@ -14,7 +14,7 @@ import { TriDatePickerComponent, TriDatePickerModule } from 'ng-zorro-antd/date-
       [(ngModel)]="startValue"
       placeHolder="Start"
       (onOpenChange)="handleStartOpenChange($event)"
-    ></tri-date-picker>
+    />
     <tri-date-picker
       #endDatePicker
       [disabledDate]="disabledEndDate"
@@ -23,15 +23,13 @@ import { TriDatePickerComponent, TriDatePickerModule } from 'ng-zorro-antd/date-
       [(ngModel)]="endValue"
       placeHolder="End"
       (onOpenChange)="handleEndOpenChange($event)"
-    ></tri-date-picker>
+    />
   `,
-  styles: [
-    `
-      nz-date-picker {
-        margin: 0 8px 12px 0;
-      }
-    `
-  ]
+  styles: `
+    nz-date-picker {
+      margin: 0 8px 12px 0;
+    }
+  `
 })
 export class TriDemoDatePickerStartEndComponent {
   startValue: Date | null = null;

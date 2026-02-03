@@ -41,7 +41,7 @@ function mockAsyncStep(): Observable<number> {
           [title]="step.title"
           [description]="step.description"
           [percentage]="step.async ? step.percentage : null"
-        ></tri-step>
+        />
       }
     </tri-steps>
     <div class="steps-action">
@@ -62,17 +62,15 @@ function mockAsyncStep(): Observable<number> {
       }
     </div>
   `,
-  styles: [
-    `
-      .steps-action {
-        margin-top: 36px;
-      }
+  styles: `
+    .steps-action {
+      margin-top: 36px;
+    }
 
-      button {
-        margin-right: 8px;
-      }
-    `
-  ]
+    button {
+      margin-right: 8px;
+    }
+  `
 })
 export class TriDemoStepsProgressComponent {
   steps: Step[] = [

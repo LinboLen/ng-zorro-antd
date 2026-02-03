@@ -65,7 +65,7 @@ export type TriPlacementType = 'bottomLeft' | 'bottomCenter' | 'bottomRight' | '
         @if (arrow) {
           <div class="tri-dropdown-arrow"></div>
         }
-        <ng-content></ng-content>
+        <ng-content />
       </div>
     </ng-template>
   `,

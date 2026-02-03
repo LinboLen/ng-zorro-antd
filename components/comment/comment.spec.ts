@@ -168,7 +168,7 @@ describe('comment', () => {
   imports: [BidiModule, TriDemoCommentBasicComponent],
   template: `
     <div [dir]="direction">
-      <tri-demo-comment-basic></tri-demo-comment-basic>
+      <tri-demo-comment-basic />
     </div>
   `
 })

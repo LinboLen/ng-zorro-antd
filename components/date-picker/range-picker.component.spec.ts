@@ -1287,7 +1287,7 @@ describe('range-picker', () => {
         <tri-date-picker [ngModel]="singleValue" />
       }
       @case (5) {
-        <tri-range-picker open></tri-range-picker>
+        <tri-range-picker open />
       }
       @case (6) {
         <tri-range-picker [separator]="separatorTemplate" />
@@ -1345,7 +1345,7 @@ class TriTestRangePickerComponent {
 
 @Component({
   imports: [TriDatePickerModule],
-  template: `<tri-range-picker [status]="status"></tri-range-picker>`
+  template: `<tri-range-picker [status]="status" />`
 })
 class TriTestRangePickerStatusComponent {
   status: TriStatus = 'error';

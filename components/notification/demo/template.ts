@@ -15,13 +15,11 @@ import { TriTagModule } from 'ng-zorro-antd/tag';
       <button tri-button size="small">Cut It!</button>
     </ng-template>
   `,
-  styles: [
-    `
-      button {
-        margin-top: 8px;
-      }
-    `
-  ]
+  styles: `
+    button {
+      margin-top: 8px;
+    }
+  `
 })
 export class TriDemoNotificationTemplateComponent {
   @ViewChild(TemplateRef, { static: false }) template?: TemplateRef<{

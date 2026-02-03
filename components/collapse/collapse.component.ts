@@ -26,7 +26,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'collapse';
   exportAs: 'triCollapse',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  template: `<ng-content></ng-content>`,
+  template: `<ng-content />`,
   host: {
     class: 'tri-collapse',
     '[class.tri-collapse-icon-position-start]': `expandIconPosition === 'start'`,

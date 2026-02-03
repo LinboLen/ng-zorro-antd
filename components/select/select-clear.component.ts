@@ -23,7 +23,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (clearIcon) {
-      <ng-template [ngTemplateOutlet]="clearIcon"></ng-template>
+      <ng-template [ngTemplateOutlet]="clearIcon" />
     } @else {
       <tri-icon type="close-circle" theme="fill" class="tri-select-close-icon" />
     }

@@ -220,8 +220,8 @@ describe('nz-icon injection', () => {
 @Component({
   imports: [TriIconModule],
   template: `
-    <tri-icon [type]="type" [theme]="theme" [spin]="spin" [rotate]="rotate"></tri-icon>
-    <tri-icon [type]="'loading'" [theme]="theme"></tri-icon>
+    <tri-icon [type]="type" [theme]="theme" [spin]="spin" [rotate]="rotate" />
+    <tri-icon type="loading" [theme]="theme" />
   `
 })
 export class TriTestIconExtensionsComponent {
@@ -250,9 +250,9 @@ export class TriTestIconCustomComponent {}
 @Component({
   imports: [TriIconModule],
   template: `
-    <tri-icon iconfont="icon-tuichu"></tri-icon>
-    <tri-icon iconfont="icon-facebook"></tri-icon>
-    <tri-icon iconfont="icon-twitter"></tri-icon>
+    <tri-icon iconfont="icon-tuichu" />
+    <tri-icon iconfont="icon-facebook" />
+    <tri-icon iconfont="icon-twitter" />
   `
 })
 export class TriTestIconIconfontComponent {
@@ -271,8 +271,8 @@ class ChildModule {}
 @Component({
   imports: [TriIconModule, ChildModule],
   template: `
-    <tri-icon type="home"></tri-icon>
-    <tri-icon type="question"></tri-icon>
+    <tri-icon type="home" />
+    <tri-icon type="question" />
   `
 })
 class TriTestIconMultiInjectionComponent {}
@@ -281,8 +281,8 @@ class TriTestIconMultiInjectionComponent {}
   imports: [TriIconModule],
   providers: [provideNzIconsPatch([QuestionOutline])],
   template: `
-    <tri-icon type="home"></tri-icon>
-    <tri-icon type="question"></tri-icon>
+    <tri-icon type="home" />
+    <tri-icon type="question" />
   `
 })
 class TriTestIconMultiInjectionStandaloneComponent {}

@@ -11,12 +11,12 @@ import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
   template: `
     <div class="segment-wrapper">
       <span>Select justify:</span>
-      <tri-segmented [options]="justifySegment" [(ngModel)]="selectedJustification"></tri-segmented>
+      <tri-segmented [options]="justifySegment" [(ngModel)]="selectedJustification" />
     </div>
 
     <div class="segment-wrapper">
       <span>Select align:</span>
-      <tri-segmented [options]="alignSegment" [(ngModel)]="selectedLAlignment"></tri-segmented>
+      <tri-segmented [options]="alignSegment" [(ngModel)]="selectedLAlignment" />
     </div>
 
     <div class="btn-wrappers" tri-flex [justify]="selectedJustification" [align]="selectedLAlignment">
@@ -26,22 +26,20 @@ import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
       <button tri-button type="primary">Primary</button>
     </div>
   `,
-  styles: [
-    `
-      .segment-wrapper {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
+  styles: `
+    .segment-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
 
-        margin-block-end: 1rem;
-      }
+      margin-block-end: 1rem;
+    }
 
-      .btn-wrappers {
-        block-size: 10rem;
-        border: 1px solid var(--ant-primary-6);
-      }
-    `
-  ]
+    .btn-wrappers {
+      block-size: 10rem;
+      border: 1px solid var(--ant-primary-6);
+    }
+  `
 })
 export class TriDemoFlexAlignComponent {
   public justifySegment: TriJustify[] = [

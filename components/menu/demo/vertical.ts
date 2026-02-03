@@ -6,7 +6,7 @@ import { TriMenuModule } from 'ng-zorro-antd/menu';
   selector: 'tri-demo-menu-vertical',
   imports: [TriMenuModule],
   template: `
-    <ul tri-menu [mode]="'vertical'">
+    <ul tri-menu mode="vertical">
       <li tri-submenu title="Navigation One" icon="mail">
         <ul>
           <li tri-menu-group title="Item 1">
@@ -44,13 +44,11 @@ import { TriMenuModule } from 'ng-zorro-antd/menu';
       </li>
     </ul>
   `,
-  styles: [
-    `
-      [nz-menu] {
-        width: 240px;
-      }
-    `
-  ]
+  styles: `
+    [nz-menu] {
+      width: 240px;
+    }
+  `
 })
 export class TriDemoMenuVerticalComponent {
   change(value: boolean): void {

@@ -6,9 +6,9 @@ import { TriHashCodeModule } from 'ng-zorro-antd/hash-code';
   selector: 'tri-demo-hash-code-strip',
   imports: [TriHashCodeModule],
   template: `
-    <tri-hash-code [value]="value" mode="strip"></tri-hash-code>
+    <tri-hash-code [value]="value" mode="strip" />
     <br />
-    <tri-hash-code [value]="value" mode="strip" type="primary"></tri-hash-code>
+    <tri-hash-code [value]="value" mode="strip" type="primary" />
   `
 })
 export class TriDemoHashCodeStripComponent {

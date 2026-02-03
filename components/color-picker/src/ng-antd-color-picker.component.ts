@@ -45,14 +45,14 @@ import { defaultColor, generateColor } from './util/util';
     <div class="tri-color-picker-inner-content">
       <div class="tri-color-picker-panel" [class.tri-color-picker-panel-disabled]="disabled">
         @if (panelRenderHeader) {
-          <ng-template [ngTemplateOutlet]="panelRenderHeader"></ng-template>
+          <ng-template [ngTemplateOutlet]="panelRenderHeader" />
         }
         <color-picker
           [color]="colorValue"
           (onChange)="handleChange($event)"
           [disabled]="disabled"
           (onChangeComplete)="onChangeComplete.emit($event)"
-        ></color-picker>
+        />
         <div class="tri-color-picker-slider-container">
           <div
             class="tri-color-picker-slider-group"
@@ -65,7 +65,7 @@ import { defaultColor, generateColor } from './util/util';
               (onChange)="handleChange($event, 'hue')"
               [disabled]="disabled"
               (onChangeComplete)="onChangeComplete.emit($event)"
-            ></color-slider>
+            />
             @if (!disabledAlpha) {
               <color-slider
                 type="alpha"
@@ -75,14 +75,18 @@ import { defaultColor, generateColor } from './util/util';
                 (onChange)="handleChange($event, 'alpha')"
                 [disabled]="disabled"
                 (onChangeComplete)="onChangeComplete.emit($event)"
-              ></color-slider>
+              />
             }
           </div>
-          <ng-antd-color-block [color]="toRgbString"></ng-antd-color-block>
+          <ng-antd-color-block [color]="toRgbString" />
         </div>
       </div>
       @if (panelRenderFooter) {
-        <ng-template [ngTemplateOutlet]="panelRenderFooter"></ng-template>
+        <ng-template [ngTemplateOutlet]="panelRenderFooter" />
+      }
+      @if (presets && presets.length > 0) {
+        <tri-divider size="small" />
+        <ng-antd-color-preset [value]="colorValue" [presets]="presets" (presetSelect)="handleChange($event)" />
       }
       @if (presets && presets.length > 0) {
         <tri-divider size="small" />

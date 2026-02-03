@@ -25,22 +25,20 @@ interface MockUser {
       [dropdownRender]="renderTemplate"
     >
       @for (item of optionList; track item) {
-        <tri-option [value]="item" [label]="item"></tri-option>
+        <tri-option [value]="item" [label]="item" />
       }
     </tri-select>
     <ng-template #renderTemplate>
       @if (isLoading) {
-        <tri-spin></tri-spin>
+        <tri-spin />
       }
     </ng-template>
   `,
-  styles: [
-    `
-      nz-select {
-        width: 100%;
-      }
-    `
-  ]
+  styles: `
+    nz-select {
+      width: 100%;
+    }
+  `
 })
 export class TriDemoSelectScrollLoadComponent implements OnInit {
   readonly randomUserUrl: string = 'https://api.randomuser.me/?results=10';

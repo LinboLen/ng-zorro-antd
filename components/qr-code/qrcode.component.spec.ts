@@ -85,7 +85,7 @@ describe('qrcode', () => {
     [bordered]="bordered"
     [status]="status"
     [statusRender]="statusRender"
-  ></tri-qrcode>`
+  />`
 })
 export class TriTestQrCodeBasicComponent {
   value: string = 'https://ng.ant.design/';

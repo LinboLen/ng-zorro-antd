@@ -24,14 +24,14 @@ import { TriTableLayout } from '../table.types';
     }
     @if (theadTemplate) {
       <thead class="tri-table-thead">
-        <ng-template [ngTemplateOutlet]="theadTemplate"></ng-template>
+        <ng-template [ngTemplateOutlet]="theadTemplate" />
       </thead>
     }
-    <ng-template [ngTemplateOutlet]="contentTemplate"></ng-template>
-    <ng-content></ng-content>
+    <ng-template [ngTemplateOutlet]="contentTemplate" />
+    <ng-content />
     @if (tfootTemplate) {
       <tfoot class="tri-table-summary">
-        <ng-template [ngTemplateOutlet]="tfootTemplate"></ng-template>
+        <ng-template [ngTemplateOutlet]="tfootTemplate" />
       </tfoot>
     }
   `,

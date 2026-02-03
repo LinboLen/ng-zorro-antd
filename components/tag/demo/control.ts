@@ -11,7 +11,7 @@ import { TriTagModule } from 'ng-zorro-antd/tag';
   imports: [FormsModule, TriIconModule, TriInputModule, TriTagModule, TriNoAnimationDirective],
   template: `
     @for (tag of tags; track tag) {
-      <tri-tag [mode]="$index === 0 ? 'default' : 'closeable'" (onClose)="handleClose(tag)">
+      <tri-tag [mode]="$first ? 'default' : 'closeable'" (onClose)="handleClose(tag)">
         {{ sliceTagName(tag) }}
       </tri-tag>
     }
@@ -34,14 +34,12 @@ import { TriTagModule } from 'ng-zorro-antd/tag';
       />
     }
   `,
-  styles: [
-    `
-      .editable-tag {
-        background: rgb(255, 255, 255);
-        border-style: dashed;
-      }
-    `
-  ]
+  styles: `
+    .editable-tag {
+      background: rgb(255, 255, 255);
+      border-style: dashed;
+    }
+  `
 })
 export class TriDemoTagControlComponent {
   tags = ['Unremovable', 'Tag 2', 'Tag 3'];

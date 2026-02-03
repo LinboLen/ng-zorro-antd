@@ -10,10 +10,10 @@ import { TriTabPosition, TriTabsModule } from 'ng-zorro-antd/tabs';
   imports: [FormsModule, TriInputNumberModule, TriRadioModule, TriTabsModule],
   template: `
     <tri-radio-group [(ngModel)]="tabPosition" style="margin-bottom: 8px;">
-      <label tri-radio-button [value]="'top'">Horizontal</label>
-      <label tri-radio-button [value]="'left'">Vertical</label>
+      <label tri-radio-button value="top">Horizontal</label>
+      <label tri-radio-button value="left">Vertical</label>
     </tri-radio-group>
-    <tri-input-number style="float:right;" [min]="0" [max]="29" [(ngModel)]="selectedIndex"></tri-input-number>
+    <tri-input-number style="float:right;" [min]="0" [max]="29" [(ngModel)]="selectedIndex" />
 
     <tri-tabs
       style="height:220px;"

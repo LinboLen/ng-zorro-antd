@@ -22,7 +22,7 @@ export type TriFormControlStatusType = 'success' | 'error' | 'warning' | 'valida
     '[class.tri-form-item-has-feedback]': 'hasFeedback && status',
     '[class.tri-form-item-with-help]': 'withHelpClass'
   },
-  template: `<ng-content></ng-content>`
+  template: `<ng-content />`
 })
 export class TriFormItemComponent {
   private cdr = inject(ChangeDetectorRef);

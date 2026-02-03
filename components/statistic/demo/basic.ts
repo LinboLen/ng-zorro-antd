@@ -11,14 +11,14 @@ import { TriStatisticModule } from 'ng-zorro-antd/statistic';
   template: `
     <tri-row [gutter]="16">
       <tri-col [span]="12">
-        <tri-statistic [value]="(1949101 | number)!" title="Active Users"></tri-statistic>
+        <tri-statistic [value]="(1949101 | number)!" title="Active Users" />
       </tri-col>
       <tri-col [span]="12">
-        <tri-statistic [value]="(2019.111 | number: '1.0-2')!" title="Account Balance (CNY)"></tri-statistic>
+        <tri-statistic [value]="(2019.111 | number: '1.0-2')!" title="Account Balance (CNY)" />
         <button tri-button type="primary" [style.margin-top.px]="16">Recharge</button>
       </tri-col>
       <tri-col [span]="12">
-        <tri-statistic [value]="(112893 | number: '1.0-2')!" title="Active Users" loading></tri-statistic>
+        <tri-statistic [value]="(112893 | number: '1.0-2')!" title="Active Users" loading />
       </tri-col>
     </tri-row>
   `

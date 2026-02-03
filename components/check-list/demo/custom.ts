@@ -36,7 +36,7 @@ import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
       <tri-form-item>
         <tri-form-label>Index</tri-form-label>
         <tri-form-control>
-          <tri-segmented [options]="options" (valueChange)="handleIndexChange($event)"></tri-segmented>
+          <tri-segmented [options]="options" (valueChange)="handleIndexChange($event)" />
         </tri-form-control>
       </tri-form-item>
       <tri-form-item>
@@ -68,21 +68,19 @@ import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
       [title]="title.value"
       [footer]="footer.value"
       (hide)="hideCancel($event)"
-    ></tri-check-list>
+    />
   `,
-  styles: [
-    `
-      :host {
-        position: relative;
-      }
-      form {
-        width: 300px;
-      }
-      nz-check-list {
-        position: absolute;
-      }
-    `
-  ]
+  styles: `
+    :host {
+      position: relative;
+    }
+    form {
+      width: 300px;
+    }
+    nz-check-list {
+      position: absolute;
+    }
+  `
 })
 export class TriDemoCheckListCustomComponent {
   private fb = inject(NonNullableFormBuilder);

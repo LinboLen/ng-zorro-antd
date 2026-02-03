@@ -9,13 +9,13 @@ import { TriStatisticModule } from 'ng-zorro-antd/statistic';
   template: `
     <tri-row [gutter]="16">
       <tri-col [span]="12">
-        <tri-countdown [value]="deadline" title="Countdown"></tri-countdown>
+        <tri-countdown [value]="deadline" title="Countdown" />
       </tri-col>
       <tri-col [span]="12">
-        <tri-countdown [value]="deadline" title="Million Seconds" format="HH:mm:ss:SSS"></tri-countdown>
+        <tri-countdown [value]="deadline" title="Million Seconds" format="HH:mm:ss:SSS" />
       </tri-col>
       <tri-col [span]="24" style="margin-top: 32px;">
-        <tri-countdown [value]="deadline" title="Day Level" format="D 天 H 时 m 分 s 秒"></tri-countdown>
+        <tri-countdown [value]="deadline" title="Day Level" format="D 天 H 时 m 分 s 秒" />
       </tri-col>
     </tri-row>
   `

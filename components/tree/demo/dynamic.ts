@@ -5,9 +5,7 @@ import { TriFormatEmitEvent, TriTreeModule, TriTreeNodeOptions } from 'ng-zorro-
 @Component({
   selector: 'tri-demo-tree-dynamic',
   imports: [TriTreeModule],
-  template: `
-    <tri-tree [data]="nodes" asyncData (click)="event($event)" (expandChange)="event($event)"></tri-tree>
-  `
+  template: ` <tri-tree [data]="nodes" asyncData (click)="event($event)" (expandChange)="event($event)" /> `
 })
 export class TriDemoTreeDynamicComponent {
   readonly nodes = [

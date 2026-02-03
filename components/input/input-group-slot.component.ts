@@ -20,7 +20,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
       <tri-icon [type]="icon" />
     }
     <ng-container *stringTemplateOutlet="template">{{ template }}</ng-container>
-    <ng-content></ng-content>
+    <ng-content />
   `,
   host: {
     '[class.tri-input-group-addon]': `type === 'addon'`,

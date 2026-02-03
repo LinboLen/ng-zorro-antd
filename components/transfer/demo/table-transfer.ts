@@ -66,8 +66,8 @@ import { TriTransferModule, TransferChange, TransferItem, TransferSelectChange }
       </ng-template>
     </tri-transfer>
     <div style="margin-top: 8px;">
-      <tri-switch [(ngModel)]="disabled" checkedChildren="disabled" unCheckedChildren="disabled"></tri-switch>
-      <tri-switch [(ngModel)]="showSearch" checkedChildren="showSearch" unCheckedChildren="showSearch"></tri-switch>
+      <tri-switch [(ngModel)]="disabled" checkedChildren="disabled" unCheckedChildren="disabled" />
+      <tri-switch [(ngModel)]="showSearch" checkedChildren="showSearch" unCheckedChildren="showSearch" />
     </div>
   `
 })

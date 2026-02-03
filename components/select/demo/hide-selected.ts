@@ -9,17 +9,15 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
   template: `
     <tri-select mode="multiple" placeHolder="Inserted are removed" [(ngModel)]="listOfSelected">
       @for (option of listOfOption; track option) {
-        <tri-option [label]="option" [value]="option" [hide]="!isSelected(option)"></tri-option>
+        <tri-option [label]="option" [value]="option" [hide]="!isSelected(option)" />
       }
     </tri-select>
   `,
-  styles: [
-    `
-      nz-select {
-        width: 100%;
-      }
-    `
-  ]
+  styles: `
+    nz-select {
+      width: 100%;
+    }
+  `
 })
 export class TriDemoSelectHideSelectedComponent {
   listOfOption = ['Apples', 'Nails', 'Bananas', 'Helicopters'];

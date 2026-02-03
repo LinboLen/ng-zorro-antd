@@ -20,7 +20,7 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
         </tri-splitter-panel>
       </tri-splitter>
       <tri-flex justify="space-between">
-        <tri-switch checkedChildren="Enabled" unCheckedChildren="Disabled" [(ngModel)]="resizable"></tri-switch>
+        <tri-switch checkedChildren="Enabled" unCheckedChildren="Disabled" [(ngModel)]="resizable" />
         <button tri-button (click)="sizes.set(['50%', '50%'])">Reset</button>
       </tri-flex>
     </tri-flex>

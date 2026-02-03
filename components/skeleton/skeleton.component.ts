@@ -44,7 +44,7 @@ import {
             type="avatar"
             [size]="avatar.size || 'default'"
             [shape]="avatar.shape || 'circle'"
-          ></tri-skeleton-element>
+          />
         </div>
       }
       <div class="tri-skeleton-content">
@@ -53,14 +53,14 @@ import {
         }
         @if (!!paragraph) {
           <ul class="tri-skeleton-paragraph">
-            @for (row of rowsList; track row; let i = $index) {
-              <li [style.width]="toCSSUnit(widthList[i])"></li>
+            @for (row of rowsList; track row) {
+              <li [style.width]="toCSSUnit(widthList[$index])"></li>
             }
           </ul>
         }
       </div>
     } @else {
-      <ng-content></ng-content>
+      <ng-content />
     }
   `,
   imports: [TriSkeletonElementDirective, TriSkeletonElementAvatarComponent],

@@ -56,26 +56,22 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'table';
         [filterMultiple]="filterMultiple"
         [listOfFilter]="filters"
         (filterChange)="onFilterValueChange($event)"
-      ></tri-table-filter>
+      />
     } @else {
-      <ng-container [ngTemplateOutlet]="notFilterTemplate"></ng-container>
+      <ng-container [ngTemplateOutlet]="notFilterTemplate" />
     }
     <ng-template #notFilterTemplate>
-      <ng-template [ngTemplateOutlet]="showSort ? sortTemplate : contentTemplate"></ng-template>
+      <ng-template [ngTemplateOutlet]="showSort ? sortTemplate : contentTemplate" />
     </ng-template>
     <ng-template #extraTemplate>
-      <ng-content select="[nz-th-extra]"></ng-content>
-      <ng-content select="nz-filter-trigger"></ng-content>
+      <ng-content select="[nz-th-extra]" />
+      <ng-content select="nz-filter-trigger" />
     </ng-template>
     <ng-template #sortTemplate>
-      <tri-table-sorters
-        [sortOrder]="sortOrder"
-        [sortDirections]="sortDirections"
-        [contentTemplate]="contentTemplate"
-      ></tri-table-sorters>
+      <tri-table-sorters [sortOrder]="sortOrder" [sortDirections]="sortDirections" [contentTemplate]="contentTemplate" />
     </ng-template>
     <ng-template #contentTemplate>
-      <ng-content></ng-content>
+      <ng-content />
     </ng-template>
   `,
   host: {

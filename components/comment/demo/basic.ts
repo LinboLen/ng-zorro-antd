@@ -12,11 +12,7 @@ import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
   imports: [TriAvatarModule, TriCommentModule, TriIconModule, TriTooltipModule],
   template: `
     <tri-comment author="Han Solo" [datetime]="time">
-      <tri-avatar
-        tri-comment-avatar
-        icon="user"
-        src="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-      ></tri-avatar>
+      <tri-avatar tri-comment-avatar icon="user" src="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
       <tri-comment-content>
         <p>
           We supply a series of design principles, practical patterns and high quality design resources(Sketch and
@@ -46,18 +42,16 @@ import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
       <tri-comment-action>Reply to</tri-comment-action>
     </tri-comment>
   `,
-  styles: [
-    `
-      .count {
-        padding-left: 8px;
-        cursor: auto;
-      }
-      .ant-comment-rtl .count {
-        padding-right: 8px;
-        padding-left: 0;
-      }
-    `
-  ]
+  styles: `
+    .count {
+      padding-left: 8px;
+      cursor: auto;
+    }
+    .ant-comment-rtl .count {
+      padding-right: 8px;
+      padding-left: 0;
+    }
+  `
 })
 export class TriDemoCommentBasicComponent {
   likes = 0;

@@ -14,7 +14,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
       [nodes]="nodes"
       placeHolder="Please select"
       showIcon
-    ></tri-tree-select>
+    />
     <br />
     <tri-tree-select
       style="width: 250px; margin-top: 20px;"

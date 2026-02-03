@@ -70,8 +70,8 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
         >
           <tri-input-wrapper>
             <tri-select inputAddonBefore formControlName="phoneNumberPrefix" class="phone-select">
-              <tri-option label="+86" value="+86"></tri-option>
-              <tri-option label="+87" value="+87"></tri-option>
+              <tri-option label="+86" value="+86" />
+              <tri-option label="+87" value="+87" />
             </tri-select>
             <input formControlName="phoneNumber" id="'phoneNumber'" tri-input />
           </tri-input-wrapper>
@@ -127,21 +127,19 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
       </tri-form-item>
     </form>
   `,
-  styles: [
-    `
-      [nz-form] {
-        max-width: 600px;
-      }
+  styles: `
+    [nz-form] {
+      max-width: 600px;
+    }
 
-      .ant-select.ant-select-in-form-item.phone-select {
-        width: 80px;
-      }
+    .ant-select.ant-select-in-form-item.phone-select {
+      width: 80px;
+    }
 
-      .register-area {
-        margin-bottom: 8px;
-      }
-    `
-  ]
+    .register-area {
+      margin-bottom: 8px;
+    }
+  `
 })
 export class TriDemoFormRegisterComponent implements OnInit, OnDestroy {
   private fb = inject(NonNullableFormBuilder);

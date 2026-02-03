@@ -40,7 +40,7 @@ import { TriSelectItemInterface, TriSelectModeType } from './select.types';
     <div>
       @if (listOfContainerItem.length === 0) {
         <div class="tri-select-item-empty">
-          <tri-embed-empty componentName="select" [specificContent]="notFoundContent!"></tri-embed-empty>
+          <tri-embed-empty componentName="select" [specificContent]="notFoundContent!" />
         </div>
       }
       <cdk-virtual-scroll-viewport
@@ -61,7 +61,7 @@ import { TriSelectItemInterface, TriSelectModeType } from './select.types';
         >
           @switch (item.type) {
             @case ('group') {
-              <tri-option-item-group [label]="item.groupLabel ?? null"></tri-option-item-group>
+              <tri-option-item-group [label]="item.groupLabel ?? null" />
             }
             @case ('item') {
               <tri-option-item
@@ -81,12 +81,12 @@ import { TriSelectItemInterface, TriSelectModeType } from './select.types';
                 [value]="value"
                 (itemHover)="onItemHover($event)"
                 (itemClick)="onItemClick($event)"
-              ></tri-option-item>
+              />
             }
           }
         </ng-template>
       </cdk-virtual-scroll-viewport>
-      <ng-template [ngTemplateOutlet]="dropdownRender"></ng-template>
+      <ng-template [ngTemplateOutlet]="dropdownRender" />
     </div>
   `,
   host: { class: 'tri-select-dropdown' },

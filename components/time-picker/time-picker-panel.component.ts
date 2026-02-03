@@ -120,7 +120,7 @@ export type TriTimePickerUnit = 'hour' | 'minute' | 'second' | '12-hour';
       <div class="tri-picker-footer">
         @if (addOn) {
           <div class="tri-picker-footer-extra">
-            <ng-template [ngTemplateOutlet]="addOn"></ng-template>
+            <ng-template [ngTemplateOutlet]="addOn" />
           </div>
         }
         <ul class="tri-picker-ranges">

@@ -16,13 +16,11 @@ import { TriCardModule } from 'ng-zorro-antd/card';
       <div tri-card-grid>Content</div>
     </tri-card>
   `,
-  styles: [
-    `
-      [nz-card-grid] {
-        width: 25%;
-        text-align: center;
-      }
-    `
-  ]
+  styles: `
+    [nz-card-grid] {
+      width: 25%;
+      text-align: center;
+    }
+  `
 })
 export class TriDemoCardGridCardComponent {}

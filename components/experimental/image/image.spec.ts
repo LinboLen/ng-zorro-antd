@@ -135,7 +135,7 @@ describe('NzSrcLoader', () => {
       [width]="width"
       height="200"
       alt="test"
-    ></tri-image>
+    />
   `
 })
 export class TestImageExperimentalBaseComponent {

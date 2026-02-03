@@ -20,14 +20,12 @@ import { TriDropdownModule, TriPlacementType } from 'ng-zorro-antd/dropdown';
       }
     </div>
   `,
-  styles: [
-    `
-      [nz-button] {
-        margin-right: 8px;
-        margin-bottom: 8px;
-      }
-    `
-  ]
+  styles: `
+    [nz-button] {
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+  `
 })
 export class TriDemoDropdownPlacementComponent {
   listOfPosition: TriPlacementType[] = ['bottomLeft', 'bottomCenter', 'bottomRight', 'topLeft', 'topCenter', 'topRight'];

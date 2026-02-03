@@ -89,7 +89,7 @@ export class TriDemoDrawerServiceComponent {
   template: `
     <div>
       <input tri-input [(ngModel)]="data.value" />
-      <tri-divider></tri-divider>
+      <tri-divider />
       <button type="primary" (click)="close()" tri-button>Confirm</button>
     </div>
   `

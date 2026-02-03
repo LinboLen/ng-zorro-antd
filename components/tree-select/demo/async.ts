@@ -18,7 +18,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
       [nodes]="nodes"
       [asyncData]="true"
       (expandChange)="onExpandChange($event)"
-    ></tri-tree-select>
+    />
   `
 })
 export class TriDemoTreeSelectAsyncComponent {

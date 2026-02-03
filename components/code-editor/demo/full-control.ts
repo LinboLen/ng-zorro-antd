@@ -10,16 +10,12 @@ declare const monaco: any;
 @Component({
   selector: 'tri-demo-code-editor-full-control',
   imports: [TriCodeEditorModule],
-  template: `
-    <tri-code-editor class="editor" [fullControl]="true" (editorInitialized)="onEditorInit($event)"></tri-code-editor>
-  `,
-  styles: [
-    `
-      .editor {
-        height: 200px;
-      }
-    `
-  ]
+  template: ` <tri-code-editor class="editor" [fullControl]="true" (editorInitialized)="onEditorInit($event)" /> `,
+  styles: `
+    .editor {
+      height: 200px;
+    }
+  `
 })
 export class TriDemoCodeEditorFullControlComponent {
   editor?: editor.ICodeEditor | editor.IEditor;

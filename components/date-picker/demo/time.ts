@@ -13,7 +13,7 @@ import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
       ngModel
       (ngModelChange)="onChange($event)"
       (onOk)="onOk($event)"
-    ></tri-date-picker>
+    />
     <br />
     <tri-range-picker
       [showTime]="{ nzFormat: 'HH:mm' }"
@@ -22,16 +22,14 @@ import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
       (ngModelChange)="onChange($event)"
       (onCalendarChange)="onCalendarChange($event)"
       (onOk)="onOk($event)"
-    ></tri-range-picker>
+    />
   `,
-  styles: [
-    `
-      nz-date-picker,
-      nz-range-picker {
-        margin: 0 8px 12px 0;
-      }
-    `
-  ]
+  styles: `
+    nz-date-picker,
+    nz-range-picker {
+      margin: 0 8px 12px 0;
+    }
+  `
 })
 export class TriDemoDatePickerTimeComponent {
   onChange(result: Date): void {

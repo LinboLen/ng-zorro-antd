@@ -7,10 +7,10 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
   selector: 'tri-demo-tree-select-prefix-and-suffix',
   imports: [FormsModule, TriTreeSelectModule],
   template: `
-    <tri-tree-select [nodes]="nodes" suffixIcon="smile" [(ngModel)]="value" defaultExpandAll></tri-tree-select>
+    <tri-tree-select [nodes]="nodes" suffixIcon="smile" [(ngModel)]="value" defaultExpandAll />
     <br />
     <br />
-    <tri-tree-select [nodes]="nodes" prefix="Prefix" [(ngModel)]="value" defaultExpandAll></tri-tree-select>
+    <tri-tree-select [nodes]="nodes" prefix="Prefix" [(ngModel)]="value" defaultExpandAll />
   `,
   styles: `
     nz-tree-select {

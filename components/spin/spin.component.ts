@@ -51,7 +51,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'spin';
           [class.tri-spin-sm]="size === 'small'"
           [class.tri-spin-show-text]="tip"
         >
-          <ng-template [ngTemplateOutlet]="indicator || defaultTemplate"></ng-template>
+          <ng-template [ngTemplateOutlet]="indicator || defaultTemplate" />
           @if (tip) {
             <div class="tri-spin-text">{{ tip }}</div>
           }
@@ -60,7 +60,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'spin';
     }
     @if (!simple) {
       <div class="tri-spin-container" [class.tri-spin-blur]="isLoading()">
-        <ng-content></ng-content>
+        <ng-content />
       </div>
     }
   `,

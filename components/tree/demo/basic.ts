@@ -18,7 +18,7 @@ import { TriFormatEmitEvent, TriTreeComponent, TriTreeModule, TriTreeNodeOptions
       (contextMenu)="click($event)"
       (checkboxChange)="check($event)"
       (expandChange)="check($event)"
-    ></tri-tree>
+    />
   `
 })
 export class TriDemoTreeBasicComponent {

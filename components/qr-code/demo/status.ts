@@ -6,17 +6,15 @@ import { TriQRCodeModule } from 'ng-zorro-antd/qr-code';
   selector: 'tri-demo-qr-code-status',
   imports: [TriQRCodeModule],
   template: `
-    <tri-qrcode value="https://ng.ant.design/" status="loading"></tri-qrcode>
-    <tri-qrcode value="https://ng.ant.design/" status="expired" (refresh)="refresh($event)"></tri-qrcode>
-    <tri-qrcode value="https://ng.ant.design/" status="scanned"></tri-qrcode>
+    <tri-qrcode value="https://ng.ant.design/" status="loading" />
+    <tri-qrcode value="https://ng.ant.design/" status="expired" (refresh)="refresh($event)" />
+    <tri-qrcode value="https://ng.ant.design/" status="scanned" />
   `,
-  styles: [
-    `
-      nz-qrcode {
-        margin-right: 12px;
-      }
-    `
-  ]
+  styles: `
+    nz-qrcode {
+      margin-right: 12px;
+    }
+  `
 })
 export class TriDemoQrCodeStatusComponent {
   refresh(val: string): void {

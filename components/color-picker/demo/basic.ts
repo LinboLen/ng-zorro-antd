@@ -5,6 +5,6 @@ import { TriColorPickerModule } from 'ng-zorro-antd/color-picker';
 @Component({
   selector: 'tri-demo-color-picker-basic',
   imports: [TriColorPickerModule],
-  template: `<tri-color-picker></tri-color-picker>`
+  template: `<tri-color-picker />`
 })
 export class TriDemoColorPickerBasicComponent {}

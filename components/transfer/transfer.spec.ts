@@ -634,7 +634,7 @@ interface AbstractTestTransferComponent {
       (searchChange)="search($event)"
       (selectChange)="select($event)"
       (change)="change($event)"
-    ></tri-transfer>
+    />
     <ng-template #renderList>
       <p class="transfer-renderList">renderList</p>
     </ng-template>
@@ -732,7 +732,7 @@ class TestTransferCustomRenderComponent implements OnInit, AbstractTestTransferC
 // https://github.com/NG-ZORRO/ng-zorro-antd/issues/996
 @Component({
   imports: [TriTransferModule],
-  template: `<tri-transfer [dataSource]="list"></tri-transfer>`
+  template: `<tri-transfer [dataSource]="list" />`
 })
 class Test996Component implements OnInit {
   @ViewChild(TriTransferComponent, { static: true }) comp!: TriTransferComponent;
@@ -751,7 +751,7 @@ class Test996Component implements OnInit {
   imports: [BidiModule, TestTransferComponent],
   template: `
     <div [dir]="direction">
-      <tri-test-transfer></tri-test-transfer>
+      <tri-test-transfer />
     </div>
   `
 })
@@ -762,7 +762,7 @@ export class TriTestTransferRtlComponent {
 
 @Component({
   imports: [TriTransferModule],
-  template: `<tri-transfer [dataSource]="[]" [status]="status"></tri-transfer>`
+  template: `<tri-transfer [dataSource]="[]" [status]="status" />`
 })
 export class TriTestTransferStatusComponent {
   status: TriStatus = 'error';
@@ -774,7 +774,7 @@ export class TriTestTransferStatusComponent {
     <form tri-form>
       <tri-form-item>
         <tri-form-control [hasFeedback]="feedback" [validateStatus]="status">
-          <tri-transfer [dataSource]="[]"></tri-transfer>
+          <tri-transfer [dataSource]="[]" />
         </tri-form-control>
       </tri-form-item>
     </form>

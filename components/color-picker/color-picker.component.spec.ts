@@ -260,7 +260,7 @@ describe('color-picker', () => {
       (onOpenChange)="onOpenChange($event)"
       title="Color Picker"
       [flipFlop]="isFlipFlop ? flipFlop : null"
-    ></tri-color-picker>
+    />
     <ng-template #flipFlop>
       <button tri-button type="primary">Color</button>
     </ng-template>
@@ -435,7 +435,7 @@ describe('nz-color-picker with presets', () => {
       <tri-form-item>
         <tri-form-label [span]="4">color</tri-form-label>
         <tri-form-control [span]="16">
-          <tri-color-picker formControlName="colorPicker" showText></tri-color-picker>
+          <tri-color-picker formControlName="colorPicker" showText />
         </tri-form-control>
       </tri-form-item>
     </form>
@@ -457,10 +457,7 @@ export class TriTestColorPickerFormComponent {
 
 @Component({
   imports: [TriColorPickerModule],
-  template: `
-    <tri-color-picker [presets]="presets" [value]="'#1677ff'" (onChange)="onColorChange($event)">
-    </tri-color-picker>
-  `
+  template: ` <tri-color-picker [presets]="presets" value="#1677ff" (onChange)="onColorChange($event)" /> `
 })
 export class TriTestColorPickerPresetsComponent {
   presets: TriPresetColor[] | null = [

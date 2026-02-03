@@ -77,14 +77,14 @@ function isDataSource(value: TriSafeAny): value is TriGraphData {
   exportAs: 'triGraph',
   providers: [{ provide: TriGraph, useExisting: forwardRef(() => TriGraphComponent) }],
   template: `
-    <ng-content></ng-content>
+    <ng-content />
     <svg width="100%" height="100%">
-      <svg:defs tri-graph-defs></svg:defs>
+      <svg:defs tri-graph-defs />
       <svg:g [attr.transform]="transformStyle">
         <ng-container
           [ngTemplateOutlet]="groupTemplate"
           [ngTemplateOutletContext]="{ renderNode: renderInfo, type: 'root' }"
-        ></ng-container>
+        />
       </svg:g>
     </svg>
 
@@ -99,18 +99,18 @@ function isDataSource(value: TriSafeAny): value is TriGraphData {
                 [edge]="edge"
                 [edgeType]="graphLayoutConfig?.defaultEdge?.type"
                 [customTemplate]="customGraphEdgeTemplate"
-              ></g>
+              />
             }
           </svg:g>
 
           <svg:g class="nz-graph-nodes">
             @for (node of typedNodes(renderNode.nodes); track node.name) {
               @if (node.type === 1) {
-                <g class="nz-graph-node" tri-graph-node [node]="node" [customTemplate]="nodeTemplate"></g>
+                <g class="nz-graph-node" tri-graph-node [node]="node" [customTemplate]="nodeTemplate" />
               }
 
               @if (node.type === 0) {
-                <g class="nz-graph-node" tri-graph-node [node]="node" [customTemplate]="groupNodeTemplate"></g>
+                <g class="nz-graph-node" tri-graph-node [node]="node" [customTemplate]="groupNodeTemplate" />
               }
 
               @if (node.expanded) {

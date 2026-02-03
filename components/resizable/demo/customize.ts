@@ -19,44 +19,42 @@ import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
       </tri-resize-handle>
     </div>
   `,
-  styles: [
-    `
-      :host {
-        display: block;
-        height: 200px;
-      }
+  styles: `
+    :host {
+      display: block;
+      height: 200px;
+    }
 
-      .box {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #eee;
-        border: 1px solid #ddd;
-      }
+    .box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #eee;
+      border: 1px solid #ddd;
+    }
 
-      .bottom-right {
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
+    .bottom-right {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
 
-      .right-wrap {
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+    .right-wrap {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-      .right {
-        background: #fff;
-        border: 1px solid #ddd;
-        text-align: center;
-        font-size: 12px;
-        height: 20px;
-        line-height: 20px;
-      }
-    `
-  ]
+    .right {
+      background: #fff;
+      border: 1px solid #ddd;
+      text-align: center;
+      font-size: 12px;
+      height: 20px;
+      line-height: 20px;
+    }
+  `
 })
 export class TriDemoResizableCustomizeComponent {
   width = 400;

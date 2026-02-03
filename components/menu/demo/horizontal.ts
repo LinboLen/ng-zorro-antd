@@ -34,7 +34,7 @@ import { TriMenuModule } from 'ng-zorro-antd/menu';
                   <li tri-menu-item>Option 6</li>
                 </ul>
               </li>
-              <li tri-submenu title="Click me" [triggerSubMenuAction]="'click'">
+              <li tri-submenu title="Click me" triggerSubMenuAction="click">
                 <ul>
                   <li tri-menu-item disabled>Option 5</li>
                   <li tri-menu-item>Option 6</li>

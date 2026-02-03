@@ -11,11 +11,11 @@ import { TriStatisticModule } from 'ng-zorro-antd/statistic';
   template: `
     <tri-row [gutter]="16">
       <tri-col [span]="12">
-        <tri-statistic [value]="(1128 | number)!" title="Feedback" [prefix]="prefixTpl"></tri-statistic>
+        <tri-statistic [value]="(1128 | number)!" title="Feedback" [prefix]="prefixTpl" />
         <ng-template #prefixTpl><tri-icon type="like" /></ng-template>
       </tri-col>
       <tri-col [span]="12">
-        <tri-statistic [value]="93" title="Unmerged" suffix="/ 100"></tri-statistic>
+        <tri-statistic [value]="93" title="Unmerged" suffix="/ 100" />
       </tri-col>
     </tri-row>
   `

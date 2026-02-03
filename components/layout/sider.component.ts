@@ -37,7 +37,7 @@ import { TriSiderTriggerComponent } from './sider-trigger.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="tri-layout-sider-children">
-      <ng-content></ng-content>
+      <ng-content />
     </div>
     @if (collapsible && trigger !== null) {
       <div

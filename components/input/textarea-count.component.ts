@@ -26,7 +26,7 @@ import { TriInputDirective } from './input.directive';
 
 @Component({
   selector: 'tri-textarea-count',
-  template: `<ng-content select="textarea[nz-input]"></ng-content>`,
+  template: `<ng-content select="textarea[nz-input]" />`,
   host: {
     class: 'tri-input-textarea-show-count'
   },

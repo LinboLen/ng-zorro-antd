@@ -10,7 +10,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
   selector: 'tri-demo-cron-expression-use',
   imports: [ReactiveFormsModule, TriButtonModule, TriCronExpressionModule, TriFormModule, TriInputModule],
   template: `
-    <form tri-form [layout]="'vertical'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <form tri-form layout="vertical" [formGroup]="validateForm" (ngSubmit)="submitForm()">
       <tri-form-item>
         <tri-form-label [span]="6">name</tri-form-label>
         <tri-form-control [span]="14">
@@ -20,13 +20,13 @@ import { TriInputModule } from 'ng-zorro-antd/input';
       <tri-form-item>
         <tri-form-label [span]="6">nz-cron-linux</tri-form-label>
         <tri-form-control [span]="14">
-          <tri-cron-expression formControlName="cronLinux"></tri-cron-expression>
+          <tri-cron-expression formControlName="cronLinux" />
         </tri-form-control>
       </tri-form-item>
       <tri-form-item>
         <tri-form-label [span]="6">nz-cron-spring</tri-form-label>
         <tri-form-control [span]="14">
-          <tri-cron-expression formControlName="cronSpring" type="spring"></tri-cron-expression>
+          <tri-cron-expression formControlName="cronSpring" type="spring" />
         </tri-form-control>
       </tri-form-item>
       <tri-form-item>

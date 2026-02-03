@@ -58,7 +58,7 @@ import { FontType, TriWatermarkModule } from 'ng-zorro-antd/watermark';
           alt="示例图片"
         />
       </tri-watermark>
-      <tri-divider type="vertical"></tri-divider>
+      <tri-divider type="vertical" />
       <form tri-form layout="vertical" [formGroup]="form">
         <tri-form-item>
           <tri-form-label>Content</tri-form-label>
@@ -69,65 +69,63 @@ import { FontType, TriWatermarkModule } from 'ng-zorro-antd/watermark';
         <tri-form-item>
           <tri-form-label>Color</tri-form-label>
           <tri-form-control>
-            <tri-color-picker [value]="color" (onChange)="changeColor($event)"></tri-color-picker>
+            <tri-color-picker [value]="color" (onChange)="changeColor($event)" />
           </tri-form-control>
         </tri-form-item>
         <tri-form-item>
           <tri-form-label>FontSize</tri-form-label>
           <tri-form-control>
-            <tri-slider formControlName="fontSize"></tri-slider>
+            <tri-slider formControlName="fontSize" />
           </tri-form-control>
         </tri-form-item>
         <tri-form-item>
           <tri-form-label>zIndex</tri-form-label>
           <tri-form-control>
-            <tri-slider formControlName="zIndex"></tri-slider>
+            <tri-slider formControlName="zIndex" />
           </tri-form-control>
         </tri-form-item>
         <tri-form-item>
           <tri-form-label>Rotate</tri-form-label>
           <tri-form-control>
-            <tri-slider [min]="-180" [max]="180" formControlName="rotate"></tri-slider>
+            <tri-slider [min]="-180" [max]="180" formControlName="rotate" />
           </tri-form-control>
         </tri-form-item>
         <tri-form-item>
           <tri-form-label>Gap</tri-form-label>
           <tri-form-control>
-            <tri-input-number formControlName="gapX"></tri-input-number>
-            <tri-input-number formControlName="gapY"></tri-input-number>
+            <tri-input-number formControlName="gapX" />
+            <tri-input-number formControlName="gapY" />
           </tri-form-control>
         </tri-form-item>
         <tri-form-item>
           <tri-form-label>Offset</tri-form-label>
           <tri-form-control>
-            <tri-input-number formControlName="offsetX"></tri-input-number>
-            <tri-input-number formControlName="offsetY"></tri-input-number>
+            <tri-input-number formControlName="offsetX" />
+            <tri-input-number formControlName="offsetY" />
           </tri-form-control>
         </tri-form-item>
       </form>
     </div>
   `,
-  styles: [
-    `
-      nz-watermark {
-        flex: 1 1 auto;
-      }
+  styles: `
+    nz-watermark {
+      flex: 1 1 auto;
+    }
 
-      nz-divider {
-        height: auto;
-        margin: 0 20px;
-      }
+    nz-divider {
+      height: auto;
+      margin: 0 20px;
+    }
 
-      form {
-        flex: 0 0 280px;
-      }
+    form {
+      flex: 0 0 280px;
+    }
 
-      nz-input-number {
-        margin-right: 12px;
-        width: 40%;
-      }
-    `
-  ]
+    nz-input-number {
+      margin-right: 12px;
+      width: 40%;
+    }
+  `
 })
 export class TriDemoWatermarkCustomComponent implements OnInit {
   private fb = inject(NonNullableFormBuilder);

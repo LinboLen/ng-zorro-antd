@@ -58,13 +58,11 @@ const options: TriCascaderOption[] = [
     <button tri-button (click)="reset()">Reset</button>
     <button tri-button (click)="submit()">Submit</button>
   `,
-  styles: [
-    `
-      button {
-        margin-right: 8px;
-      }
-    `
-  ]
+  styles: `
+    button {
+      margin-right: 8px;
+    }
+  `
 })
 export class TriDemoCascaderReactiveFormComponent {
   private fb = inject(FormBuilder);

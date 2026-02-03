@@ -40,14 +40,14 @@ const SPACE_SIZE: Record<TriSpaceType, number> = {
   exportAs: 'triSpace',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <ng-content></ng-content>
-    @for (item of items; track item; let last = $last; let index = $index) {
+    <ng-content />
+    @for (item of items; track item) {
       <div class="tri-space-item">
-        <ng-container [ngTemplateOutlet]="item"></ng-container>
+        <ng-container [ngTemplateOutlet]="item" />
       </div>
-      @if (split && !last) {
+      @if (split && !$last) {
         <span class="tri-space-split">
-          <ng-template [stringTemplateOutlet]="split" [stringTemplateOutletContext]="{ $implicit: index }">{{ split }}</ng-template>
+          <ng-template [stringTemplateOutlet]="split" [stringTemplateOutletContext]="{ $implicit: $index }">{{ split }}</ng-template>
         </span>
       }
     }

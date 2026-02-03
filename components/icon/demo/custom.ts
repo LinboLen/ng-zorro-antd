@@ -58,13 +58,11 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
       </svg>
     </tri-icon>
   `,
-  styles: [
-    `
-      nz-icon {
-        margin-right: 6px;
-        font-size: 24px;
-      }
-    `
-  ]
+  styles: `
+    nz-icon {
+      margin-right: 6px;
+      font-size: 24px;
+    }
+  `
 })
 export class TriDemoIconCustomComponent {}

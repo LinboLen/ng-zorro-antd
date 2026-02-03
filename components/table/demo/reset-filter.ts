@@ -58,17 +58,15 @@ interface ColumnItem {
       </tbody>
     </tri-table>
   `,
-  styles: [
-    `
-      .table-operations {
-        margin-bottom: 16px;
-      }
+  styles: `
+    .table-operations {
+      margin-bottom: 16px;
+    }
 
-      .table-operations > button {
-        margin-right: 8px;
-      }
-    `
-  ]
+    .table-operations > button {
+      margin-right: 8px;
+    }
+  `
 })
 export class TriDemoTableResetFilterComponent {
   listOfColumns: ColumnItem[] = [

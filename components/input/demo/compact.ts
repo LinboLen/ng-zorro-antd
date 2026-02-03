@@ -37,7 +37,7 @@ import { TriSpaceModule } from 'ng-zorro-antd/space';
     <br />
     <br />
     <tri-space-compact>
-      <tri-select [ngModel]="'zhejiang'" [options]="options" />
+      <tri-select ngModel="zhejiang" [options]="options" />
       <input tri-input placeholder="Xihu District, Hangzhou" />
     </tri-space-compact>
     <br />

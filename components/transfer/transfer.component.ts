@@ -72,7 +72,7 @@ import { TriTransferListComponent } from './transfer-list.component';
       [footer]="footer"
       (handleSelect)="handleLeftSelect($event)"
       (handleSelectAll)="handleLeftSelectAll($event)"
-    ></tri-transfer-list>
+    />
     @if (dir !== 'rtl') {
       <div class="tri-transfer-operation">
         @if (!oneWay) {
@@ -81,8 +81,8 @@ import { TriTransferListComponent } from './transfer-list.component';
             type="button"
             (click)="moveToLeft()"
             [disabled]="disabled || !leftActive"
-            [type]="'primary'"
-            [size]="'small'"
+            type="primary"
+            size="small"
           >
             <tri-icon type="left" />
             @if (operations[1]) {
@@ -95,8 +95,8 @@ import { TriTransferListComponent } from './transfer-list.component';
           type="button"
           (click)="moveToRight()"
           [disabled]="disabled || !rightActive"
-          [type]="'primary'"
-          [size]="'small'"
+          type="primary"
+          size="small"
         >
           <tri-icon type="right" />
           @if (operations[0]) {
@@ -111,8 +111,8 @@ import { TriTransferListComponent } from './transfer-list.component';
           type="button"
           (click)="moveToRight()"
           [disabled]="disabled || !rightActive"
-          [type]="'primary'"
-          [size]="'small'"
+          type="primary"
+          size="small"
         >
           <tri-icon type="left" />
           @if (operations[0]) {
@@ -125,8 +125,8 @@ import { TriTransferListComponent } from './transfer-list.component';
             type="button"
             (click)="moveToLeft()"
             [disabled]="disabled || !leftActive"
-            [type]="'primary'"
-            [size]="'small'"
+            type="primary"
+            size="small"
           >
             <tri-icon type="right" />
             @if (operations[1]) {
@@ -160,7 +160,7 @@ import { TriTransferListComponent } from './transfer-list.component';
       (moveToLeft)="moveToLeft()"
       (handleSelect)="handleRightSelect($event)"
       (handleSelectAll)="handleRightSelectAll($event)"
-    ></tri-transfer-list>
+    />
   `,
   host: {
     class: 'tri-transfer',

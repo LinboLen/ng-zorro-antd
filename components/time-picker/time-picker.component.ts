@@ -101,7 +101,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'timePicker';
           <tri-icon [type]="suffixIcon" />
         </ng-container>
         @if (hasFeedback && !!status) {
-          <tri-form-item-feedback-icon [status]="status"></tri-form-item-feedback-icon>
+          <tri-form-item-feedback-icon [status]="status" />
         }
       </span>
       @if (allowEmpty && !disabled && value) {

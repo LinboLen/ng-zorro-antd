@@ -51,14 +51,12 @@ import { TriSpaceModule } from 'ng-zorro-antd/space';
       </button>
     </tri-space-compact>
   `,
-  styles: [
-    `
-      [nz-button] {
-        margin-right: 8px;
-        margin-bottom: 12px;
-      }
-    `
-  ]
+  styles: `
+    [nz-button] {
+      margin-right: 8px;
+      margin-bottom: 12px;
+    }
+  `
 })
 export class TriDemoButtonSizeComponent {
   size: TriButtonSize = 'large';

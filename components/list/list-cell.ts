@@ -11,7 +11,7 @@ import { TriEmptyModule } from 'ng-zorro-antd/empty';
   selector: 'tri-list-empty',
   exportAs: 'triListHeader',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<tri-embed-empty [componentName]="'list'" [specificContent]="noResult"></tri-embed-empty>`,
+  template: `<tri-embed-empty componentName="list" [specificContent]="noResult" />`,
   host: {
     class: 'tri-list-empty-text'
   },
@@ -25,7 +25,7 @@ export class TriListEmptyComponent {
   selector: 'tri-list-header',
   exportAs: 'triListHeader',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<ng-content></ng-content>`,
+  template: `<ng-content />`,
   host: {
     class: 'tri-list-header'
   }
@@ -36,7 +36,7 @@ export class TriListHeaderComponent {}
   selector: 'tri-list-footer',
   exportAs: 'triListFooter',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<ng-content></ng-content>`,
+  template: `<ng-content />`,
   host: {
     class: 'tri-list-footer'
   }
@@ -47,7 +47,7 @@ export class TriListFooterComponent {}
   selector: 'tri-list-pagination',
   exportAs: 'triListPagination',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<ng-content></ng-content>`,
+  template: `<ng-content />`,
   host: {
     class: 'tri-list-pagination'
   }

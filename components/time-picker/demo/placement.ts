@@ -20,13 +20,11 @@ import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
     <tri-time-picker [placement]="placement()" />
     <br />
   `,
-  styles: [
-    `
-      nz-time-picker {
-        margin: 0 8px 12px 0;
-      }
-    `
-  ]
+  styles: `
+    nz-time-picker {
+      margin: 0 8px 12px 0;
+    }
+  `
 })
 export class TriDemoTimePickerPlacementComponent {
   readonly placement = signal<TriPlacement>('bottomLeft');

@@ -26,17 +26,15 @@ import { TriTableModule } from 'ng-zorro-antd/table';
       </tbody>
     </tri-table>
   `,
-  styles: [
-    `
-      ::ng-deep .cdk-drag-preview {
-        display: table;
-      }
+  styles: `
+    ::ng-deep .cdk-drag-preview {
+      display: table;
+    }
 
-      ::ng-deep .cdk-drag-placeholder {
-        opacity: 0;
-      }
-    `
-  ]
+    ::ng-deep .cdk-drag-placeholder {
+      opacity: 0;
+    }
+  `
 })
 export class TriDemoTableDragSortingComponent {
   listOfData = [

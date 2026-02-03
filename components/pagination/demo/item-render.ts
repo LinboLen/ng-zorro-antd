@@ -6,7 +6,7 @@ import { TriPaginationModule } from 'ng-zorro-antd/pagination';
   selector: 'tri-demo-pagination-item-render',
   imports: [TriPaginationModule],
   template: `
-    <tri-pagination [pageIndex]="1" [total]="500" [itemRender]="renderItemTemplate"></tri-pagination>
+    <tri-pagination [pageIndex]="1" [total]="500" [itemRender]="renderItemTemplate" />
     <ng-template #renderItemTemplate let-type let-page="page">
       @switch (type) {
         @case ('page') {

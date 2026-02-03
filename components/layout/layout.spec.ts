@@ -251,7 +251,7 @@ describe('nz-layout', () => {
   imports: [TriIconModule, TriLayoutModule],
   template: `
     <tri-layout>
-      <tri-sider collapsible [(collapsedChange)]="isCollapsed" [trigger]="triggerTemplate"></tri-sider>
+      <tri-sider collapsible [(collapsedChange)]="isCollapsed" [trigger]="triggerTemplate" />
       <tri-layout>
         <tri-header>
           <span
@@ -287,14 +287,9 @@ export class TriLayoutCustomTriggerComponent {
   imports: [TriLayoutModule],
   template: `
     <tri-layout>
-      <tri-sider
-        collapsible
-        [(collapsedChange)]="isCollapsed"
-        [width]="width"
-        [reverseArrow]="isReverseArrow"
-      ></tri-sider>
+      <tri-sider collapsible [(collapsedChange)]="isCollapsed" [width]="width" [reverseArrow]="isReverseArrow" />
       <tri-layout>
-        <tri-header></tri-header>
+        <tri-header />
         <tri-content>
           <div>Bill is a cat.</div>
         </tri-content>
@@ -316,12 +311,12 @@ export class TriLayoutSideComponent {
       <tri-sider
         collapsible
         [(collapsedChange)]="isCollapsed"
-        [breakpoint]="'lg'"
+        breakpoint="lg"
         [collapsedWidth]="0"
         [zeroTrigger]="zeroTrigger"
-      ></tri-sider>
+      />
       <tri-layout>
-        <tri-header></tri-header>
+        <tri-header />
         <tri-content>
           <div>Content</div>
         </tri-content>
@@ -381,7 +376,7 @@ export class TriLayoutBasicComponent {}
   imports: [BidiModule, TriLayoutBasicComponent],
   template: `
     <div [dir]="direction">
-      <tri-test-layout-basic></tri-test-layout-basic>
+      <tri-test-layout-basic />
     </div>
   `
 })

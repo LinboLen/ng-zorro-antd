@@ -12,7 +12,7 @@ import { TriSpinModule } from 'ng-zorro-antd/spin';
         type="info"
         message="Alert message title"
         description="Further details about the context of this alert."
-      ></tri-alert>
+      />
     </tri-spin>
   `
 })

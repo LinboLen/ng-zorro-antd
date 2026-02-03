@@ -21,7 +21,7 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
     <br />
     <br />
     Whether directly execute:
-    <tri-switch [(ngModel)]="switchValue"></tri-switch>
+    <tri-switch [(ngModel)]="switchValue" />
   `
 })
 export class TriDemoPopconfirmDynamicTriggerComponent {

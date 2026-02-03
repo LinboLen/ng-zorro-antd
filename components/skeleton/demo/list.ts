@@ -10,7 +10,7 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   selector: 'tri-demo-skeleton-list',
   imports: [FormsModule, TriIconModule, TriListModule, TriSkeletonModule, TriSwitchModule],
   template: `
-    <tri-switch [(ngModel)]="loading"></tri-switch>
+    <tri-switch [(ngModel)]="loading" />
     <tri-list [dataSource]="listData" [renderItem]="item" itemLayout="vertical">
       <ng-template #item let-item>
         <tri-list-item

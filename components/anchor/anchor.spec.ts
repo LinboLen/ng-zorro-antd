@@ -301,27 +301,27 @@ describe('anchor', () => {
       (scroll)="_scroll()"
       (change)="_change()"
     >
-      <tri-link href="#何时使用" title="何时使用"></tri-link>
-      <tri-link href="#basic" title="Basic demo"></tri-link>
+      <tri-link href="#何时使用" title="何时使用" />
+      <tri-link href="#basic" title="Basic demo" />
       <tri-link href="#API-AnchorLink">
         <ng-template #nzTemplate>
           <span class="nzTemplate-title">tpl</span>
         </ng-template>
       </tri-link>
       <tri-link href="#API" title="API">
-        <tri-link href="#API-Anchor" title="nz-anchor"></tri-link>
+        <tri-link href="#API-Anchor" title="nz-anchor" />
         <tri-link href="#API-AnchorLink" [title]="title">
           <ng-template #title>
             <span class="nzTitle-title">tpl-title</span>
           </ng-template>
         </tri-link>
       </tri-link>
-      <tri-link href="#invalid" title="invalid"></tri-link>
-      <tri-link href="invalidLink" title="invalidLink"></tri-link>
-      <tri-link href="http://www.example.com/#id" title="complete" class="mock-complete"></tri-link>
-      <tri-link href="#parallel1" title="parallel1"></tri-link>
-      <tri-link href="#parallel2" title="parallel2"></tri-link>
-      <tri-link href="#basic-target" title="basic-target"></tri-link>
+      <tri-link href="#invalid" title="invalid" />
+      <tri-link href="invalidLink" title="invalidLink" />
+      <tri-link href="http://www.example.com/#id" title="complete" class="mock-complete" />
+      <tri-link href="#parallel1" title="parallel1" />
+      <tri-link href="#parallel2" title="parallel2" />
+      <tri-link href="#basic-target" title="basic-target" />
     </tri-anchor>
     <h2 id="何时使用"></h2>
     <div style="height: 1000px"></div>

@@ -73,7 +73,7 @@ import { TriExtendedMark, TriMarks, TriSliderHandler, TriSliderShowTooltip, TriS
       [length]="track.length!"
       [reverse]="reverse"
       [dir]="dir"
-    ></tri-slider-track>
+    />
     @if (marksArray) {
       <tri-slider-step
         [vertical]="vertical"
@@ -84,9 +84,9 @@ import { TriExtendedMark, TriMarks, TriSliderHandler, TriSliderShowTooltip, TriS
         [marksArray]="marksArray"
         [included]="included"
         [reverse]="reverse"
-      ></tri-slider-step>
+      />
     }
-    @for (handle of handles; track handle.value; let handleIndex = $index) {
+    @for (handle of handles; track handle.value) {
       <tri-slider-handle
         [vertical]="vertical"
         [reverse]="reverse"
@@ -98,8 +98,8 @@ import { TriExtendedMark, TriMarks, TriSliderHandler, TriSliderShowTooltip, TriS
         [tooltipPlacement]="tooltipPlacement"
         [dragging]="dragging()"
         [dir]="dir"
-        (focusin)="onHandleFocusIn(handleIndex)"
-      ></tri-slider-handle>
+        (focusin)="onHandleFocusIn($index)"
+      />
     }
     @if (marksArray) {
       <tri-slider-marks
@@ -111,7 +111,7 @@ import { TriExtendedMark, TriMarks, TriSliderHandler, TriSliderShowTooltip, TriS
         [marksArray]="marksArray"
         [included]="included"
         [reverse]="reverse"
-      ></tri-slider-marks>
+      />
     }
   `,
   imports: [TriSliderTrackComponent, TriSliderStepComponent, TriSliderHandleComponent, TriSliderMarksComponent],

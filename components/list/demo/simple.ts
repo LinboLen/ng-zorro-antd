@@ -44,19 +44,17 @@ import { TriTypographyModule } from 'ng-zorro-antd/typography';
       <tri-list-footer>Footer</tri-list-footer>
     </ul>
   `,
-  styles: [
-    `
-      h3 {
-        margin: 16px 0;
-      }
-      h3:first-child {
-        margin-top: 0;
-      }
-      h3:last-child {
-        margin-bottom: 0;
-      }
-    `
-  ]
+  styles: `
+    h3 {
+      margin: 16px 0;
+    }
+    h3:first-child {
+      margin-top: 0;
+    }
+    h3:last-child {
+      margin-bottom: 0;
+    }
+  `
 })
 export class TriDemoListSimpleComponent {
   data = [

@@ -14,37 +14,37 @@ import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
       <tri-form-item>
         <tri-form-label [sm]="8" [xs]="24" required>DatePicker</tri-form-label>
         <tri-form-control [sm]="16" [xs]="24">
-          <tri-date-picker formControlName="datePicker"></tri-date-picker>
+          <tri-date-picker formControlName="datePicker" />
         </tri-form-control>
       </tri-form-item>
       <tri-form-item>
         <tri-form-label [sm]="8" [xs]="24" required>DatePicker[ShowTime]</tri-form-label>
         <tri-form-control [sm]="16" [xs]="24">
-          <tri-date-picker showTime formControlName="datePickerTime"></tri-date-picker>
+          <tri-date-picker showTime formControlName="datePickerTime" />
         </tri-form-control>
       </tri-form-item>
       <tri-form-item>
         <tri-form-label [sm]="8" [xs]="24" required>MonthPicker</tri-form-label>
         <tri-form-control [sm]="16" [xs]="24">
-          <tri-date-picker mode="month" formControlName="monthPicker"></tri-date-picker>
+          <tri-date-picker mode="month" formControlName="monthPicker" />
         </tri-form-control>
       </tri-form-item>
       <tri-form-item>
         <tri-form-label [sm]="8" [xs]="24" required>RangePicker</tri-form-label>
         <tri-form-control [sm]="16" [xs]="24">
-          <tri-range-picker formControlName="rangePicker"></tri-range-picker>
+          <tri-range-picker formControlName="rangePicker" />
         </tri-form-control>
       </tri-form-item>
       <tri-form-item>
         <tri-form-label [sm]="8" [xs]="24" required>RangePicker[showTime]</tri-form-label>
         <tri-form-control [sm]="16" [xs]="24">
-          <tri-range-picker showTime formControlName="rangePickerTime"></tri-range-picker>
+          <tri-range-picker showTime formControlName="rangePickerTime" />
         </tri-form-control>
       </tri-form-item>
       <tri-form-item>
         <tri-form-label [sm]="8" [xs]="24" required>TimePicker</tri-form-label>
         <tri-form-control [sm]="16" [xs]="24">
-          <tri-time-picker formControlName="timePicker"></tri-time-picker>
+          <tri-time-picker formControlName="timePicker" />
         </tri-form-control>
       </tri-form-item>
       <tri-form-item>
@@ -54,13 +54,11 @@ import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
       </tri-form-item>
     </form>
   `,
-  styles: [
-    `
-      form {
-        max-width: 600px;
-      }
-    `
-  ]
+  styles: `
+    form {
+      max-width: 600px;
+    }
+  `
 })
 export class TriDemoFormTimeRelatedControlsComponent {
   private fb = inject(FormBuilder);

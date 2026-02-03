@@ -18,7 +18,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
           variant="outlined"
           [ngModel]="defaultValue"
           defaultExpandAll
-        ></tri-tree-select>
+        />
         <tri-tree-select
           *spaceItem
           style="width: 100%"
@@ -26,7 +26,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
           variant="filled"
           [ngModel]="defaultValue"
           defaultExpandAll
-        ></tri-tree-select>
+        />
         <tri-tree-select
           *spaceItem
           style="width: 100%"
@@ -34,7 +34,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
           variant="borderless"
           [ngModel]="defaultValue"
           defaultExpandAll
-        ></tri-tree-select>
+        />
         <tri-tree-select
           *spaceItem
           style="width: 100%"
@@ -42,7 +42,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
           variant="underlined"
           [ngModel]="defaultValue"
           defaultExpandAll
-        ></tri-tree-select>
+        />
       </tri-space>
       <tri-space direction="vertical" style="flex: 1">
         <tri-tree-select
@@ -54,7 +54,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
           multiple
           [ngModel]="defaultValue"
           defaultExpandAll
-        ></tri-tree-select>
+        />
         <tri-tree-select
           *spaceItem
           style="width: 100%"
@@ -64,7 +64,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
           multiple
           [ngModel]="defaultValue"
           defaultExpandAll
-        ></tri-tree-select>
+        />
         <tri-tree-select
           *spaceItem
           style="width: 100%"
@@ -74,7 +74,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
           multiple
           [ngModel]="defaultValue"
           defaultExpandAll
-        ></tri-tree-select>
+        />
         <tri-tree-select
           *spaceItem
           style="width: 100%"
@@ -84,7 +84,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
           multiple
           [ngModel]="defaultValue"
           defaultExpandAll
-        ></tri-tree-select>
+        />
       </tri-space>
     </div>
   `

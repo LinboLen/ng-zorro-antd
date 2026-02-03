@@ -98,7 +98,7 @@ interface Person {
             <td cellControl="address">{{ data.address }}</td>
             <td cellControl="action">
               <a>Action</a>
-              <tri-divider type="vertical"></tri-divider>
+              <tri-divider type="vertical" />
               <a>Delete</a>
             </td>
           </tr>

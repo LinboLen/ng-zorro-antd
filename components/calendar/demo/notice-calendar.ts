@@ -13,21 +13,21 @@ import { TriCalendarModule } from 'ng-zorro-antd/calendar';
           @case (8) {
             @for (item of listDataMap.eight; track $index) {
               <li>
-                <tri-badge [status]="item.type" [text]="item.content"></tri-badge>
+                <tri-badge [status]="item.type" [text]="item.content" />
               </li>
             }
           }
           @case (10) {
             @for (item of listDataMap.ten; track $index) {
               <li>
-                <tri-badge [status]="item.type" [text]="item.content"></tri-badge>
+                <tri-badge [status]="item.type" [text]="item.content" />
               </li>
             }
           }
           @case (11) {
             @for (item of listDataMap.eleven; track $index) {
               <li>
-                <tri-badge [status]="item.type" [text]="item.content"></tri-badge>
+                <tri-badge [status]="item.type" [text]="item.content" />
               </li>
             }
           }
@@ -43,23 +43,21 @@ import { TriCalendarModule } from 'ng-zorro-antd/calendar';
       </ng-container>
     </tri-calendar>
   `,
-  styles: [
-    `
-      .events {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
+  styles: `
+    .events {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
 
-      .events .ant-badge-status {
-        overflow: hidden;
-        white-space: nowrap;
-        width: 100%;
-        text-overflow: ellipsis;
-        font-size: 12px;
-      }
-    `
-  ]
+    .events .ant-badge-status {
+      overflow: hidden;
+      white-space: nowrap;
+      width: 100%;
+      text-overflow: ellipsis;
+      font-size: 12px;
+    }
+  `
 })
 export class TriDemoCalendarNoticeCalendarComponent {
   readonly listDataMap = {

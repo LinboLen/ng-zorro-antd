@@ -86,7 +86,7 @@ function filterTreeData(data: TreeNode[], value: string): FilteredTreeResult {
 
     <tri-tree-view [dataSource]="dataSource" [levelAccessor]="levelAccessor">
       <tri-tree-node *treeNodeDef="let node" treeNodePadding [expandable]="false">
-        <tri-tree-node-toggle treeNodeNoopToggle></tri-tree-node-toggle>
+        <tri-tree-node-toggle treeNodeNoopToggle />
         <span [innerHTML]="node.name | nzHighlight: searchValue : 'i' : 'highlight'"></span>
       </tri-tree-node>
 

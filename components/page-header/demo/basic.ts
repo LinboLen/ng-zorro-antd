@@ -5,9 +5,7 @@ import { TriPageHeaderModule } from 'ng-zorro-antd/page-header';
 @Component({
   selector: 'tri-demo-page-header-basic',
   imports: [TriPageHeaderModule],
-  template: `
-    <tri-page-header (back)="onBack()" backIcon title="Title" subtitle="This is a subtitle"></tri-page-header>
-  `
+  template: ` <tri-page-header (back)="onBack()" backIcon title="Title" subtitle="This is a subtitle" /> `
 })
 export class TriDemoPageHeaderBasicComponent {
   onBack(): void {

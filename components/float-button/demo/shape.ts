@@ -7,26 +7,18 @@ import { TriFloatButtonModule } from 'ng-zorro-antd/float-button';
   imports: [TriFloatButtonModule],
   template: `
     <div class="shape">
-      <tri-float-button shape="circle" style="right: 94px" type="primary" icon="customer-service">
-      </tri-float-button>
-      <tri-float-button
-        shape="square"
-        style="right: 24px"
-        type="primary"
-        icon="customer-service"
-      ></tri-float-button>
+      <tri-float-button shape="circle" style="right: 94px" type="primary" icon="customer-service" />
+      <tri-float-button shape="square" style="right: 24px" type="primary" icon="customer-service" />
     </div>
   `,
-  styles: [
-    `
-      .shape {
-        height: 300px;
-        position: relative;
-      }
-      nz-float-button {
-        position: absolute;
-      }
-    `
-  ]
+  styles: `
+    .shape {
+      height: 300px;
+      position: relative;
+    }
+    nz-float-button {
+      position: absolute;
+    }
+  `
 })
 export class TriDemoFloatButtonShapeComponent {}

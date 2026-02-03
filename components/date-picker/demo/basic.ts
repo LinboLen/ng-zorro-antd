@@ -11,25 +11,23 @@ import { en_US, TriI18nService, zh_CN } from 'ng-zorro-antd/i18n';
   selector: 'tri-demo-date-picker-basic',
   imports: [FormsModule, TriButtonModule, TriDatePickerModule],
   template: `
-    <tri-date-picker [(ngModel)]="date" (ngModelChange)="onChange($event)"></tri-date-picker>
+    <tri-date-picker [(ngModel)]="date" (ngModelChange)="onChange($event)" />
     <br />
-    <tri-date-picker mode="week" [(ngModel)]="date" (ngModelChange)="getWeek($event)"></tri-date-picker>
+    <tri-date-picker mode="week" [(ngModel)]="date" (ngModelChange)="getWeek($event)" />
     <br />
-    <tri-date-picker mode="month" [(ngModel)]="date" (ngModelChange)="onChange($event)"></tri-date-picker>
+    <tri-date-picker mode="month" [(ngModel)]="date" (ngModelChange)="onChange($event)" />
     <br />
-    <tri-date-picker mode="quarter" [(ngModel)]="date" (ngModelChange)="onChange($event)"></tri-date-picker>
+    <tri-date-picker mode="quarter" [(ngModel)]="date" (ngModelChange)="onChange($event)" />
     <br />
-    <tri-date-picker mode="year" [(ngModel)]="date" (ngModelChange)="onChange($event)"></tri-date-picker>
+    <tri-date-picker mode="year" [(ngModel)]="date" (ngModelChange)="onChange($event)" />
     <br />
     <button tri-button type="default" (click)="changeLanguage()">Switch language for all pickers</button>
   `,
-  styles: [
-    `
-      nz-date-picker {
-        margin: 0 8px 12px 0;
-      }
-    `
-  ]
+  styles: `
+    nz-date-picker {
+      margin: 0 8px 12px 0;
+    }
+  `
 })
 export class TriDemoDatePickerBasicComponent {
   date = null;

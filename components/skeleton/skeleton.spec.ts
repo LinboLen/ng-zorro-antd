@@ -242,7 +242,7 @@ describe('skeleton element', () => {
       [title]="title"
       [paragraph]="paragraph"
       [round]="round"
-    ></tri-skeleton>
+    />
   `
 })
 export class TriTestSkeletonComponent {
@@ -258,26 +258,16 @@ export class TriTestSkeletonComponent {
   template: `
     @switch (useSuite) {
       @case (1) {
-        <tri-skeleton-element
-          type="avatar"
-          [active]="active"
-          [size]="size"
-          [shape]="$any(shape)"
-        ></tri-skeleton-element>
+        <tri-skeleton-element type="avatar" [active]="active" [size]="size" [shape]="$any(shape)" />
       }
       @case (2) {
-        <tri-skeleton-element
-          type="button"
-          [active]="active"
-          [size]="$any(size)"
-          [shape]="shape"
-        ></tri-skeleton-element>
+        <tri-skeleton-element type="button" [active]="active" [size]="$any(size)" [shape]="shape" />
       }
       @case (3) {
-        <tri-skeleton-element type="input" [active]="active" [size]="$any(size)"></tri-skeleton-element>
+        <tri-skeleton-element type="input" [active]="active" [size]="$any(size)" />
       }
       @case (4) {
-        <tri-skeleton-element type="image" [active]="active"></tri-skeleton-element>
+        <tri-skeleton-element type="image" [active]="active" />
       }
     }
   `

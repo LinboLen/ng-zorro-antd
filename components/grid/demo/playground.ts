@@ -11,11 +11,11 @@ import { TriMarks, TriSliderModule } from 'ng-zorro-antd/slider';
     <div class="slider-container">
       <span>Horizontal Gutter (px):</span>
       <div class="slider">
-        <tri-slider [marks]="marksHGutter" [step]="null" [min]="8" [max]="48" [(ngModel)]="hGutter"></tri-slider>
+        <tri-slider [marks]="marksHGutter" [step]="null" [min]="8" [max]="48" [(ngModel)]="hGutter" />
       </div>
       <span>Vertical Gutter (px):</span>
       <div class="slider">
-        <tri-slider [marks]="marksVGutter" [step]="null" [min]="8" [max]="48" [(ngModel)]="vGutter"></tri-slider>
+        <tri-slider [marks]="marksVGutter" [step]="null" [min]="8" [max]="48" [(ngModel)]="vGutter" />
       </div>
       <span>Column Count:</span>
       <div class="slider">
@@ -26,7 +26,7 @@ import { TriMarks, TriSliderModule } from 'ng-zorro-antd/slider';
           [max]="12"
           [(ngModel)]="count"
           (ngModelChange)="reGenerateArray($event)"
-        ></tri-slider>
+        />
       </div>
     </div>
 
@@ -46,23 +46,21 @@ import { TriMarks, TriSliderModule } from 'ng-zorro-antd/slider';
       </div>
     </div>
   `,
-  styles: [
-    `
-      .slider {
-        width: 50%;
-      }
-      .slider-container {
-        margin-bottom: 16px;
-      }
-      .grid-config {
-        height: 120px;
-        font-size: 14px;
-        line-height: 120px;
-        background: #0092ff;
-        border-radius: 4px;
-      }
-    `
-  ]
+  styles: `
+    .slider {
+      width: 50%;
+    }
+    .slider-container {
+      margin-bottom: 16px;
+    }
+    .grid-config {
+      height: 120px;
+      font-size: 14px;
+      line-height: 120px;
+      background: #0092ff;
+      border-radius: 4px;
+    }
+  `
 })
 export class TriDemoGridPlaygroundComponent {
   hGutter = 16;

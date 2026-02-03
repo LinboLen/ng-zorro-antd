@@ -28,7 +28,7 @@ interface MockUser {
     >
       @if (!loading) {
         @for (o of optionList; track o) {
-          <tri-option [value]="o" [label]="o"></tri-option>
+          <tri-option [value]="o" [label]="o" />
         }
       } @else {
         <tri-option disabled customContent>
@@ -38,17 +38,15 @@ interface MockUser {
       }
     </tri-select>
   `,
-  styles: [
-    `
-      nz-select {
-        width: 100%;
-      }
+  styles: `
+    nz-select {
+      width: 100%;
+    }
 
-      .loading-icon {
-        margin-right: 8px;
-      }
-    `
-  ]
+    .loading-icon {
+      margin-right: 8px;
+    }
+  `
 })
 export class TriDemoSelectSelectUsersComponent implements OnInit {
   randomUserUrl = 'https://api.randomuser.me/?results=5';

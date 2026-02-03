@@ -8,7 +8,7 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   selector: 'tri-demo-switch-disabled',
   imports: [FormsModule, TriButtonModule, TriSwitchModule],
   template: `
-    <tri-switch [(ngModel)]="switchValue" [disabled]="isDisabled"></tri-switch>
+    <tri-switch [(ngModel)]="switchValue" [disabled]="isDisabled" />
     <br />
     <br />
     <button tri-button type="primary" (click)="isDisabled = !isDisabled">Toggle disabled</button>

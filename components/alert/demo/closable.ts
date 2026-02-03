@@ -11,22 +11,20 @@ import { TriAlertModule } from 'ng-zorro-antd/alert';
       closeable
       message="Warning Text Warning Text Warning Text Warning Text Warning Text Warning Text Warning Text"
       (onClose)="afterClose()"
-    ></tri-alert>
+    />
     <tri-alert
       type="error"
       closeable
       message="Error Text"
       description="Error Description Error Description Error Description Error Description Error Description Error Description"
       (onClose)="afterClose()"
-    ></tri-alert>
+    />
   `,
-  styles: [
-    `
-      nz-alert {
-        margin-bottom: 16px;
-      }
-    `
-  ]
+  styles: `
+    nz-alert {
+      margin-bottom: 16px;
+    }
+  `
 })
 export class TriDemoAlertClosableComponent {
   afterClose(): void {

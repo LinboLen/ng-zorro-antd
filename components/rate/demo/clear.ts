@@ -7,10 +7,10 @@ import { TriRateModule } from 'ng-zorro-antd/rate';
   selector: 'tri-demo-rate-clear',
   imports: [FormsModule, TriRateModule],
   template: `
-    <tri-rate [(ngModel)]="value" allowHalf></tri-rate>
+    <tri-rate [(ngModel)]="value" allowHalf />
     <span class="tri-rate-text">allowClear: true</span>
     <br />
-    <tri-rate [(ngModel)]="value" allowHalf [allowClear]="false"></tri-rate>
+    <tri-rate [(ngModel)]="value" allowHalf [allowClear]="false" />
     <span class="tri-rate-text">allowClear: false</span>
   `
 })

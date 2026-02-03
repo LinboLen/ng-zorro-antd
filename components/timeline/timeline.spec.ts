@@ -271,10 +271,10 @@ export class TriTestTimelineBasicComponent {
   imports: [TriTimelineModule],
   template: `
     <tri-timeline>
-      <tri-timeline-item [color]="'cyan'">Create a services site 2015-09-01</tri-timeline-item>
-      <tri-timeline-item [color]="'rgb(200, 0, 0)'">Solve initial network problems 2015-09-01</tri-timeline-item>
-      <tri-timeline-item [color]="'#781241'">Technical testing 2015-09-01</tri-timeline-item>
-      <tri-timeline-item [color]="'red'">Network problems being solved 2015-09-01</tri-timeline-item>
+      <tri-timeline-item color="cyan">Create a services site 2015-09-01</tri-timeline-item>
+      <tri-timeline-item color="rgb(200, 0, 0)">Solve initial network problems 2015-09-01</tri-timeline-item>
+      <tri-timeline-item color="#781241">Technical testing 2015-09-01</tri-timeline-item>
+      <tri-timeline-item color="red">Network problems being solved 2015-09-01</tri-timeline-item>
     </tri-timeline>
   `
 })
@@ -307,7 +307,7 @@ export class TriTestTimelineCustomPositionComponent {}
   imports: [BidiModule, TriTestTimelineBasicComponent],
   template: `
     <div [dir]="direction">
-      <tri-test-basic-timeline></tri-test-basic-timeline>
+      <tri-test-basic-timeline />
     </div>
   `
 })

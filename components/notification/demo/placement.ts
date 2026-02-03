@@ -17,7 +17,7 @@ import { TriNotificationPlacement, TriNotificationService } from 'ng-zorro-antd/
       <tri-icon type="border-bottom" theme="outline" />
       bottom
     </button>
-    <tri-divider></tri-divider>
+    <tri-divider />
     <button tri-button (click)="createNotification('topLeft')" type="primary">
       <tri-icon type="radius-upleft" />
       topLeft
@@ -26,7 +26,7 @@ import { TriNotificationPlacement, TriNotificationService } from 'ng-zorro-antd/
       <tri-icon type="radius-upright" />
       topRight
     </button>
-    <tri-divider></tri-divider>
+    <tri-divider />
     <button tri-button (click)="createNotification('bottomLeft')" type="primary">
       <tri-icon type="radius-bottomleft" />
       bottomLeft
@@ -36,13 +36,11 @@ import { TriNotificationPlacement, TriNotificationService } from 'ng-zorro-antd/
       bottomRight
     </button>
   `,
-  styles: [
-    `
-      button {
-        margin-right: 1em;
-      }
-    `
-  ]
+  styles: `
+    button {
+      margin-right: 1em;
+    }
+  `
 })
 export class TriDemoNotificationPlacementComponent {
   placement = 'topRight';

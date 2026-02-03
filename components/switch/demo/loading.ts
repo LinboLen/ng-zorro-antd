@@ -7,10 +7,10 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   selector: 'tri-demo-switch-loading',
   imports: [FormsModule, TriSwitchModule],
   template: `
-    <tri-switch [ngModel]="true" loading></tri-switch>
+    <tri-switch [ngModel]="true" loading />
     <br />
     <br />
-    <tri-switch size="small" [ngModel]="false" loading></tri-switch>
+    <tri-switch size="small" [ngModel]="false" loading />
   `
 })
 export class TriDemoSwitchLoadingComponent {}

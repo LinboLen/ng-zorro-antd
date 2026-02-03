@@ -8,7 +8,7 @@ import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
   selector: 'tri-demo-time-picker-addon',
   imports: [FormsModule, TriButtonModule, TriTimePickerModule],
   template: `
-    <tri-time-picker [(ngModel)]="time" [addOn]="addOnTemplate" #timePicker></tri-time-picker>
+    <tri-time-picker [(ngModel)]="time" [addOn]="addOnTemplate" #timePicker />
     <ng-template #addOnTemplate>
       <button tri-button size="small" type="primary" (click)="timePicker.close()">Ok</button>
     </ng-template>

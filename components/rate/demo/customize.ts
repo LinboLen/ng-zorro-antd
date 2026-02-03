@@ -8,9 +8,9 @@ import { TriRateModule } from 'ng-zorro-antd/rate';
   selector: 'tri-demo-rate-customize',
   imports: [FormsModule, TriIconModule, TriRateModule],
   template: `
-    <tri-rate [ngModel]="2" [character]="characterNumber"></tri-rate>
+    <tri-rate [ngModel]="2" [character]="characterNumber" />
     <br />
-    <tri-rate [ngModel]="3" [character]="characterIcon"></tri-rate>
+    <tri-rate [ngModel]="3" [character]="characterIcon" />
     <br />
     <ng-template #characterNumber let-index>
       {{ index + 1 }}
@@ -35,12 +35,10 @@ import { TriRateModule } from 'ng-zorro-antd/rate';
       }
     </ng-template>
   `,
-  styles: [
-    `
-      .large ::ng-deep .ant-rate-star {
-        font-size: 36px;
-      }
-    `
-  ]
+  styles: `
+    .large ::ng-deep .ant-rate-star {
+      font-size: 36px;
+    }
+  `
 })
 export class TriDemoRateCustomizeComponent {}

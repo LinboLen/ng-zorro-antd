@@ -35,8 +35,8 @@ import { TriTableSelectionComponent } from '../addon/selection.component';
       [showCheckbox]="showCheckbox"
       [showRowSelection]="showRowSelection"
       (checkedChange)="onCheckedChange($event)"
-    ></tri-table-selection>
-    <ng-content></ng-content>
+    />
+    <ng-content />
   `,
   host: { class: 'tri-table-selection-column' },
   imports: [TriTableSelectionComponent]

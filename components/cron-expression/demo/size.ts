@@ -7,17 +7,15 @@ import { TriCronExpressionModule } from 'ng-zorro-antd/cron-expression';
   imports: [TriCronExpressionModule],
   template: `
     <div class="example-cron-expression">
-      <tri-cron-expression size="small"></tri-cron-expression>
-      <tri-cron-expression size="default"></tri-cron-expression>
-      <tri-cron-expression size="large"></tri-cron-expression>
+      <tri-cron-expression size="small" />
+      <tri-cron-expression size="default" />
+      <tri-cron-expression size="large" />
     </div>
   `,
-  styles: [
-    `
-      .example-cron-expression nz-cron-expression {
-        margin: 0 8px 8px 0;
-      }
-    `
-  ]
+  styles: `
+    .example-cron-expression nz-cron-expression {
+      margin: 0 8px 8px 0;
+    }
+  `
 })
 export class TriDemoCronExpressionSizeComponent {}

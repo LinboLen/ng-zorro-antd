@@ -11,13 +11,11 @@ import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
     <tri-input-number [(ngModel)]="value" min="1" max="10" />
     <tri-input-number [(ngModel)]="value" size="small" min="1" max="10" />
   `,
-  styles: [
-    `
-      nz-input-number {
-        margin-right: 8px;
-      }
-    `
-  ]
+  styles: `
+    nz-input-number {
+      margin-right: 8px;
+    }
+  `
 })
 export class TriDemoInputNumberSizeComponent {
   value = 3;

@@ -12,12 +12,10 @@ import { TriButtonModule } from 'ng-zorro-antd/button';
     <button tri-button type="text" block>Text</button>
     <a tri-button type="link" block>Link</a>
   `,
-  styles: [
-    `
-      [nz-button] {
-        margin-bottom: 12px;
-      }
-    `
-  ]
+  styles: `
+    [nz-button] {
+      margin-bottom: 12px;
+    }
+  `
 })
 export class TriDemoButtonBlockComponent {}

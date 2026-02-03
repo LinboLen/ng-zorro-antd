@@ -9,7 +9,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
   selector: 'tri-demo-form-horizontal-login',
   imports: [ReactiveFormsModule, TriButtonModule, TriFormModule, TriInputModule],
   template: `
-    <form tri-form [layout]="'inline'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <form tri-form layout="inline" [formGroup]="validateForm" (ngSubmit)="submitForm()">
       <tri-form-item>
         <tri-form-control errorTip="Please input your username!">
           <tri-input-wrapper>

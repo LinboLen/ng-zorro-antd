@@ -1613,18 +1613,18 @@ describe('finalSize', () => {
         />
       }
       @case (2) {
-        <tri-date-picker [open]="open" (onOpenChange)="onOpenChange($event)"></tri-date-picker>
+        <tri-date-picker [open]="open" (onOpenChange)="onOpenChange($event)" />
       }
       @case (3) {
-        <tri-date-picker open [(ngModel)]="modelValue"></tri-date-picker>
+        <tri-date-picker open [(ngModel)]="modelValue" />
       }
       @case (4) {
-        <tri-date-picker [formControl]="control" [disabled]="disabled"></tri-date-picker>
+        <tri-date-picker [formControl]="control" [disabled]="disabled" />
       }
       @case (5) {
         <ng-container>
-          <tri-date-picker [ngModel]="firstValue" (ngModelChange)="onChange($event)"></tri-date-picker>
-          <tri-date-picker [ngModel]="secondValue"></tri-date-picker>
+          <tri-date-picker [ngModel]="firstValue" (ngModelChange)="onChange($event)" />
+          <tri-date-picker [ngModel]="secondValue" />
         </ng-container>
       }
     }
@@ -1695,7 +1695,7 @@ class TriTestDatePickerComponent {
 
 @Component({
   imports: [TriDatePickerModule],
-  template: `<tri-date-picker [status]="status"></tri-date-picker>`
+  template: `<tri-date-picker [status]="status" />`
 })
 class TriTestDatePickerStatusComponent {
   status: TriStatus = 'error';
@@ -1707,7 +1707,7 @@ class TriTestDatePickerStatusComponent {
     <form tri-form [formGroup]="validateForm">
       <tri-form-item>
         <tri-form-control hasFeedback>
-          <tri-date-picker formControlName="demo"></tri-date-picker>
+          <tri-date-picker formControlName="demo" />
         </tri-form-control>
       </tri-form-item>
     </form>

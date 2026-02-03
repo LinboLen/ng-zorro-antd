@@ -71,7 +71,7 @@ import { TriItemProps } from './typings';
         [footer]="footer()"
         (closePopover)="visible.set($event)"
         (hide)="visible.set($event); hide.emit($event)"
-      ></tri-check-list-content>
+      />
     </ng-template>
   `,
   host: {

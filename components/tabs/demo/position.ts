@@ -12,7 +12,7 @@ import { TriTabPosition, TriTabsModule } from 'ng-zorro-antd/tabs';
       Tab position:
       <tri-select [(ngModel)]="position" style="width: 80px;">
         @for (option of options; track option.value) {
-          <tri-option [label]="option.label" [value]="option.value"></tri-option>
+          <tri-option [label]="option.label" [value]="option.value" />
         }
       </tri-select>
     </div>

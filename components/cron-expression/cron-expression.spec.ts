@@ -144,7 +144,7 @@ describe('cron-expression', () => {
       [borderless]="borderless"
       [extra]="shortcuts"
       [semantic]="semanticTemplate"
-    ></tri-cron-expression>
+    />
     <ng-template #shortcuts>
       <button tri-button type="primary">Test</button>
     </ng-template>
@@ -160,7 +160,7 @@ export class TriTestCronExpressionComponent {
 
 @Component({
   imports: [TriCronExpressionModule],
-  template: `<tri-cron-expression [type]="type"></tri-cron-expression>`
+  template: `<tri-cron-expression [type]="type" />`
 })
 export class TriTestCronExpressionTypeComponent {
   type: 'linux' | 'spring' = 'spring';
@@ -168,7 +168,7 @@ export class TriTestCronExpressionTypeComponent {
 
 @Component({
   imports: [ReactiveFormsModule, TriCronExpressionModule],
-  template: `<tri-cron-expression [formControl]="formControl"></tri-cron-expression>`
+  template: `<tri-cron-expression [formControl]="formControl" />`
 })
 export class TriTestCronExpressionFormComponent {
   formControl = new FormControl('1 1 1 * *');

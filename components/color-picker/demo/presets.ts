@@ -9,17 +9,17 @@ import { TriColorPickerModule, TriPresetColor } from 'ng-zorro-antd/color-picker
     <div style="display: flex; flex-direction: column; gap: 16px;">
       <div>
         <h4>Basic Presets</h4>
-        <tri-color-picker [presets]="basicPresets" [value]="'#1677ff'"></tri-color-picker>
+        <tri-color-picker [presets]="basicPresets" value="#1677ff" />
       </div>
 
       <div>
         <h4>Multiple Preset Groups</h4>
-        <tri-color-picker [presets]="multiplePresets" [value]="'#52c41a'"></tri-color-picker>
+        <tri-color-picker [presets]="multiplePresets" value="#52c41a" />
       </div>
 
       <div>
         <h4>Custom Preset with Collapsed State</h4>
-        <tri-color-picker [presets]="customPresets" [value]="'#722ed1'"></tri-color-picker>
+        <tri-color-picker [presets]="customPresets" value="#722ed1" />
       </div>
     </div>
   `

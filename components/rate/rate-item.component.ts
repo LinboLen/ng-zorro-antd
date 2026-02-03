@@ -31,13 +31,13 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
       <ng-template
         [ngTemplateOutlet]="character || defaultCharacter"
         [ngTemplateOutletContext]="{ $implicit: index }"
-      ></ng-template>
+      />
     </div>
     <div class="tri-rate-star-first" (mouseover)="hoverRate(true); $event.stopPropagation()" (click)="clickRate(true)">
       <ng-template
         [ngTemplateOutlet]="character || defaultCharacter"
         [ngTemplateOutletContext]="{ $implicit: index }"
-      ></ng-template>
+      />
     </div>
 
     <ng-template #defaultCharacter>

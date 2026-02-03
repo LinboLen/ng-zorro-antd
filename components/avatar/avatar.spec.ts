@@ -359,7 +359,7 @@ function getScaleFromCSSTransform(transform: string): number {
       [alt]="alt"
       [loading]="loading"
       [fetchPriority]="fetchPriority"
-    ></tri-avatar>
+    />
   `,
   styles: `
     @import '../style/testing.less';
@@ -382,6 +382,6 @@ class TestAvatarComponent {
 
 @Component({
   imports: [TriAvatarModule],
-  template: `<tri-avatar-group></tri-avatar-group>`
+  template: `<tri-avatar-group />`
 })
 class TestAvatarGroupComponent {}

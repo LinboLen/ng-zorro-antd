@@ -31,7 +31,7 @@ import { TriOptionGroupComponent } from './option-group.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ng-template>
-      <ng-content></ng-content>
+      <ng-content />
     </ng-template>
   `
 })

@@ -23,17 +23,15 @@ interface Option {
       placeHolder="Choose"
     >
       @for (option of optionList; track option) {
-        <tri-option [value]="option" [label]="option.label"></tri-option>
+        <tri-option [value]="option" [label]="option.label" />
       }
     </tri-select>
   `,
-  styles: [
-    `
-      nz-select {
-        width: 120px;
-      }
-    `
-  ]
+  styles: `
+    nz-select {
+      width: 120px;
+    }
+  `
 })
 export class TriDemoSelectLabelInValueComponent {
   optionList: Option[] = [

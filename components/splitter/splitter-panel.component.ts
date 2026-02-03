@@ -20,7 +20,7 @@ import { TriSplitterCollapsible } from './typings';
   exportAs: 'triSplitterPanel',
   template: `
     <ng-template #contentTemplate>
-      <ng-content></ng-content>
+      <ng-content />
     </ng-template>
   `,
   encapsulation: ViewEncapsulation.None,

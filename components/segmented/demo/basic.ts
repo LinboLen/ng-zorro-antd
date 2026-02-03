@@ -5,7 +5,7 @@ import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
 @Component({
   selector: 'tri-demo-segmented-basic',
   imports: [TriSegmentedModule],
-  template: `<tri-segmented [options]="options" (valueChange)="handleValueChange($event)"></tri-segmented>`
+  template: `<tri-segmented [options]="options" (valueChange)="handleValueChange($event)" />`
 })
 export class TriDemoSegmentedBasicComponent {
   options = ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly'];

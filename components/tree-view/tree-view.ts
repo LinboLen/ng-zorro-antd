@@ -18,7 +18,7 @@ import { TriTreeView } from './tree';
   template: `
     <div class="tri-tree-list-holder">
       <div class="tri-tree-list-holder-inner">
-        <ng-container treeNodeOutlet></ng-container>
+        <ng-container treeNodeOutlet />
       </div>
     </div>
   `,

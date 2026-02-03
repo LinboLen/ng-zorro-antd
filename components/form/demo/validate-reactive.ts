@@ -82,17 +82,15 @@ import { TriInputModule } from 'ng-zorro-antd/input';
       </tri-form-item>
     </form>
   `,
-  styles: [
-    `
-      [nz-form] {
-        max-width: 600px;
-      }
+  styles: `
+    [nz-form] {
+      max-width: 600px;
+    }
 
-      button {
-        margin-left: 8px;
-      }
-    `
-  ]
+    button {
+      margin-left: 8px;
+    }
+  `
 })
 export class TriDemoFormValidateReactiveComponent implements OnInit, OnDestroy {
   private fb = inject(NonNullableFormBuilder);

@@ -36,11 +36,11 @@ const CLASS_NAME = 'ant-float-btn-group';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (!isMenuMode()) {
-      <ng-container *ngTemplateOutlet="menu"></ng-container>
+      <ng-container *ngTemplateOutlet="menu" />
     } @else {
       @if (open()) {
         <div class="tri-float-btn-group-wrap" [animate.enter]="enterAnimation()" [animate.leave]="leaveAnimation()">
-          <ng-container *ngTemplateOutlet="menu"></ng-container>
+          <ng-container *ngTemplateOutlet="menu" />
         </div>
       }
       <tri-float-button
@@ -51,9 +51,9 @@ const CLASS_NAME = 'ant-float-btn-group';
         [description]="open() ? null : description()"
         (onClick)="open() ? clickCloseMenu() : clickOpenMenu()"
         (mouseover)="hoverOpenMenu()"
-      ></tri-float-button>
+      />
     }
-    <ng-template #menu><ng-content></ng-content></ng-template>
+    <ng-template #menu><ng-content /></ng-template>
     <ng-template #close>
       <tri-icon type="close" theme="outline" />
     </ng-template>

@@ -58,9 +58,9 @@ import { TriTagModule } from 'ng-zorro-antd/tag';
       </tri-page-header-extra>
       <tri-page-header-content>
         <tri-row>
-          <tri-statistic title="Status" value="Pending"></tri-statistic>
-          <tri-statistic title="Price" [value]="568.08" prefix="$" style="margin: 0 32px"></tri-statistic>
-          <tri-statistic title="Balance" [value]="3345.08" prefix="$"></tri-statistic>
+          <tri-statistic title="Status" value="Pending" />
+          <tri-statistic title="Price" [value]="568.08" prefix="$" style="margin: 0 32px" />
+          <tri-statistic title="Balance" [value]="3345.08" prefix="$" />
         </tri-row>
       </tri-page-header-content>
     </tri-page-header>

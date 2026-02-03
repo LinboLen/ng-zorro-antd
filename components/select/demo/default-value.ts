@@ -9,28 +9,26 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
   template: `
     <tri-select mode="multiple" placeHolder="Inserted are removed" [(ngModel)]="listOfSelectedValue">
       @for (option of listOfOption; track option) {
-        <tri-option [label]="option" [value]="option"></tri-option>
+        <tri-option [label]="option" [value]="option" />
       }
       @for (option of defaultOption; track option) {
-        <tri-option [label]="option" [value]="option" hide></tri-option>
+        <tri-option [label]="option" [value]="option" hide />
       }
     </tri-select>
     <br />
     <br />
     <tri-select [(ngModel)]="selectedValue">
       @for (option of listOfOption; track option) {
-        <tri-option [label]="option" [value]="option"></tri-option>
+        <tri-option [label]="option" [value]="option" />
       }
-      <tri-option label="Default Value" value="Default" hide></tri-option>
+      <tri-option label="Default Value" value="Default" hide />
     </tri-select>
   `,
-  styles: [
-    `
-      nz-select {
-        width: 100%;
-      }
-    `
-  ]
+  styles: `
+    nz-select {
+      width: 100%;
+    }
+  `
 })
 export class TriDemoSelectDefaultValueComponent {
   listOfOption = ['Option 01', 'Option 02'];

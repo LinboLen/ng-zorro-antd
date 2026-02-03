@@ -7,7 +7,7 @@ import { TriRateModule } from 'ng-zorro-antd/rate';
   selector: 'tri-demo-rate-text',
   imports: [FormsModule, TriRateModule],
   template: `
-    <tri-rate [(ngModel)]="value" [tooltips]="tooltips"></tri-rate>
+    <tri-rate [(ngModel)]="value" [tooltips]="tooltips" />
     @if (value) {
       <span class="tri-rate-text">{{ value ? tooltips[value - 1] : '' }}</span>
     }

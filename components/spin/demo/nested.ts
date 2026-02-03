@@ -14,12 +14,12 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
         type="info"
         message="Alert message title"
         description="Further details about the context of this alert."
-      ></tri-alert>
+      />
     </tri-spin>
     <br />
     <div>
       Loading state：
-      <tri-switch [(ngModel)]="isSpinning"></tri-switch>
+      <tri-switch [(ngModel)]="isSpinning" />
     </div>
   `
 })

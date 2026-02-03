@@ -43,12 +43,12 @@ const TREE_DATA: TreeNode[] = [
   template: `
     <tri-tree-view [dataSource]="dataSource" [childrenAccessor]="childrenAccessor">
       <tri-tree-node *treeNodeDef="let node" treeNodePadding [expandable]="false">
-        <tri-tree-node-toggle treeNodeNoopToggle></tri-tree-node-toggle>
+        <tri-tree-node-toggle treeNodeNoopToggle />
         <tri-tree-node-checkbox
           [disabled]="node.disabled"
           [checked]="checklistSelection.isSelected(node)"
           (click)="leafItemSelectionToggle(node)"
-        ></tri-tree-node-checkbox>
+        />
         <tri-tree-node-option [disabled]="node.disabled" (click)="leafItemSelectionToggle(node)">
           {{ node.name }}
         </tri-tree-node-option>
@@ -63,7 +63,7 @@ const TREE_DATA: TreeNode[] = [
           [checked]="descendantsAllSelected(node)"
           [indeterminate]="descendantsPartiallySelected(node)"
           (click)="itemSelectionToggle(node)"
-        ></tri-tree-node-checkbox>
+        />
         <tri-tree-node-option [disabled]="node.disabled" (click)="itemSelectionToggle(node)">
           {{ node.name }}
         </tri-tree-node-option>

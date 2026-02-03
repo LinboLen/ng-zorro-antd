@@ -16,7 +16,7 @@ import { TriDescriptionsModule } from 'ng-zorro-antd/descriptions';
         2018-04-24 18:00:00 To 2019-04-24 18:00:00
       </tri-descriptions-item>
       <tri-descriptions-item title="Status" [span]="3">
-        <tri-badge status="processing" text="Running"></tri-badge>
+        <tri-badge status="processing" text="Running" />
       </tri-descriptions-item>
       <tri-descriptions-item title="Negotiated Amount">$80.00</tri-descriptions-item>
       <tri-descriptions-item title="Discount">$20.00</tri-descriptions-item>

@@ -8,7 +8,7 @@ import { TriTypographyModule } from 'ng-zorro-antd/typography';
   selector: 'tri-demo-typography-suffix',
   imports: [FormsModule, TriSliderModule, TriTypographyModule],
   template: `
-    <tri-slider [(ngModel)]="rows" [max]="10" [min]="1"></tri-slider>
+    <tri-slider [(ngModel)]="rows" [max]="10" [min]="1" />
     <p
       tri-typography
       ellipsis

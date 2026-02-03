@@ -40,10 +40,10 @@ export const TRI_TAB_SET = new InjectionToken<TriSafeAny>(typeof ngDevMode !== '
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ng-template #tabLinkTemplate>
-      <ng-content select="[nz-tab-link]"></ng-content>
+      <ng-content select="[nz-tab-link]" />
     </ng-template>
     <ng-template #contentTemplate>
-      <ng-content></ng-content>
+      <ng-content />
     </ng-template>
   `
 })

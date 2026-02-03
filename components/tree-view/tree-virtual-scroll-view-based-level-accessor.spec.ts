@@ -312,7 +312,7 @@ const TREE_DATA: TreeNode[] = dig();
       [trackBy]="trackBy"
     >
       <tri-tree-node *treeNodeDef="let node" treeNodePadding [expandable]="false">
-        <tri-tree-node-toggle treeNodeNoopToggle></tri-tree-node-toggle>
+        <tri-tree-node-toggle treeNodeNoopToggle />
         {{ node.name }}
       </tri-tree-node>
 

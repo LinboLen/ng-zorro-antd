@@ -29,39 +29,37 @@ import { TriMenuModule } from 'ng-zorro-antd/menu';
       <tri-footer>Ant Design ©{{ date.getFullYear() }} Implement By Angular</tri-footer>
     </tri-layout>
   `,
-  styles: [
-    `
-      .logo {
-        width: 120px;
-        height: 31px;
-        background: rgba(255, 255, 255, 0.2);
-        margin: 16px 24px 16px 0;
-        float: left;
-      }
+  styles: `
+    .logo {
+      width: 120px;
+      height: 31px;
+      background: rgba(255, 255, 255, 0.2);
+      margin: 16px 24px 16px 0;
+      float: left;
+    }
 
-      [nz-menu] {
-        line-height: 64px;
-      }
+    [nz-menu] {
+      line-height: 64px;
+    }
 
-      nz-breadcrumb {
-        margin: 16px 0;
-      }
+    nz-breadcrumb {
+      margin: 16px 0;
+    }
 
-      nz-content {
-        padding: 0 50px;
-      }
+    nz-content {
+      padding: 0 50px;
+    }
 
-      nz-footer {
-        text-align: center;
-      }
+    nz-footer {
+      text-align: center;
+    }
 
-      .inner-content {
-        background: #fff;
-        padding: 24px;
-        min-height: 280px;
-      }
-    `
-  ]
+    .inner-content {
+      background: #fff;
+      padding: 24px;
+      min-height: 280px;
+    }
+  `
 })
 export class TriDemoLayoutTopComponent {
   protected readonly date = new Date();

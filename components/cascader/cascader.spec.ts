@@ -2772,7 +2772,7 @@ const options5: TriSafeAny[] = [];
       (ngModelChange)="onValueChanges($event)"
       (visibleChange)="onVisibleChange($event)"
       (clear)="onClear()"
-    ></tri-cascader>
+    />
 
     <ng-template #renderTpl let-labels="labels">
       @for (label of labels; track $index) {
@@ -2831,7 +2831,7 @@ export class TriDemoCascaderDefaultComponent {
       [loadData]="loadData"
       (ngModelChange)="onValueChanges($event)"
       (visibleChange)="onVisibleChange($event)"
-    ></tri-cascader>
+    />
   `
 })
 export class TriDemoCascaderLoadDataComponent {
@@ -2884,7 +2884,7 @@ export class TriDemoCascaderLoadDataComponent {
   imports: [BidiModule, TriCascaderModule],
   template: `
     <div [dir]="direction">
-      <tri-cascader [options]="options"></tri-cascader>
+      <tri-cascader [options]="options" />
     </div>
   `
 })
@@ -2897,7 +2897,7 @@ export class TriDemoCascaderRtlComponent {
 
 @Component({
   imports: [FormsModule, TriCascaderModule],
-  template: `<tri-cascader [options]="options" [status]="status"></tri-cascader>`
+  template: `<tri-cascader [options]="options" [status]="status" />`
 })
 export class TriDemoCascaderStatusComponent {
   options: TriSafeAny[] | null = options1;
@@ -2910,7 +2910,7 @@ export class TriDemoCascaderStatusComponent {
     <form tri-form [formGroup]="validateForm">
       <tri-form-item>
         <tri-form-control hasFeedback>
-          <tri-cascader formControlName="demo" [options]="options"></tri-cascader>
+          <tri-cascader formControlName="demo" [options]="options" />
         </tri-form-control>
       </tri-form-item>
     </form>

@@ -11,7 +11,7 @@ import { TriSafeAny } from 'ng-zorro-antd/core/types';
 @Component({
   selector: 'tri-option-group',
   exportAs: 'triOptionGroup',
-  template: `<ng-content></ng-content>`,
+  template: `<ng-content />`,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -47,19 +47,17 @@ interface AutocompleteOptionGroups {
       </tri-autocomplete>
     </div>
   `,
-  styles: [
-    `
-      .certain-search-item-count {
-        position: absolute;
-        color: #999;
-        right: 16px;
-      }
+  styles: `
+    .certain-search-item-count {
+      position: absolute;
+      color: #999;
+      right: 16px;
+    }
 
-      .more-link {
-        float: right;
-      }
-    `
-  ]
+    .more-link {
+      float: right;
+    }
+  `
 })
 export class TriDemoAutoCompleteCertainCategoryComponent implements OnInit {
   inputValue?: string;

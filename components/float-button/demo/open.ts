@@ -16,24 +16,22 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
         trigger="hover"
         style="right: 24px"
       >
-        <tri-float-button></tri-float-button>
-        <tri-float-button icon="comment"></tri-float-button>
+        <tri-float-button />
+        <tri-float-button icon="comment" />
       </tri-float-button-group>
-      <tri-switch [(ngModel)]="isOpen"></tri-switch>
+      <tri-switch [(ngModel)]="isOpen" />
     </div>
   `,
-  styles: [
-    `
-      .open {
-        height: 300px;
-        position: relative;
-      }
-      nz-float-button-group,
-      nz-float-button {
-        position: absolute;
-      }
-    `
-  ]
+  styles: `
+    .open {
+      height: 300px;
+      position: relative;
+    }
+    nz-float-button-group,
+    nz-float-button {
+      position: absolute;
+    }
+  `
 })
 export class TriDemoFloatButtonOpenComponent {
   isOpen: boolean = true;

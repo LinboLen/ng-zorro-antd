@@ -48,13 +48,11 @@ interface IModalData {
 
     <button tri-button type="primary" (click)="openAndCloseAll()">Open more modals then close all after 2s</button>
   `,
-  styles: [
-    `
-      button {
-        margin-right: 8px;
-      }
-    `
-  ]
+  styles: `
+    button {
+      margin-right: 8px;
+    }
+  `
 })
 export class TriDemoModalServiceComponent {
   tplModalButtonLoading = false;

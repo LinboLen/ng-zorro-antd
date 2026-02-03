@@ -14,12 +14,10 @@ import { TriSpaceModule } from 'ng-zorro-antd/space';
       <tri-date-picker *spaceItem variant="underlined" />
     </tri-space>
   `,
-  styles: [
-    `
-      nz-date-picker {
-        margin: 0 8px 12px 0;
-      }
-    `
-  ]
+  styles: `
+    nz-date-picker {
+      margin: 0 8px 12px 0;
+    }
+  `
 })
 export class TriDemoDatePickerVariantComponent {}

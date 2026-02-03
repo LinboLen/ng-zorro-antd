@@ -8,9 +8,9 @@ import { TriStepsModule } from 'ng-zorro-antd/steps';
   imports: [TriButtonModule, TriStepsModule],
   template: `
     <tri-steps [current]="current">
-      <tri-step title="Finished"></tri-step>
-      <tri-step title="In Progress"></tri-step>
-      <tri-step title="Waiting"></tri-step>
+      <tri-step title="Finished" />
+      <tri-step title="In Progress" />
+      <tri-step title="Waiting" />
     </tri-steps>
 
     <div class="steps-content">{{ index }}</div>
@@ -32,27 +32,25 @@ import { TriStepsModule } from 'ng-zorro-antd/steps';
       }
     </div>
   `,
-  styles: [
-    `
-      .steps-content {
-        margin-top: 16px;
-        border: 1px dashed #e9e9e9;
-        border-radius: 6px;
-        background-color: #fafafa;
-        min-height: 200px;
-        text-align: center;
-        padding-top: 80px;
-      }
+  styles: `
+    .steps-content {
+      margin-top: 16px;
+      border: 1px dashed #e9e9e9;
+      border-radius: 6px;
+      background-color: #fafafa;
+      min-height: 200px;
+      text-align: center;
+      padding-top: 80px;
+    }
 
-      .steps-action {
-        margin-top: 24px;
-      }
+    .steps-action {
+      margin-top: 24px;
+    }
 
-      button {
-        margin-right: 8px;
-      }
-    `
-  ]
+    button {
+      margin-right: 8px;
+    }
+  `
 })
 export class TriDemoStepsStepNextComponent {
   current = 0;

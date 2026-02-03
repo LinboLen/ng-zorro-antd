@@ -380,7 +380,7 @@ export class TriTestCollapseTemplateComponent {}
       <tri-collapse-panel>
         <p>Panel01</p>
       </tri-collapse-panel>
-      <tri-collapse-panel [expandedIcon]="'double-right'">
+      <tri-collapse-panel expandedIcon="double-right">
         <p>Panel02</p>
       </tri-collapse-panel>
       <tri-collapse-panel [expandedIcon]="expandedIcon">

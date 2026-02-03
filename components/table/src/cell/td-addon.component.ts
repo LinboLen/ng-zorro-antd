@@ -32,9 +32,9 @@ import { TriRowIndentDirective } from '../addon/row-indent.directive';
   encapsulation: ViewEncapsulation.None,
   template: `
     @if (showExpand || indentSize > 0) {
-      <tri-row-indent [indentSize]="indentSize"></tri-row-indent>
+      <tri-row-indent [indentSize]="indentSize" />
       @if (expandIcon) {
-        <ng-template [ngTemplateOutlet]="expandIcon"></ng-template>
+        <ng-template [ngTemplateOutlet]="expandIcon" />
       } @else {
         <button
           tri-row-expand-button
@@ -54,7 +54,7 @@ import { TriRowIndentDirective } from '../addon/row-indent.directive';
         (ngModelChange)="onCheckedChange($event)"
       ></label>
     }
-    <ng-content></ng-content>
+    <ng-content />
   `,
   host: {
     '[class.tri-table-cell-with-append]': `showExpand || indentSize > 0`,

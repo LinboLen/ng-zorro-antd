@@ -13,7 +13,7 @@ import { TriTransferModule, TransferCanMove, TransferItem } from 'ng-zorro-antd/
       [canMove]="canMove"
       (selectChange)="select($event)"
       (change)="change($event)"
-    ></tri-transfer>
+    />
   `
 })
 export class TriDemoTransferCanMoveComponent implements OnInit {

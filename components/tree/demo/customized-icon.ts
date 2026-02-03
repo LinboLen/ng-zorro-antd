@@ -7,7 +7,7 @@ import { TriTreeModule } from 'ng-zorro-antd/tree';
   selector: 'tri-demo-tree-customized-icon',
   imports: [TriIconModule, TriTreeModule],
   template: `
-    <tri-tree [data]="nodes" showIcon></tri-tree>
+    <tri-tree [data]="nodes" showIcon />
     <tri-tree [data]="nodes" showIcon [expandedIcon]="multiExpandedIconTpl">
       <ng-template #multiExpandedIconTpl let-node let-origin="origin">
         @if (!origin.isLeaf) {

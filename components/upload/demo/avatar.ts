@@ -26,14 +26,12 @@ import { TriUploadFile, TriUploadModule } from 'ng-zorro-antd/upload';
       }
     </tri-upload>
   `,
-  styles: [
-    `
-      :host ::ng-deep .avatar-uploader > .ant-upload {
-        width: 128px;
-        height: 128px;
-      }
-    `
-  ]
+  styles: `
+    :host ::ng-deep .avatar-uploader > .ant-upload {
+      width: 128px;
+      height: 128px;
+    }
+  `
 })
 export class TriDemoUploadAvatarComponent {
   loading = false;

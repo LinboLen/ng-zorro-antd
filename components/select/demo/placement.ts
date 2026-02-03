@@ -17,18 +17,16 @@ import { TriSelectModule, TriSelectPlacementType } from 'ng-zorro-antd/select';
     <br />
     <br />
     <tri-select [(ngModel)]="selectedValue" [dropdownMatchSelectWidth]="false" [placement]="placement">
-      <tri-option value="HangZhou" label="HangZhou #310000"></tri-option>
-      <tri-option value="NingBo" label="NingBo #315000"></tri-option>
-      <tri-option value="WenZhou" label="WenZhou #325000"></tri-option>
+      <tri-option value="HangZhou" label="HangZhou #310000" />
+      <tri-option value="NingBo" label="NingBo #315000" />
+      <tri-option value="WenZhou" label="WenZhou #325000" />
     </tri-select>
   `,
-  styles: [
-    `
-      nz-select {
-        width: 120px;
-      }
-    `
-  ]
+  styles: `
+    nz-select {
+      width: 120px;
+    }
+  `
 })
 export class TriDemoSelectPlacementComponent {
   placement: TriSelectPlacementType = 'topLeft';

@@ -7,9 +7,9 @@ import { TriStepsModule } from 'ng-zorro-antd/steps';
   imports: [TriStepsModule],
   template: `
     <tri-steps [current]="current" [startIndex]="3" size="small">
-      <tri-step title="Finished"></tri-step>
-      <tri-step title="In Progress"></tri-step>
-      <tri-step title="Waiting"></tri-step>
+      <tri-step title="Finished" />
+      <tri-step title="In Progress" />
+      <tri-step title="Waiting" />
     </tri-steps>
   `
 })

@@ -370,7 +370,7 @@ describe('finalSize', () => {
       [control]="control"
       [checkedChildren]="checkedChildren"
       [unCheckedChildren]="unCheckedChildren"
-    ></tri-switch>
+    />
   `
 })
 export class TriTestSwitchBasicComponent {
@@ -392,10 +392,7 @@ export class TriTestSwitchBasicComponent {
   template: `
     <ng-template #checkedChildrenTemplate><tri-icon type="check" /></ng-template>
     <ng-template #unCheckedChildrenTemplate><tri-icon type="close" /></ng-template>
-    <tri-switch
-      [checkedChildren]="checkedChildrenTemplate"
-      [unCheckedChildren]="unCheckedChildrenTemplate"
-    ></tri-switch>
+    <tri-switch [checkedChildren]="checkedChildrenTemplate" [unCheckedChildren]="unCheckedChildrenTemplate" />
   `
 })
 export class TriTestSwitchTemplateComponent {}
@@ -404,7 +401,7 @@ export class TriTestSwitchTemplateComponent {}
   imports: [ReactiveFormsModule, TriSwitchModule],
   template: `
     <form>
-      <tri-switch [formControl]="formControl" [disabled]="disabled"></tri-switch>
+      <tri-switch [formControl]="formControl" [disabled]="disabled" />
     </form>
   `
 })
@@ -426,7 +423,7 @@ export class TriTestSwitchFormComponent {
   imports: [BidiModule, FormsModule, TriSwitchModule],
   template: `
     <div [dir]="direction">
-      <tri-switch [(ngModel)]="switchValue"></tri-switch>
+      <tri-switch [(ngModel)]="switchValue" />
     </div>
   `
 })

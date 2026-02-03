@@ -17,17 +17,15 @@ function alphabet(): string[] {
   template: `
     <tri-select mode="tags" placeHolder="Tag Mode" [(ngModel)]="listOfTagOptions">
       @for (option of listOfOption; track option) {
-        <tri-option [label]="option" [value]="option"></tri-option>
+        <tri-option [label]="option" [value]="option" />
       }
     </tri-select>
   `,
-  styles: [
-    `
-      nz-select {
-        width: 100%;
-      }
-    `
-  ]
+  styles: `
+    nz-select {
+      width: 100%;
+    }
+  `
 })
 export class TriDemoSelectTagsComponent {
   readonly listOfOption: string[] = alphabet();

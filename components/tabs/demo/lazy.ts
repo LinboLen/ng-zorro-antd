@@ -28,19 +28,19 @@ export class TriDemoTabContentEagerlyComponent implements OnInit {
   template: `
     <tri-tabs>
       <tri-tab title="Tab Eagerly 1">
-        <tri-demo-tab-content-eagerly></tri-demo-tab-content-eagerly>
+        <tri-demo-tab-content-eagerly />
       </tri-tab>
       <tri-tab title="Tab Eagerly 2">
-        <tri-demo-tab-content-eagerly></tri-demo-tab-content-eagerly>
+        <tri-demo-tab-content-eagerly />
       </tri-tab>
       <tri-tab title="Tab Lazy 1">
         <ng-template tri-tab>
-          <tri-demo-tab-content-lazy></tri-demo-tab-content-lazy>
+          <tri-demo-tab-content-lazy />
         </ng-template>
       </tri-tab>
       <tri-tab title="Tab Lazy 2">
         <ng-template tri-tab>
-          <tri-demo-tab-content-lazy></tri-demo-tab-content-lazy>
+          <tri-demo-tab-content-lazy />
         </ng-template>
       </tri-tab>
     </tri-tabs>

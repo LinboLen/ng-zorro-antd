@@ -6,7 +6,7 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
 @Component({
   selector: 'tri-demo-switch-basic',
   imports: [FormsModule, TriSwitchModule],
-  template: `<tri-switch [(ngModel)]="switchValue"></tri-switch>`
+  template: `<tri-switch [(ngModel)]="switchValue" />`
 })
 export class TriDemoSwitchBasicComponent {
   switchValue = false;

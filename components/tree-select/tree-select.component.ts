@@ -111,7 +111,7 @@ const listOfPositions = [
       [cdkConnectedOverlayOrigin]="cdkOverlayOrigin"
       [cdkConnectedOverlayPositions]="placement ? positions : []"
       [cdkConnectedOverlayOpen]="open"
-      [cdkConnectedOverlayTransformOriginOn]="'.ant-select-tree-dropdown'"
+      cdkConnectedOverlayTransformOriginOn=".ant-select-tree-dropdown"
       [cdkConnectedOverlayMinWidth]="$any(dropdownMatchSelectWidth ? null : triggerWidth)"
       [cdkConnectedOverlayWidth]="$any(dropdownMatchSelectWidth ? triggerWidth : null)"
       (overlayOutsideClick)="onClickOutside($event)"
@@ -161,10 +161,10 @@ const listOfPositions = [
           (selectedKeysChange)="updateSelectedNodes()"
           (checkboxChange)="treeCheckboxChange.emit($event)"
           (searchValueChange)="setSearchValues($event)"
-        ></tri-tree>
+        />
         @if (nodes.length === 0 || isNotFound) {
           <span class="tri-select-not-found">
-            <tri-embed-empty [componentName]="'tree-select'" [specificContent]="notFoundContent" />
+            <tri-embed-empty componentName="tree-select" [specificContent]="notFoundContent" />
           </span>
         }
       </div>

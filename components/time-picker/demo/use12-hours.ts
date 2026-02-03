@@ -7,10 +7,10 @@ import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
   selector: 'tri-demo-time-picker-use12-hours',
   imports: [FormsModule, TriTimePickerModule],
   template: `
-    <tri-time-picker [(ngModel)]="time" use12Hours></tri-time-picker>
+    <tri-time-picker [(ngModel)]="time" use12Hours />
     <br />
     <br />
-    <tri-time-picker [(ngModel)]="time" use12Hours format="h:mm a"></tri-time-picker>
+    <tri-time-picker [(ngModel)]="time" use12Hours format="h:mm a" />
   `
 })
 export class TriDemoTimePickerUse12HoursComponent {

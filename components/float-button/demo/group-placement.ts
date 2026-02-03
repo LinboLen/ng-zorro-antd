@@ -16,8 +16,8 @@ import { TriFloatButtonModule } from 'ng-zorro-antd/float-button';
           (onOpenChange)="openChange($event)"
           placement="top"
         >
-          <tri-float-button></tri-float-button>
-          <tri-float-button icon="comment"></tri-float-button>
+          <tri-float-button />
+          <tri-float-button icon="comment" />
         </tri-float-button-group>
         <tri-float-button-group
           class="down"
@@ -27,8 +27,8 @@ import { TriFloatButtonModule } from 'ng-zorro-antd/float-button';
           (onOpenChange)="openChange($event)"
           placement="bottom"
         >
-          <tri-float-button></tri-float-button>
-          <tri-float-button icon="comment"></tri-float-button>
+          <tri-float-button />
+          <tri-float-button icon="comment" />
         </tri-float-button-group>
         <tri-float-button-group
           class="left"
@@ -38,8 +38,8 @@ import { TriFloatButtonModule } from 'ng-zorro-antd/float-button';
           (onOpenChange)="openChange($event)"
           placement="left"
         >
-          <tri-float-button></tri-float-button>
-          <tri-float-button icon="comment"></tri-float-button>
+          <tri-float-button />
+          <tri-float-button icon="comment" />
         </tri-float-button-group>
         <tri-float-button-group
           class="right"
@@ -49,48 +49,46 @@ import { TriFloatButtonModule } from 'ng-zorro-antd/float-button';
           (onOpenChange)="openChange($event)"
           placement="right"
         >
-          <tri-float-button></tri-float-button>
-          <tri-float-button icon="comment"></tri-float-button>
+          <tri-float-button />
+          <tri-float-button icon="comment" />
         </tri-float-button-group>
       </div>
     </div>
   `,
-  styles: [
-    `
-      .container {
-        display: flex;
-        height: 300px;
-        justify-content: center;
-        align-items: center;
+  styles: `
+    .container {
+      display: flex;
+      height: 300px;
+      justify-content: center;
+      align-items: center;
 
-        .anchor {
-          height: 100px;
-          width: 100px;
-          position: relative;
+      .anchor {
+        height: 100px;
+        width: 100px;
+        position: relative;
 
-          .up {
-            inset-inline-end: 30px;
-            bottom: 80px;
-          }
-          .down {
-            inset-inline-end: 30px;
-            bottom: -20px;
-          }
-          .left {
-            inset-inline-end: 80px;
-            bottom: 30px;
-          }
-          .right {
-            inset-inline-end: -20px;
-            bottom: 30px;
-          }
+        .up {
+          inset-inline-end: 30px;
+          bottom: 80px;
         }
-        nz-float-button-group {
-          position: absolute;
+        .down {
+          inset-inline-end: 30px;
+          bottom: -20px;
+        }
+        .left {
+          inset-inline-end: 80px;
+          bottom: 30px;
+        }
+        .right {
+          inset-inline-end: -20px;
+          bottom: 30px;
         }
       }
-    `
-  ]
+      nz-float-button-group {
+        position: absolute;
+      }
+    }
+  `
 })
 export class TriDemoFloatButtonGroupPlacementComponent {
   openChange(status: boolean): void {

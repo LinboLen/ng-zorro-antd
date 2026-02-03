@@ -22,17 +22,15 @@ function alphabet(): string[] {
       placeHolder="automatic tokenization"
     >
       @for (option of listOfOption; track option.value) {
-        <tri-option [label]="option.label" [value]="option.value"></tri-option>
+        <tri-option [label]="option.label" [value]="option.value" />
       }
     </tri-select>
   `,
-  styles: [
-    `
-      nz-select {
-        width: 100%;
-      }
-    `
-  ]
+  styles: `
+    nz-select {
+      width: 100%;
+    }
+  `
 })
 export class TriDemoSelectAutomaticTokenizationComponent {
   readonly listOfOption: Array<{ label: string; value: string }> = alphabet().map(item => ({

@@ -7,19 +7,17 @@ import { TriSpinModule } from 'ng-zorro-antd/spin';
   imports: [TriSpinModule],
   template: `
     <div class="container">
-      <tri-spin simple></tri-spin>
+      <tri-spin simple />
     </div>
   `,
-  styles: [
-    `
-      .container {
-        text-align: center;
-        background: rgba(0, 0, 0, 0.05);
-        border-radius: 4px;
-        padding: 30px 50px;
-        margin: 20px 0;
-      }
-    `
-  ]
+  styles: `
+    .container {
+      text-align: center;
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 4px;
+      padding: 30px 50px;
+      margin: 20px 0;
+    }
+  `
 })
 export class TriDemoSpinInsideComponent {}

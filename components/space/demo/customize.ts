@@ -9,7 +9,7 @@ import { TriSpaceModule } from 'ng-zorro-antd/space';
   selector: 'tri-demo-space-customize',
   imports: [FormsModule, TriButtonModule, TriSpaceModule, TriSliderModule],
   template: `
-    <tri-slider [(ngModel)]="size"></tri-slider>
+    <tri-slider [(ngModel)]="size" />
     <tri-space [size]="size">
       <button *spaceItem tri-button type="primary">Button</button>
       <button *spaceItem tri-button type="default">Default</button>

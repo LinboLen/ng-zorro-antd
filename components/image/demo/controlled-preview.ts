@@ -12,28 +12,26 @@ import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
     <div>
       <label>
         <span>scale step:</span>
-        <tri-input-number [(ngModel)]="scaleStep" [min]="0.1" [step]="1"></tri-input-number>
+        <tri-input-number [(ngModel)]="scaleStep" [min]="0.1" [step]="1" />
       </label>
 
       <button tri-button type="primary" (click)="onClick()">Preview</button>
     </div>
   `,
-  styles: [
-    `
-      div {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-      }
+  styles: `
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
 
-      label {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-    `
-  ]
+    label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  `
 })
 export class TriDemoImageControlledPreviewComponent {
   private imageService = inject(TriImageService);

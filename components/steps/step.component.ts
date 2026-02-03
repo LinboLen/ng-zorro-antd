@@ -53,7 +53,7 @@ import { TriProgressFormatter, TriProgressModule } from 'ng-zorro-antd/progress'
                 [width]="size === 'small' ? 32 : 40"
                 [format]="nullProcessFormat"
                 [strokeWidth]="4"
-              ></tri-progress>
+              />
             </div>
           }
           @if (status === 'finish' && !icon) {
@@ -87,7 +87,7 @@ import { TriProgressFormatter, TriProgressModule } from 'ng-zorro-antd/progress'
                 status: status,
                 index: index
               }"
-            ></ng-template>
+            />
           </span>
         }
       </div>

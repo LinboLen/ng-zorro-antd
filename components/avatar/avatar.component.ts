@@ -52,7 +52,7 @@ type TriAvatarFetchPriority = 'high' | 'low' | 'auto';
     } @else if (text && hasText) {
       <span class="tri-avatar-string" #textEl>{{ text }}</span>
     }
-    <ng-content></ng-content>
+    <ng-content />
   `,
   host: {
     class: 'tri-avatar',

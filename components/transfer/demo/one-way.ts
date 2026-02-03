@@ -16,9 +16,9 @@ import { TriTransferModule, TransferItem } from 'ng-zorro-antd/transfer';
       [selectedKeys]="['0', '2', '3']"
       oneWay
       (change)="change($event)"
-    ></tri-transfer>
+    />
     <div style="margin-top: 8px;">
-      <tri-switch [(ngModel)]="disabled" checkedChildren="disabled" unCheckedChildren="disabled"></tri-switch>
+      <tri-switch [(ngModel)]="disabled" checkedChildren="disabled" unCheckedChildren="disabled" />
       <div></div>
     </div>
   `

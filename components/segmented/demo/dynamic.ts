@@ -13,13 +13,11 @@ const defaultOptions = ['Daily', 'Weekly', 'Monthly'];
     <br />
     <button tri-button type="primary" [disabled]="moreLoaded" (click)="handleLoadMore()"> Load more options </button>
   `,
-  styles: [
-    `
-      .ant-segmented {
-        margin-bottom: 10px;
-      }
-    `
-  ]
+  styles: `
+    .ant-segmented {
+      margin-bottom: 10px;
+    }
+  `
 })
 export class TriDemoSegmentedDynamicComponent {
   options = [...defaultOptions];

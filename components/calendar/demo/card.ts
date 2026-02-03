@@ -11,18 +11,16 @@ import { TriCalendarModule } from 'ng-zorro-antd/calendar';
         [fullscreen]="false"
         (selectChange)="onValueChange($event)"
         (panelChange)="onPanelChange($event)"
-      ></tri-calendar>
+      />
     </div>
   `,
-  styles: [
-    `
-      .card {
-        width: 300px;
-        border: 1px solid #d9d9d9;
-        border-radius: 4px;
-      }
-    `
-  ]
+  styles: `
+    .card {
+      width: 300px;
+      border: 1px solid #d9d9d9;
+      border-radius: 4px;
+    }
+  `
 })
 export class TriDemoCalendarCardComponent {
   onValueChange(value: Date): void {

@@ -88,27 +88,27 @@ let nextId = 0;
         (selectFocusedIndex)="setSelectedIndex($event)"
         (addClicked)="onAdd()"
       >
-        @for (tab of tabs; track tab; let i = $index) {
+        @for (tab of tabs; track tab) {
           <div
             class="tri-tabs-tab"
             [style.margin-right.px]="position === 'horizontal' ? tabBarGutter : null"
             [style.margin-bottom.px]="position === 'vertical' ? tabBarGutter : null"
-            [class.tri-tabs-tab-active]="selectedIndex === i"
+            [class.tri-tabs-tab-active]="selectedIndex === $index"
             [class.tri-tabs-tab-disabled]="disabled"
-            (click)="clickNavItem(tab, i, $event)"
+            (click)="clickNavItem(tab, $index, $event)"
             (contextmenu)="contextmenuNavItem(tab, $event)"
           >
             <button
               type="button"
               role="tab"
-              [id]="getTabContentId(i)"
-              [attr.tabIndex]="getTabIndex(tab, i)"
+              [id]="getTabContentId($index)"
+              [attr.tabIndex]="getTabIndex(tab, $index)"
               [attr.aria-disabled]="disabled"
-              [attr.aria-selected]="selectedIndex === i && !hideAll"
-              [attr.aria-controls]="getTabContentId(i)"
+              [attr.aria-selected]="selectedIndex === $index && !hideAll"
+              [attr.aria-controls]="getTabContentId($index)"
               [disabled]="disabled"
               [tab]="tab"
-              [active]="selectedIndex === i"
+              [active]="selectedIndex === $index"
               class="tri-tabs-tab-btn"
               tabNavItem
               cdkMonitorElementFocus
@@ -121,7 +121,7 @@ let nextId = 0;
                   type="button"
                   tri-tab-close-button
                   [closeIcon]="closeIcon"
-                  (click)="onClose(i, $event)"
+                  (click)="onClose($index, $event)"
                 ></button>
               }
             </button>
@@ -139,26 +139,26 @@ let nextId = 0;
         [class.tri-tabs-content-animated]="tabPaneAnimated"
       >
         @if (!hideAll) {
-          @for (tab of tabs; track tab; let i = $index) {
+          @for (tab of tabs; track tab) {
             @if (forceRender) {
-              <ng-template [ngTemplateOutlet]="tabpaneTmpl"></ng-template>
+              <ng-template [ngTemplateOutlet]="tabpaneTmpl" />
             } @else if (destroyInactiveTabPane) {
-              @if (selectedIndex === i) {
-                <ng-template [ngTemplateOutlet]="tabpaneTmpl"></ng-template>
+              @if (selectedIndex === $index) {
+                <ng-template [ngTemplateOutlet]="tabpaneTmpl" />
               }
             } @else {
-              @if (selectedIndex === i || tab.hasBeenActive) {
-                <ng-template [ngTemplateOutlet]="tabpaneTmpl"></ng-template>
+              @if (selectedIndex === $index || tab.hasBeenActive) {
+                <ng-template [ngTemplateOutlet]="tabpaneTmpl" />
               }
             }
 
             <ng-template #tabpaneTmpl>
               <div
                 role="tabpanel"
-                [id]="getTabContentId(i)"
-                [attr.aria-labelledby]="getTabContentId(i)"
+                [id]="getTabContentId($index)"
+                [attr.aria-labelledby]="getTabContentId($index)"
                 tri-tab-body
-                [active]="selectedIndex === i"
+                [active]="selectedIndex === $index"
                 [content]="tab.content"
                 [animated]="tabPaneAnimated"
               ></div>

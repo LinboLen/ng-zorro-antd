@@ -350,7 +350,7 @@ describe('rate', () => {
       [allowClear]="allowClear"
       [disabled]="disabled"
       [autoFocus]="autoFocus"
-    ></tri-rate>
+    />
   `
 })
 export class TriTestRateBasicComponent {
@@ -372,7 +372,7 @@ export class TriTestRateBasicComponent {
   imports: [ReactiveFormsModule, TriRateModule],
   template: `
     <form>
-      <tri-rate [formControl]="formControl" [disabled]="disabled"></tri-rate>
+      <tri-rate [formControl]="formControl" [disabled]="disabled" />
     </form>
   `
 })
@@ -394,7 +394,7 @@ export class TriTestRateFormComponent {
   imports: [BidiModule, TriTestRateBasicComponent],
   template: `
     <div [dir]="direction">
-      <tri-test-rate></tri-test-rate>
+      <tri-test-rate />
     </div>
   `
 })
@@ -407,7 +407,7 @@ export class TriTestRateRtlComponent {
   selector: 'tri-test-rate-character',
   imports: [FormsModule, TriRateModule],
   template: `
-    <tri-rate [(ngModel)]="value" [character]="characterTpl"></tri-rate>
+    <tri-rate [(ngModel)]="value" [character]="characterTpl" />
     <ng-template #characterTpl let-index>
       {{ index + 1 }}
     </ng-template>

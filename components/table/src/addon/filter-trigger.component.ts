@@ -45,7 +45,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'filterTrigger';
       [visible]="visible"
       (visibleChange)="onVisibleChange($event)"
     >
-      <ng-content></ng-content>
+      <ng-content />
     </span>
   `,
   imports: [TriDropdownModule]

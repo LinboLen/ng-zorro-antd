@@ -292,7 +292,7 @@ export class TriTestCheckboxFormComponent {
   imports: [BidiModule, TriTestCheckboxSingleComponent],
   template: `
     <div [dir]="direction">
-      <tri-test-single-checkbox></tri-test-single-checkbox>
+      <tri-test-single-checkbox />
     </div>
   `
 })

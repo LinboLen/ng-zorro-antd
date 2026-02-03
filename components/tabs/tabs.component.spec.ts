@@ -1079,7 +1079,7 @@ class DisableTabsTestComponent {
   template: `
     <tri-tabs
       [(selectedIndexChange)]="selectedIndex"
-      [type]="'editable-card'"
+      type="editable-card"
       (selectedIndexChange)="handleSelection($event)"
     >
       @for (tab of tabs; track tab) {
@@ -1111,10 +1111,10 @@ class DynamicTabsTestComponent {
         (selectedIndexChange)="handleSelection($event)"
         [tabPosition]="position"
       >
-        @for (_tab of tabs; track i; let i = $index) {
+        @for (_tab of tabs; track $index) {
           <tri-tab [title]="titleTemplate">
             <ng-template #titleTemplate let-visible="visible">Title in {{ visible ? 'tabs' : 'menu' }}</ng-template>
-            Content of Tab Pane {{ i }}
+            Content of Tab Pane {{ $index }}
           </tri-tab>
         }
       </tri-tabs>
@@ -1217,7 +1217,7 @@ class TabSetWithIndirectDescendantTabsTestComponent {
         Two
       </tri-tab>
     </tri-tabs>
-    <router-outlet></router-outlet>
+    <router-outlet />
   `
 })
 export class RouterTabsTestComponent {
@@ -1234,7 +1234,7 @@ export class RouterTabsTestComponent {
         </tri-tab>
       }
     </tri-tabs>
-    <router-outlet></router-outlet>
+    <router-outlet />
   `,
   imports: [RouterLink, RouterOutlet, TriTabsModule]
 })

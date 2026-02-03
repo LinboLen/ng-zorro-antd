@@ -11,25 +11,17 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   selector: 'tri-demo-card-loading',
   imports: [FormsModule, TriAvatarModule, TriCardModule, TriIconModule, TriSwitchModule, TriSkeletonModule],
   template: `
-    <tri-switch [(ngModel)]="loading"></tri-switch>
+    <tri-switch [(ngModel)]="loading" />
     <tri-card style="width: 300px;margin-top: 16px" [loading]="loading">
-      <tri-card-meta
-        [avatar]="avatarTemplate"
-        title="Card title"
-        description="This is the description"
-      ></tri-card-meta>
+      <tri-card-meta [avatar]="avatarTemplate" title="Card title" description="This is the description" />
     </tri-card>
     <tri-card style="width: 300px;margin-top: 16px" [actions]="[actionSetting, actionEdit, actionEllipsis]">
       <tri-skeleton [active]="true" [loading]="loading" [avatar]="{ size: 'large' }">
-        <tri-card-meta
-          [avatar]="avatarTemplate"
-          title="Card title"
-          description="This is the description"
-        ></tri-card-meta>
+        <tri-card-meta [avatar]="avatarTemplate" title="Card title" description="This is the description" />
       </tri-skeleton>
     </tri-card>
     <ng-template #avatarTemplate>
-      <tri-avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></tri-avatar>
+      <tri-avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
     </ng-template>
     <ng-template #actionSetting>
       <tri-icon type="setting" />

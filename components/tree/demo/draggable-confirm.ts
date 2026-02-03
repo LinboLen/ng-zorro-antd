@@ -7,7 +7,7 @@ import { TriFormatBeforeDropEvent, TriTreeModule } from 'ng-zorro-antd/tree';
 @Component({
   selector: 'tri-demo-tree-draggable-confirm',
   imports: [TriTreeModule],
-  template: `<tri-tree [data]="nodes" draggable blockNode [beforeDrop]="beforeDrop"></tri-tree>`
+  template: `<tri-tree [data]="nodes" draggable blockNode [beforeDrop]="beforeDrop" />`
 })
 export class TriDemoTreeDraggableConfirmComponent {
   readonly nodes = [

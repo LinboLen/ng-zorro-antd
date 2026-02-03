@@ -34,10 +34,10 @@ function fixedAttribute(value: TriTableSummaryFixedType | boolean | unknown): Tr
   encapsulation: ViewEncapsulation.None,
   template: `
     <ng-template #contentTemplate>
-      <ng-content></ng-content>
+      <ng-content />
     </ng-template>
     @if (!isInsideTable || !fixed) {
-      <ng-template [ngTemplateOutlet]="contentTemplate"></ng-template>
+      <ng-template [ngTemplateOutlet]="contentTemplate" />
     }
   `,
   imports: [NgTemplateOutlet],

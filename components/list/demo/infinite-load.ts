@@ -40,26 +40,24 @@ interface Name {
                 </tri-list-item-meta-title>
               </tri-list-item-meta>
             } @else {
-              <tri-skeleton [avatar]="true" [paragraph]="{ rows: 1 }"></tri-skeleton>
+              <tri-skeleton [avatar]="true" [paragraph]="{ rows: 1 }" />
             }
           </tri-list-item>
         </tri-list>
       </cdk-virtual-scroll-viewport>
     </div>
   `,
-  styles: [
-    `
-      .demo-infinite-container {
-        height: 300px;
-        border: 1px solid #e8e8e8;
-        border-radius: 4px;
-      }
+  styles: `
+    .demo-infinite-container {
+      height: 300px;
+      border: 1px solid #e8e8e8;
+      border-radius: 4px;
+    }
 
-      nz-list {
-        padding: 24px;
-      }
-    `
-  ],
+    nz-list {
+      padding: 24px;
+    }
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TriDemoListInfiniteLoadComponent implements OnInit {

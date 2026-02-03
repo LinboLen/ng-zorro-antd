@@ -24,26 +24,26 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
         [active]="elementActive"
         [size]="elementSize"
         [shape]="buttonShape"
-      ></tri-skeleton-element>
+      />
       <tri-skeleton-element
         *spaceItem
         type="avatar"
         [active]="elementActive"
         [size]="elementSize"
         [shape]="avatarShape"
-      ></tri-skeleton-element>
+      />
       <tri-skeleton-element
         *spaceItem
         type="input"
         [active]="elementActive"
         [size]="elementSize"
         style="width:200px"
-      ></tri-skeleton-element>
+      />
     </tri-space>
     <br />
     <br />
-    <tri-skeleton-element type="image" [active]="elementActive"></tri-skeleton-element>
-    <tri-divider></tri-divider>
+    <tri-skeleton-element type="image" [active]="elementActive" />
+    <tri-divider />
     <div tri-row align="middle" [gutter]="8">
       <div tri-col span="10">
         Size:
@@ -55,7 +55,7 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
       </div>
       <div tri-col span="5">
         Active:
-        <tri-switch [(ngModel)]="elementActive"></tri-switch>
+        <tri-switch [(ngModel)]="elementActive" />
       </div>
     </div>
     <br />

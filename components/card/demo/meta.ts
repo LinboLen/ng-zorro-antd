@@ -9,14 +9,10 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
   imports: [TriAvatarModule, TriCardModule, TriIconModule],
   template: `
     <tri-card style="width:300px;" [cover]="coverTemplate" [actions]="[actionSetting, actionEdit, actionEllipsis]">
-      <tri-card-meta
-        title="Card title"
-        description="This is the description"
-        [avatar]="avatarTemplate"
-      ></tri-card-meta>
+      <tri-card-meta title="Card title" description="This is the description" [avatar]="avatarTemplate" />
     </tri-card>
     <ng-template #avatarTemplate>
-      <tri-avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></tri-avatar>
+      <tri-avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
     </ng-template>
     <ng-template #coverTemplate>
       <img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />

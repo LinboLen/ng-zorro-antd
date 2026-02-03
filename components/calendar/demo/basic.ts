@@ -6,7 +6,7 @@ import { TriCalendarMode, TriCalendarModule } from 'ng-zorro-antd/calendar';
 @Component({
   selector: 'tri-demo-calendar-basic',
   imports: [FormsModule, TriCalendarModule],
-  template: `<tri-calendar [(ngModel)]="date" [(modeChange)]="mode" (panelChange)="panelChange($event)"></tri-calendar>`
+  template: `<tri-calendar [(ngModel)]="date" [(modeChange)]="mode" (panelChange)="panelChange($event)" />`
 })
 export class TriDemoCalendarBasicComponent {
   date = new Date(2012, 11, 21);

@@ -66,7 +66,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'card';
 
     <div class="tri-card-body" [style]="bodyStyle">
       @if (loading) {
-        <tri-skeleton [active]="true" [title]="false" [paragraph]="{ rows: 4 }"></tri-skeleton>
+        <tri-skeleton [active]="true" [title]="false" [paragraph]="{ rows: 4 }" />
       } @else {
         <ng-content />
       }
@@ -74,7 +74,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'card';
     @if (actions.length) {
       <ul class="tri-card-actions">
         @for (action of actions; track $index) {
-          <li [style.width.%]="100 / actions.length">
+          <li [style.width.%]="100 / $count">
             <span><ng-template [ngTemplateOutlet]="action" /></span>
           </li>
         }

@@ -56,7 +56,7 @@ interface Setting {
           <tri-form-item>
             <tri-form-label>{{ item.name }}</tri-form-label>
             <tri-form-control>
-              <tri-switch [formControlName]="item.formControlName"></tri-switch>
+              <tri-switch [formControlName]="item.formControlName" />
             </tri-form-control>
           </tri-form-item>
         }
@@ -128,7 +128,7 @@ interface Setting {
             <td [ellipsis]="settingValue.ellipsis">{{ data.address }}</td>
             <td [right]="fixedColumn" [ellipsis]="settingValue.ellipsis">
               <a href="#">Delete</a>
-              <tri-divider type="vertical"></tri-divider>
+              <tri-divider type="vertical" />
               <a href="#">More action</a>
             </td>
           </tr>
@@ -141,14 +141,12 @@ interface Setting {
       </tbody>
     </tri-table>
   `,
-  styles: [
-    `
-      form nz-form-item {
-        margin-right: 16px;
-        margin-bottom: 8px;
-      }
-    `
-  ]
+  styles: `
+    form nz-form-item {
+      margin-right: 16px;
+      margin-bottom: 8px;
+    }
+  `
 })
 export class TriDemoTableDynamicSettingsComponent implements OnInit {
   settingForm: FormGroup<{ [K in keyof Setting]: FormControl<Setting[K]> }>;

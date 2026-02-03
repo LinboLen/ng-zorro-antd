@@ -10,11 +10,7 @@ import { TriCronExpressionModule } from 'ng-zorro-antd/cron-expression';
   selector: 'tri-demo-cron-expression-semantic',
   imports: [FormsModule, TriCronExpressionModule, DatePipe],
   template: `
-    <tri-cron-expression
-      [semantic]="semanticTemplate"
-      [ngModel]="value"
-      (ngModelChange)="getValue($event)"
-    ></tri-cron-expression>
+    <tri-cron-expression [semantic]="semanticTemplate" [ngModel]="value" (ngModelChange)="getValue($event)" />
     <ng-template #semanticTemplate>Next Time: {{ semantic | date: 'yyyy-MM-dd HH:mm:ss' }}</ng-template>
   `
 })

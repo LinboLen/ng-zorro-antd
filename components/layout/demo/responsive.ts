@@ -31,7 +31,7 @@ import { TriMenuModule } from 'ng-zorro-antd/menu';
         </ul>
       </tri-sider>
       <tri-layout>
-        <tri-header></tri-header>
+        <tri-header />
         <tri-content>
           <div class="inner-content">Content</div>
         </tri-content>
@@ -39,34 +39,32 @@ import { TriMenuModule } from 'ng-zorro-antd/menu';
       </tri-layout>
     </tri-layout>
   `,
-  styles: [
-    `
-      .logo {
-        height: 32px;
-        background: rgba(255, 255, 255, 0.2);
-        margin: 16px;
-      }
+  styles: `
+    .logo {
+      height: 32px;
+      background: rgba(255, 255, 255, 0.2);
+      margin: 16px;
+    }
 
-      nz-header {
-        background: #fff;
-        padding: 0;
-      }
+    nz-header {
+      background: #fff;
+      padding: 0;
+    }
 
-      nz-content {
-        margin: 24px 16px 0;
-      }
+    nz-content {
+      margin: 24px 16px 0;
+    }
 
-      .inner-content {
-        padding: 24px;
-        background: #fff;
-        min-height: 360px;
-      }
+    .inner-content {
+      padding: 24px;
+      background: #fff;
+      min-height: 360px;
+    }
 
-      nz-footer {
-        text-align: center;
-      }
-    `
-  ]
+    nz-footer {
+      text-align: center;
+    }
+  `
 })
 export class TriDemoLayoutResponsiveComponent {
   protected readonly date = new Date();

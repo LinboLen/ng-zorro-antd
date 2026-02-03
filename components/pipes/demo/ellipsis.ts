@@ -12,13 +12,11 @@ import { TriEllipsisPipe } from 'ng-zorro-antd/pipes';
     <br />
     <p>{{ str | nzEllipsis: 36 : '...' }}</p>
   `,
-  styles: [
-    `
-      p {
-        padding: 8px 12px;
-      }
-    `
-  ]
+  styles: `
+    p {
+      padding: 8px 12px;
+    }
+  `
 })
 export class TriDemoPipesEllipsisComponent {
   str = 'Ant Design, a design language for background applications';

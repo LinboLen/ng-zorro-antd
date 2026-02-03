@@ -37,7 +37,7 @@ const REFRESH_INTERVAL = 1000 / 30;
       [title]="title"
       [prefix]="prefix"
       [suffix]="suffix"
-    ></tri-statistic>
+    />
 
     <ng-template #countDownTpl>{{ diff | nzTimeRange: nzFormat }}</ng-template>
   `,

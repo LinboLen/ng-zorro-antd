@@ -17,7 +17,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
         (ngModelChange)="onChange($event)"
         [autocomplete]="auto"
       />
-      <tri-autocomplete [dataSource]="filteredOptions" #auto></tri-autocomplete>
+      <tri-autocomplete [dataSource]="filteredOptions" #auto />
     </div>
   `
 })

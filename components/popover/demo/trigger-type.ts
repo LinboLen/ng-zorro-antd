@@ -23,12 +23,10 @@ import { TriPopoverModule } from 'ng-zorro-antd/popover';
       Focus me
     </button>
   `,
-  styles: [
-    `
-      button {
-        margin-right: 8px;
-      }
-    `
-  ]
+  styles: `
+    button {
+      margin-right: 8px;
+    }
+  `
 })
 export class TriDemoPopoverTriggerTypeComponent {}

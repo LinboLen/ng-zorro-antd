@@ -9,23 +9,21 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
   template: `
     <tri-select [(ngModel)]="selectedProvince" (ngModelChange)="provinceChange($event)">
       @for (p of provinceData; track p) {
-        <tri-option [value]="p" [label]="p"></tri-option>
+        <tri-option [value]="p" [label]="p" />
       }
     </tri-select>
     <tri-select [(ngModel)]="selectedCity">
       @for (c of cityData[selectedProvince]; track c) {
-        <tri-option [value]="c" [label]="c"></tri-option>
+        <tri-option [value]="c" [label]="c" />
       }
     </tri-select>
   `,
-  styles: [
-    `
-      nz-select {
-        margin-right: 8px;
-        width: 120px;
-      }
-    `
-  ]
+  styles: `
+    nz-select {
+      margin-right: 8px;
+      width: 120px;
+    }
+  `
 })
 export class TriDemoSelectCoordinateComponent {
   selectedProvince = 'Zhejiang';

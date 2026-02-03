@@ -12,21 +12,19 @@ import { TriMentionModule } from 'ng-zorro-antd/mention';
     <tri-mention [suggestions]="webFrameworks" [valueWith]="valueWith" (onSelect)="onSelect($event)">
       <textarea rows="1" tri-input mentionTrigger [(ngModel)]="inputValue"></textarea>
       <ng-container *mentionSuggestion="let framework">
-        <tri-avatar size="small" [text]="framework.name" [src]="framework.icon"></tri-avatar>
+        <tri-avatar size="small" [text]="framework.name" [src]="framework.icon" />
         <span>{{ framework.name }} - {{ framework.type }}</span>
       </ng-container>
     </tri-mention>
   `,
-  styles: [
-    `
-      .ant-avatar.ant-avatar-sm {
-        width: 14px;
-        height: 14px;
-        margin-right: 8px;
-        position: relative;
-      }
-    `
-  ]
+  styles: `
+    .ant-avatar.ant-avatar-sm {
+      width: 14px;
+      height: 14px;
+      margin-right: 8px;
+      position: relative;
+    }
+  `
 })
 export class TriDemoMentionAvatarComponent {
   inputValue?: string;

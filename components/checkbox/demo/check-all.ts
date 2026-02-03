@@ -19,11 +19,7 @@ import { TriDividerModule } from 'ng-zorro-antd/divider';
 
     <tri-divider />
 
-    <tri-checkbox-group
-      [options]="options"
-      [(ngModel)]="value"
-      (ngModelChange)="updateSingleChecked()"
-    ></tri-checkbox-group>
+    <tri-checkbox-group [options]="options" [(ngModel)]="value" (ngModelChange)="updateSingleChecked()" />
   `
 })
 export class TriDemoCheckboxCheckAllComponent {

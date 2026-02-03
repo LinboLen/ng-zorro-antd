@@ -77,8 +77,7 @@ import { DEFAULT_BACKGROUND_COLOR, DEFAULT_FRONT_COLOR, DEFAULT_MINVERSION } fro
             [size]="size()"
             [color]="color()"
             [bgColor]="bgColor()"
-          >
-          </tri-qrcode-canvas>
+          />
         }
         @case ('svg') {
           <tri-qrcode-svg
@@ -93,7 +92,7 @@ import { DEFAULT_BACKGROUND_COLOR, DEFAULT_FRONT_COLOR, DEFAULT_MINVERSION } fro
               calculatedImageSettings() || { x: 0, y: 0, h: 0, w: 0, excavation: null, opacity: 1, crossOrigin: '' }
             "
             [size]="size()"
-          ></tri-qrcode-svg>
+          />
         }
       }
     }

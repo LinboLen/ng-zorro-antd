@@ -73,7 +73,7 @@ export class TriInputGroupWhitSuffixOrPrefixDirective {
             [class.tri-input-affix-wrapper-focused]="focused"
             [class]="affixInGroupStatusCls"
           >
-            <ng-template [ngTemplateOutlet]="affixTemplate"></ng-template>
+            <ng-template [ngTemplateOutlet]="affixTemplate" />
           </span>
         } @else {
           <ng-template [ngTemplateOutlet]="contentTemplate" />
@@ -107,7 +107,7 @@ export class TriInputGroupWhitSuffixOrPrefixDirective {
 
     <!-- content template -->
     <ng-template #contentTemplate>
-      <ng-content></ng-content>
+      <ng-content />
       @if (!isAddOn && !isAffix && isFeedback) {
         <span tri-input-group-slot type="suffix">
           <tri-form-item-feedback-icon [status]="status" />

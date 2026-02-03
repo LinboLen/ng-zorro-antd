@@ -1018,7 +1018,7 @@ class TriTestSimpleAutocompleteComponent {
         [defaultActiveFirstOption]="false"
         backfill
         #auto
-      ></tri-autocomplete>
+      />
     </div>
   `
 })
@@ -1046,7 +1046,7 @@ class TriTestAutocompleteWithoutPanelComponent {
   template: `
     <div>
       <input [autocomplete]="auto" />
-      <tri-autocomplete [dataSource]="options" #auto></tri-autocomplete>
+      <tri-autocomplete [dataSource]="options" #auto />
     </div>
   `
 })

@@ -58,8 +58,8 @@ const options = [
     <tri-cascader
       [changeOn]="validate"
       [options]="options"
-      [labelProperty]="'name'"
-      [valueProperty]="'code'"
+      labelProperty="name"
+      valueProperty="code"
       [showSearch]="true"
       [(ngModel)]="values"
       (ngModelChange)="onChanges($event)"

@@ -66,7 +66,7 @@ describe('color-block', () => {
 
 @Component({
   imports: [TriColorPickerModule],
-  template: ` <tri-color-block [color]="color" [size]="size" (onClick)="clickHandle()"></tri-color-block> `
+  template: ` <tri-color-block [color]="color" [size]="size" (onClick)="clickHandle()" /> `
 })
 export class TriTestColorBlockComponent {
   color = '#1677ff';

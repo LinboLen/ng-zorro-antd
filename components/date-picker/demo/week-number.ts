@@ -14,18 +14,16 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
     </tri-radio-group>
     <br />
     <br />
-    <tri-date-picker [showWeekNumber]="showWeekNumber"></tri-date-picker>
+    <tri-date-picker [showWeekNumber]="showWeekNumber" />
     <br />
-    <tri-range-picker [showWeekNumber]="showWeekNumber"></tri-range-picker>
+    <tri-range-picker [showWeekNumber]="showWeekNumber" />
   `,
-  styles: [
-    `
-      nz-date-picker,
-      nz-range-picker {
-        margin: 0 8px 12px 0;
-      }
-    `
-  ]
+  styles: `
+    nz-date-picker,
+    nz-range-picker {
+      margin: 0 8px 12px 0;
+    }
+  `
 })
 export class TriDemoDatePickerWeekNumberComponent {
   showWeekNumber: boolean = false;

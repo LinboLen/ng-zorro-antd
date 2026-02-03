@@ -8,24 +8,22 @@ import { TriQRCodeModule } from 'ng-zorro-antd/qr-code';
   imports: [TriButtonModule, TriQRCodeModule],
   template: `
     <div id="download">
-      <tri-qrcode value="https://ng.ant.design/"></tri-qrcode>
+      <tri-qrcode value="https://ng.ant.design/" />
       <a #download></a>
       <button tri-button type="primary" (click)="downloadImg()">Download</button>
     </div>
   `,
-  styles: [
-    `
-      div {
-        display: flex;
-        align-items: flex-start;
-        flex-direction: column;
-      }
+  styles: `
+    div {
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+    }
 
-      nz-qrcode {
-        margin-bottom: 12px;
-      }
-    `
-  ]
+    nz-qrcode {
+      margin-bottom: 12px;
+    }
+  `
 })
 export class TriDemoQrCodeDownloadComponent {
   @ViewChild('download', { static: false }) download!: ElementRef;

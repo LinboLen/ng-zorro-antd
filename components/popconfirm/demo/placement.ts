@@ -137,17 +137,15 @@ import { TriPopconfirmModule } from 'ng-zorro-antd/popconfirm';
       </button>
     </div>
   `,
-  styles: [
-    `
-      button {
-        margin-right: 8px;
-        margin-bottom: 8px;
-        width: 70px;
-        text-align: center;
-        padding: 0;
-      }
-    `
-  ]
+  styles: `
+    button {
+      margin-right: 8px;
+      margin-bottom: 8px;
+      width: 70px;
+      text-align: center;
+      padding: 0;
+    }
+  `
 })
 export class TriDemoPopconfirmPlacementComponent {
   constructor(private nzMessageService: TriMessageService) {}

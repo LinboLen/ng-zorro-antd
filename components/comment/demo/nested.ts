@@ -10,7 +10,7 @@ import { TriCommentModule } from 'ng-zorro-antd/comment';
   template: `
     <ng-template #commentTemplateRef let-comment="comment">
       <tri-comment [author]="comment.author">
-        <tri-avatar tri-comment-avatar icon="user" [src]="comment.avatar"></tri-avatar>
+        <tri-avatar tri-comment-avatar icon="user" [src]="comment.avatar" />
         <tri-comment-content>
           <p>{{ comment.content }}</p>
         </tri-comment-content>
@@ -23,7 +23,7 @@ import { TriCommentModule } from 'ng-zorro-antd/comment';
       </tri-comment>
     </ng-template>
 
-    <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: data }"></ng-template>
+    <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: data }" />
   `
 })
 export class TriDemoCommentNestedComponent {

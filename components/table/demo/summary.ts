@@ -74,13 +74,11 @@ import { TriTypographyModule } from 'ng-zorro-antd/typography';
       </tfoot>
     </tri-table>
   `,
-  styles: [
-    `
-      :host ::ng-deep tfoot.ant-table-summary {
-        background-color: #fafafa !important;
-      }
-    `
-  ]
+  styles: `
+    :host ::ng-deep tfoot.ant-table-summary {
+      background-color: #fafafa !important;
+    }
+  `
 })
 export class TriDemoTableSummaryComponent implements OnInit {
   data = [

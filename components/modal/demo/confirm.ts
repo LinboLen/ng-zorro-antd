@@ -10,13 +10,11 @@ import { TriModalModule, TriModalService } from 'ng-zorro-antd/modal';
     <button tri-button type="primary" (click)="showConfirm()">Confirm</button>
     <button tri-button type="dashed" (click)="showDeleteConfirm()">Delete</button>
   `,
-  styles: [
-    `
-      button {
-        margin-right: 8px;
-      }
-    `
-  ]
+  styles: `
+    button {
+      margin-right: 8px;
+    }
+  `
 })
 export class TriDemoModalConfirmComponent {
   constructor(private modal: TriModalService) {}

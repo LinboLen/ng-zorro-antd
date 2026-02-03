@@ -288,8 +288,7 @@ describe('check-list', () => {
       [triggerRender]="triggerRender"
       [title]="title"
       [footer]="footer"
-    >
-    </tri-check-list>
+    />
   `
 })
 export class TriTestCheckListBasicComponent {

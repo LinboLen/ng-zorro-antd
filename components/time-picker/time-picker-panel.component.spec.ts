@@ -373,7 +373,7 @@ describe('time-picker-panel', () => {
       [secondStep]="secondStep"
       [minuteStep]="minuteStep"
       [hourStep]="hourStep"
-    ></tri-time-picker-panel>
+    />
   `
 })
 export class TriTestTimePanelComponent {
@@ -401,7 +401,7 @@ export class TriTestTimePanelComponent {
       [inDatePicker]="inDatePicker"
       [hideDisabledOptions]="hideDisabledOptions"
       [hourStep]="hourStep"
-    ></tri-time-picker-panel>
+    />
   `
 })
 export class TriTestTimePanelDisabledComponent {
@@ -445,7 +445,7 @@ export class TriTestTimePanelDisabledComponent {
       [defaultOpenValue]="openValue"
       [hourStep]="hourStep"
       [format]="format"
-    ></tri-time-picker-panel>
+    />
   `
 })
 export class TriTest12HourTimePanelComponent {
@@ -467,7 +467,7 @@ export class TriTest12HourTimePanelComponent {
       [disabledMinutes]="disabledMinutes"
       [disabledSeconds]="disabledSeconds"
       [hideDisabledOptions]="false"
-    ></tri-time-picker-panel>
+    />
   `
 })
 export class TriTest12HourTimePanelDisabledComponent {

@@ -37,7 +37,7 @@ import { TriSubmenuService } from './submenu.service';
   encapsulation: ViewEncapsulation.None,
   template: `
     <span class="tri-menu-title-content">
-      <ng-content></ng-content>
+      <ng-content />
     </span>
   `,
   host: {

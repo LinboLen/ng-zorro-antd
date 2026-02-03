@@ -32,7 +32,7 @@ import { TriTagColor } from './typings';
   selector: 'tri-tag',
   exportAs: 'triTag',
   template: `
-    <ng-content></ng-content>
+    <ng-content />
     @if (mode === 'closeable') {
       <tri-icon type="close" class="tri-tag-close-icon" tabindex="-1" (click)="closeTag($event)" />
     }

@@ -9,21 +9,19 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
   template: `
     <tri-select [(ngModel)]="selectedValue" allowClear placeHolder="Choose" showSearch>
       <tri-option-group label="Manager">
-        <tri-option value="jack" label="Jack"></tri-option>
-        <tri-option value="lucy" label="Lucy"></tri-option>
+        <tri-option value="jack" label="Jack" />
+        <tri-option value="lucy" label="Lucy" />
       </tri-option-group>
       <tri-option-group label="Engineer">
-        <tri-option value="tom" label="Tom"></tri-option>
+        <tri-option value="tom" label="Tom" />
       </tri-option-group>
     </tri-select>
   `,
-  styles: [
-    `
-      nz-select {
-        width: 120px;
-      }
-    `
-  ]
+  styles: `
+    nz-select {
+      width: 120px;
+    }
+  `
 })
 export class TriDemoSelectOptgroupComponent {
   selectedValue = 'lucy';

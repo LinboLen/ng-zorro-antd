@@ -50,14 +50,14 @@ import { TriTimelineMode, TriTimelinePosition } from './typings';
     >
       <!-- pending dot (reversed) -->
       @if (reverse) {
-        <ng-container [ngTemplateOutlet]="pendingTemplate"></ng-container>
+        <ng-container [ngTemplateOutlet]="pendingTemplate" />
       }
       <!-- timeline items -->
       @for (item of timelineItems; track item) {
-        <ng-template [ngTemplateOutlet]="item.template"></ng-template>
+        <ng-template [ngTemplateOutlet]="item.template" />
       }
       @if (!reverse) {
-        <ng-container [ngTemplateOutlet]="pendingTemplate"></ng-container>
+        <ng-container [ngTemplateOutlet]="pendingTemplate" />
       }
       <!-- pending dot -->
     </ul>
@@ -82,7 +82,7 @@ import { TriTimelineMode, TriTimelinePosition } from './typings';
       }
     </ng-template>
     <!-- Grasp items -->
-    <ng-content></ng-content>
+    <ng-content />
   `,
   imports: [NgTemplateOutlet, TriOutletModule, TriIconModule]
 })

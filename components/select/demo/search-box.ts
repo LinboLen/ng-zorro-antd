@@ -18,17 +18,15 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
       (onSearch)="search($event)"
     >
       @for (item of listOfOption; track item) {
-        <tri-option [label]="item" [value]="item"></tri-option>
+        <tri-option [label]="item" [value]="item" />
       }
     </tri-select>
   `,
-  styles: [
-    `
-      nz-select {
-        width: 200px;
-      }
-    `
-  ]
+  styles: `
+    nz-select {
+      width: 200px;
+    }
+  `
 })
 export class TriDemoSelectSearchBoxComponent {
   selectedValue: string | null = null;

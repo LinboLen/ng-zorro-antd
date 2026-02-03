@@ -29,9 +29,9 @@ import { TriOverflowSuffixDirective } from './overflow-suffix.directive';
 @Component({
   selector: 'tri-overflow-container',
   template: `
-    <ng-content></ng-content>
-    <ng-content select="[appOverflowRest]"></ng-content>
-    <ng-content select="[appOverflowSuffix]"></ng-content>
+    <ng-content />
+    <ng-content select="[appOverflowRest]" />
+    <ng-content select="[appOverflowSuffix]" />
   `,
   providers: [TriResizeObserver],
   changeDetection: ChangeDetectionStrategy.OnPush

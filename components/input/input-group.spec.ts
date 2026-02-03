@@ -385,10 +385,10 @@ export class TriTestInputGroupMixComponent {}
   template: `
     <tri-input-group>
       <div tri-col span="4">
-        <input type="text" tri-input [ngModel]="'0571'" />
+        <input type="text" tri-input ngModel="0571" />
       </div>
       <div tri-col span="8">
-        <input type="text" tri-input [ngModel]="'26888888'" />
+        <input type="text" tri-input ngModel="26888888" />
       </div>
     </tri-input-group>
   `

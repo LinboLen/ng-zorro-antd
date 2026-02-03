@@ -11,34 +11,16 @@ import { TriSpaceModule } from 'ng-zorro-antd/space';
   template: `
     <div tri-flex gap="large">
       <tri-space direction="vertical" style="flex: 1">
-        <tri-select *spaceItem ngModel="lucy" [options]="options"></tri-select>
-        <tri-select *spaceItem ngModel="lucy" variant="filled" [options]="options"></tri-select>
-        <tri-select *spaceItem ngModel="lucy" variant="borderless" [options]="options"></tri-select>
-        <tri-select *spaceItem ngModel="lucy" variant="underlined" [options]="options"></tri-select>
+        <tri-select *spaceItem ngModel="lucy" [options]="options" />
+        <tri-select *spaceItem ngModel="lucy" variant="filled" [options]="options" />
+        <tri-select *spaceItem ngModel="lucy" variant="borderless" [options]="options" />
+        <tri-select *spaceItem ngModel="lucy" variant="underlined" [options]="options" />
       </tri-space>
       <tri-space direction="vertical" style="flex: 1">
-        <tri-select *spaceItem mode="multiple" [ngModel]="['lucy']" [options]="options"></tri-select>
-        <tri-select
-          *spaceItem
-          mode="multiple"
-          [ngModel]="['lucy']"
-          variant="filled"
-          [options]="options"
-        ></tri-select>
-        <tri-select
-          *spaceItem
-          mode="multiple"
-          [ngModel]="['lucy']"
-          variant="borderless"
-          [options]="options"
-        ></tri-select>
-        <tri-select
-          *spaceItem
-          mode="multiple"
-          [ngModel]="['lucy']"
-          variant="underlined"
-          [options]="options"
-        ></tri-select>
+        <tri-select *spaceItem mode="multiple" [ngModel]="['lucy']" [options]="options" />
+        <tri-select *spaceItem mode="multiple" [ngModel]="['lucy']" variant="filled" [options]="options" />
+        <tri-select *spaceItem mode="multiple" [ngModel]="['lucy']" variant="borderless" [options]="options" />
+        <tri-select *spaceItem mode="multiple" [ngModel]="['lucy']" variant="underlined" [options]="options" />
       </tri-space>
     </div>
   `,

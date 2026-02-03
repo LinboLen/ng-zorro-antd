@@ -22,7 +22,7 @@ import { TriBreadCrumbSeparatorComponent } from './breadcrumb-separator.componen
   template: `
     @if (!!overlay) {
       <span class="tri-breadcrumb-overlay-link" tri-dropdown [dropdownMenu]="overlay">
-        <ng-template [ngTemplateOutlet]="noMenuTpl"></ng-template>
+        <ng-template [ngTemplateOutlet]="noMenuTpl" />
         <tri-icon type="down" />
       </span>
     } @else {

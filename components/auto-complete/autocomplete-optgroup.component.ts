@@ -17,7 +17,7 @@ import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
     <div class="tri-select-item tri-select-item-group">
       <ng-container *stringTemplateOutlet="label">{{ label }}</ng-container>
     </div>
-    <ng-content select="nz-auto-option"></ng-content>
+    <ng-content select="nz-auto-option" />
   `
 })
 export class TriAutocompleteOptgroupComponent {

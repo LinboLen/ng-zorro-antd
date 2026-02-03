@@ -17,7 +17,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
       defaultExpandAll
       multiple
       (ngModelChange)="onChange($event)"
-    ></tri-tree-select>
+    />
     <ng-template #omittedPlaceHolder let-omittedValues>and {{ omittedValues.length }} more...</ng-template>
   `
 })

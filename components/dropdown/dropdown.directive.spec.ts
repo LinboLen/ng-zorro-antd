@@ -306,9 +306,7 @@ export class TriTestDropdownVisibleComponent {
 @Component({
   imports: [TriDropdownModule, TriMenuModule],
   template: `
-    <a tri-dropdown [dropdownMenu]="menu" [arrow]="arrow" [placement]="placement" [trigger]="'hover'">
-      Trigger
-    </a>
+    <a tri-dropdown [dropdownMenu]="menu" [arrow]="arrow" [placement]="placement" trigger="hover"> Trigger </a>
     <tri-dropdown-menu #menu="nzDropdownMenu">
       <ul tri-menu>
         <li tri-menu-item>1st menu item</li>

@@ -9,14 +9,14 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } f
   selector: 'tri-tree-indent',
   exportAs: 'triTreeIndent',
   template: `
-    @for (_ of listOfUnit; track i; let i = $index) {
+    @for (_ of listOfUnit; track $index) {
       <span
         [class.tri-tree-indent-unit]="!selectMode"
         [class.tri-select-tree-indent-unit]="selectMode"
-        [class.tri-select-tree-indent-unit-start]="selectMode && isStart[i]"
-        [class.tri-tree-indent-unit-start]="!selectMode && isStart[i]"
-        [class.tri-select-tree-indent-unit-end]="selectMode && isEnd[i]"
-        [class.tri-tree-indent-unit-end]="!selectMode && isEnd[i]"
+        [class.tri-select-tree-indent-unit-start]="selectMode && isStart[$index]"
+        [class.tri-tree-indent-unit-start]="!selectMode && isStart[$index]"
+        [class.tri-select-tree-indent-unit-end]="selectMode && isEnd[$index]"
+        [class.tri-tree-indent-unit-end]="!selectMode && isEnd[$index]"
       ></span>
     }
   `,

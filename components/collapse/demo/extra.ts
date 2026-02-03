@@ -31,8 +31,8 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
     <br />
     <span>Expand Icon Position: </span>
     <tri-select [(ngModel)]="expandIconPosition">
-      <tri-option value="start" label="start"></tri-option>
-      <tri-option value="end" label="end"></tri-option>
+      <tri-option value="start" label="start" />
+      <tri-option value="end" label="end" />
     </tri-select>
   `
 })

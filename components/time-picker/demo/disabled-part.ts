@@ -10,7 +10,7 @@ import { TriTimePickerModule } from 'ng-zorro-antd/time-picker';
       [disabledHours]="disabledHours"
       [disabledMinutes]="disabledMinutes"
       [disabledSeconds]="disabledSeconds"
-    ></tri-time-picker>
+    />
   `
 })
 export class TriDemoTimePickerDisabledPartComponent {

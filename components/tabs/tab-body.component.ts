@@ -40,7 +40,7 @@ const ANIMATION_CLASS_MAP: Record<AnimationState, string[]> = {
   selector: '[tri-tab-body]',
   exportAs: 'triTabBody',
   imports: [NgTemplateOutlet],
-  template: `<ng-template [ngTemplateOutlet]="content()"></ng-template>`,
+  template: `<ng-template [ngTemplateOutlet]="content()" />`,
   host: {
     '[class]': 'class()',
     '[class.tri-tabs-tabpane-active]': 'active()',

@@ -8,10 +8,10 @@ import { TriBadgeModule } from 'ng-zorro-antd/badge';
   imports: [TriBadgeModule, TriAvatarModule],
   template: `
     <tri-badge [count]="5" style="margin-right: 24px">
-      <tri-avatar icon="user" shape="square"></tri-avatar>
+      <tri-avatar icon="user" shape="square" />
     </tri-badge>
     <tri-badge dot>
-      <tri-avatar icon="user" shape="square"></tri-avatar>
+      <tri-avatar icon="user" shape="square" />
     </tri-badge>
   `
 })

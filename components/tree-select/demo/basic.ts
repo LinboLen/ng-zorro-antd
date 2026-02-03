@@ -15,7 +15,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
       placeHolder="Please select"
       [(ngModel)]="value"
       (ngModelChange)="onChange($event)"
-    ></tri-tree-select>
+    />
   `
 })
 export class TriDemoTreeSelectBasicComponent implements OnInit {

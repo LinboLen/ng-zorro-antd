@@ -22,7 +22,7 @@ import { Subject } from 'rxjs';
   selector: 'tri-descriptions-item',
   template: `
     <ng-template>
-      <ng-content></ng-content>
+      <ng-content />
     </ng-template>
   `,
   exportAs: 'triDescriptionsItem'

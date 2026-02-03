@@ -102,7 +102,7 @@ import { RenderListContext, TransferDirection, TransferItem, TransferStat } from
                 stat: stat
               }
             "
-          ></ng-container>
+          />
         </div>
       } @else {
         @if (stat.shownCount > 0) {
@@ -124,10 +124,7 @@ import { RenderListContext, TransferDirection, TransferItem, TransferStat } from
                     @if (!render) {
                       {{ item.title }}
                     } @else {
-                      <ng-template
-                        [ngTemplateOutlet]="render"
-                        [ngTemplateOutletContext]="{ $implicit: item }"
-                      ></ng-template>
+                      <ng-template [ngTemplateOutlet]="render" [ngTemplateOutletContext]="{ $implicit: item }" />
                     }
                   </label>
                 } @else {
@@ -143,10 +140,7 @@ import { RenderListContext, TransferDirection, TransferItem, TransferStat } from
                       <tri-icon type="delete" theme="outline" />
                     </div>
                   } @else {
-                    <ng-template
-                      [ngTemplateOutlet]="render"
-                      [ngTemplateOutletContext]="{ $implicit: item }"
-                    ></ng-template>
+                    <ng-template [ngTemplateOutlet]="render" [ngTemplateOutletContext]="{ $implicit: item }" />
                   }
                 }
               </li>
@@ -154,14 +148,14 @@ import { RenderListContext, TransferDirection, TransferItem, TransferStat } from
           </ul>
         } @else {
           <div class="tri-transfer-list-body-not-found">
-            <tri-embed-empty [componentName]="'transfer'" [specificContent]="notFoundContent"></tri-embed-empty>
+            <tri-embed-empty componentName="transfer" [specificContent]="notFoundContent" />
           </div>
         }
       }
     </div>
     @if (footer) {
       <div class="tri-transfer-list-footer">
-        <ng-template [ngTemplateOutlet]="footer" [ngTemplateOutletContext]="{ $implicit: direction }"></ng-template>
+        <ng-template [ngTemplateOutlet]="footer" [ngTemplateOutletContext]="{ $implicit: direction }" />
       </div>
     }
   `,

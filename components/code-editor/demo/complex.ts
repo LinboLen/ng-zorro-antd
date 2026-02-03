@@ -13,7 +13,7 @@ import { TriTypographyModule } from 'ng-zorro-antd/typography';
   template: `
     <p tri-paragraph style="margin-bottom: 8px;">
       Loading
-      <tri-switch [(ngModel)]="loading"></tri-switch>
+      <tri-switch [(ngModel)]="loading" />
     </p>
     <tri-code-editor
       class="editor"
@@ -22,7 +22,7 @@ import { TriTypographyModule } from 'ng-zorro-antd/typography';
       [loading]="loading"
       [toolkit]="toolkit"
       [editorOption]="{ language: 'javascript' }"
-    ></tri-code-editor>
+    />
     <ng-template #toolkit>
       <tri-icon
         [class.active]="fullScreen"
@@ -33,23 +33,21 @@ import { TriTypographyModule } from 'ng-zorro-antd/typography';
       />
     </ng-template>
   `,
-  styles: [
-    `
-      .editor {
-        height: 200px;
-      }
+  styles: `
+    .editor {
+      height: 200px;
+    }
 
-      .full-screen {
-        position: fixed;
-        z-index: 999;
-        height: 100vh;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        right: 0;
-      }
-    `
-  ]
+    .full-screen {
+      position: fixed;
+      z-index: 999;
+      height: 100vh;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: 0;
+    }
+  `
 })
 export class TriDemoCodeEditorComplexComponent {
   @ViewChild(TriCodeEditorComponent, { static: false }) editorComponent?: TriCodeEditorComponent;

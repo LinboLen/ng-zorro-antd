@@ -41,7 +41,7 @@ export type TriProgressDotTemplate = TemplateRef<{ $implicit: TemplateRef<void>;
   encapsulation: ViewEncapsulation.None,
   selector: 'tri-steps',
   exportAs: 'triSteps',
-  template: `<ng-content></ng-content>`,
+  template: `<ng-content />`,
   host: {
     class: 'tri-steps',
     '[class.tri-steps-horizontal]': `direction === 'horizontal'`,

@@ -24,7 +24,7 @@ import { TriTableSortOrder } from '../table.types';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
-    <span class="tri-table-column-title"><ng-template [ngTemplateOutlet]="contentTemplate"></ng-template></span>
+    <span class="tri-table-column-title"><ng-template [ngTemplateOutlet]="contentTemplate" /></span>
     <span class="tri-table-column-sorter" [class.tri-table-column-sorter-full]="isDown && isUp">
       <span class="tri-table-column-sorter-inner">
         @if (isUp) {

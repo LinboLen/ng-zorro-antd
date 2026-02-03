@@ -11,13 +11,13 @@ import { TriSpaceModule } from 'ng-zorro-antd/space';
   template: `
     <tri-space>
       <tri-select *spaceItem [(ngModel)]="mode">
-        <tri-option value="date" label="Date"></tri-option>
-        <tri-option value="week" label="Week"></tri-option>
-        <tri-option value="month" label="Month"></tri-option>
-        <tri-option value="quarter" label="Quarter"></tri-option>
-        <tri-option value="year" label="Year"></tri-option>
+        <tri-option value="date" label="Date" />
+        <tri-option value="week" label="Week" />
+        <tri-option value="month" label="Month" />
+        <tri-option value="quarter" label="Quarter" />
+        <tri-option value="year" label="Year" />
       </tri-select>
-      <tri-date-picker *spaceItem [mode]="mode"></tri-date-picker>
+      <tri-date-picker *spaceItem [mode]="mode" />
     </tri-space>
   `
 })

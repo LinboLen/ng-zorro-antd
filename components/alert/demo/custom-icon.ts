@@ -12,7 +12,7 @@ import { TriAlertModule } from 'ng-zorro-antd/alert';
       description="Detailed description and advices about successful copywriting."
       [icon]="customIconTemplate"
       showIcon
-    ></tri-alert>
+    />
 
     <ng-template #customIconTemplate>
       <div> S </div>

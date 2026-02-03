@@ -20,9 +20,9 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
         <tri-form-label [span]="isHorizontal ? 4 : null">Form Layout</tri-form-label>
         <tri-form-control [span]="isHorizontal ? 14 : null">
           <tri-radio-group formControlName="formLayout">
-            <label tri-radio-button [value]="'horizontal'">Horizontal</label>
-            <label tri-radio-button [value]="'vertical'">Vertical</label>
-            <label tri-radio-button [value]="'inline'">Inline</label>
+            <label tri-radio-button value="horizontal">Horizontal</label>
+            <label tri-radio-button value="vertical">Vertical</label>
+            <label tri-radio-button value="inline">Inline</label>
           </tri-radio-group>
         </tri-form-control>
       </tri-form-item>
@@ -45,13 +45,11 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
       </tri-form-item>
     </form>
   `,
-  styles: [
-    `
-      [nz-form]:not(.ant-form-inline):not(.ant-form-vertical) {
-        max-width: 600px;
-      }
-    `
-  ]
+  styles: `
+    [nz-form]:not(.ant-form-inline):not(.ant-form-vertical) {
+      max-width: 600px;
+    }
+  `
 })
 export class TriDemoFormLayoutComponent {
   private fb = inject(NonNullableFormBuilder);

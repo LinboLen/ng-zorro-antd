@@ -16,9 +16,9 @@ import { TriTransferModule, TransferItem } from 'ng-zorro-antd/transfer';
       (searchChange)="search($event)"
       (selectChange)="select($event)"
       (change)="change($event)"
-    ></tri-transfer>
+    />
     <br />
-    <tri-switch [(ngModel)]="disabled" checkedChildren="disabled" unCheckedChildren="disabled"></tri-switch>
+    <tri-switch [(ngModel)]="disabled" checkedChildren="disabled" unCheckedChildren="disabled" />
   `
 })
 export class TriDemoTransferSearchComponent implements OnInit {

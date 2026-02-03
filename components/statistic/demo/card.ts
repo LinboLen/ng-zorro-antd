@@ -20,7 +20,7 @@ import { TriStatisticModule } from 'ng-zorro-antd/statistic';
               [prefix]="prefixTplOne"
               suffix="%"
               [valueStyle]="{ color: '#3F8600' }"
-            ></tri-statistic>
+            />
             <ng-template #prefixTplOne><tri-icon type="arrow-up" /></ng-template>
           </tri-card>
         </tri-col>
@@ -32,7 +32,7 @@ import { TriStatisticModule } from 'ng-zorro-antd/statistic';
               [prefix]="prefixTplTwo"
               suffix="%"
               [valueStyle]="{ color: '#CF1322' }"
-            ></tri-statistic>
+            />
             <ng-template #prefixTplTwo><tri-icon type="arrow-down" /></ng-template>
           </tri-card>
         </tri-col>

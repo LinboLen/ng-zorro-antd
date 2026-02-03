@@ -154,8 +154,8 @@ describe('descriptions', () => {
   selector: 'tri-test-descriptions',
   template: `
     <tri-descriptions [title]="title" [bordered]="bordered" [column]="column">
-      @for (col of colspanArray; track i; let i = $index) {
-        <tri-descriptions-item [title]="itemTitle + i" [span]="col" />
+      @for (col of colspanArray; track $index) {
+        <tri-descriptions-item [title]="itemTitle + $index" [span]="col" />
       }
     </tri-descriptions>
   `
@@ -172,7 +172,7 @@ export class TriTestDescriptionsComponent {
   imports: [BidiModule, TriTestDescriptionsComponent],
   template: `
     <div [dir]="direction">
-      <tri-test-descriptions></tri-test-descriptions>
+      <tri-test-descriptions />
     </div>
   `
 })

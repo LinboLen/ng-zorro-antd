@@ -46,7 +46,7 @@ interface TriThItemInterface {
   encapsulation: ViewEncapsulation.None,
   template: `
     <span class="tri-table-column-title">
-      <ng-template [ngTemplateOutlet]="contentTemplate"></ng-template>
+      <ng-template [ngTemplateOutlet]="contentTemplate" />
     </span>
     @if (!customFilter) {
       <tri-filter-trigger
@@ -80,7 +80,7 @@ interface TriThItemInterface {
         </div>
       </tri-dropdown-menu>
     } @else {
-      <ng-container [ngTemplateOutlet]="extraTemplate"></ng-container>
+      <ng-container [ngTemplateOutlet]="extraTemplate" />
     }
   `,
   host: { class: 'tri-table-filter-column' },

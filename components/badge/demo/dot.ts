@@ -14,16 +14,14 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
       <a>Link something</a>
     </tri-badge>
   `,
-  styles: [
-    `
-      nz-badge {
-        margin-right: 20px;
-      }
+  styles: `
+    nz-badge {
+      margin-right: 20px;
+    }
 
-      nz-icon {
-        font-size: 16px;
-      }
-    `
-  ]
+    nz-icon {
+      font-size: 16px;
+    }
+  `
 })
 export class TriDemoBadgeDotComponent {}

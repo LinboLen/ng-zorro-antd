@@ -10,16 +10,16 @@ import { TriStatisticModule } from 'ng-zorro-antd/statistic';
   template: `
     <tri-row [gutter]="16">
       <tri-col [span]="6">
-        <tri-statistic [value]="[7, 8, 2, 3] | nzAggregate: 'max'" title="Max [7, 8, 2, 3]"></tri-statistic>
+        <tri-statistic [value]="[7, 8, 2, 3] | nzAggregate: 'max'" title="Max [7, 8, 2, 3]" />
       </tri-col>
       <tri-col [span]="6">
-        <tri-statistic [value]="[7, 8, 2, 3] | nzAggregate: 'min'" title="Min [7, 8, 2, 3]"></tri-statistic>
+        <tri-statistic [value]="[7, 8, 2, 3] | nzAggregate: 'min'" title="Min [7, 8, 2, 3]" />
       </tri-col>
       <tri-col [span]="6">
-        <tri-statistic [value]="[7, 8, 2, 3] | nzAggregate: 'sum'" title="Sum [7, 8, 2, 3]"></tri-statistic>
+        <tri-statistic [value]="[7, 8, 2, 3] | nzAggregate: 'sum'" title="Sum [7, 8, 2, 3]" />
       </tri-col>
       <tri-col [span]="6">
-        <tri-statistic [value]="[7, 8, 2, 3] | nzAggregate: 'avg'" title="Avg [7, 8, 2, 3]"></tri-statistic>
+        <tri-statistic [value]="[7, 8, 2, 3] | nzAggregate: 'avg'" title="Avg [7, 8, 2, 3]" />
       </tri-col>
     </tri-row>
   `

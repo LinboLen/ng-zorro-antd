@@ -55,7 +55,7 @@ export type TriAlertType = 'success' | 'info' | 'warning' | 'error';
         @if (showIcon) {
           <div class="tri-alert-icon">
             @if (icon) {
-              <ng-container *stringTemplateOutlet="icon"></ng-container>
+              <ng-container *stringTemplateOutlet="icon" />
             } @else {
               <tri-icon [type]="iconType || inferredIconType" [theme]="iconTheme" />
             }

@@ -24,10 +24,7 @@ import { TriStatisticValueType } from './typings';
   exportAs: 'triStatisticContentValue',
   template: `
     @if (valueTemplate) {
-      <ng-container
-        [ngTemplateOutlet]="valueTemplate"
-        [ngTemplateOutletContext]="{ $implicit: value }"
-      ></ng-container>
+      <ng-container [ngTemplateOutlet]="valueTemplate" [ngTemplateOutletContext]="{ $implicit: value }" />
     } @else {
       @if (displayInt) {
         <span class="tri-statistic-content-value-int">{{ displayInt }}</span>

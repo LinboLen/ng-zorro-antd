@@ -69,12 +69,12 @@ describe('nz-countdown', () => {
   imports: [TriStatisticModule],
   template: `
     <tri-countdown
-      [title]="'Countdown'"
+      title="Countdown"
       [value]="value"
       [format]="format"
       [valueTemplate]="template"
       (countdownFinish)="onFinish()"
-    ></tri-countdown>
+    />
     <ng-template #tpl let-diff>
       {{ diff }}
     </ng-template>

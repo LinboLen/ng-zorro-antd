@@ -8,15 +8,15 @@ import { TriStepsModule } from 'ng-zorro-antd/steps';
   imports: [TriDividerModule, TriStepsModule],
   template: `
     <tri-steps [current]="index" (indexChange)="onIndexChange($event)">
-      <tri-step title="Finished" [disabled]="disable" description="This is a description."></tri-step>
-      <tri-step title="In Progress" description="This is a description."></tri-step>
-      <tri-step title="Waiting" description="This is a description."></tri-step>
+      <tri-step title="Finished" [disabled]="disable" description="This is a description." />
+      <tri-step title="In Progress" description="This is a description." />
+      <tri-step title="Waiting" description="This is a description." />
     </tri-steps>
-    <tri-divider></tri-divider>
+    <tri-divider />
     <tri-steps direction="vertical" [current]="index" (indexChange)="onIndexChange($event)">
-      <tri-step title="Finished" description="This is a description."></tri-step>
-      <tri-step title="In Progress" description="This is a description."></tri-step>
-      <tri-step title="Waiting" description="This is a description."></tri-step>
+      <tri-step title="Finished" description="This is a description." />
+      <tri-step title="In Progress" description="This is a description." />
+      <tri-step title="Waiting" description="This is a description." />
     </tri-steps>
   `
 })

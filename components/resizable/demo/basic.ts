@@ -18,25 +18,23 @@ import { TriResizableModule, TriResizeDirection, TriResizeEvent } from 'ng-zorro
       [style.width.px]="width"
       (resize)="onResize($event)"
     >
-      <tri-resize-handles></tri-resize-handles>
+      <tri-resize-handles />
       content
     </div>
   `,
-  styles: [
-    `
-      :host {
-        display: block;
-        height: 200px;
-      }
-      .box {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #eee;
-        border: 1px solid #ddd;
-      }
-    `
-  ]
+  styles: `
+    :host {
+      display: block;
+      height: 200px;
+    }
+    .box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #eee;
+      border: 1px solid #ddd;
+    }
+  `
 })
 export class TriDemoResizableBasicComponent {
   width = 400;

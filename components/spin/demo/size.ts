@@ -6,17 +6,15 @@ import { TriSpinModule } from 'ng-zorro-antd/spin';
   selector: 'tri-demo-spin-size',
   imports: [TriSpinModule],
   template: `
-    <tri-spin simple size="small"></tri-spin>
-    <tri-spin simple></tri-spin>
-    <tri-spin simple size="large"></tri-spin>
+    <tri-spin simple size="small" />
+    <tri-spin simple />
+    <tri-spin simple size="large" />
   `,
-  styles: [
-    `
-      nz-spin {
-        display: inline-block;
-        margin-right: 16px;
-      }
-    `
-  ]
+  styles: `
+    nz-spin {
+      display: inline-block;
+      margin-right: 16px;
+    }
+  `
 })
 export class TriDemoSpinSizeComponent {}

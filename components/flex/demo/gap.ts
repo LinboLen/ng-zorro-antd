@@ -12,7 +12,7 @@ import { TriSliderModule } from 'ng-zorro-antd/slider';
   template: `
     <div class="segment-wrapper">
       <span>Select gap:</span>
-      <tri-segmented [options]="gapSegment" [(ngModel)]="selectedGap"></tri-segmented>
+      <tri-segmented [options]="gapSegment" [(ngModel)]="selectedGap" />
     </div>
     @if (selectedGap === 'custom') {
       <tri-slider [min]="0" [max]="100" [(ngModel)]="customGapValue" />
@@ -24,17 +24,15 @@ import { TriSliderModule } from 'ng-zorro-antd/slider';
       <button tri-button type="link">Link</button>
     </div>
   `,
-  styles: [
-    `
-      .segment-wrapper {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
+  styles: `
+    .segment-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
 
-        margin-block-end: 1rem;
-      }
-    `
-  ]
+      margin-block-end: 1rem;
+    }
+  `
 })
 export class TriDemoFlexGapComponent {
   public gapSegment: string[] = ['small', 'middle', 'large', 'custom'];

@@ -25,8 +25,8 @@ type Gender = 'male' | 'female';
         <tri-form-label [span]="5" for="gender" required>Gender</tri-form-label>
         <tri-form-control [span]="12" errorTip="Please select your gender!">
           <tri-select id="gender" formControlName="gender" placeHolder="Select a option and change input text above">
-            <tri-option value="male" label="male"></tri-option>
-            <tri-option value="female" label="female"></tri-option>
+            <tri-option value="male" label="male" />
+            <tri-option value="female" label="female" />
           </tri-select>
         </tri-form-control>
       </tri-form-item>
@@ -37,13 +37,11 @@ type Gender = 'male' | 'female';
       </tri-form-item>
     </form>
   `,
-  styles: [
-    `
-      [nz-form] {
-        max-width: 600px;
-      }
-    `
-  ]
+  styles: `
+    [nz-form] {
+      max-width: 600px;
+    }
+  `
 })
 export class TriDemoFormCoordinatedComponent implements OnInit, OnDestroy {
   private fb = inject(FormBuilder);

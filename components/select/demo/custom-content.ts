@@ -23,13 +23,11 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
       </tri-option>
     </tri-select>
   `,
-  styles: [
-    `
-      nz-select {
-        width: 200px;
-      }
-    `
-  ]
+  styles: `
+    nz-select {
+      width: 200px;
+    }
+  `
 })
 export class TriDemoSelectCustomContentComponent {
   selectedValue = null;

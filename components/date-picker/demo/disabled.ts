@@ -6,19 +6,17 @@ import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
   selector: 'tri-demo-date-picker-disabled',
   imports: [TriDatePickerModule],
   template: `
-    <tri-date-picker disabled></tri-date-picker>
+    <tri-date-picker disabled />
     <br />
-    <tri-date-picker mode="month" disabled></tri-date-picker>
+    <tri-date-picker mode="month" disabled />
     <br />
-    <tri-range-picker disabled></tri-range-picker>
+    <tri-range-picker disabled />
   `,
-  styles: [
-    `
-      nz-date-picker,
-      nz-range-picker {
-        margin: 0 8px 12px 0;
-      }
-    `
-  ]
+  styles: `
+    nz-date-picker,
+    nz-range-picker {
+      margin: 0 8px 12px 0;
+    }
+  `
 })
 export class TriDemoDatePickerDisabledComponent {}

@@ -436,7 +436,7 @@ describe('form-control', () => {
   imports: [TriFormModule],
   template: `
     <tri-form-item>
-      <tri-form-control [hasFeedback]="hasFeedback" [validateStatus]="status"></tri-form-control>
+      <tri-form-control [hasFeedback]="hasFeedback" [validateStatus]="status" />
     </tri-form-item>
   `
 })

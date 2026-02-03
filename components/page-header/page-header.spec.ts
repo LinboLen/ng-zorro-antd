@@ -194,7 +194,7 @@ describe('page-header', () => {
   imports: [BidiModule, TriDemoPageHeaderBasicComponent],
   template: `
     <div [dir]="direction">
-      <tri-demo-page-header-basic></tri-demo-page-header-basic>
+      <tri-demo-page-header-basic />
     </div>
   `
 })

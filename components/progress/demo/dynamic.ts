@@ -11,8 +11,8 @@ import { TriSpaceModule } from 'ng-zorro-antd/space';
   imports: [TriButtonModule, TriIconModule, TriFlexModule, TriProgressModule, TriSpaceModule],
   template: `
     <div tri-flex vertical gap="small">
-      <tri-progress [percent]="percent"></tri-progress>
-      <tri-progress [percent]="percent" type="circle"></tri-progress>
+      <tri-progress [percent]="percent" />
+      <tri-progress [percent]="percent" type="circle" />
       <tri-space-compact>
         <button tri-button (click)="decline()"><tri-icon type="minus" /></button>
         <button tri-button (click)="increase()"><tri-icon type="plus" /></button>

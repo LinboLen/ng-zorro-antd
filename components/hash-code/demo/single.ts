@@ -6,9 +6,9 @@ import { TriHashCodeModule } from 'ng-zorro-antd/hash-code';
   selector: 'tri-demo-hash-code-single',
   imports: [TriHashCodeModule],
   template: `
-    <tri-hash-code [value]="value" mode="single"></tri-hash-code>
+    <tri-hash-code [value]="value" mode="single" />
     <br />
-    <tri-hash-code [value]="value" mode="single" type="primary"></tri-hash-code>
+    <tri-hash-code [value]="value" mode="single" type="primary" />
   `
 })
 export class TriDemoHashCodeSingleComponent {

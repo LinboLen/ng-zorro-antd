@@ -43,7 +43,7 @@ import { TriFormDirective } from './form.directive';
   template: `
     <div class="tri-form-item-control-input">
       <div class="tri-form-item-control-input-content">
-        <ng-content></ng-content>
+        <ng-content />
       </div>
     </div>
     @if (innerTip) {

@@ -447,7 +447,7 @@ describe('progress', () => {
       [strokeColor]="strokeColor"
       [strokeLinecap]="strokeLinecap"
       [steps]="steps"
-    ></tri-progress>
+    />
     <ng-template #formatterTemplate let-percent>{{ percent }} / 100</ng-template>
   `
 })
@@ -477,7 +477,7 @@ export class TriTestProgressLineComponent {
       [strokeWidth]="strokeWidth"
       [percent]="percent"
       [strokeLinecap]="strokeLinecap"
-    ></tri-progress>
+    />
   `
 })
 export class TriTestProgressDashBoardComponent {
@@ -500,7 +500,7 @@ export class TriTestProgressDashBoardComponent {
       [gapPosition]="gapPosition"
       [strokeColor]="strokeColor"
       [strokeLinecap]="strokeLinecap"
-    ></tri-progress>
+    />
   `
 })
 export class TriTestProgressCircleComponent {
@@ -512,7 +512,7 @@ export class TriTestProgressCircleComponent {
 
 @Component({
   imports: [TriProgressModule],
-  template: `<tri-progress type="circle" [percent]="75" [successPercent]="60"></tri-progress>`
+  template: `<tri-progress type="circle" [percent]="75" [successPercent]="60" />`
 })
 export class TriTestProgressCircleSuccessComponent {}
 
@@ -520,7 +520,7 @@ export class TriTestProgressCircleSuccessComponent {}
   imports: [BidiModule, TriProgressModule],
   template: `
     <div [dir]="direction">
-      <tri-progress type="circle" [percent]="75" [successPercent]="60"></tri-progress>
+      <tri-progress type="circle" [percent]="75" [successPercent]="60" />
     </div>
   `
 })

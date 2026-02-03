@@ -10,11 +10,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
   selector: 'tri-demo-cron-expression-shortcuts',
   imports: [FormsModule, TriButtonModule, TriCronExpressionModule, TriDropdownModule, TriIconModule],
   template: `
-    <tri-cron-expression
-      [extra]="shortcuts"
-      [(ngModel)]="value"
-      (ngModelChange)="getValue($event)"
-    ></tri-cron-expression>
+    <tri-cron-expression [extra]="shortcuts" [(ngModel)]="value" (ngModelChange)="getValue($event)" />
     <ng-template #shortcuts>
       <button tri-button tri-dropdown [dropdownMenu]="menu">
         Shortcuts

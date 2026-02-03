@@ -37,30 +37,28 @@ import { TriInputModule } from 'ng-zorro-antd/input';
           <a class="login-form-forgot">Forgot password</a>
         </div>
       </div>
-      <button tri-button class="login-form-button login-form-margin" [type]="'primary'">Log in</button>
+      <button tri-button class="login-form-button login-form-margin" type="primary">Log in</button>
       Or
       <a>register now!</a>
     </form>
   `,
-  styles: [
-    `
-      .login-form {
-        max-width: 300px;
-      }
+  styles: `
+    .login-form {
+      max-width: 300px;
+    }
 
-      .login-form-margin {
-        margin-bottom: 16px;
-      }
+    .login-form-margin {
+      margin-bottom: 16px;
+    }
 
-      .login-form-forgot {
-        float: right;
-      }
+    .login-form-forgot {
+      float: right;
+    }
 
-      .login-form-button {
-        width: 100%;
-      }
-    `
-  ]
+    .login-form-button {
+      width: 100%;
+    }
+  `
 })
 export class TriDemoFormNormalLoginComponent {
   private fb = inject(NonNullableFormBuilder);

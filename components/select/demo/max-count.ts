@@ -24,17 +24,15 @@ function alphabet(): string[] {
       [(ngModel)]="listOfSelectedValue"
     >
       @for (item of listOfOption; track item) {
-        <tri-option [label]="item" [value]="item"></tri-option>
+        <tri-option [label]="item" [value]="item" />
       }
     </tri-select>
   `,
-  styles: [
-    `
-      nz-select {
-        width: 100%;
-      }
-    `
-  ]
+  styles: `
+    nz-select {
+      width: 100%;
+    }
+  `
 })
 export class TriDemoSelectMaxCountComponent {
   readonly listOfOption: string[] = alphabet();

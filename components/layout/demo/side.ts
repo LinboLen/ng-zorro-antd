@@ -41,7 +41,7 @@ import { TriMenuModule } from 'ng-zorro-antd/menu';
         </ul>
       </tri-sider>
       <tri-layout>
-        <tri-header></tri-header>
+        <tri-header />
         <tri-content>
           <tri-breadcrumb>
             <tri-breadcrumb-item>User</tri-breadcrumb-item>
@@ -53,43 +53,41 @@ import { TriMenuModule } from 'ng-zorro-antd/menu';
       </tri-layout>
     </tri-layout>
   `,
-  styles: [
-    `
-      .logo {
-        height: 32px;
-        margin: 16px;
-        background: rgba(255, 255, 255, 0.3);
-      }
+  styles: `
+    .logo {
+      height: 32px;
+      margin: 16px;
+      background: rgba(255, 255, 255, 0.3);
+    }
 
-      nz-header {
-        background: #fff;
-        padding: 0;
-      }
+    nz-header {
+      background: #fff;
+      padding: 0;
+    }
 
-      nz-content {
-        margin: 0 16px;
-      }
+    nz-content {
+      margin: 0 16px;
+    }
 
-      nz-breadcrumb {
-        margin: 16px 0;
-      }
+    nz-breadcrumb {
+      margin: 16px 0;
+    }
 
-      .inner-content {
-        padding: 24px;
-        background: #fff;
-        min-height: 360px;
-        border-radius: 8px;
-      }
+    .inner-content {
+      padding: 24px;
+      background: #fff;
+      min-height: 360px;
+      border-radius: 8px;
+    }
 
-      nz-footer {
-        text-align: center;
-      }
+    nz-footer {
+      text-align: center;
+    }
 
-      :host > nz-layout {
-        min-height: 100vh;
-      }
-    `
-  ]
+    :host > nz-layout {
+      min-height: 100vh;
+    }
+  `
 })
 export class TriDemoLayoutSideComponent {
   protected readonly date = new Date();

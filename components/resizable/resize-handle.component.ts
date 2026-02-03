@@ -47,7 +47,7 @@ const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: t
 @Component({
   selector: 'tri-resize-handle,[tri-resize-handle]',
   exportAs: 'triResizeHandle',
-  template: `<ng-content></ng-content>`,
+  template: `<ng-content />`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'nz-resizable-handle',

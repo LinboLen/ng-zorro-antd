@@ -56,7 +56,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'button';
         <tri-icon type="loading" />
       </span>
     }
-    <ng-content></ng-content>
+    <ng-content />
   `,
   host: {
     class: 'tri-btn',

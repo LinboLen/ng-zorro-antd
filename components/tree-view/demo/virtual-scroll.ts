@@ -49,7 +49,7 @@ interface FlatNode {
       [levelAccessor]="levelAccessor"
     >
       <tri-tree-node *treeNodeDef="let node" treeNodePadding [expandable]="false">
-        <tri-tree-node-toggle treeNodeNoopToggle></tri-tree-node-toggle>
+        <tri-tree-node-toggle treeNodeNoopToggle />
         {{ node.name }}
       </tri-tree-node>
 
@@ -61,13 +61,11 @@ interface FlatNode {
       </tri-tree-node>
     </tri-tree-virtual-scroll-view>
   `,
-  styles: [
-    `
-      .virtual-scroll-tree {
-        height: 200px;
-      }
-    `
-  ]
+  styles: `
+    .virtual-scroll-tree {
+      height: 200px;
+    }
+  `
 })
 export class TriDemoTreeViewVirtualScrollComponent implements OnInit, AfterViewInit {
   @ViewChild(TriTreeVirtualScrollViewComponent, { static: true }) tree!: TriTreeVirtualScrollViewComponent<FlatNode>;

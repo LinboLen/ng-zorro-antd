@@ -644,7 +644,7 @@ describe('tree', () => {
       (contextMenu)="event($event)"
       (expandChange)="event($event)"
       (checkboxChange)="event($event)"
-    ></tri-tree>
+    />
     <ng-template #expandedIconTpl let-node>
       <tri-icon type="smile" class="tri-tree-switcher-icon" />
     </ng-template>
@@ -722,7 +722,7 @@ export class TriTestTreeBasicControlledComponent {
       (onDragOver)="onDragOver()"
       (onDrop)="onDrop()"
       (onDragEnd)="onDragEnd()"
-    ></tri-tree>
+    />
   `
 })
 export class TriTestTreeDraggableComponent {
@@ -784,7 +784,7 @@ export class TriTestTreeDraggableComponent {
       [expandAll]="expandAll"
       [asyncData]="asyncData"
       [hideUnMatched]="hideUnMatched"
-    ></tri-tree>
+    />
   `
 })
 export class TriTestTreeBasicSearchComponent {

@@ -53,7 +53,7 @@ import { BaseModalContainerComponent } from './modal-container.directive';
                 </ng-container>
               </span>
               <div class="tri-modal-confirm-content">
-                <ng-template cdkPortalOutlet></ng-template>
+                <ng-template cdkPortalOutlet />
                 @if (isStringContent) {
                   <div [innerHTML]="content"></div>
                 }

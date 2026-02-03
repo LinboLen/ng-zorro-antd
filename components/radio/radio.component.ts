@@ -54,7 +54,7 @@ import { TriRadioService } from './radio.service';
       />
       <span [class.tri-radio-inner]="!isRadioButton" [class.tri-radio-button-inner]="isRadioButton"></span>
     </span>
-    <span><ng-content></ng-content></span>
+    <span><ng-content /></span>
   `,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

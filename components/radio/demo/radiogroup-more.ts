@@ -20,20 +20,18 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
       </label>
     </tri-radio-group>
   `,
-  styles: [
-    `
-      [nz-radio] {
-        display: block;
-        height: 32px;
-        line-height: 32px;
-      }
+  styles: `
+    [nz-radio] {
+      display: block;
+      height: 32px;
+      line-height: 32px;
+    }
 
-      input {
-        width: 100px;
-        margin-left: 10px;
-      }
-    `
-  ]
+    input {
+      width: 100px;
+      margin-left: 10px;
+    }
+  `
 })
 export class TriDemoRadioRadiogroupMoreComponent {
   radioValue = 'A';

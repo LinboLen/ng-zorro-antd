@@ -189,7 +189,7 @@ export class TriTestSpinBasicComponent {
   imports: [BidiModule, TriTestSpinBasicComponent],
   template: `
     <div [dir]="direction">
-      <tri-test-basic-spin></tri-test-basic-spin>
+      <tri-test-basic-spin />
     </div>
   `
 })

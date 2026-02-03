@@ -75,7 +75,7 @@ import { TriTbodyComponent } from './tbody.component';
                 <ng-template
                   [ngTemplateOutlet]="virtualTemplate"
                   [ngTemplateOutletContext]="{ $implicit: item, index: i }"
-                ></ng-template>
+                />
               </ng-container>
             </tbody>
           </table>

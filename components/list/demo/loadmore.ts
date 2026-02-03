@@ -47,19 +47,17 @@ const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,
       </div>
     </tri-list>
   `,
-  styles: [
-    `
-      .demo-loadmore-list {
-        min-height: 350px;
-      }
-      .loadmore {
-        text-align: center;
-        margin-top: 12px;
-        height: 32px;
-        line-height: 32px;
-      }
-    `
-  ]
+  styles: `
+    .demo-loadmore-list {
+      min-height: 350px;
+    }
+    .loadmore {
+      text-align: center;
+      margin-top: 12px;
+      height: 32px;
+      line-height: 32px;
+    }
+  `
 })
 export class TriDemoListLoadmoreComponent implements OnInit {
   initLoading = true; // bug
