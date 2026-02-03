@@ -45,8 +45,8 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'collapsePanel';
       role="button"
       [attr.aria-expanded]="active()"
       class="tri-collapse-header"
-      [class.tri-collapse-icon-collapsible-only]="collapsible === 'icon'"
-      [class.tri-collapse-header-collapsible-only]="collapsible === 'header'"
+      [class.tri-collapse-collapsible-icon]="collapsible === 'icon'"
+      [class.tri-collapse-collapsible-header]="collapsible === 'header'"
     >
       @if (showArrow) {
         <div role="button" #collapseIcon class="tri-collapse-expand-icon">
@@ -55,7 +55,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'collapsePanel';
           </ng-container>
         </div>
       }
-      <span class="tri-collapse-header-text">
+      <span class="tri-collapse-title">
         <ng-container *stringTemplateOutlet="header">{{ header }}</ng-container>
       </span>
       @if (extra) {
@@ -65,13 +65,13 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'collapsePanel';
       }
     </div>
     <div
-      class="tri-collapse-content"
-      [class.tri-collapse-content-active]="active()"
+      class="tri-collapse-panel"
+      [class.tri-collapse-panel-active]="active()"
       animation-collapse
       [open]="active()"
-      leavedClassName="ant-collapse-content-hidden"
+      leavedClassName="ant-collapse-panel-hidden"
     >
-      <div class="tri-collapse-content-box">
+      <div class="tri-collapse-body">
         <ng-content />
       </div>
     </div>

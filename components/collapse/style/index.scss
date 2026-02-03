@@ -37,7 +37,7 @@ $collapse-prefix-cls: "#{$ant-prefix}-collapse";
           transition: transform 0.24s;
         }
       }
-      .#{$collapse-prefix-cls}-header-text {
+      .#{$collapse-prefix-cls}-title {
         flex: auto;
       }
       .#{$collapse-prefix-cls}-extra {
@@ -47,14 +47,18 @@ $collapse-prefix-cls: "#{$ant-prefix}-collapse";
         outline: none;
       }
     }
-    .#{$collapse-prefix-cls}-header-collapsible-only {
+    // Sync with ant-design: when only header is clickable, pointer on title and expand-icon
+    .#{$collapse-prefix-cls}-collapsible-header {
       cursor: default;
-      .#{$collapse-prefix-cls}-header-text {
+      .#{$collapse-prefix-cls}-title {
         flex: none;
         cursor: pointer;
       }
+      .#{$collapse-prefix-cls}-expand-icon {
+        cursor: pointer;
+      }
     }
-    .#{$collapse-prefix-cls}-icon-collapsible-only {
+    .#{$collapse-prefix-cls}-collapsible-icon {
       cursor: default;
       .#{$collapse-prefix-cls}-expand-icon {
         cursor: pointer;
@@ -84,11 +88,11 @@ $collapse-prefix-cls: "#{$ant-prefix}-collapse";
       }
     }
   }
-  &-content {
+  &-panel {
     color: $text-color;
     background-color: $collapse-content-bg;
     border-top: $border-width-base $border-style-base $border-color-base;
-    & > &-box {
+    & > &-body {
       padding: $collapse-content-padding;
     }
     &-hidden {
@@ -96,7 +100,7 @@ $collapse-prefix-cls: "#{$ant-prefix}-collapse";
     }
   }
   &-item:last-child {
-    > .#{$collapse-prefix-cls}-content {
+    > .#{$collapse-prefix-cls}-panel {
       border-radius: 0 0 $collapse-panel-border-radius $collapse-panel-border-radius;
     }
   }
@@ -115,11 +119,11 @@ $collapse-prefix-cls: "#{$ant-prefix}-collapse";
   &-borderless > &-item:last-child {
     border-bottom: 0;
   }
-  &-borderless > &-item > &-content {
+  &-borderless > &-item > &-panel {
     background-color: transparent;
     border-top: 0;
   }
-  &-borderless > &-item > &-content > &-content-box {
+  &-borderless > &-item > &-panel > &-body {
     padding-top: 4px;
   }
   &-ghost {
@@ -127,10 +131,10 @@ $collapse-prefix-cls: "#{$ant-prefix}-collapse";
     border: 0;
     > .#{$collapse-prefix-cls}-item {
       border-bottom: 0;
-      > .#{$collapse-prefix-cls}-content {
+      > .#{$collapse-prefix-cls}-panel {
         background-color: transparent;
         border-top: 0;
-        > .#{$collapse-prefix-cls}-content-box {
+        > .#{$collapse-prefix-cls}-body {
           padding-top: 12px;
           padding-bottom: 12px;
         }
@@ -150,10 +154,8 @@ $collapse-prefix-cls: "#{$ant-prefix}-collapse";
         padding: 8px 12px;
         padding-inline-start: 8px;
       }
-      > .#{$collapse-prefix-cls}-content {
-        > .#{$collapse-prefix-cls}-content-box {
-          padding: 12px;
-        }
+      > .#{$collapse-prefix-cls}-panel > .#{$collapse-prefix-cls}-body {
+        padding: 12px;
       }
     }
   }
@@ -165,10 +167,8 @@ $collapse-prefix-cls: "#{$ant-prefix}-collapse";
         padding: 16px 24px;
         padding-inline-start: 16px;
       }
-      > .#{$collapse-prefix-cls}-content {
-        > .#{$collapse-prefix-cls}-content-box {
-          padding: 24px;
-        }
+      > .#{$collapse-prefix-cls}-panel > .#{$collapse-prefix-cls}-body {
+        padding: 24px;
       }
     }
   }

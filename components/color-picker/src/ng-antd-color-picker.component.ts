@@ -88,10 +88,6 @@ import { defaultColor, generateColor } from './util/util';
         <tri-divider size="small" />
         <ng-antd-color-preset [value]="colorValue" [presets]="presets" (presetSelect)="handleChange($event)" />
       }
-      @if (presets && presets.length > 0) {
-        <tri-divider size="small" />
-        <ng-antd-color-preset [value]="colorValue" [presets]="presets" (presetSelect)="handleChange($event)" />
-      }
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
