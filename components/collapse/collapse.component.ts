@@ -29,8 +29,8 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'collapse';
   template: `<ng-content />`,
   host: {
     class: 'tri-collapse',
-    '[class.tri-collapse-icon-position-start]': `expandIconPosition === 'start'`,
-    '[class.tri-collapse-icon-position-end]': `expandIconPosition === 'end'`,
+    '[class.tri-collapse-icon-placement-start]': `expandIconPosition === 'start'`,
+    '[class.tri-collapse-icon-placement-end]': `expandIconPosition === 'end'`,
     '[class.tri-collapse-ghost]': `ghost`,
     '[class.tri-collapse-borderless]': '!bordered',
     '[class.tri-collapse-rtl]': `dir() === 'rtl'`,

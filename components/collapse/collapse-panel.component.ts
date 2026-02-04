@@ -44,6 +44,8 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'collapsePanel';
       #collapseHeader
       role="button"
       [attr.aria-expanded]="active()"
+      [attr.aria-disabled]="disabled || collapsible === 'disabled'"
+      [attr.tabindex]="disabled || collapsible === 'disabled' ? -1 : 0"
       class="tri-collapse-header"
       [class.tri-collapse-collapsible-icon]="collapsible === 'icon'"
       [class.tri-collapse-collapsible-header]="collapsible === 'header'"
@@ -80,7 +82,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'collapsePanel';
     class: 'tri-collapse-item',
     '[class.tri-collapse-no-arrow]': '!showArrow',
     '[class.tri-collapse-item-active]': 'active()',
-    '[class.tri-collapse-item-disabled]': 'disabled || collapsible === "disabled"'
+    '[class.tri-collapse-item-disabled]': `disabled || collapsible === 'disabled'`
   },
   imports: [TriOutletModule, TriIconModule, TriAnimationCollapseDirective]
 })
