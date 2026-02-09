@@ -246,7 +246,8 @@ export class TriAnchorComponent implements AfterViewInit, OnChanges {
   }
 
   handleScrollTo(linkComp: TriAnchorLinkComponent): void {
-    const el = this.doc.querySelector<HTMLElement>(linkComp.href);
+    const id = linkComp.href.replace(/^#/, '');
+    const el = this.doc.getElementById(id);
     if (!el) {
       return;
     }
