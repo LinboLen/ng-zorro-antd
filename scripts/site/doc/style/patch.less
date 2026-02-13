@@ -54,8 +54,13 @@
     }
 
     .ant-anchor-link {
-      padding: 0 0 4px 16px;
-      line-height: 1.5;
+      &.toc-indent-1 {
+        padding-inline-start: 16px;
+      }
+
+      &.toc-indent-2 {
+        padding-inline-start: 32px;
+      }
 
       &.toc-indent-1 {
         padding-inline-start: 16px;
@@ -151,7 +156,7 @@ label {
   }
 
   .head-example {
-    background: rgba(255, 255, 255, .12) !important;
+    background: rgb(255, 255, 255, .12) !important;
   }
 
   .popover-menu .ant-popover-inner-content #nav a {
@@ -167,7 +172,7 @@ label {
   }
 
   .site-page-header-ghost-wrapper {
-    background-color: rgba(255, 255, 255, 0.08);
+    background-color: rgb(255, 255, 255, 0.08);
   }
 
   .drawer-content-wrapper {
