@@ -58,6 +58,14 @@ import {
 } from 'ng-zorro-antd/input';
 import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
+export type TriInputNumberStepEmitter = 'wheel' | 'handler' | 'keyboard';
+export interface TriInputNumberStepEvent {
+  value: number;
+  offset: number;
+  type: 'up' | 'down';
+  emitter: TriInputNumberStepEmitter;
+}
+
 @Component({
   selector: 'tri-input-number',
   exportAs: 'triInputNumber',
@@ -215,7 +223,7 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
   readonly blur = output<void>();
   readonly focus = output<void>();
 
-  readonly onStep = output<{ value: number; offset: number; type: 'up' | 'down' }>();
+  readonly onStep = output<TriInputNumberStepEvent>();
 
   private onChange: OnChangeType = () => {};
   private onTouched: OnTouchedType = () => {};
@@ -391,7 +399,7 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
     this.inputRef().nativeElement.blur();
   }
 
-  #step(event: MouseEvent | KeyboardEvent, up: boolean): void {
+  #step(event: MouseEvent | KeyboardEvent, up: boolean, emitter: TriInputNumberStepEmitter): void {
     // Ignore step since out of range
     if ((up && this.upDisabled()) || (!up && this.downDisabled())) {
       return;
@@ -417,7 +425,8 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
     this.onStep.emit({
       type: up ? 'up' : 'down',
       value: this.value()!,
-      offset: this.step()
+      offset: this.step(),
+      emitter: emitter
     });
 
     this._focus();
@@ -513,11 +522,11 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
     event.preventDefault();
     this.stopAutoStep();
 
-    this.#step(event, up);
+    this.#step(event, up, 'handler');
 
     // Loop step for interval
     const loopStep: () => void = () => {
-      this.#step(event, up);
+      this.#step(event, up, 'handler');
       this.autoStepTimer = setTimeout(loopStep, STEP_INTERVAL);
     };
 
@@ -529,11 +538,11 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
     switch (event.keyCode) {
       case UP_ARROW:
         event.preventDefault();
-        this.keyboard() && this.#step(event, true);
+        this.keyboard() && this.#step(event, true, 'keyboard');
         break;
       case DOWN_ARROW:
         event.preventDefault();
-        this.keyboard() && this.#step(event, false);
+        this.keyboard() && this.#step(event, false, 'keyboard');
         break;
       case ENTER:
         this.fixValue();
@@ -551,7 +560,7 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
     }
 
     event.preventDefault();
-    this.#step(event, event.deltaY < 0);
+    this.#step(event, event.deltaY < 0, 'wheel');
   }
 }
 
