@@ -14,6 +14,7 @@ import {
   computed,
   contentChild,
   DestroyRef,
+  effect,
   ElementRef,
   forwardRef,
   inject,
@@ -23,11 +24,12 @@ import {
   TemplateRef,
   ViewEncapsulation
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { EMPTY, startWith, switchMap } from 'rxjs';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriFormItemFeedbackIconComponent } from 'ng-zorro-antd/core/form';
-import { getStatusClassNames, getVariantClassNames } from 'ng-zorro-antd/core/util';
+import { getStatusClassNames, getVariantClassNames, isNotNil, isNumberFinite } from 'ng-zorro-antd/core/util';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
@@ -37,6 +39,12 @@ import { TriInputPasswordDirective, TriInputPasswordIconDirective } from './inpu
 import { TriInputSearchDirective, TriInputSearchEnterButtonDirective } from './input-search.directive';
 import { TriInputDirective } from './input.directive';
 import { TRI_INPUT_WRAPPER } from './tokens';
+
+export interface TriCountConfig {
+  max?: number;
+  strategy?: (value: string) => number;
+  exceedFormatter?: (value: string, config: { max: number }) => string;
+}
 
 @Component({
   selector: 'tri-input-wrapper,tri-input-password,tri-input-search',
@@ -125,6 +133,9 @@ import { TRI_INPUT_WRAPPER } from './tokens';
               </ng-content>
             </span>
           }
+          @if (showCount()) {
+            <span class="tri-input-show-count-suffix">{{ dataCount() }}</span>
+          }
           @if (inputPasswordDir && visibilityToggle()) {
             <span
               class="tri-input-password-icon"
@@ -164,6 +175,7 @@ import { TRI_INPUT_WRAPPER } from './tokens';
   host: {
     '[class]': 'class()',
     '[class.tri-input-disabled]': 'disabled()',
+    '[class.tri-input-out-of-range]': 'showCount() && isOutOfRange()',
     '[class.tri-input-affix-wrapper-textarea-with-clear-btn]': 'allowClear() && isTextarea()'
   }
 })
@@ -189,6 +201,9 @@ export class TriInputWrapperComponent {
   readonly addonBefore = input<string>();
   readonly addonAfter = input<string>();
 
+  readonly showCount = input(false, { transform: booleanAttribute });
+  readonly count = input<TriCountConfig>();
+
   readonly clear = output<void>();
 
   readonly size = computed(() => this.inputDir().size());
@@ -200,7 +215,13 @@ export class TriInputWrapperComponent {
 
   protected readonly hasPrefix = computed(() => !!this.prefix() || !!this._prefix());
   protected readonly hasSuffix = computed(
-    () => !!this.suffix() || !!this._suffix() || this.allowClear() || this.hasFeedback() || this.inputPasswordDir
+    () =>
+      !!this.suffix() ||
+      !!this._suffix() ||
+      this.allowClear() ||
+      this.hasFeedback() ||
+      this.showCount() ||
+      this.inputPasswordDir
   );
   protected readonly hasAffix = computed(() => this.hasPrefix() || this.hasSuffix());
   protected readonly hasAddonBefore = computed(() => !!this.addonBefore() || !!this._addonBefore());
@@ -254,6 +275,52 @@ export class TriInputWrapperComponent {
     };
   });
 
+  protected readonly inputValue = toSignal(
+    toObservable(this.inputDir).pipe(
+      switchMap(inputDir => {
+        const ngControl = inputDir.ngControl;
+        if (!ngControl) return EMPTY;
+        return (ngControl.valueChanges ?? EMPTY).pipe(startWith(ngControl.value as string));
+      })
+    )
+  );
+  protected readonly formattedValue = computed(() => {
+    const countConfig = this.count();
+    const inputValue = this.inputValue();
+    const countMax = countConfig?.max ?? 0;
+    const value = isNotNil(inputValue) ? String(inputValue) : '';
+    let formattedValue = value;
+
+    if (countConfig?.exceedFormatter) {
+      formattedValue = countConfig.exceedFormatter(value, { max: countMax });
+    }
+    return formattedValue;
+  });
+  protected readonly computedCount = computed(() => {
+    const countConfig = this.count();
+    const formattedValue = this.formattedValue();
+    let computedCount = formattedValue.length;
+
+    if (countConfig?.strategy) {
+      computedCount = countConfig.strategy(formattedValue);
+    }
+    return computedCount;
+  });
+  protected readonly dataCount = computed(() => {
+    const countConfig = this.count();
+    const computedCount = this.computedCount();
+    const countMax = countConfig?.max;
+    return `${computedCount}${countMax ? `/${countMax}` : ``}`;
+  });
+  protected readonly isOutOfRange = computed(() => {
+    const countConfig = this.count();
+    const countMax = countConfig?.max;
+    if (isNumberFinite(countMax)) {
+      return this.computedCount() > countMax!;
+    }
+    return false;
+  });
+
   constructor() {
     const destroyRef = inject(DestroyRef);
 
@@ -269,6 +336,14 @@ export class TriInputWrapperComponent {
       destroyRef.onDestroy(() => {
         this.focusMonitor.stopMonitoring(element);
       });
+    });
+
+    effect(() => {
+      const inputValue = this.inputValue();
+      const formattedValue = this.formattedValue();
+      if (formattedValue !== inputValue) {
+        this.inputDir().ngControl?.control?.setValue(formattedValue);
+      }
     });
   }
 

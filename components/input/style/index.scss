@@ -75,6 +75,12 @@ $input-prefix-cls: "#{$ant-prefix}-input";
     align-items: center;
     margin: auto;
   }
+  &-out-of-range {
+    .#{$input-prefix-cls},
+    .#{$input-prefix-cls}-show-count-suffix {
+      color: $error-color;
+    }
+  }
   // ===================== Compact Item Styles =====================
   @include compact-item($input-prefix-cls);
   @include compact-item(("#{$input-prefix-cls}-affix-wrapper"));
