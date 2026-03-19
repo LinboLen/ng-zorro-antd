@@ -27,6 +27,7 @@ import { map, startWith } from 'rxjs/operators';
 
 import {
   TRI_FORM_SIZE,
+  TRI_FORM_VARIANT,
   TriFormItemFeedbackIconComponent,
   TriFormNoStatusService,
   TriFormStatusService
@@ -48,9 +49,9 @@ const PREFIX_CLS = 'ant-input';
     '[attr.type]': 'type()',
     '[class]': 'classes()',
     '[class.tri-input-disabled]': 'finalDisabled()',
-    '[class.tri-input-borderless]': `variant() === 'borderless'`,
-    '[class.tri-input-filled]': `variant() === 'filled'`,
-    '[class.tri-input-underlined]': `variant() === 'underlined'`,
+    '[class.tri-input-borderless]': `finalVariant() === 'borderless'`,
+    '[class.tri-input-filled]': `finalVariant() === 'filled'`,
+    '[class.tri-input-underlined]': `finalVariant() === 'underlined'`,
     '[class.tri-input-lg]': `finalSize() === 'large'`,
     '[class.tri-input-sm]': `finalSize() === 'small'`,
     '[attr.disabled]': 'finalDisabled() || null',
@@ -77,7 +78,7 @@ export class TriInputDirective implements OnInit {
   readonly ngControl = inject(NgControl, { self: true, optional: true });
   readonly value = signal<string>(this.elementRef.nativeElement.value);
 
-  readonly variant = input<TriVariant>('outlined');
+  readonly variant = input<TriVariant>();
   readonly size = input<TriSizeLDSType>('default');
   /**
    * @deprecated Will be removed in v22.
@@ -94,6 +95,7 @@ export class TriInputDirective implements OnInit {
   readonly _size = linkedSignal(this.size);
 
   private readonly formSize = inject(TRI_FORM_SIZE, { optional: true });
+  private readonly formVariant = inject(TRI_FORM_VARIANT, { optional: true });
 
   readonly _status = this.formStatusService
     ? toSignal(this.formStatusService.formStatusChanges.pipe(map(value => value.status)), { initialValue: '' })
@@ -123,6 +125,8 @@ export class TriInputDirective implements OnInit {
     }
     return this._size();
   });
+
+  protected readonly finalVariant = computed(() => this.variant() || this.formVariant?.() || 'outlined');
 
   feedbackRef: ComponentRef<TriFormItemFeedbackIconComponent> | null = null;
   // TODO: When the input group is removed, we can remove this.

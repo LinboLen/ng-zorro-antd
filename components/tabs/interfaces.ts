@@ -48,3 +48,9 @@ export type TriTabScrollEventHandlerFun<T extends TriTabScrollEvent['event']> = 
 export interface TabTemplateContext {
   visible: boolean;
 }
+
+export type TriIndicatorAlign = 'start' | 'end' | 'center';
+export interface TriIndicator {
+  size?: number | ((origin: number) => number);
+  align: TriIndicatorAlign;
+}

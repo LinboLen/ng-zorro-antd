@@ -16,6 +16,7 @@ import {
   ChangeDetectorRef,
   Component,
   ContentChildren,
+  DestroyRef,
   ElementRef,
   EventEmitter,
   Input,
@@ -29,9 +30,8 @@ import {
   ViewEncapsulation,
   booleanAttribute,
   computed,
-  input,
   inject,
-  DestroyRef
+  input
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { animationFrameScheduler, asapScheduler, merge, of } from 'rxjs';
@@ -41,7 +41,7 @@ import { TriResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
 import { requestAnimationFrame } from 'ng-zorro-antd/core/polyfill';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { TriTabPositionMode, TriTabScrollEvent, TriTabScrollListOffsetEvent } from './interfaces';
+import { TriTabPositionMode, TriTabScrollEvent, TriTabScrollListOffsetEvent, type TriIndicator } from './interfaces';
 import { TriTabAddButtonComponent } from './tab-add-button.component';
 import { TriTabBarExtraContentDirective } from './tab-bar-extra-content.directive';
 import { TriTabNavItemDirective } from './tab-nav-item.directive';
@@ -94,7 +94,13 @@ const CSS_TRANSFORM_TIME = 150;
             (click)="addClicked.emit()"
           ></button>
         }
-        <div tri-tabs-ink-bar [hidden]="hideBar" [position]="position" [animated]="inkBarAnimated"></div>
+        <div
+          tri-tabs-ink-bar
+          [hidden]="hideBar"
+          [position]="position"
+          [animated]="inkBarAnimated"
+          [indicator]="indicator()"
+        ></div>
       </div>
     </div>
     <tri-tab-nav-operation
@@ -142,6 +148,7 @@ export class TriTabNavBarComponent implements AfterViewInit, AfterContentChecked
   @Input() extraTemplate?: TemplateRef<void>;
 
   readonly extraContents = input.required<readonly TriTabBarExtraContentDirective[]>();
+  readonly indicator = input<TriIndicator>();
 
   readonly startExtraContent = computed(() => this.extraContents().find(item => item.position() === 'start'));
   readonly endExtraContent = computed(() => this.extraContents().find(item => item.position() === 'end'));
@@ -566,12 +573,14 @@ export class TriTabNavBarComponent implements AfterViewInit, AfterContentChecked
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const { position } = changes;
     // The first will be aligning in ngAfterViewInit
+    const { position, indicator } = changes;
     if (position && !position.isFirstChange()) {
+      this.updateScrollListPosition();
+    }
+    if ((position && !position.isFirstChange()) || (indicator && !indicator.isFirstChange())) {
       this.alignInkBarToSelectedTab();
       this.lockAnimation();
-      this.updateScrollListPosition();
     }
   }
 }

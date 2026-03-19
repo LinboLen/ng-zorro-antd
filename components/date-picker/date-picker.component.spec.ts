@@ -27,7 +27,7 @@ import isEqual from 'date-fns/isEqual';
 import isSameDay from 'date-fns/isSameDay';
 import { enUS } from 'date-fns/locale';
 
-import { TRI_FORM_SIZE } from 'ng-zorro-antd/core/form';
+import { TRI_FORM_SIZE, TRI_FORM_VARIANT } from 'ng-zorro-antd/core/form';
 import {
   dispatchFakeEvent,
   dispatchKeyboardEvent,
@@ -1573,6 +1573,76 @@ describe('finalSize', () => {
   });
 });
 
+describe('finalVariant', () => {
+  let fixture: ComponentFixture<TestDatePickerFinalVariantComponent>;
+  let datePickerElement: HTMLElement;
+  let formVariantSignal: WritableSignal<TriVariant>;
+
+  beforeEach(() => {
+    formVariantSignal = signal<TriVariant>('outlined');
+  });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+
+  it('should use formVariant when nzVariant is not set (undefined by default)', () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: TRI_FORM_VARIANT, useValue: formVariantSignal }]
+    });
+    fixture = TestBed.createComponent(TestDatePickerFinalVariantComponent);
+    datePickerElement = fixture.debugElement.query(By.directive(TriDatePickerComponent)).nativeElement;
+    fixture.detectChanges();
+    formVariantSignal.set('filled');
+    fixture.detectChanges();
+    expect(datePickerElement.classList).toContain('ant-picker-filled');
+  });
+
+  it('should use nzVariant over formVariant when nzVariant is explicitly set', () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: TRI_FORM_VARIANT, useValue: formVariantSignal }]
+    });
+    fixture = TestBed.createComponent(TestDatePickerFinalVariantComponent);
+    datePickerElement = fixture.debugElement.query(By.directive(TriDatePickerComponent)).nativeElement;
+    fixture.componentInstance.variant.set('borderless');
+    fixture.detectChanges();
+    formVariantSignal.set('filled');
+    fixture.detectChanges();
+    expect(datePickerElement.classList).toContain('ant-picker-borderless');
+    expect(datePickerElement.classList).not.toContain('ant-picker-filled');
+  });
+
+  it('should use nzVariant outlined over formVariant when explicitly set', () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: TRI_FORM_VARIANT, useValue: formVariantSignal }]
+    });
+    fixture = TestBed.createComponent(TestDatePickerFinalVariantComponent);
+    datePickerElement = fixture.debugElement.query(By.directive(TriDatePickerComponent)).nativeElement;
+    fixture.componentInstance.variant.set('outlined');
+    fixture.detectChanges();
+    formVariantSignal.set('filled');
+    fixture.detectChanges();
+    expect(datePickerElement.classList).not.toContain('ant-picker-filled');
+  });
+
+  it('should use nzVariant when no formVariant is provided', () => {
+    fixture = TestBed.createComponent(TestDatePickerFinalVariantComponent);
+    datePickerElement = fixture.debugElement.query(By.directive(TriDatePickerComponent)).nativeElement;
+    fixture.componentInstance.variant.set('filled');
+    fixture.detectChanges();
+    expect(datePickerElement.classList).toContain('ant-picker-filled');
+  });
+
+  it('should default to outlined when neither nzVariant nor formVariant is set', () => {
+    fixture = TestBed.createComponent(TestDatePickerFinalVariantComponent);
+    datePickerElement = fixture.debugElement.query(By.directive(TriDatePickerComponent)).nativeElement;
+    fixture.detectChanges();
+    expect(datePickerElement.classList).not.toContain('ant-picker-filled');
+    expect(datePickerElement.classList).not.toContain('ant-picker-borderless');
+    expect(datePickerElement.classList).not.toContain('ant-picker-underlined');
+  });
+});
+
 @Component({
   imports: [ReactiveFormsModule, FormsModule, TriDatePickerModule],
   template: `
@@ -1726,4 +1796,12 @@ class TriTestDatePickerInFormComponent {
 })
 export class TestDatePickerFinalSizeComponent {
   size: TriDatePickerSizeType = 'default';
+}
+
+@Component({
+  imports: [TriDatePickerModule],
+  template: `<tri-date-picker [variant]="variant()" />`
+})
+export class TestDatePickerFinalVariantComponent {
+  readonly variant = signal<TriVariant | undefined>(undefined);
 }

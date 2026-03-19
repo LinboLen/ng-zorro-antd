@@ -118,6 +118,7 @@ export class TriAlertComponent implements OnChanges, OnInit {
   @Input({ transform: booleanAttribute }) banner = false;
   @Input({ transform: booleanAttribute }) noAnimation = false;
   @Input() icon: string | TemplateRef<void> | null = null;
+
   @Output() readonly onClose = new EventEmitter<boolean>();
   closed = false;
   iconTheme: 'outline' | 'fill' = 'fill';

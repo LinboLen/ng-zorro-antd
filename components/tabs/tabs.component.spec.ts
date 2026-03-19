@@ -12,6 +12,7 @@ import {
   OnInit,
   provideZoneChangeDetection,
   QueryList,
+  signal,
   ViewChild,
   ViewChildren,
   ViewEncapsulation
@@ -25,9 +26,9 @@ import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { dispatchFakeEvent, dispatchKeyboardEvent } from 'ng-zorro-antd/core/testing';
 import { TriSafeAny, TriSizeLDSType } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
-import { TriTabPosition, TriTabType } from 'ng-zorro-antd/tabs/interfaces';
-import { TriTabNavBarComponent } from 'ng-zorro-antd/tabs/tab-nav-bar.component';
 
+import { TriIndicator, TriTabPosition, TriTabType } from './interfaces';
+import { TriTabNavBarComponent } from './tab-nav-bar.component';
 import { TriTabNavOperationComponent } from './tab-nav-operation.component';
 import { TriTabComponent } from './tab.component';
 import { TriTabsComponent } from './tabs.component';
@@ -964,6 +965,83 @@ describe('tabs', () => {
       expect(tabsNav.lastElementChild?.textContent?.trim()).toEqual('End Extra Action');
     });
   });
+
+  describe('indicator', () => {
+    let fixture: ComponentFixture<IndicatorTabsTestComponent>;
+    let element: HTMLElement;
+
+    beforeEach(fakeAsync(() => {
+      fixture = TestBed.createComponent(IndicatorTabsTestComponent);
+      element = fixture.nativeElement;
+      fixture.detectChanges();
+      tick(300);
+      fixture.detectChanges();
+    }));
+
+    it('should set indicator width and horizontal alignment', fakeAsync(() => {
+      fixture.componentInstance.indicator.set({
+        size: 20,
+        align: 'end'
+      });
+
+      fixture.detectChanges();
+      tick(300);
+      fixture.detectChanges();
+
+      const activeTab = element.querySelector('.ant-tabs-tab-active') as HTMLElement;
+      const inkBar = element.querySelector('.ant-tabs-ink-bar') as HTMLElement;
+      const expectedLeft = activeTab.offsetLeft + activeTab.offsetWidth - 20;
+
+      expect(inkBar.style.width).toBe('20px');
+      expect(parseFloat(inkBar.style.left)).toBe(expectedLeft);
+    }));
+
+    it('should update indicator style when nzIndicator changes', fakeAsync(() => {
+      fixture.componentInstance.indicator.set({
+        size: 10,
+        align: 'start'
+      });
+      fixture.detectChanges();
+      tick(300);
+      fixture.detectChanges();
+
+      const inkBar = element.querySelector('.ant-tabs-ink-bar') as HTMLElement;
+      const previousWidth = inkBar.style.width;
+      const previousLeft = inkBar.style.left;
+
+      fixture.componentInstance.indicator.set({
+        size: 30,
+        align: 'end'
+      });
+      fixture.detectChanges();
+      tick(300);
+      fixture.detectChanges();
+
+      expect(inkBar.style.width).toBe('30px');
+      expect(inkBar.style.width).not.toBe(previousWidth);
+      expect(inkBar.style.left).not.toBe(previousLeft);
+    }));
+
+    it('should set indicator height and vertical alignment', fakeAsync(() => {
+      fixture.componentInstance.position.set('left');
+      fixture.componentInstance.indicator.set({
+        size: origin => origin / 2,
+        align: 'center'
+      });
+
+      fixture.detectChanges();
+      tick(300);
+      fixture.detectChanges();
+
+      const activeTab = element.querySelector('.ant-tabs-tab-active') as HTMLElement;
+      const inkBar = element.querySelector('.ant-tabs-ink-bar') as HTMLElement;
+      const expectedHeight = activeTab.offsetHeight / 2;
+      const expectedTop = activeTab.offsetTop + (activeTab.offsetHeight - inkBar.offsetHeight) / 2;
+
+      expect(parseFloat(inkBar.style.height)).toBe(expectedHeight);
+      expect(parseFloat(inkBar.style.top)).toBe(expectedTop);
+    }));
+  });
 });
 
 @Component({
@@ -1299,4 +1377,20 @@ function getTranslate(transformValue: string): { x: number; y: number } {
 })
 class SimpleTabsWithExtraContentComponent {
   selectedIndex = 0;
+}
+
+@Component({
+  imports: [TriTabsModule],
+  template: `
+    <tri-tabs [tabPosition]="position()" [indicator]="indicator()" [(selectedIndexChange)]="selectedIndex">
+      <tri-tab title="Tab 0">Content of Tab Pane 0</tri-tab>
+      <tri-tab title="Tab 1">Content of Tab Pane 1</tri-tab>
+      <tri-tab title="Tab 2">Content of Tab Pane 2</tri-tab>
+    </tri-tabs>
+  `
+})
+class IndicatorTabsTestComponent {
+  readonly selectedIndex = signal(1);
+  readonly position = signal<TriTabPosition>('top');
+  readonly indicator = signal<TriIndicator | undefined>(undefined);
 }

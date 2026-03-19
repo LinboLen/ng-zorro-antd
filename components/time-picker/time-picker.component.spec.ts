@@ -21,7 +21,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { TRI_FORM_SIZE } from 'ng-zorro-antd/core/form';
+import { TRI_FORM_SIZE, TRI_FORM_VARIANT } from 'ng-zorro-antd/core/form';
 import { dispatchFakeEvent, dispatchMouseEvent, typeInElement } from 'ng-zorro-antd/core/testing';
 import { TriPlacement, TriStatus, TriVariant, type TriSizeLDSType } from 'ng-zorro-antd/core/types';
 import { PREFIX_CLASS } from 'ng-zorro-antd/date-picker';
@@ -995,6 +995,71 @@ describe('time-picker size', () => {
   });
 });
 
+describe('finalVariant', () => {
+  let fixture: ComponentFixture<TriTestTimePickerVariantComponent>;
+  let timePickerElement: HTMLElement;
+  let formVariantSignal: WritableSignal<TriVariant>;
+  beforeEach(() => {
+    formVariantSignal = signal<TriVariant>('outlined');
+  });
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+  it('should use the formVariant when nzVariant is not explicitly set', () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: TRI_FORM_VARIANT, useValue: formVariantSignal }]
+    });
+    fixture = TestBed.createComponent(TriTestTimePickerVariantComponent);
+    timePickerElement = fixture.debugElement.query(By.directive(TriTimePickerComponent)).nativeElement;
+    fixture.detectChanges();
+    formVariantSignal.set('filled');
+    fixture.detectChanges();
+    expect(timePickerElement.classList).toContain('ant-picker-filled');
+  });
+  it('should use nzVariant over formVariant when nzVariant is explicitly set', () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: TRI_FORM_VARIANT, useValue: formVariantSignal }]
+    });
+    fixture = TestBed.createComponent(TriTestTimePickerVariantComponent);
+    timePickerElement = fixture.debugElement.query(By.directive(TriTimePickerComponent)).nativeElement;
+    fixture.detectChanges();
+    formVariantSignal.set('filled');
+    fixture.componentInstance.variant.set('borderless');
+    fixture.detectChanges();
+    expect(timePickerElement.classList).toContain('ant-picker-borderless');
+    expect(timePickerElement.classList).not.toContain('ant-picker-filled');
+  });
+  it('should not apply formVariant when nzVariant is explicitly set', () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: TRI_FORM_VARIANT, useValue: formVariantSignal }]
+    });
+    fixture = TestBed.createComponent(TriTestTimePickerVariantComponent);
+    timePickerElement = fixture.debugElement.query(By.directive(TriTimePickerComponent)).nativeElement;
+    fixture.detectChanges();
+    fixture.componentInstance.variant.set('outlined');
+    fixture.detectChanges();
+    formVariantSignal.set('filled');
+    fixture.detectChanges();
+    expect(timePickerElement.classList).not.toContain('ant-picker-filled');
+  });
+  it('should use nzVariant when no formVariant is provided', () => {
+    fixture = TestBed.createComponent(TriTestTimePickerVariantComponent);
+    timePickerElement = fixture.debugElement.query(By.directive(TriTimePickerComponent)).nativeElement;
+    fixture.detectChanges();
+    fixture.componentInstance.variant.set('filled');
+    fixture.detectChanges();
+    expect(timePickerElement.classList).toContain('ant-picker-filled');
+  });
+  it('should default to outlined when neither nzVariant nor formVariant is set', () => {
+    fixture = TestBed.createComponent(TriTestTimePickerVariantComponent);
+    timePickerElement = fixture.debugElement.query(By.directive(TriTimePickerComponent)).nativeElement;
+    fixture.detectChanges();
+    expect(timePickerElement.classList).not.toContain('ant-picker-filled');
+    expect(timePickerElement.classList).not.toContain('ant-picker-borderless');
+    expect(timePickerElement.classList).not.toContain('ant-picker-underlined');
+  });
+});
+
 @Component({
   imports: [TriTimePickerComponent, FormsModule],
   template: `
@@ -1124,4 +1189,12 @@ export class TriTestTimePickerPlacementComponent {
 })
 class TriTestTimePickerSizeComponent {
   size: TriSizeLDSType = 'default';
+}
+
+@Component({
+  imports: [TriTimePickerComponent],
+  template: `<tri-time-picker [variant]="variant()" />`
+})
+export class TriTestTimePickerVariantComponent {
+  readonly variant = signal<TriVariant | undefined>(undefined);
 }

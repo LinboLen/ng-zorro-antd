@@ -17,7 +17,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { TRI_FORM_SIZE } from 'ng-zorro-antd/core/form';
+import { TRI_FORM_SIZE, TRI_FORM_VARIANT } from 'ng-zorro-antd/core/form';
 import { dispatchEvent, dispatchKeyboardEvent } from 'ng-zorro-antd/core/testing';
 import { TriSizeLDSType, TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
@@ -699,6 +699,55 @@ describe('finalSize', () => {
   });
 });
 
+describe('finalVariant', () => {
+  let fixture: ComponentFixture<TestInputNumberFinalVariantComponent>;
+  let inputNumberElement: HTMLElement;
+  let formVariantSignal: WritableSignal<TriVariant>;
+
+  beforeEach(() => {
+    formVariantSignal = signal<TriVariant>('outlined');
+  });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+
+  it('should use the formVariant when nzVariant is not set', () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: TRI_FORM_VARIANT, useValue: formVariantSignal }]
+    });
+    fixture = TestBed.createComponent(TestInputNumberFinalVariantComponent);
+    inputNumberElement = fixture.debugElement.query(By.directive(TriInputNumberComponent)).nativeElement;
+    fixture.detectChanges();
+    formVariantSignal.set('filled');
+    fixture.detectChanges();
+    expect(inputNumberElement.classList).toContain('ant-input-number-filled');
+  });
+
+  it('should use nzVariant over formVariant when nzVariant is explicitly set', () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: TRI_FORM_VARIANT, useValue: formVariantSignal }]
+    });
+    fixture = TestBed.createComponent(TestInputNumberFinalVariantComponent);
+    inputNumberElement = fixture.debugElement.query(By.directive(TriInputNumberComponent)).nativeElement;
+    fixture.componentInstance.variant.set('borderless');
+    fixture.detectChanges();
+    formVariantSignal.set('filled');
+    fixture.detectChanges();
+    expect(inputNumberElement.classList).toContain('ant-input-number-borderless');
+    expect(inputNumberElement.classList).not.toContain('ant-input-number-filled');
+  });
+
+  it('should use nzVariant when no formVariant is provided', () => {
+    TestBed.configureTestingModule({});
+    fixture = TestBed.createComponent(TestInputNumberFinalVariantComponent);
+    inputNumberElement = fixture.debugElement.query(By.directive(TriInputNumberComponent)).nativeElement;
+    fixture.componentInstance.variant.set('filled');
+    fixture.detectChanges();
+    expect(inputNumberElement.classList).toContain('ant-input-number-filled');
+  });
+});
+
 @Component({
   imports: [TriInputNumberModule, FormsModule],
   template: `
@@ -823,4 +872,12 @@ class InputNumberWithAffixesAndAddonsTestComponent {
 })
 class TestInputNumberFinalSizeComponent {
   size: TriSizeLDSType = 'default';
+}
+
+@Component({
+  imports: [TriInputNumberModule],
+  template: `<tri-input-number [variant]="variant()" />`
+})
+class TestInputNumberFinalVariantComponent {
+  readonly variant = signal<TriVariant | undefined>(undefined);
 }

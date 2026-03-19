@@ -20,6 +20,7 @@ import {
   EventEmitter,
   forwardRef,
   inject,
+  input,
   Input,
   NgZone,
   OnInit,
@@ -47,7 +48,8 @@ import {
   TriTabPositionMode,
   TriTabsCanDeactivateFn,
   TriTabScrollEvent,
-  TriTabType
+  TriTabType,
+  type TriIndicator
 } from './interfaces';
 import { TriTabBarExtraContentDirective } from './tab-bar-extra-content.directive';
 import { TriTabBodyComponent } from './tab-body.component';
@@ -84,6 +86,7 @@ let nextId = 0;
         [position]="position"
         [extraTemplate]="tabBarExtraContent"
         [extraContents]="extraContents()"
+        [indicator]="indicator()"
         (tabScroll)="tabListScroll.emit($event)"
         (selectFocusedIndex)="setSelectedIndex($event)"
         (addClicked)="onAdd()"
@@ -224,6 +227,8 @@ export class TriTabsComponent implements OnInit, AfterContentChecked, AfterConte
   @Input({ transform: booleanAttribute }) linkRouter = false;
   @Input({ transform: booleanAttribute }) linkExact = true;
   @Input({ transform: booleanAttribute }) destroyInactiveTabPane = false;
+
+  readonly indicator = input<TriIndicator>();
 
   @Output() readonly selectChange: EventEmitter<TriTabChangeEvent> = new EventEmitter<TriTabChangeEvent>(true);
   @Output() readonly selectedIndexChange: EventEmitter<number> = new EventEmitter<number>();

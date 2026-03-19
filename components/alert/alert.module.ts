@@ -5,10 +5,11 @@
 
 import { NgModule } from '@angular/core';
 
+import { TriAlertMarqueeComponent } from './alert-marquee.component';
 import { TriAlertComponent } from './alert.component';
 
 @NgModule({
-  exports: [TriAlertComponent],
-  imports: [TriAlertComponent]
+  exports: [TriAlertComponent, TriAlertMarqueeComponent],
+  imports: [TriAlertComponent, TriAlertMarqueeComponent]
 })
 export class TriAlertModule {}

@@ -50,7 +50,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { merge, of as observableOf, Subscription } from 'rxjs';
 import { distinctUntilChanged, map, startWith, switchMap, withLatestFrom } from 'rxjs/operators';
 
-import { TriFormItemFeedbackIconComponent, TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
+import {
+  TRI_FORM_VARIANT,
+  TriFormItemFeedbackIconComponent,
+  TriFormNoStatusService,
+  TriFormStatusService
+} from 'ng-zorro-antd/core/form';
 import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import { DEFAULT_MENTION_BOTTOM_POSITIONS, DEFAULT_MENTION_TOP_POSITIONS } from 'ng-zorro-antd/core/overlay';
 import { NgClassInterface, TriSafeAny, TriStatus, TriValidateStatus, TriVariant } from 'ng-zorro-antd/core/types';
@@ -135,9 +140,9 @@ export type MentionPlacement = 'top' | 'bottom';
   host: {
     class: 'tri-mentions',
     '[class.tri-mentions-rtl]': `dir === 'rtl'`,
-    '[class.tri-mentions-borderless]': `variant === 'borderless'`,
-    '[class.tri-mentions-filled]': `variant === 'filled'`,
-    '[class.tri-mentions-underlined]': `variant === 'underlined'`,
+    '[class.tri-mentions-borderless]': `finalVariant() === 'borderless'`,
+    '[class.tri-mentions-filled]': `finalVariant() === 'filled'`,
+    '[class.tri-mentions-underlined]': `finalVariant() === 'underlined'`,
     '[class.tri-mentions-focused]': `focused()`,
     '[class.tri-mentions-disabled]': `disabled()`
   },
@@ -165,7 +170,7 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() placement: MentionPlacement = 'bottom';
   @Input() suggestions: TriSafeAny[] = [];
   @Input() status: TriStatus = '';
-  @Input() variant: TriVariant = 'outlined';
+  @Input() variant: TriVariant | undefined = undefined;
   @Input({ transform: booleanAttribute }) allowClear = false;
   @Input() clearIcon: TemplateRef<TriSafeAny> | null = null;
   @Output() readonly onSelect = new EventEmitter<TriSafeAny>();
@@ -229,6 +234,12 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
   private formStatusService = inject(TriFormStatusService, { optional: true });
   private formNoStatusService = inject(TriFormNoStatusService, { optional: true });
 
+  private readonly formVariant = inject(TRI_FORM_VARIANT, { optional: true });
+
+  protected readonly _variant = signal<TriVariant | undefined>(this.variant);
+
+  protected readonly finalVariant = computed(() => this._variant() || this.formVariant?.() || 'outlined');
+
   constructor() {
     this.destroyRef.onDestroy(() => {
       this.closeDropdown();
@@ -264,7 +275,7 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const { nzSuggestions, nzStatus } = changes;
+    const { nzSuggestions, nzStatus, nzVariant } = changes;
     if (nzSuggestions) {
       if (this.isOpen) {
         this.previousValue = null;
@@ -274,6 +285,9 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
     }
     if (nzStatus) {
       this.setStatusStyles(this.status, this.hasFeedback);
+    }
+    if (nzVariant) {
+      this._variant.set(nzVariant.currentValue);
     }
   }
 

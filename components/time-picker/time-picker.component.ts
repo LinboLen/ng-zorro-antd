@@ -43,6 +43,7 @@ import { slideAnimationEnter, slideAnimationLeave } from 'ng-zorro-antd/core/ani
 import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
 import {
   TRI_FORM_SIZE,
+  TRI_FORM_VARIANT,
   TriFormItemFeedbackIconComponent,
   TriFormNoStatusService,
   TriFormStatusService
@@ -165,9 +166,9 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'timePicker';
     '[class.tri-picker-disabled]': `disabled`,
     '[class.tri-picker-focused]': `focused`,
     '[class.tri-picker-rtl]': `dir() === 'rtl'`,
-    '[class.tri-picker-borderless]': `variant === 'borderless'`,
-    '[class.tri-picker-filled]': `variant === 'filled'`,
-    '[class.tri-picker-underlined]': `variant === 'underlined'`,
+    '[class.tri-picker-borderless]': `finalVariant() === 'borderless'`,
+    '[class.tri-picker-filled]': `finalVariant() === 'filled'`,
+    '[class.tri-picker-underlined]': `finalVariant() === 'underlined'`,
     '(click)': 'open()'
   },
   hostDirectives: [TriSpaceCompactItemDirective],
@@ -233,7 +234,7 @@ export class TriTimePickerComponent implements ControlValueAccessor, OnInit, Aft
   @Input() id: string | null = null;
   @Input() size: TriSizeLDSType = 'default';
   @Input() status: TriStatus = '';
-  @Input() @WithConfig() variant: TriVariant = 'outlined';
+  @Input() @WithConfig() variant: TriVariant | undefined = undefined;
   @Input() @WithConfig() hourStep: number = 1;
   @Input() @WithConfig() minuteStep: number = 1;
   @Input() @WithConfig() secondStep: number = 1;
@@ -262,6 +263,7 @@ export class TriTimePickerComponent implements ControlValueAccessor, OnInit, Aft
   @Input({ transform: booleanAttribute }) inputReadOnly: boolean = false;
 
   private readonly formSize = inject(TRI_FORM_SIZE, { optional: true });
+  private readonly formVariant = inject(TRI_FORM_VARIANT, { optional: true });
   private hasConfirmed = false;
 
   readonly prefix = input<string | TemplateRef<void>>();
@@ -409,6 +411,8 @@ export class TriTimePickerComponent implements ControlValueAccessor, OnInit, Aft
     return this.#size();
   });
 
+  protected readonly finalVariant = computed(() => this.#variant() || this.formVariant?.() || 'outlined');
+
   protected dropdownTimePickerClass = computed(() => {
     const classList = [this.generateClass('dropdown')];
     const { originX, originY } = this.currentPosition();
@@ -432,6 +436,7 @@ export class TriTimePickerComponent implements ControlValueAccessor, OnInit, Aft
   });
 
   #size = signal<TriSizeLDSType>(this.size);
+  readonly #variant = signal<TriVariant | undefined>(this.variant);
   private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private formStatusService = inject(TriFormStatusService, { optional: true });
   private formNoStatusService = inject(TriFormNoStatusService, { optional: true });
@@ -452,7 +457,7 @@ export class TriTimePickerComponent implements ControlValueAccessor, OnInit, Aft
     this.i18nPlaceHolder$ = this.i18n.localeChange.pipe(map(nzLocale => nzLocale.TimePicker.placeholder));
   }
 
-  ngOnChanges({ nzUse12Hours, nzFormat, nzDisabled, nzAutoFocus, nzStatus, nzSize }: SimpleChanges): void {
+  ngOnChanges({ nzUse12Hours, nzFormat, nzDisabled, nzAutoFocus, nzStatus, nzSize, nzVariant }: SimpleChanges): void {
     if (nzUse12Hours && !nzUse12Hours.previousValue && nzUse12Hours.currentValue && !nzFormat) {
       this.format = 'h:mm:ss a';
     }
@@ -473,6 +478,9 @@ export class TriTimePickerComponent implements ControlValueAccessor, OnInit, Aft
     }
     if (nzSize) {
       this.#size.set(nzSize.currentValue);
+    }
+    if (nzVariant) {
+      this.#variant.set(nzVariant.currentValue);
     }
   }
 

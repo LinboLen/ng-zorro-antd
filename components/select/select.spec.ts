@@ -19,7 +19,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { TRI_FORM_SIZE } from 'ng-zorro-antd/core/form';
+import { TRI_FORM_SIZE, TRI_FORM_VARIANT } from 'ng-zorro-antd/core/form';
 import { dispatchFakeEvent, dispatchKeyboardEvent, dispatchMouseEvent } from 'ng-zorro-antd/core/testing';
 import { TriSafeAny, TriSizeLDSType, TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
 import { TriFormControlStatusType, TriFormModule } from 'ng-zorro-antd/form';
@@ -1701,6 +1701,76 @@ describe('select finalSize', () => {
   });
 });
 
+describe('select finalVariant', () => {
+  let fixture: ComponentFixture<TestSelectFinalVariantComponent>;
+  let selectElement: HTMLElement;
+  let formVariantSignal: WritableSignal<TriVariant>;
+
+  beforeEach(() => {
+    formVariantSignal = signal<TriVariant>('outlined');
+  });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+
+  it('should use formVariant when nzVariant is not set (undefined by default)', () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: TRI_FORM_VARIANT, useValue: formVariantSignal }]
+    });
+    fixture = TestBed.createComponent(TestSelectFinalVariantComponent);
+    selectElement = fixture.debugElement.query(By.directive(TriSelectComponent)).nativeElement;
+    fixture.detectChanges();
+    formVariantSignal.set('filled');
+    fixture.detectChanges();
+    expect(selectElement.classList).toContain('ant-select-filled');
+  });
+
+  it('should use nzVariant over formVariant when nzVariant is explicitly set', () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: TRI_FORM_VARIANT, useValue: formVariantSignal }]
+    });
+    fixture = TestBed.createComponent(TestSelectFinalVariantComponent);
+    selectElement = fixture.debugElement.query(By.directive(TriSelectComponent)).nativeElement;
+    fixture.componentInstance.variant.set('borderless');
+    fixture.detectChanges();
+    formVariantSignal.set('filled');
+    fixture.detectChanges();
+    expect(selectElement.classList).toContain('ant-select-borderless');
+    expect(selectElement.classList).not.toContain('ant-select-filled');
+  });
+
+  it('should use nzVariant outlined over formVariant when explicitly set', () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: TRI_FORM_VARIANT, useValue: formVariantSignal }]
+    });
+    fixture = TestBed.createComponent(TestSelectFinalVariantComponent);
+    selectElement = fixture.debugElement.query(By.directive(TriSelectComponent)).nativeElement;
+    fixture.componentInstance.variant.set('outlined');
+    fixture.detectChanges();
+    formVariantSignal.set('filled');
+    fixture.detectChanges();
+    expect(selectElement.classList).not.toContain('ant-select-filled');
+  });
+
+  it('should use nzVariant when no formVariant is provided', () => {
+    fixture = TestBed.createComponent(TestSelectFinalVariantComponent);
+    selectElement = fixture.debugElement.query(By.directive(TriSelectComponent)).nativeElement;
+    fixture.componentInstance.variant.set('filled');
+    fixture.detectChanges();
+    expect(selectElement.classList).toContain('ant-select-filled');
+  });
+
+  it('should default to outlined when neither nzVariant nor formVariant is set', () => {
+    fixture = TestBed.createComponent(TestSelectFinalVariantComponent);
+    selectElement = fixture.debugElement.query(By.directive(TriSelectComponent)).nativeElement;
+    fixture.detectChanges();
+    expect(selectElement.classList).not.toContain('ant-select-filled');
+    expect(selectElement.classList).not.toContain('ant-select-borderless');
+    expect(selectElement.classList).not.toContain('ant-select-underlined');
+  });
+});
+
 @Component({
   imports: [FormsModule, TriSelectModule],
   template: `
@@ -1791,7 +1861,7 @@ export class TestSelectTemplateDefaultComponent {
   };
   compareWith: (o1: TriSafeAny, o2: TriSafeAny) => boolean = (o1: TriSafeAny, o2: TriSafeAny) => o1 === o2;
   allowClear = false;
-  variant: TriVariant = 'outlined';
+  variant: TriVariant | undefined = undefined;
   showSearch = false;
   loading = false;
   autoFocus = false;
@@ -2052,4 +2122,12 @@ export class TestSelectInFormComponent {
 })
 export class TestSelectFinalSizeComponent {
   size: TriSelectSizeType = 'default';
+}
+
+@Component({
+  imports: [TriSelectModule],
+  template: `<tri-select [variant]="variant()" />`
+})
+export class TestSelectFinalVariantComponent {
+  readonly variant = signal<TriVariant | undefined>(undefined);
 }

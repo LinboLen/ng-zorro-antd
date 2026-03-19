@@ -16,7 +16,7 @@ import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testi
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { TRI_FORM_SIZE } from 'ng-zorro-antd/core/form';
+import { TRI_FORM_SIZE, TRI_FORM_VARIANT } from 'ng-zorro-antd/core/form';
 import { TriSizeLDSType, TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
@@ -340,6 +340,87 @@ describe('input', () => {
       expect(inputElement.classList).toContain('ant-input-lg');
     });
   });
+
+  describe('finalVariant', () => {
+    let fixture: ComponentFixture<TestInputFinalVariantComponent>;
+    let inputElement: HTMLElement;
+    let component: TestInputFinalVariantComponent;
+    let formVariantSignal: WritableSignal<TriVariant>;
+
+    beforeEach(() => {
+      formVariantSignal = signal<TriVariant>('outlined');
+    });
+
+    afterEach(() => {
+      TestBed.resetTestingModule();
+    });
+
+    it('should set correctly the variant from the formVariant signal', () => {
+      TestBed.configureTestingModule({
+        providers: [{ provide: TRI_FORM_VARIANT, useValue: formVariantSignal }]
+      });
+      fixture = TestBed.createComponent(TestInputFinalVariantComponent);
+      component = fixture.componentInstance;
+      inputElement = fixture.debugElement.query(By.directive(TriInputDirective)).nativeElement;
+      fixture.detectChanges();
+      formVariantSignal.set('filled');
+      fixture.detectChanges();
+      expect(inputElement.classList).toContain('ant-input-filled');
+    });
+
+    it('should prioritize any explicit nzVariant over formVariant', () => {
+      TestBed.configureTestingModule({
+        providers: [{ provide: TRI_FORM_VARIANT, useValue: formVariantSignal }]
+      });
+      fixture = TestBed.createComponent(TestInputFinalVariantComponent);
+      component = fixture.componentInstance;
+      inputElement = fixture.debugElement.query(By.directive(TriInputDirective)).nativeElement;
+      fixture.detectChanges();
+      formVariantSignal.set('filled');
+      component.variant.set('borderless');
+      fixture.detectChanges();
+      expect(inputElement.classList).toContain('ant-input-borderless');
+      expect(inputElement.classList).not.toContain('ant-input-filled');
+    });
+
+    it('should prioritize nzVariant over formVariant when nzVariant is explicitly set', () => {
+      TestBed.configureTestingModule({
+        providers: [{ provide: TRI_FORM_VARIANT, useValue: formVariantSignal }]
+      });
+      fixture = TestBed.createComponent(TestInputFinalVariantComponent);
+      component = fixture.componentInstance;
+      inputElement = fixture.debugElement.query(By.directive(TriInputDirective)).nativeElement;
+      fixture.detectChanges();
+      formVariantSignal.set('filled');
+      component.variant.set('outlined');
+      fixture.detectChanges();
+      expect(inputElement.classList).not.toContain('ant-input-filled');
+      expect(inputElement.classList).not.toContain('ant-input-borderless');
+      expect(inputElement.classList).not.toContain('ant-input-underlined');
+    });
+
+    it('should use nzVariant when no formVariant is provided', () => {
+      TestBed.configureTestingModule({});
+      fixture = TestBed.createComponent(TestInputFinalVariantComponent);
+      component = fixture.componentInstance;
+      inputElement = fixture.debugElement.query(By.directive(TriInputDirective)).nativeElement;
+      fixture.detectChanges();
+      component.variant.set('underlined');
+      fixture.detectChanges();
+      expect(inputElement.classList).toContain('ant-input-underlined');
+    });
+
+    it('should fallback to outlined when neither nzVariant nor formVariant is set', () => {
+      TestBed.configureTestingModule({});
+      fixture = TestBed.createComponent(TestInputFinalVariantComponent);
+      component = fixture.componentInstance;
+      inputElement = fixture.debugElement.query(By.directive(TriInputDirective)).nativeElement;
+      fixture.detectChanges();
+      expect(inputElement.classList).not.toContain('ant-input-filled');
+      expect(inputElement.classList).not.toContain('ant-input-borderless');
+      expect(inputElement.classList).not.toContain('ant-input-underlined');
+    });
+  });
 });
 
 @Component({
@@ -442,4 +523,12 @@ export class TriTestInputWithTypeComponent {
 })
 export class TestInputFinalSizeComponent {
   size: TriSizeLDSType = 'default';
+}
+
+@Component({
+  imports: [TriInputModule],
+  template: `<input tri-input [variant]="variant()" />`
+})
+export class TestInputFinalVariantComponent {
+  readonly variant = signal<TriVariant | undefined>(undefined);
 }

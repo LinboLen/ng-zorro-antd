@@ -49,6 +49,7 @@ import { TriNoAnimationDirective, slideAnimationEnter, slideAnimationLeave } fro
 import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
 import {
   TRI_FORM_SIZE,
+  TRI_FORM_VARIANT,
   TriFormItemFeedbackIconComponent,
   TriFormNoStatusService,
   TriFormStatusService
@@ -291,9 +292,9 @@ const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
     '[class.tri-select-show-arrow]': 'showArrow',
     '[class.tri-select-show-search]': '!!showSearch',
     '[class.tri-select-disabled]': 'disabled',
-    '[class.tri-select-borderless]': `variant === 'borderless'`,
-    '[class.tri-select-filled]': `variant === 'filled'`,
-    '[class.tri-select-underlined]': `variant === 'underlined'`,
+    '[class.tri-select-borderless]': `finalVariant() === 'borderless'`,
+    '[class.tri-select-filled]': `finalVariant() === 'filled'`,
+    '[class.tri-select-underlined]': `finalVariant() === 'underlined'`,
     '[class.tri-select-open]': 'menuVisible()',
     '[class.tri-select-focused]': 'isFocused',
     '[class.tri-select-multiple]': 'multiple',
@@ -366,7 +367,7 @@ export class TriCascaderComponent
   @Input() valueProperty: string = 'value';
   @Input() labelProperty: string = 'label';
   @Input() labelRender: TemplateRef<typeof this.labelRenderContext> | null = null;
-  @Input() @WithConfig() variant: TriVariant = 'outlined';
+  @Input() @WithConfig() variant: TriVariant | undefined = undefined;
   @Input() notFoundContent?: string | TemplateRef<void>;
   @Input() @WithConfig() size: TriCascaderSize = 'default';
   @Input() @WithConfig() backdrop = false;
@@ -446,7 +447,7 @@ export class TriCascaderComponent
     return this.elementRef;
   }
 
-  protected finalSize = computed(() => {
+  protected readonly finalSize = computed(() => {
     if (this.formSize?.()) {
       return this.formSize();
     }
@@ -456,9 +457,13 @@ export class TriCascaderComponent
     return this.#size();
   });
 
+  protected readonly finalVariant = computed(() => this.#variant() || this.formVariant?.() || 'outlined');
+
   #size = signal<TriSizeLDSType>(this.size);
+  readonly #variant = signal<TriVariant | undefined>(this.variant);
 
   private readonly formSize = inject(TRI_FORM_SIZE, { optional: true });
+  private readonly formVariant = inject(TRI_FORM_VARIANT, { optional: true });
   private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private inputString = '';
   private isOpening = false;
@@ -597,7 +602,7 @@ export class TriCascaderComponent
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const { nzOpen, nzStatus, nzSize, nzPlacement, nzOptions } = changes;
+    const { nzOpen, nzStatus, nzSize, nzPlacement, nzOptions, nzVariant } = changes;
     if (nzOpen && this.openControlled) {
       this.setMenuVisible(nzOpen.currentValue);
     }
@@ -609,6 +614,9 @@ export class TriCascaderComponent
     }
     if (nzSize) {
       this.#size.set(nzSize.currentValue);
+    }
+    if (nzVariant) {
+      this.#variant.set(nzVariant.currentValue);
     }
     if (nzPlacement) {
       const { currentValue } = nzPlacement;

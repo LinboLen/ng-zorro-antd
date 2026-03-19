@@ -45,6 +45,7 @@ import { TriNoAnimationDirective, slideAnimationEnter, slideAnimationLeave } fro
 import { TriConfigKey, WithConfig, onConfigChangeEventForComponent } from 'ng-zorro-antd/core/config';
 import {
   TRI_FORM_SIZE,
+  TRI_FORM_VARIANT,
   TriFormItemFeedbackIconComponent,
   TriFormNoStatusService,
   TriFormStatusService
@@ -277,9 +278,9 @@ const listOfPositions = [
     '[class.tri-select-single]': '!isMultiple',
     '[class.tri-select-show-arrow]': '!isMultiple',
     '[class.tri-select-show-search]': '!isMultiple',
-    '[class.tri-select-borderless]': 'variant === "borderless"',
-    '[class.tri-select-filled]': 'variant === "filled"',
-    '[class.tri-select-underlined]': 'variant === "underlined"',
+    '[class.tri-select-borderless]': 'finalVariant() === "borderless"',
+    '[class.tri-select-filled]': 'finalVariant() === "filled"',
+    '[class.tri-select-underlined]': 'finalVariant() === "underlined"',
     '[class.tri-select-multiple]': 'isMultiple',
     '[class.tri-select-allow-clear]': 'allowClear',
     '[class.tri-select-open]': 'open',
@@ -324,7 +325,7 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
   @Input() nodes: TriTreeNodeOptions[] | TriTreeNode[] = [];
   @Input() open = false;
   @Input() @WithConfig() size: TriSizeLDSType = 'default';
-  @Input() @WithConfig() variant: TriVariant = 'outlined';
+  @Input() @WithConfig() variant: TriVariant | undefined = undefined;
   @Input() placeHolder = '';
   @Input() dropdownStyle: NgStyleInterface | null = null;
   @Input() dropdownClassName?: string;
@@ -393,9 +394,13 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
     return this.#size();
   });
 
+  protected readonly finalVariant = computed(() => this.#variant() || this.formVariant?.() || 'outlined');
+
   #size = signal<TriSizeLDSType>(this.size);
+  readonly #variant = signal<TriVariant | undefined>(this.variant);
 
   private readonly formSize = inject(TRI_FORM_SIZE, { optional: true });
+  private readonly formVariant = inject(TRI_FORM_VARIANT, { optional: true });
 
   private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private isNzDisableFirstChange: boolean = true;
@@ -502,7 +507,7 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
     });
   }
 
-  ngOnChanges({ nzNodes, nzDropdownClassName, nzStatus, nzPlacement, nzSize }: SimpleChanges): void {
+  ngOnChanges({ nzNodes, nzDropdownClassName, nzStatus, nzPlacement, nzSize, nzVariant }: SimpleChanges): void {
     if (nzNodes) {
       this.updateSelectedNodes(true);
     }
@@ -521,6 +526,9 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
     }
     if (nzSize) {
       this.#size.set(nzSize.currentValue);
+    }
+    if (nzVariant) {
+      this.#variant.set(nzVariant.currentValue);
     }
   }
 

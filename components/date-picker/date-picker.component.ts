@@ -50,6 +50,7 @@ import { slideAnimationEnter, slideAnimationLeave } from 'ng-zorro-antd/core/ani
 import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
 import {
   TRI_FORM_SIZE,
+  TRI_FORM_VARIANT,
   TriFormItemFeedbackIconComponent,
   TriFormNoStatusService,
   TriFormStatusService
@@ -251,9 +252,9 @@ export type TriDatePickerSizeType = 'large' | 'default' | 'small';
     '[class.tri-picker-small]': `finalSize() === 'small'`,
     '[class.tri-picker-disabled]': `disabled`,
     '[class.tri-picker-rtl]': `dir() === 'rtl'`,
-    '[class.tri-picker-borderless]': `variant === 'borderless'`,
-    '[class.tri-picker-filled]': `variant === 'filled'`,
-    '[class.tri-picker-underlined]': `variant === 'underlined'`,
+    '[class.tri-picker-borderless]': `finalVariant() === 'borderless'`,
+    '[class.tri-picker-filled]': `finalVariant() === 'filled'`,
+    '[class.tri-picker-underlined]': `finalVariant() === 'underlined'`,
     '[class.tri-picker-inline]': `inline()`,
     '(click)': 'onClickInputBox($event)'
   },
@@ -324,7 +325,7 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
   @Input() size: TriDatePickerSizeType = 'default';
   @Input() status: TriStatus = '';
   @Input() format!: string;
-  @Input() @WithConfig() variant: TriVariant = 'outlined';
+  @Input() @WithConfig() variant: TriVariant | undefined = undefined;
   @Input() dateRender?: TemplateRef<TriSafeAny> | string | FunctionProp<TemplateRef<Date> | string>;
   @Input() disabledTime?: DisabledTimeFn;
   @Input() renderExtraFooter?: TemplateRef<TriSafeAny> | string | FunctionProp<TemplateRef<TriSafeAny> | string>;
@@ -423,9 +424,13 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
     return this.#size();
   });
 
+  protected readonly finalVariant = computed(() => this.#variant() || this.formVariant?.() || 'outlined');
+
   #size = signal<TriSizeLDSType>(this.size);
+  #variant = signal<TriVariant | undefined>(this.variant);
 
   private readonly formSize = inject(TRI_FORM_SIZE, { optional: true });
+  private readonly formVariant = inject(TRI_FORM_VARIANT, { optional: true });
 
   private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private document: Document = inject(DOCUMENT);
@@ -756,7 +761,8 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
     nzFormat,
     nzRenderExtraFooter,
     nzMode,
-    nzSize
+    nzSize,
+    nzVariant
   }: SimpleChanges): void {
     if (nzPopupStyle) {
       // Always assign the popup style patch
@@ -797,6 +803,10 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
 
     if (nzSize) {
       this.#size.set(nzSize.currentValue);
+    }
+
+    if (nzVariant) {
+      this.#variant.set(nzVariant.currentValue);
     }
   }
 

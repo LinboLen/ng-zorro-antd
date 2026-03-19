@@ -21,8 +21,8 @@ import { filter, map } from 'rxjs/operators';
 import { ThemeType } from '@ant-design/icons-angular';
 
 import { TriConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
-import { TRI_FORM_SIZE } from 'ng-zorro-antd/core/form';
-import { InputObservable, type TriSizeLDSType } from 'ng-zorro-antd/core/types';
+import { TRI_FORM_SIZE, TRI_FORM_VARIANT } from 'ng-zorro-antd/core/form';
+import { InputObservable, type TriSizeLDSType, type TriVariant } from 'ng-zorro-antd/core/types';
 
 import type { TriRequiredMark } from './types';
 
@@ -49,7 +49,13 @@ export const DefaultTooltipIcon = {
     '[class.tri-form-small]': `size() === 'small'`,
     '[class.tri-form-large]': `size() === 'large'`
   },
-  providers: [{ provide: TRI_FORM_SIZE, useFactory: () => inject(TriFormDirective).size }]
+  providers: [
+    { provide: TRI_FORM_SIZE, useFactory: () => inject(TriFormDirective).size },
+    {
+      provide: TRI_FORM_VARIANT,
+      useFactory: () => inject(TriFormDirective).variant
+    }
+  ]
 })
 export class TriFormDirective implements OnChanges, InputObservable {
   private destroyRef = inject(DestroyRef);
@@ -65,6 +71,7 @@ export class TriFormDirective implements OnChanges, InputObservable {
   @Input({ transform: booleanAttribute }) @WithConfig() labelWrap: boolean = false;
 
   readonly size = input<TriSizeLDSType>();
+  readonly variant = input<TriVariant>('outlined');
 
   readonly requiredMark = input<TriRequiredMark>(true);
 

@@ -49,6 +49,7 @@ import { TriNoAnimationDirective, slideAnimationEnter, slideAnimationLeave } fro
 import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
 import {
   TRI_FORM_SIZE,
+  TRI_FORM_VARIANT,
   TriFormItemFeedbackIconComponent,
   TriFormNoStatusService,
   TriFormStatusService
@@ -209,9 +210,9 @@ export type TriSelectSizeType = TriSizeLDSType;
     '[class.tri-select-disabled]': 'disabled',
     '[class.tri-select-show-search]': `(showSearch || mode !== 'default') && !disabled`,
     '[class.tri-select-allow-clear]': 'allowClear',
-    '[class.tri-select-borderless]': `variant === 'borderless'`,
-    '[class.tri-select-filled]': `variant === 'filled'`,
-    '[class.tri-select-underlined]': `variant === 'underlined'`,
+    '[class.tri-select-borderless]': `finalVariant() === 'borderless'`,
+    '[class.tri-select-filled]': `finalVariant() === 'filled'`,
+    '[class.tri-select-underlined]': `finalVariant() === 'underlined'`,
     '[class.tri-select-open]': 'open',
     '[class.tri-select-focused]': 'open || focused',
     '[class.tri-select-single]': `mode === 'default'`,
@@ -249,7 +250,7 @@ export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterCo
   @Input() id: string | null = null;
   @Input() size: TriSelectSizeType = 'default';
   @Input() status: TriStatus = '';
-  @Input() @WithConfig() variant: TriVariant = 'outlined';
+  @Input() @WithConfig() variant: TriVariant | undefined = undefined;
   @Input() @WithConfig() optionHeightPx = 32;
   @Input() optionOverflowSize = 8;
   @Input() dropdownClassName: string[] | string | null = null;
@@ -329,8 +330,11 @@ export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterCo
     return this.#size();
   });
 
+  protected readonly finalVariant = computed(() => this.#variant() || this.formVariant?.() || 'outlined');
   #size = signal<TriSizeLDSType>(this.size);
+  #variant = signal<TriVariant | undefined>(this.variant);
   private readonly formSize = inject(TRI_FORM_SIZE, { optional: true });
+  private readonly formVariant = inject(TRI_FORM_VARIANT, { optional: true });
   private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private listOfValue$ = new BehaviorSubject<TriSafeAny[]>([]);
   private listOfTemplateItem$ = new BehaviorSubject<TriSelectItemInterface[]>([]);
@@ -682,7 +686,7 @@ export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterCo
     this.cdr.markForCheck();
   }
 
-  ngOnChanges({ nzOpen, nzDisabled, nzOptions, nzStatus, nzPlacement, nzSize }: SimpleChanges): void {
+  ngOnChanges({ nzOpen, nzDisabled, nzOptions, nzStatus, nzPlacement, nzSize, nzVariant }: SimpleChanges): void {
     if (nzOpen) {
       this.onOpenChange();
     }
@@ -723,6 +727,9 @@ export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterCo
     }
     if (nzSize) {
       this.#size.set(nzSize.currentValue);
+    }
+    if (nzVariant) {
+      this.#variant.set(nzVariant.currentValue);
     }
   }
 
