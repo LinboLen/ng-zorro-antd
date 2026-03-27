@@ -10,7 +10,6 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  HostListener,
   Input,
   OnChanges,
   OnInit,
@@ -166,7 +165,10 @@ import { TriTransferListComponent } from './transfer-list.component';
     class: 'tri-transfer',
     '[class.tri-transfer-rtl]': `dir === 'rtl'`,
     '[class.tri-transfer-disabled]': `disabled`,
-    '[class.tri-transfer-customize-list]': `renderList`
+    '[class.tri-transfer-customize-list]': `renderList`,
+    '(window:keydown.shift)': 'onTriggerShiftDown()',
+    '(window:keyup.shift)': 'onTriggerShiftUp()',
+    '(mousedown)': 'onTriggerMouseDown($event)'
   },
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -236,17 +238,14 @@ export class TriTransferComponent implements OnInit, OnChanges {
 
   isShiftPressed = false;
 
-  @HostListener('window:keydown.shift')
   onTriggerShiftDown(): void {
     this.isShiftPressed = true;
   }
 
-  @HostListener('window:keyup.shift')
   onTriggerShiftUp(): void {
     this.isShiftPressed = false;
   }
 
-  @HostListener('mousedown', ['$event'])
   onTriggerMouseDown(event: MouseEvent): void {
     const isInsideTransfer = (event.target as HTMLElement).closest('.ant-transfer-list');
     if (event.shiftKey && isInsideTransfer) {

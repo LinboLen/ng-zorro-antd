@@ -24,12 +24,12 @@ import { TriMentionComponent, TriMentionModule } from 'ng-zorro-antd/mention';
         <tri-form-control [sm]="16" errorTip="More than one must be selected!">
           <tri-mention #mentions [suggestions]="suggestions">
             <textarea
-              rows="1"
+              tri-input
+              mentionTrigger
+              formControlName="mention"
+              rows="3"
               id="mention"
               placeholder="input here"
-              formControlName="mention"
-              mentionTrigger
-              tri-input
             ></textarea>
           </tri-mention>
         </tri-form-control>
@@ -65,9 +65,12 @@ export class TriDemoMentionFormComponent {
   };
 
   private fb = inject(FormBuilder);
-  validateForm = this.fb.group({
-    mention: ['@afc163 ', [Validators.required, this.mentionValidator]]
-  });
+  validateForm = this.fb.group(
+    {
+      mention: ['Hello @afc163 ', [Validators.required, this.mentionValidator]]
+    },
+    { updateOn: 'blur' }
+  );
 
   get mention(): FormControl<string | null> {
     return this.validateForm.controls.mention;
@@ -76,9 +79,11 @@ export class TriDemoMentionFormComponent {
   submitForm(): void {
     this.mention.markAsDirty();
     this.mention.updateValueAndValidity();
+
+    console.log('form value: ', this.validateForm.value);
     if (this.mention.valid) {
-      console.log('Submit!!!', this.mention.value);
-      console.log(this.mentionChild.getMentions());
+      console.log('Submit:', this.mention.value);
+      console.log('Mentions:', this.mentionChild.getMentions());
     } else {
       console.log('Errors in form!!!');
     }
@@ -86,7 +91,7 @@ export class TriDemoMentionFormComponent {
 
   resetForm(): void {
     this.validateForm.reset({
-      mention: '@afc163 '
+      mention: 'Hello @afc163 '
     });
   }
 }
