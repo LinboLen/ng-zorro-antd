@@ -339,10 +339,13 @@ export class TriInputWrapperComponent {
     });
 
     effect(() => {
-      const inputValue = this.inputValue();
-      const formattedValue = this.formattedValue();
-      if (formattedValue !== inputValue) {
-        this.inputDir().ngControl?.control?.setValue(formattedValue);
+      if (this.count()) {
+        const inputValue = this.inputValue();
+        const formattedValue = this.formattedValue();
+
+        if (isNotNil(inputValue) && formattedValue !== inputValue) {
+          this.inputDir().ngControl?.control?.setValue(formattedValue);
+        }
       }
     });
   }

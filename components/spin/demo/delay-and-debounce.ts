@@ -18,7 +18,7 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
     </tri-spin>
     <br />
     <div>
-      Loading state：
+      Loading state:
       <tri-switch [(ngModel)]="isSpinning" />
     </div>
   `
