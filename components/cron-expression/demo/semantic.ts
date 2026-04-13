@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { parseExpression } from 'cron-parser';
+import { CronExpressionParser } from 'cron-parser';
 
 import { TriCronExpressionModule } from 'ng-zorro-antd/cron-expression';
 
@@ -20,7 +20,7 @@ export class TriDemoCronExpressionSemanticComponent {
 
   getValue(value: string): void {
     try {
-      const interval = parseExpression(value);
+      const interval = CronExpressionParser.parse(value);
       this.semantic = interval.next().toDate();
     } catch {
       return;

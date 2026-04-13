@@ -22,20 +22,17 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
-  AsyncValidator,
   ControlValueAccessor,
   FormBuilder,
-  FormControl,
-  FormGroup,
-  NG_ASYNC_VALIDATORS,
+  NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ValidationErrors,
+  Validator,
   ValidatorFn,
   Validators
 } from '@angular/forms';
-import { Observable, of } from 'rxjs';
 
-import { CronExpression, parseExpression } from 'cron-parser';
+import { CronExpressionParser } from 'cron-parser';
 
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { TriCronExpressionI18nInterface, TriI18nService } from 'ng-zorro-antd/i18n';
@@ -43,7 +40,7 @@ import { TriCronExpressionI18nInterface, TriI18nService } from 'ng-zorro-antd/i1
 import { TriCronExpressionInputComponent } from './cron-expression-input.component';
 import { TriCronExpressionLabelComponent } from './cron-expression-label.component';
 import { TriCronExpressionPreviewComponent } from './cron-expression-preview.component';
-import { Cron, CronChangeType, CronValue, TriCronExpressionSize, TriCronExpressionType, TimeType } from './typings';
+import { Cron, CronChangeType, TriCronExpressionSize, TriCronExpressionType, TimeType } from './typings';
 
 function labelsOfType(type: TriCronExpressionType): TimeType[] {
   if (type === 'spring') {
@@ -66,13 +63,13 @@ function labelsOfType(type: TriCronExpressionType): TimeType[] {
           [class.tri-input-sm]="size === 'small'"
           [class.tri-input-borderless]="borderless"
           [class.tri-cron-expression-input-group-focus]="focus && !borderless"
-          [class.tri-input-status-error]="!validateForm.valid && !borderless"
-          [class.tri-cron-expression-input-group-error-focus]="!validateForm.valid && focus && !borderless"
+          [class.tri-input-status-error]="form.invalid && !borderless"
+          [class.tri-cron-expression-input-group-error-focus]="form.invalid && focus && !borderless"
           [class.tri-input-disabled]="disabled"
         >
           @for (label of labels; track label) {
             <tri-cron-expression-input
-              [value]="this.validateForm.controls[label].value"
+              [value]="form.controls[label].value"
               [label]="label"
               [disabled]="disabled"
               (focusEffect)="focusEffect($event)"
@@ -94,7 +91,7 @@ function labelsOfType(type: TriCronExpressionType): TimeType[] {
         @if (!collapseDisable) {
           <tri-cron-expression-preview
             [TimeList]="nextTimeList"
-            [visible]="validateForm.valid"
+            [visible]="form.valid"
             [locale]="locale"
             [semantic]="semantic"
             (loadMorePreview)="loadMorePreview()"
@@ -110,7 +107,7 @@ function labelsOfType(type: TriCronExpressionType): TimeType[] {
   `,
   providers: [
     {
-      provide: NG_ASYNC_VALIDATORS,
+      provide: NG_VALIDATORS,
       useExisting: forwardRef(() => TriCronExpressionComponent),
       multi: true
     },
@@ -127,11 +124,11 @@ function labelsOfType(type: TriCronExpressionType): TimeType[] {
     NgTemplateOutlet
   ]
 })
-export class TriCronExpressionComponent implements OnInit, OnChanges, ControlValueAccessor, AsyncValidator {
-  private formBuilder = inject(FormBuilder);
-  private cdr = inject(ChangeDetectorRef);
-  private i18n = inject(TriI18nService);
-  private destroyRef = inject(DestroyRef);
+export class TriCronExpressionComponent implements OnInit, OnChanges, ControlValueAccessor, Validator {
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly i18n = inject(TriI18nService);
+  private readonly destroyRef = inject(DestroyRef);
 
   @Input() size: TriCronExpressionSize = 'default';
   @Input() type: TriCronExpressionType = 'linux';
@@ -145,11 +142,33 @@ export class TriCronExpressionComponent implements OnInit, OnChanges, ControlVal
   focus: boolean = false;
   labelFocus: TimeType | null = null;
   labels: TimeType[] = labelsOfType(this.type);
-  interval!: CronExpression<false>;
+  interval!: ReturnType<typeof CronExpressionParser.parse>;
   nextTimeList: Date[] = [];
   private isNzDisableFirstChange: boolean = true;
 
-  validateForm: FormGroup<Record<TimeType, FormControl<CronValue>>>;
+  protected readonly cronValidatorFn: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+    if (control.value) {
+      try {
+        const cron = this.labels.map(label => control.value[label]).join(' ');
+        CronExpressionParser.parse(cron);
+      } catch {
+        return { error: true };
+      }
+    }
+    return null;
+  };
+
+  protected readonly form = this.formBuilder.nonNullable.group(
+    {
+      second: ['0', Validators.required],
+      minute: ['*', Validators.required],
+      hour: ['*', Validators.required],
+      day: ['*', Validators.required],
+      month: ['*', Validators.required],
+      week: ['*', Validators.required]
+    },
+    { validators: this.cronValidatorFn }
+  );
 
   onChange: TriSafeAny = () => {};
   onTouch: () => void = () => null;
@@ -160,7 +179,7 @@ export class TriCronExpressionComponent implements OnInit, OnChanges, ControlVal
       obj[label] = values[idx];
       return obj;
     }, {} as Cron);
-    this.validateForm.patchValue(valueObject);
+    this.form.patchValue(valueObject);
   }
 
   writeValue(value: string | null): void {
@@ -177,12 +196,8 @@ export class TriCronExpressionComponent implements OnInit, OnChanges, ControlVal
     this.onTouch = fn;
   }
 
-  validate(): Observable<ValidationErrors | null> {
-    if (this.validateForm.valid) {
-      return of(null);
-    } else {
-      return of({ error: true });
-    }
+  validate(): ValidationErrors | null {
+    return this.form.valid ? null : { error: true };
   }
 
   setDisabledState(isDisabled: boolean): void {
@@ -191,29 +206,15 @@ export class TriCronExpressionComponent implements OnInit, OnChanges, ControlVal
     this.cdr.markForCheck();
   }
 
-  constructor() {
-    this.validateForm = this.formBuilder.nonNullable.group(
-      {
-        second: ['0', Validators.required],
-        minute: ['*', Validators.required],
-        hour: ['*', Validators.required],
-        day: ['*', Validators.required],
-        month: ['*', Validators.required],
-        week: ['*', Validators.required]
-      },
-      { validators: this.checkValid }
-    );
-  }
-
   ngOnInit(): void {
     this.i18n.localeChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.locale = this.i18n.getLocaleData('CronExpression');
       this.cdr.markForCheck();
     });
     this.cronFormType();
-    this.previewDate(this.validateForm.value);
+    this.previewDate(this.form.value);
 
-    this.validateForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(value => {
+    this.form.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(value => {
       this.onChange(Object.values(value).join(' '));
       this.previewDate(value);
       this.cdr.markForCheck();
@@ -229,17 +230,17 @@ export class TriCronExpressionComponent implements OnInit, OnChanges, ControlVal
     }
   }
 
-  cronFormType(): void {
+  private cronFormType(): void {
     if (this.type === 'spring') {
-      this.validateForm.controls.second.enable();
+      this.form.controls.second.enable();
     } else {
-      this.validateForm.controls.second.disable();
+      this.form.controls.second.disable();
     }
   }
 
   previewDate(value: Cron): void {
     try {
-      this.interval = parseExpression(Object.values(value).join(' '));
+      this.interval = CronExpressionParser.parse(Object.values(value).join(' '));
       this.nextTimeList = [
         this.interval.next().toDate(),
         this.interval.next().toDate(),
@@ -277,20 +278,7 @@ export class TriCronExpressionComponent implements OnInit, OnChanges, ControlVal
   }
 
   getValue(item: CronChangeType): void {
-    this.validateForm.controls[item.label].patchValue(item.value);
+    this.form.controls[item.label].patchValue(item.value);
     this.cdr.markForCheck();
   }
-
-  checkValid: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
-    if (control.value) {
-      try {
-        const cron: string[] = [];
-        this.labels.forEach(label => cron.push(control.value[label]));
-        parseExpression(cron.join(' '));
-      } catch {
-        return { error: true };
-      }
-    }
-    return null;
-  };
 }

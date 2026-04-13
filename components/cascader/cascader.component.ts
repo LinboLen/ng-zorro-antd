@@ -12,7 +12,7 @@ import {
   OverlayModule
 } from '@angular/cdk/overlay';
 import { _getEventTarget } from '@angular/cdk/platform';
-import { SlicePipe } from '@angular/common';
+import { NgTemplateOutlet, SlicePipe } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -221,55 +221,63 @@ const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
         (mouseenter)="onTriggerMouseEnter()"
         (mouseleave)="onTriggerMouseLeave($event)"
       >
-        <div
-          #menu
-          class="tri-cascader-menus"
-          [class.tri-cascader-rtl]="dir === 'rtl'"
-          [class.tri-cascader-menus-hidden]="!menuVisible()"
-          [class.tri-cascader-menu-empty]="shouldShowEmpty"
-          [class]="menuClassName"
-          [style]="menuStyle"
-        >
-          @if (shouldShowEmpty) {
-            <ul class="tri-cascader-menu" [style.width]="dropdownWidthStyle" [style.height]="dropdownHeightStyle">
-              <li class="tri-cascader-menu-item tri-cascader-menu-item-disabled">
-                <tri-embed-empty
-                  class="tri-cascader-menu-item-content"
-                  componentName="cascader"
-                  [specificContent]="notFoundContent"
-                />
-              </li>
+        @if (popupRender) {
+          <ng-container [ngTemplateOutlet]="popupRender" [ngTemplateOutletContext]="{ $implicit: menuTemplate }" />
+        } @else {
+          <ng-container [ngTemplateOutlet]="menuTemplate" />
+        }
+      </div>
+    </ng-template>
+
+    <ng-template #menuTemplate>
+      <div
+        #menu
+        class="tri-cascader-menus"
+        [class.tri-cascader-rtl]="dir === 'rtl'"
+        [class.tri-cascader-menus-hidden]="!menuVisible()"
+        [class.tri-cascader-menu-empty]="shouldShowEmpty"
+        [class]="menuClassName"
+        [style]="menuStyle"
+      >
+        @if (shouldShowEmpty) {
+          <ul class="tri-cascader-menu" [style.width]="dropdownWidthStyle" [style.height]="dropdownHeightStyle">
+            <li class="tri-cascader-menu-item tri-cascader-menu-item-disabled">
+              <tri-embed-empty
+                class="tri-cascader-menu-item-content"
+                componentName="cascader"
+                [specificContent]="notFoundContent"
+              />
+            </li>
+          </ul>
+        } @else {
+          @for (options of cascaderService.columns; track options; let i = $index) {
+            <ul
+              class="tri-cascader-menu"
+              role="menuitemcheckbox"
+              [class]="columnClassName"
+              [style.height]="dropdownHeightStyle"
+            >
+              @for (option of options; track option) {
+                <li
+                  tri-cascader-option
+                  [expandIcon]="expandIcon"
+                  [columnIndex]="i"
+                  [labelProperty]="labelProperty"
+                  [optionTemplate]="optionRender"
+                  [activated]="isOptionActivated(option, i)"
+                  [highlightText]="inSearchingMode ? inputValue : ''"
+                  [node]="option"
+                  [dir]="dir"
+                  [checkable]="multiple"
+                  (mouseenter)="onOptionMouseEnter(option, i, $event)"
+                  (mouseleave)="onOptionMouseLeave(option, i, $event)"
+                  (click)="onOptionClick(option, i, $event)"
+                  (check)="onOptionCheck(option, i)"
+                ></li>
+              }
             </ul>
-          } @else {
-            @for (options of cascaderService.columns; track options; let i = $index) {
-              <ul
-                class="tri-cascader-menu"
-                role="menuitemcheckbox"
-                [class]="columnClassName"
-                [style.height]="dropdownHeightStyle"
-              >
-                @for (option of options; track option) {
-                  <li
-                    tri-cascader-option
-                    [expandIcon]="expandIcon"
-                    [columnIndex]="i"
-                    [labelProperty]="labelProperty"
-                    [optionTemplate]="optionRender"
-                    [activated]="isOptionActivated(option, i)"
-                    [highlightText]="inSearchingMode ? inputValue : ''"
-                    [node]="option"
-                    [dir]="dir"
-                    [checkable]="multiple"
-                    (mouseenter)="onOptionMouseEnter(option, i, $event)"
-                    (mouseleave)="onOptionMouseLeave(option, i, $event)"
-                    (click)="onOptionClick(option, i, $event)"
-                    (check)="onOptionCheck(option, i)"
-                  ></li>
-                }
-              </ul>
-            }
           }
-        </div>
+        }
       </div>
     </ng-template>
   `,
@@ -303,6 +311,7 @@ const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
   },
   hostDirectives: [TriSpaceCompactItemDirective],
   imports: [
+    NgTemplateOutlet,
     SlicePipe,
     OverlayModule,
     FormsModule,
@@ -400,6 +409,7 @@ export class TriCascaderComponent
   @Input() prefix: string | TemplateRef<void> | null = null;
   @Input() suffixIcon: string | TemplateRef<void> = 'down';
   @Input() expandIcon: string | TemplateRef<void> = '';
+  @Input() popupRender: TemplateRef<{ $implicit: TemplateRef<void> }> | null = null;
 
   get treeService(): TriCascaderTreeService {
     return this.nzTreeService as TriCascaderTreeService;
