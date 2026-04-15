@@ -122,7 +122,7 @@ $form-item-prefix-cls: "#{$ant-prefix}-form-item";
     right: 0;
     width: 22px;
     height: 100%;
-    background: transparent;
+    background: $input-number-handler-bg;
     border-radius: 0 $control-border-radius $control-border-radius 0;
     opacity: 0;
     transition: opacity 0.24s linear 0.1s;
