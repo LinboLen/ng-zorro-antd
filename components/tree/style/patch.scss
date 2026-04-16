@@ -3,9 +3,6 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-.font-highlight {
-  color: $highlight-color;
-}
-nz-tree {
-  display: block;
-}
+import { TemplateRef } from '@angular/core';
+
+export type TriRequiredMark = boolean | 'optional' | TemplateRef<{ $implicit: TemplateRef<void>; required: boolean }>;
