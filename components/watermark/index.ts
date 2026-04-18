@@ -3,6 +3,6 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { TemplateRef } from '@angular/core';
+import { TriPresetColor, TriStatusColor } from 'ng-zorro-antd/core/color';
 
-export type TriRequiredMark = boolean | 'optional' | TemplateRef<{ $implicit: TemplateRef<void>; required: boolean }>;
+export type TriTagColor = TriPresetColor | TriStatusColor | (string & {});
