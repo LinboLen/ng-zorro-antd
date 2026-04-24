@@ -13,8 +13,9 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
         icon="customer-service"
         [open]="isOpen"
         type="primary"
-        trigger="hover"
+        trigger="click"
         style="right: 24px"
+        (openChange)="onOpenChange($event)"
       >
         <tri-float-button />
         <tri-float-button icon="comment" />
@@ -35,4 +36,10 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
 })
 export class TriDemoFloatButtonOpenComponent {
   isOpen: boolean = true;
+
+  onOpenChange(open: boolean): void {
+    console.log(open);
+    // You can set the `isOpen` variable in `(nzOpenChange)` to control the open state.
+    // this.isOpen = open;
+  }
 }

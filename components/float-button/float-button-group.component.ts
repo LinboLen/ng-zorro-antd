@@ -76,7 +76,12 @@ export class TriFloatButtonGroupComponent {
   readonly trigger = input<'click' | 'hover' | null>(null);
   readonly open = input<boolean | null>(null);
   readonly placement = input<TriFourDirectionType>('top');
+
+  /**
+   * @deprecated Use `nzOpenChange` instead. This will be removed in v23.0.0.
+   */
   readonly onOpenChange = output<boolean>();
+  readonly openChange = output<boolean>();
 
   protected readonly dir = inject(Directionality).valueSignal;
   protected readonly _open = linkedSignal<boolean>(() => !!this.open());
@@ -133,10 +138,14 @@ export class TriFloatButtonGroupComponent {
   }
 
   private handleEvent(type: 'click' | 'hover', isOpen: boolean): void {
-    if (this.trigger() !== type || this.isControlledMode() || this._open() === isOpen) {
+    if (this.trigger() !== type || this._open() === isOpen) {
       return;
     }
-    this._open.set(isOpen);
+
+    if (!this.isControlledMode()) {
+      this._open.set(isOpen);
+    }
+    this.openChange.emit(isOpen);
     this.onOpenChange.emit(isOpen);
   }
 
