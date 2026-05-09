@@ -69,9 +69,9 @@ const defaultColumnMap: Record<NzBreakpointEnum, number> = {
       <table>
         <tbody>
           @if (layout === 'horizontal') {
-            @for (row of itemMatrix; track row; let i = $index) {
+            @for (row of itemMatrix; track $index; let i = $index) {
               <tr class="tri-descriptions-row">
-                @for (item of row; track item; let isLast = $last) {
+                @for (item of row; track $index; let isLast = $last) {
                   @if (!bordered) {
                     <td class="tri-descriptions-item" [colSpan]="item.span">
                       <div class="tri-descriptions-item-container">
@@ -102,9 +102,9 @@ const defaultColumnMap: Record<NzBreakpointEnum, number> = {
 
           @if (layout === 'vertical') {
             @if (!bordered) {
-              @for (row of itemMatrix; track row; let i = $index) {
+              @for (row of itemMatrix; track $index; let i = $index) {
                 <tr class="tri-descriptions-row">
-                  @for (item of row; track item; let isLast = $last) {
+                  @for (item of row; track $index; let isLast = $last) {
                     <td class="tri-descriptions-item" [colSpan]="item.span">
                       <div class="tri-descriptions-item-container">
                         <span class="tri-descriptions-item-label" [class.tri-descriptions-item-no-colon]="!colon">
@@ -117,7 +117,7 @@ const defaultColumnMap: Record<NzBreakpointEnum, number> = {
                   }
                 </tr>
                 <tr class="tri-descriptions-row">
-                  @for (item of row; track item; let isLast = $last) {
+                  @for (item of row; track $index; let isLast = $last) {
                     <td class="tri-descriptions-item" [colSpan]="item.span">
                       <div class="tri-descriptions-item-container">
                         <span class="tri-descriptions-item-content">
@@ -129,9 +129,9 @@ const defaultColumnMap: Record<NzBreakpointEnum, number> = {
                 </tr>
               }
             } @else {
-              @for (row of itemMatrix; track row; let i = $index) {
+              @for (row of itemMatrix; track $index; let i = $index) {
                 <tr class="tri-descriptions-row">
-                  @for (item of row; track item; let isLast = $last) {
+                  @for (item of row; track $index; let isLast = $last) {
                     <td class="tri-descriptions-item-label" [colSpan]="item.span">
                       <ng-container *stringTemplateOutlet="item.title">
                         {{ item.title }}
@@ -140,7 +140,7 @@ const defaultColumnMap: Record<NzBreakpointEnum, number> = {
                   }
                 </tr>
                 <tr class="tri-descriptions-row">
-                  @for (item of row; track item; let isLast = $last) {
+                  @for (item of row; track $index; let isLast = $last) {
                     <td class="tri-descriptions-item-content" [colSpan]="item.span">
                       <ng-template [ngTemplateOutlet]="item.content" />
                     </td>
