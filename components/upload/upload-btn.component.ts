@@ -5,7 +5,17 @@
 
 import { ENTER } from '@angular/cdk/keycodes';
 import { HttpClient, HttpEvent, HttpEventType, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Component, DestroyRef, ElementRef, inject, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  ElementRef,
+  inject,
+  input,
+  Input,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable, of, Subscription } from 'rxjs';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
@@ -34,6 +44,7 @@ export class TriUploadBtnComponent implements OnInit {
   reqs: Record<string, Subscription> = {};
   private destroyed = false;
   @ViewChild('file', { static: true }) file!: ElementRef<HTMLInputElement>;
+  readonly id = input<string>();
   @Input() options!: ZipButtonOptions;
 
   onClick(): void {

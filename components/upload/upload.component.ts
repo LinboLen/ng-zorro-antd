@@ -81,6 +81,7 @@ export class TriUploadComponent implements OnInit, AfterViewInit, OnChanges {
 
   // #region fields
 
+  readonly id = input<string>();
   @Input() type: TriUploadType = 'select';
   @Input({ transform: numberAttribute }) limit = 0;
   @Input({ transform: numberAttribute }) size = 0;

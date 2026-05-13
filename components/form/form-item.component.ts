@@ -3,7 +3,9 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, input, ViewEncapsulation } from '@angular/core';
+
+import type { TriFormItemLayout } from './types';
 
 export type TriFormControlStatusType = 'success' | 'error' | 'warning' | 'validating' | '';
 
@@ -20,12 +22,16 @@ export type TriFormControlStatusType = 'success' | 'error' | 'warning' | 'valida
     '[class.tri-form-item-has-error]': 'status === "error"',
     '[class.tri-form-item-is-validating]': 'status === "validating"',
     '[class.tri-form-item-has-feedback]': 'hasFeedback && status',
-    '[class.tri-form-item-with-help]': 'withHelpClass'
+    '[class.tri-form-item-with-help]': 'withHelpClass',
+    '[class.tri-form-item-horizontal]': 'layout() === "horizontal"',
+    '[class.tri-form-item-vertical]': 'layout() === "vertical"'
   },
   template: `<ng-content />`
 })
 export class TriFormItemComponent {
   private cdr = inject(ChangeDetectorRef);
+
+  readonly layout = input<TriFormItemLayout>();
 
   status: TriFormControlStatusType = '';
   hasFeedback = false;
