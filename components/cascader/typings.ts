@@ -62,3 +62,8 @@ export interface TriCascaderComponentAsSource {
 
   loadData?(node: TriCascaderOption, index: number): PromiseLike<TriSafeAny> | Observable<TriSafeAny>;
 }
+
+export interface TriDisplayRenderContext {
+  labels: string[];
+  selectedOptions: TriCascaderOption[];
+}

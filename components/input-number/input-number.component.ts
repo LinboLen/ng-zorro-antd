@@ -563,7 +563,7 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
   }
 
   protected onWheel(event: WheelEvent): void {
-    if (this.disabled() || !this.changeOnWheel()) {
+    if (this.finalDisabled() || this.readOnly() || !this.changeOnWheel()) {
       return;
     }
 

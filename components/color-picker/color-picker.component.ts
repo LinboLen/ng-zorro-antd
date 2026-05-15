@@ -55,6 +55,7 @@ import { TriColor, TriColorPickerFormatType, TriColorPickerTriggerType, TriPrese
       [class.tri-color-picker-lg]="finalSize() === 'large'"
       tri-popover
       [popoverContent]="colorPicker"
+      [popoverPlacement]="popoverPlacements"
       [popoverTrigger]="!disabled ? trigger : null"
       [popoverVisible]="open"
       (popoverVisibleChange)="onOpenChange.emit($event)"
@@ -143,6 +144,7 @@ export class TriColorPickerComponent implements OnInit, OnChanges, ControlValueA
   @Output() readonly onOpenChange = new EventEmitter<boolean>();
 
   private isNzDisableFirstChange: boolean = true;
+  protected readonly popoverPlacements = ['bottomLeft', 'bottomRight', 'topLeft', 'topRight'];
   blockColor: string = '';
   clearColor: boolean = false;
   _showText: string = defaultColor.toHexString();

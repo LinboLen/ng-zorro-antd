@@ -85,6 +85,7 @@ import {
 } from 'ng-zorro-antd/select';
 import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
+import { defaultDisplayRender, TriDisplayRenderContextPipe, TriDisplayRenderPipe } from './cascader-display-render.pipe';
 import { TriCascaderOptionComponent } from './cascader-option.component';
 import { TriCascaderTreeService } from './cascader-tree.service';
 import { TriCascaderService } from './cascader.service';
@@ -95,11 +96,11 @@ import {
   TriCascaderPlacement,
   TriCascaderSize,
   TriCascaderTriggerType,
+  TriDisplayRenderContext,
   TriShowSearchOptions
 } from './typings';
 
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'cascader';
-const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -122,7 +123,9 @@ const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
                   <tri-select-item
                     deletable
                     [disabled]="disabled"
-                    [label]="displayWith(getAncestorOptionList(node))"
+                    [label]="node | nzDisplayRender: (labelRender ? undefined : displayWith)"
+                    [contentTemplateOutlet]="isLabelRenderTemplate ? labelRender : null"
+                    [contentTemplateOutletContext]="node | nzDisplayRenderContext"
                     (delete)="removeSelected(node)"
                   />
                 </div>
@@ -161,9 +164,9 @@ const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
             @if (showLabelRender) {
               <tri-select-item
                 [disabled]="disabled"
-                [label]="labelRenderText"
+                [label]="selectedNodes[0] | nzDisplayRender"
                 [contentTemplateOutlet]="isLabelRenderTemplate ? labelRender : null"
-                [contentTemplateOutletContext]="labelRenderContext"
+                [contentTemplateOutletContext]="selectedNodes[0] | nzDisplayRenderContext"
               />
             }
           }
@@ -328,7 +331,9 @@ const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
     TriSelectPlaceholderComponent,
     TriSelectSearchComponent,
     TriCascaderOptionComponent,
-    TriStringTemplateOutletDirective
+    TriStringTemplateOutletDirective,
+    TriDisplayRenderPipe,
+    TriDisplayRenderContextPipe
   ]
 })
 export class TriCascaderComponent
@@ -378,7 +383,7 @@ export class TriCascaderComponent
   @Input() expandTrigger: TriCascaderExpandTrigger = 'click';
   @Input() valueProperty: string = 'value';
   @Input() labelProperty: string = 'label';
-  @Input() labelRender: TemplateRef<typeof this.labelRenderContext> | null = null;
+  @Input() labelRender: TemplateRef<TriDisplayRenderContext> | null = null;
   @Input() @WithConfig() variant: TriVariant | undefined = undefined;
   @Input() notFoundContent?: string | TemplateRef<void>;
   @Input() @WithConfig() size: TriCascaderSize = 'default';
@@ -405,6 +410,9 @@ export class TriCascaderComponent
   @Input() triggerAction: TriCascaderTriggerType | TriCascaderTriggerType[] = ['click'] as TriCascaderTriggerType[];
   @Input() changeOn?: (option: TriCascaderOption, level: number) => boolean;
   @Input() loadData?: (node: TriCascaderOption, index: number) => PromiseLike<TriSafeAny> | Observable<TriSafeAny>;
+  /**
+   * @deprecated Use `nzLabelRender` instead. This will be removed in v22.0.0.
+   */
   @Input() displayWith: (nodes: TriCascaderOption[]) => string | undefined = (nodes: TriCascaderOption[]) => {
     return defaultDisplayRender(nodes.map(n => this.cascaderService.getOptionLabel(n!)));
   };
@@ -441,8 +449,6 @@ export class TriCascaderComponent
   el: HTMLElement = this.elementRef.nativeElement;
   readonly menuOpen = signal(false);
   isLoading = false;
-  labelRenderText?: string;
-  labelRenderContext = {};
   onChange = Function.prototype;
   onTouched = Function.prototype;
   positions: ConnectionPositionPair[] = [...DEFAULT_CASCADER_POSITIONS];
@@ -567,7 +573,6 @@ export class TriCascaderComponent
     srv.$redraw.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       // These operations would not mutate data.
       this.checkChildren();
-      this.setDisplayLabel();
       this.cdr.detectChanges();
       this.reposition();
       this.setDropdownStyles();
@@ -741,8 +746,6 @@ export class TriCascaderComponent
     }
 
     this.clearSelectedNodes();
-    this.labelRenderText = '';
-    this.labelRenderContext = {};
     this.inputValue = '';
     this.setMenuOpen(false);
     this.cascaderService.clear();
@@ -1173,21 +1176,6 @@ export class TriCascaderComponent
     if (this.cascaderItems) {
       this.cascaderItems.forEach(item => item.markForCheck());
     }
-  }
-
-  private setDisplayLabel(): void {
-    if (this.multiple) {
-      return;
-    }
-
-    const node = this.selectedNodes.length ? this.selectedNodes[0] : null;
-    const selectedOptions = this.getAncestorOptionList(node);
-    const labels: string[] = selectedOptions.map(o => this.cascaderService.getOptionLabel(o));
-
-    if (this.isLabelRenderTemplate) {
-      this.labelRenderContext = { labels, selectedOptions };
-    }
-    this.labelRenderText = defaultDisplayRender.call(this, labels);
   }
 
   private setDropdownStyles(): void {

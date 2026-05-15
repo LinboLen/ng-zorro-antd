@@ -89,6 +89,7 @@ import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactIte
 
 import { DatePickerService } from './date-picker.service';
 import { DateRangePopupComponent } from './date-range-popup.component';
+import { TriRangePickerComponent } from './range-picker.component';
 import {
   CompatibleDate,
   DisabledTimeFn,
@@ -297,7 +298,7 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
   static ngAcceptInputType_nzShowTime: BooleanInput | SupportTimeOptions | null | undefined;
   static ngAcceptInputType_nzMode: TriDateMode | string;
 
-  isRange: boolean = false; // Indicate whether the value is a range value
+  isRange = !!inject(TriRangePickerComponent, { self: true, optional: true }); // Indicate whether the value is a range value
   extraFooter?: TemplateRef<TriSafeAny> | string;
 
   // status
@@ -434,6 +435,11 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
 
   private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private document: Document = inject(DOCUMENT);
+
+  constructor() {
+    this.datePickerService.isRange = this.isRange;
+    this.datePickerService.initValue(true);
+  }
 
   ngAfterViewInit(): void {
     if (this.autoFocus) {
@@ -694,9 +700,6 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
       this.i18n.localeChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.setLocale());
     }
 
-    // Default value
-    this.datePickerService.isRange = this.isRange;
-    this.datePickerService.initValue(true);
     this.datePickerService.emitValue$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       const granularityComparison = this.#showTime ? 'second' : 'day';
       const value = this.datePickerService.value;
