@@ -30,6 +30,8 @@ import { TriMarks, TriSliderModule } from 'ng-zorro-antd/slider';
       </div>
     </div>
 
+    <br />
+
     <div class="gutter-example">
       <div tri-row [gutter]="[hGutter, vGutter]">
         @for (i of array; track $index) {
@@ -38,6 +40,15 @@ import { TriMarks, TriSliderModule } from 'ng-zorro-antd/slider';
           </div>
         }
 
+        @for (i of array; track $index) {
+          <div tri-col class="gutter-row" [span]="24 / count">
+            <div class="grid-config">Column</div>
+          </div>
+        }
+      </div>
+
+      Another Row:
+      <div tri-row [gutter]="[hGutter, vGutter]">
         @for (i of array; track $index) {
           <div tri-col class="gutter-row" [span]="24 / count">
             <div class="grid-config">Column</div>
