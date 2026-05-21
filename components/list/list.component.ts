@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterContentInit,
@@ -13,14 +13,12 @@ import {
   DestroyRef,
   Input,
   OnChanges,
-  OnInit,
   SimpleChanges,
   TemplateRef,
   ViewEncapsulation,
   booleanAttribute,
   inject
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
@@ -66,6 +64,7 @@ import {
                 [lg]="grid.lg || null"
                 [xl]="grid.xl || null"
                 [xXl]="grid.xxl || null"
+                [xXXl]="grid.xxxl || null"
               >
                 <ng-template
                   [ngTemplateOutlet]="renderItem"
@@ -117,7 +116,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'tri-list',
-    '[class.tri-list-rtl]': `dir === 'rtl'`,
+    '[class.tri-list-rtl]': `dir() === 'rtl'`,
     '[class.tri-list-vertical]': 'itemLayout === "vertical"',
     '[class.tri-list-lg]': 'size === "large"',
     '[class.tri-list-sm]': 'size === "small"',
@@ -137,9 +136,9 @@ import {
     TriListPaginationComponent
   ]
 })
-export class TriListComponent implements AfterContentInit, OnChanges, OnInit {
-  private directionality = inject(Directionality);
-  private destroyRef = inject(DestroyRef);
+export class TriListComponent implements AfterContentInit, OnChanges {
+  protected readonly dir = inject(Directionality).valueSignal;
+  private readonly destroyRef = inject(DestroyRef);
 
   @Input() dataSource?: TriSafeAny[];
   @Input({ transform: booleanAttribute }) bordered = false;
@@ -159,8 +158,7 @@ export class TriListComponent implements AfterContentInit, OnChanges, OnInit {
   @ContentChild(TriListPaginationComponent) listPaginationComponent!: TriListPaginationComponent;
   @ContentChild(TriListLoadMoreDirective) listLoadMoreDirective!: TriListLoadMoreDirective;
 
-  hasSomethingAfterLastItem = false;
-  dir: Direction = 'ltr';
+  protected hasSomethingAfterLastItem = false;
   private itemLayoutNotifySource = new BehaviorSubject<TriDirectionVHType>(this.itemLayout);
 
   get itemLayoutNotify$(): Observable<TriDirectionVHType> {
@@ -171,14 +169,7 @@ export class TriListComponent implements AfterContentInit, OnChanges, OnInit {
     this.destroyRef.onDestroy(() => this.itemLayoutNotifySource.unsubscribe());
   }
 
-  ngOnInit(): void {
-    this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((direction: Direction) => {
-      this.dir = direction;
-    });
-  }
-
-  getSomethingAfterLastItem(): boolean {
+  private getSomethingAfterLastItem(): boolean {
     return !!(
       this.loadMore ||
       this.pagination ||
@@ -188,6 +179,7 @@ export class TriListComponent implements AfterContentInit, OnChanges, OnInit {
       this.listLoadMoreDirective
     );
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.nzItemLayout) {
       this.itemLayoutNotifySource.next(this.itemLayout);

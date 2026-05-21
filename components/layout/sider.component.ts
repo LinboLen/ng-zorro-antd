@@ -24,7 +24,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { TriBreakpointKey, TriBreakpointService, siderResponsiveMap } from 'ng-zorro-antd/core/services';
+import { Breakpoint, TriBreakpointService, siderResponsiveMap } from 'ng-zorro-antd/core/services';
 import { inNextTick, toCssPixel } from 'ng-zorro-antd/core/util';
 import { TriMenuDirective } from 'ng-zorro-antd/menu';
 
@@ -79,7 +79,7 @@ export class TriSiderComponent implements OnInit, OnChanges, AfterContentInit {
   @Input() width: string | number = 200;
   @Input() theme: 'light' | 'dark' = 'dark';
   @Input() collapsedWidth = 80;
-  @Input() breakpoint: TriBreakpointKey | null = null;
+  @Input() breakpoint: Breakpoint | null = null;
   @Input() zeroTrigger: TemplateRef<void> | null = null;
   @Input() trigger: TemplateRef<void> | undefined | null = undefined;
   @Input({ transform: booleanAttribute }) reverseArrow = false;

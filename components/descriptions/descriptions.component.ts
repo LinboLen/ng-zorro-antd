@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterContentInit,
@@ -14,7 +14,6 @@ import {
   DestroyRef,
   Input,
   OnChanges,
-  OnInit,
   QueryList,
   SimpleChanges,
   TemplateRef,
@@ -26,16 +25,17 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { merge } from 'rxjs';
 import { auditTime, startWith, switchMap, tap } from 'rxjs/operators';
 
-import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
 import { warn } from 'ng-zorro-antd/core/logger';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
-import { NzBreakpointEnum, TriBreakpointService, gridResponsiveMap } from 'ng-zorro-antd/core/services';
+import { NzBreakpointEnum, TriBreakpointService, ResponsiveLike, gridResponsiveMap } from 'ng-zorro-antd/core/services';
 
 import { TriDescriptionsItemComponent } from './descriptions-item.component';
 import { TriDescriptionsItemRenderProps, TriDescriptionsLayout, TriDescriptionsSize } from './typings';
 
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'descriptions';
-const defaultColumnMap: Record<NzBreakpointEnum, number> = {
+const defaultColumnMap: ResponsiveLike<number> = {
+  xxxl: 4,
   xxl: 3,
   xl: 3,
   lg: 3,
@@ -43,6 +43,7 @@ const defaultColumnMap: Record<NzBreakpointEnum, number> = {
   sm: 2,
   xs: 1
 };
+const DEFAULT_COLUMN_NUM = 3;
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -158,40 +159,31 @@ const defaultColumnMap: Record<NzBreakpointEnum, number> = {
     '[class.tri-descriptions-bordered]': 'bordered',
     '[class.tri-descriptions-middle]': 'size === "middle"',
     '[class.tri-descriptions-small]': 'size === "small"',
-    '[class.tri-descriptions-rtl]': 'dir === "rtl"'
+    '[class.tri-descriptions-rtl]': `dir() === "rtl"`
   },
   imports: [TriOutletModule, NgTemplateOutlet]
 })
-export class TriDescriptionsComponent implements OnChanges, AfterContentInit, OnInit {
-  public configService = inject(TriConfigService);
-  private cdr = inject(ChangeDetectorRef);
-  private breakpointService = inject(TriBreakpointService);
-  private directionality = inject(Directionality);
-  private destroyRef = inject(DestroyRef);
+export class TriDescriptionsComponent implements OnChanges, AfterContentInit {
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly breakpointService = inject(TriBreakpointService);
+  private readonly destroyRef = inject(DestroyRef);
+  protected readonly dir = inject(Directionality).valueSignal;
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   @ContentChildren(TriDescriptionsItemComponent) items!: QueryList<TriDescriptionsItemComponent>;
 
   @Input({ transform: booleanAttribute }) @WithConfig() bordered: boolean = false;
   @Input() layout: TriDescriptionsLayout = 'horizontal';
-  @Input() @WithConfig() column: number | Record<NzBreakpointEnum, number> = defaultColumnMap;
+  @Input() @WithConfig() column: number | Partial<ResponsiveLike<number>> = defaultColumnMap;
   @Input() @WithConfig() size: TriDescriptionsSize = 'default';
   @Input() title: string | TemplateRef<void> = '';
   @Input() extra?: string | TemplateRef<void>;
   @Input({ transform: booleanAttribute }) @WithConfig() colon: boolean = true;
 
   itemMatrix: TriDescriptionsItemRenderProps[][] = [];
-  realColumn = 3;
-  dir: Direction = 'ltr';
+  realColumn = DEFAULT_COLUMN_NUM;
 
-  private breakpoint: NzBreakpointEnum = NzBreakpointEnum.md;
-
-  ngOnInit(): void {
-    this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((direction: Direction) => {
-      this.dir = direction;
-    });
-  }
+  private breakpoint = NzBreakpointEnum.md;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.nzColumn) {
@@ -263,7 +255,7 @@ export class TriDescriptionsComponent implements OnChanges, AfterContentInit, On
 
   private getColumn(): number {
     if (typeof this.column !== 'number') {
-      return this.column[this.breakpoint];
+      return this.column[this.breakpoint] ?? DEFAULT_COLUMN_NUM;
     }
 
     return this.column;

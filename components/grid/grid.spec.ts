@@ -227,6 +227,7 @@ describe('grid', () => {
       expect(propertySizeMatch('lg', 8)).toBe(true);
       expect(propertySizeMatch('xl', 8)).toBe(true);
       expect(propertySizeMatch('xxl', 8)).toBe(true);
+      expect(propertySizeMatch('xxxl', 8)).toBe(true);
     });
 
     it('should apply className according to responsive size object', () => {
@@ -242,6 +243,7 @@ describe('grid', () => {
       component.lg.set({ span: 4, offset: 4, order: 4, pull: 4, push: 4 });
       component.xl.set({ span: 5, offset: 5, order: 5, pull: 5, push: 5 });
       component.xxl.set({ span: 6, offset: 6, order: 6, pull: 6, push: 6 });
+      component.xxxl.set({ span: 7, offset: 7, order: 7, pull: 7, push: 7 });
       fixture.detectChanges();
       expect(batchSizeMatch(1, 'xs')).toBe(true);
       expect(batchSizeMatch(2, 'sm')).toBe(true);
@@ -249,6 +251,7 @@ describe('grid', () => {
       expect(batchSizeMatch(4, 'lg')).toBe(true);
       expect(batchSizeMatch(5, 'xl')).toBe(true);
       expect(batchSizeMatch(6, 'xxl')).toBe(true);
+      expect(batchSizeMatch(7, 'xxxl')).toBe(true);
       component.xs.set({ span: 2, offset: 2, order: 2, pull: 2, push: 2 });
       fixture.detectChanges();
       expect(batchSizeMatch(1, 'xs')).toBe(false);
@@ -326,6 +329,7 @@ export class TestGridComponent {
         [lg]="lg()"
         [xl]="xl()"
         [xXl]="xxl()"
+        [xXXl]="xxxl()"
       ></div>
     </div>
   `
@@ -343,4 +347,5 @@ export class TestColComponent {
   lg = signal<string | number | ColSize | null>(null);
   xl = signal<string | number | ColSize | null>(null);
   xxl = signal<string | number | ColSize | null>(null);
+  xxxl = signal<string | number | ColSize | null>(null);
 }

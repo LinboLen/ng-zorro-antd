@@ -56,6 +56,7 @@ export class TriColDirective {
   readonly lg = input<ColSpanType | ColSize | null>();
   readonly xl = input<ColSpanType | ColSize | null>();
   readonly xXl = input<ColSpanType | ColSize | null>();
+  readonly xXXl = input<ColSpanType | ColSize | null>();
 
   protected readonly responsiveClass = computed(() => {
     const xs = this.xs();
@@ -64,7 +65,8 @@ export class TriColDirective {
     const lg = this.lg();
     const xl = this.xl();
     const xxl = this.xXl();
-    return this.generateClassList({ xs, sm, md, lg, xl, xxl });
+    const xxxl = this.xXXl();
+    return this.generateClassList({ xs, sm, md, lg, xl, xxl, xxxl });
   });
 
   protected readonly hostClass = computed(() => {

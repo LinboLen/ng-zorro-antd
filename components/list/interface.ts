@@ -15,4 +15,5 @@ export interface TriListGrid {
   lg?: ColumnCount;
   xl?: ColumnCount;
   xxl?: ColumnCount;
+  xxxl?: ColumnCount;
 }

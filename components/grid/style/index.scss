@@ -104,4 +104,12 @@
 @media (min-width: $screen-xxl-min) {
   @include make-grid(-xxl);
 }
+// Extra Extra Extra Large grid
+
+//
+
+// Columns, offsets, pushes, and pulls for the ultra full hd device range.
+@media (min-width: $screen-xxxl-min) {
+  @include make-grid(-xxxl);
+}
 @import "./rtl";

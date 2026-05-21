@@ -14,7 +14,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { TriBreakpointKey } from 'ng-zorro-antd/core/services';
+import { Breakpoint } from 'ng-zorro-antd/core/services';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
@@ -58,17 +58,21 @@ export class TriSiderTriggerComponent implements OnChanges, OnInit {
   @Input() matchBreakPoint = false;
   @Input() collapsedWidth: number | null = null;
   @Input() siderWidth: string | null = null;
-  @Input() breakpoint: TriBreakpointKey | null = null;
+  @Input() breakpoint: Breakpoint | null = null;
+
   isZeroTrigger = false;
   isNormalTrigger = false;
+
   updateTriggerType(): void {
     this.isZeroTrigger =
       this.collapsedWidth === 0 && ((this.breakpoint && this.matchBreakPoint) || !this.breakpoint);
     this.isNormalTrigger = this.collapsedWidth !== 0;
   }
+
   ngOnInit(): void {
     this.updateTriggerType();
   }
+
   ngOnChanges(): void {
     this.updateTriggerType();
   }

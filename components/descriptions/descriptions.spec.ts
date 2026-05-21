@@ -3,10 +3,12 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
-import { Component, provideZoneChangeDetection, ViewChild } from '@angular/core';
+import { Directionality } from '@angular/cdk/bidi';
+import { Component, provideZoneChangeDetection } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+
+import { provideMockDirectionality } from 'ng-zorro-antd/core/testing';
 
 import { TriDescriptionsComponent } from './descriptions.component';
 import { TriDescriptionsModule } from './descriptions.module';
@@ -131,21 +133,29 @@ describe('descriptions', () => {
   });
 
   describe('RTL', () => {
-    let fixture: ComponentFixture<TriTestDescriptionsRtlComponent>;
+    let fixture: ComponentFixture<TriTestDescriptionsComponent>;
     let componentElement: HTMLElement;
+    let dir: Directionality;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(TriTestDescriptionsRtlComponent);
+      TestBed.configureTestingModule({
+        providers: [provideMockDirectionality()]
+      });
+      fixture = TestBed.createComponent(TriTestDescriptionsComponent);
       componentElement = fixture.debugElement.query(By.directive(TriDescriptionsComponent)).nativeElement;
+      dir = fixture.debugElement.injector.get(Directionality);
       fixture.detectChanges();
     });
 
-    it('should className correct on dir change', fakeAsync(() => {
+    it('should className correct on dir change', () => {
+      dir.valueSignal.set('rtl');
+      fixture.detectChanges();
       expect(componentElement.classList).toContain('ant-descriptions-rtl');
-      fixture.componentInstance.direction = 'ltr';
+
+      dir.valueSignal.set('ltr');
       fixture.detectChanges();
       expect(componentElement.classList).not.toContain('ant-descriptions-rtl');
-    }));
+    });
   });
 });
 
@@ -166,17 +176,4 @@ export class TriTestDescriptionsComponent {
   column: TriDescriptionsComponent['nzColumn'] = 3;
   title = 'Title';
   itemTitle = 'Item Title ';
-}
-
-@Component({
-  imports: [BidiModule, TriTestDescriptionsComponent],
-  template: `
-    <div [dir]="direction">
-      <tri-test-descriptions />
-    </div>
-  `
-})
-export class TriTestDescriptionsRtlComponent {
-  @ViewChild(Dir) dir!: Dir;
-  direction: Direction = 'rtl';
 }
