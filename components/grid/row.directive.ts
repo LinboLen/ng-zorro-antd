@@ -39,8 +39,8 @@ export class TriRowDirective {
   private readonly breakpointService = inject(TriBreakpointService);
   protected readonly dir = inject(Directionality).valueSignal;
 
-  readonly align = input<TriAlign | null>(null);
-  readonly justify = input<TriJustify | null>(null);
+  readonly align = input<TriAlign | Partial<ResponsiveLike<TriAlign>> | null>(null);
+  readonly justify = input<TriJustify | Partial<ResponsiveLike<TriJustify>> | null>(null);
   readonly gutter = input<Gutter | [Gutter, Gutter] | null>(undefined);
   readonly wrap = input(true, { transform: booleanAttribute });
 
@@ -53,12 +53,14 @@ export class TriRowDirective {
     : signal(undefined);
 
   protected readonly alignClass = computed<string>(() => {
-    const align = this.align();
+    this.currentBreakpoint();
+    const align = this.resolveResponsiveValue(this.align());
     return isNotNil(align) ? this.generateClass(align) : '';
   });
 
   protected readonly flexClass = computed<string>(() => {
-    const justify = this.justify();
+    this.currentBreakpoint();
+    const justify = this.resolveResponsiveValue(this.justify());
     return isNotNil(justify) ? this.generateClass(justify) : '';
   });
 
@@ -100,5 +102,22 @@ export class TriRowDirective {
 
   private generateClass(suffix: string): string {
     return generateClassName(CLASS_NAME, suffix);
+  }
+
+  private resolveResponsiveValue<T extends string>(value: T | Partial<ResponsiveLike<T>> | null): T | null {
+    if (!isNotNil(value)) {
+      return null;
+    }
+    if (isPlainObject<Partial<ResponsiveLike<T>>>(value)) {
+      let result: T | null = null;
+      Object.keys(gridResponsiveMap).forEach(screen => {
+        const bp = screen as TriBreakpointKey;
+        if (this.mediaMatcher.matchMedia(gridResponsiveMap[bp]).matches && value[bp]) {
+          result = value[bp] as T;
+        }
+      });
+      return result;
+    }
+    return value;
   }
 }
