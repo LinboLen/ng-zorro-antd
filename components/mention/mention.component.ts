@@ -140,6 +140,7 @@ export type MentionPlacement = 'top' | 'bottom';
   host: {
     class: 'tri-mentions',
     '[class.tri-mentions-rtl]': `dir === 'rtl'`,
+    '[class.tri-mentions-outlined]': `finalVariant() === 'outlined'`,
     '[class.tri-mentions-borderless]': `finalVariant() === 'borderless'`,
     '[class.tri-mentions-filled]': `finalVariant() === 'filled'`,
     '[class.tri-mentions-underlined]': `finalVariant() === 'underlined'`,

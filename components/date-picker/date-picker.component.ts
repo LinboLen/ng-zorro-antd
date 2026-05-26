@@ -253,6 +253,7 @@ export type TriDatePickerSizeType = 'large' | 'default' | 'small';
     '[class.tri-picker-small]': `finalSize() === 'small'`,
     '[class.tri-picker-disabled]': `disabled`,
     '[class.tri-picker-rtl]': `dir() === 'rtl'`,
+    '[class.tri-picker-outlined]': `finalVariant() === 'outlined'`,
     '[class.tri-picker-borderless]': `finalVariant() === 'borderless'`,
     '[class.tri-picker-filled]': `finalVariant() === 'filled'`,
     '[class.tri-picker-underlined]': `finalVariant() === 'underlined'`,

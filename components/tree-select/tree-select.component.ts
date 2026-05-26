@@ -278,6 +278,7 @@ const listOfPositions = [
     '[class.tri-select-single]': '!isMultiple',
     '[class.tri-select-show-arrow]': '!isMultiple',
     '[class.tri-select-show-search]': '!isMultiple',
+    '[class.tri-select-outlined]': 'finalVariant() === "outlined"',
     '[class.tri-select-borderless]': 'finalVariant() === "borderless"',
     '[class.tri-select-filled]': 'finalVariant() === "filled"',
     '[class.tri-select-underlined]': 'finalVariant() === "underlined"',

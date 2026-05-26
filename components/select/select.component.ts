@@ -210,6 +210,7 @@ export type TriSelectSizeType = TriSizeLDSType;
     '[class.tri-select-disabled]': 'disabled',
     '[class.tri-select-show-search]': `(showSearch || mode !== 'default') && !disabled`,
     '[class.tri-select-allow-clear]': 'allowClear',
+    '[class.tri-select-outlined]': `finalVariant() === 'outlined'`,
     '[class.tri-select-borderless]': `finalVariant() === 'borderless'`,
     '[class.tri-select-filled]': `finalVariant() === 'filled'`,
     '[class.tri-select-underlined]': `finalVariant() === 'underlined'`,

@@ -296,6 +296,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'cascader';
   ],
   host: {
     '[attr.tabIndex]': '"0"',
+    class: 'tri-select ant-cascader',
     '[class.tri-select-in-form-item]': '!!formStatusService',
     '[class.tri-select-lg]': 'finalSize() === "large"',
     '[class.tri-select-sm]': 'finalSize() === "small"',
@@ -303,6 +304,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'cascader';
     '[class.tri-select-show-arrow]': 'showArrow',
     '[class.tri-select-show-search]': '!!showSearch',
     '[class.tri-select-disabled]': 'disabled',
+    '[class.tri-select-outlined]': `finalVariant() === 'outlined'`,
     '[class.tri-select-borderless]': `finalVariant() === 'borderless'`,
     '[class.tri-select-filled]': `finalVariant() === 'filled'`,
     '[class.tri-select-underlined]': `finalVariant() === 'underlined'`,
@@ -544,8 +546,6 @@ export class TriCascaderComponent
   constructor() {
     super(inject(TriCascaderTreeService));
     this.cascaderService.withComponent(this);
-    this.renderer.addClass(this.elementRef.nativeElement, 'ant-select');
-    this.renderer.addClass(this.elementRef.nativeElement, 'ant-cascader');
 
     this.destroyRef.onDestroy(() => {
       this.clearDelayMenuTimer();
