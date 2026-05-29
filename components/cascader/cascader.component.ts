@@ -202,6 +202,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'cascader';
     <ng-template
       cdkConnectedOverlay
       connectedOverlay
+      [cdkConnectedOverlayOffsetY]="dropdownPosition.startsWith('top') ? -4 : 4"
       [cdkConnectedOverlayHasBackdrop]="backdrop"
       [cdkConnectedOverlayOrigin]="overlayOrigin"
       [cdkConnectedOverlayPositions]="positions"

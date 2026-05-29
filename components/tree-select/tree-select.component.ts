@@ -108,6 +108,7 @@ const listOfPositions = [
     <ng-template
       cdkConnectedOverlay
       connectedOverlay
+      [cdkConnectedOverlayOffsetY]="dropdownPosition.startsWith('top') ? -4 : 4"
       [cdkConnectedOverlayHasBackdrop]="backdrop"
       [cdkConnectedOverlayOrigin]="cdkOverlayOrigin"
       [cdkConnectedOverlayPositions]="placement ? positions : []"
