@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriRadioModule } from 'ng-zorro-antd/radio';
-import { TriTreeSelectModule, TriPlacementType } from 'ng-zorro-antd/tree-select';
+import { TriPlacementType, TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
 @Component({
   selector: 'tri-demo-tree-select-placement',
@@ -22,6 +22,7 @@ import { TriTreeSelectModule, TriPlacementType } from 'ng-zorro-antd/tree-select
       [nodes]="nodes"
       [dropdownStyle]="{ width: '300px' }"
       defaultExpandAll
+      [dropdownMatchSelectWidth]="false"
       (ngModelChange)="onChange($event)"
     />
   `

@@ -28,6 +28,7 @@ import {
   dispatchFakeEvent,
   dispatchMouseEvent,
   MockNgZone,
+  sleep,
   typeInElement
 } from 'ng-zorro-antd/core/testing';
 import { TriTreeNode, TriTreeNodeOptions } from 'ng-zorro-antd/core/tree';
@@ -35,7 +36,7 @@ import { TriSizeLDSType, TriStatus, TriVariant } from 'ng-zorro-antd/core/types'
 import { TriFormControlStatusType, TriFormModule } from 'ng-zorro-antd/form';
 import { TRI_SPACE_COMPACT_SIZE } from 'ng-zorro-antd/space';
 
-import { TriTreeSelectComponent } from './tree-select.component';
+import { TriPlacementType, TriTreeSelectComponent } from './tree-select.component';
 import { TriTreeSelectModule } from './tree-select.module';
 
 describe('tree-select', () => {
@@ -96,6 +97,48 @@ describe('tree-select', () => {
       testComponent.size = 'large';
       fixture.detectChanges();
       expect(treeSelect.nativeElement.classList).toContain('ant-select-lg');
+    }));
+
+    it('should placement works', fakeAsync(() => {
+      fixture.detectChanges();
+      treeSelectComponent.openDropdown();
+      fixture.detectChanges();
+      let element = overlayContainerElement.querySelector('.ant-select-dropdown') as HTMLElement;
+      expect(element.classList.contains('ant-select-dropdown-placement-bottomLeft')).toBe(true);
+      expect(element.classList.contains('ant-select-dropdown-placement-bottomRight')).toBe(false);
+      expect(element.classList.contains('ant-select-dropdown-placement-topLeft')).toBe(false);
+      expect(element.classList.contains('ant-select-dropdown-placement-topRight')).toBe(false);
+
+      const setPlacement = (placement: TriPlacementType): void => {
+        treeSelectComponent.closeDropdown();
+        fixture.detectChanges();
+        testComponent.placement = placement;
+        treeSelectComponent.openDropdown();
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+      };
+
+      setPlacement('bottomRight');
+      element = overlayContainerElement.querySelector('.ant-select-dropdown') as HTMLElement;
+      expect(element.classList.contains('ant-select-dropdown-placement-bottomLeft')).toBe(false);
+      expect(element.classList.contains('ant-select-dropdown-placement-bottomRight')).toBe(true);
+      expect(element.classList.contains('ant-select-dropdown-placement-topLeft')).toBe(false);
+      expect(element.classList.contains('ant-select-dropdown-placement-topRight')).toBe(false);
+
+      setPlacement('topLeft');
+      element = overlayContainerElement.querySelector('.ant-select-dropdown') as HTMLElement;
+      expect(element.classList.contains('ant-select-dropdown-placement-bottomLeft')).toBe(false);
+      expect(element.classList.contains('ant-select-dropdown-placement-bottomRight')).toBe(false);
+      expect(element.classList.contains('ant-select-dropdown-placement-topLeft')).toBe(true);
+      expect(element.classList.contains('ant-select-dropdown-placement-topRight')).toBe(false);
+
+      setPlacement('topRight');
+      element = overlayContainerElement.querySelector('.ant-select-dropdown') as HTMLElement;
+      expect(element.classList.contains('ant-select-dropdown-placement-bottomLeft')).toBe(false);
+      expect(element.classList.contains('ant-select-dropdown-placement-bottomRight')).toBe(false);
+      expect(element.classList.contains('ant-select-dropdown-placement-topLeft')).toBe(false);
+      expect(element.classList.contains('ant-select-dropdown-placement-topRight')).toBe(true);
     }));
 
     describe('should variant works', () => {
@@ -179,13 +222,14 @@ describe('tree-select', () => {
       tick();
     }));
 
-    it('should dropdownMatchSelectWidth work', () => {
+    it('should dropdownMatchSelectWidth work', async () => {
       testComponent.dropdownMatchSelectWidth = true;
       fixture.detectChanges();
       treeSelect.nativeElement.click();
       fixture.detectChanges();
       expect(treeSelectComponent.open).toBe(true);
       const overlayPane = overlayContainerElement.querySelector('.cdk-overlay-pane') as HTMLElement;
+      await sleep(0);
       expect(overlayPane.style.width).toBe('250px');
       treeSelectComponent.closeDropdown();
       fixture.detectChanges();
@@ -194,6 +238,7 @@ describe('tree-select', () => {
       treeSelect.nativeElement.click();
       fixture.detectChanges();
       expect(treeSelectComponent.open).toBe(true);
+      await sleep(0);
       expect(overlayPane.style.minWidth).toBe('250px');
     });
 
@@ -917,6 +962,7 @@ describe('finalVariant', () => {
       [backdrop]="hasBackdrop"
       [prefix]="prefix"
       [suffixIcon]="suffixIcon"
+      [placement]="placement"
       dropdownClassName="class1 class2"
     />
     <ng-template #affixTemplate>icon</ng-template>
@@ -997,6 +1043,7 @@ export class TriTestTreeSelectBasicComponent {
     }
   ];
   hasBackdrop = false;
+  placement: TriPlacementType = 'bottomLeft';
 
   setNull(): void {
     this.value = null;

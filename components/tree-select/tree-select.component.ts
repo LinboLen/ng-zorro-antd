@@ -12,7 +12,7 @@ import {
   ConnectedOverlayPositionChange,
   ConnectionPositionPair
 } from '@angular/cdk/overlay';
-import { _getEventTarget } from '@angular/cdk/platform';
+import { Platform, _getEventTarget } from '@angular/cdk/platform';
 import { SlicePipe } from '@angular/common';
 import {
   ChangeDetectorRef,
@@ -51,8 +51,8 @@ import {
   TriFormStatusService
 } from 'ng-zorro-antd/core/form';
 import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
-import { TriOverlayModule, POSITION_MAP } from 'ng-zorro-antd/core/overlay';
-import { requestAnimationFrame } from 'ng-zorro-antd/core/polyfill';
+import { TriOverlayModule, POSITION_MAP, POSITION_TYPE, getPlacementName } from 'ng-zorro-antd/core/overlay';
+import { cancelAnimationFrame, requestAnimationFrame } from 'ng-zorro-antd/core/polyfill';
 import {
   TriFormatEmitEvent,
   TriTreeBase,
@@ -82,12 +82,6 @@ import { TriTreeSelectService } from './tree-select.service';
 export type TriPlacementType = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' | '';
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'treeSelect';
 const TREE_SELECT_DEFAULT_CLASS = 'ant-select-dropdown ant-select-tree-dropdown';
-const listOfPositions = [
-  POSITION_MAP.bottomLeft,
-  POSITION_MAP.bottomRight,
-  POSITION_MAP.topRight,
-  POSITION_MAP.topLeft
-];
 
 @Component({
   selector: 'tri-tree-select',
@@ -125,8 +119,10 @@ const listOfPositions = [
         [noAnimation]="!!noAnimation?.nzNoAnimation?.()"
         [animate.enter]="slideAnimationEnter()"
         [animate.leave]="slideAnimationLeave()"
-        [class.tri-select-dropdown-placement-bottomLeft]="dropdownPosition === 'bottom'"
-        [class.tri-select-dropdown-placement-topLeft]="dropdownPosition === 'top'"
+        [class.tri-select-dropdown-placement-bottomLeft]="dropdownPosition === 'bottomLeft'"
+        [class.tri-select-dropdown-placement-topLeft]="dropdownPosition === 'topLeft'"
+        [class.tri-select-dropdown-placement-bottomRight]="dropdownPosition === 'bottomRight'"
+        [class.tri-select-dropdown-placement-topRight]="dropdownPosition === 'topRight'"
         [class.tri-tree-select-dropdown-rtl]="dir() === 'rtl'"
         [dir]="dir()"
         [style]="dropdownStyle"
@@ -295,11 +291,13 @@ const listOfPositions = [
 export class TriTreeSelectComponent extends TriTreeBase implements ControlValueAccessor, OnInit, OnChanges {
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
-  private renderer = inject(Renderer2);
-  private cdr = inject(ChangeDetectorRef);
-  private elementRef = inject(ElementRef);
-  private focusMonitor = inject(FocusMonitor);
-  private destroyRef = inject(DestroyRef);
+  private readonly renderer = inject(Renderer2);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly elementRef = inject(ElementRef);
+  private readonly focusMonitor = inject(FocusMonitor);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly platform = inject(Platform);
+  private requestId: number = -1;
 
   protected readonly slideAnimationEnter = slideAnimationEnter();
   protected readonly slideAnimationLeave = slideAnimationLeave();
@@ -379,7 +377,7 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
   isNotFound = false;
   focused = false;
   inputValue = '';
-  dropdownPosition: 'top' | 'center' | 'bottom' = 'bottom';
+  dropdownPosition: TriPlacementType = 'bottomLeft';
   selectedNodes: TriTreeNode[] = [];
   _expandedKeys: string[] = [];
   value: string[] = [];
@@ -521,9 +519,14 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
       this.setStatusStyles(this.status, this.hasFeedback);
     }
 
-    if (nzPlacement && this.placement) {
-      if (POSITION_MAP[this.placement]) {
-        this.positions = [POSITION_MAP[this.placement]];
+    if (nzPlacement) {
+      const { currentValue } = nzPlacement;
+      this.dropdownPosition = currentValue as TriPlacementType;
+      const listOfPlacement = ['bottomLeft', 'topLeft', 'bottomRight', 'topRight'];
+      if (currentValue && listOfPlacement.includes(currentValue)) {
+        this.positions = [POSITION_MAP[currentValue as POSITION_TYPE]];
+      } else {
+        this.positions = listOfPlacement.map(e => POSITION_MAP[e as POSITION_TYPE]);
       }
     }
     if (nzSize) {
@@ -734,7 +737,8 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
   }
 
   onPositionChange(position: ConnectedOverlayPositionChange): void {
-    this.dropdownPosition = position.connectionPair.originY;
+    const placement = getPlacementName(position);
+    this.dropdownPosition = placement as TriPlacementType;
   }
 
   onClearSelection(): void {
@@ -758,8 +762,20 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
   }
 
   updateCdkConnectedOverlayStatus(): void {
-    if (!this.placement || !listOfPositions.includes(POSITION_MAP[this.placement])) {
-      this.triggerWidth = this.cdkOverlayOrigin.elementRef.nativeElement.getBoundingClientRect().width;
+    if (this.platform.isBrowser && this.cdkOverlayOrigin.elementRef.nativeElement) {
+      const triggerWidth = this.triggerWidth;
+      cancelAnimationFrame(this.requestId);
+      this.requestId = requestAnimationFrame(() => {
+        // Blink triggers style and layout pipelines anytime the `getBoundingClientRect()` is called, which may cause a
+        // frame drop. That's why it's scheduled through the `requestAnimationFrame` to unload the composite thread.
+        this.triggerWidth = this.cdkOverlayOrigin.elementRef.nativeElement.getBoundingClientRect().width;
+        if (triggerWidth !== this.triggerWidth) {
+          // The `requestAnimationFrame` will trigger change detection, but we're inside an `OnPush` component which won't have
+          // the `ChecksEnabled` state. Calling `markForCheck()` will allow Angular to run the change detection from the root component
+          // down to the `nz-select`. But we'll trigger only local change detection if the `triggerWidth` has been changed.
+          this.cdr.detectChanges();
+        }
+      });
     }
   }
 
