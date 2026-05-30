@@ -2,11 +2,6 @@
 .ant-tabs-dropdown-menu-item a[nz-tab-link] {
   position: relative;
 }
-.ant-tabs-tab-btn {
-  background-color: unset;
-  border: none;
-  cursor: pointer;
-}
 .ant-tabs-tab a[nz-tab-link] {
   &::before {
     position: absolute;
