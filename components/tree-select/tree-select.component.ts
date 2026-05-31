@@ -102,7 +102,7 @@ const TREE_SELECT_DEFAULT_CLASS = 'ant-select-dropdown ant-select-tree-dropdown'
     <ng-template
       cdkConnectedOverlay
       connectedOverlay
-      [cdkConnectedOverlayOffsetY]="dropdownPosition.startsWith('top') ? -4 : 4"
+      [cdkConnectedOverlayOffsetY]="placement().startsWith('top') ? -4 : 4"
       [cdkConnectedOverlayHasBackdrop]="backdrop"
       [cdkConnectedOverlayOrigin]="cdkOverlayOrigin"
       [cdkConnectedOverlayPositions]="placement ? positions : []"
@@ -119,10 +119,10 @@ const TREE_SELECT_DEFAULT_CLASS = 'ant-select-dropdown ant-select-tree-dropdown'
         [noAnimation]="!!noAnimation?.nzNoAnimation?.()"
         [animate.enter]="slideAnimationEnter()"
         [animate.leave]="slideAnimationLeave()"
-        [class.tri-select-dropdown-placement-bottomLeft]="dropdownPosition === 'bottomLeft'"
-        [class.tri-select-dropdown-placement-topLeft]="dropdownPosition === 'topLeft'"
-        [class.tri-select-dropdown-placement-bottomRight]="dropdownPosition === 'bottomRight'"
-        [class.tri-select-dropdown-placement-topRight]="dropdownPosition === 'topRight'"
+        [class.tri-select-dropdown-placement-bottomLeft]="placement() === 'bottomLeft'"
+        [class.tri-select-dropdown-placement-topLeft]="placement() === 'topLeft'"
+        [class.tri-select-dropdown-placement-bottomRight]="placement() === 'bottomRight'"
+        [class.tri-select-dropdown-placement-topRight]="placement() === 'topRight'"
         [class.tri-tree-select-dropdown-rtl]="dir() === 'rtl'"
         [dir]="dir()"
         [style]="dropdownStyle"
@@ -299,8 +299,12 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
   private readonly platform = inject(Platform);
   private requestId: number = -1;
 
-  protected readonly slideAnimationEnter = slideAnimationEnter();
-  protected readonly slideAnimationLeave = slideAnimationLeave();
+  protected readonly slideAnimationEnter = slideAnimationEnter(() =>
+    this._placement().startsWith('top') ? 'down' : 'up'
+  );
+  protected readonly slideAnimationLeave = slideAnimationLeave(() =>
+    this._placement().startsWith('top') ? 'down' : 'up'
+  );
 
   @Input() id: string | null = null;
   @Input({ transform: booleanAttribute }) allowClear: boolean = true;
@@ -377,7 +381,6 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
   isNotFound = false;
   focused = false;
   inputValue = '';
-  dropdownPosition: TriPlacementType = 'bottomLeft';
   selectedNodes: TriTreeNode[] = [];
   _expandedKeys: string[] = [];
   value: string[] = [];
@@ -395,8 +398,9 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
   });
 
   protected readonly finalVariant = computed(() => this.#variant() || this.formVariant?.() || 'outlined');
+  protected readonly _placement = signal<TriPlacementType>('bottomLeft');
 
-  #size = signal<TriSizeLDSType>(this.size);
+  readonly #size = signal<TriSizeLDSType>(this.size);
   readonly #variant = signal<TriVariant | undefined>(this.variant);
 
   private readonly formSize = inject(TRI_FORM_SIZE, { optional: true });
@@ -521,7 +525,7 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
 
     if (nzPlacement) {
       const { currentValue } = nzPlacement;
-      this.dropdownPosition = currentValue as TriPlacementType;
+      this._placement.set(currentValue);
       const listOfPlacement = ['bottomLeft', 'topLeft', 'bottomRight', 'topRight'];
       if (currentValue && listOfPlacement.includes(currentValue)) {
         this.positions = [POSITION_MAP[currentValue as POSITION_TYPE]];
@@ -738,7 +742,7 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
 
   onPositionChange(position: ConnectedOverlayPositionChange): void {
     const placement = getPlacementName(position);
-    this.dropdownPosition = placement as TriPlacementType;
+    this._placement.set(placement as TriPlacementType);
   }
 
   onClearSelection(): void {

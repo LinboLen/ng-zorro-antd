@@ -80,7 +80,6 @@ import {
   TriSelectClearComponent,
   TriSelectItemComponent,
   TriSelectPlaceholderComponent,
-  TriSelectPlacementType,
   TriSelectSearchComponent
 } from 'ng-zorro-antd/select';
 import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
@@ -202,7 +201,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'cascader';
     <ng-template
       cdkConnectedOverlay
       connectedOverlay
-      [cdkConnectedOverlayOffsetY]="dropdownPosition.startsWith('top') ? -4 : 4"
+      [cdkConnectedOverlayOffsetY]="placement().startsWith('top') ? -4 : 4"
       [cdkConnectedOverlayHasBackdrop]="backdrop"
       [cdkConnectedOverlayOrigin]="overlayOrigin"
       [cdkConnectedOverlayPositions]="positions"
@@ -214,13 +213,13 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'cascader';
     >
       <div
         class="tri-select-dropdown tri-cascader-dropdown"
-        [class.tri-select-dropdown-placement-bottomLeft]="dropdownPosition === 'bottomLeft'"
-        [class.tri-select-dropdown-placement-bottomRight]="dropdownPosition === 'bottomRight'"
-        [class.tri-select-dropdown-placement-topLeft]="dropdownPosition === 'topLeft'"
-        [class.tri-select-dropdown-placement-topRight]="dropdownPosition === 'topRight'"
+        [class.tri-select-dropdown-placement-bottomLeft]="placement() === 'bottomLeft'"
+        [class.tri-select-dropdown-placement-bottomRight]="placement() === 'bottomRight'"
+        [class.tri-select-dropdown-placement-topLeft]="placement() === 'topLeft'"
+        [class.tri-select-dropdown-placement-topRight]="placement() === 'topRight'"
         [class.tri-cascader-dropdown-rtl]="dir === 'rtl'"
-        [animate.enter]="cascaderAnimationEnter()"
-        [animate.leave]="cascaderAnimationLeave()"
+        [animate.enter]="slideAnimationEnter()"
+        [animate.leave]="slideAnimationLeave()"
         [noAnimation]="noAnimation?.nzNoAnimation?.()"
         (mouseenter)="onTriggerMouseEnter()"
         (mouseleave)="onTriggerMouseLeave($event)"
@@ -357,6 +356,13 @@ export class TriCascaderComponent
   protected readonly cascaderAnimationEnter = slideAnimationEnter();
   protected readonly cascaderAnimationLeave = slideAnimationLeave();
 
+  protected readonly slideAnimationEnter = slideAnimationEnter(() =>
+    this._placement().startsWith('top') ? 'down' : 'up'
+  );
+  protected readonly slideAnimationLeave = slideAnimationLeave(() =>
+    this._placement().startsWith('top') ? 'down' : 'up'
+  );
+
   @ViewChild(TriSelectSearchComponent)
   set input(inputComponent: TriSelectSearchComponent | undefined) {
     this.input$.next(inputComponent?.inputElement);
@@ -461,7 +467,6 @@ export class TriCascaderComponent
    */
   dropdownWidthStyle?: string;
   dropdownHeightStyle: 'auto' | '' = '';
-  dropdownPosition: TriCascaderPlacement = 'bottomLeft';
   isFocused = false;
 
   locale!: TriCascaderI18nInterface;
@@ -484,6 +489,7 @@ export class TriCascaderComponent
   });
 
   protected readonly finalVariant = computed(() => this.#variant() || this.formVariant?.() || 'outlined');
+  protected readonly _placement = signal<TriCascaderPlacement>('bottomLeft');
 
   #size = signal<TriSizeLDSType>(this.size);
   readonly #variant = signal<TriVariant | undefined>(this.variant);
@@ -641,7 +647,7 @@ export class TriCascaderComponent
     }
     if (nzPlacement) {
       const { currentValue } = nzPlacement;
-      this.dropdownPosition = currentValue as TriCascaderPlacement;
+      this._placement.set(currentValue);
       const listOfPlacement = ['bottomLeft', 'topLeft', 'bottomRight', 'topRight'];
       if (currentValue && listOfPlacement.includes(currentValue)) {
         this.positions = [POSITION_MAP[currentValue as POSITION_TYPE]];
@@ -1029,7 +1035,7 @@ export class TriCascaderComponent
 
   onPositionChange(position: ConnectedOverlayPositionChange): void {
     const placement = getPlacementName(position);
-    this.dropdownPosition = placement as TriSelectPlacementType;
+    this._placement.set(placement as TriCascaderPlacement);
   }
 
   private updateOptions(): void {

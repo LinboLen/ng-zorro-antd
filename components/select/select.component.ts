@@ -162,7 +162,7 @@ export type TriSelectSizeType = TriSizeLDSType;
     <ng-template
       cdkConnectedOverlay
       connectedOverlay
-      [cdkConnectedOverlayOffsetY]="dropdownPosition.startsWith('top') ? -4 : 4"
+      [cdkConnectedOverlayOffsetY]="placement().startsWith('top') ? -4 : 4"
       [cdkConnectedOverlayHasBackdrop]="backdrop"
       [cdkConnectedOverlayMinWidth]="$any(dropdownMatchSelectWidth ? null : triggerWidth)"
       [cdkConnectedOverlayWidth]="$any(dropdownMatchSelectWidth ? triggerWidth : null)"
@@ -180,12 +180,12 @@ export type TriSelectSizeType = TriSizeLDSType;
         [itemSize]="optionHeightPx"
         [maxItemLength]="optionOverflowSize"
         [matchWidth]="dropdownMatchSelectWidth"
-        [class.tri-select-dropdown-placement-bottomLeft]="dropdownPosition === 'bottomLeft'"
-        [class.tri-select-dropdown-placement-topLeft]="dropdownPosition === 'topLeft'"
-        [class.tri-select-dropdown-placement-bottomRight]="dropdownPosition === 'bottomRight'"
-        [class.tri-select-dropdown-placement-topRight]="dropdownPosition === 'topRight'"
-        [animate.enter]="selectAnimationEnter()"
-        [animate.leave]="selectAnimationLeave()"
+        [class.tri-select-dropdown-placement-bottomLeft]="placement() === 'bottomLeft'"
+        [class.tri-select-dropdown-placement-topLeft]="placement() === 'topLeft'"
+        [class.tri-select-dropdown-placement-bottomRight]="placement() === 'bottomRight'"
+        [class.tri-select-dropdown-placement-topRight]="placement() === 'topRight'"
+        [animate.enter]="slideAnimationEnter()"
+        [animate.leave]="slideAnimationLeave()"
         [noAnimation]="!!noAnimation?.nzNoAnimation?.()"
         [listOfContainerItem]="listOfContainerItem"
         [menuItemSelectedIcon]="menuItemSelectedIcon"
@@ -333,8 +333,8 @@ export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterCo
   });
 
   protected readonly finalVariant = computed(() => this.#variant() || this.formVariant?.() || 'outlined');
-  #size = signal<TriSizeLDSType>(this.size);
-  #variant = signal<TriVariant | undefined>(this.variant);
+  readonly #size = signal<TriSizeLDSType>(this.size);
+  readonly #variant = signal<TriVariant | undefined>(this.variant);
   private readonly formSize = inject(TRI_FORM_SIZE, { optional: true });
   private readonly formVariant = inject(TRI_FORM_VARIANT, { optional: true });
   private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
@@ -349,18 +349,22 @@ export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterCo
 
   onChange: OnChangeType = () => {};
   onTouched: OnTouchedType = () => {};
-  dropdownPosition: TriSelectPlacementType = 'bottomLeft';
   triggerWidth: number | null = null;
   listOfContainerItem: TriSelectItemInterface[] = [];
   listOfTopItem: TriSelectItemInterface[] = [];
   activatedValue: TriSafeAny | null = null;
   listOfValue: TriSafeAny[] = [];
   focused = false;
-  protected readonly dir = inject(Directionality).valueSignal;
   positions: ConnectionPositionPair[] = [];
 
-  protected readonly selectAnimationEnter = slideAnimationEnter();
-  protected readonly selectAnimationLeave = slideAnimationLeave();
+  protected readonly dir = inject(Directionality).valueSignal;
+  protected readonly _placement = signal<TriSelectPlacementType>('bottomLeft');
+  protected readonly slideAnimationEnter = slideAnimationEnter(() =>
+    this._placement().startsWith('top') ? 'down' : 'up'
+  );
+  protected readonly slideAnimationLeave = slideAnimationLeave(() =>
+    this._placement().startsWith('top') ? 'down' : 'up'
+  );
 
   // status
   prefixCls: string = 'ant-select';
@@ -612,7 +616,7 @@ export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterCo
 
   onPositionChange(position: ConnectedOverlayPositionChange): void {
     const placement = getPlacementName(position);
-    this.dropdownPosition = placement as TriSelectPlacementType;
+    this._placement.set(placement as TriSelectPlacementType);
   }
 
   updateCdkConnectedOverlayStatus(): void {
@@ -719,7 +723,7 @@ export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterCo
     }
     if (nzPlacement) {
       const { currentValue } = nzPlacement;
-      this.dropdownPosition = currentValue as TriSelectPlacementType;
+      this._placement.set(currentValue);
       const listOfPlacement = ['bottomLeft', 'topLeft', 'bottomRight', 'topRight'];
       if (currentValue && listOfPlacement.includes(currentValue)) {
         this.positions = [POSITION_MAP[currentValue as POSITION_TYPE]];
