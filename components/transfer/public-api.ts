@@ -5,6 +5,5 @@
 
 export * from './interface';
 export { TriTransferListComponent } from './transfer-list.component';
-export { TriTransferSearchComponent } from './transfer-search.component';
 export { TriTransferComponent } from './transfer.component';
 export { TriTransferModule } from './transfer.module';

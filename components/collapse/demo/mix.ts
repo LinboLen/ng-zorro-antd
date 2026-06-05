@@ -30,10 +30,9 @@ import { TriCollapseModule } from 'ng-zorro-antd/collapse';
   `
 })
 export class TriDemoCollapseMixComponent {
-  panels = [
+  readonly panels = [
     {
       active: true,
-      disabled: false,
       name: 'This is panel header 1',
       childPanel: [
         {
@@ -48,12 +47,10 @@ export class TriDemoCollapseMixComponent {
     },
     {
       active: false,
-      disabled: true,
       name: 'This is panel header 2'
     },
     {
       active: false,
-      disabled: false,
       name: 'This is panel header 3'
     }
   ];

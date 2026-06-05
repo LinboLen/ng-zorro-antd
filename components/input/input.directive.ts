@@ -29,7 +29,6 @@ import {
   TRI_FORM_SIZE,
   TRI_FORM_VARIANT,
   TriFormItemFeedbackIconComponent,
-  TriFormNoStatusService,
   TriFormStatusService
 } from 'ng-zorro-antd/core/form';
 import { TriSizeLDSType, TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
@@ -58,7 +57,6 @@ const PREFIX_CLS = 'ant-input';
     '[attr.disabled]': 'finalDisabled() || null',
     '[attr.readonly]': 'readonly() || null',
     '[class.tri-input-rtl]': `dir() === 'rtl'`,
-    '[class.tri-input-stepperless]': `stepperless()`,
     '[class.tri-input-focused]': 'focused()'
   },
   hostDirectives: [TriSpaceCompactItemDirective],
@@ -69,7 +67,6 @@ export class TriInputDirective implements OnInit {
   private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private destroyRef = inject(DestroyRef);
   private formStatusService = inject(TriFormStatusService, { optional: true });
-  private formNoStatusService = inject(TriFormNoStatusService, { optional: true });
   private inputWrapper = inject(TRI_INPUT_WRAPPER, { host: true, optional: true });
   private focusMonitor = inject(FocusMonitor);
   private hostView = inject(ViewContainerRef);
@@ -81,10 +78,6 @@ export class TriInputDirective implements OnInit {
 
   readonly variant = input<TriVariant>();
   readonly size = input<TriSizeLDSType>('default');
-  /**
-   * @deprecated Will be removed in v22.
-   */
-  readonly stepperless = input(true, { transform: booleanAttribute });
   readonly status = input<TriStatus>('');
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly readonly = input(false, { transform: booleanAttribute });
@@ -162,7 +155,7 @@ export class TriInputDirective implements OnInit {
   }
 
   private renderFeedbackIcon(): void {
-    if (!this._status() || !this.hasFeedback() || this.inputWrapper || !!this.formNoStatusService) {
+    if (!this._status() || !this.hasFeedback() || this.inputWrapper) {
       // remove feedback
       this.hostView.clear();
       this.feedbackRef = null;
@@ -171,8 +164,15 @@ export class TriInputDirective implements OnInit {
 
     this.feedbackRef = this.feedbackRef || this.hostView.createComponent(TriFormItemFeedbackIconComponent);
     this.feedbackRef.location.nativeElement.classList.add('ant-input-suffix');
-    this.feedbackRef.instance.status = this._status();
-    this.feedbackRef.instance.updateIcon();
+    this.feedbackRef.setInput('status', this._status());
+  }
+
+  focus(options?: InputFocusOptions): void {
+    triggerFocus(this.elementRef.nativeElement, options);
+  }
+
+  blur(): void {
+    this.elementRef.nativeElement.blur();
   }
 
   focus(options?: InputFocusOptions): void {

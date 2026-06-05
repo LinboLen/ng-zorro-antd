@@ -41,7 +41,6 @@ import {
   TriUploadChangeParam,
   TriUploadFile,
   TriUploadListType,
-  TriUploadTransformFileType,
   TriUploadType,
   TriUploadXHRArgs,
   UploadFilter,
@@ -120,11 +119,6 @@ export class TriUploadComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() preview?: (file: TriUploadFile) => void;
   @Input() previewFile?: (file: TriUploadFile) => Observable<string>;
   @Input() previewIsImage?: (file: TriUploadFile) => boolean;
-  /**
-   * @deprecated will be removed in v22.0.0
-   * Use `nzBeforeUpload` instead.
-   */
-  @Input() transformFile?: (file: TriUploadFile) => TriUploadTransformFileType;
   @Input() download?: (file: TriUploadFile) => void;
   @Input() iconRender: TriIconRenderTemplate | null = null;
   @Input() fileListRender: TemplateRef<{ $implicit: TriUploadFile[] }> | null = null;
@@ -179,7 +173,6 @@ export class TriUploadComponent implements OnInit, AfterViewInit, OnChanges {
       multiple: this.multiple,
       withCredentials: this.withCredentials,
       filters,
-      transformFile: this.transformFile,
       onStart: this.onStart,
       onProgress: this.onProgress,
       onSuccess: this.onSuccess,

@@ -47,15 +47,10 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { merge, of as observableOf, Subscription } from 'rxjs';
-import { distinctUntilChanged, map, startWith, switchMap, withLatestFrom } from 'rxjs/operators';
+import { merge, Subscription } from 'rxjs';
+import { distinctUntilChanged, startWith, switchMap } from 'rxjs/operators';
 
-import {
-  TRI_FORM_VARIANT,
-  TriFormItemFeedbackIconComponent,
-  TriFormNoStatusService,
-  TriFormStatusService
-} from 'ng-zorro-antd/core/form';
+import { TRI_FORM_VARIANT, TriFormItemFeedbackIconComponent, TriFormStatusService } from 'ng-zorro-antd/core/form';
 import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import { DEFAULT_MENTION_BOTTOM_POSITIONS, DEFAULT_MENTION_TOP_POSITIONS } from 'ng-zorro-antd/core/overlay';
 import { NgClassInterface, TriSafeAny, TriStatus, TriValidateStatus, TriVariant } from 'ng-zorro-antd/core/types';
@@ -156,14 +151,16 @@ export type MentionPlacement = 'top' | 'bottom';
   ]
 })
 export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
-  private ngZone = inject(NgZone);
-  private directionality = inject(Directionality);
-  private cdr = inject(ChangeDetectorRef);
-  private injector = inject(Injector);
-  private viewContainerRef = inject(ViewContainerRef);
-  private elementRef = inject(ElementRef);
-  private renderer = inject(Renderer2);
-  private destroyRef = inject(DestroyRef);
+  private readonly ngZone = inject(NgZone);
+  private readonly directionality = inject(Directionality);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly injector = inject(Injector);
+  private readonly viewContainerRef = inject(ViewContainerRef);
+  private readonly elementRef = inject(ElementRef);
+  private readonly renderer = inject(Renderer2);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly formStatusService = inject(TriFormStatusService, { optional: true });
+
   @Input() valueWith: (value: TriSafeAny) => string = value => value;
   @Input() prefix: string | string[] = '@';
   @Input({ transform: booleanAttribute }) loading = false;
@@ -232,9 +229,6 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
     return null;
   }
 
-  private formStatusService = inject(TriFormStatusService, { optional: true });
-  private formNoStatusService = inject(TriFormNoStatusService, { optional: true });
-
   private readonly formVariant = inject(TRI_FORM_VARIANT, { optional: true });
 
   protected readonly _variant = signal<TriVariant | undefined>(this.variant);
@@ -259,11 +253,7 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
   ngOnInit(): void {
     this.formStatusService?.formStatusChanges
       .pipe(
-        distinctUntilChanged((pre, cur) => {
-          return pre.status === cur.status && pre.hasFeedback === cur.hasFeedback;
-        }),
-        withLatestFrom(this.formNoStatusService ? this.formNoStatusService.noFormStatus : observableOf(false)),
-        map(([{ status, hasFeedback }, noStatus]) => ({ status: noStatus ? '' : status, hasFeedback })),
+        distinctUntilChanged((pre, cur) => pre.status === cur.status && pre.hasFeedback === cur.hasFeedback),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(({ status, hasFeedback }) => {

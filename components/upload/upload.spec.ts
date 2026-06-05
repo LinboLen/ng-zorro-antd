@@ -35,7 +35,6 @@ import {
   TriUploadChangeParam,
   TriUploadFile,
   TriUploadListType,
-  TriUploadTransformFileType,
   TriUploadType,
   UploadFilter,
   ZipButtonOptions
@@ -335,28 +334,6 @@ describe('upload', () => {
           instance.headers = null;
           fixture.detectChanges();
           pageObject.postSmall().expectChange();
-        });
-      });
-
-      describe('[nzTransformFile]', () => {
-        it('should be from small to big', () => {
-          instance.transformFile = () => new File([`1`], `1.png`);
-          fixture.detectChanges();
-          pageObject.postLarge();
-          const req = httpMock.expectOne(instance.action as string);
-          expect((req.request.body.get('file') as TriUploadFile).size).toBe(1);
-          req.flush({});
-          httpMock.verify();
-        });
-
-        it('should return Observable', () => {
-          instance.transformFile = () => of(new File([`123`], `1.png`));
-          fixture.detectChanges();
-          pageObject.postLarge();
-          const req = httpMock.expectOne(instance.action as string);
-          expect((req.request.body.get('file') as TriUploadFile).size).toBe(3);
-          req.flush({});
-          httpMock.verify();
         });
       });
 
@@ -1503,7 +1480,6 @@ describe('upload', () => {
         [previewFile]="previewFile"
         [remove]="onRemove"
         [directory]="directory"
-        [transformFile]="transformFile"
         [iconRender]="iconRender"
         [fileListRender]="fileListRender"
         [maxCount]="maxCount"
@@ -1554,7 +1530,6 @@ class TestUploadComponent {
   showUploadList: boolean | TriShowUploadList = true;
   showButton = true;
   withCredentials = false;
-  transformFile!: (file: TriUploadFile) => TriUploadTransformFileType;
   iconRender: TriIconRenderTemplate | null = null;
   fileListRender: TemplateRef<{ $implicit: TriUploadFile[] }> | null = null;
   maxCount: number | undefined = undefined;

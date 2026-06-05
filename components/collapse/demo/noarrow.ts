@@ -19,7 +19,7 @@ import { TriCollapseModule } from 'ng-zorro-antd/collapse';
   `
 })
 export class TriDemoCollapseNoarrowComponent {
-  panels = [
+  readonly panels = [
     {
       active: true,
       name: 'This is panel header 1',

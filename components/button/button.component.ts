@@ -73,7 +73,6 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'button';
     '[class.tri-btn-loading]': `loading`,
     '[class.tri-btn-background-ghost]': `ghost`,
     '[class.tri-btn-block]': `block`,
-    '[class.tri-input-search-button]': `search`,
     '[class.tri-btn-rtl]': `dir() === 'rtl'`,
     '[class.tri-btn-icon-only]': `iconOnly()`,
     '[attr.tabindex]': 'disabled ? -1 : (tabIndex === null ? null : tabIndex)',
@@ -83,19 +82,16 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'button';
   providers: [{ provide: TRI_SPACE_COMPACT_ITEM_TYPE, useValue: 'btn' }]
 })
 export class TriButtonComponent implements OnChanges, AfterViewInit, AfterContentInit, OnInit {
-  private elementRef: ElementRef<HTMLButtonElement | HTMLAnchorElement> = inject(ElementRef);
-  private cdr = inject(ChangeDetectorRef);
-  private renderer = inject(Renderer2);
-  private destroyRef = inject(DestroyRef);
+  private readonly elementRef: ElementRef<HTMLButtonElement | HTMLAnchorElement> = inject(ElementRef);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly renderer = inject(Renderer2);
+  private readonly destroyRef = inject(DestroyRef);
+  protected readonly dir = inject(Directionality).valueSignal;
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   @ContentChild(TriIconDirective, { read: ElementRef }) iconDirectiveElement!: ElementRef;
   @Input({ transform: booleanAttribute }) block: boolean = false;
   @Input({ transform: booleanAttribute }) ghost: boolean = false;
-  /**
-   * @deprecated Will be removed in v22.0.0. Please use `nz-input-search` instead.
-   */
-  @Input({ transform: booleanAttribute }) search: boolean = false;
   @Input({ transform: booleanAttribute }) loading: boolean = false;
   @Input({ transform: booleanAttribute }) danger: boolean = false;
   @Input({ transform: booleanAttribute }) disabled: boolean = false;
@@ -103,15 +99,13 @@ export class TriButtonComponent implements OnChanges, AfterViewInit, AfterConten
   @Input() type: TriButtonType = null;
   @Input() shape: TriButtonShape = null;
   @Input() @WithConfig() size: TriButtonSize = 'default';
-  protected readonly dir = inject(Directionality).valueSignal;
 
   private readonly elementOnly = signal(false);
   readonly #size = signal<TriSizeLDSType>(this.size);
 
-  private readonly formSize = inject(TRI_FORM_SIZE, { optional: true });
-
-  private readonly compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private readonly loading$ = new Subject<boolean>();
+  private readonly formSize = inject(TRI_FORM_SIZE, { optional: true });
+  private readonly compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
 
   protected readonly finalSize = computed(() => {
     if (this.formSize?.()) {
@@ -125,7 +119,6 @@ export class TriButtonComponent implements OnChanges, AfterViewInit, AfterConten
 
   readonly iconDir = contentChild(TriIconDirective);
   readonly loadingIconDir = viewChild(TriIconDirective);
-
   readonly iconOnly = computed(() => this.elementOnly() && (!!this.iconDir() || !!this.loadingIconDir()));
 
   constructor() {

@@ -4,6 +4,7 @@
  */
 
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import {
   afterNextRender,
   ChangeDetectionStrategy,
@@ -31,15 +32,16 @@ import { TriTSType } from 'ng-zorro-antd/core/types';
 import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 import { TriI18nService, TriTextI18nInterface } from 'ng-zorro-antd/i18n';
 import { TriIconModule } from 'ng-zorro-antd/icon';
-import { TriAutosizeDirective, TriInputModule } from 'ng-zorro-antd/input';
+import { TriInputModule } from 'ng-zorro-antd/input';
 import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
   selector: 'tri-text-edit',
   exportAs: 'triTextEdit',
+  imports: [CdkTextareaAutosize, TriInputModule, TriTransButtonModule, TriIconModule, TriTooltipModule, TriOutletModule],
   template: `
     @if (editing) {
-      <textarea #textarea tri-input autosize (blur)="confirm()"></textarea>
+      <textarea #textarea tri-input cdkTextareaAutosize (blur)="confirm()"></textarea>
       <button tri-trans-button class="tri-typography-edit-content-confirm" (click)="confirm()">
         <tri-icon type="enter" />
       </button>
@@ -58,14 +60,14 @@ import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
-  imports: [TriInputModule, TriTransButtonModule, TriIconModule, TriTooltipModule, TriOutletModule]
+  encapsulation: ViewEncapsulation.None
 })
 export class TriTextEditComponent implements OnInit {
-  private ngZone = inject(NgZone);
-  private cdr = inject(ChangeDetectorRef);
-  private i18n = inject(TriI18nService);
-  private destroyRef = inject(DestroyRef);
+  private readonly ngZone = inject(NgZone);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly i18n = inject(TriI18nService);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly injector = inject(Injector);
 
   editing = false;
   locale!: TriTextI18nInterface;
@@ -79,18 +81,16 @@ export class TriTextEditComponent implements OnInit {
   set textarea(textarea: ElementRef<HTMLTextAreaElement> | undefined) {
     this.textarea$.next(textarea);
   }
-  @ViewChild(TriAutosizeDirective, { static: false }) autosizeDirective!: TriAutosizeDirective;
+  @ViewChild(CdkTextareaAutosize, { static: false }) autosizeDirective!: CdkTextareaAutosize;
 
   beforeText?: string;
   currentText?: string;
-  nativeElement: HTMLElement = inject(ElementRef).nativeElement;
+  readonly nativeElement: HTMLElement = inject(ElementRef).nativeElement;
 
   // We could've saved the textarea within some private property (e.g. `_textarea`) and have a getter,
   // but having subject makes the code more reactive and cancellable (e.g., event listeners will be
   // automatically removed and re-added through the `switchMap` below).
   private textarea$ = new BehaviorSubject<ElementRef<HTMLTextAreaElement> | null | undefined>(null);
-
-  private injector = inject(Injector);
 
   ngOnInit(): void {
     this.i18n.localeChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
@@ -166,13 +166,13 @@ export class TriTextEditComponent implements OnInit {
             // It may still not be available, so we need to wait until view queries
             // are executed during the change detection. It's safer to wait until
             // the query runs, and the textarea is set on the behavior subject.
-            first((textarea): textarea is ElementRef<HTMLTextAreaElement> => textarea != null),
+            first(textarea => textarea != null),
             takeUntilDestroyed(this.destroyRef)
           )
           .subscribe(textarea => {
             textarea.nativeElement.focus();
             textarea.nativeElement.value = this.currentText || '';
-            this.autosizeDirective.resizeToFitContent();
+            this.autosizeDirective.resizeToFitContent(true);
             this.cdr.markForCheck();
           });
       },

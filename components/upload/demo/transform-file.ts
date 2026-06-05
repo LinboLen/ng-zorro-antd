@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { Observable, Observer } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriUploadFile, TriUploadModule } from 'ng-zorro-antd/upload';
 
@@ -19,10 +20,9 @@ import { TriUploadFile, TriUploadModule } from 'ng-zorro-antd/upload';
 })
 export class TriDemoUploadTransformFileComponent {
   transformFile = (file: TriUploadFile): Observable<Blob> =>
-    new Observable((observer: Observer<Blob>) => {
+    new Observable(observer => {
       const reader = new FileReader();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      reader.readAsDataURL(file as any);
+      reader.readAsDataURL(file as TriSafeAny);
       reader.onload = () => {
         const canvas = document.createElement('canvas');
         const img = document.createElement('img');

@@ -42,8 +42,8 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { BehaviorSubject, merge, Observable, of } from 'rxjs';
-import { distinctUntilChanged, map, startWith, switchMap, withLatestFrom } from 'rxjs/operators';
+import { BehaviorSubject, merge, Observable } from 'rxjs';
+import { distinctUntilChanged, startWith, switchMap } from 'rxjs/operators';
 
 import { TriNoAnimationDirective, slideAnimationEnter, slideAnimationLeave } from 'ng-zorro-antd/core/animation';
 import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
@@ -51,7 +51,6 @@ import {
   TRI_FORM_SIZE,
   TRI_FORM_VARIANT,
   TriFormItemFeedbackIconComponent,
-  TriFormNoStatusService,
   TriFormStatusService
 } from 'ng-zorro-antd/core/form';
 import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
@@ -84,7 +83,7 @@ import {
 } from 'ng-zorro-antd/select';
 import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
-import { defaultDisplayRender, TriDisplayRenderContextPipe, TriDisplayRenderPipe } from './cascader-display-render.pipe';
+import { TriDisplayRenderContextPipe, TriDisplayRenderPipe } from './cascader-display-render.pipe';
 import { TriCascaderOptionComponent } from './cascader-option.component';
 import { TriCascaderTreeService } from './cascader-tree.service';
 import { TriCascaderService } from './cascader.service';
@@ -122,7 +121,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'cascader';
                   <tri-select-item
                     deletable
                     [disabled]="disabled"
-                    [label]="node | nzDisplayRender: (labelRender ? undefined : displayWith)"
+                    [label]="node | nzDisplayRender"
                     [contentTemplateOutlet]="isLabelRenderTemplate ? labelRender : null"
                     [contentTemplateOutletContext]="node | nzDisplayRenderContext"
                     (delete)="removeSelected(node)"
@@ -342,13 +341,16 @@ export class TriCascaderComponent
   extends TriTreeBase
   implements TriCascaderComponentAsSource, OnInit, OnChanges, ControlValueAccessor
 {
-  private ngZone = inject(NgZone);
-  private cdr = inject(ChangeDetectorRef);
-  private i18nService = inject(TriI18nService);
-  private elementRef = inject(ElementRef<HTMLElement>);
-  private renderer = inject(Renderer2);
-  private directionality = inject(Directionality);
-  private destroyRef = inject(DestroyRef);
+  public readonly cascaderService = inject(TriCascaderService);
+  private readonly ngZone = inject(NgZone);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly i18nService = inject(TriI18nService);
+  private readonly elementRef = inject(ElementRef<HTMLElement>);
+  private readonly renderer = inject(Renderer2);
+  private readonly directionality = inject(Directionality);
+  private readonly destroyRef = inject(DestroyRef);
+  protected readonly formStatusService = inject(TriFormStatusService, { optional: true });
+  protected readonly noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
 
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
@@ -419,12 +421,6 @@ export class TriCascaderComponent
   @Input() triggerAction: TriCascaderTriggerType | TriCascaderTriggerType[] = ['click'] as TriCascaderTriggerType[];
   @Input() changeOn?: (option: TriCascaderOption, level: number) => boolean;
   @Input() loadData?: (node: TriCascaderOption, index: number) => PromiseLike<TriSafeAny> | Observable<TriSafeAny>;
-  /**
-   * @deprecated Use `nzLabelRender` instead. This will be removed in v22.0.0.
-   */
-  @Input() displayWith: (nodes: TriCascaderOption[]) => string | undefined = (nodes: TriCascaderOption[]) => {
-    return defaultDisplayRender(nodes.map(n => this.cascaderService.getOptionLabel(n!)));
-  };
   // TODO: RTL
   @Input() prefix: string | TemplateRef<void> | null = null;
   @Input() suffixIcon: string | TemplateRef<void> = 'down';
@@ -545,11 +541,6 @@ export class TriCascaderComponent
     return isNotNil(this.open);
   }
 
-  noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
-  formStatusService = inject(TriFormStatusService, { optional: true });
-  private formNoStatusService = inject(TriFormNoStatusService, { optional: true });
-  public cascaderService = inject(TriCascaderService);
-
   constructor() {
     super(inject(TriCascaderTreeService));
     this.cascaderService.withComponent(this);
@@ -569,8 +560,6 @@ export class TriCascaderComponent
     this.formStatusService?.formStatusChanges
       .pipe(
         distinctUntilChanged((pre, cur) => pre.status === cur.status && pre.hasFeedback === cur.hasFeedback),
-        withLatestFrom(this.formNoStatusService ? this.formNoStatusService.noFormStatus : of(false)),
-        map(([{ status, hasFeedback }, noStatus]) => ({ status: noStatus ? '' : status, hasFeedback })),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(({ status, hasFeedback }) => this.setStatusStyles(status, hasFeedback));

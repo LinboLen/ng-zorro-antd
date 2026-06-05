@@ -5,11 +5,8 @@
 
 import { NgModule } from '@angular/core';
 
-import { TriAutosizeDirective } from './autosize.directive';
 import { TriInputAddonAfterDirective, TriInputAddonBeforeDirective } from './input-addon.directive';
 import { TriInputPrefixDirective, TriInputSuffixDirective } from './input-affix.directive';
-import { TriInputGroupSlotComponent } from './input-group-slot.component';
-import { TriInputGroupComponent, TriInputGroupWhitSuffixOrPrefixDirective } from './input-group.component';
 import { TriInputOtpComponent } from './input-otp.component';
 import { TriInputPasswordDirective, TriInputPasswordIconDirective } from './input-password.directive';
 import { TriInputSearchDirective, TriInputSearchEnterButtonDirective } from './input-search.directive';
@@ -30,10 +27,6 @@ import { TriTextareaCountComponent } from './textarea-count.component';
     TriInputAddonAfterDirective,
     TriInputPrefixDirective,
     TriInputSuffixDirective,
-    TriInputGroupComponent,
-    TriAutosizeDirective,
-    TriInputGroupSlotComponent,
-    TriInputGroupWhitSuffixOrPrefixDirective,
     TriInputOtpComponent
   ],
   exports: [
@@ -48,9 +41,6 @@ import { TriTextareaCountComponent } from './textarea-count.component';
     TriInputAddonAfterDirective,
     TriInputPrefixDirective,
     TriInputSuffixDirective,
-    TriInputGroupComponent,
-    TriAutosizeDirective,
-    TriInputGroupWhitSuffixOrPrefixDirective,
     TriInputOtpComponent
   ]
 })

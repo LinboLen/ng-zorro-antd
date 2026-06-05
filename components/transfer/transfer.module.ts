@@ -6,11 +6,10 @@
 import { NgModule } from '@angular/core';
 
 import { TriTransferListComponent } from './transfer-list.component';
-import { TriTransferSearchComponent } from './transfer-search.component';
 import { TriTransferComponent } from './transfer.component';
 
 @NgModule({
-  imports: [TriTransferComponent, TriTransferListComponent, TriTransferSearchComponent],
+  imports: [TriTransferComponent, TriTransferListComponent],
   exports: [TriTransferComponent]
 })
 export class TriTransferModule {}

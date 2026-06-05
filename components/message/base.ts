@@ -209,8 +209,6 @@ export abstract class TriMNComponent implements OnInit {
     this.options = this.instance.options as Required<TriMessageDataOptions>;
 
     if (this.options.nzAnimate) {
-      // todo: remove this line in v22.0.0
-      this.instance.state = 'enter';
       this._startEnterAnimation();
     }
 
@@ -238,8 +236,6 @@ export abstract class TriMNComponent implements OnInit {
   protected destroy(userAction: boolean = false): void {
     this.userAction = userAction;
     if (this.options.nzAnimate) {
-      // todo: remove this line in v22.0.0
-      this.instance.state = 'leave';
       this._startLeaveAnimation(() => this.destroyed.next({ id: this.instance.messageId, userAction }));
     } else {
       this.destroyed.next({ id: this.instance.messageId, userAction });

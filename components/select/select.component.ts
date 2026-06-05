@@ -42,8 +42,8 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { BehaviorSubject, combineLatest, merge, of as observableOf } from 'rxjs';
-import { distinctUntilChanged, map, startWith, switchMap, withLatestFrom } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, merge } from 'rxjs';
+import { distinctUntilChanged, startWith, switchMap } from 'rxjs/operators';
 
 import { TriNoAnimationDirective, slideAnimationEnter, slideAnimationLeave } from 'ng-zorro-antd/core/animation';
 import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
@@ -51,7 +51,6 @@ import {
   TRI_FORM_SIZE,
   TRI_FORM_VARIANT,
   TriFormItemFeedbackIconComponent,
-  TriFormNoStatusService,
   TriFormStatusService
 } from 'ng-zorro-antd/core/form';
 import { getPlacementName, TriOverlayModule, POSITION_MAP, POSITION_TYPE } from 'ng-zorro-antd/core/overlay';
@@ -245,9 +244,8 @@ export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterCo
   private readonly focusMonitor = inject(FocusMonitor);
   private readonly destroyRef = inject(DestroyRef);
 
-  noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
-  protected formStatusService = inject(TriFormStatusService, { optional: true });
-  private formNoStatusService = inject(TriFormNoStatusService, { optional: true });
+  protected readonly noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
+  protected readonly formStatusService = inject(TriFormStatusService, { optional: true });
 
   @Input() id: string | null = null;
   @Input() size: TriSelectSizeType = 'default';
@@ -742,11 +740,7 @@ export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterCo
   ngOnInit(): void {
     this.formStatusService?.formStatusChanges
       .pipe(
-        distinctUntilChanged((pre, cur) => {
-          return pre.status === cur.status && pre.hasFeedback === cur.hasFeedback;
-        }),
-        withLatestFrom(this.formNoStatusService ? this.formNoStatusService.noFormStatus : observableOf(false)),
-        map(([{ status, hasFeedback }, noStatus]) => ({ status: noStatus ? '' : status, hasFeedback })),
+        distinctUntilChanged((pre, cur) => pre.status === cur.status && pre.hasFeedback === cur.hasFeedback),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(({ status, hasFeedback }) => {

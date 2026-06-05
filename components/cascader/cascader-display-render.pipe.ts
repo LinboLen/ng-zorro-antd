@@ -9,7 +9,7 @@ import { TriTreeNode } from 'ng-zorro-antd/tree';
 
 import { TriCascaderTreeService } from './cascader-tree.service';
 import { TriCascaderService } from './cascader.service';
-import { TriCascaderOption, TriDisplayRenderContext } from './typings';
+import { TriDisplayRenderContext } from './typings';
 
 export const defaultDisplayRender = (labels: string[]): string => labels.join(' / ');
 
@@ -20,11 +20,11 @@ export class TriDisplayRenderPipe implements PipeTransform {
   private cascaderService = inject(TriCascaderService);
   private cascaderTreeService = inject(TriCascaderTreeService);
 
-  transform(node: TriTreeNode, deprecatedDisplayWith?: (nodes: TriCascaderOption[]) => string | undefined): string {
+  transform(node: TriTreeNode): string {
     const ancestors = this.cascaderTreeService.getAncestorNodeList(node);
     const selectedOptions = this.cascaderTreeService.toOptions(ancestors);
     const labels = selectedOptions.map(o => this.cascaderService.getOptionLabel(o));
-    return deprecatedDisplayWith ? deprecatedDisplayWith(selectedOptions)! : defaultDisplayRender(labels);
+    return defaultDisplayRender(labels);
   }
 }
 

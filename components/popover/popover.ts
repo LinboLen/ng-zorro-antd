@@ -92,7 +92,6 @@ export class TriPopoverDirective extends TriTooltipBaseDirective {
       [cdkConnectedOverlayOrigin]="origin"
       [cdkConnectedOverlayPositions]="_positions"
       [cdkConnectedOverlayOpen]="_visible"
-      [cdkConnectedOverlayPush]="cdkConnectedOverlayPush"
       [arrowPointAtCenter]="arrowPointAtCenter"
       (overlayOutsideClick)="onClickOutside($event)"
       (detach)="hide()"

@@ -25,11 +25,11 @@ import {
   DestroyRef
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Observable, of as observableOf, of } from 'rxjs';
-import { distinctUntilChanged, map, withLatestFrom } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
-import { TriFormNoStatusService, TriFormStatusService } from 'ng-zorro-antd/core/form';
+import { TriFormStatusService } from 'ng-zorro-antd/core/form';
 import { NgClassInterface, NgStyleInterface, TriSafeAny, TriStatus, TriValidateStatus } from 'ng-zorro-antd/core/types';
 import { getStatusClassNames, toArray } from 'ng-zorro-antd/core/util';
 import { TriI18nService, TriTransferI18nInterface } from 'ng-zorro-antd/i18n';
@@ -182,7 +182,6 @@ export class TriTransferComponent implements OnInit, OnChanges {
   private renderer = inject(Renderer2);
   private directionality = inject(Directionality);
   private formStatusService = inject(TriFormStatusService, { optional: true });
-  private formNoStatusService = inject(TriFormNoStatusService, { optional: true });
 
   @ViewChildren(TriTransferListComponent) lists!: QueryList<TriTransferListComponent>;
   locale!: TriTransferI18nInterface;
@@ -388,8 +387,6 @@ export class TriTransferComponent implements OnInit, OnChanges {
     this.formStatusService?.formStatusChanges
       .pipe(
         distinctUntilChanged((pre, cur) => pre.status === cur.status && pre.hasFeedback === cur.hasFeedback),
-        withLatestFrom(this.formNoStatusService ? this.formNoStatusService.noFormStatus : observableOf(false)),
-        map(([{ status, hasFeedback }, noStatus]) => ({ status: noStatus ? '' : status, hasFeedback })),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(({ status, hasFeedback }) => {

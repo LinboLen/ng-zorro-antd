@@ -17,7 +17,7 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { By } from '@angular/platform-browser';
 
 import { TRI_FORM_SIZE } from 'ng-zorro-antd/core/form';
-import { TriSafeAny, TriSizeLDSType } from 'ng-zorro-antd/core/types';
+import { TriSizeLDSType } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 import { TRI_SPACE_COMPACT_SIZE } from 'ng-zorro-antd/space';
@@ -59,13 +59,6 @@ describe('button', () => {
       component.ghost = true;
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-background-ghost');
-    });
-
-    it('should apply classname based on nzSearch', () => {
-      expect(buttonElement.classList).not.toContain('ant-input-search-button');
-      component.search = true;
-      fixture.detectChanges();
-      expect(buttonElement.classList).toContain('ant-input-search-button');
     });
 
     it('should apply classname based on nzLoading', () => {
@@ -265,23 +258,6 @@ describe('button', () => {
       expect(stopImmediatePropagationSpy).toHaveBeenCalledTimes(1);
     }));
   });
-
-  describe('basic', () => {
-    let fixture: ComponentFixture<TriButtonComponent>;
-    let component: TriButtonComponent;
-
-    beforeEach(() => {
-      fixture = TestBed.createComponent(TriButtonComponent);
-      component = fixture.componentInstance;
-    });
-
-    it('correct value for listOfNode', () => {
-      component['elementRef'] = {
-        nativeElement: {} as TriSafeAny
-      };
-      expect(component.iconOnly()).toBeFalsy();
-    });
-  });
 });
 
 describe('anchor', () => {
@@ -360,7 +336,6 @@ describe('finalSize', () => {
       tri-button
       [type]="type"
       [ghost]="ghost"
-      [search]="search"
       [loading]="loading"
       [danger]="danger"
       [shape]="shape"
@@ -374,7 +349,6 @@ describe('finalSize', () => {
 export class TestButtonComponent {
   @Input() block: boolean = false;
   @Input() ghost: boolean = false;
-  @Input() search: boolean = false;
   @Input() loading: boolean = false;
   @Input() danger: boolean = false;
   @Input() type: TriButtonType = null;
@@ -482,7 +456,6 @@ export class TestButtonIconOnlyLoadingComponent {}
         tri-button
         [type]="type"
         [ghost]="ghost"
-        [search]="search"
         [loading]="loading"
         [danger]="danger"
         [shape]="shape"

@@ -17,9 +17,3 @@ import { TriDropdownDirective } from './dropdown.directive';
   exports: [TriMenuModule, TriDropdownDirective, TriDropdownADirective, TriDropdownMenuComponent]
 })
 export class TriDropdownModule {}
-
-/**
- * @deprecated Use {@link TriDropdownModule} instead.
- * This will be removed in v22.0.0.
- */
-export const TriDropDownModule = TriDropdownModule;

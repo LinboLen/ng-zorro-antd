@@ -87,19 +87,6 @@ describe('collapse', () => {
       expect(testComponent.active01Change).toHaveBeenCalledTimes(1);
     });
 
-    it('should disabled work', () => {
-      testComponent.disabled = true;
-      fixture.detectChanges();
-      expect(panels[1].nativeElement.classList).not.toContain('ant-collapse-item-active');
-      expect(testComponent.active02).toBe(false);
-      panels[1].nativeElement.querySelector('.ant-collapse-header').click();
-      fixture.detectChanges();
-      expect(testComponent.active02).toBe(false);
-      expect(panels[1].nativeElement.classList).toContain('ant-collapse-item-disabled');
-      expect(panels[1].nativeElement.classList).not.toContain('ant-collapse-item-active');
-      expect(testComponent.active02Change).toHaveBeenCalledTimes(0);
-    });
-
     it('should accordion work', () => {
       testComponent.accordion = true;
       fixture.detectChanges();
@@ -340,7 +327,7 @@ describe('collapse', () => {
       >
         <p>Panel01</p>
       </tri-collapse-panel>
-      <tri-collapse-panel [(activeChange)]="active02" (activeChange)="active02Change($event)" [disabled]="disabled">
+      <tri-collapse-panel [(activeChange)]="active02" (activeChange)="active02Change($event)">
         <p>Panel02</p>
       </tri-collapse-panel>
     </tri-collapse>
@@ -350,7 +337,6 @@ export class TriTestCollapseBasicComponent {
   @ViewChild('headerTemplate', { static: false }) headerTemplate!: TemplateRef<void>;
   accordion = false;
   bordered = true;
-  disabled = false;
   active01 = false;
   active02 = false;
   showArrow = true;

@@ -11,7 +11,7 @@ import { TriUploadChangeParam, TriUploadFile, TriUploadModule } from 'ng-zorro-a
     <tri-upload
       name="file"
       [(fileListChange)]="files"
-      [transformFile]="transformFile"
+      [beforeUpload]="beforeUpload"
       [data]="getExtraData"
       [action]="mockOSSData.host"
       (change)="onChange($event)"
@@ -35,11 +35,11 @@ export class TriDemoUploadUploadWithAliyunOssComponent {
     signature: 'ZGFob25nc2hhbw=='
   };
 
-  transformFile = (file: TriUploadFile): TriUploadFile => {
+  beforeUpload = (file: TriUploadFile): boolean => {
     const suffix = file.name.slice(file.name.lastIndexOf('.'));
     const filename = Date.now() + suffix;
     file.url = this.mockOSSData.dir + filename;
-    return file;
+    return true;
   };
 
   getExtraData = (file: TriUploadFile): {} => {

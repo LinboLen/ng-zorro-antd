@@ -44,8 +44,8 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'collapsePanel';
       #collapseHeader
       role="button"
       [attr.aria-expanded]="active()"
-      [attr.aria-disabled]="disabled || collapsible === 'disabled'"
-      [attr.tabindex]="disabled || collapsible === 'disabled' ? -1 : 0"
+      [attr.aria-disabled]="disabled"
+      [attr.tabindex]="disabled ? -1 : 0"
       class="tri-collapse-header"
       [class.tri-collapse-collapsible-icon]="collapsible === 'icon'"
       [class.tri-collapse-collapsible-header]="collapsible === 'header'"
@@ -82,7 +82,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'collapsePanel';
     class: 'tri-collapse-item',
     '[class.tri-collapse-no-arrow]': '!showArrow',
     '[class.tri-collapse-item-active]': 'active()',
-    '[class.tri-collapse-item-disabled]': `disabled || collapsible === 'disabled'`
+    '[class.tri-collapse-item-disabled]': `disabled`
   },
   imports: [TriOutletModule, TriIconModule, TriAnimationCollapseDirective]
 })
@@ -95,16 +95,16 @@ export class TriCollapsePanelComponent implements AfterViewInit {
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   readonly active = input(false, { transform: booleanAttribute });
-  /**
-   * @deprecated Will be removed in v22, please use `nzCollapsible` with the value `'disabled'` instead.
-   */
-  @Input({ transform: booleanAttribute }) disabled = false;
   @Input({ transform: booleanAttribute }) @WithConfig() showArrow: boolean = true;
   @Input() extra?: string | TemplateRef<void>;
   @Input() header?: string | TemplateRef<void>;
   @Input() expandedIcon?: string | TemplateRef<void>;
   @Input() collapsible?: 'disabled' | 'header' | 'icon';
   readonly activeChange = output<boolean>();
+
+  protected get disabled(): boolean {
+    return this.collapsible === 'disabled';
+  }
 
   /**
    * @description Actual active state of the panel.
@@ -132,7 +132,7 @@ export class TriCollapsePanelComponent implements AfterViewInit {
         : (header.nativeElement as HTMLElement);
     fromEventOutsideAngular(element, 'click')
       .pipe(
-        filter(() => !this.disabled && this.collapsible !== 'disabled'),
+        filter(() => !this.disabled),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(() => {

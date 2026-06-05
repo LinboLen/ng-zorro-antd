@@ -161,7 +161,6 @@ export class TriPopconfirmDirective extends TriTooltipBaseDirective {
       (positionChange)="onPositionChange($event)"
       [cdkConnectedOverlayPositions]="_positions"
       [cdkConnectedOverlayOpen]="_visible"
-      [cdkConnectedOverlayPush]="cdkConnectedOverlayPush"
       [arrowPointAtCenter]="arrowPointAtCenter"
     >
       <div

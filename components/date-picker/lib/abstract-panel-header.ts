@@ -24,9 +24,9 @@ import { PanelSelector } from './interface';
 export abstract class AbstractPanelHeader implements OnInit, OnChanges {
   prefixCls: string = `ant-picker-header`;
   selectors: PanelSelector[] = [];
-  mode!: TriDateMode;
 
   @Input() value!: CandyDate;
+  @Input() mode: TriDateMode = 'date';
   @Input() locale!: TriCalendarI18nInterface;
   @Input({ transform: booleanAttribute }) showSuperPreBtn: boolean = true;
   @Input({ transform: booleanAttribute }) showSuperNextBtn: boolean = true;

@@ -32,7 +32,7 @@ import { TriModalFooterDirective } from './modal-footer.directive';
 import { TriModalLegacyAPI } from './modal-legacy-api';
 import { TriModalRef } from './modal-ref';
 import { TriModalTitleDirective } from './modal-title.directive';
-import { ModalButtonOptions, ModalOptions, ModalTypes, OnClickCallback, StyleObjectLike } from './modal-types';
+import { ModalButtonOptions, ModalOptions, ModalTypes, StyleObjectLike } from './modal-types';
 import { TriModalService } from './modal.service';
 import { getConfigFromComponent } from './utils';
 
@@ -82,20 +82,8 @@ export class TriModalComponent<T extends ModalOptions = TriSafeAny, R = TriSafeA
   @Input() modalType: ModalTypes = 'default';
   @Input() autofocus: 'ok' | 'cancel' | 'auto' | null = 'auto';
 
-  /**
-   * @note The input usage will be removed in v22.
-   */
-  @Input()
-  @Output()
-  readonly onOk: EventEmitter<T> | OnClickCallback<T> | TriSafeAny = new EventEmitter<T>();
-
-  /**
-   * @note The input usage will be removed in v22.
-   */
-  @Input()
-  @Output()
-  readonly onCancel: EventEmitter<T> | OnClickCallback<T> | TriSafeAny = new EventEmitter<T>();
-
+  @Output() readonly onOk = new EventEmitter<T>();
+  @Output() readonly onCancel = new EventEmitter<T>();
   @Output() readonly afterOpen = new EventEmitter<void>();
   @Output() readonly afterClose = new EventEmitter<R>();
   @Output() readonly visibleChange = new EventEmitter<boolean>();

@@ -35,7 +35,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-import { distinctUntilChanged, map, withLatestFrom } from 'rxjs/operators';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 
 import { isValid } from 'date-fns';
 
@@ -45,7 +45,6 @@ import {
   TRI_FORM_SIZE,
   TRI_FORM_VARIANT,
   TriFormItemFeedbackIconComponent,
-  TriFormNoStatusService,
   TriFormStatusService
 } from 'ng-zorro-antd/core/form';
 import { warn } from 'ng-zorro-antd/core/logger';
@@ -440,14 +439,11 @@ export class TriTimePickerComponent implements ControlValueAccessor, OnInit, Aft
   readonly #variant = signal<TriVariant | undefined>(this.variant);
   private compactSize = inject(TRI_SPACE_COMPACT_SIZE, { optional: true });
   private formStatusService = inject(TriFormStatusService, { optional: true });
-  private formNoStatusService = inject(TriFormNoStatusService, { optional: true });
 
   ngOnInit(): void {
     this.formStatusService?.formStatusChanges
       .pipe(
         distinctUntilChanged((pre, cur) => pre.status === cur.status && pre.hasFeedback === cur.hasFeedback),
-        withLatestFrom(this.formNoStatusService ? this.formNoStatusService.noFormStatus : of(false)),
-        map(([{ status, hasFeedback }, noStatus]) => ({ status: noStatus ? '' : status, hasFeedback })),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(({ status, hasFeedback }) => {

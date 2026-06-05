@@ -72,14 +72,6 @@ describe('input', () => {
         expect(inputElement.nativeElement.classList).toContain('ant-input-lg');
       });
 
-      it('should nzStepperLess work', () => {
-        fixture.detectChanges();
-        expect(inputElement.nativeElement.classList).toContain('ant-input-stepperless');
-        testComponent.stepperless = false;
-        fixture.detectChanges();
-        expect(inputElement.nativeElement.classList).not.toContain('ant-input-stepperless');
-      });
-
       it('should be focus / blur work', async () => {
         const input = inputElement.nativeElement;
         testComponent.inputDirective().focus();
@@ -323,6 +315,7 @@ describe('input', () => {
       fixture.detectChanges();
       expect(inputElement.classList).toContain('ant-input-lg');
     });
+
     it('should set correctly the size from the compactSize signal', () => {
       TestBed.configureTestingModule({
         providers: [{ provide: TRI_SPACE_COMPACT_SIZE, useValue: compactSizeSignal }]
@@ -335,6 +328,7 @@ describe('input', () => {
       fixture.detectChanges();
       expect(inputElement.classList).toContain('ant-input-lg');
     });
+
     it('should set correctly the size from the nzSize input', () => {
       TestBed.configureTestingModule({});
       fixture = TestBed.createComponent(TestInputFinalSizeComponent);
@@ -447,21 +441,11 @@ export class TriTestInputWithDirComponent {
 
 @Component({
   imports: [TriInputModule],
-  template: `
-    <input
-      tri-input
-      [size]="size"
-      [disabled]="disabled"
-      [variant]="variant"
-      [stepperless]="stepperless"
-      [value]="value"
-    />
-  `
+  template: `<input tri-input [size]="size" [disabled]="disabled" [variant]="variant" [value]="value" />`
 })
 export class TriTestInputWithInputComponent {
   size: TriSizeLDSType = 'default';
   disabled = false;
-  stepperless = true;
   variant: TriVariant = 'outlined';
   value = 'NzTestInput';
   inputDirective = viewChild.required(TriInputDirective);

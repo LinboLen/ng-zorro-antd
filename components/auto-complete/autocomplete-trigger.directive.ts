@@ -33,7 +33,6 @@ import { Subscription } from 'rxjs';
 import { delay, filter, tap } from 'rxjs/operators';
 
 import { TriSafeAny, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
-import { TriInputGroupWhitSuffixOrPrefixDirective } from 'ng-zorro-antd/input';
 
 import { TriAutocompleteOptionComponent } from './autocomplete-option.component';
 import { TriAutocompleteComponent } from './autocomplete.component';
@@ -60,11 +59,13 @@ import { getNzAutocompleteMissingPanelError } from './error';
   }
 })
 export class TriAutocompleteTriggerDirective implements AfterViewInit, ControlValueAccessor {
-  private injector = inject(Injector);
-  private ngZone = inject(NgZone);
-  private elementRef = inject(ElementRef<HTMLElement>);
-  private viewContainerRef = inject(ViewContainerRef);
-  private destroyRef = inject(DestroyRef);
+  private readonly injector = inject(Injector);
+  private readonly ngZone = inject(NgZone);
+  private readonly elementRef = inject(ElementRef<HTMLElement>);
+  private readonly viewContainerRef = inject(ViewContainerRef);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly document = inject(DOCUMENT);
+
   /** Bind nzAutocomplete component */
   @Input() autocomplete!: TriAutocompleteComponent;
 
@@ -88,8 +89,6 @@ export class TriAutocompleteTriggerDirective implements AfterViewInit, ControlVa
   private selectionChangeSubscription!: Subscription;
   private optionsChangeSubscription!: Subscription;
   private overlayOutsideClickSubscription!: Subscription;
-  private document = inject(DOCUMENT);
-  private inputGroupWhitSuffixOrPrefixDirective = inject(TriInputGroupWhitSuffixOrPrefixDirective, { optional: true });
 
   constructor() {
     this.destroyRef.onDestroy(() => {
@@ -305,12 +304,8 @@ export class TriAutocompleteTriggerDirective implements AfterViewInit, ControlVa
     }
   }
 
-  private getConnectedElement(): ElementRef {
-    return this.inputGroupWhitSuffixOrPrefixDirective?.elementRef ?? this.elementRef;
-  }
-
   private getOverlayPosition(): PositionStrategy {
-    return (this.positionStrategy = createFlexibleConnectedPositionStrategy(this.injector, this.getConnectedElement())
+    return (this.positionStrategy = createFlexibleConnectedPositionStrategy(this.injector, this.elementRef)
       .withFlexibleDimensions(false)
       .withPush(false)
       .withPositions([
@@ -321,7 +316,7 @@ export class TriAutocompleteTriggerDirective implements AfterViewInit, ControlVa
   }
 
   private getHostWidth(): number {
-    return this.getConnectedElement().nativeElement.getBoundingClientRect().width;
+    return this.elementRef.nativeElement.getBoundingClientRect().width;
   }
 
   private resetActiveItem(): void {
