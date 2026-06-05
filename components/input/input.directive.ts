@@ -174,12 +174,4 @@ export class TriInputDirective implements OnInit {
   blur(): void {
     this.elementRef.nativeElement.blur();
   }
-
-  focus(options?: InputFocusOptions): void {
-    triggerFocus(this.elementRef.nativeElement, options);
-  }
-
-  blur(): void {
-    this.elementRef.nativeElement.blur();
-  }
 }
