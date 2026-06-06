@@ -27,6 +27,7 @@ import {
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   DebugElement,
   inject,
@@ -91,6 +92,7 @@ describe('cascader', () => {
     TestBed.configureTestingModule({
       providers: [provideNzIconsTesting(), provideNzNoAnimation(), provideZoneChangeDetection()]
     });
+    (TriDemoCascaderMultipleComponent as TriSafeAny).ɵcmp.onPush = false;
   });
 
   beforeEach(
@@ -2969,7 +2971,8 @@ const options5: TriSafeAny[] = [];
         {{ label }}{{ $last ? '' : ' | ' }}
       }
     </ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriDemoCascaderDefaultComponent {
   @ViewChild(TriCascaderComponent, { static: true }) cascader!: TriCascaderComponent;
@@ -3022,7 +3025,8 @@ export class TriDemoCascaderDefaultComponent {
       (ngModelChange)="onValueChanges($event)"
       (openChange)="onOpenChange($event)"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriDemoCascaderLoadDataComponent {
   @ViewChild(TriCascaderComponent, { static: true }) cascader!: TriCascaderComponent;
@@ -3076,7 +3080,8 @@ export class TriDemoCascaderLoadDataComponent {
     <div [dir]="direction">
       <tri-cascader [options]="options" />
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriDemoCascaderRtlComponent {
   @ViewChild(TriCascaderComponent, { static: true }) cascader!: TriCascaderComponent;
@@ -3087,7 +3092,8 @@ export class TriDemoCascaderRtlComponent {
 
 @Component({
   imports: [FormsModule, TriCascaderModule],
-  template: `<tri-cascader [options]="options" [status]="status" />`
+  template: `<tri-cascader [options]="options" [status]="status" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriDemoCascaderStatusComponent {
   options: TriSafeAny[] | null = options1();
@@ -3104,7 +3110,8 @@ export class TriDemoCascaderStatusComponent {
         </tri-form-control>
       </tri-form-item>
     </form>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriDemoCascaderInFormComponent {
   private fb = inject(FormBuilder);
@@ -3116,7 +3123,8 @@ export class TriDemoCascaderInFormComponent {
 
 @Component({
   imports: [TriCascaderModule],
-  template: ` <tri-cascader [variant]="variant()" /> `
+  template: ` <tri-cascader [variant]="variant()" /> `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestCascaderFinalVariantComponent {
   readonly variant = signal<TriVariant | undefined>(undefined);
@@ -3131,7 +3139,8 @@ export class TestCascaderFinalVariantComponent {
       <ng-container [ngTemplateOutlet]="menu" />
       <div class="custom-footer">Custom Footer</div>
     </ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriDemoCascaderPopupRenderComponent {
   @ViewChild(TriCascaderComponent, { static: true }) cascader!: TriCascaderComponent;

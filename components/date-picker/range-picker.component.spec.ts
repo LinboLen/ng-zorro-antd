@@ -7,7 +7,14 @@ import { ESCAPE } from '@angular/cdk/keycodes';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
-import { Component, DebugElement, provideZoneChangeDetection, TemplateRef, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DebugElement,
+  provideZoneChangeDetection,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, inject, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -1293,7 +1300,8 @@ describe('range-picker', () => {
         <tri-range-picker [separator]="separatorTemplate" />
       }
     }
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestRangePickerComponent {
   useSuite!: 1 | 2 | 3 | 4 | 5 | 6;
@@ -1345,7 +1353,8 @@ class TriTestRangePickerComponent {
 
 @Component({
   imports: [TriDatePickerModule],
-  template: `<tri-range-picker [status]="status" />`
+  template: `<tri-range-picker [status]="status" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestRangePickerStatusComponent {
   status: TriStatus = 'error';

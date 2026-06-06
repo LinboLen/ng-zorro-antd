@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriMessageService } from 'ng-zorro-antd/message';
@@ -148,13 +148,13 @@ import { TriPopconfirmModule } from 'ng-zorro-antd/popconfirm';
   `
 })
 export class TriDemoPopconfirmPlacementComponent {
-  constructor(private nzMessageService: TriMessageService) {}
+  private readonly messageService = inject(TriMessageService);
 
   cancel(): void {
-    this.nzMessageService.info('click cancel');
+    this.messageService.info('click cancel');
   }
 
   confirm(): void {
-    this.nzMessageService.info('click confirm');
+    this.messageService.info('click confirm');
   }
 }

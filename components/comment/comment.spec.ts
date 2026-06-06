@@ -4,10 +4,17 @@
  */
 
 import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
-import { Component, NO_ERRORS_SCHEMA, provideZoneChangeDetection, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  NO_ERRORS_SCHEMA,
+  provideZoneChangeDetection,
+  ViewChild
+} from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
 import { TriCommentComponent } from './comment.component';
@@ -22,6 +29,14 @@ describe('comment', () => {
     TestBed.configureTestingModule({
       providers: [provideNzIconsTesting(), provideZoneChangeDetection()],
       schemas: [NO_ERRORS_SCHEMA]
+    });
+    [
+      TriDemoCommentBasicComponent,
+      TriDemoCommentListComponent,
+      TriDemoCommentEditorComponent,
+      TriDemoCommentNestedComponent
+    ].forEach(comp => {
+      (comp as TriSafeAny).ɵcmp.onPush = false;
     });
   });
 
@@ -170,7 +185,8 @@ describe('comment', () => {
     <div [dir]="direction">
       <tri-demo-comment-basic />
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestCommentRtlComponent {
   @ViewChild(Dir) dir!: Dir;

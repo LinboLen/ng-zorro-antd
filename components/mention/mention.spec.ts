@@ -9,6 +9,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { ScrollDispatcher } from '@angular/cdk/scrolling';
 import {
   ApplicationRef,
+  ChangeDetectionStrategy,
   Component,
   DebugElement,
   NgZone,
@@ -849,7 +850,8 @@ describe('finalVariant', () => {
         <textarea rows="1" tri-input [(ngModel)]="inputValue" mentionTrigger></textarea>
       }
     </tri-mention>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestSimpleMentionComponent {
   inputValue: string = '@angular';
@@ -875,7 +877,8 @@ class TriTestSimpleMentionComponent {
         <span class="custom">{{ framework.name }} - {{ framework.type }}</span>
       </ng-container>
     </tri-mention>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestPropertyMentionComponent {
   inputValue: string = '@angular';
@@ -922,7 +925,8 @@ class TriTestPropertyMentionComponent {
         <textarea rows="1" tri-input mentionTrigger></textarea>
       </tri-mention>
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestDirMentionComponent {
   direction: Direction = 'ltr';
@@ -934,7 +938,8 @@ class TriTestDirMentionComponent {
     <tri-mention [suggestions]="[]" [status]="status">
       <textarea rows="1" tri-input mentionTrigger></textarea>
     </tri-mention>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestStatusMentionComponent {
   status: TriStatus = 'error';
@@ -952,7 +957,8 @@ class TriTestStatusMentionComponent {
         </tri-form-control>
       </tri-form-item>
     </form>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestMentionInFormComponent {
   status: TriFormControlStatusType = 'error';
@@ -967,7 +973,8 @@ class TriTestMentionInFormComponent {
     <tri-mention [suggestions]="suggestions" [variant]="variant">
       <textarea tri-input [(ngModel)]="inputValue" mentionTrigger></textarea>
     </tri-mention>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestVariantMentionComponent {
   inputValue: string = '@angular';
@@ -990,7 +997,8 @@ class TriTestVariantMentionComponent {
         <span class="custom-clear-icon">×</span>
       </ng-template>
     </tri-mention>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestClearMentionComponent {
   inputValue = '';
@@ -1009,7 +1017,8 @@ class TriTestClearMentionComponent {
     <tri-mention [suggestions]="suggestions" [variant]="variant()">
       <textarea tri-input mentionTrigger></textarea>
     </tri-mention>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestFinalVariantMentionComponent {
   readonly variant = signal<TriVariant | undefined>(undefined);

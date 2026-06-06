@@ -9,21 +9,22 @@ import {
   ChangeDetectorRef,
   DestroyRef,
   Directive,
-  Input,
+  input,
   NgZone,
-  OnChanges,
   PLATFORM_ID,
   PendingTasks,
-  Renderer2,
-  SimpleChanges,
   booleanAttribute,
   inject,
-  numberAttribute
+  numberAttribute,
+  effect,
+  computed,
+  ElementRef,
+  Renderer2
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { animationFrameScheduler, asapScheduler, debounceTime, finalize } from 'rxjs';
 
-import { IconDirective, ThemeType } from '@ant-design/icons-angular';
+import { IconBase, RenderMeta, ThemeType } from '@ant-design/icons-angular';
 
 import { warn } from 'ng-zorro-antd/core/logger';
 import { wrapIntoObservable } from 'ng-zorro-antd/core/util';
@@ -34,81 +35,92 @@ import { TriIconPatchService, TriIconService } from './icon.service';
   selector: 'tri-icon,[tri-icon]',
   exportAs: 'triIcon',
   host: {
-    class: 'anticon',
-    '[class]': `'anticon-' + type`,
-    '[class.anticon-spin]': `nzSpin || type === 'loading'`,
     role: 'img',
-    '[attr.aria-label]': 'type'
+    '[class]': `hostClass()`,
+    '[attr.aria-label]': 'nzType()'
   }
 })
-export class TriIconDirective extends IconDirective implements OnChanges, AfterContentChecked {
+export class TriIconDirective extends IconBase implements AfterContentChecked {
   private readonly ngZone = inject(NgZone);
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
-  public readonly renderer = inject(Renderer2);
-  private destroyRef = inject(DestroyRef);
-  private pendingTasks = inject(PendingTasks);
-  private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly pendingTasks = inject(PendingTasks);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  protected readonly el = inject(ElementRef).nativeElement as HTMLElement;
+  protected readonly renderer = inject(Renderer2);
+  protected readonly iconService = inject(TriIconService);
 
-  @Input({ transform: booleanAttribute }) spin: boolean = false;
-  @Input({ transform: numberAttribute }) rotate: number = 0;
-  @Input()
-  set type(value: string) {
-    this.type = value;
+  readonly type = input<string>();
+  readonly theme = input<ThemeType>();
+  readonly twotoneColor = input<string>();
+  readonly spin = input(false, { transform: booleanAttribute });
+  readonly rotate = input(0, { transform: numberAttribute });
+  readonly iconfont = input<string>();
+
+  protected readonly hostClass = computed(() => {
+    const type = this.type();
+    const spin = this.spin();
+    const cls = ['anticon'];
+    if (type) {
+      cls.push(`anticon-${type}`);
+    }
+    if (spin || type === 'loading') {
+      cls.push('anticon-spin');
+    }
+    return cls;
+  });
+
+  protected get selfRenderMeta(): RenderMeta {
+    return {
+      type: this.type() as string,
+      theme: this.theme(),
+      twoToneColor: this.twotoneColor()
+    };
   }
 
-  @Input()
-  set theme(value: ThemeType) {
-    this.theme = value;
-  }
-
-  @Input()
-  set twotoneColor(value: string) {
-    this.twoToneColor = value;
-  }
-
-  @Input()
-  set iconfont(value: string) {
-    this.#iconfont = value;
-  }
-
-  hostClass?: string;
-
-  private readonly el: HTMLElement;
-  #iconfont?: string;
-
-  constructor(public readonly iconService: TriIconService) {
-    super(iconService);
+  constructor() {
+    super();
     inject(TriIconPatchService, { optional: true })?.doPatch();
-    this.el = this._elementRef.nativeElement;
-  }
 
-  override ngOnChanges(changes: SimpleChanges): void {
-    const { nzType, nzTwotoneColor, nzTheme, nzRotate, nzSpin } = changes;
-
-    if (nzType || nzTwotoneColor || nzTheme || nzSpin) {
+    let renderedIcon = false;
+    effect(() => {
+      void this.type();
+      void this.twotoneColor();
+      void this.theme();
       // This is used to reduce the number of change detections
       // while the icon is being loaded asynchronously.
-      this.ngZone.runOutsideAngular(() => this.changeIcon2());
-    } else if (nzRotate) {
-      this.handleRotate(this.el.firstChild as SVGElement);
-    } else {
-      this._setSVGElement(this.iconService.createIconfontIcon(`#${this.#iconfont}`));
-    }
+      if (this.type()) {
+        renderedIcon = true;
+        this.ngZone.runOutsideAngular(() => this.changeIcon2());
+      } else if (renderedIcon) {
+        renderedIcon = false;
+        this._clearSVGElement();
+      }
+    });
+
+    effect(() => {
+      void this.rotate();
+      this.handleRotate(this.el.firstChild as SVGElement | null);
+    });
+
+    effect(() => {
+      const iconfont = this.iconfont();
+      if (iconfont) {
+        this._setSVGElement(this.iconService.createIconfontIcon(`#${iconfont}`));
+      }
+    });
   }
 
   /**
    * If custom content is provided, try to normalize SVG elements.
    */
   ngAfterContentChecked(): void {
-    if (!this.type) {
+    if (!this.type()) {
       const children = this.el.children;
-      let length = children.length;
-      if (!this.type && children.length) {
-        while (length--) {
-          const child = children[length];
-          if (child.tagName.toLowerCase() === 'svg') {
-            this.iconService.normalizeSvgElement(child as SVGElement);
-          }
+      for (let index = children.length - 1; index >= 0; index--) {
+        const child = children[index];
+        if (child.tagName.toLowerCase() === 'svg') {
+          this.iconService.normalizeSvgElement(child as SVGElement);
         }
       }
     }
@@ -132,7 +144,7 @@ export class TriIconDirective extends IconDirective implements OnChanges, AfterC
     );
 
     svgOrRemove$.subscribe({
-      next: svgOrRemove => {
+      next: svg => {
         // Get back into the Angular zone after completing all the tasks.
         // Since we manually run change detection locally, we have to re-enter
         // the zone because the change detection might also be run on other local
@@ -144,9 +156,9 @@ export class TriIconDirective extends IconDirective implements OnChanges, AfterC
           // #7186
           this.changeDetectorRef.detectChanges();
 
-          if (svgOrRemove) {
-            this.setSVGData(svgOrRemove);
-            this.handleRotate(svgOrRemove);
+          if (svg) {
+            this.setSVGData(svg);
+            this.handleRotate(svg);
           }
         });
       },
@@ -154,16 +166,21 @@ export class TriIconDirective extends IconDirective implements OnChanges, AfterC
     });
   }
 
-  private handleRotate(svg: SVGElement): void {
-    if (this.rotate) {
-      this.renderer.setAttribute(svg, 'style', `transform: rotate(${this.rotate}deg)`);
+  private handleRotate(svg: SVGElement | null): void {
+    if (!svg) {
+      return;
+    }
+
+    const rotate = this.rotate();
+    if (rotate) {
+      this.renderer.setAttribute(svg, 'style', `transform: rotate(${rotate}deg)`);
     } else {
       this.renderer.removeAttribute(svg, 'style');
     }
   }
 
   private setSVGData(svg: SVGElement): void {
-    this.renderer.setAttribute(svg, 'data-icon', this.type as string);
+    this.renderer.setAttribute(svg, 'data-icon', this.type() as string);
     this.renderer.setAttribute(svg, 'aria-hidden', 'true');
   }
 }

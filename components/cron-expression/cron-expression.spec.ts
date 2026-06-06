@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -149,7 +149,8 @@ describe('cron-expression', () => {
       <button tri-button type="primary">Test</button>
     </ng-template>
     <ng-template #semanticTemplate>Test</ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestCronExpressionComponent {
   size: TriCronExpressionSize = 'default';
@@ -160,7 +161,8 @@ export class TriTestCronExpressionComponent {
 
 @Component({
   imports: [TriCronExpressionModule],
-  template: `<tri-cron-expression [type]="type" />`
+  template: `<tri-cron-expression [type]="type" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestCronExpressionTypeComponent {
   type: 'linux' | 'spring' = 'spring';
@@ -168,7 +170,8 @@ export class TriTestCronExpressionTypeComponent {
 
 @Component({
   imports: [ReactiveFormsModule, TriCronExpressionModule],
-  template: `<tri-cron-expression [formControl]="formControl" />`
+  template: `<tri-cron-expression [formControl]="formControl" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestCronExpressionFormComponent {
   formControl = new FormControl('1 1 1 * *');

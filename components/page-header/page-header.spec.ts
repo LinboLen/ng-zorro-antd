@@ -5,11 +5,12 @@
 
 import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
 import { Location } from '@angular/common';
-import { Component, DebugElement, provideZoneChangeDetection, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
 import { TriDemoPageHeaderBasicComponent } from './demo/basic';
@@ -26,6 +27,15 @@ describe('page-header', () => {
     // todo: use zoneless
     TestBed.configureTestingModule({
       providers: [provideNoopAnimations(), provideNzIconsTesting(), provideZoneChangeDetection()]
+    });
+    [
+      TriDemoPageHeaderBasicComponent,
+      TriDemoPageHeaderBreadcrumbComponent,
+      TriDemoPageHeaderContentComponent,
+      TriDemoPageHeaderGhostComponent,
+      TriDemoPageHeaderResponsiveComponent
+    ].forEach(comp => {
+      (comp as TriSafeAny).ɵcmp.onPush = false;
     });
     location = TestBed.inject(Location);
     spyOn(location, 'getState').and.returnValue({ navigationId: 2 });
@@ -196,7 +206,8 @@ describe('page-header', () => {
     <div [dir]="direction">
       <tri-demo-page-header-basic />
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriDemoPageHeaderRtlComponent {
   @ViewChild(Dir) dir!: Dir;

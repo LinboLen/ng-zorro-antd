@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriModalModule, TriModalService } from 'ng-zorro-antd/modal';
@@ -19,10 +19,10 @@ import { TriModalModule, TriModalService } from 'ng-zorro-antd/modal';
   `
 })
 export class TriDemoModalInfoComponent {
-  constructor(private modal: TriModalService) {}
+  private readonly modalService = inject(TriModalService);
 
   info(): void {
-    this.modal.info({
+    this.modalService.info({
       title: 'This is a notification message',
       content: '<p>some messages...some messages...</p><p>some messages...some messages...</p>',
       onOk: () => console.log('Info OK')
@@ -30,21 +30,21 @@ export class TriDemoModalInfoComponent {
   }
 
   success(): void {
-    this.modal.success({
+    this.modalService.success({
       title: 'This is a success message',
       content: 'some messages...some messages...'
     });
   }
 
   error(): void {
-    this.modal.error({
+    this.modalService.error({
       title: 'This is an error message',
       content: 'some messages...some messages...'
     });
   }
 
   warning(): void {
-    this.modal.warning({
+    this.modalService.warning({
       title: 'This is an warning message',
       content: 'some messages...some messages...'
     });

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -26,7 +26,7 @@ import { TriUploadChangeParam, TriUploadModule } from 'ng-zorro-antd/upload';
   `
 })
 export class TriDemoUploadDragComponent {
-  constructor(private messageService: TriMessageService) {}
+  private readonly messageService = inject(TriMessageService);
 
   handleChange({ file, fileList }: TriUploadChangeParam): void {
     const status = file.status;

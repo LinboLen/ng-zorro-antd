@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { concatMap } from 'rxjs/operators';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
@@ -10,7 +10,7 @@ import { TriMessageService } from 'ng-zorro-antd/message';
   template: `<button tri-button type="default" (click)="startShowMessages()">Display a sequence of messages</button>`
 })
 export class TriDemoMessageCloseComponent {
-  constructor(private message: TriMessageService) {}
+  private readonly message = inject(TriMessageService);
 
   startShowMessages(): void {
     this.message

@@ -25,7 +25,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
 
 import { TriResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
-import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -94,9 +94,12 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'pageHeader';
   imports: [TriOutletModule, TriIconModule]
 })
 export class TriPageHeaderComponent implements AfterViewInit, OnInit {
-  private location = inject(Location);
-  private destroyRef = inject(DestroyRef);
-
+  private readonly location = inject(Location);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly elementRef = inject(ElementRef);
+  private readonly resizeObserver = inject(TriResizeObserver);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly directionality = inject(Directionality);
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   @Input() backIcon: string | TemplateRef<void> | null = null;
@@ -114,14 +117,6 @@ export class TriPageHeaderComponent implements AfterViewInit, OnInit {
   dir: Direction = 'ltr';
 
   enableBackButton = true;
-
-  constructor(
-    public nzConfigService: TriConfigService,
-    private elementRef: ElementRef,
-    private nzResizeObserver: TriResizeObserver,
-    private cdr: ChangeDetectorRef,
-    private directionality: Directionality
-  ) {}
 
   ngOnInit(): void {
     this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((direction: Direction) => {
@@ -142,7 +137,7 @@ export class TriPageHeaderComponent implements AfterViewInit, OnInit {
       this.destroyRef.onDestroy(() => subscription.unsubscribe());
     }
 
-    this.nzResizeObserver
+    this.resizeObserver
       .observe(this.elementRef)
       .pipe(
         map(([entry]) => entry.contentRect.width),

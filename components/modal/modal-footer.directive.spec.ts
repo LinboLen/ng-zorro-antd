@@ -4,8 +4,15 @@
  */
 
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, provideZoneChangeDetection, TemplateRef, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, inject, TestBed } from '@angular/core/testing';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  provideZoneChangeDetection,
+  TemplateRef,
+  ViewChild,
+  inject
+} from '@angular/core';
+import { ComponentFixture, fakeAsync, flush, inject as testingInject, TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
@@ -36,10 +43,12 @@ describe('modal footer directive', () => {
     fixture.detectChanges();
   });
 
-  beforeEach(inject([OverlayContainer, TriModalService], (oc: OverlayContainer, m: TriModalService) => {
-    overlayContainer = oc;
-    modalService = m;
-  }));
+  beforeEach(
+    testingInject([OverlayContainer, TriModalService], (oc: OverlayContainer, m: TriModalService) => {
+      overlayContainer = oc;
+      modalService = m;
+    })
+  );
 
   afterEach(() => {
     overlayContainer.ngOnDestroy();
@@ -74,7 +83,7 @@ describe('modal footer directive', () => {
     const modalRef = modalService.create({ content: TestDirectiveFooterInServiceComponent, footer: null });
     fixture.detectChanges();
 
-    expect(modalRef.componentInstance!.nzModalRef).toBe(modalRef);
+    expect(modalRef.componentInstance!.modalRef).toBe(modalRef);
     expect(modalRef.componentInstance!.modalFooterDirective).toEqual(
       modalRef.getConfig().footer as TemplateRef<{}>
     );
@@ -92,7 +101,8 @@ describe('modal footer directive', () => {
         <button id="btn-template" tri-button type="default" (click)="handleCancel()">Custom Callback</button>
       </div>
     </tri-modal>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestDirectiveFooterComponent {
   isVisible = false;
@@ -120,7 +130,8 @@ class TestDirectiveFooterComponent {
         <button id="btn-template" tri-button type="default">Custom Callback</button>
       </div>
     </tri-modal>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestDirectiveFooterWithInitOpenedComponent {
   isVisible = true;
@@ -135,15 +146,16 @@ class TestDirectiveFooterWithInitOpenedComponent {
     <div *modalFooter>
       <button id="btn-template" tri-button type="default" (click)="handleCancel()">Custom Callback</button>
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestDirectiveFooterInServiceComponent {
+  public readonly modalRef = inject(TriModalRef);
+
   @ViewChild(TriModalFooterDirective, { static: true, read: TemplateRef })
   modalFooterDirective!: TemplateRef<TriSafeAny>;
 
-  constructor(public nzModalRef: TriModalRef) {}
-
   handleCancel(): void {
-    this.nzModalRef.close();
+    this.modalRef.close();
   }
 }

@@ -4,7 +4,14 @@
  */
 
 import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
-import { Component, DebugElement, provideZoneChangeDetection, TemplateRef, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DebugElement,
+  provideZoneChangeDetection,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -449,7 +456,8 @@ describe('progress', () => {
       [steps]="steps"
     />
     <ng-template #formatterTemplate let-percent>{{ percent }} / 100</ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestProgressLineComponent {
   @ViewChild('formatterTemplate') formatterTemplate!: TemplateRef<{ $implicit: number }>;
@@ -478,7 +486,8 @@ export class TriTestProgressLineComponent {
       [percent]="percent"
       [strokeLinecap]="strokeLinecap"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestProgressDashBoardComponent {
   status?: TriProgressStatusType;
@@ -501,7 +510,8 @@ export class TriTestProgressDashBoardComponent {
       [strokeColor]="strokeColor"
       [strokeLinecap]="strokeLinecap"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestProgressCircleComponent {
   gapDegree?: number;
@@ -512,7 +522,8 @@ export class TriTestProgressCircleComponent {
 
 @Component({
   imports: [TriProgressModule],
-  template: `<tri-progress type="circle" [percent]="75" [successPercent]="60" />`
+  template: `<tri-progress type="circle" [percent]="75" [successPercent]="60" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestProgressCircleSuccessComponent {}
 
@@ -522,7 +533,8 @@ export class TriTestProgressCircleSuccessComponent {}
     <div [dir]="direction">
       <tri-progress type="circle" [percent]="75" [successPercent]="60" />
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestProgressRtlComponent {
   @ViewChild(Dir) dir!: Dir;

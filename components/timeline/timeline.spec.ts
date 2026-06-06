@@ -4,7 +4,7 @@
  */
 
 import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
-import { Component, DebugElement, provideZoneChangeDetection, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -256,7 +256,8 @@ describe('nz-timeline', () => {
         <tri-timeline-item>Network problems being solved 2015-09-01</tri-timeline-item>
       }
     </tri-timeline>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTimelineBasicComponent {
   color = 'blue';
@@ -276,7 +277,8 @@ export class TriTestTimelineBasicComponent {
       <tri-timeline-item color="#781241">Technical testing 2015-09-01</tri-timeline-item>
       <tri-timeline-item color="red">Network problems being solved 2015-09-01</tri-timeline-item>
     </tri-timeline>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTimelineCustomColorComponent {}
 
@@ -288,7 +290,8 @@ export class TriTestTimelineCustomColorComponent {}
       <tri-timeline-item>Technical testing 2015-09-01</tri-timeline-item>
       <tri-timeline-item>Network problems being solved 2015-09-01</tri-timeline-item>
     </tri-timeline>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTimelinePendingComponent {}
 
@@ -299,7 +302,8 @@ export class TriTestTimelinePendingComponent {}
       <tri-timeline-item position="right">Right</tri-timeline-item>
       <tri-timeline-item position="left">Left</tri-timeline-item>
     </tri-timeline>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTimelineCustomPositionComponent {}
 
@@ -309,7 +313,8 @@ export class TriTestTimelineCustomPositionComponent {}
     <div [dir]="direction">
       <tri-test-basic-timeline />
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTimelineRtlComponent {
   @ViewChild(Dir) dir!: Dir;
@@ -325,7 +330,8 @@ export class TriTestTimelineRtlComponent {
       }
     </tri-timeline>
     <span (click)="reset()">reset</span>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTimelineClearItemsComponent {
   @ViewChild(TriTimelineComponent)

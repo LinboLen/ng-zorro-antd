@@ -3,7 +3,14 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ApplicationRef, Component, DebugElement, provideZoneChangeDetection, ViewChild } from '@angular/core';
+import {
+  ApplicationRef,
+  ChangeDetectionStrategy,
+  Component,
+  DebugElement,
+  provideZoneChangeDetection,
+  ViewChild
+} from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, flush, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -374,7 +381,8 @@ describe('time-picker-panel', () => {
       [minuteStep]="minuteStep"
       [hourStep]="hourStep"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTimePanelComponent {
   @ViewChild(TriTimePickerPanelComponent, { static: false }) timePickerPanelComponent!: TriTimePickerPanelComponent;
@@ -402,7 +410,8 @@ export class TriTestTimePanelComponent {
       [hideDisabledOptions]="hideDisabledOptions"
       [hourStep]="hourStep"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTimePanelDisabledComponent {
   @ViewChild(TriTimePickerPanelComponent, { static: false }) timePickerPanelComponent!: TriTimePickerPanelComponent;
@@ -446,7 +455,8 @@ export class TriTestTimePanelDisabledComponent {
       [hourStep]="hourStep"
       [format]="format"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTest12HourTimePanelComponent {
   @ViewChild(TriTimePickerPanelComponent, { static: false }) timePickerPanelComponent!: TriTimePickerPanelComponent;
@@ -468,7 +478,8 @@ export class TriTest12HourTimePanelComponent {
       [disabledSeconds]="disabledSeconds"
       [hideDisabledOptions]="false"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTest12HourTimePanelDisabledComponent {
   @ViewChild(TriTimePickerPanelComponent, { static: false }) timePickerPanelComponent!: TriTimePickerPanelComponent;

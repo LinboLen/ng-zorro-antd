@@ -29,6 +29,8 @@ export function DATE_HELPER_SERVICE_FACTORY(): DateHelperService {
 export abstract class DateHelperService {
   protected config: TriDateConfig = mergeDateConfig(inject(TRI_DATE_CONFIG, { optional: true }));
 
+  // i18n is supplied by DATE_HELPER_SERVICE_FACTORY when choosing the concrete helper.
+  // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(protected i18n: TriI18nService) {}
 
   abstract getISOWeek(date: Date): number;

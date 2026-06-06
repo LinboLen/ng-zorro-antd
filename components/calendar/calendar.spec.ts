@@ -6,7 +6,7 @@
 import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
-import { Component, provideZoneChangeDetection, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, provideZoneChangeDetection, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
 import { FormsModule, NgModel } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -428,7 +428,8 @@ describe('calendar', () => {
   template: `
     <tri-calendar />
     <tri-calendar [(modeChange)]="mode" />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestCalendarModeComponent {
   mode: 'month' | 'year' = 'month';
@@ -441,7 +442,8 @@ class TriTestCalendarModeComponent {
     <tri-calendar [(valueChange)]="date0" />
     <tri-calendar [(ngModel)]="date1" />
     <tri-calendar [(valueChange)]="date2" [(modeChange)]="mode" />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestCalendarValueComponent {
   date0 = new Date(2001, 1, 3);
@@ -455,7 +457,8 @@ class TriTestCalendarValueComponent {
   template: `
     <tri-calendar />
     <tri-calendar [fullscreen]="fullscreen" />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestCalendarFullscreenComponent {
   fullscreen = true;
@@ -470,7 +473,8 @@ class TriTestCalendarFullscreenComponent {
     <tri-calendar>
       <ng-container *dateCell>Bar</ng-container>
     </tri-calendar>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestCalendarDateCellComponent {}
 
@@ -482,7 +486,8 @@ class TriTestCalendarDateCellComponent {}
     <tri-calendar>
       <ng-container *dateFullCell>Bar</ng-container>
     </tri-calendar>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestCalendarDateFullCellComponent {}
 
@@ -494,7 +499,8 @@ class TriTestCalendarDateFullCellComponent {}
     <tri-calendar mode="year">
       <ng-container *monthCell>Bar</ng-container>
     </tri-calendar>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestCalendarMonthCellComponent {}
 
@@ -506,7 +512,8 @@ class TriTestCalendarMonthCellComponent {}
     <tri-calendar mode="year">
       <ng-container *monthFullCell>Bar</ng-container>
     </tri-calendar>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestCalendarMonthFullCellComponent {}
 
@@ -519,7 +526,8 @@ class TriTestCalendarMonthFullCellComponent {}
       (panelChange)="panelChange($event)"
       (selectChange)="selectChange($event)"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestCalendarChangesComponent {
   mode: 'month' | 'year' = 'month';
@@ -534,7 +542,8 @@ class TriTestCalendarChangesComponent {
     <div [dir]="direction">
       <tri-calendar />
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestCalendarRtlComponent {
   @ViewChild(Dir) dir!: Dir;

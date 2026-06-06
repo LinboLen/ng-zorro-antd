@@ -6,6 +6,7 @@
 import { DOWN_ARROW, ENTER, UP_ARROW } from '@angular/cdk/keycodes';
 import {
   ApplicationRef,
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   provideZoneChangeDetection,
@@ -795,7 +796,8 @@ describe('finalVariant', () => {
       [changeOnWheel]="changeOnWheel"
       (onStep)="onStep($event)"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class InputNumberTestComponent {
   id: string | null = null;
@@ -874,7 +876,8 @@ class InputNumberTestComponent {
       <span inputAddonBefore>Before</span>
       <span inputAddonAfter>After</span>
     </tri-input-number>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class InputNumberWithAffixesAndAddonsTestComponent {
   disabled = false;
@@ -891,7 +894,8 @@ class InputNumberWithAffixesAndAddonsTestComponent {
 
 @Component({
   imports: [TriInputNumberModule],
-  template: `<tri-input-number [size]="size" />`
+  template: `<tri-input-number [size]="size" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestInputNumberFinalSizeComponent {
   size: TriSizeLDSType = 'default';
@@ -899,7 +903,8 @@ class TestInputNumberFinalSizeComponent {
 
 @Component({
   imports: [TriInputNumberModule],
-  template: `<tri-input-number [variant]="variant()" />`
+  template: `<tri-input-number [variant]="variant()" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestInputNumberFinalVariantComponent {
   readonly variant = signal<TriVariant | undefined>(undefined);

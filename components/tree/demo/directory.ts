@@ -1,5 +1,5 @@
 import { LowerCasePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { TriContextMenuService, TriDropdownMenuComponent, TriDropdownModule } from 'ng-zorro-antd/dropdown';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -71,6 +71,8 @@ import { TriFormatEmitEvent, TriTreeModule, TriTreeNode } from 'ng-zorro-antd/tr
   `
 })
 export class TriDemoTreeDirectoryComponent {
+  private readonly contextMenuService = inject(TriContextMenuService);
+
   activatedNode?: TriTreeNode;
   readonly nodes = [
     {
@@ -93,9 +95,6 @@ export class TriDemoTreeDirectoryComponent {
       ]
     }
   ];
-
-  constructor(private nzContextMenuService: TriContextMenuService) {}
-
   openFolder(data: TriTreeNode | TriFormatEmitEvent): void {
     // do something if u want
     if (data instanceof TriTreeNode) {
@@ -113,7 +112,7 @@ export class TriDemoTreeDirectoryComponent {
   }
 
   contextMenu($event: MouseEvent, menu: TriDropdownMenuComponent): void {
-    this.nzContextMenuService.create($event, menu);
+    this.contextMenuService.create($event, menu);
   }
 
   selectDropdown(): void {

@@ -4,7 +4,7 @@
  */
 
 import { Directionality } from '@angular/cdk/bidi';
-import { Component, provideZoneChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component, provideZoneChangeDetection } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -168,7 +168,8 @@ describe('descriptions', () => {
         <tri-descriptions-item [title]="itemTitle + $index" [span]="col" />
       }
     </tri-descriptions>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestDescriptionsComponent {
   bordered = false;

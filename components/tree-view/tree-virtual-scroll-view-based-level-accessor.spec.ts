@@ -5,7 +5,7 @@
 
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { CdkTreeNodeOutletContext } from '@angular/cdk/tree';
-import { Component, OnInit, TrackByFunction, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, TrackByFunction, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -323,7 +323,8 @@ const TREE_DATA: TreeNode[] = dig();
         {{ node.name }}
       </tri-tree-node>
     </tri-tree-virtual-scroll-view>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTreeViewVirtualScrollWithLevelAccessorComponent implements OnInit {
   @ViewChild(TriTreeVirtualScrollViewComponent, { static: true }) tree!: TriTreeVirtualScrollViewComponent<FlatNode>;

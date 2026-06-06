@@ -6,7 +6,15 @@
 import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, Input, TemplateRef, ViewChild, inject, provideZoneChangeDetection } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  TemplateRef,
+  ViewChild,
+  inject,
+  provideZoneChangeDetection
+} from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, inject as testingInject, tick } from '@angular/core/testing';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
@@ -859,7 +867,8 @@ describe('NzDrawerService', () => {
         <p>Some contents...</p>
       </ng-container>
     </tri-drawer>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestDrawerComponent {
   visible = false;
@@ -899,9 +908,12 @@ class TriTestDrawerComponent {
     <ng-template #drawerTemplate>
       <span>Template</span>
     </ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestDrawerWithServiceComponent {
+  private readonly drawerService = inject(TriDrawerService);
+
   @ViewChild('drawerTemplate', { static: false }) drawerTemplate!: TemplateRef<{
     $implicit: number;
     drawerRef: TriDrawerRef;
@@ -909,9 +921,6 @@ class TriTestDrawerWithServiceComponent {
   templateOpenSpy = jasmine.createSpy('template afterOpen spy');
   templateCloseSpy = jasmine.createSpy('template afterClose spy');
   templateDrawerRef?: TriDrawerRef;
-
-  constructor(private drawerService: TriDrawerService) {}
-
   openTemplate(): void {
     this.templateDrawerRef = this.drawerService.create({
       nzTitle: 'Service',
@@ -930,13 +939,14 @@ class TriTestDrawerWithServiceComponent {
       <p>Custom Component</p>
       <button class="close-btn" (click)="close()" tri-button>Close</button>
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriDrawerCustomComponent {
-  @Input() value: TriSafeAny;
-  data: { value: string } = inject(TRI_DRAWER_DATA);
+  readonly data = inject<{ value: string }>(TRI_DRAWER_DATA);
+  private readonly drawerRef = inject(TriDrawerRef);
 
-  constructor(private drawerRef: TriDrawerRef) {}
+  @Input() value: TriSafeAny;
 
   close(): void {
     this.drawerRef.close(this.value);
@@ -955,7 +965,8 @@ export class TriDrawerCustomComponent {
         </ng-container>
       </tri-drawer>
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestDrawerRtlComponent {
   @ViewChild(Dir) dir!: Dir;

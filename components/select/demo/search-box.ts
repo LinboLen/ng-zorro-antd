@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriSelectModule } from 'ng-zorro-antd/select';
@@ -29,12 +29,11 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
   `
 })
 export class TriDemoSelectSearchBoxComponent {
+  private readonly http = inject(HttpClient);
+
   selectedValue: string | null = null;
   listOfOption: string[] = [];
   readonly filterOption = (): boolean => true;
-
-  constructor(private http: HttpClient) {}
-
   search(value: string): void {
     this.http
       .jsonp<{ result: Array<[string, string]> }>(`https://suggest.taobao.com/sug?code=utf-8&q=${value}`, 'callback')

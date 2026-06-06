@@ -1,5 +1,5 @@
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
@@ -25,7 +25,7 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
       [bodyStyle]="{ overflow: 'auto' }"
       [maskClosable]="false"
       [width]="720"
-      [visible]="visible"
+      [visible]="visible()"
       title="Create"
       [footer]="footerTpl"
       (onClose)="close()"
@@ -115,13 +115,13 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
   `
 })
 export class TriDemoDrawerFromDrawerComponent {
-  visible = false;
+  readonly visible = signal(false);
 
   open(): void {
-    this.visible = true;
+    this.visible.set(true);
   }
 
   close(): void {
-    this.visible = false;
+    this.visible.set(false);
   }
 }

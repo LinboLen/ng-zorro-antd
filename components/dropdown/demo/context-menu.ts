@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { TriContextMenuService, TriDropdownMenuComponent, TriDropdownModule } from 'ng-zorro-antd/dropdown';
 
@@ -38,9 +38,9 @@ import { TriContextMenuService, TriDropdownMenuComponent, TriDropdownModule } fr
   `
 })
 export class TriDemoDropdownContextMenuComponent {
-  contextMenu($event: MouseEvent, menu: TriDropdownMenuComponent): void {
-    this.nzContextMenuService.create($event, menu);
-  }
+  private readonly contextMenuService = inject(TriContextMenuService);
 
-  constructor(private nzContextMenuService: TriContextMenuService) {}
+  contextMenu($event: MouseEvent, menu: TriDropdownMenuComponent): void {
+    this.contextMenuService.create($event, menu);
+  }
 }

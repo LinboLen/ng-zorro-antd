@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, TemplateRef, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriCascaderModule } from 'ng-zorro-antd/cascader';
@@ -79,17 +79,16 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
   `
 })
 export class TriDemoEmptyConfigComponent {
+  private readonly configService = inject(TriConfigService);
+
   @ViewChild('customTpl', { static: false }) customTpl?: TemplateRef<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 
   customize = false;
-
-  constructor(private nzConfigService: TriConfigService) {}
-
   onConfigChange(): void {
     if (this.customize) {
-      this.nzConfigService.set('empty', { nzDefaultEmptyContent: this.customTpl });
+      this.configService.set('empty', { nzDefaultEmptyContent: this.customTpl });
     } else {
-      this.nzConfigService.set('empty', { nzDefaultEmptyContent: undefined });
+      this.configService.set('empty', { nzDefaultEmptyContent: undefined });
     }
   }
 }

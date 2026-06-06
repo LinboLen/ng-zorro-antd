@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriModalModule, TriModalService } from 'ng-zorro-antd/modal';
@@ -17,10 +17,10 @@ import { TriModalModule, TriModalService } from 'ng-zorro-antd/modal';
   `
 })
 export class TriDemoModalConfirmComponent {
-  constructor(private modal: TriModalService) {}
+  private readonly modalService = inject(TriModalService);
 
   showConfirm(): void {
-    this.modal.confirm({
+    this.modalService.confirm({
       title: '<i>Do you Want to delete these items?</i>',
       content: '<b>Some descriptions</b>',
       onOk: () => console.log('OK')
@@ -28,7 +28,7 @@ export class TriDemoModalConfirmComponent {
   }
 
   showDeleteConfirm(): void {
-    this.modal.confirm({
+    this.modalService.confirm({
       title: 'Are you sure delete this task?',
       content: '<b style="color: red;">Some descriptions</b>',
       okText: 'Yes',

@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -66,7 +66,8 @@ describe('color-block', () => {
 
 @Component({
   imports: [TriColorPickerModule],
-  template: ` <tri-color-block [color]="color" [size]="size" (onClick)="clickHandle()" /> `
+  template: ` <tri-color-block [color]="color" [size]="size" (onClick)="clickHandle()" /> `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestColorBlockComponent {
   color = '#1677ff';

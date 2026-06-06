@@ -1,5 +1,5 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriDividerModule } from 'ng-zorro-antd/divider';
@@ -181,6 +181,8 @@ interface CustomColumn extends TriCustomColumn {
   `
 })
 export class TriDemoTableCustomColumnComponent implements OnInit {
+  private readonly cdr = inject(ChangeDetectorRef);
+
   listOfData: Person[] = [
     {
       key: '1',
@@ -248,9 +250,6 @@ export class TriDemoTableCustomColumnComponent implements OnInit {
   footer: CustomColumn[] = [];
   fix: CustomColumn[] = [];
   notFix: CustomColumn[] = [];
-
-  constructor(private cdr: ChangeDetectorRef) {}
-
   ngOnInit(): void {
     this.title = this.customColumn.filter(item => item.position === 'left' && item.required);
     this.footer = this.customColumn.filter(item => item.position === 'right' && item.required);

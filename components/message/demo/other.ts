@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriMessageService } from 'ng-zorro-antd/message';
@@ -18,9 +18,9 @@ import { TriMessageService } from 'ng-zorro-antd/message';
   `
 })
 export class TriDemoMessageOtherComponent {
+  private readonly message = inject(TriMessageService);
+
   createMessage(type: string): void {
     this.message.create(type, `This is a message of ${type}`);
   }
-
-  constructor(private message: TriMessageService) {}
 }

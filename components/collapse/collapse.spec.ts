@@ -4,7 +4,14 @@
  */
 
 import { Directionality } from '@angular/cdk/bidi';
-import { Component, DebugElement, provideZoneChangeDetection, TemplateRef, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DebugElement,
+  provideZoneChangeDetection,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -331,7 +338,8 @@ describe('collapse', () => {
         <p>Panel02</p>
       </tri-collapse-panel>
     </tri-collapse>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestCollapseBasicComponent {
   @ViewChild('headerTemplate', { static: false }) headerTemplate!: TemplateRef<void>;
@@ -355,7 +363,8 @@ export class TriTestCollapseBasicComponent {
         <p>Panel01</p>
       </tri-collapse-panel>
     </tri-collapse>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestCollapseTemplateComponent {}
 
@@ -376,7 +385,8 @@ export class TriTestCollapseTemplateComponent {}
         <tri-icon type="caret-right" class="tri-collapse-arrow" />
       </ng-template>
     </tri-collapse>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestCollapseIconComponent {}
 
@@ -393,7 +403,8 @@ export class TriTestCollapseIconComponent {}
         <p>Content</p>
       </tri-collapse-panel>
     </tri-collapse>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestCollapseCollapsibleComponent {
   active = false;
@@ -409,7 +420,8 @@ export class TriTestCollapseCollapsibleComponent {
         <p>content</p>
       </tri-collapse-panel>
     </tri-collapse>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestCollapseSizeSpecComponent {
   size: 'small' | 'middle' | 'large' = 'middle';

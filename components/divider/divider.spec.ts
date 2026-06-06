@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Component, DebugElement, provideZoneChangeDetection, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -143,7 +143,8 @@ describe('divider', () => {
   imports: [TriDividerModule],
   template: `
     <tri-divider #comp [dashed]="dashed" [type]="type" [text]="text" [orientation]="orientation" />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestDividerComponent {
   @ViewChild('comp', { static: false }) comp!: TriDividerComponent;
@@ -162,6 +163,7 @@ class TestDividerComponent {
         Add
       </ng-template>
     </tri-divider>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestDividerTextTemplateComponent {}

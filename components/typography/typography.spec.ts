@@ -5,7 +5,14 @@
 
 import { CAPS_LOCK, ENTER, ESCAPE, TAB } from '@angular/cdk/keycodes';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { ApplicationRef, Component, NgZone, provideZoneChangeDetection, ViewChild } from '@angular/core';
+import {
+  ApplicationRef,
+  ChangeDetectionStrategy,
+  Component,
+  NgZone,
+  provideZoneChangeDetection,
+  ViewChild
+} from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, inject, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -563,7 +570,8 @@ describe('change detection behavior', () => {
     <span tri-typography><u>Ant Design</u></span>
     <span tri-typography><del>Ant Design</del></span>
     <span tri-typography><strong>Ant Design</strong></span>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTypographyComponent {}
 
@@ -583,7 +591,8 @@ export class TriTestTypographyComponent {}
       [copyTooltips]="tooltips"
       [copyIcons]="icons"
     ></p>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTypographyCopyComponent {
   tooltips: [string, string] | null = ['click here', 'coped'];
@@ -602,7 +611,8 @@ export class TriTestTypographyCopyComponent {
       (contentChange)="onChange($event)"
       [content]="str"
     ></p>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTypographyEditComponent {
   @ViewChild(TriTypographyComponent, { static: false }) typographyComponent!: TriTypographyComponent;
@@ -651,7 +661,8 @@ export class TriTestTypographyEditComponent {
       [suffix]="suffix"
       class="dynamic"
     ></p>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTypographyEllipsisComponent {
   expandable = false;

@@ -3,7 +3,14 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ApplicationRef, Component, provideZoneChangeDetection, TemplateRef, ViewChild } from '@angular/core';
+import {
+  ApplicationRef,
+  ChangeDetectionStrategy,
+  Component,
+  provideZoneChangeDetection,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Observable, of } from 'rxjs';
@@ -648,7 +655,8 @@ describe('tree', () => {
     <ng-template #expandedIconTpl let-node>
       <tri-icon type="smile" class="tri-tree-switcher-icon" />
     </ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTreeBasicControlledComponent {
   @ViewChild('treeComponent', { static: true }) treeComponent!: TriTreeComponent;
@@ -723,7 +731,8 @@ export class TriTestTreeBasicControlledComponent {
       (onDrop)="onDrop()"
       (onDragEnd)="onDragEnd()"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTreeDraggableComponent {
   @ViewChild(TriTreeComponent, { static: true }) treeComponent!: TriTreeComponent;
@@ -785,7 +794,8 @@ export class TriTestTreeDraggableComponent {
       [asyncData]="asyncData"
       [hideUnMatched]="hideUnMatched"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTreeBasicSearchComponent {
   @ViewChild(TriTreeComponent, { static: true }) treeComponent!: TriTreeComponent;

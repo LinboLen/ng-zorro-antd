@@ -13,7 +13,6 @@ import {
   Component,
   Directive,
   Injector,
-  Input,
   TemplateRef,
   ViewChild,
   ViewContainerRef,
@@ -1519,13 +1518,14 @@ describe('modal', () => {
   selector: 'tri-test-with-view-container'
 })
 class TestWithViewContainerDirective {
-  constructor(public viewContainerRef: ViewContainerRef) {}
+  public readonly viewContainerRef = inject(ViewContainerRef);
 }
 
 @Component({
   selector: 'test-with-child-view-container',
   imports: [TestWithViewContainerDirective],
-  template: `<tri-test-with-view-container />`
+  template: `<tri-test-with-view-container />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestWithChildViewContainerComponent {
   @ViewChild(TestWithViewContainerDirective) childWithViewContainer!: TestWithViewContainerDirective;
@@ -1541,7 +1541,7 @@ class TestWithChildViewContainerComponent {
   template: 'hello'
 })
 class TestWithOnPushViewContainerComponent {
-  constructor(public viewContainerRef: ViewContainerRef) {}
+  public readonly viewContainerRef = inject(ViewContainerRef);
 }
 
 @Component({
@@ -1552,18 +1552,16 @@ class TestWithOnPushViewContainerComponent {
       <span class="modal-template-data">My favorite UI framework is {{ data }}</span>
       {{ setModalRef(modalRef) }}
     </ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestWithServiceComponent {
+  public readonly modalService = inject(TriModalService);
+  public readonly viewContainerRef = inject(ViewContainerRef);
+
   value?: string;
   modalRef?: TriModalRef;
   @ViewChild(TemplateRef) templateRef!: TemplateRef<{}>;
-
-  constructor(
-    public nzModalService: TriModalService,
-    public viewContainerRef: ViewContainerRef
-  ) {}
-
   setModalRef(modalRef: TriModalRef): string {
     this.modalRef = modalRef;
     return '';
@@ -1578,13 +1576,14 @@ class TestWithServiceComponent {
     <div class="modal-data">My favorite UI Library is {{ modalData }}</div>
     <input />
     <button (click)="destroyModal()">destroy</button>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestWithModalContentComponent {
-  @Input() value: string = inject(TRI_MODAL_DATA);
-  modalData: string = inject(TRI_MODAL_DATA);
-  modalRef = inject(TriModalRef);
-  modalInjector = inject(Injector);
+  readonly value = inject<string>(TRI_MODAL_DATA);
+  readonly modalData = inject<string>(TRI_MODAL_DATA);
+  readonly modalRef = inject(TriModalRef);
+  readonly modalInjector = inject(Injector);
 
   destroyModal(): void {
     this.modalRef.destroy();
@@ -1606,7 +1605,8 @@ class TestWithModalContentComponent {
       Test Content
     </tri-modal>
     <ng-template><span class="template-test">Test Template Content</span></ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestModalComponent {
   readonly visible = model(false);
@@ -1631,6 +1631,7 @@ class TestModalComponent {
 
 @Component({
   selector: 'test-modal-without-focusable-elements',
-  template: '<p>Modal</p>'
+  template: '<p>Modal</p>',
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestModalWithoutFocusableElementsComponent {}

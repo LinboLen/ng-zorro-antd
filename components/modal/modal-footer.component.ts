@@ -73,7 +73,7 @@ import { ModalButtonOptions, ModalOptions } from './modal-types';
   host: {
     class: 'tri-modal-footer'
   },
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TriOutletModule, TriButtonModule]
 })
 export class TriModalFooterComponent {

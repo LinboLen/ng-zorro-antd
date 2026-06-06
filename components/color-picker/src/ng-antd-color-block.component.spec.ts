@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -45,7 +45,8 @@ describe('NgxColorBlockComponent', () => {
 
 @Component({
   imports: [NgAntdColorBlockComponent],
-  template: `<ng-antd-color-block [color]="color" (onClick)="clickHandle()" />`
+  template: `<ng-antd-color-block [color]="color" (onClick)="clickHandle()" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class NzxTestColorBlockComponent {
   color = '#1677ff';

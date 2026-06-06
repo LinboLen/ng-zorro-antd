@@ -4,7 +4,7 @@
  */
 
 import { BidiModule, Direction } from '@angular/cdk/bidi';
-import { Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -25,7 +25,8 @@ import { TriResultModule } from './result.module';
       <div tri-result-content>Content</div>
       <div tri-result-extra>Content Extra</div>
     </tri-result>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestResultBasicComponent {
   icon?: string = 'success';
@@ -37,7 +38,8 @@ export class TriTestResultBasicComponent {
 
 @Component({
   imports: [BidiModule, TriTestResultBasicComponent],
-  template: `<tri-test-basic-result [dir]="direction" />`
+  template: `<tri-test-basic-result [dir]="direction" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestResultRtlComponent {
   direction: Direction = 'rtl';
@@ -46,7 +48,8 @@ export class TriTestResultRtlComponent {
 @Component({
   selector: 'tri-test-status-icon-result',
   imports: [TriResultModule],
-  template: `<tri-result [status]="status" title="Test Title" />`
+  template: `<tri-result [status]="status" title="Test Title" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestResultStatusIconComponent {
   status: TriResultStatusType = 'success';

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -34,11 +34,10 @@ import { TriUploadFile, TriUploadModule } from 'ng-zorro-antd/upload';
   `
 })
 export class TriDemoUploadAvatarComponent {
+  private readonly messageService = inject(TriMessageService);
+
   loading = false;
   avatarUrl?: string;
-
-  constructor(private messageService: TriMessageService) {}
-
   beforeUpload = (file: TriUploadFile, _fileList: TriUploadFile[]): Observable<boolean> =>
     new Observable((observer: Observer<boolean>) => {
       const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';

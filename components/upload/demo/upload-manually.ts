@@ -1,5 +1,5 @@
 import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { filter } from 'rxjs/operators';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
@@ -31,13 +31,11 @@ import { TriUploadFile, TriUploadModule } from 'ng-zorro-antd/upload';
   `
 })
 export class TriDemoUploadUploadManuallyComponent {
+  private readonly http = inject(HttpClient);
+  private readonly messageService = inject(TriMessageService);
+
   uploading = false;
   fileList: TriUploadFile[] = [];
-
-  constructor(
-    private http: HttpClient,
-    private messageService: TriMessageService
-  ) {}
 
   beforeUpload = (file: TriUploadFile): boolean => {
     this.fileList = this.fileList.concat(file);

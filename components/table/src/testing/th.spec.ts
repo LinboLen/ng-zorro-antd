@@ -3,7 +3,14 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ApplicationRef, Component, DebugElement, provideZoneChangeDetection, ViewChild } from '@angular/core';
+import {
+  ApplicationRef,
+  ChangeDetectionStrategy,
+  Component,
+  DebugElement,
+  provideZoneChangeDetection,
+  ViewChild
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -139,7 +146,8 @@ describe('nz-th', () => {
         ></th>
       </tri-table>
     }
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriThTestNzTableComponent {
   @ViewChild(TriThAddOnComponent, { static: false }) thComponent!: TriThAddOnComponent<TriSafeAny>;
@@ -191,7 +199,8 @@ interface ItemData {
         }
       </tbody>
     </tri-table>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriThTestTableDefaultFilterComponent {
   nameList = [
@@ -269,6 +278,7 @@ export class TriThTestTableDefaultFilterComponent {
 
 @Component({
   imports: [TriTableModule],
-  template: `<th class="nz-disable-th"></th>`
+  template: `<th class="nz-disable-th"></th>`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestDisableThComponent {}

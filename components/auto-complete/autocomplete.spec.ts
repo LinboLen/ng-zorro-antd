@@ -13,6 +13,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  inject,
   NgZone,
   OnInit,
   provideZoneChangeDetection,
@@ -22,7 +23,15 @@ import {
   ViewChild,
   ViewChildren
 } from '@angular/core';
-import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, inject, TestBed, tick } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  discardPeriodicTasks,
+  fakeAsync,
+  flush,
+  inject as testingInject,
+  TestBed,
+  tick
+} from '@angular/core/testing';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -69,15 +78,19 @@ describe('auto-complete', () => {
     });
   });
 
-  beforeEach(inject([OverlayContainer], (oc: OverlayContainer) => {
-    overlayContainer = oc;
-    overlayContainerElement = oc.getContainerElement();
-  }));
+  beforeEach(
+    testingInject([OverlayContainer], (oc: OverlayContainer) => {
+      overlayContainer = oc;
+      overlayContainerElement = oc.getContainerElement();
+    })
+  );
 
-  afterEach(inject([OverlayContainer], (currentOverlayContainer: OverlayContainer) => {
-    currentOverlayContainer.ngOnDestroy();
-    overlayContainer.ngOnDestroy();
-  }));
+  afterEach(
+    testingInject([OverlayContainer], (currentOverlayContainer: OverlayContainer) => {
+      currentOverlayContainer.ngOnDestroy();
+      overlayContainer.ngOnDestroy();
+    })
+  );
 
   describe('toggling', () => {
     let fixture: ComponentFixture<TriTestSimpleAutocompleteComponent>;
@@ -982,7 +995,8 @@ describe('auto-complete', () => {
         }
       </tri-autocomplete>
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestSimpleAutocompleteComponent {
   inputValue!: string;
@@ -1018,7 +1032,8 @@ class TriTestSimpleAutocompleteComponent {
         #auto
       />
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestAutocompletePropertyComponent {
   inputValue?: string;
@@ -1032,7 +1047,8 @@ class TriTestAutocompletePropertyComponent {
 
 @Component({
   imports: [TriAutocompleteModule],
-  template: `<input [autocomplete]="null!" />`
+  template: `<input [autocomplete]="null!" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestAutocompleteWithoutPanelComponent {
   @ViewChild(TriAutocompleteTriggerDirective, { static: false }) trigger!: TriAutocompleteTriggerDirective;
@@ -1049,10 +1065,9 @@ class TriTestAutocompleteWithoutPanelComponent {
   `
 })
 class TriTestAutocompleteWithOnPushDelayComponent implements OnInit {
+  readonly cdr = inject(ChangeDetectorRef);
   options: string[] = [];
   @ViewChild(TriAutocompleteTriggerDirective, { static: false }) trigger!: TriAutocompleteTriggerDirective;
-
-  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -1084,7 +1099,8 @@ class TriTestAutocompleteWithOnPushDelayComponent implements OnInit {
         </tri-auto-optgroup>
       }
     </tri-autocomplete>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestAutocompleteGroupComponent {
   inputValue!: string;
@@ -1141,7 +1157,8 @@ class TriTestAutocompleteGroupComponent {
         }
       </tri-autocomplete>
     </form>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestAutocompleteWithFormComponent {
   formControl = new FormControl('Burns');
@@ -1160,7 +1177,8 @@ class TriTestAutocompleteWithFormComponent {
         </tri-auto-option>
       }
     </tri-autocomplete>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestAutocompleteDifferentValueWithFormComponent {
   formControl = new FormControl('lucy');
@@ -1182,7 +1200,8 @@ class TriTestAutocompleteDifferentValueWithFormComponent {
         </tri-auto-option>
       }
     </tri-autocomplete>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestAutocompleteWithObjectOptionComponent {
   formControl = new FormControl<string | { label: string; value: string } | null>({ label: 'Lucy', value: 'lucy' });
@@ -1210,7 +1229,8 @@ class TriTestAutocompleteWithObjectOptionComponent {
         <tri-auto-option value="value">label</tri-auto-option>
       </tri-autocomplete>
     </tri-input-wrapper>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestAutocompleteWithGroupInputComponent {
   @ViewChild(TriAutocompleteTriggerDirective, { static: true }) trigger!: TriAutocompleteTriggerDirective;

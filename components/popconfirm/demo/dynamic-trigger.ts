@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriMessageService } from 'ng-zorro-antd/message';
@@ -25,15 +25,15 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   `
 })
 export class TriDemoPopconfirmDynamicTriggerComponent {
+  private readonly messageService = inject(TriMessageService);
+
   switchValue = false;
 
-  constructor(private nzMessageService: TriMessageService) {}
-
   cancel(): void {
-    this.nzMessageService.info('click cancel');
+    this.messageService.info('click cancel');
   }
 
   confirm(): void {
-    this.nzMessageService.info('click confirm');
+    this.messageService.info('click confirm');
   }
 }

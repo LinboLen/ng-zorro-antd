@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -364,7 +364,8 @@ function getScaleFromCSSTransform(transform: string): number {
   styles: `
     @import '../style/testing.less';
     @import './style/index.less';
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestAvatarComponent {
   @ViewChild('comp', { static: false }) comp!: TriAvatarComponent;
@@ -382,6 +383,7 @@ class TestAvatarComponent {
 
 @Component({
   imports: [TriAvatarModule],
-  template: `<tri-avatar-group />`
+  template: `<tri-avatar-group />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestAvatarGroupComponent {}

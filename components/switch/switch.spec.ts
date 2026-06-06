@@ -7,6 +7,7 @@ import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
 import { ENTER, LEFT_ARROW, RIGHT_ARROW, SPACE } from '@angular/cdk/keycodes';
 import {
   ApplicationRef,
+  ChangeDetectionStrategy,
   Component,
   DebugElement,
   provideZoneChangeDetection,
@@ -371,7 +372,8 @@ describe('finalSize', () => {
       [checkedChildren]="checkedChildren"
       [unCheckedChildren]="unCheckedChildren"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestSwitchBasicComponent {
   @ViewChild(TriSwitchComponent, { static: false }) switchComponent!: TriSwitchComponent;
@@ -393,7 +395,8 @@ export class TriTestSwitchBasicComponent {
     <ng-template #checkedChildrenTemplate><tri-icon type="check" /></ng-template>
     <ng-template #unCheckedChildrenTemplate><tri-icon type="close" /></ng-template>
     <tri-switch [checkedChildren]="checkedChildrenTemplate" [unCheckedChildren]="unCheckedChildrenTemplate" />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestSwitchTemplateComponent {}
 
@@ -403,7 +406,8 @@ export class TriTestSwitchTemplateComponent {}
     <form>
       <tri-switch [formControl]="formControl" [disabled]="disabled" />
     </form>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestSwitchFormComponent {
   formControl = new FormControl(true);
@@ -425,7 +429,8 @@ export class TriTestSwitchFormComponent {
     <div [dir]="direction">
       <tri-switch [(ngModel)]="switchValue" />
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestSwitchRtlComponent {
   @ViewChild(Dir) dir!: Dir;

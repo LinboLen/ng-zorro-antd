@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild, inject } from '@angular/core';
+import { Component, TemplateRef, ViewChild, inject, model } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
@@ -6,6 +6,10 @@ import { TriDividerModule } from 'ng-zorro-antd/divider';
 import { TRI_DRAWER_DATA, TriDrawerModule, TriDrawerRef, TriDrawerService } from 'ng-zorro-antd/drawer';
 import { TriFormModule } from 'ng-zorro-antd/form';
 import { TriInputModule } from 'ng-zorro-antd/input';
+
+interface IDrawerData {
+  value: string;
+}
 
 @Component({
   selector: 'tri-demo-drawer-service',
@@ -28,13 +32,13 @@ import { TriInputModule } from 'ng-zorro-antd/input';
   `
 })
 export class TriDemoDrawerServiceComponent {
+  private readonly drawerService = inject(TriDrawerService);
+
   @ViewChild('drawerTemplate', { static: false }) drawerTemplate?: TemplateRef<{
-    $implicit: { value: string };
+    $implicit: IDrawerData;
     drawerRef: TriDrawerRef<string>;
   }>;
-  value = 'ng';
-
-  constructor(private drawerService: TriDrawerService) {}
+  readonly value = model('ng');
 
   openTemplate(): void {
     const drawerRef = this.drawerService.create({
@@ -43,7 +47,7 @@ export class TriDemoDrawerServiceComponent {
       extra: 'Extra',
       content: this.drawerTemplate,
       contentParams: {
-        value: this.value
+        value: this.value()
       }
     });
 
@@ -57,13 +61,13 @@ export class TriDemoDrawerServiceComponent {
   }
 
   openComponent(): void {
-    const drawerRef = this.drawerService.create<TriDrawerCustomComponent, { value: string }, string>({
+    const drawerRef = this.drawerService.create<TriDrawerCustomComponent, IDrawerData, string>({
       nzTitle: 'Component',
       footer: 'Footer',
       extra: 'Extra',
       content: TriDrawerCustomComponent,
       contentParams: {
-        value: this.value
+        value: this.value()
       },
       data: {
         value: 'Ng Zorro'
@@ -77,8 +81,9 @@ export class TriDemoDrawerServiceComponent {
     drawerRef._afterClose.subscribe(data => {
       console.log(data);
       if (typeof data === 'string') {
-        this.value = data;
+        this.value.set(data);
       }
+      console.log('Drawer(Component) close');
     });
   }
 }
@@ -88,17 +93,15 @@ export class TriDemoDrawerServiceComponent {
   imports: [FormsModule, TriButtonModule, TriDividerModule, TriInputModule],
   template: `
     <div>
-      <input tri-input [(ngModel)]="data.value" />
+      <input tri-input [(ngModel)]="data" />
       <tri-divider />
       <button type="primary" (click)="close()" tri-button>Confirm</button>
     </div>
   `
 })
 export class TriDrawerCustomComponent {
-  // @Input() value = '';
-  data: { value: string } = inject(TRI_DRAWER_DATA);
-
-  constructor(private drawerRef: TriDrawerRef<string>) {}
+  readonly data = inject<IDrawerData>(TRI_DRAWER_DATA).value;
+  readonly drawerRef: TriDrawerRef<this, string> = inject(TriDrawerRef);
 
   close(): void {
     this.drawerRef.close(this.data);

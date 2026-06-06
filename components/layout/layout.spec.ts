@@ -4,7 +4,14 @@
  */
 
 import { Directionality } from '@angular/cdk/bidi';
-import { Component, DebugElement, provideZoneChangeDetection, TemplateRef, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DebugElement,
+  provideZoneChangeDetection,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -273,7 +280,8 @@ describe('nz-layout', () => {
     <ng-template #trigger>
       <tri-icon type="up" />
     </ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriLayoutCustomTriggerComponent {
   isCollapsed = false;
@@ -299,7 +307,8 @@ export class TriLayoutCustomTriggerComponent {
         <tri-footer>Ant Design ©2019 Implement By Angular</tri-footer>
       </tri-layout>
     </tri-layout>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriLayoutSideComponent {
   isCollapsed = false;
@@ -329,7 +338,8 @@ export class TriLayoutSideComponent {
     <ng-template #zeroTrigger>
       <tri-icon type="menu-fold" theme="outline" />
     </ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriLayoutResponsiveComponent {
   isCollapsed = false;
@@ -371,6 +381,7 @@ export class TriLayoutResponsiveComponent {
         <tri-footer>Footer</tri-footer>
       </tri-layout>
     </tri-layout>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriLayoutBasicComponent {}

@@ -3,7 +3,15 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Component, DebugElement, TemplateRef, ViewChild, inject, provideZoneChangeDetection } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DebugElement,
+  TemplateRef,
+  ViewChild,
+  inject,
+  provideZoneChangeDetection
+} from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -280,7 +288,8 @@ describe('empty', () => {
       <ng-template #contentTpl>Content</ng-template>
       <ng-template #footerTpl>Footer</ng-template>
     </tri-empty>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriEmptyTestBasicComponent {
   @ViewChild('imageTpl', { static: false }) imageTpl!: TemplateRef<void>;
@@ -299,15 +308,15 @@ export class TriEmptyTestBasicComponent {
     <ng-template #tpl let-component>
       <div>I am in template {{ component }}</div>
     </ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriEmptyTestServiceComponent {
+  public readonly configService = inject(TriConfigService);
+
   @ViewChild('tpl', { static: false }) template!: TemplateRef<string>;
 
   noResult!: string;
-
-  constructor(public configService: TriConfigService) {}
-
   reset(): void {
     this.configService.set('empty', { nzDefaultEmptyContent: undefined });
   }
@@ -319,8 +328,9 @@ export class TriEmptyTestServiceComponent {
 
 @Component({
   selector: 'tri-empty-test-custom',
-  template: `<div>I'm in component {{ name }}</div>`
+  template: `<div>I'm in component {{ name }}</div>`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriEmptyTestCustomComponent {
-  name = inject(TRI_EMPTY_COMPONENT_NAME);
+  readonly name = inject(TRI_EMPTY_COMPONENT_NAME);
 }

@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Component, provideZoneChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component, provideZoneChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -185,7 +185,8 @@ describe('input-search', () => {
     <tri-input-search allowClear [loading]="loading" [enterButton]="enterButton" (search)="onSearch($event)">
       <input tri-input [(ngModel)]="value" [size]="size" />
     </tri-input-search>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class InputSearchTestComponent {
   loading = false;
@@ -203,6 +204,7 @@ class InputSearchTestComponent {
       <input tri-input />
       <span inputSearchEnterButton>custom</span>
     </tri-input-search>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class InputSearchCustomEnterButtonTestComponent {}

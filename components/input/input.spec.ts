@@ -5,6 +5,7 @@
 
 import { BidiModule, Direction } from '@angular/cdk/bidi';
 import {
+  ChangeDetectionStrategy,
   Component,
   DebugElement,
   provideZoneChangeDetection,
@@ -433,7 +434,8 @@ describe('input', () => {
         <tri-icon inputAddonAfter type="setting" />
       </tri-input-wrapper>
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestInputWithDirComponent {
   dir: Direction = 'ltr';
@@ -441,7 +443,8 @@ export class TriTestInputWithDirComponent {
 
 @Component({
   imports: [TriInputModule],
-  template: `<input tri-input [size]="size" [disabled]="disabled" [variant]="variant" [value]="value" />`
+  template: `<input tri-input [size]="size" [disabled]="disabled" [variant]="variant" [value]="value" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestInputWithInputComponent {
   size: TriSizeLDSType = 'default';
@@ -453,7 +456,8 @@ export class TriTestInputWithInputComponent {
 
 @Component({
   imports: [TriInputModule],
-  template: `<textarea tri-input></textarea>`
+  template: `<textarea tri-input></textarea>`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestInputWithTextAreaComponent {}
 
@@ -463,7 +467,8 @@ export class TriTestInputWithTextAreaComponent {}
     <form>
       <input tri-input [formControl]="formControl" />
     </form>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestInputFormComponent {
   formControl = new FormControl('abc');
@@ -476,7 +481,8 @@ export class TriTestInputFormComponent {
 // status
 @Component({
   imports: [TriInputModule],
-  template: `<input tri-input [status]="status" />`
+  template: `<input tri-input [status]="status" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestInputWithStatusComponent {
   status: TriStatus = 'error';
@@ -492,7 +498,8 @@ export class TriTestInputWithStatusComponent {
         </tri-form-control>
       </tri-form-item>
     </form>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestInputInFormComponent {
   status: TriFormControlStatusType = 'error';
@@ -501,7 +508,8 @@ export class TriTestInputInFormComponent {
 
 @Component({
   imports: [TriInputModule],
-  template: `<input tri-input [type]="type" />`
+  template: `<input tri-input [type]="type" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestInputWithTypeComponent {
   type: string | null = null;
@@ -509,7 +517,8 @@ export class TriTestInputWithTypeComponent {
 
 @Component({
   imports: [TriInputModule],
-  template: `<input tri-input [size]="size" />`
+  template: `<input tri-input [size]="size" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestInputFinalSizeComponent {
   size: TriSizeLDSType = 'default';
@@ -517,7 +526,8 @@ export class TestInputFinalSizeComponent {
 
 @Component({
   imports: [TriInputModule],
-  template: `<input tri-input [variant]="variant()" />`
+  template: `<input tri-input [variant]="variant()" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestInputFinalVariantComponent {
   readonly variant = signal<TriVariant | undefined>(undefined);

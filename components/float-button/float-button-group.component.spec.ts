@@ -4,7 +4,7 @@
  */
 
 import { BidiModule, Direction } from '@angular/cdk/bidi';
-import { Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -212,7 +212,8 @@ describe('nz-float-button-group', () => {
       [placement]="placement"
       (onOpenChange)="onClick($event)"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestFloatButtonGroupBasicComponent {
   shape: TriShapeSCType = 'circle';
@@ -233,7 +234,8 @@ export class TriTestFloatButtonGroupBasicComponent {
     <div [dir]="direction">
       <tri-float-button-group />
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestFloatButtonRtlComponent {
   direction: Direction = 'rtl';

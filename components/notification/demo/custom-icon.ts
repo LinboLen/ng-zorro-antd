@@ -1,4 +1,4 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component, TemplateRef, inject } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -26,7 +26,7 @@ import { type TriNotificationComponent, TriNotificationService } from 'ng-zorro-
   `
 })
 export class TriDemoNotificationCustomIconComponent {
-  constructor(private notification: TriNotificationService) {}
+  private readonly notification = inject(TriNotificationService);
 
   createNotification(template: TemplateRef<{ $implicit: TriNotificationComponent; data: undefined }>): void {
     this.notification.template(template);

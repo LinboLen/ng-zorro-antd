@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Component, ElementRef, provideZoneChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, provideZoneChangeDetection, inject } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TriTableModule } from '../table.module';
@@ -75,12 +75,12 @@ describe('tfoot', () => {
         <td colspan="2">summary</td>
       </tfoot>
     </tri-table>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestComponent {
+  readonly elementRef = inject(ElementRef);
   scrollX: string | null = null;
   scrollY: string | null = null;
   fixed: TriTableSummaryFixedType | boolean = false;
-
-  constructor(public elementRef: ElementRef) {}
 }

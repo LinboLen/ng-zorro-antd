@@ -3,7 +3,14 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { AnimationCallbackEvent, Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
+import {
+  AnimationCallbackEvent,
+  ChangeDetectionStrategy,
+  Component,
+  DebugElement,
+  inject,
+  provideZoneChangeDetection
+} from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import {
   AbstractControl,
@@ -438,7 +445,8 @@ describe('form-control', () => {
     <tri-form-item>
       <tri-form-control [hasFeedback]="hasFeedback" [validateStatus]="status" />
     </tri-form-item>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestStaticFormControlComponent {
   hasFeedback = false;
@@ -463,9 +471,12 @@ export class TriTestStaticFormControlComponent {
         <input formControlName="input2" />
       </tri-form-control>
     </form>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestReactiveFormControlComponent {
+  private readonly formBuilder = inject(FormBuilder);
+
   formGroup: FormGroup<{
     input: FormControl<string | null>;
     input2: FormControl<string | null>;
@@ -473,7 +484,7 @@ export class TriTestReactiveFormControlComponent {
   }>;
   validateStatus: FormControl<string | null>;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor() {
     this.formGroup = this.formBuilder.group({
       input: this.formBuilder.control('', [Validators.required]),
       input2: this.formBuilder.control('', [Validators.required]),
@@ -494,12 +505,14 @@ export class TriTestReactiveFormControlComponent {
         </tri-form-control>
       </tri-form-item>
     </form>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestReactiveFormControlInitStatusComponent {
+  private readonly formBuilder = inject(FormBuilder);
   formGroup: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor() {
     this.formGroup = this.formBuilder.group({
       input: ['', [Validators.required]]
     });
@@ -539,9 +552,13 @@ export class TriTestReactiveFormControlInitStatusComponent {
         </tri-form-item>
       }
     </form>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestReactiveFormAutoTipsComponent {
+  private readonly formBuilder = inject(FormBuilder);
+  public readonly i18n = inject(TriI18nService);
+
   formGroup: FormGroup<{
     username: FormControl<string | null>;
     mobile: FormControl<string | null>;
@@ -578,10 +595,7 @@ export class TriTestReactiveFormAutoTipsComponent {
     }
   };
 
-  constructor(
-    private formBuilder: FormBuilder,
-    public i18n: TriI18nService
-  ) {
+  constructor() {
     const { required, minLength, email, mobile } = MyValidators;
     this.formGroup = this.formBuilder.group({
       username: ['', [required, minLength(6)]],
@@ -637,12 +651,14 @@ function isMobile(value: string): boolean {
         </tri-form-control>
       </tri-form-item>
     </form>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestNoopAnimationsFormControlComponent {
+  private readonly formBuilder = inject(FormBuilder);
   formGroup: FormGroup<{ input: FormControl<string | null> }>;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor() {
     this.formGroup = this.formBuilder.group({
       input: this.formBuilder.control('', [Validators.required])
     });

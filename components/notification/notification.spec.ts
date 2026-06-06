@@ -4,7 +4,7 @@
  */
 
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 
 import { TriConfigService, provideNzConfig } from 'ng-zorro-antd/core/config';
@@ -16,7 +16,8 @@ import { TriNotificationService } from './notification.service';
 
 @Component({
   selector: 'tri-test-notification',
-  template: `<ng-template let-data="data">test template content {{ data }}</ng-template>`
+  template: `<ng-template let-data="data">test template content {{ data }}</ng-template>`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestNotificationComponent {
   @ViewChild(TemplateRef, { static: true }) demoTemplateRef!: TemplateRef<{

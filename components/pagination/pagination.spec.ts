@@ -5,7 +5,14 @@
 
 import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
 import { ENTER } from '@angular/cdk/keycodes';
-import { Component, DebugElement, provideZoneChangeDetection, signal, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DebugElement,
+  provideZoneChangeDetection,
+  signal,
+  ViewChild
+} from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -461,7 +468,8 @@ describe('pagination', () => {
       [showSizeChanger]="showSizeChanger"
       [showQuickJumper]="showQuickJumper"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestPaginationComponent {
   @ViewChild(TriPaginationComponent, { static: false }) paginationComponent!: TriPaginationComponent;
@@ -496,7 +504,8 @@ export class TriTestPaginationComponent {
         }
       }
     </ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestPaginationRenderComponent {
   align = signal<TriPaginationAlign>('start');
@@ -509,7 +518,8 @@ export class TriTestPaginationRenderComponent {
     <ng-template #rangeTemplate let-range="range" let-total>
       {{ range[0] }}-{{ range[1] }} of {{ total }} items
     </ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestPaginationTotalComponent {
   pageIndex = 1;
@@ -517,7 +527,8 @@ export class TriTestPaginationTotalComponent {
 
 @Component({
   imports: [TriPaginationModule],
-  template: `<tri-pagination responsive />`
+  template: `<tri-pagination responsive />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestPaginationAutoResizeComponent {}
 
@@ -527,7 +538,8 @@ export class TriTestPaginationAutoResizeComponent {}
     <div [dir]="direction">
       <tri-pagination [simple]="false" [(pageIndexChange)]="pageIndex" [total]="total" [(pageSizeChange)]="pageSize" />
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestPaginationRtlComponent {
   @ViewChild(Dir) dir!: Dir;

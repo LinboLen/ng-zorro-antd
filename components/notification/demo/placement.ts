@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriDividerModule } from 'ng-zorro-antd/divider';
@@ -43,9 +43,9 @@ import { TriNotificationPlacement, TriNotificationService } from 'ng-zorro-antd/
   `
 })
 export class TriDemoNotificationPlacementComponent {
-  placement = 'topRight';
+  private readonly notification = inject(TriNotificationService);
 
-  constructor(private notification: TriNotificationService) {}
+  placement = 'topRight';
 
   createNotification(position: TriNotificationPlacement): void {
     this.notification.blank(

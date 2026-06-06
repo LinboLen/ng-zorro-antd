@@ -4,7 +4,15 @@
  */
 
 import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
-import { Component, DebugElement, provideZoneChangeDetection, TemplateRef, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DebugElement,
+  inject,
+  provideZoneChangeDetection,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -85,7 +93,7 @@ describe('spin', () => {
       fixture.detectChanges();
       expect(spin.nativeElement.querySelector('.ant-spin-dot')).toBeDefined();
 
-      testComponent.nzConfigService.set('spin', { nzIndicator: testComponent.indicatorTemplate });
+      testComponent.configService.set('spin', { nzIndicator: testComponent.indicatorTemplate });
       fixture.detectChanges();
       expect(spin.nativeElement.querySelector('.ant-spin-dot')).toBeNull();
       expect(spin.nativeElement.querySelector('.anticon-loading')).toBeDefined();
@@ -170,9 +178,12 @@ describe('spin', () => {
     >
       <div>test</div>
     </tri-spin>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestSpinBasicComponent {
+  public readonly configService = inject(TriConfigService);
+
   @ViewChild('indicatorTemplate', { static: false }) indicatorTemplate!: TemplateRef<void>;
 
   size: TriSizeLDSType = 'default';
@@ -181,8 +192,6 @@ export class TriTestSpinBasicComponent {
   indicator!: TemplateRef<TriSafeAny>;
   tip!: string;
   simple = false;
-
-  constructor(public nzConfigService: TriConfigService) {}
 }
 
 @Component({
@@ -191,7 +200,8 @@ export class TriTestSpinBasicComponent {
     <div [dir]="direction">
       <tri-test-basic-spin />
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestSpinRtlComponent {
   @ViewChild(Dir) dir!: Dir;

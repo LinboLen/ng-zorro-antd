@@ -4,7 +4,7 @@
  */
 
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, provideZoneChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component, provideZoneChangeDetection } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, inject, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -256,7 +256,8 @@ describe('quater-picker', () => {
         <tri-range-picker mode="quarter" [ngModel]="value" open />
       }
     }
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestQuarterPickerComponent {
   useSuite!: 1 | 2 | 3 | 4;

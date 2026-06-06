@@ -5,6 +5,7 @@
 
 import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
 import {
+  ChangeDetectionStrategy,
   Component,
   DebugElement,
   OnInit,
@@ -375,7 +376,8 @@ type TriPageSizeChangeFn = (pageSize: number) => void;
         }
       </tbody>
     </tri-table>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTableBasicComponent implements OnInit {
   @ViewChild(TriTableComponent, { static: false }) tableComponent!: TriTableComponent<BasicTestDataItem>;
@@ -466,7 +468,8 @@ interface ScrollTestDataItem {
   styles: `
     @import '../../../style/testing.less';
     @import '../../../style/entry.less';
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTableScrollComponent implements OnInit {
   @ViewChild(TriTableComponent, { static: false }) tableComponent!: TriTableComponent<ScrollTestDataItem>;
@@ -510,7 +513,8 @@ export class TriTestTableScrollComponent implements OnInit {
         }
       </tbody>
     </tri-table>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTableSpecCrashComponent {
   data: Array<{ id: number; name: string }> = [];
@@ -567,7 +571,8 @@ interface RtlTestDataItem {
         </tbody>
       </tri-table>
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTableRtlComponent implements OnInit {
   @ViewChild(Dir) dir!: Dir;

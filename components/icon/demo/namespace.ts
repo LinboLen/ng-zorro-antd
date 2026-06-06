@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { TriIconModule, TriIconService } from 'ng-zorro-antd/icon';
 
@@ -17,7 +17,9 @@ const ngZorroIconLiteral =
   `
 })
 export class TriDemoIconNamespaceComponent {
-  constructor(private iconService: TriIconService) {
+  private readonly iconService = inject(TriIconService);
+
+  constructor() {
     this.iconService.addIconLiteral('ng-zorro:antd', ngZorroIconLiteral);
   }
 }

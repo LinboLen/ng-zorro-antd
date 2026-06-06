@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriMessageService } from 'ng-zorro-antd/message';
@@ -9,7 +9,7 @@ import { TriMessageService } from 'ng-zorro-antd/message';
   template: `<button tri-button type="default" (click)="createBasicMessage()">Display a loading indicator</button>`
 })
 export class TriDemoMessageLoadingComponent {
-  constructor(private message: TriMessageService) {}
+  private readonly message = inject(TriMessageService);
 
   createBasicMessage(): void {
     const id = this.message.loading('Action in progress..', { nzDuration: 0 }).messageId;

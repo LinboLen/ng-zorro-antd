@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, TemplateRef, ViewChild, inject } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriMessageComponent, TriMessageService } from 'ng-zorro-antd/message';
@@ -12,13 +12,12 @@ import { TriMessageComponent, TriMessageService } from 'ng-zorro-antd/message';
   `
 })
 export class TriDemoMessageTemplateComponent {
+  private readonly message = inject(TriMessageService);
+
   @ViewChild('customTemplate', { static: true }) customTemplate!: TemplateRef<{
     $implicit: TriMessageComponent;
     data: string;
   }>;
-
-  constructor(private message: TriMessageService) {}
-
   showMessage(): void {
     this.message.success(this.customTemplate, { nzData: 'Angular' });
   }

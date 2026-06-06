@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, TemplateRef, ViewChild, inject } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { type TriNotificationComponent, TriNotificationService } from 'ng-zorro-antd/notification';
@@ -22,13 +22,12 @@ import { TriTagModule } from 'ng-zorro-antd/tag';
   `
 })
 export class TriDemoNotificationTemplateComponent {
+  private readonly notificationService = inject(TriNotificationService);
+
   @ViewChild(TemplateRef, { static: false }) template?: TemplateRef<{
     $implicit: TriNotificationComponent;
     data: Array<{ name: string; color: string }>;
   }>;
-
-  constructor(private notificationService: TriNotificationService) {}
-
   createNotification(): void {
     const fruits = [
       { name: 'Apple', color: 'red' },

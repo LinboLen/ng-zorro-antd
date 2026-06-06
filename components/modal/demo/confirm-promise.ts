@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
-import { TriModalModule, TriModalRef, TriModalService } from 'ng-zorro-antd/modal';
+import { TriModalModule, TriModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'tri-demo-modal-confirm-promise',
@@ -9,12 +9,10 @@ import { TriModalModule, TriModalRef, TriModalService } from 'ng-zorro-antd/moda
   template: `<button tri-button type="primary" (click)="showConfirm()">Confirm</button>`
 })
 export class TriDemoModalConfirmPromiseComponent {
-  confirmModal?: TriModalRef; // For testing by now
-
-  constructor(private modal: TriModalService) {}
+  private readonly modalService = inject(TriModalService);
 
   showConfirm(): void {
-    this.confirmModal = this.modal.confirm({
+    this.modalService.confirm({
       title: 'Do you Want to delete these items?',
       content: 'When clicked the OK button, this dialog will be closed after 1 second',
       onOk: () =>

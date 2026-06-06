@@ -4,7 +4,15 @@
  */
 
 import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
-import { ApplicationRef, Component, DebugElement, provideZoneChangeDetection, signal, ViewChild } from '@angular/core';
+import {
+  ApplicationRef,
+  ChangeDetectionStrategy,
+  Component,
+  DebugElement,
+  provideZoneChangeDetection,
+  signal,
+  ViewChild
+} from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -500,7 +508,8 @@ describe('radio', () => {
     >
       Radio
     </label>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestRadioSingleComponent {
   @ViewChild(TriRadioComponent, { static: false }) radioComponent!: TriRadioComponent;
@@ -512,7 +521,8 @@ export class TriTestRadioSingleComponent {
 
 @Component({
   imports: [FormsModule, TriRadioModule],
-  template: `<label tri-radio-button>Radio</label>`
+  template: `<label tri-radio-button>Radio</label>`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestRadioButtonComponent {}
 
@@ -532,7 +542,8 @@ export class TriTestRadioButtonComponent {}
       <label tri-radio-button value="C">C</label>
       <label tri-radio-button value="D">D</label>
     </tri-radio-group>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestRadioGroupComponent {
   size: TriSizeLDSType = 'default';
@@ -548,7 +559,8 @@ export class TriTestRadioGroupComponent {
     <form>
       <label tri-radio [formControl]="formControl" [disabled]="disabled"></label>
     </form>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestRadioFormComponent {
   formControl = new FormControl(false);
@@ -575,7 +587,8 @@ export class TriTestRadioFormComponent {
         <label tri-radio-button value="D">D</label>
       </tri-radio-group>
     </form>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestRadioGroupFormComponent {
   formControl = new FormControl('B');
@@ -601,7 +614,8 @@ export class TriTestRadioGroupFormComponent {
       <label tri-radio-button value="C" [disabled]="singleDisabled">C</label>
       <label tri-radio-button value="D">D</label>
     </tri-radio-group>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestRadioGroupDisabledComponent {
   size: TriSizeLDSType = 'default';
@@ -622,7 +636,8 @@ export class TriTestRadioGroupDisabledComponent {
         }
       </tri-radio-group>
     </form>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestRadioGroupDisabledFormComponent {
   formControl = new FormControl({ value: 'B', disabled: true });
@@ -638,7 +653,8 @@ export class TriTestRadioGroupDisabledFormComponent {
       <label tri-radio-button value="C" [disabled]="singleDisabled">C</label>
       <label tri-radio-button value="D">D</label>
     </tri-radio-group>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestRadioGroupSolidComponent {
   value = 'A';
@@ -656,7 +672,8 @@ export class TriTestRadioGroupSolidComponent {
         </label>
       }
     </tri-radio-group>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestRadioGroupLabelNgModelComponent {
   items = [
@@ -685,7 +702,8 @@ export class TriTestRadioGroupLabelNgModelComponent {
     <div [dir]="direction">
       <tri-test-radio-single />
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestRadioSingleRtlComponent {
   @ViewChild(Dir) dir!: Dir;
@@ -698,7 +716,8 @@ export class TriTestRadioSingleRtlComponent {
     <div [dir]="direction">
       <label tri-radio-button>Radio</label>
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestRadioButtonRtlComponent {
   @ViewChild(Dir) dir!: Dir;
@@ -711,7 +730,8 @@ export class TriTestRadioButtonRtlComponent {
     <div [dir]="direction">
       <tri-test-radio-group />
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestRadioGroupRtlComponent {
   @ViewChild(Dir) dir!: Dir;
@@ -720,7 +740,8 @@ export class TriTestRadioGroupRtlComponent {
 
 @Component({
   imports: [TriRadioModule],
-  template: `<tri-radio-group [size]="size" />`
+  template: `<tri-radio-group [size]="size" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestRadioGroupFinalSizeComponent {
   size: TriSizeLDSType = 'default';

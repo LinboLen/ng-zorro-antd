@@ -7,6 +7,7 @@ import { BACKSPACE, DOWN_ARROW, ENTER, ESCAPE, SPACE, TAB, UP_ARROW } from '@ang
 import { OverlayContainer } from '@angular/cdk/overlay';
 import {
   ApplicationRef,
+  ChangeDetectionStrategy,
   Component,
   provideZoneChangeDetection,
   signal,
@@ -1836,7 +1837,8 @@ describe('select finalVariant', () => {
     <ng-template #dropdownTemplate><div class="dropdown-render">dropdownRender</div></ng-template>
     <ng-template #customTemplate let-selected>selected: {{ selected.nzLabel }}</ng-template>
     <ng-template #affixTemplate>icon</ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestSelectTemplateDefaultComponent {
   @ViewChild('dropdownTemplate') dropdownTemplate!: TemplateRef<TriSafeAny>;
@@ -1900,7 +1902,8 @@ export class TestSelectTemplateDefaultComponent {
       }
     </tri-select>
     <ng-template #iconTemplate>icon</ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestSelectTemplateMultipleComponent {
   @ViewChild('iconTemplate') iconTemplate!: TemplateRef<TriSafeAny>;
@@ -1934,7 +1937,8 @@ export class TestSelectTemplateMultipleComponent {
       }
     </tri-select>
     <ng-template #tagTemplate let-selectedList>and {{ selectedList.length }} more selected</ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestSelectTemplateTagsComponent {
   @ViewChild('tagTemplate') tagTemplate!: TemplateRef<TriSafeAny>;
@@ -1980,7 +1984,8 @@ export class TestSelectTemplateTagsComponent {
     <ng-template #dropdownTemplate><div class="dropdown-render">dropdownRender</div></ng-template>
     <ng-template #customTemplate let-selected>selected: {{ selected.nzLabel }}</ng-template>
     <ng-template #suffixIconTemplate>icon</ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestSelectReactiveDefaultComponent {
   @ViewChild('dropdownTemplate') dropdownTemplate!: TemplateRef<TriSafeAny>;
@@ -2037,7 +2042,8 @@ export class TestSelectReactiveDefaultComponent {
       (openChange)="valueChange($event)"
     />
     <ng-template #iconTemplate>icon</ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestSelectReactiveMultipleComponent {
   @ViewChild('iconTemplate') iconTemplate!: TemplateRef<TriSafeAny>;
@@ -2070,7 +2076,8 @@ export class TestSelectReactiveMultipleComponent {
       (ngModelChange)="valueChange($event)"
     />
     <ng-template #tagTemplate let-selectedList>and {{ selectedList.length }} more selected</ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestSelectReactiveTagsComponent {
   @ViewChild('tagTemplate') tagTemplate?: TemplateRef<TriSafeAny>;
@@ -2086,7 +2093,8 @@ export class TestSelectReactiveTagsComponent {
 
 @Component({
   imports: [TriSelectModule],
-  template: `<tri-select [status]="status" />`
+  template: `<tri-select [status]="status" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestSelectStatusComponent {
   status: TriStatus = 'error';
@@ -2102,7 +2110,8 @@ export class TestSelectStatusComponent {
         </tri-form-control>
       </tri-form-item>
     </form>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestSelectInFormComponent {
   selectForm = new FormGroup({
@@ -2124,7 +2133,8 @@ export class TestSelectInFormComponent {
 
 @Component({
   imports: [TriSelectModule],
-  template: `<tri-select [size]="size" />`
+  template: `<tri-select [size]="size" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestSelectFinalSizeComponent {
   size: TriSelectSizeType = 'default';
@@ -2132,7 +2142,8 @@ export class TestSelectFinalSizeComponent {
 
 @Component({
   imports: [TriSelectModule],
-  template: `<tri-select [variant]="variant()" />`
+  template: `<tri-select [variant]="variant()" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestSelectFinalVariantComponent {
   readonly variant = signal<TriVariant | undefined>(undefined);

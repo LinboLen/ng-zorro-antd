@@ -6,6 +6,7 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   DebugElement,
   provideZoneChangeDetection,
@@ -218,7 +219,8 @@ describe('form', () => {
 
 @Component({
   imports: [TriFormModule],
-  template: `<form tri-form [layout]="layout"></form>`
+  template: `<form tri-form [layout]="layout"></form>`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestFormDirectiveComponent {
   layout: TriFormLayoutType = 'horizontal';
@@ -240,7 +242,8 @@ export class TriTestFormDirectiveComponent {
         </tri-form-item>
       }
     </form>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestFormLabelIntegrateComponent {
   defaultNoColon = false;
@@ -272,7 +275,8 @@ export class TriTestFormLabelIntegrateComponent {
       }
       <ng-container *ngTemplateOutlet="label" />
     </ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestFormRequiredMarkComponent implements AfterViewInit {
   requiredMark: TriRequiredMark = true;

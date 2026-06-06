@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriMessageService } from 'ng-zorro-antd/message';
@@ -9,7 +9,7 @@ import { TriMessageService } from 'ng-zorro-antd/message';
   template: `<button tri-button type="primary" (click)="createBasicMessage()">Display normal message</button>`
 })
 export class TriDemoMessageInfoComponent {
-  constructor(private message: TriMessageService) {}
+  private readonly message = inject(TriMessageService);
 
   createBasicMessage(): void {
     this.message.info('This is a normal message');

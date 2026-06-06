@@ -4,7 +4,7 @@
  */
 
 import { BidiModule, Direction } from '@angular/cdk/bidi';
-import { Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -167,7 +167,8 @@ describe('tag', () => {
     >
       Tag 1
     </tri-tag>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTagBasicComponent {
   mode: 'default' | 'closeable' | 'checkable' = 'default';
@@ -181,7 +182,8 @@ export class TriTestTagBasicComponent {
 
 @Component({
   imports: [TriTagModule],
-  template: `<tri-tag mode="closeable" (onClose)="onClose($event)">Tag 1</tri-tag>`
+  template: `<tri-tag mode="closeable" (onClose)="onClose($event)">Tag 1</tri-tag>`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTagPreventComponent {
   onClose(e: MouseEvent): void {
@@ -195,7 +197,8 @@ export class TriTestTagPreventComponent {
     <div [dir]="direction">
       <tri-test-basic-tag />
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTagRtlComponent {
   direction: Direction = 'rtl';

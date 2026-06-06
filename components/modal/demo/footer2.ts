@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriModalModule, TriModalRef, TriModalService } from 'ng-zorro-antd/modal';
@@ -29,14 +29,13 @@ import { TriModalModule, TriModalRef, TriModalService } from 'ng-zorro-antd/moda
         <button tri-button type="primary" (click)="handleOk()" [loading]="isConfirmLoading">Custom Submit</button>
       </div>
     </tri-modal>
-  `,
-  styles: []
+  `
 })
 export class TriDemoModalFooter2Component {
+  private readonly modalService = inject(TriModalService);
+
   isVisible = false;
   isConfirmLoading = false;
-
-  constructor(private modalService: TriModalService) {}
 
   showModal1(): void {
     this.isVisible = true;
@@ -80,9 +79,9 @@ export class TriDemoModalFooter2Component {
   `
 })
 export class TriModalCustomFooterComponent {
-  constructor(private modal: TriModalRef) {}
+  private readonly modalRef = inject(TriModalRef);
 
   destroyModal(): void {
-    this.modal.destroy();
+    this.modalRef.destroy();
   }
 }

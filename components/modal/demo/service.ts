@@ -55,16 +55,14 @@ interface IModalData {
   `
 })
 export class TriDemoModalServiceComponent {
+  private readonly modalService = inject(TriModalService);
+  private readonly viewContainerRef = inject(ViewContainerRef);
+
   tplModalButtonLoading = false;
   disabled = false;
 
-  constructor(
-    private modal: TriModalService,
-    private viewContainerRef: ViewContainerRef
-  ) {}
-
   createModal(): void {
-    this.modal.create({
+    this.modalService.create({
       title: 'Modal Title',
       content: 'string, will close after 1 sec',
       closable: false,
@@ -73,7 +71,7 @@ export class TriDemoModalServiceComponent {
   }
 
   createTplModal(tplTitle: TemplateRef<{}>, tplContent: TemplateRef<{}>, tplFooter: TemplateRef<{}>): void {
-    this.modal.create({
+    this.modalService.create({
       title: tplTitle,
       content: tplContent,
       footer: tplFooter,
@@ -92,7 +90,7 @@ export class TriDemoModalServiceComponent {
   }
 
   createComponentModal(): void {
-    const modal = this.modal.create<TriModalCustomComponent, IModalData>({
+    const modal = this.modalService.create<TriModalCustomComponent, IModalData>({
       title: 'Modal Title',
       content: TriModalCustomComponent,
       viewContainerRef: this.viewContainerRef,
@@ -122,7 +120,7 @@ export class TriDemoModalServiceComponent {
   }
 
   createCustomButtonModal(): void {
-    const modal: TriModalRef = this.modal.create({
+    const modal = this.modalService.create({
       title: 'custom button demo',
       content: 'pass array of button config to nzFooter to create multiple buttons',
       footer: [
@@ -134,7 +132,8 @@ export class TriDemoModalServiceComponent {
         {
           label: 'Confirm',
           type: 'primary',
-          onClick: () => this.modal.confirm({ title: 'Confirm Modal Title', content: 'Confirm Modal Content' })
+          onClick: () =>
+            this.modalService.confirm({ title: 'Confirm Modal Title', content: 'Confirm Modal Content' })
         },
         {
           label: 'Change Button Status',
@@ -165,7 +164,7 @@ export class TriDemoModalServiceComponent {
 
     ['create', 'info', 'success', 'error'].forEach(method =>
       // @ts-ignore
-      this.modal[method]({
+      this.modalService[method]({
         nzMask: false,
         nzTitle: `Test ${method} title`,
         nzContent: `Test content: <b>${method}</b>`,
@@ -173,9 +172,9 @@ export class TriDemoModalServiceComponent {
       })
     );
 
-    this.modal.afterAllClose.subscribe(() => console.log('afterAllClose emitted!'));
+    this.modalService.afterAllClose.subscribe(() => console.log('afterAllClose emitted!'));
 
-    setTimeout(() => this.modal.closeAll(), 2000);
+    setTimeout(() => this.modalService.closeAll(), 2000);
   }
 }
 
@@ -194,11 +193,11 @@ export class TriDemoModalServiceComponent {
   `
 })
 export class TriModalCustomComponent {
-  @Input() title?: string;
-  @Input() subtitle?: string;
-
   readonly modalRef = inject(TriModalRef);
   readonly modalData = inject<IModalData>(TRI_MODAL_DATA);
+
+  @Input() title?: string;
+  @Input() subtitle?: string;
 
   destroyModal(): void {
     this.modalRef.destroy({ data: 'this the result data' });

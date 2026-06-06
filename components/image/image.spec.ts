@@ -5,8 +5,8 @@
 
 import { ESCAPE, LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
 import { Overlay, OverlayContainer } from '@angular/cdk/overlay';
-import { Component, DebugElement, NgZone, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
+import { ChangeDetectionStrategy, Component, DebugElement, NgZone, ViewChild, inject } from '@angular/core';
+import { ComponentFixture, fakeAsync, inject as testingInject, TestBed, tick } from '@angular/core/testing';
 
 import { TriConfigService } from 'ng-zorro-antd/core/config';
 import {
@@ -197,11 +197,13 @@ describe('image preview', () => {
     });
   });
 
-  beforeEach(inject([OverlayContainer, TriConfigService], (oc: OverlayContainer, cs: TriConfigService) => {
-    overlayContainer = oc;
-    configService = cs;
-    overlayContainerElement = oc.getContainerElement();
-  }));
+  beforeEach(
+    testingInject([OverlayContainer, TriConfigService], (oc: OverlayContainer, cs: TriConfigService) => {
+      overlayContainer = oc;
+      configService = cs;
+      overlayContainerElement = oc.getContainerElement();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestImagePreviewGroupComponent);
@@ -727,7 +729,8 @@ describe('image preview', () => {
 @Component({
   selector: 'test-image-basic',
   imports: [TriImageModule],
-  template: `<img alt="" tri-image [src]="src" [placeholder]="placeholder" />`
+  template: `<img alt="" tri-image [src]="src" [placeholder]="placeholder" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestImageBasicComponent {
   @ViewChild(TriImageDirective) image!: TriImageDirective;
@@ -738,7 +741,8 @@ export class TestImageBasicComponent {
 @Component({
   selector: 'test-image-placeholder',
   imports: [TriImageModule],
-  template: `<img alt="" tri-image [src]="src" [placeholder]="placeholder" [disablePreview]="disablePreview" />`
+  template: `<img alt="" tri-image [src]="src" [placeholder]="placeholder" [disablePreview]="disablePreview" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestImagePlaceholderComponent {
   @ViewChild(TriImageDirective) image!: TriImageDirective;
@@ -750,7 +754,8 @@ export class TestImagePlaceholderComponent {
 @Component({
   selector: 'test-image-fallback',
   imports: [TriImageModule],
-  template: `<img alt="" tri-image [src]="src" [fallback]="fallback" />`
+  template: `<img alt="" tri-image [src]="src" [fallback]="fallback" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestImageFallbackComponent {
   @ViewChild(TriImageDirective) image!: TriImageDirective;
@@ -768,9 +773,12 @@ export class TestImageFallbackComponent {
     </tri-image-group>
     <img alt="" tri-image [src]="firstSrc" [disablePreview]="disablePreview" [scaleStep]="zoomStep" />
     <img alt="" tri-image [src]="firstSrc" [disablePreview]="disablePreview" />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestImagePreviewGroupComponent {
+  private readonly imageService = inject(TriImageService);
+
   disablePreview = false;
   firstSrc = '';
   secondSrc = '';
@@ -782,10 +790,8 @@ export class TestImagePreviewGroupComponent {
   @ViewChild(TriImageGroupComponent) imageGroup!: TriImageGroupComponent;
   @ViewChild(TriImageDirective) image!: TriImageDirective;
 
-  constructor(private nzImageService: TriImageService) {}
-
   createByService(): void {
-    this.previewRef = this.nzImageService.preview(this.images, { zoom: 1.5, rotate: 0 });
+    this.previewRef = this.imageService.preview(this.images, { zoom: 1.5, rotate: 0 });
   }
 
   triggerPreview(): void {

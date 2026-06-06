@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TriElementPatchDirective } from './element-patch.directive';
@@ -24,7 +24,8 @@ describe('nz-element', () => {
 
 @Component({
   imports: [TriElementPatchDirective],
-  template: `<button tri-element>Action</button> `
+  template: `<button tri-element>Action</button> `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestElementPatchComponent {
   @ViewChild(TriElementPatchDirective) element!: TriElementPatchDirective;

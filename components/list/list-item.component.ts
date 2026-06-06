@@ -11,7 +11,6 @@ import {
   Component,
   ContentChild,
   DestroyRef,
-  HostBinding,
   Input,
   TemplateRef,
   ViewEncapsulation,
@@ -68,7 +67,8 @@ import { TriListComponent } from './list.component';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'tri-list-item'
+    class: 'tri-list-item',
+    '[class.tri-list-item-no-flex]': 'noFlex'
   },
   imports: [TriListItemActionsComponent, TriOutletModule, NgTemplateOutlet, TriListItemExtraComponent]
 })
@@ -80,7 +80,7 @@ export class TriListItemComponent implements AfterViewInit {
   @Input() actions: Array<TemplateRef<void>> = [];
   @Input() content?: string | TemplateRef<void>;
   @Input() extra: TemplateRef<void> | null = null;
-  @Input({ transform: booleanAttribute }) @HostBinding('class.ant-list-item-no-flex') noFlex: boolean = false;
+  @Input({ transform: booleanAttribute }) noFlex: boolean = false;
 
   @ContentChild(TriListItemExtraComponent) listItemExtraDirective?: TriListItemExtraComponent;
 

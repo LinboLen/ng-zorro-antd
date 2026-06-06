@@ -13,7 +13,8 @@ import {
   OnInit,
   provideZoneChangeDetection,
   TemplateRef,
-  ViewChild
+  ViewChild,
+  inject
 } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -540,6 +541,8 @@ describe('steps', () => {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TriTestOuterStepsComponent {
+  public readonly cdr = inject(ChangeDetectorRef);
+
   @ViewChild('progressTemplate', { static: false }) progressTemplate?: TriProgressDotTemplate;
   current = 0;
   direction: TriDirectionVHType = 'horizontal';
@@ -549,7 +552,6 @@ export class TriTestOuterStepsComponent {
   subtitle?: string | TemplateRef<void>;
   progressDot: BooleanInput | TriProgressDotTemplate | undefined | null = false;
   startIndex = 0;
-  constructor(public cdr: ChangeDetectorRef) {}
 }
 
 @Component({
@@ -563,7 +565,8 @@ export class TriTestOuterStepsComponent {
     <ng-template #titleTemplate>titleTemplate</ng-template>
     <ng-template #descriptionTemplate>descriptionTemplate</ng-template>
     <ng-template #iconTemplate><tri-icon type="smile-o" /></ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestInnerStepStringComponent {
   @ViewChild('titleTemplate', { static: false }) titleTemplate?: TemplateRef<void>;
@@ -587,7 +590,8 @@ export class TriTestInnerStepStringComponent {
     <ng-template #titleTemplate>titleTemplate</ng-template>
     <ng-template #descriptionTemplate>descriptionTemplate</ng-template>
     <ng-template #iconTemplate><tri-icon type="smile-o" /></ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestInnerStepTemplateComponent {}
 
@@ -599,7 +603,8 @@ export class TriTestInnerStepTemplateComponent {}
         <tri-step />
       }
     </tri-steps>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestStepForComponent {
   steps = [1, 2, 3];
@@ -616,7 +621,8 @@ export class TriTestStepForComponent {
         <tri-step />
       }
     </tri-steps>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestStepAsyncComponent implements OnInit {
   steps: number[] = [];
@@ -630,7 +636,8 @@ export class TriTestStepAsyncComponent implements OnInit {
 
 @Component({
   imports: [BidiModule, TriTestOuterStepsComponent],
-  template: `<tri-test-outer-steps [dir]="direction" />`
+  template: `<tri-test-outer-steps [dir]="direction" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestOuterStepsRtlComponent {
   @ViewChild(Dir) dir!: Dir;

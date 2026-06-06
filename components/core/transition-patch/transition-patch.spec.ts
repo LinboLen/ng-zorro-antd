@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -55,25 +55,29 @@ describe('transition-patch', () => {
 
 @Component({
   imports: [TriButtonModule, TriTransitionPatchModule],
-  template: `<button tri-button></button>`
+  template: `<button tri-button></button>`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestTransitionPatchComponent {}
 
 @Component({
   imports: [TriButtonModule, TriTransitionPatchModule],
-  template: `<button tri-button hidden></button>`
+  template: `<button tri-button hidden></button>`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestTransitionPatchHiddenComponent {}
 
 @Component({
   imports: [TriButtonModule, TriTransitionPatchModule],
-  template: `<button tri-button hidden="abc"></button>`
+  template: `<button tri-button hidden="abc"></button>`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestTransitionPatchRestoreComponent {}
 
 @Component({
   imports: [TriButtonModule, TriTransitionPatchModule],
-  template: `<button tri-button [hidden]="hidden"></button>`
+  template: `<button tri-button [hidden]="hidden"></button>`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestTransitionPatchHiddenBindingComponent {
   hidden?: boolean = false;

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriModalModule, TriModalService } from 'ng-zorro-antd/modal';
@@ -9,7 +9,7 @@ import { TriModalModule, TriModalService } from 'ng-zorro-antd/modal';
   template: `<button tri-button (click)="success()">Success</button>`
 })
 export class TriDemoModalManualComponent {
-  constructor(private modalService: TriModalService) {}
+  private readonly modalService = inject(TriModalService);
 
   success(): void {
     const modal = this.modalService.success({

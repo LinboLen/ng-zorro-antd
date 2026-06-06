@@ -9,6 +9,7 @@ import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import {
   ApplicationRef,
+  ChangeDetectionStrategy,
   Component,
   DebugElement,
   inject,
@@ -1739,7 +1740,8 @@ describe('finalVariant', () => {
       <div [class.test-first-day]="current.getDate() === 1">{{ current.getDate() }}</div>
     </ng-template>
     <ng-template #tplExtraFooter>TEST_EXTRA_FOOTER</ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestDatePickerComponent {
   useSuite!: 1 | 2 | 3 | 4 | 5;
@@ -1802,7 +1804,8 @@ class TriTestDatePickerComponent {
 
 @Component({
   imports: [TriDatePickerModule],
-  template: `<tri-date-picker [status]="status" />`
+  template: `<tri-date-picker [status]="status" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestDatePickerStatusComponent {
   status: TriStatus = 'error';
@@ -1818,7 +1821,8 @@ class TriTestDatePickerStatusComponent {
         </tri-form-control>
       </tri-form-item>
     </form>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestDatePickerInFormComponent {
   private fb = inject(FormBuilder);
@@ -1829,7 +1833,8 @@ class TriTestDatePickerInFormComponent {
 
 @Component({
   imports: [TriDatePickerModule],
-  template: `<tri-date-picker [size]="size" />`
+  template: `<tri-date-picker [size]="size" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestDatePickerFinalSizeComponent {
   size: TriDatePickerSizeType = 'default';
@@ -1837,7 +1842,8 @@ export class TestDatePickerFinalSizeComponent {
 
 @Component({
   imports: [TriDatePickerModule],
-  template: `<tri-date-picker [variant]="variant()" />`
+  template: `<tri-date-picker [variant]="variant()" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestDatePickerFinalVariantComponent {
   readonly variant = signal<TriVariant | undefined>(undefined);
@@ -1845,7 +1851,8 @@ export class TestDatePickerFinalVariantComponent {
 
 @Component({
   imports: [FormField, TriDatePickerModule],
-  template: `<tri-date-picker [formField]="myForm.date" />`
+  template: `<tri-date-picker [formField]="myForm.date" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestDatePickerInSignalFormComponent {
   readonly model = signal<{ date: Date | null }>({ date: null });

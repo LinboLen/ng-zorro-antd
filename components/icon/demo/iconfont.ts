@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { TriIconModule, TriIconService } from 'ng-zorro-antd/icon';
 
@@ -18,7 +18,9 @@ import { TriIconModule, TriIconService } from 'ng-zorro-antd/icon';
   `
 })
 export class TriDemoIconIconfontComponent {
-  constructor(private iconService: TriIconService) {
+  private readonly iconService = inject(TriIconService);
+
+  constructor() {
     this.iconService.fetchFromIconfont({
       scriptUrl: 'https://at.alicdn.com/t/font_8d5l8fzk5b87iudi.js'
     });

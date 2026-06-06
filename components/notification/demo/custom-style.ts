@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriNotificationService } from 'ng-zorro-antd/notification';
@@ -9,7 +9,7 @@ import { TriNotificationService } from 'ng-zorro-antd/notification';
   template: `<button tri-button type="primary" (click)="createNotification()">Open the notification box</button>`
 })
 export class TriDemoNotificationCustomStyleComponent {
-  constructor(private notification: TriNotificationService) {}
+  private readonly notification = inject(TriNotificationService);
 
   createNotification(): void {
     this.notification.blank(

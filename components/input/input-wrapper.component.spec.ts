@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Component, ElementRef, provideZoneChangeDetection, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, provideZoneChangeDetection, viewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
@@ -413,7 +413,8 @@ describe('input-wrapper with count config', () => {
     <tri-input-wrapper [allowClear]="allowClear" (clear)="onClear()">
       <input tri-input [(ngModel)]="value" [disabled]="disabled" [readonly]="readonly" />
     </tri-input-wrapper>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class InputAllowClearTestComponent {
   allowClear = true;
@@ -462,7 +463,8 @@ class InputAllowClearTestComponent {
     <tri-input-wrapper #onlyInput>
       <input tri-input [size]="size" [variant]="variant" [disabled]="disabled" [readonly]="readonly" />
     </tri-input-wrapper>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class InputWithAffixesAndAddonsTestComponent {
   size: TriSizeLDSType = 'default';
@@ -489,7 +491,8 @@ class InputWithAffixesAndAddonsTestComponent {
     <tri-input-wrapper #withCountConfig [showCount]="showCount" [count]="countConfig">
       <input tri-input [(ngModel)]="value" />
     </tri-input-wrapper>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class InputWithCountTestComponent {
   value = '';

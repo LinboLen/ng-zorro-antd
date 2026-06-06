@@ -6,6 +6,7 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   DebugElement,
   provideZoneChangeDetection,
@@ -246,7 +247,8 @@ describe('form-label', () => {
       [labelAlign]="align"
       [labelWrap]="labelWrap"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestFormLabelComponent {
   forValue = 'test';
@@ -282,7 +284,8 @@ export class TriTestFormLabelComponent {
       }
       <ng-container *ngTemplateOutlet="label" />
     </ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestFormLabelRequiredMarkComponent implements AfterViewInit {
   requiredMark: TriRequiredMark = true;

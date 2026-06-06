@@ -5,8 +5,8 @@
 
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { OverlayContainer, ScrollDispatcher } from '@angular/cdk/overlay';
-import { Component, Provider, Type, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
+import { ChangeDetectionStrategy, Component, Provider, Type, ViewChild, inject } from '@angular/core';
+import { ComponentFixture, fakeAsync, inject as testingInject, TestBed, tick } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Subject } from 'rxjs';
 
@@ -26,7 +26,7 @@ describe('context-menu', () => {
       providers: [provideNoopAnimations(), ...providers]
     });
 
-    inject([OverlayContainer], (oc: OverlayContainer) => {
+    testingInject([OverlayContainer], (oc: OverlayContainer) => {
       overlayContainer = oc;
       overlayContainerElement = oc.getContainerElement();
     })();
@@ -34,10 +34,12 @@ describe('context-menu', () => {
     return TestBed.createComponent<T>(component);
   }
 
-  afterEach(inject([OverlayContainer], (currentOverlayContainer: OverlayContainer) => {
-    currentOverlayContainer.ngOnDestroy();
-    overlayContainer.ngOnDestroy();
-  }));
+  afterEach(
+    testingInject([OverlayContainer], (currentOverlayContainer: OverlayContainer) => {
+      currentOverlayContainer.ngOnDestroy();
+      overlayContainer.ngOnDestroy();
+    })
+  );
 
   it('should create dropdown', fakeAsync(() => {
     const fixture = createComponent(TriTestDropdownContextMenuComponent);
@@ -47,7 +49,7 @@ describe('context-menu', () => {
     expect(() => {
       const fakeEvent = createMouseEvent('contextmenu', 300, 300);
       const component = fixture.componentInstance;
-      const viewRef = component.nzContextMenuService.create(fakeEvent, component.dropdownMenuComponent);
+      const viewRef = component.contextMenuService.create(fakeEvent, component.dropdownMenuComponent);
       expect(viewRef).toBeTruthy();
       fixture.detectChanges();
       tick(1000);
@@ -64,13 +66,13 @@ describe('context-menu', () => {
     expect(() => {
       let fakeEvent = createMouseEvent('contextmenu', 0, 0);
       const component = fixture.componentInstance;
-      component.nzContextMenuService.create(fakeEvent, component.dropdownMenuComponent);
+      component.contextMenuService.create(fakeEvent, component.dropdownMenuComponent);
       fixture.detectChanges();
       tick(1000);
       fixture.detectChanges();
       expect(overlayContainerElement.textContent).toContain('1st menu item');
       fakeEvent = createMouseEvent('contextmenu', window.innerWidth, window.innerHeight);
-      component.nzContextMenuService.create(fakeEvent, component.dropdownMenuComponent);
+      component.contextMenuService.create(fakeEvent, component.dropdownMenuComponent);
       fixture.detectChanges();
       tick(1000);
       fixture.detectChanges();
@@ -88,7 +90,7 @@ describe('context-menu', () => {
     expect(() => {
       const fakeEvent = createMouseEvent('contextmenu', 0, 0);
       const component = fixture.componentInstance;
-      component.nzContextMenuService.create(fakeEvent, component.dropdownMenuComponent);
+      component.contextMenuService.create(fakeEvent, component.dropdownMenuComponent);
       fixture.detectChanges();
       tick(1000);
       fixture.detectChanges();
@@ -109,7 +111,7 @@ describe('context-menu', () => {
     expect(() => {
       const fakeEvent = createMouseEvent('contextmenu', 300, 300);
       const component = fixture.componentInstance;
-      component.nzContextMenuService.create(fakeEvent, component.dropdownMenuComponent);
+      component.contextMenuService.create(fakeEvent, component.dropdownMenuComponent);
       fixture.detectChanges();
       tick(1000);
       fixture.detectChanges();
@@ -131,7 +133,7 @@ describe('context-menu', () => {
     expect(() => {
       const fakeEvent = createMouseEvent('contextmenu', 300, 300);
       const component = fixture.componentInstance;
-      component.nzContextMenuService.create(fakeEvent, component.dropdownMenuComponent);
+      component.contextMenuService.create(fakeEvent, component.dropdownMenuComponent);
       fixture.detectChanges();
       tick(1000);
       fixture.detectChanges();
@@ -149,11 +151,11 @@ describe('context-menu', () => {
     fixture.detectChanges();
     const fakeEvent = createMouseEvent('contextmenu', 300, 300);
     const component = fixture.componentInstance;
-    component.nzContextMenuService.create(fakeEvent, component.dropdownMenuComponent);
+    component.contextMenuService.create(fakeEvent, component.dropdownMenuComponent);
     fixture.detectChanges();
     await fixture.whenStable();
     fixture.detectChanges();
-    const closeSpy = spyOn(component.nzContextMenuService, 'close');
+    const closeSpy = spyOn(component.contextMenuService, 'close');
     overlayContainerElement.querySelector('ul')!.click();
     expect(closeSpy).toHaveBeenCalledTimes(0);
     document.body.click();
@@ -171,10 +173,11 @@ describe('context-menu', () => {
         <li tri-menu-item>3rd menu item</li>
       </ul>
     </tri-dropdown-menu>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestDropdownContextMenuComponent {
-  @ViewChild(TriDropdownMenuComponent, { static: true }) dropdownMenuComponent!: TriDropdownMenuComponent;
+  public readonly contextMenuService = inject(TriContextMenuService);
 
-  constructor(public nzContextMenuService: TriContextMenuService) {}
+  @ViewChild(TriDropdownMenuComponent, { static: true }) dropdownMenuComponent!: TriDropdownMenuComponent;
 }

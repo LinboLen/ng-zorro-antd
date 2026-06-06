@@ -5,7 +5,7 @@
 
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
-import { Component, provideZoneChangeDetection, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, provideZoneChangeDetection, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule, NgModel } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -215,7 +215,8 @@ describe('calendar Header', () => {
   template: `
     <tri-calendar-header />
     <tri-calendar-header [(mode)]="mode" />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestCalendarHeaderModeComponent {
   mode: 'month' | 'year' = 'month';
@@ -226,7 +227,8 @@ class TriTestCalendarHeaderModeComponent {
   template: `
     <tri-calendar-header />
     <tri-calendar-header [fullscreen]="fullscreen" />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestCalendarHeaderFullscreenComponent {
   fullscreen = true;
@@ -237,7 +239,8 @@ class TriTestCalendarHeaderFullscreenComponent {
   template: `
     <tri-calendar-header />
     <tri-calendar-header [activeDate]="activeDate" />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestCalendarHeaderActiveDateComponent {
   activeDate = new CandyDate(new Date(2001, 1, 3));
@@ -251,7 +254,8 @@ class TriTestCalendarHeaderActiveDateComponent {
     <ng-template #customHeaderElement>
       <p>custom header</p>
     </ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestCalendarHeaderChangesComponent {
   @ViewChild('customHeaderElement', { static: true }) customHeaderElement!: TemplateRef<TriSafeAny>;

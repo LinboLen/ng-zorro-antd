@@ -3,7 +3,16 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Component, ElementRef, inject, input, Input, inputBinding, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+  input,
+  Input,
+  inputBinding,
+  signal
+} from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { TriButtonSize } from 'ng-zorro-antd/button';
@@ -16,7 +25,8 @@ const withConfig = withConfigFactory(TRI_CONFIG_MODULE_NAME);
 
 @Component({
   selector: 'tri-with-config',
-  template: ``
+  template: ``,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriWithConfigTestComponent {
   readonly elementRef = inject(ElementRef);
@@ -27,7 +37,8 @@ class TriWithConfigTestComponent {
 
 @Component({
   selector: 'tri-with-config-signal',
-  template: ``
+  template: ``,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriWithConfigSignalTestComponent {
   readonly elementRef = inject(ElementRef);

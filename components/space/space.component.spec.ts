@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Component, provideZoneChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component, provideZoneChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -160,7 +160,8 @@ describe('space', () => {
     </tri-space>
 
     <ng-template #spaceSplit>|</ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class SpaceTestComponent {
   size: TriSpaceSize | [TriSpaceSize, TriSpaceSize] = 'small';

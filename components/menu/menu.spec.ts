@@ -6,6 +6,7 @@
 import { Directionality } from '@angular/cdk/bidi';
 import { ConnectedOverlayPositionChange, OverlayContainer } from '@angular/cdk/overlay';
 import {
+  ChangeDetectionStrategy,
   Component,
   DebugElement,
   ElementRef,
@@ -656,7 +657,8 @@ describe('menu', () => {
         </ul>
       </li>
     </ul>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestMenuHorizontalComponent {
   width = 200;
@@ -684,7 +686,8 @@ export class TriTestMenuHorizontalComponent {
         </ul>
       </li>
     </ul>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestMenuInlineComponent {
   disabled = false;
@@ -738,7 +741,8 @@ export class TriTestMenuInlineComponent {
       </li>
       <li tri-menu-item danger>Navigation Five</li>
     </ul>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestBasicMenuHorizontalComponent {}
 
@@ -788,7 +792,8 @@ export class TriTestBasicMenuHorizontalComponent {}
         </ul>
       </li>
     </ul>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestBasicMenuInlineComponent {}
 
@@ -808,7 +813,8 @@ export class TriTestBasicMenuInlineComponent {}
         </ul>
       </li>
     </ul>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestSubMenuSelectedComponent {}
 
@@ -845,7 +851,8 @@ export class TriTestSubMenuSelectedComponent {}
         </li>
       </ul>
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestMenuInlineCollapsedComponent {
   isCollapsed = false;
@@ -913,7 +920,8 @@ export class TriTestMenuInlineCollapsedComponent {
         </ul>
       </li>
     </ul>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestMenuSiderCurrentComponent {
   openMap: Record<string, boolean> = {
@@ -971,7 +979,8 @@ export class TriTestMenuSiderCurrentComponent {
         </ul>
       </li>
     </ul>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestMenuSwitchModeComponent {
   mode = false;
@@ -1018,7 +1027,8 @@ export class TriTestMenuSwitchModeComponent {
         </ul>
       </li>
     </ul>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestMenuThemeComponent {
   theme = true;

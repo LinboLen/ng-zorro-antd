@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { TriListModule } from 'ng-zorro-antd/list';
 import { TriMessageService } from 'ng-zorro-antd/message';
@@ -57,6 +57,8 @@ import { TriTypographyModule } from 'ng-zorro-antd/typography';
   `
 })
 export class TriDemoListSimpleComponent {
+  public readonly msg = inject(TriMessageService);
+
   data = [
     'Racing car sprays burning fuel into crowd.',
     'Japanese princess to wed commoner.',
@@ -64,6 +66,4 @@ export class TriDemoListSimpleComponent {
     'Man charged over missing wedding girl.',
     'Los Angeles battles huge wildfires.'
   ];
-
-  constructor(public msg: TriMessageService) {}
 }

@@ -8,6 +8,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import {
+  ChangeDetectionStrategy,
   Component,
   DebugElement,
   provideZoneChangeDetection,
@@ -1083,7 +1084,8 @@ describe('finalVariant', () => {
       [defaultOpenValue]="defaultOpenValue"
       [variant]="variant"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTimePickerComponent {
   open = false;
@@ -1104,7 +1106,8 @@ export class TriTestTimePickerComponent {
 
 @Component({
   imports: [TriTimePickerComponent],
-  template: `<tri-time-picker [status]="status" />`
+  template: `<tri-time-picker [status]="status" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTimePickerStatusComponent {
   status: TriStatus = 'error';
@@ -1116,7 +1119,8 @@ export class TriTestTimePickerStatusComponent {
     <div [dir]="dir">
       <tri-time-picker [placement]="placement" />
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTimePickerDirComponent {
   dir: Direction = 'ltr';
@@ -1133,7 +1137,8 @@ export class TriTestTimePickerDirComponent {
         </tri-form-control>
       </tri-form-item>
     </form>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTimePickerInFormComponent {
   timePickerForm = new FormGroup({
@@ -1155,7 +1160,8 @@ export class TriTestTimePickerInFormComponent {
     <ng-template #prefixTemplate>
       <tri-icon type="clock-circle" />
     </ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTimePickerPrefixTemplateComponent {}
 
@@ -1168,7 +1174,8 @@ export class TriTestTimePickerPrefixTemplateComponent {}
       [needConfirm]="needConfirm"
       [defaultOpenValue]="defaultOpenValue"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTimePickerConfirmationComponent {
   date: Date | null = null;
@@ -1180,7 +1187,8 @@ export class TriTestTimePickerConfirmationComponent {
 
 @Component({
   imports: [TriTimePickerComponent, FormsModule],
-  template: ` <tri-time-picker [placement]="placement" [(ngModel)]="date" /> `
+  template: ` <tri-time-picker [placement]="placement" [(ngModel)]="date" /> `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTimePickerPlacementComponent {
   placement: TriPlacement = 'bottomLeft';
@@ -1190,7 +1198,8 @@ export class TriTestTimePickerPlacementComponent {
 
 @Component({
   imports: [TriTimePickerComponent],
-  template: ` <tri-time-picker [size]="size" /> `
+  template: ` <tri-time-picker [size]="size" /> `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestTimePickerSizeComponent {
   size: TriSizeLDSType = 'default';
@@ -1198,7 +1207,8 @@ class TriTestTimePickerSizeComponent {
 
 @Component({
   imports: [TriTimePickerComponent],
-  template: `<tri-time-picker [variant]="variant()" />`
+  template: `<tri-time-picker [variant]="variant()" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTimePickerVariantComponent {
   readonly variant = signal<TriVariant | undefined>(undefined);

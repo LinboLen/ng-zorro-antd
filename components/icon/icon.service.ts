@@ -33,9 +33,8 @@ export const DEFAULT_TWOTONE_COLOR = '#1890ff';
   providedIn: 'root'
 })
 export class TriIconService extends IconService {
-  protected configService = inject(TriConfigService);
-  private platform = inject(Platform);
-
+  protected readonly configService = inject(TriConfigService);
+  private readonly platform = inject(Platform);
   configUpdated$ = new Subject<void>();
 
   protected override get _disableDynamicLoading(): boolean {
@@ -46,24 +45,24 @@ export class TriIconService extends IconService {
 
   normalizeSvgElement(svg: SVGElement): void {
     if (!svg.getAttribute('viewBox')) {
-      this._renderer.setAttribute(svg, 'viewBox', '0 0 1024 1024');
+      this.renderer.setAttribute(svg, 'viewBox', '0 0 1024 1024');
     }
     if (!svg.getAttribute('width') || !svg.getAttribute('height')) {
-      this._renderer.setAttribute(svg, 'width', '1em');
-      this._renderer.setAttribute(svg, 'height', '1em');
+      this.renderer.setAttribute(svg, 'width', '1em');
+      this.renderer.setAttribute(svg, 'height', '1em');
     }
     if (!svg.getAttribute('fill')) {
-      this._renderer.setAttribute(svg, 'fill', 'currentColor');
+      this.renderer.setAttribute(svg, 'fill', 'currentColor');
     }
   }
 
   fetchFromIconfont(opt: TriIconfontOption): void {
     const { scriptUrl } = opt;
-    if (this._document && !this.iconfontCache.has(scriptUrl)) {
-      const script = this._renderer.createElement('script');
-      this._renderer.setAttribute(script, 'src', scriptUrl);
-      this._renderer.setAttribute(script, 'data-namespace', scriptUrl.replace(/^(https?|http):/g, ''));
-      this._renderer.appendChild(this._document.body, script);
+    if (this.document && !this.iconfontCache.has(scriptUrl)) {
+      const script = this.renderer.createElement('script');
+      this.renderer.setAttribute(script, 'src', scriptUrl);
+      this.renderer.setAttribute(script, 'data-namespace', scriptUrl.replace(/^(https?|http):/g, ''));
+      this.renderer.appendChild(this.document.body, script);
       this.iconfontCache.add(scriptUrl);
     }
   }
@@ -73,7 +72,8 @@ export class TriIconService extends IconService {
   }
 
   constructor() {
-    super([...TRI_ICONS_USED_BY_ZORRO, ...(inject(TRI_ICONS, { optional: true }) || [])]);
+    super();
+    this.addIcon(...TRI_ICONS_USED_BY_ZORRO, ...(inject(TRI_ICONS, { optional: true }) || []));
 
     this.onConfigChange();
     this.configDefaultTwotoneColor();
@@ -119,10 +119,9 @@ export const TRI_ICONS_PATCH = new InjectionToken<IconDefinition[]>('nz_icons_pa
 
 @Injectable()
 export class TriIconPatchService {
+  private readonly extraIcons = inject(TRI_ICONS_PATCH, { self: true });
+  private readonly rootIconService = inject(TriIconService);
   patched = false;
-  private extraIcons = inject(TRI_ICONS_PATCH, { self: true });
-
-  constructor(private rootIconService: TriIconService) {}
 
   doPatch(): void {
     if (this.patched) {

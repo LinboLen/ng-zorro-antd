@@ -5,7 +5,7 @@
 
 import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
 import { LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
-import { Component, DebugElement, provideZoneChangeDetection, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -351,7 +351,8 @@ describe('rate', () => {
       [disabled]="disabled"
       [autoFocus]="autoFocus"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestRateBasicComponent {
   @ViewChild(TriRateComponent, { static: false }) rateComponent!: TriRateComponent;
@@ -374,7 +375,8 @@ export class TriTestRateBasicComponent {
     <form>
       <tri-rate [formControl]="formControl" [disabled]="disabled" />
     </form>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestRateFormComponent {
   formControl = new FormControl(1);
@@ -396,7 +398,8 @@ export class TriTestRateFormComponent {
     <div [dir]="direction">
       <tri-test-rate />
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestRateRtlComponent {
   @ViewChild(Dir) dir!: Dir;
@@ -411,7 +414,8 @@ export class TriTestRateRtlComponent {
     <ng-template #characterTpl let-index>
       {{ index + 1 }}
     </ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestRateCharacterComponent {
   @ViewChild(TriRateComponent, { static: false }) rateComponent!: TriRateComponent;

@@ -4,7 +4,7 @@
  */
 
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -357,7 +357,8 @@ const flattenNodes = [
         </tri-tree-node-option>
       </tri-tree-node>
     </tri-tree-view>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTreeViewBasicWithLevelAccessorComponent implements OnInit {
   @ViewChild(TriTreeViewComponent, { static: true }) tree!: TriTreeViewComponent<FlatNode>;
@@ -408,7 +409,8 @@ export class TriTestTreeViewBasicWithLevelAccessorComponent implements OnInit {
         </tri-tree-node-option>
       </tri-tree-node>
     </tri-tree-view>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTreeViewLineComponent implements OnInit {
   @ViewChild(TriTreeViewComponent, { static: true }) tree!: TriTreeViewComponent<FlatNode>;

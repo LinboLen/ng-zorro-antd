@@ -4,7 +4,14 @@
  */
 
 import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
-import { ChangeDetectorRef, Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DebugElement,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -180,7 +187,8 @@ describe('alert', () => {
       [action]="action"
       (onClose)="onClose($event)"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriDemoTestBasicComponent {
   @ViewChild('template', { static: false }) template!: TemplateRef<void>;
@@ -198,7 +206,8 @@ export class TriDemoTestBasicComponent {
 
 @Component({
   imports: [TriAlertModule],
-  template: `<tri-alert banner />`
+  template: `<tri-alert banner />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriDemoTestBannerComponent {}
 
@@ -208,7 +217,8 @@ export class TriDemoTestBannerComponent {}
     <div [dir]="direction">
       <tri-test-basic-alert />
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestAlertRtlComponent {
   @ViewChild(Dir) dir!: Dir;
@@ -229,7 +239,8 @@ export class TriTestAlertRtlComponent {
     <ng-template #customIconTemplate>
       <div> S </div>
     </ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestAlertCustomIconComponent {}
 

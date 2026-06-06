@@ -67,7 +67,7 @@ let nextId = 0;
   selector: 'tri-tabs',
   exportAs: 'triTabs',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     {
       provide: TRI_TAB_SET,

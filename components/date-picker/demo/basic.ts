@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { getISOWeek } from 'date-fns';
@@ -30,11 +30,10 @@ import { en_US, TriI18nService, zh_CN } from 'ng-zorro-antd/i18n';
   `
 })
 export class TriDemoDatePickerBasicComponent {
+  private readonly i18n = inject(TriI18nService);
+
   date = null;
   isEnglish = false;
-
-  constructor(private i18n: TriI18nService) {}
-
   onChange(result: Date): void {
     console.log('onChange: ', result);
   }

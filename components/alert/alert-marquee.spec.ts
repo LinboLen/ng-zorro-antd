@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Component, DebugElement, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -159,7 +159,8 @@ describe('NzAlertMarqueeComponent', () => {
   imports: [TriAlertModule],
   template: `
     <tri-alert-marquee [pauseOnHover]="pauseOnHover()" [speed]="speed()"> Scrolling message </tri-alert-marquee>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestMarqueeBasicComponent {
   readonly pauseOnHover = signal(false);
@@ -173,6 +174,7 @@ export class TriTestMarqueeBasicComponent {
     <ng-template #message>
       <tri-alert-marquee>Loop banner text</tri-alert-marquee>
     </ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestMarqueeInsideAlertComponent {}

@@ -6,6 +6,7 @@
 import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
 import {
   ApplicationRef,
+  ChangeDetectionStrategy,
   Component,
   DebugElement,
   OnInit,
@@ -641,7 +642,8 @@ interface AbstractTestTransferComponent {
     <ng-template #footer>
       <p id="transfer-footer">footer</p>
     </ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestTransferComponent implements OnInit, AbstractTestTransferComponent {
   @ViewChild('comp', { static: false }) comp!: TriTransferComponent;
@@ -706,7 +708,8 @@ class TestTransferComponent implements OnInit, AbstractTestTransferComponent {
         {{ item.title }}
       </ng-template>
     </tri-transfer>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestTransferCustomRenderComponent implements OnInit, AbstractTestTransferComponent {
   @ViewChild('comp', { static: false }) comp!: TriTransferComponent;
@@ -732,7 +735,8 @@ class TestTransferCustomRenderComponent implements OnInit, AbstractTestTransferC
 // https://github.com/NG-ZORRO/ng-zorro-antd/issues/996
 @Component({
   imports: [TriTransferModule],
-  template: `<tri-transfer [dataSource]="list" />`
+  template: `<tri-transfer [dataSource]="list" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class Test996Component implements OnInit {
   @ViewChild(TriTransferComponent, { static: true }) comp!: TriTransferComponent;
@@ -753,7 +757,8 @@ class Test996Component implements OnInit {
     <div [dir]="direction">
       <tri-test-transfer />
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTransferRtlComponent {
   @ViewChild(Dir) dir!: Dir;
@@ -762,7 +767,8 @@ export class TriTestTransferRtlComponent {
 
 @Component({
   imports: [TriTransferModule],
-  template: `<tri-transfer [dataSource]="[]" [status]="status" />`
+  template: `<tri-transfer [dataSource]="[]" [status]="status" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTransferStatusComponent {
   status: TriStatus = 'error';
@@ -778,7 +784,8 @@ export class TriTestTransferStatusComponent {
         </tri-form-control>
       </tri-form-item>
     </form>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTransferInFormComponent {
   status: TriFormControlStatusType = 'error';

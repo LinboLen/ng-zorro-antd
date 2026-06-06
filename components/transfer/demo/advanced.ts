@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriMessageService } from 'ng-zorro-antd/message';
@@ -28,9 +28,9 @@ import { TriTransferModule, TransferItem } from 'ng-zorro-antd/transfer';
   `
 })
 export class TriDemoTransferAdvancedComponent implements OnInit {
-  list: TransferItem[] = [];
+  private readonly messageService = inject(TriMessageService);
 
-  constructor(private messageService: TriMessageService) {}
+  list: TransferItem[] = [];
 
   ngOnInit(): void {
     this.getData();

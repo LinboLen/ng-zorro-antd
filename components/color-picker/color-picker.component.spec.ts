@@ -4,7 +4,14 @@
  */
 
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, DebugElement, provideZoneChangeDetection, signal, WritableSignal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DebugElement,
+  provideZoneChangeDetection,
+  signal,
+  WritableSignal
+} from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -298,7 +305,8 @@ describe('color-picker', () => {
     <ng-template #flipFlop>
       <button tri-button type="primary">Color</button>
     </ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestColorPickerComponent {
   format: TriColorPickerFormatType | null = null;
@@ -473,7 +481,8 @@ describe('nz-color-picker with presets', () => {
         </tri-form-control>
       </tri-form-item>
     </form>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestColorPickerFormComponent {
   validateForm = new FormGroup({
@@ -491,7 +500,8 @@ export class TriTestColorPickerFormComponent {
 
 @Component({
   imports: [TriColorPickerModule],
-  template: ` <tri-color-picker [presets]="presets" value="#1677ff" (onChange)="onColorChange($event)" /> `
+  template: ` <tri-color-picker [presets]="presets" value="#1677ff" (onChange)="onColorChange($event)" /> `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestColorPickerPresetsComponent {
   presets: TriPresetColor[] | null = [
@@ -622,7 +632,8 @@ describe('nz-color-picker form size', () => {
 
 @Component({
   imports: [TriColorPickerModule],
-  template: `<tri-color-picker [size]="size" />`
+  template: `<tri-color-picker [size]="size" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestColorPickerFormSizeComponent {
   size: TriSizeLDSType = 'default';

@@ -7,6 +7,7 @@ import { ENTER, LEFT_ARROW, RIGHT_ARROW, SPACE } from '@angular/cdk/keycodes';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { AsyncPipe } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   DebugElement,
   OnInit,
@@ -1068,7 +1069,8 @@ describe('tabs', () => {
     <ng-template #extraTemplate>
       <input type="text" class="extra-input" />
     </ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class SimpleTabsTestComponent {
   selectedIndex = 1;
@@ -1095,7 +1097,8 @@ class SimpleTabsTestComponent {
       <tri-tab title="Tab 1" [forceRender]="forceRender">Content of Tab Pane 1</tri-tab>
       <tri-tab title="Tab 2" [forceRender]="forceRender">Content of Tab Pane 2</tri-tab>
     </tri-tabs>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class SimpleTabsRenderingComponent {
   selectedIndex = 0;
@@ -1124,7 +1127,8 @@ class SimpleTabsRenderingComponent {
     <ng-template #addTemplate>
       <span class="add-icon">+</span>
     </ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TemplateTabsTestComponent {
   selectedIndex = 1;
@@ -1142,7 +1146,8 @@ class TemplateTabsTestComponent {
       <tri-tab title="Tab 1" closable [disabled]="disabled">Content of Tab Pane 1</tri-tab>
       <tri-tab title="Tab 2" disabled>Content of Tab Pane 2</tri-tab>
     </tri-tabs>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class DisableTabsTestComponent {
   selectedIndex = 1;
@@ -1166,7 +1171,8 @@ class DisableTabsTestComponent {
         </tri-tab>
       }
     </tri-tabs>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class DynamicTabsTestComponent {
   selectedIndex = 1;
@@ -1203,7 +1209,8 @@ class DynamicTabsTestComponent {
     @import '../style/testing.less';
     @import '../style/entry.less';
     @import './style/entry.less';
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class ScrollableTabsTestComponent {
   selectedIndex = 0;
@@ -1224,7 +1231,8 @@ class ScrollableTabsTestComponent {
         </tri-tab>
       }
     </tri-tabs>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class AsyncTabsTestComponent implements OnInit {
   tabs!: Observable<Array<{ title: string; content: string }>>;
@@ -1255,7 +1263,8 @@ class AsyncTabsTestComponent implements OnInit {
         </tri-tabs>
       </tri-tab>
     </tri-tabs>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class NestedTabsTestComponent {
   @ViewChildren(TriTabsComponent) tabSets!: QueryList<TriTabsComponent>;
@@ -1276,7 +1285,8 @@ class NestedTabsTestComponent {
         </ng-container>
       }
     </tri-tabs>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TabSetWithIndirectDescendantTabsTestComponent {
   @ViewChild(TriTabsComponent, { static: true }) tabSet!: TriTabsComponent;
@@ -1296,7 +1306,8 @@ class TabSetWithIndirectDescendantTabsTestComponent {
       </tri-tab>
     </tri-tabs>
     <router-outlet />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class RouterTabsTestComponent {
   handleSelection(_event: number): void {}
@@ -1314,7 +1325,8 @@ export class RouterTabsTestComponent {
     </tri-tabs>
     <router-outlet />
   `,
-  imports: [RouterLink, RouterOutlet, TriTabsModule]
+  imports: [RouterLink, RouterOutlet, TriTabsModule],
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class DynamicRouterTabsTestComponent {
   selectedIdx = 0;
@@ -1373,7 +1385,8 @@ function getTranslate(transformValue: string): { x: number; y: number } {
       <tri-tab title="Tab 1">Content of Tab Pane 1</tri-tab>
       <tri-tab title="Tab 2">Content of Tab Pane 2</tri-tab>
     </tri-tabs>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class SimpleTabsWithExtraContentComponent {
   selectedIndex = 0;
@@ -1387,7 +1400,8 @@ class SimpleTabsWithExtraContentComponent {
       <tri-tab title="Tab 1">Content of Tab Pane 1</tri-tab>
       <tri-tab title="Tab 2">Content of Tab Pane 2</tri-tab>
     </tri-tabs>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class IndicatorTabsTestComponent {
   readonly selectedIndex = signal(1);

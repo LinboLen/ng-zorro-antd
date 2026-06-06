@@ -4,7 +4,7 @@
  */
 
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 
 import { TriConfigService, provideNzConfig } from 'ng-zorro-antd/core/config';
@@ -281,7 +281,8 @@ describe('message', () => {
 
 @Component({
   selector: 'tri-test-message',
-  template: `<ng-template #contentTemplate let-data="data">Content in template {{ data }}</ng-template>`
+  template: `<ng-template #contentTemplate let-data="data">Content in template {{ data }}</ng-template>`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestMessageComponent {
   @ViewChild('contentTemplate', { static: true }) template!: TemplateRef<{

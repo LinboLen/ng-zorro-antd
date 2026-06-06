@@ -34,6 +34,7 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
 export class TriDemoDrawerPlacementComponent {
   visible = false;
   placement: TriDrawerPlacement = 'left';
+
   open(): void {
     this.visible = true;
   }

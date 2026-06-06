@@ -5,7 +5,7 @@
 
 import { BidiModule } from '@angular/cdk/bidi';
 import { DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
-import { Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -677,7 +677,8 @@ describe('segmented animation', () => {
       [name]="name"
       (valueChange)="handleValueChange($event)"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriSegmentedTestComponent {
   size: TriSizeLDSType = 'default';
@@ -695,7 +696,8 @@ export class TriSegmentedTestComponent {
 
 @Component({
   imports: [TriSegmentedModule],
-  template: `<tri-segmented [options]="options" />`
+  template: `<tri-segmented [options]="options" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriSegmentedDomStructureTestComponent {
   options: TriSegmentedOptions = [
@@ -707,7 +709,8 @@ export class TriSegmentedDomStructureTestComponent {
 
 @Component({
   imports: [FormsModule, TriSegmentedModule],
-  template: `<tri-segmented [options]="options" [(ngModel)]="value" (ngModelChange)="handleValueChange($event)" />`
+  template: `<tri-segmented [options]="options" [(ngModel)]="value" (ngModelChange)="handleValueChange($event)" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriSegmentedNgModelTestComponent {
   options: TriSegmentedOptions = [1, 2, 3];
@@ -720,7 +723,8 @@ export class TriSegmentedNgModelTestComponent {
 
 @Component({
   imports: [ReactiveFormsModule, TriSegmentedModule],
-  template: `<tri-segmented [options]="options" [formControl]="formControl" />`
+  template: `<tri-segmented [options]="options" [formControl]="formControl" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriSegmentedInReactiveFormTestComponent {
   options = ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly'];
@@ -729,7 +733,8 @@ export class TriSegmentedInReactiveFormTestComponent {
 
 @Component({
   imports: [FormsModule, TriSegmentedModule],
-  template: `<tri-segmented [options]="options" vertical (valueChange)="handleValueChange($event)" />`
+  template: `<tri-segmented [options]="options" vertical (valueChange)="handleValueChange($event)" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriSegmentedVerticalTestComponent {
   options: TriSegmentedOptions = [1, 2, 3];
@@ -741,7 +746,8 @@ export class TriSegmentedVerticalTestComponent {
 
 @Component({
   imports: [BidiModule, TriSegmentedModule],
-  template: `<tri-segmented [options]="options" dir="rtl" />`
+  template: `<tri-segmented [options]="options" dir="rtl" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriSegmentedRtlTestComponent {
   options: TriSegmentedOptions = [1, 2, 3];

@@ -8,6 +8,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { TestKey } from '@angular/cdk/testing';
 import { UnitTestElement } from '@angular/cdk/testing/testbed';
 import {
+  ChangeDetectionStrategy,
   Component,
   DebugElement,
   NgZone,
@@ -32,7 +33,7 @@ import {
   typeInElement
 } from 'ng-zorro-antd/core/testing';
 import { TriTreeNode, TriTreeNodeOptions } from 'ng-zorro-antd/core/tree';
-import { TriSizeLDSType, TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
+import { TriSafeAny, TriSizeLDSType, TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
 import { TriFormControlStatusType, TriFormModule } from 'ng-zorro-antd/form';
 import { TRI_SPACE_COMPACT_SIZE } from 'ng-zorro-antd/space';
 
@@ -59,6 +60,7 @@ describe('tree-select', () => {
         }
       ]
     });
+    (TriTreeSelectComponent as TriSafeAny).ɵcmp.onPush = false;
   });
 
   beforeEach(inject([OverlayContainer], (oc: OverlayContainer) => {
@@ -966,7 +968,8 @@ describe('finalVariant', () => {
       dropdownClassName="class1 class2"
     />
     <ng-template #affixTemplate>icon</ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTreeSelectBasicComponent {
   @ViewChild(TriTreeSelectComponent, { static: false }) selectTreeComponent!: TriTreeSelectComponent;
@@ -1062,7 +1065,8 @@ export class TriTestTreeSelectBasicComponent {
       [checkStrictly]="checkStrictly"
       [(ngModel)]="value"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTreeSelectCheckableComponent {
   @ViewChild(TriTreeSelectComponent, { static: false }) selectTreeComponent!: TriTreeSelectComponent;
@@ -1141,7 +1145,8 @@ export class TriTestTreeSelectCheckableComponent {
     <form>
       <tri-tree-select [formControl]="formControl" [nodes]="nodes" />
     </form>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTreeSelectFormComponent {
   formControl = new FormControl('10021');
@@ -1182,7 +1187,8 @@ export class TriTestTreeSelectFormComponent {
         </span>
       </ng-template>
     </tri-tree-select>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTreeSelectCustomizedIconComponent {
   value?: string;
@@ -1214,7 +1220,8 @@ export class TriTestTreeSelectCustomizedIconComponent {
       placeHolder="Please select"
       [(ngModel)]="value"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTreeSelectStatusComponent {
   status: TriStatus = 'error';
@@ -1252,7 +1259,8 @@ export class TriTestTreeSelectStatusComponent {
         </tri-form-control>
       </tri-form-item>
     </form>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTreeSelectInFormComponent {
   status: TriFormControlStatusType = 'error';
@@ -1294,7 +1302,8 @@ function dig(path = '0', level = 3): TriTreeNodeOptions[] {
       hideUnMatched="true"
       [dropdownMatchSelectWidth]="true"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTreeSelectVirtualScrollComponent {
   nodes: TriTreeNodeOptions[] = dig();
@@ -1302,7 +1311,8 @@ export class TriTestTreeSelectVirtualScrollComponent {
 
 @Component({
   imports: [TriTreeSelectModule],
-  template: `<tri-tree-select [nodes]="[]" [size]="size" />`
+  template: `<tri-tree-select [nodes]="[]" [size]="size" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestTreeSelectFinalSizeComponent {
   size: TriSizeLDSType = 'default';
@@ -1310,7 +1320,8 @@ export class TestTreeSelectFinalSizeComponent {
 
 @Component({
   imports: [TriTreeSelectComponent],
-  template: `<tri-tree-select [variant]="variant()" />`
+  template: `<tri-tree-select [variant]="variant()" />`,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestTreeSelectFinalVariantComponent {
   readonly variant = signal<TriVariant | undefined>(undefined);

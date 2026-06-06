@@ -3,7 +3,14 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Component, DebugElement, NgModule, provideZoneChangeDetection } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DebugElement,
+  NgModule,
+  inject,
+  provideZoneChangeDetection
+} from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -222,15 +229,16 @@ describe('nz-icon injection', () => {
   template: `
     <tri-icon [type]="type" [theme]="theme" [spin]="spin" [rotate]="rotate" />
     <tri-icon type="loading" [theme]="theme" />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestIconExtensionsComponent {
+  public readonly iconService = inject(TriIconService);
+
   type = 'question';
   theme: 'fill' | 'outline' | 'twotone' = 'outline';
   spin = true;
   rotate = 0;
-
-  constructor(public iconService: TriIconService) {}
 }
 
 @Component({
@@ -243,7 +251,8 @@ export class TriTestIconExtensionsComponent {
         />
       </svg>
     </tri-icon>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestIconCustomComponent {}
 
@@ -253,10 +262,13 @@ export class TriTestIconCustomComponent {}
     <tri-icon iconfont="icon-tuichu" />
     <tri-icon iconfont="icon-facebook" />
     <tri-icon iconfont="icon-twitter" />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestIconIconfontComponent {
-  constructor(private iconService: TriIconService) {
+  private readonly iconService = inject(TriIconService);
+
+  constructor() {
     this.iconService.fetchFromIconfont({
       scriptUrl: 'https://at.alicdn.com/t/font_8d5l8fzk5b87iudi.js'
     });
@@ -273,7 +285,8 @@ class ChildModule {}
   template: `
     <tri-icon type="home" />
     <tri-icon type="question" />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestIconMultiInjectionComponent {}
 
@@ -283,6 +296,7 @@ class TriTestIconMultiInjectionComponent {}
   template: `
     <tri-icon type="home" />
     <tri-icon type="question" />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TriTestIconMultiInjectionStandaloneComponent {}

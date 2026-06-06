@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -60,16 +60,13 @@ const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,
   `
 })
 export class TriDemoListLoadmoreComponent implements OnInit {
+  private readonly http = inject(HttpClient);
+  private readonly msg = inject(TriMessageService);
+
   initLoading = true; // bug
   loadingMore = false;
   data: any[] = [];
   list: Array<{ loading: boolean; name: any }> = [];
-
-  constructor(
-    private http: HttpClient,
-    private msg: TriMessageService
-  ) {}
-
   ngOnInit(): void {
     this.getData((res: any) => {
       this.data = res.results;

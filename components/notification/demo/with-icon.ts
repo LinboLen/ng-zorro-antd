@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriNotificationService } from 'ng-zorro-antd/notification';
@@ -19,7 +19,7 @@ import { TriNotificationService } from 'ng-zorro-antd/notification';
   `
 })
 export class TriDemoNotificationWithIconComponent {
-  constructor(private notification: TriNotificationService) {}
+  private readonly notification = inject(TriNotificationService);
 
   createNotification(type: string): void {
     this.notification.create(

@@ -5,7 +5,7 @@
 
 import { Directionality } from '@angular/cdk/bidi';
 import { ENTER, LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
-import { Component, DebugElement, provideZoneChangeDetection, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
@@ -561,7 +561,8 @@ function swipe(carousel: TriCarouselComponent, distance: number): void {
         <a>{{ index + 1 }}</a>
       </ng-template>
     </tri-carousel>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestCarouselBasicComponent {
   @ViewChild(TriCarouselComponent, { static: false }) carouselComponent!: TriCarouselComponent;
@@ -586,7 +587,8 @@ export class TriTestCarouselBasicComponent {
         </div>
       }
     </tri-carousel>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestCarouselActiveIndexComponent {
   @ViewChild(TriCarouselComponent, { static: true }) carouselComponent!: TriCarouselComponent;
@@ -609,7 +611,8 @@ export class TriTestCarouselActiveIndexComponent {
         </div>
       }
     </tri-carousel>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestCarouselArrowsComponent {
   @ViewChild(TriCarouselComponent, { static: true }) carouselComponent!: TriCarouselComponent;
@@ -628,7 +631,8 @@ export class TriTestCarouselArrowsComponent {
         </div>
       }
     </tri-carousel>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestCarouselNoSwipeComponent {
   @ViewChild(TriCarouselComponent, { static: true }) carouselComponent!: TriCarouselComponent;

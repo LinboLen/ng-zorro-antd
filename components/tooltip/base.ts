@@ -49,6 +49,14 @@ export type TriTooltipTrigger = 'click' | 'focus' | 'hover' | null;
 
 @Directive()
 export abstract class TriTooltipBaseDirective implements AfterViewInit, OnChanges {
+  readonly elementRef = inject(ElementRef);
+  protected readonly hostView = inject(ViewContainerRef);
+  protected readonly renderer = inject(Renderer2);
+  protected readonly noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
+  protected readonly configService = inject(TriConfigService);
+  protected readonly destroyRef = inject(DestroyRef);
+  protected readonly platformId = inject(PLATFORM_ID);
+
   config?: Required<PopoverConfig | PopConfirmConfig>;
   abstract arrowPointAtCenter?: boolean;
   abstract directiveTitle?: TriTSType | null;
@@ -125,14 +133,8 @@ export abstract class TriTooltipBaseDirective implements AfterViewInit, OnChange
 
   private delayTimer?: ReturnType<typeof setTimeout>;
 
-  elementRef = inject(ElementRef);
-  protected hostView = inject(ViewContainerRef);
-  protected renderer = inject(Renderer2);
-  protected noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
-  protected configService = inject(TriConfigService);
-  protected destroyRef = inject(DestroyRef);
-  protected platformId = inject(PLATFORM_ID);
-
+  // componentType is supplied by subclasses, not Angular DI.
+  // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(protected componentType: Type<TriTooltipBaseComponent>) {
     this.destroyRef.onDestroy(() => {
       // Clear toggling timer. Issue #3875 #4317 #4386
@@ -339,13 +341,13 @@ export abstract class TriTooltipBaseDirective implements AfterViewInit, OnChange
 
 @Directive()
 export abstract class TriTooltipBaseComponent {
-  @ViewChild('overlay', { static: false }) overlay!: CdkConnectedOverlay;
-
   protected readonly noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
   protected readonly dir = inject(Directionality).valueSignal;
   protected readonly cdr = inject(ChangeDetectorRef);
   protected readonly elementRef = inject(ElementRef);
   protected readonly destroyRef = inject(DestroyRef);
+
+  @ViewChild('overlay', { static: false }) overlay!: CdkConnectedOverlay;
 
   title: TriTSType | null = null;
   content: TriTSType | null = null;

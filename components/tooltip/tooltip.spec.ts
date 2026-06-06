@@ -4,7 +4,7 @@
  */
 
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, ElementRef, provideZoneChangeDetection, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, provideZoneChangeDetection, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
@@ -416,7 +416,8 @@ function getOverlayElementForTooltip(tooltip: TriTooltipBaseDirective): HTMLElem
     </div>
 
     <ng-template #template>title-template</ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTooltipTestComponent {
   @ViewChild('titleString', { static: false }) titleString!: ElementRef;
@@ -452,7 +453,8 @@ export class TriTooltipTestComponent {
   template: `
     <button tri-element #button="nzElement">Action</button>
     <a tri-tooltip tooltipTitle="This action could not be revoked!" [tooltipOrigin]="button.elementRef">Notice</a>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTooltipTargetComponent {
   @ViewChild(TriTooltipDirective) tooltip?: TriTooltipDirective;
@@ -471,7 +473,8 @@ export class TriTestTooltipTargetComponent {
     >
       Tooltip
     </a>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTooltipArrowComponent {
   @ViewChild('titleString', { static: false, read: TriTooltipDirective }) tooltipDirective!: TriTooltipDirective;
