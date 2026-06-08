@@ -3,25 +3,20 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  DestroyRef,
   ElementRef,
   EventEmitter,
   inject,
   Input,
   OnChanges,
-  OnInit,
   Output,
   Renderer2,
   SimpleChanges,
   ViewEncapsulation
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { isPresetColor, isStatusColor, presetColors, statusColors } from 'ng-zorro-antd/core/color';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -37,7 +32,6 @@ import { TriTagColor } from './typings';
       <tri-icon type="close" class="tri-tag-close-icon" tabindex="-1" (click)="closeTag($event)" />
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
     class: 'tri-tag',
@@ -45,18 +39,16 @@ import { TriTagColor } from './typings';
     '[class.tri-tag-has-color]': `color && !isPresetColor`,
     '[class.tri-tag-checkable]': `mode === 'checkable'`,
     '[class.tri-tag-checkable-checked]': `checked`,
-    '[class.tri-tag-rtl]': `dir === 'rtl'`,
+    '[class.tri-tag-rtl]': `dir() === 'rtl'`,
     '[class.tri-tag-borderless]': `!bordered`,
     '(click)': 'updateCheckedStatus()'
   },
   imports: [TriIconModule]
 })
-export class TriTagComponent implements OnChanges, OnInit {
-  private cdr = inject(ChangeDetectorRef);
+export class TriTagComponent implements OnChanges {
   private renderer = inject(Renderer2);
   private el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
-  private directionality = inject(Directionality);
-  private destroyRef = inject(DestroyRef);
+  protected readonly dir = inject(Directionality).valueSignal;
 
   @Input() mode: 'default' | 'closeable' | 'checkable' = 'default';
   @Input() color?: TriTagColor;
@@ -64,7 +56,6 @@ export class TriTagComponent implements OnChanges, OnInit {
   @Input({ transform: booleanAttribute }) bordered = true;
   @Output() readonly onClose = new EventEmitter<MouseEvent>();
   @Output() readonly checkedChange = new EventEmitter<boolean>();
-  dir: Direction = 'ltr';
   isPresetColor = false;
 
   updateCheckedStatus(): void {
@@ -104,15 +95,6 @@ export class TriTagComponent implements OnChanges, OnInit {
     if (this.isPresetColor) {
       this.el.classList.add(`ant-tag-${this.color}`);
     }
-  }
-
-  ngOnInit(): void {
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-
-    this.dir = this.directionality.value;
   }
 
   ngOnChanges(changes: SimpleChanges): void {

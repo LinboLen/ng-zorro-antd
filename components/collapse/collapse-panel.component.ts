@@ -6,7 +6,6 @@
 import {
   AfterViewInit,
   booleanAttribute,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   DestroyRef,
@@ -37,7 +36,6 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'collapsePanel';
 @Component({
   selector: 'tri-collapse-panel',
   exportAs: 'triCollapsePanel',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
     <div

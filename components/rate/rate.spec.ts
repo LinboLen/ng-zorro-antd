@@ -3,14 +3,13 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
 import { LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
 import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { dispatchFakeEvent, dispatchKeyboardEvent } from 'ng-zorro-antd/core/testing';
+import { dispatchFakeEvent, dispatchKeyboardEvent, testDirectionality } from 'ng-zorro-antd/core/testing';
 
 import { TriRateComponent } from './rate.component';
 import { TriRateModule } from './rate.module';
@@ -293,25 +292,7 @@ describe('rate', () => {
     }));
   });
 
-  describe('RTL', () => {
-    let fixture: ComponentFixture<TriTestRateRtlComponent>;
-    let rate: DebugElement;
-
-    beforeEach(() => {
-      fixture = TestBed.createComponent(TriTestRateRtlComponent);
-      fixture.detectChanges();
-      rate = fixture.debugElement.query(By.directive(TriRateComponent));
-    });
-
-    it('should className correct on dir change', fakeAsync(() => {
-      fixture.detectChanges();
-      expect(rate.nativeElement.firstElementChild!.classList).toContain('ant-rate-rtl');
-
-      fixture.componentInstance.direction = 'ltr';
-      fixture.detectChanges();
-      expect(rate.nativeElement.firstElementChild!.classList).not.toContain('ant-rate-rtl');
-    }));
-  });
+  testDirectionality(() => TriTestRateBasicComponent, By.css('.ant-rate'), 'ant-rate');
 
   describe('rate character', () => {
     let fixture: ComponentFixture<TriTestRateCharacterComponent>;
@@ -390,20 +371,6 @@ export class TriTestRateFormComponent {
   enable(): void {
     this.formControl.enable();
   }
-}
-
-@Component({
-  imports: [BidiModule, TriTestRateBasicComponent],
-  template: `
-    <div [dir]="direction">
-      <tri-test-rate />
-    </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
-})
-export class TriTestRateRtlComponent {
-  @ViewChild(Dir) dir!: Dir;
-  direction: Direction = 'rtl';
 }
 
 @Component({

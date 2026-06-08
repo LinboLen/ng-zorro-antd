@@ -6,7 +6,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   computed,
@@ -39,7 +38,6 @@ import { TriColor, TriColorPickerFormatType, TriColorPickerTriggerType, TriPrese
 @Component({
   selector: 'tri-color-picker',
   exportAs: 'triColorPicker',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NgAntdColorPickerModule,
     TriPopoverDirective,

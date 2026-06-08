@@ -3,11 +3,10 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { Location } from '@angular/common';
 import {
   AfterViewInit,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChild,
@@ -16,7 +15,6 @@ import {
   EventEmitter,
   inject,
   Input,
-  OnInit,
   Output,
   TemplateRef,
   ViewEncapsulation
@@ -81,7 +79,6 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'pageHeader';
     <ng-content select="nz-page-header-content, [nz-page-header-content]" />
     <ng-content select="nz-page-header-footer, [nz-page-header-footer]" />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
     class: 'tri-page-header',
@@ -89,17 +86,17 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'pageHeader';
     '[class.tri-page-header-ghost]': 'ghost',
     '[class.has-breadcrumb]': 'nzPageHeaderBreadcrumb',
     '[class.tri-page-header-compact]': 'compact',
-    '[class.tri-page-header-rtl]': `dir === 'rtl'`
+    '[class.tri-page-header-rtl]': `dir() === 'rtl'`
   },
   imports: [TriOutletModule, TriIconModule]
 })
-export class TriPageHeaderComponent implements AfterViewInit, OnInit {
+export class TriPageHeaderComponent implements AfterViewInit {
   private readonly location = inject(Location);
   private readonly destroyRef = inject(DestroyRef);
   private readonly elementRef = inject(ElementRef);
   private readonly resizeObserver = inject(TriResizeObserver);
   private readonly cdr = inject(ChangeDetectorRef);
-  private readonly directionality = inject(Directionality);
+  protected readonly dir = inject(Directionality).valueSignal;
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   @Input() backIcon: string | TemplateRef<void> | null = null;
@@ -114,17 +111,7 @@ export class TriPageHeaderComponent implements AfterViewInit, OnInit {
   pageHeaderBreadcrumb?: ElementRef<TriPageHeaderBreadcrumbDirective>;
 
   compact = false;
-  dir: Direction = 'ltr';
-
   enableBackButton = true;
-
-  ngOnInit(): void {
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((direction: Direction) => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-    this.dir = this.directionality.value;
-  }
 
   ngAfterViewInit(): void {
     if (!this.back.observers.length) {
@@ -158,7 +145,7 @@ export class TriPageHeaderComponent implements AfterViewInit, OnInit {
   }
 
   getBackIcon(): string {
-    if (this.dir === 'rtl') {
+    if (this.dir() === 'rtl') {
       return 'arrow-right';
     }
     return 'arrow-left';

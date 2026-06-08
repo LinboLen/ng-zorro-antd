@@ -5,7 +5,6 @@
 
 import {
   AfterContentInit,
-  ChangeDetectionStrategy,
   Component,
   ContentChild,
   DestroyRef,
@@ -29,8 +28,7 @@ import { TriInputDirective } from './input.directive';
   template: `<ng-content select="textarea[nz-input]" />`,
   host: {
     class: 'tri-input-textarea-show-count'
-  },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  }
 })
 export class TriTextareaCountComponent implements AfterContentInit {
   private renderer = inject(Renderer2);

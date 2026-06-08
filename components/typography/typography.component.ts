@@ -3,13 +3,12 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { Platform } from '@angular/cdk/platform';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
   booleanAttribute,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   DestroyRef,
@@ -108,11 +107,10 @@ const EXPAND_ELEMENT_CLASSNAME = 'ant-typography-expand';
       />
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
     '[class.tri-typography]': '!editing',
-    '[class.tri-typography-rtl]': 'dir === "rtl"',
+    '[class.tri-typography-rtl]': 'dir() === "rtl"',
     '[class.tri-typography-edit-content]': 'editing',
     '[class.tri-typography-secondary]': 'type === "secondary"',
     '[class.tri-typography-warning]': 'type === "warning"',
@@ -138,7 +136,7 @@ export class TriTypographyComponent implements OnInit, AfterViewInit, OnChanges 
   private platform = inject(Platform);
   private i18n = inject(TriI18nService);
   private resizeService = inject(TriResizeService);
-  private directionality = inject(Directionality);
+  protected readonly dir = inject(Directionality).valueSignal;
   private document: Document = inject(DOCUMENT);
   private destroyRef = inject(DestroyRef);
 
@@ -176,7 +174,6 @@ export class TriTypographyComponent implements OnInit, AfterViewInit, OnChanges 
   isEllipsis: boolean = true;
   expanded: boolean = false;
   ellipsisStr = '...';
-  dir: Direction = 'ltr';
 
   get hasEllipsisObservers(): boolean {
     return this.onEllipsis.observers.length > 0;
@@ -336,13 +333,6 @@ export class TriTypographyComponent implements OnInit, AfterViewInit, OnChanges 
       this.locale = this.i18n.getLocaleData('Text');
       this.cdr.markForCheck();
     });
-
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-
-    this.dir = this.directionality.value;
   }
 
   ngAfterViewInit(): void {

@@ -7,7 +7,6 @@ import { isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
 import {
   AfterContentChecked,
   booleanAttribute,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChild,
@@ -71,10 +70,9 @@ function isDataSource(value: TriSafeAny): value is TriGraphData {
 }
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   selector: 'tri-graph',
   exportAs: 'triGraph',
+  encapsulation: ViewEncapsulation.None,
   providers: [{ provide: TriGraph, useExisting: forwardRef(() => TriGraphComponent) }],
   template: `
     <ng-content />

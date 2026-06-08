@@ -7,7 +7,6 @@ import { Directionality } from '@angular/cdk/bidi';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterContentInit,
-  ChangeDetectionStrategy,
   Component,
   ContentChild,
   DestroyRef,
@@ -113,7 +112,6 @@ import {
     <ng-content select="nz-list-pagination, [nz-list-pagination]" />
   `,
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'tri-list',
     '[class.tri-list-rtl]': `dir() === 'rtl'`,

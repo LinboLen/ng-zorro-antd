@@ -9,7 +9,6 @@ import { Platform, _getEventTarget } from '@angular/cdk/platform';
 import { AsyncPipe } from '@angular/common';
 import {
   AfterViewInit,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   DestroyRef,
@@ -70,7 +69,6 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'timePicker';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'tri-time-picker',
   exportAs: 'triTimePicker',
   template: `

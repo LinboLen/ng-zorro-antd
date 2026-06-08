@@ -12,7 +12,6 @@ import { defaultColor, generateColor } from './util/util';
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'ng-antd-color-block',
   template: `<div class="tri-color-picker-color-block-inner" [style.background-color]="color"></div>`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'tri-color-picker-color-block ant-color-picker-presets-color',
     '[class.tri-color-picker-presets-color-checked]': 'isChecked',

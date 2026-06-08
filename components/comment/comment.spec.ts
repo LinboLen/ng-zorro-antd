@@ -3,17 +3,11 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  NO_ERRORS_SCHEMA,
-  provideZoneChangeDetection,
-  ViewChild
-} from '@angular/core';
+import { NO_ERRORS_SCHEMA, provideZoneChangeDetection } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { testDirectionality } from 'ng-zorro-antd/core/testing';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
@@ -165,30 +159,5 @@ describe('comment', () => {
     });
   });
 
-  describe('RTL', () => {
-    it('should className correct on dir change', () => {
-      const fixture = TestBed.createComponent(TriTestCommentRtlComponent);
-      const comment = fixture.debugElement.query(By.directive(TriCommentComponent));
-      fixture.detectChanges();
-      expect(comment.nativeElement.classList).toContain('ant-comment-rtl');
-
-      fixture.componentInstance.direction = 'ltr';
-      fixture.detectChanges();
-      expect(comment.nativeElement.classList).not.toContain('ant-comment-rtl');
-    });
-  });
+  testDirectionality(() => TriDemoCommentBasicComponent, By.directive(TriCommentComponent), 'ant-comment');
 });
-
-@Component({
-  imports: [BidiModule, TriDemoCommentBasicComponent],
-  template: `
-    <div [dir]="direction">
-      <tri-demo-comment-basic />
-    </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
-})
-export class TriTestCommentRtlComponent {
-  @ViewChild(Dir) dir!: Dir;
-  direction: Direction = 'rtl';
-}

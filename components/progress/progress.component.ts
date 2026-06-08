@@ -3,22 +3,18 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   Input,
   OnChanges,
-  OnInit,
   SimpleChanges,
   ViewEncapsulation,
   numberAttribute,
-  inject,
-  DestroyRef
+  inject
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
@@ -55,10 +51,9 @@ const statusColorMap = new Map([
 const defaultFormatter: TriProgressFormatter = (p: number): string => `${p}%`;
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   selector: 'tri-progress',
   exportAs: 'triProgress',
+  encapsulation: ViewEncapsulation.None,
   imports: [TriIconModule, TriOutletModule, NgTemplateOutlet],
   template: `
     <ng-template #progressInfoTemplate>
@@ -83,7 +78,7 @@ const defaultFormatter: TriProgressFormatter = (p: number): string => `${p}%`;
       [class.tri-progress-show-info]="showInfo"
       [class.tri-progress-circle]="isCircleStyle"
       [class.tri-progress-steps]="isSteps"
-      [class.tri-progress-rtl]="dir === 'rtl'"
+      [class.tri-progress-rtl]="dir() === 'rtl'"
     >
       @if (type === 'line') {
         <div>
@@ -169,12 +164,11 @@ const defaultFormatter: TriProgressFormatter = (p: number): string => `${p}%`;
     </div>
   `
 })
-export class TriProgressComponent implements OnChanges, OnInit {
+export class TriProgressComponent implements OnChanges {
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   private readonly cdr = inject(ChangeDetectorRef);
-  private readonly directionality = inject(Directionality);
-  private readonly destroyRef = inject(DestroyRef);
+  protected readonly dir = inject(Directionality).valueSignal;
 
   @Input() @WithConfig() showInfo: boolean = true;
   @Input() width = 132;
@@ -215,8 +209,6 @@ export class TriProgressComponent implements OnChanges, OnInit {
   trailPathStyle: NgStyleInterface | null = null;
   pathString?: string;
   icon!: string;
-
-  dir: Direction = 'ltr';
 
   get formatter(): TriProgressFormatter {
     return this.format || defaultFormatter;
@@ -292,14 +284,6 @@ export class TriProgressComponent implements OnChanges, OnInit {
         this.getSteps();
       }
     }
-  }
-
-  ngOnInit(): void {
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-    this.dir = this.directionality.value;
   }
 
   private updateIcon(): void {

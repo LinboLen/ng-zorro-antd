@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, computed, input, ViewEncapsulation } from '@angular/core';
+import { Component, computed, input, ViewEncapsulation } from '@angular/core';
 
 import { TriValidateStatus } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -21,7 +21,6 @@ const CLASS_NAME = 'ant-form-item-feedback-icon';
   exportAs: 'triFormFeedbackIcon',
   imports: [TriIconModule],
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (iconType(); as type) {
       <tri-icon [type]="type" />

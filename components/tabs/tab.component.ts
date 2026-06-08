@@ -4,7 +4,6 @@
  */
 
 import {
-  ChangeDetectionStrategy,
   Component,
   ContentChild,
   EventEmitter,
@@ -37,7 +36,6 @@ export const TRI_TAB_SET = new InjectionToken<TriSafeAny>(typeof ngDevMode !== '
   selector: 'tri-tab',
   exportAs: 'triTab',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ng-template #tabLinkTemplate>
       <ng-content select="[nz-tab-link]" />

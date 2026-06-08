@@ -4,7 +4,6 @@
  */
 
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   inject,
@@ -60,7 +59,6 @@ function isDefaultColor(color?: string): boolean {
     </ng-template>
   `,
   imports: [TriOutletModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class TriTimelineItemComponent implements OnChanges {

@@ -4,7 +4,7 @@
  */
 
 import { FocusKeyManager } from '@angular/cdk/a11y';
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
 import { DOWN_ARROW, ENTER, LEFT_ARROW, RIGHT_ARROW, SPACE, UP_ARROW, hasModifierKey } from '@angular/cdk/keycodes';
 import { ViewportRuler } from '@angular/cdk/overlay';
@@ -12,7 +12,6 @@ import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterContentChecked,
   AfterViewInit,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChildren,
@@ -34,7 +33,7 @@ import {
   input
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { animationFrameScheduler, asapScheduler, merge, of } from 'rxjs';
+import { animationFrameScheduler, asapScheduler, merge } from 'rxjs';
 import { auditTime } from 'rxjs/operators';
 
 import { TriResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
@@ -124,16 +123,16 @@ const CSS_TRANSFORM_TIME = 150;
     class: 'tri-tabs-nav',
     '(keydown)': 'handleKeydown($event)'
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class TriTabNavBarComponent implements AfterViewInit, AfterContentChecked, OnChanges {
-  private cdr = inject(ChangeDetectorRef);
-  private ngZone = inject(NgZone);
-  private viewportRuler = inject(ViewportRuler);
-  private resizeObserver = inject(TriResizeObserver);
-  private dir = inject(Directionality);
-  private destroyRef = inject(DestroyRef);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly ngZone = inject(NgZone);
+  private readonly viewportRuler = inject(ViewportRuler);
+  private readonly resizeObserver = inject(TriResizeObserver);
+  private readonly directionality = inject(Directionality);
+  private readonly destroyRef = inject(DestroyRef);
+  protected readonly dir = this.directionality.valueSignal;
 
   @Output() readonly indexFocused: EventEmitter<number> = new EventEmitter<number>();
   @Output() readonly selectFocusedIndex: EventEmitter<number> = new EventEmitter<number>();
@@ -224,7 +223,7 @@ export class TriTabNavBarComponent implements AfterViewInit, AfterContentChecked
   }
 
   ngAfterViewInit(): void {
-    const dirChange = this.dir ? this.dir.change.asObservable() : of(null);
+    const dirChange = this.directionality.change.asObservable();
     const resize = this.viewportRuler.change(150);
 
     const realign = (): void => {
@@ -232,7 +231,7 @@ export class TriTabNavBarComponent implements AfterViewInit, AfterContentChecked
       this.alignInkBarToSelectedTab();
     };
     this.keyManager = new FocusKeyManager<TriTabNavItemDirective>(this.items)
-      .withHorizontalOrientation(this.getLayoutDirection())
+      .withHorizontalOrientation(this.dir())
       .withWrap();
     this.keyManager.updateActiveItem(this.selectedIndex);
 
@@ -247,7 +246,7 @@ export class TriTabNavBarComponent implements AfterViewInit, AfterContentChecked
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
         Promise.resolve().then(realign);
-        this.keyManager.withHorizontalOrientation(this.getLayoutDirection());
+        this.keyManager.withHorizontalOrientation(this.dir());
       });
 
     this.keyManager.change.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(newFocusIndex => {
@@ -350,7 +349,7 @@ export class TriTabNavBarComponent implements AfterViewInit, AfterContentChecked
 
     if (this.position === 'horizontal') {
       let newTransform = this.transformX;
-      if (this.getLayoutDirection() === 'rtl') {
+      if (this.dir() === 'rtl') {
         const right = tabs[0].left + tabs[0].width - tab.left - tab.width;
 
         if (right < this.transformX) {
@@ -403,7 +402,7 @@ export class TriTabNavBarComponent implements AfterViewInit, AfterContentChecked
 
   private clampTransformX(transform: number): number {
     const scrollWidth = this.wrapperWidth - this.scrollListWidth;
-    if (this.getLayoutDirection() === 'rtl') {
+    if (this.dir() === 'rtl') {
       return Math.max(Math.min(scrollWidth, transform), 0);
     } else {
       return Math.min(Math.max(scrollWidth, transform), 0);
@@ -462,7 +461,7 @@ export class TriTabNavBarComponent implements AfterViewInit, AfterContentChecked
     };
     const navWrap = this.navWrapRef.nativeElement;
     if (this.position === 'horizontal') {
-      if (this.getLayoutDirection() === 'rtl') {
+      if (this.dir() === 'rtl') {
         ping.right = this.transformX > 0;
         ping.left = this.transformX + this.wrapperWidth < this.scrollListWidth;
       } else {
@@ -511,7 +510,7 @@ export class TriTabNavBarComponent implements AfterViewInit, AfterContentChecked
       tabContentSize = this.scrollListWidth - (this.hiddenItems.length ? this.operationWidth : 0);
       addSize = this.addButtonWidth;
       transformSize = Math.abs(this.transformX);
-      if (this.getLayoutDirection() === 'rtl') {
+      if (this.dir() === 'rtl') {
         position = 'right';
         this.pingRight = this.transformX > 0;
         this.pingLeft = this.transformX + this.wrapperWidth < this.scrollListWidth;
@@ -566,10 +565,6 @@ export class TriTabNavBarComponent implements AfterViewInit, AfterContentChecked
     const endHiddenTabs = tabs.slice(endIndex + 1);
     this.hiddenItems = [...startHiddenTabs, ...endHiddenTabs];
     this.cdr.markForCheck();
-  }
-
-  private getLayoutDirection(): Direction {
-    return this.dir && this.dir.value === 'rtl' ? 'rtl' : 'ltr';
   }
 
   ngOnChanges(changes: SimpleChanges): void {

@@ -50,7 +50,6 @@ function getPosition(e: EventType): { pageX: number; pageY: number } {
       <color-gradient [colors]="gradientColors" [direction]="direction" [type]="type" />
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'tri-color-picker-slider',
     '[class]': `'ant-color-picker-slider-' + type`,

@@ -6,7 +6,6 @@
 import { Directionality } from '@angular/cdk/bidi';
 import { CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChild,
@@ -174,7 +173,6 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'tree';
       }
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     TriTreeService,
     TriAnimationTreeCollapseService,

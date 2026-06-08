@@ -9,7 +9,6 @@ import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
   booleanAttribute,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   DestroyRef,
@@ -57,7 +56,6 @@ const CLASS_NAME = 'ant-upload';
   exportAs: 'triUpload',
   templateUrl: './upload.component.html',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.tri-upload-picture-card-wrapper]': 'listType === "picture-card"'
   },

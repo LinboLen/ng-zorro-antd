@@ -8,7 +8,6 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
-  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   inject,
@@ -34,7 +33,6 @@ import { TriSelectItemInterface, TriSelectModeType } from './select.types';
 @Component({
   selector: 'tri-option-container',
   exportAs: 'triOptionContainer',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
     <div>

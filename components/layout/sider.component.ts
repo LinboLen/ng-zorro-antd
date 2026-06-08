@@ -6,7 +6,6 @@
 import { Platform } from '@angular/cdk/platform';
 import {
   AfterContentInit,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChild,
@@ -34,7 +33,6 @@ import { TriSiderTriggerComponent } from './sider-trigger.component';
   selector: 'tri-sider',
   exportAs: 'triSider',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="tri-layout-sider-children">
       <ng-content />

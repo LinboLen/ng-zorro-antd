@@ -6,7 +6,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, TemplateRef, ViewEncapsulation, inject } from '@angular/core';
+import { Component, TemplateRef, ViewEncapsulation, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject } from 'rxjs';
 
@@ -18,8 +18,7 @@ import { TriTableFixedRowComponent } from './table-fixed-row.component';
 import { TriTrMeasureComponent } from './tr-measure.component';
 
 @Component({
-  selector: '',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'tbody',
   encapsulation: ViewEncapsulation.None,
   template: `
     @if (listOfMeasureColumn$ | async; as listOfMeasureColumn) {

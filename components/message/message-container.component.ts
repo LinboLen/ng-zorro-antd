@@ -4,7 +4,7 @@
  */
 
 import { Direction } from '@angular/cdk/bidi';
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 import { MessageConfig, onConfigChangeEventForComponent } from 'ng-zorro-antd/core/config';
 import { toCssPixel } from 'ng-zorro-antd/core/util';
@@ -24,10 +24,9 @@ const TRI_MESSAGE_DEFAULT_CONFIG: Required<MessageConfig> = {
 };
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   selector: 'tri-message-container',
   exportAs: 'triMessageContainer',
+  encapsulation: ViewEncapsulation.None,
   template: `
     <div class="tri-message" [class.tri-message-rtl]="dir === 'rtl'" [style.top]="top">
       @for (instance of instances; track instance) {

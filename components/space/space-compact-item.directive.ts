@@ -5,7 +5,6 @@
 
 import { Directionality } from '@angular/cdk/bidi';
 import { afterNextRender, computed, DestroyRef, Directive, ElementRef, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 
 import { TriSpaceCompactComponent } from './space-compact.component';
 import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_ITEMS } from './space-compact.token';
@@ -25,8 +24,7 @@ export class TriSpaceCompactItemDirective {
   private readonly items = inject(TRI_SPACE_COMPACT_ITEMS, { host: true, optional: true });
   private readonly type = inject(TRI_SPACE_COMPACT_ITEM_TYPE);
   private readonly elementRef: ElementRef<HTMLElement> = inject(ElementRef);
-  private readonly directionality = inject(Directionality);
-  private readonly dir = toSignal(this.directionality.change, { initialValue: this.directionality.value });
+  private readonly dir = inject(Directionality).valueSignal;
 
   private get parentElement(): HTMLElement | null {
     return this.elementRef.nativeElement?.parentElement;

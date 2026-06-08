@@ -4,7 +4,6 @@
  */
 
 import {
-  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   EventEmitter,
@@ -38,7 +37,6 @@ import { TriColorPickerFormatType, ValidFormKey } from './typings';
 @Component({
   selector: 'tri-color-format',
   exportAs: 'triColorFormat',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ReactiveFormsModule, TriSelectModule, TriInputModule, TriInputNumberModule],
   template: `
     <div class="tri-color-picker-format-select">

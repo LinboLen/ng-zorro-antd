@@ -5,7 +5,6 @@
 
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   Injector,
@@ -39,7 +38,6 @@ import { TriGraphEdge, NzGraphEdgeType } from './interface';
       </svg:g>
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgTemplateOutlet]
 })
 export class TriGraphEdgeComponent implements OnInit, OnChanges {

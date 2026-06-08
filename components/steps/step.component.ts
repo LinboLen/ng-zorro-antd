@@ -5,7 +5,6 @@
 
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -29,10 +28,9 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriProgressFormatter, TriProgressModule } from 'ng-zorro-antd/progress';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   selector: 'tri-step',
   exportAs: 'triStep',
+  encapsulation: ViewEncapsulation.None,
   template: `
     <div
       #itemContainer

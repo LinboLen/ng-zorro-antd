@@ -3,7 +3,6 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -16,6 +15,7 @@ import {
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { testDirectionality } from 'ng-zorro-antd/core/testing';
 import { TriI18nService } from 'ng-zorro-antd/i18n';
 import en_US from 'ng-zorro-antd/i18n/languages/en_US';
 import { TriTableComponent, TriTableModule, TriTableSize } from 'ng-zorro-antd/table';
@@ -293,27 +293,7 @@ describe('nz-table', () => {
     });
   });
 
-  describe('RTL', () => {
-    let fixture: ComponentFixture<TriTestTableRtlComponent>;
-    let table: DebugElement;
-    let tableElement: HTMLElement;
-
-    beforeEach(() => {
-      fixture = TestBed.createComponent(TriTestTableRtlComponent);
-      table = fixture.debugElement.query(By.directive(TriTableComponent));
-      fixture.detectChanges();
-      tableElement = table.nativeElement;
-    });
-
-    it('should table className correct on dir change', () => {
-      fixture.detectChanges();
-      expect(tableElement.classList).toContain('ant-table-wrapper-rtl');
-
-      fixture.componentInstance.direction = 'ltr';
-      fixture.detectChanges();
-      expect(tableElement.classList).not.toContain('ant-table-wrapper-rtl');
-    });
-  });
+  testDirectionality(() => TriTestTableBasicComponent, By.directive(TriTableComponent), 'ant-table-wrapper');
 });
 
 interface BasicTestDataItem {
@@ -529,72 +509,5 @@ export class TriTableSpecCrashComponent {
         name: `name ${i + 1}`
       }));
     }, 1000);
-  }
-}
-
-interface RtlTestDataItem {
-  name?: string;
-  age?: string;
-  address?: string;
-  description?: string;
-  checked?: boolean;
-  expand?: boolean;
-}
-
-@Component({
-  imports: [BidiModule, TriTableModule],
-  template: `
-    <div [dir]="direction">
-      <tri-table #dynamicTable [data]="dataSet" [simple]="simple">
-        @if (header) {
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Age</th>
-              <th>Address</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-        }
-        <tbody>
-          @for (data of dynamicTable.data; track data) {
-            <tr>
-              <td>{{ data.name }}</td>
-              <td>{{ data.age }}</td>
-              <td>{{ data.address }}</td>
-              <td>
-                <a href="#">Action 一 {{ data.name }}</a>
-                <a href="#">Delete</a>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </tri-table>
-    </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
-})
-export class TriTestTableRtlComponent implements OnInit {
-  @ViewChild(Dir) dir!: Dir;
-  direction: Direction = 'rtl';
-
-  @ViewChild(TriTableComponent, { static: false }) tableComponent!: TriTableComponent<RtlTestDataItem>;
-  pageIndex = 1;
-  pageSize = 10;
-  dataSet: RtlTestDataItem[] = [];
-  header = true;
-  simple = false;
-
-  ngOnInit(): void {
-    for (let i = 1; i <= 20; i++) {
-      this.dataSet.push({
-        name: 'John Brown',
-        age: `${i}2`,
-        address: `New York No. ${i} Lake Park`,
-        description: `My name is John Brown, I am ${i}2 years old, living in New York No. ${i} Lake Park.`,
-        checked: false,
-        expand: false
-      });
-    }
   }
 }

@@ -6,7 +6,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   inject,
   Input,
@@ -29,8 +28,7 @@ function fixedAttribute(value: TriTableSummaryFixedType | boolean | unknown): Tr
 
 /* eslint-disable @angular-eslint/component-selector */
 @Component({
-  selector: '',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'tfoot[nzSummary]',
   encapsulation: ViewEncapsulation.None,
   template: `
     <ng-template #contentTemplate>

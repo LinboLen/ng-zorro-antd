@@ -3,10 +3,11 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
 import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+
+import { testDirectionality } from 'ng-zorro-antd/core/testing';
 
 import { TriDemoTimelineLabelComponent } from './demo/label';
 import { TriTimelineComponent } from './timeline.component';
@@ -201,28 +202,7 @@ describe('nz-timeline', () => {
     });
   });
 
-  describe('RTL', () => {
-    let fixture: ComponentFixture<TriTestTimelineRtlComponent>;
-    let timeline: DebugElement;
-    let items: HTMLDivElement[] = [];
-
-    beforeEach(() => {
-      fixture = TestBed.createComponent(TriTestTimelineRtlComponent);
-      fixture.detectChanges();
-
-      timeline = fixture.debugElement.query(By.directive(TriTimelineComponent));
-      items = Array.from((fixture.debugElement.nativeElement as HTMLElement).querySelectorAll('.ant-timeline-item'));
-    });
-
-    it('should init className correct', () => {
-      expect(timeline.nativeElement.firstElementChild!.classList).toContain('ant-timeline-rtl');
-      expect(items.length).toBeGreaterThan(0);
-
-      fixture.componentInstance.direction = 'ltr';
-      fixture.detectChanges();
-      expect(timeline.nativeElement.firstElementChild!.classList).not.toContain('ant-timeline-rtl');
-    });
-  });
+  testDirectionality(() => TriTestTimelineBasicComponent, By.css('.ant-timeline'), 'ant-timeline');
 
   describe('clear', () => {
     let fixture: ComponentFixture<TriTestTimelineClearItemsComponent>;
@@ -306,20 +286,6 @@ export class TriTestTimelinePendingComponent {}
   changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTimelineCustomPositionComponent {}
-
-@Component({
-  imports: [BidiModule, TriTestTimelineBasicComponent],
-  template: `
-    <div [dir]="direction">
-      <tri-test-basic-timeline />
-    </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
-})
-export class TriTestTimelineRtlComponent {
-  @ViewChild(Dir) dir!: Dir;
-  direction: Direction = 'rtl';
-}
 
 @Component({
   imports: [TriTimelineModule],

@@ -3,7 +3,6 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { BidiModule, Direction } from '@angular/cdk/bidi';
 import { DOWN_ARROW, ENTER, ESCAPE, RIGHT_ARROW, TAB, UP_ARROW } from '@angular/cdk/keycodes';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ScrollDispatcher } from '@angular/cdk/scrolling';
@@ -32,6 +31,7 @@ import {
   dispatchKeyboardEvent,
   MockNgZone,
   provideMockDirectionality,
+  testDirectionality,
   typeInElement
 } from 'ng-zorro-antd/core/testing';
 import { TriStatus, type TriVariant } from 'ng-zorro-antd/core/types';
@@ -74,24 +74,6 @@ describe('mention', () => {
     currentOverlayContainer.ngOnDestroy();
     overlayContainer.ngOnDestroy();
   }));
-
-  describe('RTL', () => {
-    let fixture: ComponentFixture<TriTestDirMentionComponent>;
-
-    beforeEach(() => {
-      fixture = TestBed.createComponent(TriTestDirMentionComponent);
-      fixture.detectChanges();
-    });
-
-    it('should classname correct', () => {
-      expect(fixture.debugElement.nativeElement.querySelector('nz-mention').classList).not.toContain(
-        'ant-mentions-rtl'
-      );
-      fixture.componentInstance.direction = 'rtl';
-      fixture.detectChanges();
-      expect(fixture.debugElement.nativeElement.querySelector('nz-mention').classList).toContain('ant-mentions-rtl');
-    });
-  });
 
   describe('toggling', () => {
     let fixture: ComponentFixture<TriTestSimpleMentionComponent>;
@@ -772,6 +754,10 @@ describe('mention', () => {
   });
 });
 
+testDirectionality(() => TriTestSimpleMentionComponent, By.directive(TriMentionComponent), 'ant-mentions', {
+  providers: [provideZoneChangeDetection(), provideNoopAnimations(), provideNzIconsTesting()]
+});
+
 describe('finalVariant', () => {
   let fixture: ComponentFixture<TriTestFinalVariantMentionComponent>;
   let mentionHtmlElement: HTMLElement;
@@ -915,21 +901,6 @@ class TriTestPropertyMentionComponent {
       ];
     }, 500);
   }
-}
-
-@Component({
-  imports: [BidiModule, TriInputModule, TriMentionModule],
-  template: `
-    <div [dir]="direction">
-      <tri-mention [suggestions]="[]">
-        <textarea rows="1" tri-input mentionTrigger></textarea>
-      </tri-mention>
-    </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
-})
-class TriTestDirMentionComponent {
-  direction: Direction = 'ltr';
 }
 
 @Component({

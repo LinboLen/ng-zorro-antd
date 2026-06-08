@@ -3,7 +3,6 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -14,12 +13,12 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Subject } from 'rxjs';
 
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { TriConfigService } from 'ng-zorro-antd/core/config';
-import { updateNonSignalsInput } from 'ng-zorro-antd/core/testing';
-import type { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { testDirectionality, updateNonSignalsInput } from 'ng-zorro-antd/core/testing';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
 import { TriAlertComponent, TriAlertType } from './alert.component';
@@ -28,7 +27,7 @@ import { TriAlertModule } from './alert.module';
 describe('alert', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideNzIconsTesting(), provideNoopAnimations()]
+      providers: [provideNzIconsTesting(), provideNzNoAnimation()]
     });
   });
 
@@ -146,19 +145,6 @@ describe('alert', () => {
     });
   });
 
-  describe('RTL', () => {
-    it('should className correct on dir change', async () => {
-      const fixture = TestBed.createComponent(TriTestAlertRtlComponent);
-      const alert = fixture.debugElement.query(By.directive(TriAlertComponent));
-      await fixture.whenStable();
-      expect(alert.nativeElement.firstElementChild!.classList).toContain('ant-alert-rtl');
-
-      fixture.componentInstance.direction = 'ltr';
-      await updateNonSignalsInput(fixture);
-      expect(alert.nativeElement.firstElementChild!.classList).not.toContain('ant-alert-rtl');
-    });
-  });
-
   describe('custom icon', () => {
     it('should custom icon work', async () => {
       const fixture = TestBed.createComponent(TriTestAlertCustomIconComponent);
@@ -168,6 +154,8 @@ describe('alert', () => {
       expect(alert.nativeElement.querySelector('.ant-alert-icon').firstElementChild).not.toContain('anticon');
     });
   });
+
+  testDirectionality(() => TriDemoTestBasicComponent, By.css('.ant-alert'), 'ant-alert');
 });
 
 @Component({
@@ -212,20 +200,6 @@ export class TriDemoTestBasicComponent {
 export class TriDemoTestBannerComponent {}
 
 @Component({
-  imports: [TriDemoTestBasicComponent, BidiModule],
-  template: `
-    <div [dir]="direction">
-      <tri-test-basic-alert />
-    </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
-})
-export class TriTestAlertRtlComponent {
-  @ViewChild(Dir) dir!: Dir;
-  direction: Direction = 'rtl';
-}
-
-@Component({
   imports: [TriAlertModule],
   template: `
     <tri-alert
@@ -259,7 +233,7 @@ describe('NzAlertComponent', () => {
 
     TestBed.configureTestingModule({
       providers: [
-        provideNoopAnimations(),
+        provideNzNoAnimation(),
         { provide: TriConfigService, useValue: nzConfigServiceSpy },
         {
           provide: ChangeDetectorRef,

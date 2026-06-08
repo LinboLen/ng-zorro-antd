@@ -6,7 +6,6 @@
 import { BACKSPACE, LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   ElementRef,
@@ -40,7 +39,6 @@ import { TriInputDirective } from './input.directive';
   selector: 'tri-input-otp',
   exportAs: 'triInputOtp',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @for (item of otpArray.controls; track $index) {
       <input

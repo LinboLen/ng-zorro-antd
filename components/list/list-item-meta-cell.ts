@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { TriAvatarModule } from 'ng-zorro-antd/avatar';
 
@@ -14,8 +14,7 @@ import { TriAvatarModule } from 'ng-zorro-antd/avatar';
     <h4 class="tri-list-item-meta-title">
       <ng-content />
     </h4>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class TriListItemMetaTitleComponent {}
 
@@ -26,8 +25,7 @@ export class TriListItemMetaTitleComponent {}
     <div class="tri-list-item-meta-description">
       <ng-content />
     </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class TriListItemMetaDescriptionComponent {}
 
@@ -43,7 +41,6 @@ export class TriListItemMetaDescriptionComponent {}
       }
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TriAvatarModule]
 })
 export class TriListItemMetaAvatarComponent {

@@ -5,7 +5,6 @@
 
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   inject,
   Input,
@@ -24,7 +23,6 @@ import { NgStyleInterface, TriSafeAny, TriSizeDSType } from 'ng-zorro-antd/core/
   selector: 'tri-badge-sup',
   exportAs: 'triBadgeSup',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TriNoAnimationDirective],
   template: `
     @if (count <= overflowCount) {

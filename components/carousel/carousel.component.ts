@@ -3,20 +3,20 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
 import { Platform } from '@angular/cdk/platform';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterContentInit,
   AfterViewInit,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChildren,
   DestroyRef,
   ElementRef,
   EventEmitter,
+  Injector,
   Input,
   NgZone,
   OnChanges,
@@ -28,7 +28,9 @@ import {
   TemplateRef,
   ViewChild,
   ViewEncapsulation,
+  afterNextRender,
   booleanAttribute,
+  effect,
   inject,
   numberAttribute
 } from '@angular/core';
@@ -56,10 +58,9 @@ import {
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'carousel';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   selector: 'tri-carousel',
   exportAs: 'triCarousel',
+  encapsulation: ViewEncapsulation.None,
   template: `
     <div
       class="slick-initialized slick-slider"
@@ -124,7 +125,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'carousel';
   host: {
     class: 'tri-carousel',
     '[class.tri-carousel-vertical]': 'vertical',
-    '[class.tri-carousel-rtl]': `dir === 'rtl'`
+    '[class.tri-carousel-rtl]': `dir() === 'rtl'`
   },
   imports: [NgTemplateOutlet]
 })
@@ -138,8 +139,10 @@ export class TriCarouselComponent implements AfterContentInit, AfterViewInit, On
   private readonly platform = inject(Platform);
   private readonly resizeService = inject(TriResizeService);
   private readonly dragService = inject(TriDragService);
-  private resizeObserver = inject(TriResizeObserver);
-  private destroyRef = inject(DestroyRef);
+  private readonly resizeObserver = inject(TriResizeObserver);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly customStrategies = inject(TRI_CAROUSEL_CUSTOM_STRATEGIES, { optional: true });
+  protected readonly dir = inject(Directionality).valueSignal;
 
   @ContentChildren(TriCarouselContentDirective) carouselContents!: QueryList<TriCarouselContentDirective>;
 
@@ -173,17 +176,26 @@ export class TriCarouselComponent implements AfterContentInit, AfterViewInit, On
   strategy?: TriCarouselBaseStrategy;
   vertical = false;
   transitionInProgress?: ReturnType<typeof setTimeout>;
-  dir: Direction = 'ltr';
 
   private gestureRect: DOMRect | null = null;
   private pointerDelta: PointerVector | null = null;
   private isTransiting = false;
   private isDragging = false;
-  private directionality = inject(Directionality);
-  private customStrategies = inject(TRI_CAROUSEL_CUSTOM_STRATEGIES, { optional: true });
 
   constructor() {
     this.dotPosition = 'bottom';
+
+    const injector = inject(Injector);
+    afterNextRender(() => {
+      effect(
+        () => {
+          void this.dir();
+          this.markContentActive(this.activeIndex);
+        },
+        { injector }
+      );
+    });
+
     this.destroyRef.onDestroy(() => {
       this.clearScheduledTransition();
       this.strategy?.dispose();
@@ -193,14 +205,6 @@ export class TriCarouselComponent implements AfterContentInit, AfterViewInit, On
   ngOnInit(): void {
     this.slickListEl = this.slickList!.nativeElement;
     this.slickTrackEl = this.slickTrack!.nativeElement;
-
-    this.dir = this.directionality.value;
-
-    this.directionality.change.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.markContentActive(this.activeIndex);
-      this.cdr.detectChanges();
-    });
 
     fromEventOutsideAngular<KeyboardEvent>(this.slickListEl, 'keydown')
       .pipe(takeUntilDestroyed(this.destroyRef))

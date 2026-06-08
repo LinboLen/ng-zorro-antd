@@ -5,7 +5,6 @@
 
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   inject,
@@ -64,7 +63,6 @@ import {
     }
   `,
   imports: [TriSkeletonElementDirective, TriSkeletonElementAvatarComponent],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class TriSkeletonComponent implements OnInit, OnChanges {

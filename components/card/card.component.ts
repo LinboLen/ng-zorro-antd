@@ -3,24 +3,20 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChild,
   ContentChildren,
   Input,
-  OnInit,
   QueryList,
   TemplateRef,
   ViewEncapsulation,
   booleanAttribute,
-  inject,
-  DestroyRef
+  inject
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
@@ -35,7 +31,6 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'card';
 @Component({
   selector: 'tri-card',
   exportAs: 'triCard',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
     @if (title || extra || listOfNzCardTabComponent) {
@@ -90,14 +85,13 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'card';
     '[class.tri-card-contain-grid]': 'listOfNzCardGridDirective && listOfNzCardGridDirective.length',
     '[class.tri-card-type-inner]': 'type === "inner"',
     '[class.tri-card-contain-tabs]': '!!listOfNzCardTabComponent',
-    '[class.tri-card-rtl]': `dir === 'rtl'`
+    '[class.tri-card-rtl]': `dir() === 'rtl'`
   },
   imports: [TriOutletModule, NgTemplateOutlet, TriSkeletonModule]
 })
-export class TriCardComponent implements OnInit {
-  private cdr = inject(ChangeDetectorRef);
-  private directionality = inject(Directionality);
-  private destroyRef = inject(DestroyRef);
+export class TriCardComponent {
+  private readonly cdr = inject(ChangeDetectorRef);
+  protected readonly dir = inject(Directionality).valueSignal;
 
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
@@ -113,18 +107,8 @@ export class TriCardComponent implements OnInit {
   @Input() extra?: string | TemplateRef<void>;
   @ContentChild(TriCardTabComponent, { static: false }) listOfNzCardTabComponent?: TriCardTabComponent;
   @ContentChildren(TriCardGridDirective) listOfNzCardGridDirective!: QueryList<TriCardGridDirective>;
-  dir: Direction = 'ltr';
 
   constructor() {
     onConfigChangeEventForComponent(TRI_CONFIG_MODULE_NAME, () => this.cdr.markForCheck());
-  }
-
-  ngOnInit(): void {
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((direction: Direction) => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-
-    this.dir = this.directionality.value;
   }
 }

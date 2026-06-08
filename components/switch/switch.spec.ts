@@ -3,7 +3,6 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
 import { ENTER, LEFT_ARROW, RIGHT_ARROW, SPACE } from '@angular/cdk/keycodes';
 import {
   ApplicationRef,
@@ -21,7 +20,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { TRI_FORM_SIZE } from 'ng-zorro-antd/core/form';
-import { dispatchKeyboardEvent } from 'ng-zorro-antd/core/testing';
+import { dispatchKeyboardEvent, testDirectionality } from 'ng-zorro-antd/core/testing';
 import { TriSizeDSType, type TriSizeLDSType } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
@@ -312,17 +311,37 @@ describe('switch', () => {
       expect(testComponent.formControl.value).toBe(false);
     }));
   });
-  describe('RTL', () => {
-    it('should className correct on dir change', () => {
-      const fixture = TestBed.createComponent(TriTestSwitchRtlComponent);
-      const switchElement = fixture.debugElement.query(By.directive(TriSwitchComponent));
-      fixture.detectChanges();
-      expect(switchElement.nativeElement.firstElementChild!.classList).toContain('ant-switch-rtl');
+  testDirectionality(() => TriTestSwitchBasicComponent, By.css('.ant-switch'), 'ant-switch');
+});
 
-      fixture.componentInstance.direction = 'ltr';
-      fixture.detectChanges();
-      expect(switchElement.nativeElement.firstElementChild!.classList).not.toContain('ant-switch-rtl');
+describe('finalSize', () => {
+  let fixture: ComponentFixture<TriTestSwitchBasicComponent>;
+  let switchElement: HTMLElement;
+  let formSizeSignal: WritableSignal<TriSizeLDSType>;
+
+  beforeEach(() => {
+    formSizeSignal = signal<TriSizeDSType>('default');
+  });
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+  it('should set correctly the size from the formSize signal', () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: TRI_FORM_SIZE, useValue: formSizeSignal }]
     });
+    fixture = TestBed.createComponent(TriTestSwitchBasicComponent);
+    switchElement = fixture.debugElement.query(By.directive(TriSwitchComponent)).nativeElement;
+    fixture.detectChanges();
+    formSizeSignal.set('small');
+    fixture.detectChanges();
+    expect(switchElement.firstElementChild!.classList).toContain('ant-switch-small');
+  });
+  it('should set correctly the size from the component input', () => {
+    fixture = TestBed.createComponent(TriTestSwitchBasicComponent);
+    switchElement = fixture.debugElement.query(By.directive(TriSwitchComponent)).nativeElement;
+    fixture.componentInstance.size = 'small';
+    fixture.detectChanges();
+    expect(switchElement.firstElementChild!.classList).toContain('ant-switch-small');
   });
 });
 
@@ -421,19 +440,4 @@ export class TriTestSwitchFormComponent {
   enable(): void {
     this.formControl.enable();
   }
-}
-
-@Component({
-  imports: [BidiModule, FormsModule, TriSwitchModule],
-  template: `
-    <div [dir]="direction">
-      <tri-switch [(ngModel)]="switchValue" />
-    </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
-})
-export class TriTestSwitchRtlComponent {
-  @ViewChild(Dir) dir!: Dir;
-  direction: Direction = 'rtl';
-  switchValue = false;
 }

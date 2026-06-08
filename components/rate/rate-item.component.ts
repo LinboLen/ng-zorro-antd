@@ -5,7 +5,6 @@
 
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
@@ -18,10 +17,9 @@ import {
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   selector: '[tri-rate-item]',
   exportAs: 'triRateItem',
+  encapsulation: ViewEncapsulation.None,
   template: `
     <div
       class="tri-rate-star-second"

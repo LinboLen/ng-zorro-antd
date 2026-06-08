@@ -16,7 +16,6 @@ import { _getEventTarget, Platform } from '@angular/cdk/platform';
 import {
   AfterContentInit,
   booleanAttribute,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   computed,
@@ -110,7 +109,6 @@ export type TriSelectSizeType = TriSizeLDSType;
     },
     { provide: TRI_SPACE_COMPACT_ITEM_TYPE, useValue: 'select' }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
     <tri-select-top-control

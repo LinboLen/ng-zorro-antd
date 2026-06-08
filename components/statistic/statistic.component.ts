@@ -3,20 +3,8 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  DestroyRef,
-  Input,
-  OnInit,
-  TemplateRef,
-  ViewEncapsulation,
-  booleanAttribute,
-  inject
-} from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Directionality } from '@angular/cdk/bidi';
+import { Component, Input, TemplateRef, ViewEncapsulation, booleanAttribute, inject } from '@angular/core';
 
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { NgStyleInterface } from 'ng-zorro-antd/core/types';
@@ -26,10 +14,10 @@ import { TriStatisticContentValueComponent } from './statistic-content-value.com
 import { TriStatisticValueType } from './typings';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   selector: 'tri-statistic',
   exportAs: 'triStatistic',
+  encapsulation: ViewEncapsulation.None,
+  imports: [TriSkeletonModule, TriStatisticContentValueComponent, TriOutletModule],
   template: `
     <div class="tri-statistic-title">
       <ng-container *stringTemplateOutlet="title">{{ title }}</ng-container>
@@ -54,11 +42,12 @@ import { TriStatisticValueType } from './typings';
   `,
   host: {
     class: 'tri-statistic',
-    '[class.tri-statistic-rtl]': `dir === 'rtl'`
-  },
-  imports: [TriSkeletonModule, TriStatisticContentValueComponent, TriOutletModule]
+    '[class.tri-statistic-rtl]': `dir() === 'rtl'`
+  }
 })
-export class TriStatisticComponent implements OnInit {
+export class TriStatisticComponent {
+  protected readonly dir = inject(Directionality).valueSignal;
+
   @Input() prefix?: string | TemplateRef<void>;
   @Input() suffix?: string | TemplateRef<void>;
   @Input() title?: string | TemplateRef<void>;
@@ -66,18 +55,4 @@ export class TriStatisticComponent implements OnInit {
   @Input() valueStyle: NgStyleInterface = {};
   @Input() valueTemplate?: TemplateRef<{ $implicit: TriStatisticValueType }>;
   @Input({ transform: booleanAttribute }) loading: boolean = false;
-  dir: Direction = 'ltr';
-
-  protected cdr = inject(ChangeDetectorRef);
-  protected destroyRef = inject(DestroyRef);
-  private directionality = inject(Directionality);
-
-  ngOnInit(): void {
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-
-    this.dir = this.directionality.value;
-  }
 }

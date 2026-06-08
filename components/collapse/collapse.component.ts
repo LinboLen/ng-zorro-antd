@@ -4,15 +4,7 @@
  */
 
 import { Directionality } from '@angular/cdk/bidi';
-import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  inject,
-  Input,
-  ViewEncapsulation
-} from '@angular/core';
+import { booleanAttribute, ChangeDetectorRef, Component, inject, Input, ViewEncapsulation } from '@angular/core';
 
 import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
 import type { TriSizeLMSType } from 'ng-zorro-antd/core/types';
@@ -24,7 +16,6 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'collapse';
 @Component({
   selector: 'tri-collapse',
   exportAs: 'triCollapse',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `<ng-content />`,
   host: {

@@ -3,7 +3,6 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
 import { AsyncPipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -18,6 +17,7 @@ import { By } from '@angular/platform-browser';
 import { Observable, timer } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { testDirectionality } from 'ng-zorro-antd/core/testing';
 import { TriDirectionVHType, TriSizeLDSType } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
@@ -241,26 +241,8 @@ describe('list', () => {
   });
 });
 
-describe('list RTL', () => {
-  let fixture: ComponentFixture<TriTestListRtlComponent>;
-  let componentElement: HTMLElement;
-
-  beforeEach(() => {
-    // todo: use zoneless
-    TestBed.configureTestingModule({
-      providers: [provideNzIconsTesting(), provideZoneChangeDetection()]
-    });
-    fixture = TestBed.createComponent(TriTestListRtlComponent);
-    componentElement = fixture.debugElement.query(By.directive(TriListComponent)).nativeElement;
-    fixture.detectChanges();
-  });
-
-  it('should className correct on dir change', () => {
-    expect(componentElement.classList).toContain('ant-list-rtl');
-    fixture.componentInstance.direction = 'ltr';
-    fixture.detectChanges();
-    expect(componentElement.classList).not.toContain('ant-list-rtl');
-  });
+testDirectionality(() => TestListComponent, By.directive(TriListComponent), 'ant-list', {
+  providers: [provideNzIconsTesting(), provideZoneChangeDetection()]
 });
 
 @Component({
@@ -385,18 +367,4 @@ class TestListWithTemplateComponent {
 })
 class TestListItemComponent {
   noFlex = false;
-}
-
-@Component({
-  imports: [BidiModule, TestListComponent],
-  template: `
-    <div [dir]="direction">
-      <tri-test-list />
-    </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
-})
-export class TriTestListRtlComponent {
-  @ViewChild(Dir) dir!: Dir;
-  direction: Direction = 'rtl';
 }

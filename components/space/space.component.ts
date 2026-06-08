@@ -6,7 +6,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterContentInit,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChildren,
@@ -38,7 +37,6 @@ const SPACE_SIZE: Record<TriSpaceType, number> = {
 @Component({
   selector: 'tri-space,[tri-space]',
   exportAs: 'triSpace',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ng-content />
     @for (item of items; track item) {

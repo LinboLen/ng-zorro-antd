@@ -3,14 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  TemplateRef,
-  ViewEncapsulation,
-  booleanAttribute
-} from '@angular/core';
+import { Component, Input, TemplateRef, ViewEncapsulation, booleanAttribute } from '@angular/core';
 
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import type { TriSizeLMSType } from 'ng-zorro-antd/core/types';
@@ -19,7 +12,6 @@ import type { TriSizeLMSType } from 'ng-zorro-antd/core/types';
   selector: 'tri-divider',
   exportAs: 'triDivider',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (text) {
       <span class="tri-divider-inner-text">

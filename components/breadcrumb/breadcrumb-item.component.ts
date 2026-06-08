@@ -4,7 +4,7 @@
  */
 
 import { NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, Input, ViewEncapsulation } from '@angular/core';
+import { Component, inject, Input, ViewEncapsulation } from '@angular/core';
 
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriDropdownMenuComponent, TriDropdownModule } from 'ng-zorro-antd/dropdown';
@@ -14,10 +14,9 @@ import { TriBreadcrumb } from './breadcrumb';
 import { TriBreadCrumbSeparatorComponent } from './breadcrumb-separator.component';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   selector: 'tri-breadcrumb-item',
   exportAs: 'triBreadcrumbItem',
+  encapsulation: ViewEncapsulation.None,
   imports: [NgTemplateOutlet, TriBreadCrumbSeparatorComponent, TriDropdownModule, TriIconModule, TriOutletModule],
   template: `
     @if (!!overlay) {

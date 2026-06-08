@@ -5,7 +5,6 @@
 
 import { DecimalPipe } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   Component,
   computed,
   inject,
@@ -29,7 +28,6 @@ import { TriItemProps } from './typings';
 
 @Component({
   selector: 'tri-check-list',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [
     TriPopoverModule,

@@ -4,7 +4,6 @@
  */
 
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   DestroyRef,
@@ -28,10 +27,9 @@ const TriEmptyDefaultImages = ['default', 'simple'] as const;
 type TriEmptyNotFoundImageType = (typeof TriEmptyDefaultImages)[number] | null | string | TemplateRef<void>;
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   selector: 'tri-empty',
   exportAs: 'triEmpty',
+  encapsulation: ViewEncapsulation.None,
   template: `
     <div class="tri-empty-image">
       @if (!isImageBuildIn) {

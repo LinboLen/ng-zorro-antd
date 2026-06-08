@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, input, ViewEncapsulation } from '@angular/core';
 
 import type { TriFormItemLayout } from './types';
 
@@ -13,7 +13,6 @@ export type TriFormControlStatusType = 'success' | 'error' | 'warning' | 'valida
 @Component({
   selector: 'tri-form-item',
   exportAs: 'triFormItem',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
     class: 'tri-form-item',

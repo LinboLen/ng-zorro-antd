@@ -8,7 +8,6 @@ import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterContentInit,
   AfterViewInit,
-  ChangeDetectionStrategy,
   Component,
   ContentChildren,
   ElementRef,
@@ -35,8 +34,7 @@ import { TriTableStyleService } from '../table-style.service';
 import { TriTrDirective } from './tr.directive';
 
 @Component({
-  selector: '',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'thead:not(.ant-table-thead)',
   encapsulation: ViewEncapsulation.None,
   template: `
     <ng-template #contentTemplate>

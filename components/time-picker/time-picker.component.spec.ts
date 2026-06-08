@@ -3,7 +3,6 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { BidiModule, Direction } from '@angular/cdk/bidi';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
@@ -23,7 +22,7 @@ import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { TRI_FORM_SIZE, TRI_FORM_VARIANT } from 'ng-zorro-antd/core/form';
-import { dispatchFakeEvent, dispatchMouseEvent, typeInElement } from 'ng-zorro-antd/core/testing';
+import { dispatchFakeEvent, dispatchMouseEvent, testDirectionality, typeInElement } from 'ng-zorro-antd/core/testing';
 import { TriPlacement, TriStatus, TriVariant, type TriSizeLDSType } from 'ng-zorro-antd/core/types';
 import { PREFIX_CLASS } from 'ng-zorro-antd/date-picker';
 import { getPickerInput, getPickerOkButton } from 'ng-zorro-antd/date-picker/testing/util';
@@ -639,22 +638,18 @@ describe('time-picker', () => {
     });
   });
 
-  describe('RTL', () => {
-    let testComponent: TriTestTimePickerDirComponent;
-    let fixture: ComponentFixture<TriTestTimePickerDirComponent>;
-    let timeElement: DebugElement;
+  describe('prefix with template', () => {
+    let fixture: ComponentFixture<TriTestTimePickerPrefixTemplateComponent>;
+
     beforeEach(() => {
-      fixture = TestBed.createComponent(TriTestTimePickerDirComponent);
-      testComponent = fixture.debugElement.componentInstance;
+      fixture = TestBed.createComponent(TriTestTimePickerPrefixTemplateComponent);
       fixture.detectChanges();
-      timeElement = fixture.debugElement.query(By.directive(TriTimePickerComponent));
     });
 
-    it('should className correct on dir change', () => {
-      expect(timeElement.nativeElement.classList).not.toContain('ant-picker-rtl');
-      testComponent.dir = 'rtl';
-      fixture.detectChanges();
-      expect(timeElement.nativeElement.classList).toContain('ant-picker-rtl');
+    it('should render prefix template with icon', () => {
+      const prefixElement = fixture.debugElement.query(By.css('.ant-picker-prefix'));
+      expect(prefixElement).not.toBeNull();
+      expect(prefixElement.query(By.css('.anticon-clock-circle'))).not.toBeNull();
     });
 
     it('should work correctly with placement in RTL mode', fakeAsync(() => {
@@ -956,6 +951,10 @@ describe('time-picker', () => {
   }
 });
 
+testDirectionality(() => TriTestTimePickerComponent, By.directive(TriTimePickerComponent), 'ant-picker', {
+  providers: [provideNoopAnimations(), provideZoneChangeDetection()]
+});
+
 describe('time-picker size', () => {
   let fixture: ComponentFixture<TriTestTimePickerSizeComponent>;
   let timePickerElement: HTMLElement;
@@ -1111,20 +1110,6 @@ export class TriTestTimePickerComponent {
 })
 export class TriTestTimePickerStatusComponent {
   status: TriStatus = 'error';
-}
-
-@Component({
-  imports: [TriTimePickerComponent, BidiModule],
-  template: `
-    <div [dir]="dir">
-      <tri-time-picker [placement]="placement" />
-    </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
-})
-export class TriTestTimePickerDirComponent {
-  dir: Direction = 'ltr';
-  placement: TriPlacement = 'bottomLeft';
 }
 
 @Component({

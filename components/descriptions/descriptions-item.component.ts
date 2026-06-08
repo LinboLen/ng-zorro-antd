@@ -4,7 +4,6 @@
  */
 
 import {
-  ChangeDetectionStrategy,
   Component,
   Input,
   OnChanges,
@@ -17,9 +16,8 @@ import {
 import { Subject } from 'rxjs';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   selector: 'tri-descriptions-item',
+  encapsulation: ViewEncapsulation.None,
   template: `
     <ng-template>
       <ng-content />

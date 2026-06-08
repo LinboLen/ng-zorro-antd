@@ -5,16 +5,7 @@
 
 import { Directionality } from '@angular/cdk/bidi';
 import { NgTemplateOutlet } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  inject,
-  input,
-  linkedSignal,
-  output,
-  TemplateRef
-} from '@angular/core';
+import { Component, computed, inject, input, linkedSignal, output, TemplateRef } from '@angular/core';
 
 import { TriBadgeModule } from 'ng-zorro-antd/badge';
 import { TriButtonModule } from 'ng-zorro-antd/button';
@@ -30,7 +21,6 @@ const CLASS_NAME = 'ant-float-btn';
   selector: 'tri-float-button',
   exportAs: 'triFloatButton',
   imports: [TriButtonModule, TriFloatButtonContentComponent, TriBadgeModule, NgTemplateOutlet],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (!!href()) {
       <a

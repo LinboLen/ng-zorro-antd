@@ -4,10 +4,9 @@
  */
 
 import { FocusMonitor } from '@angular/cdk/a11y';
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import {
   AfterViewInit,
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   Input,
@@ -57,7 +56,6 @@ import { TriRadioService } from './radio.service';
     <span><ng-content /></span>
   `,
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -73,12 +71,12 @@ import { TriRadioService } from './radio.service';
     '[class.tri-radio-button-wrapper-checked]': 'isChecked && isRadioButton',
     '[class.tri-radio-wrapper-disabled]': 'disabled && !isRadioButton',
     '[class.tri-radio-button-wrapper-disabled]': 'disabled && isRadioButton',
-    '[class.tri-radio-wrapper-rtl]': `!isRadioButton && dir === 'rtl'`,
-    '[class.tri-radio-button-wrapper-rtl]': `isRadioButton && dir === 'rtl'`
+    '[class.tri-radio-wrapper-rtl]': `!isRadioButton && dir() === 'rtl'`,
+    '[class.tri-radio-button-wrapper-rtl]': `isRadioButton && dir() === 'rtl'`
   }
 })
 export class TriRadioComponent implements ControlValueAccessor, AfterViewInit, OnInit {
-  private readonly directionality = inject(Directionality);
+  protected readonly dir = inject(Directionality).valueSignal;
   private readonly radioService = inject(TriRadioService, { optional: true });
   private readonly ngZone = inject(NgZone);
   private readonly elementRef = inject(ElementRef);
@@ -98,8 +96,6 @@ export class TriRadioComponent implements ControlValueAccessor, AfterViewInit, O
   @Input({ transform: booleanAttribute }) disabled = false;
   @Input({ transform: booleanAttribute }) autoFocus = false;
   @Input({ alias: 'nz-radio-button', transform: booleanAttribute }) isRadioButton = false;
-
-  dir: Direction = 'ltr';
 
   focus(): void {
     this.focusMonitor.focusVia(this.inputElement!, 'keyboard');
@@ -176,13 +172,6 @@ export class TriRadioComponent implements ControlValueAccessor, AfterViewInit, O
           }
         }
       });
-
-    this.directionality.change.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-
-    this.dir = this.directionality.value;
 
     this.setupClickListener();
   }

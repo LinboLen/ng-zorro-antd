@@ -3,21 +3,8 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ContentChildren,
-  DestroyRef,
-  inject,
-  Input,
-  OnInit,
-  QueryList,
-  TemplateRef,
-  ViewEncapsulation
-} from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Directionality } from '@angular/cdk/bidi';
+import { Component, ContentChildren, inject, Input, QueryList, TemplateRef, ViewEncapsulation } from '@angular/core';
 
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 
@@ -61,30 +48,17 @@ import { TriCommentActionComponent as CommentAction, TriCommentActionHostDirecti
     </div>
   `,
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.tri-comment]': `true`,
-    '[class.tri-comment-rtl]': `dir === "rtl"`
+    '[class.tri-comment-rtl]': `dir() === "rtl"`
   },
   imports: [TriOutletModule, TriCommentActionHostDirective]
 })
-export class TriCommentComponent implements OnInit {
-  private destroyRef = inject(DestroyRef);
-  private cdr = inject(ChangeDetectorRef);
-  private directionality = inject(Directionality);
+export class TriCommentComponent {
+  protected readonly dir = inject(Directionality).valueSignal;
 
   @Input() author?: string | TemplateRef<void>;
   @Input() datetime?: string | TemplateRef<void>;
-  dir: Direction = 'ltr';
 
   @ContentChildren(CommentAction) actions!: QueryList<CommentAction>;
-
-  ngOnInit(): void {
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-
-    this.dir = this.directionality.value;
-  }
 }

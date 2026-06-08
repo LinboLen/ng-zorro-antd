@@ -16,7 +16,6 @@ import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
   booleanAttribute,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   computed,
@@ -108,10 +107,9 @@ export type TriDatePickerSizeType = 'large' | 'default' | 'small';
  * The base picker for all common APIs
  */
 @Component({
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'tri-date-picker,tri-week-picker,tri-month-picker,tri-quarter-picker,tri-year-picker,tri-range-picker',
   exportAs: 'triDatePicker',
+  encapsulation: ViewEncapsulation.None,
   template: `
     @if (!inline()) {
       @if (!isRange) {

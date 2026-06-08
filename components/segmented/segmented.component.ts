@@ -8,7 +8,6 @@ import { DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, UP_ARROW } from '@angular/cdk/keyc
 import {
   afterNextRender,
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   contentChildren,
@@ -43,10 +42,9 @@ import { normalizeOptions, TriSegmentedOption, TriSegmentedOptions } from './typ
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'segmented';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   selector: 'tri-segmented',
   exportAs: 'triSegmented',
+  encapsulation: ViewEncapsulation.None,
   template: `
     <!-- thumb motion div -->
     <div class="tri-segmented-group">

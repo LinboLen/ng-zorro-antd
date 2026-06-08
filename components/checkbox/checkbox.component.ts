@@ -4,10 +4,9 @@
  */
 
 import { FocusMonitor } from '@angular/cdk/a11y';
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import {
   AfterViewInit,
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
@@ -36,7 +35,6 @@ import { TRI_CHECKBOX_GROUP } from './tokens';
 @Component({
   selector: '[tri-checkbox]',
   exportAs: 'triCheckbox',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
     <span
@@ -74,7 +72,7 @@ import { TRI_CHECKBOX_GROUP } from './tokens';
     '[class.tri-checkbox-wrapper-in-form-item]': '!!formStatusService',
     '[class.tri-checkbox-wrapper-checked]': 'checked',
     '[class.tri-checkbox-wrapper-disabled]': 'disabled || checkboxGroupComponent?.finalDisabled()',
-    '[class.tri-checkbox-rtl]': `dir === 'rtl'`
+    '[class.tri-checkbox-rtl]': `dir() === 'rtl'`
   },
   imports: [FormsModule]
 })
@@ -83,12 +81,11 @@ export class TriCheckboxComponent implements OnInit, ControlValueAccessor, After
   private elementRef = inject(ElementRef<HTMLElement>);
   private cdr = inject(ChangeDetectorRef);
   private focusMonitor = inject(FocusMonitor);
-  private directionality = inject(Directionality);
+  protected readonly dir = inject(Directionality).valueSignal;
   private destroyRef = inject(DestroyRef);
   protected checkboxGroupComponent = inject(TRI_CHECKBOX_GROUP, { optional: true });
   protected formStatusService = inject(TriFormStatusService, { optional: true });
 
-  dir: Direction = 'ltr';
   private isNzDisableFirstChange: boolean = true;
 
   onChange: OnChangeType = () => {};
@@ -159,13 +156,6 @@ export class TriCheckboxComponent implements OnInit, ControlValueAccessor, After
           Promise.resolve().then(() => this.onTouched());
         }
       });
-
-    this.directionality.change.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-
-    this.dir = this.directionality.value;
 
     fromEventOutsideAngular(this.elementRef.nativeElement, 'click')
       .pipe(takeUntilDestroyed(this.destroyRef))

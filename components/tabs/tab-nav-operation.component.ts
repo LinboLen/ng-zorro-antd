@@ -4,7 +4,6 @@
  */
 
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -30,7 +29,6 @@ import { TriTabNavItemDirective } from './tab-nav-item.directive';
 @Component({
   selector: 'tri-tab-nav-operation',
   exportAs: 'triTabNavOperation',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
     <button

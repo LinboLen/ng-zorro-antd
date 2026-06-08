@@ -3,7 +3,6 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Directionality } from '@angular/cdk/bidi';
 import { DOWN_ARROW, ENTER, ESCAPE, TAB, UP_ARROW } from '@angular/cdk/keycodes';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ScrollDispatcher } from '@angular/cdk/scrolling';
@@ -68,7 +67,6 @@ describe('auto-complete', () => {
         // todo: use zoneless
         provideZoneChangeDetection(),
         provideNoopAnimations(),
-        provideMockDirectionality(),
         { provide: ScrollDispatcher, useFactory: () => ({ scrolled: () => scrolledSubject }) },
         {
           provide: NgZone,
@@ -1056,7 +1054,6 @@ class TriTestAutocompleteWithoutPanelComponent {
 
 @Component({
   imports: [TriAutocompleteModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div>
       <input [autocomplete]="auto" />
@@ -1240,28 +1237,16 @@ class TriTestAutocompleteWithGroupInputComponent {
 describe('auto-complete', () => {
   let component: TriAutocompleteComponent;
   let fixture: ComponentFixture<TriAutocompleteComponent>;
-  let mockDirectionality: Directionality;
 
   beforeEach(() => {
     // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideZoneChangeDetection(), provideMockDirectionality()]
+      providers: [provideZoneChangeDetection()]
     });
 
     fixture = TestBed.createComponent(TriAutocompleteComponent);
     component = fixture.componentInstance;
-    mockDirectionality = TestBed.inject(Directionality);
   });
-
-  it('should change dir', fakeAsync(() => {
-    spyOn(component['changeDetectorRef'], 'detectChanges');
-    component.ngOnInit();
-    expect(component.dir).toEqual('ltr');
-    mockDirectionality.change.next('rtl');
-    tick();
-    expect(component.dir).toEqual('rtl');
-    expect(component['changeDetectorRef'].detectChanges).toHaveBeenCalled();
-  }));
 
   it('should normalizeDataSource return correct value', () => {
     let changes: SimpleChanges = {

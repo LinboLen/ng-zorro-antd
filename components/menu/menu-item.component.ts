@@ -5,7 +5,6 @@
 
 import {
   AfterContentInit,
-  ChangeDetectionStrategy,
   Component,
   ContentChildren,
   Input,
@@ -33,7 +32,6 @@ import { TriSubmenuService } from './submenu.service';
 @Component({
   selector: '[tri-menu-item]',
   exportAs: 'triMenuItem',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
     <span class="tri-menu-title-content">

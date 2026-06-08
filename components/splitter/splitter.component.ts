@@ -9,7 +9,6 @@ import { normalizePassiveListenerOptions } from '@angular/cdk/platform';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   contentChildren,
@@ -115,8 +114,7 @@ const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: t
     '[class.tri-splitter-vertical]': 'layout() === "vertical"',
     '[class.tri-splitter-rtl]': 'dir() === "rtl"'
   },
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  encapsulation: ViewEncapsulation.None
 })
 export class TriSplitterComponent {
   /** ------------------- Props ------------------- */
@@ -128,11 +126,10 @@ export class TriSplitterComponent {
 
   protected readonly destroy$ = inject(TriDestroyService);
   protected readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
-  protected readonly directionality = inject(Directionality);
   protected readonly resizeObserver = inject(TriResizeObserver);
   protected readonly document = inject(DOCUMENT);
 
-  protected readonly dir = toSignal(this.directionality.change, { initialValue: this.directionality.value });
+  protected readonly dir = inject(Directionality).valueSignal;
 
   /** ------------------- Panels ------------------- */
   // Get all panels from content children

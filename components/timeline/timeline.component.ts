@@ -3,11 +3,10 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterContentInit,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChildren,
@@ -33,11 +32,10 @@ import { TimelineService } from './timeline.service';
 import { TriTimelineMode, TriTimelinePosition } from './typings';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   selector: 'tri-timeline',
-  providers: [TimelineService],
   exportAs: 'triTimeline',
+  encapsulation: ViewEncapsulation.None,
+  providers: [TimelineService],
   template: `
     <ul
       class="tri-timeline"
@@ -46,7 +44,7 @@ import { TriTimelineMode, TriTimelinePosition } from './typings';
       [class.tri-timeline-alternate]="mode === 'alternate' || mode === 'custom'"
       [class.tri-timeline-pending]="!!pending"
       [class.tri-timeline-reverse]="reverse"
-      [class.tri-timeline-rtl]="dir === 'rtl'"
+      [class.tri-timeline-rtl]="dir() === 'rtl'"
     >
       <!-- pending dot (reversed) -->
       @if (reverse) {
@@ -89,7 +87,7 @@ import { TriTimelineMode, TriTimelinePosition } from './typings';
 export class TriTimelineComponent implements AfterContentInit, OnChanges, OnInit {
   private cdr = inject(ChangeDetectorRef);
   private timelineService = inject(TimelineService);
-  private directionality = inject(Directionality);
+  protected readonly dir = inject(Directionality).valueSignal;
   private destroyRef = inject(DestroyRef);
 
   @ContentChildren(TriTimelineItemComponent) listOfItems!: QueryList<TriTimelineItemComponent>;
@@ -101,7 +99,6 @@ export class TriTimelineComponent implements AfterContentInit, OnChanges, OnInit
 
   isPendingBoolean: boolean = false;
   timelineItems: TriTimelineItemComponent[] = [];
-  dir: Direction = 'ltr';
   hasLabelItem = false;
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -120,13 +117,6 @@ export class TriTimelineComponent implements AfterContentInit, OnChanges, OnInit
     this.timelineService.check$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.cdr.markForCheck();
     });
-
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-
-    this.dir = this.directionality.value;
   }
 
   ngAfterContentInit(): void {

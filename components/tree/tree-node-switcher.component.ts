@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, Input, TemplateRef, booleanAttribute } from '@angular/core';
+import { Component, Input, TemplateRef, booleanAttribute } from '@angular/core';
 
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriTreeNode, TriTreeNodeOptions } from 'ng-zorro-antd/core/tree';
@@ -39,7 +39,6 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
       }
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.tri-select-tree-switcher]': 'selectMode',
     '[class.tri-select-tree-switcher-noop]': 'selectMode && isLeaf',

@@ -4,7 +4,6 @@
  */
 
 import {
-  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
@@ -26,10 +25,9 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
 import { TriSelectModule, TriSelectSizeType } from 'ng-zorro-antd/select';
 
 @Component({
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'tri-calendar-header',
   exportAs: 'triCalendarHeader',
+  encapsulation: ViewEncapsulation.None,
   template: `
     @if (customHeader) {
       <ng-container *stringTemplateOutlet="customHeader">{{ customHeader }}</ng-container>

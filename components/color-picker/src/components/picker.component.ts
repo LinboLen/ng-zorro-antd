@@ -49,7 +49,6 @@ function getPosition(e: EventType): { pageX: number; pageY: number } {
       <div class="tri-color-picker-saturation" [style.background-color]="toHsb()"></div>
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'tri-color-picker-select',
     '(mousedown)': 'dragStartHandle($event)',

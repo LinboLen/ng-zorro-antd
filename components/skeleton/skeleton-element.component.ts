@@ -3,15 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Directive,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  booleanAttribute
-} from '@angular/core';
+import { Component, Directive, Input, OnChanges, SimpleChanges, booleanAttribute } from '@angular/core';
 
 import {
   TriSkeletonAvatarShape,
@@ -36,7 +28,6 @@ export class TriSkeletonElementDirective {
 }
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tri-skeleton-element[nzType="button"]',
   template: `
@@ -56,7 +47,6 @@ export class TriSkeletonElementButtonComponent {
 }
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tri-skeleton-element[nzType="avatar"]',
   template: `
@@ -87,7 +77,6 @@ export class TriSkeletonElementAvatarComponent implements OnChanges {
 }
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tri-skeleton-element[nzType="input"]',
   template: `
@@ -103,7 +92,6 @@ export class TriSkeletonElementInputComponent {
 }
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tri-skeleton-element[nzType="image"]',
   template: `

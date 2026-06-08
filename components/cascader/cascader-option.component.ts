@@ -6,7 +6,6 @@
 import { Direction } from '@angular/cdk/bidi';
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
@@ -76,7 +75,6 @@ import { TriCascaderOption } from './typings';
     '[class.tri-cascader-menu-item-expand]': '!node.isLeaf',
     '[class.tri-cascader-menu-item-disabled]': 'node.isDisabled'
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class TriCascaderOptionComponent implements OnInit {

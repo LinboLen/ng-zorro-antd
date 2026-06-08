@@ -5,8 +5,9 @@
 
 import { Platform } from '@angular/cdk/platform';
 import {
-  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
+  DestroyRef,
   EventEmitter,
   inject,
   Input,
@@ -25,10 +26,9 @@ import { TriStatisticComponent } from './statistic.component';
 const REFRESH_INTERVAL = 1000 / 30;
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   selector: 'tri-countdown',
   exportAs: 'triCountdown',
+  encapsulation: ViewEncapsulation.None,
   template: `
     <tri-statistic
       [value]="diff"
@@ -44,8 +44,10 @@ const REFRESH_INTERVAL = 1000 / 30;
   imports: [TriStatisticComponent, TriPipesModule]
 })
 export class TriCountdownComponent extends TriStatisticComponent implements OnInit, OnChanges {
-  private ngZone = inject(NgZone);
-  private platform = inject(Platform);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly ngZone = inject(NgZone);
+  private readonly platform = inject(Platform);
 
   @Input() format: string = 'HH:mm:ss';
   @Output() readonly countdownFinish = new EventEmitter<void>();
@@ -73,8 +75,7 @@ export class TriCountdownComponent extends TriStatisticComponent implements OnIn
     }
   }
 
-  override ngOnInit(): void {
-    super.ngOnInit();
+  ngOnInit(): void {
     this.syncTimer();
   }
 

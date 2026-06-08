@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { BACKSPACE, DOWN_ARROW, ENTER, ESCAPE, LEFT_ARROW, RIGHT_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 import {
   CdkConnectedOverlay,
@@ -15,7 +15,6 @@ import { _getEventTarget } from '@angular/cdk/platform';
 import { NgTemplateOutlet, SlicePipe } from '@angular/common';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   computed,
@@ -101,10 +100,9 @@ import {
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'cascader';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   selector: 'tri-cascader,[tri-cascader]',
   exportAs: 'triCascader',
+  encapsulation: ViewEncapsulation.None,
   template: `
     @if (showInput) {
       <div #selectContainer class="tri-select-selector">
@@ -216,7 +214,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'cascader';
         [class.tri-select-dropdown-placement-bottomRight]="placement() === 'bottomRight'"
         [class.tri-select-dropdown-placement-topLeft]="placement() === 'topLeft'"
         [class.tri-select-dropdown-placement-topRight]="placement() === 'topRight'"
-        [class.tri-cascader-dropdown-rtl]="dir === 'rtl'"
+        [class.tri-cascader-dropdown-rtl]="dir() === 'rtl'"
         [animate.enter]="slideAnimationEnter()"
         [animate.leave]="slideAnimationLeave()"
         [noAnimation]="noAnimation?.nzNoAnimation?.()"
@@ -235,7 +233,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'cascader';
       <div
         #menu
         class="tri-cascader-menus"
-        [class.tri-cascader-rtl]="dir === 'rtl'"
+        [class.tri-cascader-rtl]="dir() === 'rtl'"
         [class.tri-cascader-menus-hidden]="!menuOpen()"
         [class.tri-cascader-menu-empty]="shouldShowEmpty"
         [class]="menuClassName"
@@ -269,7 +267,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'cascader';
                   [activated]="isOptionActivated(option, i)"
                   [highlightText]="inSearchingMode ? inputValue : ''"
                   [node]="option"
-                  [dir]="dir"
+                  [dir]="dir()"
                   [checkable]="multiple"
                   (mouseenter)="onOptionMouseEnter(option, i, $event)"
                   (mouseleave)="onOptionMouseLeave(option, i, $event)"
@@ -311,7 +309,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'cascader';
     '[class.tri-select-focused]': 'isFocused',
     '[class.tri-select-multiple]': 'multiple',
     '[class.tri-select-single]': '!multiple',
-    '[class.tri-select-rtl]': `dir === 'rtl'`,
+    '[class.tri-select-rtl]': `dir() === 'rtl'`,
     '(click)': 'onTriggerClick()',
     '(mouseenter)': 'onTriggerMouseEnter()',
     '(mouseleave)': 'onTriggerMouseLeave($event)'
@@ -347,7 +345,7 @@ export class TriCascaderComponent
   private readonly i18nService = inject(TriI18nService);
   private readonly elementRef = inject(ElementRef<HTMLElement>);
   private readonly renderer = inject(Renderer2);
-  private readonly directionality = inject(Directionality);
+  protected readonly dir = inject(Directionality).valueSignal;
   private readonly destroyRef = inject(DestroyRef);
   protected readonly formStatusService = inject(TriFormStatusService, { optional: true });
   protected readonly noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
@@ -466,8 +464,6 @@ export class TriCascaderComponent
   isFocused = false;
 
   locale!: TriCascaderI18nInterface;
-  dir: Direction = 'ltr';
-
   isComposing = false;
 
   protected get overlayOrigin(): ElementRef {
@@ -604,12 +600,6 @@ export class TriCascaderComponent
       .subscribe(() => this.setLocale());
 
     this.#size.set(this.size);
-
-    this.dir = this.directionality.value;
-    this.directionality.change.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-      this.dir = this.directionality.value;
-      srv.$redraw.next();
-    });
 
     this.setupSelectionChangeListener();
     this.setupChangeListener();
@@ -1295,14 +1285,14 @@ export class TriCascaderComponent
               this.moveUpOrDown(true);
               break;
             case LEFT_ARROW:
-              if (this.dir === 'rtl') {
+              if (this.dir() === 'rtl') {
                 this.nextColumn();
               } else {
                 this.prevColumn();
               }
               break;
             case RIGHT_ARROW:
-              if (this.dir === 'rtl') {
+              if (this.dir() === 'rtl') {
                 this.prevColumn();
               } else {
                 this.nextColumn();

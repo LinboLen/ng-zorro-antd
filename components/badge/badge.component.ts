@@ -5,7 +5,6 @@
 
 import { Directionality } from '@angular/cdk/bidi';
 import {
-  ChangeDetectionStrategy,
   Component,
   Input,
   OnChanges,
@@ -31,7 +30,6 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'badge';
   selector: 'tri-badge',
   exportAs: 'triBadge',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TriBadgeSupComponent, TriOutletModule],
   template: `
     @if ((status || color) && !showSup && !count) {

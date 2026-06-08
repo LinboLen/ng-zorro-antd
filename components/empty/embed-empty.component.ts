@@ -5,7 +5,6 @@
 
 import { ComponentPortal, Portal, PortalModule } from '@angular/cdk/portal';
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   inject,
@@ -45,10 +44,9 @@ function getEmptySize(componentName: string): TriEmptySize {
 type TriEmptyContentType = 'component' | 'template' | 'string';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   selector: 'tri-embed-empty',
   exportAs: 'triEmbedEmpty',
+  encapsulation: ViewEncapsulation.None,
   template: `
     @if (content) {
       @if (contentType === 'template' || contentType === 'string') {

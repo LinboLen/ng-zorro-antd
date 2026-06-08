@@ -5,7 +5,6 @@
 
 import {
   Component,
-  ChangeDetectionStrategy,
   ContentChildren,
   QueryList,
   ElementRef,
@@ -33,8 +32,7 @@ import { TriOverflowSuffixDirective } from './overflow-suffix.directive';
     <ng-content select="[appOverflowRest]" />
     <ng-content select="[appOverflowSuffix]" />
   `,
-  providers: [TriResizeObserver],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  providers: [TriResizeObserver]
 })
 export class TriOverflowContainerComponent implements OnInit, AfterContentInit {
   private resizeObserver = inject(TriResizeObserver);

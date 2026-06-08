@@ -4,15 +4,7 @@
  */
 
 import { NgTemplateOutlet } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  TemplateRef,
-  ViewEncapsulation
-} from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, TemplateRef, ViewEncapsulation } from '@angular/core';
 
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -21,7 +13,6 @@ import { TriTableSortOrder } from '../table.types';
 
 @Component({
   selector: 'tri-table-sorters',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
     <span class="tri-table-column-title"><ng-template [ngTemplateOutlet]="contentTemplate" /></span>

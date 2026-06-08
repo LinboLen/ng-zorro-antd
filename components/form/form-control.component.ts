@@ -7,7 +7,6 @@ import {
   AfterContentInit,
   AnimationCallbackEvent,
   booleanAttribute,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChild,
@@ -39,7 +38,6 @@ import { TriFormDirective } from './form.directive';
   selector: 'tri-form-control',
   exportAs: 'triFormControl',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="tri-form-item-control-input">
       <div class="tri-form-item-control-input-content">

@@ -4,16 +4,7 @@
  */
 
 import { DecimalPipe } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-  output,
-  signal,
-  TemplateRef,
-  ViewEncapsulation
-} from '@angular/core';
+import { Component, computed, input, output, signal, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
@@ -27,7 +18,6 @@ import { TriItemProps } from './typings';
 
 @Component({
   selector: 'tri-check-list-content',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [TriIconModule, TriProgressModule, TriOutletModule, TriCheckboxModule, TriButtonModule, FormsModule, DecimalPipe],
   template: `

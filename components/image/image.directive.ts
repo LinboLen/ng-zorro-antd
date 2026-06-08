@@ -3,10 +3,9 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import {
   booleanAttribute,
-  ChangeDetectorRef,
   DestroyRef,
   Directive,
   DOCUMENT,
@@ -45,8 +44,7 @@ export class TriImageDirective implements OnInit, OnChanges {
   public configService = inject(TriConfigService);
   private elementRef = inject(ElementRef);
   private imageService = inject(TriImageService);
-  protected cdr = inject(ChangeDetectorRef);
-  private directionality = inject(Directionality);
+  protected readonly dir = inject(Directionality).valueSignal;
   private destroyRef = inject(DestroyRef);
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
@@ -57,7 +55,6 @@ export class TriImageDirective implements OnInit, OnChanges {
   @Input() @WithConfig() placeholder: string | null = null;
   @Input() @WithConfig() scaleStep: number | null = null;
 
-  dir?: Direction;
   backLoadImage!: HTMLImageElement;
   status: ImageStatusType = 'normal';
   private backLoadDestroy$ = new Subject<void>();
@@ -71,13 +68,6 @@ export class TriImageDirective implements OnInit, OnChanges {
     this.backLoad();
     if (this.parentGroup) {
       this.parentGroup.addImage(this);
-    }
-    if (this.directionality) {
-      this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-        this.dir = direction;
-        this.cdr.detectChanges();
-      });
-      this.dir = this.directionality.value;
     }
   }
 
@@ -101,7 +91,7 @@ export class TriImageDirective implements OnInit, OnChanges {
       const previewRef = this.imageService.preview(
         previewImages,
         {
-          direction: this.dir
+          direction: this.dir()
         },
         scaleStepMap
       );
@@ -110,7 +100,7 @@ export class TriImageDirective implements OnInit, OnChanges {
       // preview not inside image group
       const previewImages = [{ src: this.src, srcset: this.srcset }];
       this.imageService.preview(previewImages, {
-        direction: this.dir,
+        direction: this.dir(),
         scaleStep: this.scaleStep ?? TRI_DEFAULT_SCALE_STEP
       });
     }

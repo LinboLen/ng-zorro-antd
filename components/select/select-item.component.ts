@@ -6,7 +6,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
@@ -22,7 +21,6 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 @Component({
   selector: 'tri-select-item',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ng-container *stringTemplateOutlet="contentTemplateOutlet; stringTemplateOutletContext: templateOutletContext">
       @if (displayLabelInHtml) {

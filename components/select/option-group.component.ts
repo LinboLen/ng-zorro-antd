@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnChanges, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
@@ -12,8 +12,7 @@ import { TriSafeAny } from 'ng-zorro-antd/core/types';
   selector: 'tri-option-group',
   exportAs: 'triOptionGroup',
   template: `<ng-content />`,
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  encapsulation: ViewEncapsulation.None
 })
 export class TriOptionGroupComponent implements OnChanges {
   @Input() label: string | number | TemplateRef<TriSafeAny> | null = null;

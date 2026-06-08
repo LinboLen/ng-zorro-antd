@@ -19,9 +19,9 @@ import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
   booleanAttribute,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  computed,
   ComponentRef,
   ContentChild,
   DestroyRef,
@@ -69,12 +69,13 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'drawer';
 @Component({
   selector: 'tri-drawer',
   exportAs: 'triDrawer',
+  imports: [TriNoAnimationDirective, TriOutletModule, TriIconModule, PortalModule, NgTemplateOutlet, CdkScrollable],
   template: `
     <ng-template #drawerTemplate>
       <div
         class="tri-drawer"
         [noAnimation]="noAnimation"
-        [class.tri-drawer-rtl]="dir === 'rtl'"
+        [class.tri-drawer-rtl]="dir() === 'rtl'"
         [class.tri-drawer-open]="isOpen"
         [class.no-mask]="!mask"
         [class.tri-drawer-top]="placement === 'top'"
@@ -147,24 +148,21 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'drawer';
         </div>
       </div>
     </ng-template>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TriNoAnimationDirective, TriOutletModule, TriIconModule, PortalModule, NgTemplateOutlet, CdkScrollable]
+  `
 })
 export class TriDrawerComponent<T extends {} = TriSafeAny, R = TriSafeAny, D extends Partial<T> = TriSafeAny>
   extends TriDrawerRef<T, R>
   implements OnInit, AfterViewInit, OnChanges, TriDrawerOptionsOfComponent
 {
-  private cdr = inject(ChangeDetectorRef);
-  private renderer = inject(Renderer2);
-  private injector = inject(Injector);
-  private changeDetectorRef = inject(ChangeDetectorRef);
-  private focusTrapFactory = inject(FocusTrapFactory);
-  private viewContainerRef = inject(ViewContainerRef);
-  private overlayKeyboardDispatcher = inject(OverlayKeyboardDispatcher);
-  private directionality = inject(Directionality);
-  private destroyRef = inject(DestroyRef);
-  private document = inject(DOCUMENT);
+  private readonly renderer = inject(Renderer2);
+  private readonly injector = inject(Injector);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly focusTrapFactory = inject(FocusTrapFactory);
+  private readonly viewContainerRef = inject(ViewContainerRef);
+  private readonly overlayKeyboardDispatcher = inject(OverlayKeyboardDispatcher);
+  private readonly directionality = inject(Directionality);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly document = inject(DOCUMENT);
 
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
@@ -299,7 +297,7 @@ export class TriDrawerComponent<T extends {} = TriSafeAny, R = TriSafeAny, D ext
   // from service config
   @WithConfig() direction?: Direction = undefined;
 
-  dir: Direction = 'ltr';
+  protected readonly dir = computed(() => this.direction || this.directionality.valueSignal());
 
   constructor() {
     super();
@@ -310,12 +308,6 @@ export class TriDrawerComponent<T extends {} = TriSafeAny, R = TriSafeAny, D ext
   }
 
   ngOnInit(): void {
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-    this.dir = this.direction || this.directionality.value;
-
     this.attachOverlay();
     this.updateOverlayStyle();
     this.updateBodyOverflow();

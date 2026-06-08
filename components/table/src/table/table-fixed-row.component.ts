@@ -6,7 +6,6 @@
 import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
-  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   ElementRef,
@@ -23,7 +22,6 @@ import { TriTableStyleService } from '../table-style.service';
 
 @Component({
   selector: 'tr[nz-table-fixed-row],tr[nzExpand]',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
     <td class="nz-disable-td tri-table-cell" #tdElement>

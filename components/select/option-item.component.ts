@@ -6,7 +6,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   ElementRef,
@@ -47,7 +46,6 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
       </div>
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
     class: 'tri-select-item ant-select-item-option',

@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import {
@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed, fakeAsync, inject as testingInject, tick } f
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
-import { dispatchKeyboardEvent } from 'ng-zorro-antd/core/testing';
+import { dispatchKeyboardEvent, provideMockDirectionality } from 'ng-zorro-antd/core/testing';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
@@ -645,19 +645,24 @@ describe('NzDrawerComponent', () => {
     });
   });
   describe('RTL', () => {
-    let component: TriTestDrawerRtlComponent;
-    let fixture: ComponentFixture<TriTestDrawerRtlComponent>;
+    let component: TriTestDrawerComponent;
+    let fixture: ComponentFixture<TriTestDrawerComponent>;
     let overlayContainerElement: HTMLElement;
 
     beforeEach(() => {
       // todo: use zoneless
       TestBed.configureTestingModule({
-        providers: [provideNzNoAnimation(), provideNzIconsTesting(), provideZoneChangeDetection()]
+        providers: [
+          provideNzNoAnimation(),
+          provideNzIconsTesting(),
+          provideZoneChangeDetection(),
+          provideMockDirectionality()
+        ]
       });
     });
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(TriTestDrawerRtlComponent);
+      fixture = TestBed.createComponent(TriTestDrawerComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
     });
@@ -668,17 +673,38 @@ describe('NzDrawerComponent', () => {
       })
     );
 
-    it('should className correct on dir change', () => {
-      component.open();
-      fixture.detectChanges();
-      expect(overlayContainerElement.querySelector('.ant-drawer')!.classList.contains('ant-drawer-rtl')).toBe(true);
-
-      fixture.componentInstance.direction = 'ltr';
+    afterEach(() => {
       component.close();
       fixture.detectChanges();
+    });
+
+    it('should className correct on dir change', () => {
+      const dir = TestBed.inject(Directionality);
       component.open();
       fixture.detectChanges();
       expect(overlayContainerElement.querySelector('.ant-drawer')!.classList.contains('ant-drawer-rtl')).toBe(false);
+
+      dir.valueSignal.set('rtl');
+      fixture.detectChanges();
+      expect(overlayContainerElement.querySelector('.ant-drawer')!.classList.contains('ant-drawer-rtl')).toBe(true);
+
+      dir.valueSignal.set('ltr');
+      fixture.detectChanges();
+      expect(overlayContainerElement.querySelector('.ant-drawer')!.classList.contains('ant-drawer-rtl')).toBe(false);
+    });
+  });
+  describe('animation', () => {
+    beforeEach(() => {
+      // todo: use zoneless
+      TestBed.configureTestingModule({
+        providers: [provideNzIconsTesting(), provideZoneChangeDetection()]
+      });
+    });
+
+    it('should get correct mask animation class', () => {
+      const fixture = TestBed.createComponent(TriDrawerComponent);
+      expect(fixture.componentInstance['maskAnimationEnter']()).toBe('ant-drawer-mask-motion-enter');
+      expect(fixture.componentInstance['maskAnimationLeave']()).toBe('ant-drawer-mask-motion-leave');
     });
   });
   describe('animation', () => {
@@ -950,34 +976,5 @@ export class TriDrawerCustomComponent {
 
   close(): void {
     this.drawerRef.close(this.value);
-  }
-}
-
-@Component({
-  imports: [BidiModule, TriDrawerModule],
-  template: `
-    <div [dir]="direction">
-      <tri-drawer [visible]="visible" (onClose)="close()">
-        <ng-container *drawerContent>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-        </ng-container>
-      </tri-drawer>
-    </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
-})
-export class TriTestDrawerRtlComponent {
-  @ViewChild(Dir) dir!: Dir;
-  direction: Direction = 'rtl';
-  visible = false;
-
-  open(): void {
-    this.visible = true;
-  }
-
-  close(): void {
-    this.visible = false;
   }
 }

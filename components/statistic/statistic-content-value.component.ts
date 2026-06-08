@@ -4,24 +4,14 @@
  */
 
 import { getLocaleNumberSymbol, NgTemplateOutlet, NumberSymbol } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  Input,
-  LOCALE_ID,
-  OnChanges,
-  TemplateRef,
-  ViewEncapsulation
-} from '@angular/core';
+import { Component, inject, Input, LOCALE_ID, OnChanges, TemplateRef, ViewEncapsulation } from '@angular/core';
 
 import { TriStatisticValueType } from './typings';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   selector: 'tri-statistic-content-value',
   exportAs: 'triStatisticContentValue',
+  encapsulation: ViewEncapsulation.None,
   template: `
     @if (valueTemplate) {
       <ng-container [ngTemplateOutlet]="valueTemplate" [ngTemplateOutletContext]="{ $implicit: value }" />

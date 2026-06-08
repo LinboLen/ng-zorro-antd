@@ -7,7 +7,6 @@ import { A11yModule } from '@angular/cdk/a11y';
 import { OverlayModule } from '@angular/cdk/overlay';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   Directive,
@@ -240,7 +239,6 @@ export class TriPopconfirmDirective extends TriTooltipBaseDirective {
     TriButtonModule,
     TriI18nModule
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class TriPopconfirmComponent extends TriTooltipComponent {

@@ -6,7 +6,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   DestroyRef,
@@ -50,10 +49,9 @@ function labelsOfType(type: TriCronExpressionType): TimeType[] {
 }
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   selector: 'tri-cron-expression',
   exportAs: 'triCronExpression',
+  encapsulation: ViewEncapsulation.None,
   template: `
     <div class="tri-cron-expression">
       <div class="tri-cron-expression-content">

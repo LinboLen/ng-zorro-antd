@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { TriSizeLDSType } from 'ng-zorro-antd/core/types';
 
@@ -13,7 +13,6 @@ import { defaultColor } from './src/util/util';
 @Component({
   selector: 'tri-color-block',
   exportAs: 'triColorBlock',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgAntdColorPickerModule],
   template: `<ng-antd-color-block [color]="color" (onClick)="onClick.emit()" />`,
   host: {

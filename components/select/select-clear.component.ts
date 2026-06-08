@@ -4,15 +4,7 @@
  */
 
 import { NgTemplateOutlet } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  TemplateRef,
-  ViewEncapsulation
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -20,7 +12,6 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 @Component({
   selector: 'tri-select-clear',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (clearIcon) {
       <ng-template [ngTemplateOutlet]="clearIcon" />

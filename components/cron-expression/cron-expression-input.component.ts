@@ -3,15 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewEncapsulation,
-  booleanAttribute
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation, booleanAttribute } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriInputModule } from 'ng-zorro-antd/input';
@@ -19,10 +11,9 @@ import { TriInputModule } from 'ng-zorro-antd/input';
 import { CronChangeType, TimeType } from './typings';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   selector: 'tri-cron-expression-input',
   exportAs: 'triCronExpressionInput',
+  encapsulation: ViewEncapsulation.None,
   template: `
     <div class="tri-cron-expression-input">
       <input

@@ -6,7 +6,6 @@
 import { CdkTreeNode, CdkTreeNodeDef, CdkTreeNodeOutletContext } from '@angular/cdk/tree';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   Directive,
   effect,
@@ -37,7 +36,6 @@ export interface TriTreeVirtualNodeData<T> {
 @Component({
   selector: 'tri-tree-node:not([builtin])',
   exportAs: 'triTreeNode',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: CdkTreeNode,

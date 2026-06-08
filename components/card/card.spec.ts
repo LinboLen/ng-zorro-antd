@@ -3,20 +3,14 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  NO_ERRORS_SCHEMA,
-  provideZoneChangeDetection,
-  ViewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, NO_ERRORS_SCHEMA, provideZoneChangeDetection } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Subject } from 'rxjs';
 
 import { TriConfigService } from 'ng-zorro-antd/core/config';
+import { testDirectionality } from 'ng-zorro-antd/core/testing';
 import { TriSizeDSType } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
@@ -137,18 +131,7 @@ describe('card', () => {
     expect(card.nativeElement.classList).toContain('ant-card-small');
   });
 
-  describe('RTL', () => {
-    it('should card className correct on dir change', () => {
-      const fixture = TestBed.createComponent(TriTestCardRtlComponent);
-      const card = fixture.debugElement.query(By.directive(TriCardComponent));
-      fixture.detectChanges();
-      expect(card.nativeElement.classList).toContain('ant-card-rtl');
-
-      fixture.componentInstance.direction = 'ltr';
-      fixture.detectChanges();
-      expect(card.nativeElement.classList).not.toContain('ant-card-rtl');
-    });
-  });
+  testDirectionality(() => TestCardSizeComponent, By.directive(TriCardComponent), 'ant-card');
 });
 
 @Component({
@@ -164,24 +147,6 @@ describe('card', () => {
 })
 class TestCardSizeComponent {
   size: TriSizeDSType = 'default';
-}
-
-@Component({
-  imports: [BidiModule, TriCardModule],
-  template: `
-    <div [dir]="direction">
-      <tri-card>
-        <p>Card content</p>
-        <p>Card content</p>
-        <p>Card content</p>
-      </tri-card>
-    </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
-})
-export class TriTestCardRtlComponent {
-  @ViewChild(Dir) dir!: Dir;
-  direction: Direction = 'rtl';
 }
 
 describe('card component', () => {

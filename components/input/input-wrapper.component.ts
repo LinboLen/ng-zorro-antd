@@ -9,7 +9,6 @@ import { NgTemplateOutlet } from '@angular/common';
 import {
   afterNextRender,
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   contentChild,
@@ -169,7 +168,6 @@ export interface TriCountConfig {
     { provide: TRI_SPACE_COMPACT_ITEM_TYPE, useValue: 'input' },
     { provide: TRI_INPUT_WRAPPER, useExisting: forwardRef(() => TriInputWrapperComponent) }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   hostDirectives: [TriSpaceCompactItemDirective],
   host: {

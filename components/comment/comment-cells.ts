@@ -6,7 +6,6 @@
 import { CdkPortalOutlet, TemplatePortal } from '@angular/cdk/portal';
 import {
   AfterViewInit,
-  ChangeDetectionStrategy,
   Component,
   Directive,
   inject,
@@ -56,8 +55,7 @@ export class TriCommentActionHostDirective extends CdkPortalOutlet implements On
   selector: 'tri-comment-action',
   exportAs: 'triCommentAction',
   template: '<ng-template><ng-content /></ng-template>',
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  encapsulation: ViewEncapsulation.None
 })
 export class TriCommentActionComponent implements OnInit {
   @ViewChild(TemplateRef, { static: true }) implicitContent!: TemplateRef<void>;

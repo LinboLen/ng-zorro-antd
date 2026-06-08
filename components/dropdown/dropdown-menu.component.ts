@@ -3,16 +3,13 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import {
   AfterContentInit,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  DestroyRef,
   ElementRef,
   EventEmitter,
-  OnInit,
   Renderer2,
   TemplateRef,
   ViewChild,
@@ -21,7 +18,6 @@ import {
   inject,
   type AnimationCallbackEvent
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject } from 'rxjs';
 
 import { TriNoAnimationDirective, slideAnimationEnter, slideAnimationLeave } from 'ng-zorro-antd/core/animation';
@@ -41,11 +37,12 @@ export type TriPlacementType = 'bottomLeft' | 'bottomCenter' | 'bottomRight' | '
       useValue: true
     }
   ],
+  imports: [TriNoAnimationDirective],
   template: `
     <ng-template>
       <div
         class="tri-dropdown"
-        [class.tri-dropdown-rtl]="dir === 'rtl'"
+        [class.tri-dropdown-rtl]="dir() === 'rtl'"
         [class.tri-dropdown-show-arrow]="arrow"
         [class.tri-dropdown-placement-bottomLeft]="placement === 'bottomLeft'"
         [class.tri-dropdown-placement-bottomRight]="placement === 'bottomRight'"
@@ -69,19 +66,16 @@ export type TriPlacementType = 'bottomLeft' | 'bottomCenter' | 'bottomRight' | '
       </div>
     </ng-template>
   `,
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TriNoAnimationDirective]
+  encapsulation: ViewEncapsulation.None
 })
-export class TriDropdownMenuComponent implements AfterContentInit, OnInit {
-  private cdr = inject(ChangeDetectorRef);
-  private elementRef = inject(ElementRef);
-  private renderer = inject(Renderer2);
-  public viewContainerRef = inject(ViewContainerRef);
-  private directionality = inject(Directionality);
-  private destroyRef = inject(DestroyRef);
-  noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
-  public menuService = inject(MenuService);
+export class TriDropdownMenuComponent implements AfterContentInit {
+  public readonly viewContainerRef = inject(ViewContainerRef);
+  public readonly menuService = inject(MenuService);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly elementRef = inject(ElementRef);
+  private readonly renderer = inject(Renderer2);
+  protected readonly dir = inject(Directionality).valueSignal;
+  protected readonly noAnimation = inject(TriNoAnimationDirective, { host: true, optional: true });
 
   isChildSubMenuOpen$ = this.menuService.isChildSubMenuOpen$;
   descendantMenuItemClick$ = this.menuService.descendantMenuItemClick$;
@@ -93,7 +87,6 @@ export class TriDropdownMenuComponent implements AfterContentInit, OnInit {
   overlayStyle: IndexableObject = {};
   arrow: boolean = false;
   placement: TriPlacementType | 'bottom' | 'top' = 'bottomLeft';
-  dir: Direction = 'ltr';
 
   protected readonly dropdownAnimationEnter = slideAnimationEnter();
   protected readonly dropdownAnimationLeave = slideAnimationLeave();
@@ -114,15 +107,6 @@ export class TriDropdownMenuComponent implements AfterContentInit, OnInit {
   setValue<T extends keyof TriDropdownMenuComponent>(key: T, value: this[T]): void {
     this[key] = value;
     this.cdr.markForCheck();
-  }
-
-  ngOnInit(): void {
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-
-    this.dir = this.directionality.value;
   }
 
   ngAfterContentInit(): void {

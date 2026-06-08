@@ -90,7 +90,6 @@ import { defaultColor, generateColor } from './util/util';
       }
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'tri-color-picker-inner'
   }

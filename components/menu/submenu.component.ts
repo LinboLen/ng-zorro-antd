@@ -10,7 +10,6 @@ import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterContentInit,
   booleanAttribute,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChildren,
@@ -65,7 +64,6 @@ const listOfHorizontalPositions = [
   exportAs: 'triSubmenu',
   providers: [TriSubmenuService],
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div
       tri-submenu-title

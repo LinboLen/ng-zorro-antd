@@ -3,11 +3,11 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
-import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { testDirectionality } from 'ng-zorro-antd/core/testing';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
 import { TriStatisticComponent } from './statistic.component';
@@ -52,23 +52,7 @@ describe('statistic', () => {
     });
   });
 
-  describe('RTL', () => {
-    let fixture: ComponentFixture<TriTestStatisticRtlComponent>;
-    let statisticEl: DebugElement;
-    beforeEach(() => {
-      fixture = TestBed.createComponent(TriTestStatisticRtlComponent);
-      statisticEl = fixture.debugElement.query(By.directive(TriStatisticComponent));
-    });
-
-    it('should className correct on dir change', () => {
-      fixture.detectChanges();
-      expect(statisticEl.nativeElement.classList).toContain('ant-statistic-rtl');
-
-      fixture.componentInstance.direction = 'ltr';
-      fixture.detectChanges();
-      expect(statisticEl.nativeElement.classList).not.toContain('ant-statistic-rtl');
-    });
-  });
+  testDirectionality(() => TriTestStatisticComponent, By.directive(TriStatisticComponent), 'ant-statistic');
 });
 
 @Component({
@@ -83,18 +67,4 @@ export class TriTestStatisticComponent {
   prefix = '';
   suffix = '';
   loading = false;
-}
-
-@Component({
-  imports: [BidiModule, TriStatisticModule],
-  template: `
-    <div [dir]="direction">
-      <tri-statistic [value]="123.45" title="test title" />
-    </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
-})
-export class TriTestStatisticRtlComponent {
-  @ViewChild(Dir) dir!: Dir;
-  direction: Direction = 'rtl';
 }

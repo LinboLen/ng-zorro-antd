@@ -3,11 +3,10 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 import { Platform } from '@angular/cdk/platform';
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -53,10 +52,9 @@ import { TriSliderTrackComponent } from './track.component';
 import { TriExtendedMark, TriMarks, TriSliderHandler, TriSliderShowTooltip, TriSliderValue } from './typings';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   selector: 'tri-slider',
   exportAs: 'triSlider',
+  encapsulation: ViewEncapsulation.None,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -72,7 +70,7 @@ import { TriExtendedMark, TriMarks, TriSliderHandler, TriSliderShowTooltip, TriS
       [offset]="track.offset!"
       [length]="track.length!"
       [reverse]="reverse"
-      [dir]="dir"
+      [dir]="dir()"
     />
     @if (marksArray) {
       <tri-slider-step
@@ -97,7 +95,7 @@ import { TriExtendedMark, TriMarks, TriSliderHandler, TriSliderShowTooltip, TriS
         [tooltipVisible]="tooltipVisible"
         [tooltipPlacement]="tooltipPlacement"
         [dragging]="dragging()"
-        [dir]="dir"
+        [dir]="dir()"
         (focusin)="onHandleFocusIn($index)"
       />
     }
@@ -117,7 +115,7 @@ import { TriExtendedMark, TriMarks, TriSliderHandler, TriSliderShowTooltip, TriS
   imports: [TriSliderTrackComponent, TriSliderStepComponent, TriSliderHandleComponent, TriSliderMarksComponent],
   host: {
     class: 'tri-slider',
-    '[class.tri-slider-rtl]': `dir === 'rtl'`,
+    '[class.tri-slider-rtl]': `dir() === 'rtl'`,
     '[class.tri-slider-disabled]': 'disabled',
     '[class.tri-slider-vertical]': 'vertical',
     '[class.tri-slider-with-marks]': 'marksArray',
@@ -125,11 +123,11 @@ import { TriExtendedMark, TriMarks, TriSliderHandler, TriSliderShowTooltip, TriS
   }
 })
 export class TriSliderComponent implements ControlValueAccessor, OnInit, OnChanges {
-  public slider = inject(ElementRef<HTMLElement>);
-  private destroyRef = inject(DestroyRef);
-  private cdr = inject(ChangeDetectorRef);
-  private platform = inject(Platform);
-  private directionality = inject(Directionality);
+  public readonly slider = inject(ElementRef<HTMLElement>);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly platform = inject(Platform);
+  protected readonly dir = inject(Directionality).valueSignal;
 
   @ViewChildren(TriSliderHandleComponent) handlerComponents!: QueryList<TriSliderHandleComponent>;
 
@@ -158,7 +156,6 @@ export class TriSliderComponent implements ControlValueAccessor, OnInit, OnChang
   handles: TriSliderHandler[] = []; // Handles' offset
   marksArray: TriExtendedMark[] | null = null; // "steps" in array type with more data & FILTER out the invalid mark
   bounds: { lower: TriSliderValue | null; upper: TriSliderValue | null } = { lower: null, upper: null }; // now for nz-slider-step
-  dir: Direction = 'ltr';
 
   readonly dragging = signal(false);
   private dragStart$?: Observable<number>;
@@ -170,14 +167,6 @@ export class TriSliderComponent implements ControlValueAccessor, OnInit, OnChang
   private isNzDisableFirstChange = true;
 
   ngOnInit(): void {
-    this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-      this.updateTrackAndHandles();
-      this.onValueChange(this.getValue(true));
-    });
-
     this.handles = generateHandlers(this.range ? 2 : 1);
     this.marksArray = this.marks ? this.generateMarkItems(this.marks) : null;
     this.bindDraggingHandlers();
@@ -242,7 +231,8 @@ export class TriSliderComponent implements ControlValueAccessor, OnInit, OnChang
 
     e.preventDefault();
 
-    const step = (isDecrease ? -this.step : this.step) * (this.reverse ? -1 : 1) * (this.dir === 'rtl' ? -1 : 1);
+    const step =
+      (isDecrease ? -this.step : this.step) * (this.reverse ? -1 : 1) * (this.dir() === 'rtl' ? -1 : 1);
     const newVal = this.range
       ? (this.value as number[])[this.activeValueIndex!] + step
       : (this.value as number) + step;
@@ -358,13 +348,14 @@ export class TriSliderComponent implements ControlValueAccessor, OnInit, OnChang
   }
 
   private getLogicalValue(value: number): number {
+    const rtl = !this.vertical && this.dir() === 'rtl';
     if (this.reverse) {
-      if (!this.vertical && this.dir === 'rtl') {
+      if (rtl) {
         return value;
       }
       return this.max - value + this.min;
     }
-    if (!this.vertical && this.dir === 'rtl') {
+    if (rtl) {
       return this.max - value + this.min;
     }
 

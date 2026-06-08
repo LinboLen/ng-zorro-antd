@@ -4,16 +4,7 @@
  */
 
 import { Directionality } from '@angular/cdk/bidi';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  inject,
-  Input,
-  Output,
-  TemplateRef,
-  ViewEncapsulation
-} from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -25,7 +16,6 @@ import { TriMenuModeType, TriSubmenuTrigger } from './menu.types';
   selector: '[tri-submenu-title]',
   exportAs: 'triSubmenuTitle',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (icon) {
       <tri-icon [type]="icon" />

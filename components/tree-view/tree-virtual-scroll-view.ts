@@ -6,7 +6,6 @@
 import { CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { CdkTree, CdkTreeNodeOutletContext } from '@angular/cdk/tree';
 import {
-  ChangeDetectionStrategy,
   Component,
   forwardRef,
   inject,
@@ -46,7 +45,6 @@ const DEFAULT_SIZE = 28;
     <ng-container treeNodeOutlet />
   `,
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     TriAnimationTreeCollapseService,
     { provide: TriTreeView, useExisting: forwardRef(() => TriTreeVirtualScrollViewComponent) },

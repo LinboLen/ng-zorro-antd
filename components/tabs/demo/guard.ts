@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { TriModalModule, TriModalService } from 'ng-zorro-antd/modal';
@@ -13,8 +13,7 @@ import { TriTabsCanDeactivateFn, TriTabsModule } from 'ng-zorro-antd/tabs';
         <tri-tab [title]="'Tab' + tab">Content of tab {{ tab }}</tri-tab>
       }
     </tri-tabs>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class TriDemoTabsGuardComponent {
   tabs = [1, 2, 3, 4];

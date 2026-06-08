@@ -6,7 +6,6 @@
 import { Directionality } from '@angular/cdk/bidi';
 import { Platform } from '@angular/cdk/platform';
 import {
-  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   DOCUMENT,
@@ -48,7 +47,6 @@ const NOOP_EVENT = {} as Event;
       <ng-content />
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class TriAffixComponent implements OnChanges {
@@ -57,7 +55,7 @@ export class TriAffixComponent implements OnChanges {
   private readonly platform = inject(Platform);
   private readonly renderer = inject(Renderer2);
   private readonly resizeObserver = inject(TriResizeObserver);
-  private readonly directionality = inject(Directionality);
+  private readonly dir = inject(Directionality).valueSignal;
   private readonly destroyRef = inject(DestroyRef);
   private readonly document = inject(DOCUMENT);
   private readonly placeholderNode: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
@@ -91,7 +89,8 @@ export class TriAffixComponent implements OnChanges {
 
   constructor() {
     effect(() => {
-      this.directionality.valueSignal();
+      // should update position on dir change
+      void this.dir();
       this.registerListeners();
       this.updatePosition(NOOP_EVENT);
     });
@@ -121,7 +120,7 @@ export class TriAffixComponent implements OnChanges {
     const el = this.#target === window ? this.document.body : (this.#target as Element);
     this.positionChangeSubscription = this.ngZone.runOutsideAngular(() =>
       merge(
-        ...Object.keys(AffixRespondEvents).map(evName => fromEvent(this.#target, evName)),
+        ...Object.keys(AffixRespondEvents).map(eventName => fromEvent(this.#target, eventName)),
         this.offsetChanged$.pipe(map(() => NOOP_EVENT)),
         this.resizeObserver.observe(el)
       )
@@ -176,7 +175,6 @@ export class TriAffixComponent implements OnChanges {
     } else {
       wrapEl.classList.remove(TRI_AFFIX_CLS_PREFIX);
     }
-    this.updateRtlClass();
     if ((affixStyle && !originalAffixStyle) || (!affixStyle && originalAffixStyle)) {
       this.change.emit(fixed);
     }
@@ -284,15 +282,6 @@ export class TriAffixComponent implements OnChanges {
 
     if (e.type === 'resize') {
       this.syncPlaceholderStyle(e);
-    }
-  }
-
-  private updateRtlClass(): void {
-    const wrapEl = this.fixedEl.nativeElement;
-    if (this.directionality.valueSignal() === 'rtl' && wrapEl.classList.contains(TRI_AFFIX_CLS_PREFIX)) {
-      wrapEl.classList.add(`${TRI_AFFIX_CLS_PREFIX}-rtl`);
-    } else {
-      wrapEl.classList.remove(`${TRI_AFFIX_CLS_PREFIX}-rtl`);
     }
   }
 }

@@ -3,16 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  ElementRef,
-  inject,
-  input,
-  signal
-} from '@angular/core';
+import { booleanAttribute, Component, computed, ElementRef, inject, input, signal } from '@angular/core';
 
 import { TRI_FORM_SIZE } from 'ng-zorro-antd/core/form';
 import { TriSizeLDSType } from 'ng-zorro-antd/core/types';
@@ -31,8 +22,7 @@ import { TRI_SPACE_COMPACT_ITEMS, TRI_SPACE_COMPACT_SIZE } from './space-compact
   providers: [
     { provide: TRI_SPACE_COMPACT_SIZE, useFactory: () => inject(TriSpaceCompactComponent).finalSize },
     { provide: TRI_SPACE_COMPACT_ITEMS, useFactory: () => signal([]) }
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  ]
 })
 export class TriSpaceCompactComponent {
   private readonly formSize = inject(TRI_FORM_SIZE, { optional: true });

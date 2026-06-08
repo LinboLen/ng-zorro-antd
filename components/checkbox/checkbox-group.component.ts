@@ -6,7 +6,6 @@
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { Directionality } from '@angular/cdk/bidi';
 import {
-  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   ElementRef,
@@ -21,7 +20,7 @@ import {
   signal,
   untracked
 } from '@angular/core';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
@@ -68,22 +67,19 @@ export interface TriCheckboxOption {
     class: 'tri-checkbox-group',
     '[class.tri-checkbox-group-rtl]': `dir() === 'rtl'`
   },
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  encapsulation: ViewEncapsulation.None
 })
 export class TriCheckboxGroupComponent implements ControlValueAccessor {
   private onChange: OnChangeType = () => {};
   private onTouched: OnTouchedType = () => {};
   private isDisabledFirstChange = true;
-  private readonly directionality = inject(Directionality);
+  protected readonly dir = inject(Directionality).valueSignal;
 
   readonly name = input<string | null>(null);
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly options = input<TriCheckboxOption[] | string[] | number[]>([]);
   readonly value = signal<Array<TriCheckboxOption['value']> | null>(null);
   readonly finalDisabled = linkedSignal(() => this.disabled());
-
-  protected readonly dir = toSignal(this.directionality.change, { initialValue: this.directionality.value });
   protected readonly normalizedOptions = computed(() => normalizeOptions(this.options()));
 
   constructor() {

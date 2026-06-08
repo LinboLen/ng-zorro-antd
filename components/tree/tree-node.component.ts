@@ -4,7 +4,6 @@
  */
 
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -96,7 +95,6 @@ import { TriTreeNodeTitleComponent } from './tree-node-title.component';
       (contextmenu)="contextMenu($event)"
     />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.tri-select-tree-treenode]': `selectMode`,
     '[class.tri-select-tree-treenode-disabled]': `selectMode && isDisabled`,

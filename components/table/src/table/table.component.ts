@@ -3,12 +3,11 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
-  ChangeDetectionStrategy,
   Component,
   ContentChild,
   EventEmitter,
@@ -60,7 +59,6 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'table';
   selector: 'tri-table',
   exportAs: 'triTable',
   providers: [TriTableStyleService, TriTableDataService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
     <tri-spin [delay]="loadingDelay" [spinning]="loading" [indicator]="loadingIndicator">
@@ -70,7 +68,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'table';
       <div
         #tableMainElement
         class="tri-table"
-        [class.tri-table-rtl]="dir === 'rtl'"
+        [class.tri-table-rtl]="dir() === 'rtl'"
         [class.tri-table-fixed-header]="data.length && scrollY"
         [class.tri-table-fixed-column]="scrollX"
         [class.tri-table-has-fix-left]="hasFixLeft"
@@ -146,7 +144,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'table';
   `,
   host: {
     class: 'tri-table-wrapper',
-    '[class.tri-table-wrapper-rtl]': 'dir === "rtl"',
+    '[class.tri-table-wrapper-rtl]': 'dir() === "rtl"',
     '[class.tri-table-custom-column]': `customColumn.length`
   },
   imports: [
@@ -166,7 +164,7 @@ export class TriTableComponent<T> implements OnInit, OnChanges, AfterViewInit {
   private cdr = inject(ChangeDetectorRef);
   private tableStyleService = inject(TriTableStyleService);
   private tableDataService = inject(TriTableDataService<T>);
-  private directionality = inject(Directionality);
+  protected readonly dir = inject(Directionality).valueSignal;
   private destroyRef = inject(DestroyRef);
 
   @Input() tableLayout: TriTableLayout = 'auto';
@@ -224,7 +222,6 @@ export class TriTableComponent<T> implements OnInit, OnChanges, AfterViewInit {
   hasFixRight = false;
   _showPagination = true;
   private templateMode$ = new BehaviorSubject<boolean>(false);
-  dir: Direction = 'ltr';
   @ContentChild(TriTableVirtualScrollDirective, { static: false })
   virtualScrollDirective!: TriTableVirtualScrollDirective<T>;
   @ViewChild(TriTableInnerScrollComponent) tableInnerScrollComponent!: TriTableInnerScrollComponent<T>;
@@ -245,12 +242,6 @@ export class TriTableComponent<T> implements OnInit, OnChanges, AfterViewInit {
     const { pageIndexDistinct$, pageSizeDistinct$, listOfCurrentPageData$, total$, queryParams$, listOfCustomColumn$ } =
       this.tableDataService;
     const { theadTemplate$, tfootTemplate$, tfootFixed$, hasFixLeft$, hasFixRight$ } = this.tableStyleService;
-
-    this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
 
     queryParams$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(this.queryParams);
     pageIndexDistinct$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(pageIndex => {

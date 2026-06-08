@@ -4,7 +4,6 @@
  */
 
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
@@ -22,10 +21,9 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriModeType } from './typings';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TriIconModule, TriStringTemplateOutletDirective],
   selector: 'tri-hash-code',
   exportAs: 'triHashCode',
+  imports: [TriIconModule, TriStringTemplateOutletDirective],
   template: `
     @if (mode !== 'single' && mode !== 'rect') {
       <div class="tri-hash-code-header">

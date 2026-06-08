@@ -5,7 +5,6 @@
 
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   Input,
   numberAttribute,
@@ -17,10 +16,9 @@ import {
 import { TriDisplayedStep, TriExtendedMark } from './typings';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   selector: 'tri-slider-step',
   exportAs: 'triSliderStep',
+  encapsulation: ViewEncapsulation.None,
   template: `
     @for (step of steps; track step.value) {
       <span class="tri-slider-dot" [class.tri-slider-dot-active]="step.active" [style]="step.style!"></span>

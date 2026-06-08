@@ -5,7 +5,6 @@
 
 import { OverlayModule } from '@angular/cdk/overlay';
 import {
-  ChangeDetectionStrategy,
   Component,
   Directive,
   ElementRef,
@@ -81,7 +80,6 @@ export class TriPopoverDirective extends TriTooltipBaseDirective {
 @Component({
   selector: 'tri-popover',
   exportAs: 'triPopoverComponent',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
     <ng-template

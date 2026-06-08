@@ -6,7 +6,6 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -46,7 +45,6 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'table';
   selector:
     'th[nzColumnKey],th[nzSortFn],th[nzSortOrder],th[nzFilters],th[nzShowSort],th[nzShowFilter],th[nzCustomFilter]',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (showFilter || customFilter) {
       <tri-table-filter

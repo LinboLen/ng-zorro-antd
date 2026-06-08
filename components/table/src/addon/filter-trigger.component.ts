@@ -4,7 +4,6 @@
  */
 
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -29,7 +28,6 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'filterTrigger';
 @Component({
   selector: 'tri-filter-trigger',
   exportAs: `nzFilterTrigger`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
     <span

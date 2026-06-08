@@ -8,7 +8,6 @@ import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   ElementRef,
@@ -44,10 +43,9 @@ type IStandaloneDiffEditor = editor.IStandaloneDiffEditor;
 declare const monaco: TriSafeAny;
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   selector: 'tri-code-editor',
   exportAs: 'triCodeEditor',
+  encapsulation: ViewEncapsulation.None,
   template: `
     @if (loading) {
       <div class="tri-code-editor-loading">

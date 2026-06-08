@@ -3,16 +3,13 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   Injector,
   Input,
   OnInit,
-  Renderer2,
   TemplateRef,
   ViewEncapsulation,
   booleanAttribute,
@@ -36,8 +33,6 @@ export interface BreadcrumbOption {
 }
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   selector: 'tri-breadcrumb',
   exportAs: 'triBreadcrumb',
   providers: [{ provide: TriBreadcrumb, useExisting: forwardRef(() => TriBreadCrumbComponent) }],
@@ -53,16 +48,16 @@ export interface BreadcrumbOption {
     }
   `,
   host: {
-    class: 'tri-breadcrumb'
-  }
+    class: 'tri-breadcrumb',
+    '[class.tri-breadcrumb-rtl]': `dir() === 'rtl'`
+  },
+  encapsulation: ViewEncapsulation.None
 })
 export class TriBreadCrumbComponent implements OnInit, TriBreadcrumb {
-  private injector = inject(Injector);
-  private cdr = inject(ChangeDetectorRef);
-  private elementRef = inject(ElementRef<HTMLElement>);
-  private renderer = inject(Renderer2);
-  private directionality = inject(Directionality);
-  private destroyRef = inject(DestroyRef);
+  private readonly injector = inject(Injector);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly destroyRef = inject(DestroyRef);
+  protected readonly dir = inject(Directionality).valueSignal;
 
   @Input({ transform: booleanAttribute }) autoGenerate = false;
   @Input() separator: string | TemplateRef<void> | null = '/';
@@ -71,21 +66,11 @@ export class TriBreadCrumbComponent implements OnInit, TriBreadcrumb {
   @Input() routeFn: (route: string) => string = route => route;
 
   breadcrumbs: BreadcrumbOption[] = [];
-  dir: Direction = 'ltr';
 
   ngOnInit(): void {
     if (this.autoGenerate) {
       this.registerRouterChange();
     }
-
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((direction: Direction) => {
-      this.dir = direction;
-      this.prepareComponentForRtl();
-      this.cdr.detectChanges();
-    });
-
-    this.dir = this.directionality.value;
-    this.prepareComponentForRtl();
   }
 
   navigate(url: string, e: MouseEvent): void {
@@ -152,13 +137,5 @@ export class TriBreadCrumbComponent implements OnInit, TriBreadcrumb {
     }
 
     return breadcrumbs;
-  }
-
-  private prepareComponentForRtl(): void {
-    if (this.dir === 'rtl') {
-      this.renderer.addClass(this.elementRef.nativeElement, 'ant-breadcrumb-rtl');
-    } else {
-      this.renderer.removeClass(this.elementRef.nativeElement, 'ant-breadcrumb-rtl');
-    }
   }
 }

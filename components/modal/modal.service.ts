@@ -140,7 +140,7 @@ export class TriModalService implements OnDestroy {
       backdropClass: getValueWithConfig(config.mask, globalConfig.nzMask, true) ? MODAL_MASK_CLASS_NAME : '',
       positionStrategy: createGlobalPositionStrategy(this.injector),
       disposeOnNavigation: getValueWithConfig(config.closeOnNavigation, globalConfig.nzCloseOnNavigation, true),
-      direction: getValueWithConfig(config.direction, globalConfig.nzDirection, this.directionality.value)
+      direction: getValueWithConfig(config.direction, globalConfig.nzDirection, this.directionality.valueSignal())
     });
   }
 

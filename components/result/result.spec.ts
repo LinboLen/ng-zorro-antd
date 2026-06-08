@@ -3,11 +3,11 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { BidiModule, Direction } from '@angular/cdk/bidi';
-import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { testDirectionality } from 'ng-zorro-antd/core/testing';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
@@ -37,12 +37,13 @@ export class TriTestResultBasicComponent {
 }
 
 @Component({
-  imports: [BidiModule, TriTestResultBasicComponent],
-  template: `<tri-test-basic-result [dir]="direction" />`,
+  selector: 'tri-test-status-icon-result',
+  imports: [TriResultModule],
+  template: `<tri-result [status]="status" title="Test Title" />`,
   changeDetection: ChangeDetectionStrategy.Eager
 })
-export class TriTestResultRtlComponent {
-  direction: Direction = 'rtl';
+export class TriTestResultStatusIconComponent {
+  status: TriResultStatusType = 'success';
 }
 
 @Component({
@@ -117,8 +118,11 @@ describe('nz-result', () => {
     });
   });
 
-  describe('RTL', () => {
-    let fixture: ComponentFixture<TriTestResultRtlComponent>;
+  testDirectionality(() => TriTestResultBasicComponent, By.directive(TriResultComponent), 'ant-result');
+
+  describe('default icon from status', () => {
+    let fixture: ComponentFixture<TriTestResultStatusIconComponent>;
+    let testComponent: TriTestResultStatusIconComponent;
     let resultEl: DebugElement;
 
     beforeEach(() => {
@@ -127,18 +131,41 @@ describe('nz-result', () => {
         providers: [provideNzIconsTesting(), provideZoneChangeDetection()]
       });
 
-      fixture = TestBed.createComponent(TriTestResultRtlComponent);
-      fixture.detectChanges();
+      fixture = TestBed.createComponent(TriTestResultStatusIconComponent);
+      testComponent = fixture.componentInstance;
       resultEl = fixture.debugElement.query(By.directive(TriResultComponent));
     });
 
-    it('should className correct', () => {
+    it('should show default icon based on status when nzIcon is not provided', () => {
+      testComponent.status = 'success';
       fixture.detectChanges();
-      expect(resultEl.nativeElement.classList).toContain('ant-result-rtl');
 
-      fixture.componentInstance.direction = 'ltr';
+      const iconView = resultEl.nativeElement.querySelector('.ant-result-icon');
+      expect(iconView.firstElementChild.classList).toContain('anticon-check-circle');
+    });
+
+    it('should show info icon when status is info', () => {
+      testComponent.status = 'info';
       fixture.detectChanges();
-      expect(resultEl.nativeElement.className).not.toContain('ant-result-rtl');
+
+      const iconView = resultEl.nativeElement.querySelector('.ant-result-icon');
+      expect(iconView.firstElementChild.classList).toContain('anticon-exclamation-circle');
+    });
+
+    it('should show warning icon when status is warning', () => {
+      testComponent.status = 'warning';
+      fixture.detectChanges();
+
+      const iconView = resultEl.nativeElement.querySelector('.ant-result-icon');
+      expect(iconView.firstElementChild.classList).toContain('anticon-warning');
+    });
+
+    it('should show error icon when status is error', () => {
+      testComponent.status = 'error';
+      fixture.detectChanges();
+
+      const iconView = resultEl.nativeElement.querySelector('.ant-result-icon');
+      expect(iconView.firstElementChild.classList).toContain('anticon-close-circle');
     });
   });
 

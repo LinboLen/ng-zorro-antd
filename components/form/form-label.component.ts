@@ -5,7 +5,6 @@
 
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   Input,
@@ -42,7 +41,6 @@ function toTooltipIcon(value: string | TriFormTooltipIcon): Required<TriFormTool
   selector: 'tri-form-label',
   exportAs: 'triFormLabel',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <label
       [attr.for]="for"

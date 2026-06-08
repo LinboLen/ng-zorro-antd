@@ -3,7 +3,6 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -16,6 +15,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
+import { testDirectionality } from 'ng-zorro-antd/core/testing';
 import { TriShapeSCType } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
@@ -100,20 +100,7 @@ describe('float-button', () => {
     });
   });
 
-  describe('RTL', () => {
-    let fixture: ComponentFixture<TriTestFloatButtonRtlComponent>;
-    let resultEl: DebugElement;
-
-    beforeEach(() => {
-      fixture = TestBed.createComponent(TriTestFloatButtonRtlComponent);
-      resultEl = fixture.debugElement.query(By.directive(TriFloatButtonComponent));
-    });
-
-    it('rtl', () => {
-      fixture.detectChanges();
-      expect(resultEl.nativeElement.classList).toContain('ant-float-btn-rtl');
-    });
-  });
+  testDirectionality(() => TriTestFloatButtonBasicComponent, By.directive(TriFloatButtonComponent), 'ant-float-btn');
 });
 
 @Component({
@@ -154,18 +141,4 @@ export class TriTestFloatButtonBasicComponent {
   onClick(value: boolean): void {
     this.isClick = value;
   }
-}
-
-@Component({
-  imports: [BidiModule, TriFloatButtonModule],
-  template: `
-    <div [dir]="direction">
-      <tri-float-button />
-    </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
-})
-export class TriTestFloatButtonRtlComponent {
-  @ViewChild(Dir) dir!: Dir;
-  direction: Direction = 'rtl';
 }

@@ -3,11 +3,11 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { BidiModule, Direction } from '@angular/cdk/bidi';
 import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { testDirectionality } from 'ng-zorro-antd/core/testing';
 import { TriFourDirectionType, TriShapeSCType } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
@@ -180,24 +180,11 @@ describe('nz-float-button-group', () => {
     });
   });
 
-  describe('RTL', () => {
-    let fixture: ComponentFixture<TriTestFloatButtonRtlComponent>;
-    let resultEl: DebugElement;
-    let groupComponent: TriFloatButtonGroupComponent;
-
-    beforeEach(() => {
-      fixture = TestBed.createComponent(TriTestFloatButtonRtlComponent);
-      resultEl = fixture.debugElement.query(By.directive(TriFloatButtonGroupComponent));
-      groupComponent = resultEl.componentInstance;
-    });
-
-    it('rtl', () => {
-      fixture.detectChanges();
-      // @ts-ignore
-      expect(groupComponent.dir()).toBe('rtl');
-      expect(resultEl.nativeElement.classList).toContain('ant-float-btn-group-rtl');
-    });
-  });
+  testDirectionality(
+    () => TriTestFloatButtonGroupBasicComponent,
+    By.directive(TriFloatButtonGroupComponent),
+    'ant-float-btn-group'
+  );
 });
 
 @Component({
@@ -226,17 +213,4 @@ export class TriTestFloatButtonGroupBasicComponent {
   onClick(value: boolean): void {
     this.isClick = value;
   }
-}
-
-@Component({
-  imports: [BidiModule, TriFloatButtonModule],
-  template: `
-    <div [dir]="direction">
-      <tri-float-button-group />
-    </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
-})
-export class TriTestFloatButtonRtlComponent {
-  direction: Direction = 'rtl';
 }

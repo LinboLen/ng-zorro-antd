@@ -4,15 +4,7 @@
  */
 
 import { NgTemplateOutlet } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  TemplateRef,
-  ViewEncapsulation
-} from '@angular/core';
+import { Component, Input, OnChanges, OnInit, TemplateRef, ViewEncapsulation } from '@angular/core';
 
 import { Breakpoint } from 'ng-zorro-antd/core/services';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -21,7 +13,6 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
   selector: '[tri-sider-trigger]',
   exportAs: 'triSiderTrigger',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (isZeroTrigger) {
       <ng-template [ngTemplateOutlet]="zeroTrigger || defaultZeroTrigger" />

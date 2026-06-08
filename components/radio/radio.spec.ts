@@ -3,7 +3,6 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { BidiModule, Dir, Direction } from '@angular/cdk/bidi';
 import {
   ApplicationRef,
   ChangeDetectionStrategy,
@@ -18,7 +17,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { TRI_FORM_SIZE } from 'ng-zorro-antd/core/form';
-import { createMouseEvent } from 'ng-zorro-antd/core/testing';
+import { createMouseEvent, testDirectionality } from 'ng-zorro-antd/core/testing';
 import { TriSizeLDSType } from 'ng-zorro-antd/core/types';
 
 import { TriRadioGroupComponent } from './radio-group.component';
@@ -425,38 +424,41 @@ describe('radio', () => {
     });
   });
 
-  describe('RTL', () => {
-    it('should single radio className correct', () => {
-      const fixture = TestBed.createComponent(TriTestRadioSingleRtlComponent);
-      const radio = fixture.debugElement.query(By.directive(TriRadioComponent));
-      fixture.detectChanges();
-      expect(radio.nativeElement.className).toContain('ant-radio-wrapper-rtl');
+  testDirectionality(() => TriTestRadioSingleComponent, By.directive(TriRadioComponent), 'ant-radio-wrapper');
+  testDirectionality(() => TriTestRadioButtonComponent, By.directive(TriRadioComponent), 'ant-radio-button-wrapper');
+  testDirectionality(() => TriTestRadioGroupComponent, By.directive(TriRadioGroupComponent), 'ant-radio-group');
 
-      fixture.componentInstance.direction = 'ltr';
+  describe('finalSize', () => {
+    let fixture: ComponentFixture<TestRadioGroupFinalSizeComponent>;
+    let radioGroupElement: HTMLElement;
+    let component: TestRadioGroupFinalSizeComponent;
+    const formSize = signal<TriSizeLDSType | undefined>(undefined);
+
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        providers: [{ provide: TRI_FORM_SIZE, useValue: formSize }]
+      });
+
+      fixture = TestBed.createComponent(TestRadioGroupFinalSizeComponent);
+      component = fixture.componentInstance;
+      radioGroupElement = fixture.debugElement.query(By.directive(TriRadioGroupComponent)).nativeElement;
       fixture.detectChanges();
-      expect(radio.nativeElement.className).not.toContain('ant-radio-wrapper-rtl');
     });
 
-    it('should radio button className correct', () => {
-      const fixture = TestBed.createComponent(TriTestRadioButtonRtlComponent);
-      const radio = fixture.debugElement.query(By.directive(TriRadioComponent));
+    it('should prioritize formSize > nzSize', () => {
+      component.size = 'default';
+      formSize.set('large');
       fixture.detectChanges();
-      expect(radio.nativeElement.className).toContain('ant-radio-button-wrapper-rtl');
+      expect(radioGroupElement.classList).toContain('ant-radio-group-large');
 
-      fixture.componentInstance.direction = 'ltr';
+      formSize.set('small');
       fixture.detectChanges();
-      expect(radio.nativeElement.className).not.toContain('ant-radio-button-wrapper-rtl');
-    });
+      expect(radioGroupElement.classList).toContain('ant-radio-group-small');
 
-    it('should radio group className correct', () => {
-      const fixture = TestBed.createComponent(TriTestRadioGroupRtlComponent);
-      const radioGroup = fixture.debugElement.query(By.directive(TriRadioGroupComponent));
+      formSize.set('default');
       fixture.detectChanges();
-      expect(radioGroup.nativeElement.classList).toContain('ant-radio-group-rtl');
-
-      fixture.componentInstance.direction = 'ltr';
-      fixture.detectChanges();
-      expect(radioGroup.nativeElement.className).not.toContain('ant-radio-group-rtl');
+      expect(radioGroupElement.classList).not.toContain('ant-radio-group-large');
+      expect(radioGroupElement.classList).not.toContain('ant-radio-group-small');
     });
   });
 
@@ -697,45 +699,12 @@ export class TriTestRadioGroupLabelNgModelComponent {
 }
 
 @Component({
-  imports: [BidiModule, TriTestRadioSingleComponent],
-  template: `
-    <div [dir]="direction">
-      <tri-test-radio-single />
-    </div>
-  `,
+  imports: [TriRadioModule],
+  template: `<tri-radio-group [size]="size" />`,
   changeDetection: ChangeDetectionStrategy.Eager
 })
-export class TriTestRadioSingleRtlComponent {
-  @ViewChild(Dir) dir!: Dir;
-  direction: Direction = 'rtl';
-}
-
-@Component({
-  imports: [BidiModule, TriRadioModule],
-  template: `
-    <div [dir]="direction">
-      <label tri-radio-button>Radio</label>
-    </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
-})
-export class TriTestRadioButtonRtlComponent {
-  @ViewChild(Dir) dir!: Dir;
-  direction: Direction = 'rtl';
-}
-
-@Component({
-  imports: [BidiModule, TriTestRadioGroupComponent],
-  template: `
-    <div [dir]="direction">
-      <tri-test-radio-group />
-    </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
-})
-export class TriTestRadioGroupRtlComponent {
-  @ViewChild(Dir) dir!: Dir;
-  direction: Direction = 'rtl';
+export class TestRadioGroupFinalSizeComponent {
+  size: TriSizeLDSType = 'default';
 }
 
 @Component({

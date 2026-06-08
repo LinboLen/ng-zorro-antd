@@ -3,26 +3,22 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChild,
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
   TemplateRef,
   ViewEncapsulation,
   booleanAttribute,
   forwardRef,
-  inject,
-  DestroyRef
+  inject
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { CandyDate } from 'ng-zorro-antd/core/time';
@@ -40,10 +36,10 @@ export type TriCalendarMode = 'month' | 'year';
 type TriCalendarDateTemplate = TemplateRef<{ $implicit: Date }>;
 
 @Component({
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'tri-calendar',
   exportAs: 'triCalendar',
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TriCalendarComponent), multi: true }],
+  imports: [TriCalendarHeaderComponent, LibPackerModule],
   template: `
     <tri-calendar-header
       [fullscreen]="fullscreen"
@@ -87,19 +83,16 @@ type TriCalendarDateTemplate = TemplateRef<{ $implicit: Date }>;
     class: 'tri-picker-calendar',
     '[class.tri-picker-calendar-full]': 'fullscreen',
     '[class.tri-picker-calendar-mini]': '!fullscreen',
-    '[class.tri-picker-calendar-rtl]': `dir === 'rtl'`
+    '[class.tri-picker-calendar-rtl]': `dir() === 'rtl'`
   },
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TriCalendarComponent), multi: true }],
-  imports: [TriCalendarHeaderComponent, LibPackerModule]
+  encapsulation: ViewEncapsulation.None
 })
-export class TriCalendarComponent implements ControlValueAccessor, OnChanges, OnInit {
-  private cdr = inject(ChangeDetectorRef);
-  private directionality = inject(Directionality);
-  private destroyRef = inject(DestroyRef);
+export class TriCalendarComponent implements ControlValueAccessor, OnChanges {
+  private readonly cdr = inject(ChangeDetectorRef);
+  protected readonly dir = inject(Directionality).valueSignal;
 
   activeDate: CandyDate = new CandyDate();
   prefixCls: string = 'ant-picker-calendar';
-  dir: Direction = 'ltr';
 
   private onChangeFn: (date: Date) => void = () => {};
   private onTouchFn: () => void = () => {};
@@ -145,13 +138,6 @@ export class TriCalendarComponent implements ControlValueAccessor, OnChanges, On
 
   @Input({ transform: booleanAttribute })
   fullscreen: boolean = true;
-
-  ngOnInit(): void {
-    this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-      this.dir = this.directionality.value;
-    });
-  }
 
   onModeChange(mode: TriCalendarMode): void {
     this.modeChange.emit(mode);

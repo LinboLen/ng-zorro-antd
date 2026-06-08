@@ -4,7 +4,6 @@
  */
 
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -36,7 +35,6 @@ export class TriOptionSelectionChange {
 @Component({
   selector: 'tri-auto-option',
   exportAs: 'triAutoOption',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
     <div class="tri-select-item-option-content">

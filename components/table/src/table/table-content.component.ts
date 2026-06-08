@@ -4,15 +4,14 @@
  */
 
 import { NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
 
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 import { TriTableLayout } from '../table.types';
 
 @Component({
-  selector: '',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'table[nz-table-content]',
   encapsulation: ViewEncapsulation.None,
   template: `
     @if (listOfColWidth.length > 0) {

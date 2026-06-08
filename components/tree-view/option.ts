@@ -4,7 +4,6 @@
  */
 
 import {
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   NgZone,
@@ -26,7 +25,6 @@ import { TriTreeNodeComponent } from './node';
 @Component({
   selector: 'tri-tree-node-option',
   template: `<span class="tri-tree-title"><ng-content /></span>`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'tri-tree-node-content-wrapper',
     '[class.tri-tree-node-content-wrapper-open]': 'isExpanded',

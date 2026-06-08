@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 import { TriImageDirective } from './image.directive';
 
@@ -11,7 +11,6 @@ import { TriImageDirective } from './image.directive';
   selector: 'tri-image-group',
   exportAs: 'triImageGroup',
   template: '<ng-content />',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class TriImageGroupComponent {

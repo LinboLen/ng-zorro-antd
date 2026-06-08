@@ -5,7 +5,6 @@
 
 import { DatePipe, NgTemplateOutlet } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
@@ -21,10 +20,9 @@ import { TriCronExpressionCronErrorI18n } from 'ng-zorro-antd/i18n';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   selector: 'tri-cron-expression-preview',
   exportAs: 'triCronExpressionPreview',
+  encapsulation: ViewEncapsulation.None,
   template: `
     <div class="tri-collapse tri-collapse-borderless tri-cron-expression-preview">
       <div class="tri-cron-expression-preview-dateTime" [class.tri-cron-expression-preview-dateTime-center]="!isExpand">

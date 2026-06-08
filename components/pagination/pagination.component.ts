@@ -3,10 +3,9 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   DestroyRef,
@@ -40,7 +39,6 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'pagination';
   selector: 'tri-pagination',
   exportAs: 'triPagination',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (showPagination) {
       @if (simple) {
@@ -82,7 +80,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'pagination';
     '[class.tri-pagination-simple]': 'simple',
     '[class.tri-pagination-disabled]': 'disabled',
     '[class.tri-pagination-mini]': `!simple && size === 'small'`,
-    '[class.tri-pagination-rtl]': `dir === 'rtl'`,
+    '[class.tri-pagination-rtl]': `dir() === 'rtl'`,
     '[class.tri-pagination-start]': 'align() === "start"',
     '[class.tri-pagination-center]': 'align() === "center"',
     '[class.tri-pagination-end]': 'align() === "end"'
@@ -96,7 +94,7 @@ export class TriPaginationComponent implements OnInit, OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly breakpointService = inject(TriBreakpointService);
   protected readonly configService = inject(TriConfigService);
-  private readonly directionality = inject(Directionality);
+  protected readonly dir = inject(Directionality).valueSignal;
   private readonly destroyRef = inject(DestroyRef);
 
   @Output() readonly pageSizeChange = new EventEmitter<number>();
@@ -119,7 +117,6 @@ export class TriPaginationComponent implements OnInit, OnChanges {
   showPagination = true;
   locale!: TriPaginationI18nInterface;
   _size: 'default' | 'small' = 'default';
-  dir: Direction = 'ltr';
 
   private total$ = new ReplaySubject<number>(1);
 
@@ -185,12 +182,6 @@ export class TriPaginationComponent implements OnInit, OnChanges {
           this.cdr.markForCheck();
         }
       });
-
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-    this.dir = this.directionality.value;
   }
 
   ngOnChanges(changes: SimpleChanges): void {

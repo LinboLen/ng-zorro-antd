@@ -5,7 +5,6 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 import {
-  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
@@ -24,7 +23,6 @@ import { TriTableSelectionComponent } from '../addon/selection.component';
 @Component({
   selector: '',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <tri-table-selection
       [checked]="checked"

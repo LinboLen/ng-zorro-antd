@@ -5,7 +5,6 @@
 
 import {
   AfterViewInit,
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   inject,
@@ -53,7 +52,6 @@ function MenuGroupFactory(): boolean {
     '[class.tri-menu-item-group]': '!isMenuInsideDropdown',
     '[class.tri-dropdown-menu-item-group]': 'isMenuInsideDropdown'
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class TriMenuGroupComponent implements AfterViewInit {

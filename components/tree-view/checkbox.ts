@@ -4,7 +4,6 @@
  */
 
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -24,7 +23,6 @@ import { fromEventOutsideAngular } from 'ng-zorro-antd/core/util';
 @Component({
   selector: 'tri-tree-node-checkbox:not([builtin])',
   template: `<span class="tri-tree-checkbox-inner"></span>`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'tri-tree-checkbox',
     '[class.tri-tree-checkbox-checked]': `checked()`,

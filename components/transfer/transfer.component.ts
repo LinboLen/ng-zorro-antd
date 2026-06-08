@@ -3,9 +3,8 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -48,6 +47,7 @@ import { TriTransferListComponent } from './transfer-list.component';
 @Component({
   selector: 'tri-transfer',
   exportAs: 'triTransfer',
+  imports: [TriTransferListComponent, TriIconModule, TriButtonModule],
   template: `
     <tri-transfer-list
       class="tri-transfer-list"
@@ -72,7 +72,7 @@ import { TriTransferListComponent } from './transfer-list.component';
       (handleSelect)="handleLeftSelect($event)"
       (handleSelectAll)="handleLeftSelectAll($event)"
     />
-    @if (dir !== 'rtl') {
+    @if (dir() !== 'rtl') {
       <div class="tri-transfer-operation">
         @if (!oneWay) {
           <button
@@ -163,16 +163,14 @@ import { TriTransferListComponent } from './transfer-list.component';
   `,
   host: {
     class: 'tri-transfer',
-    '[class.tri-transfer-rtl]': `dir === 'rtl'`,
+    '[class.tri-transfer-rtl]': `dir() === 'rtl'`,
     '[class.tri-transfer-disabled]': `disabled`,
     '[class.tri-transfer-customize-list]': `renderList`,
     '(window:keydown.shift)': 'onTriggerShiftDown()',
     '(window:keyup.shift)': 'onTriggerShiftUp()',
     '(mousedown)': 'onTriggerMouseDown($event)'
   },
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TriTransferListComponent, TriIconModule, TriButtonModule]
+  encapsulation: ViewEncapsulation.None
 })
 export class TriTransferComponent implements OnInit, OnChanges {
   private destroyRef = inject(DestroyRef);
@@ -180,7 +178,7 @@ export class TriTransferComponent implements OnInit, OnChanges {
   private i18n = inject(TriI18nService);
   private elementRef = inject(ElementRef<HTMLElement>);
   private renderer = inject(Renderer2);
-  private directionality = inject(Directionality);
+  protected readonly dir = inject(Directionality).valueSignal;
   private formStatusService = inject(TriFormStatusService, { optional: true });
 
   @ViewChildren(TriTransferListComponent) lists!: QueryList<TriTransferListComponent>;
@@ -188,7 +186,6 @@ export class TriTransferComponent implements OnInit, OnChanges {
 
   leftFilter = '';
   rightFilter = '';
-  dir: Direction = 'ltr';
 
   // status
   prefixCls: string = 'ant-transfer';
@@ -396,12 +393,6 @@ export class TriTransferComponent implements OnInit, OnChanges {
     this.i18n.localeChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.locale = this.i18n.getLocaleData('Transfer');
       this.markForCheckAllList();
-    });
-
-    this.dir = this.directionality.value;
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
     });
   }
 

@@ -4,14 +4,7 @@
  */
 
 import { Directionality } from '@angular/cdk/bidi';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ContentChildren,
-  inject,
-  QueryList,
-  ViewEncapsulation
-} from '@angular/core';
+import { Component, ContentChildren, inject, QueryList, ViewEncapsulation } from '@angular/core';
 
 import { TriSiderComponent } from './sider.component';
 
@@ -20,7 +13,6 @@ import { TriSiderComponent } from './sider.component';
   exportAs: 'triLayout',
   template: `<ng-content />`,
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'tri-layout',
     '[class.tri-layout-rtl]': `dir() === 'rtl'`,

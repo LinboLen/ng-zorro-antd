@@ -3,18 +3,14 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  DestroyRef,
   ElementRef,
   EventEmitter,
   inject,
   Input,
   OnChanges,
-  OnInit,
   Output,
   Renderer2,
   SimpleChanges,
@@ -22,7 +18,6 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { toNumber } from 'ng-zorro-antd/core/util';
@@ -34,7 +29,6 @@ import { PaginationItemRenderContext } from './pagination.types';
 @Component({
   selector: 'tri-pagination-simple',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ng-template #containerTemplate>
       <ul>
@@ -43,7 +37,7 @@ import { PaginationItemRenderContext } from './pagination.types';
           [locale]="locale"
           [attr.title]="locale.prev_page"
           [disabled]="isFirstIndex"
-          [direction]="dir"
+          [direction]="dir()"
           (click)="prePage()"
           type="prev"
           [itemRender]="itemRender"
@@ -58,7 +52,7 @@ import { PaginationItemRenderContext } from './pagination.types';
           [locale]="locale"
           [attr.title]="locale?.next_page"
           [disabled]="isLastIndex"
-          [direction]="dir"
+          [direction]="dir()"
           (click)="nextPage()"
           type="next"
           [itemRender]="itemRender"
@@ -68,13 +62,11 @@ import { PaginationItemRenderContext } from './pagination.types';
   `,
   imports: [TriPaginationItemComponent],
   host: {
-    '[class.tri-pagination-rtl]': "dir === 'rtl'"
+    '[class.tri-pagination-rtl]': "dir() === 'rtl'"
   }
 })
-export class TriPaginationSimpleComponent implements OnChanges, OnInit {
-  private readonly cdr = inject(ChangeDetectorRef);
-  private readonly directionality = inject(Directionality);
-  private readonly destroyRef = inject(DestroyRef);
+export class TriPaginationSimpleComponent implements OnChanges {
+  protected readonly dir = inject(Directionality).valueSignal;
 
   @ViewChild('containerTemplate', { static: true }) template!: TemplateRef<TriSafeAny>;
   @Input() itemRender: TemplateRef<PaginationItemRenderContext> | null = null;
@@ -88,20 +80,10 @@ export class TriPaginationSimpleComponent implements OnChanges, OnInit {
   isFirstIndex = false;
   isLastIndex = false;
 
-  dir: Direction = 'ltr';
-
   constructor() {
     const el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
     const renderer = inject(Renderer2);
     renderer.removeChild(renderer.parentNode(el), el);
-  }
-
-  ngOnInit(): void {
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-    this.dir = this.directionality.value;
   }
 
   jumpToPageViaInput($event: Event): void {

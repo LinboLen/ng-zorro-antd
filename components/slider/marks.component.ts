@@ -4,7 +4,6 @@
  */
 
 import {
-  ChangeDetectionStrategy,
   Component,
   Input,
   OnChanges,
@@ -34,7 +33,6 @@ import { TriDisplayedMark, TriExtendedMark, TriMark, TriMarkObj } from './typing
   host: {
     class: 'tri-slider-mark'
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class TriSliderMarksComponent implements OnChanges {

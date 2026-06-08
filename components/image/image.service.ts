@@ -31,7 +31,7 @@ export interface TriImageService {
 export class TriImageService {
   private injector = inject(Injector);
   private configService = inject(TriConfigService);
-  private directionality = inject(Directionality);
+  private readonly directionality = inject(Directionality);
 
   preview(
     images: TriImage[],
@@ -78,7 +78,7 @@ export class TriImageService {
       scrollStrategy: createBlockScrollStrategy(this.injector),
       positionStrategy: createGlobalPositionStrategy(this.injector),
       disposeOnNavigation: config.closeOnNavigation ?? globalConfig.nzCloseOnNavigation ?? true,
-      direction: config.direction || globalConfig.nzDirection || this.directionality.value
+      direction: config.direction || globalConfig.nzDirection || this.directionality.valueSignal()
     });
   }
 }

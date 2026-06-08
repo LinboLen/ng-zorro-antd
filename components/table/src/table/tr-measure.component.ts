@@ -5,7 +5,6 @@
 
 import {
   AfterViewInit,
-  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   ElementRef,
@@ -25,8 +24,7 @@ import { debounceTime, map, startWith, switchMap } from 'rxjs/operators';
 import { TriResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
 
 @Component({
-  selector: '',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'tr[nz-table-measure-row]',
   encapsulation: ViewEncapsulation.None,
   template: `
     @for (th of listOfMeasureColumn; track $index) {

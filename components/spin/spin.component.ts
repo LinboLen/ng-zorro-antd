@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectorRef,
@@ -46,7 +46,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'spin';
       <div>
         <div
           class="tri-spin tri-spin-spinning"
-          [class.tri-spin-rtl]="dir === 'rtl'"
+          [class.tri-spin-rtl]="dir() === 'rtl'"
           [class.tri-spin-lg]="size === 'large'"
           [class.tri-spin-sm]="size === 'small'"
           [class.tri-spin-show-text]="tip"
@@ -73,7 +73,7 @@ export class TriSpinComponent implements OnChanges, OnInit {
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   private cdr = inject(ChangeDetectorRef);
-  private directionality = inject(Directionality);
+  protected readonly dir = inject(Directionality).valueSignal;
   private destroyRef = inject(DestroyRef);
 
   @Input() @WithConfig() indicator: TemplateRef<TriSafeAny> | null = null;
@@ -86,8 +86,6 @@ export class TriSpinComponent implements OnChanges, OnInit {
   private delay$ = new ReplaySubject<number>(1);
 
   readonly isLoading = signal(false);
-
-  dir: Direction = 'ltr';
 
   constructor() {
     onConfigChangeEventForComponent(TRI_CONFIG_MODULE_NAME, () => this.cdr.markForCheck());
@@ -120,13 +118,6 @@ export class TriSpinComponent implements OnChanges, OnInit {
       .subscribe(isLoading => {
         this.isLoading.set(isLoading);
       });
-
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(direction => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-
-    this.dir = this.directionality.value;
   }
 
   ngOnChanges(changes: SimpleChanges): void {

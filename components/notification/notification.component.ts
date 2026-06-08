@@ -4,16 +4,7 @@
  */
 
 import { NgTemplateOutlet } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  Output,
-  viewChild,
-  ViewEncapsulation
-} from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, viewChild, ViewEncapsulation } from '@angular/core';
 
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -107,7 +98,6 @@ import { TriNotificationData } from './typings';
       </a>
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class TriNotificationComponent extends TriMNComponent {

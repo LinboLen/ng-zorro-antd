@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
 
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -12,7 +12,6 @@ import { TriTableContentComponent } from './table-content.component';
 
 @Component({
   selector: 'tri-table-inner-default',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
     <div class="tri-table-content">

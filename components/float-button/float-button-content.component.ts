@@ -4,7 +4,7 @@
  */
 
 import { NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, TemplateRef } from '@angular/core';
+import { Component, input, TemplateRef } from '@angular/core';
 
 import { TriBadgeComponent } from 'ng-zorro-antd/badge';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
@@ -17,7 +17,6 @@ import { TriFloatButtonBadge } from './typings';
   selector: 'tri-float-button-content',
   exportAs: 'triFloatButtonContent',
   imports: [TriIconModule, TriOutletModule, TriBadgeComponent, NgTemplateOutlet],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (badge()) {
       <tri-badge

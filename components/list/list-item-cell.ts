@@ -6,7 +6,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterContentInit,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChildren,
@@ -26,7 +25,6 @@ import { TriSafeAny } from 'ng-zorro-antd/core/types';
 @Component({
   selector: 'tri-list-item-extra,[tri-list-item-extra]',
   exportAs: 'triListItemExtra',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<ng-content />`,
   host: {
     class: 'tri-list-item-extra'
@@ -37,7 +35,6 @@ export class TriListItemExtraComponent {}
 @Component({
   selector: 'tri-list-item-action',
   exportAs: 'triListItemAction',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<ng-template><ng-content /></ng-template>`
 })
 export class TriListItemActionComponent {
@@ -47,7 +44,6 @@ export class TriListItemActionComponent {
 @Component({
   selector: 'ul[nz-list-item-actions]',
   exportAs: 'triListItemActions',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @for (i of actions; track i) {
       <li>

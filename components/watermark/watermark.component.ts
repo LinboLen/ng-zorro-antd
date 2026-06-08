@@ -6,7 +6,6 @@
 import { isPlatformServer } from '@angular/common';
 import {
   afterNextRender,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   DestroyRef,
@@ -34,7 +33,6 @@ const FontGap = 3;
 @Component({
   selector: 'tri-watermark',
   exportAs: 'triWatermark',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<ng-content />`,
   styles: `
     :host {

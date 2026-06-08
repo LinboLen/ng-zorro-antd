@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 
@@ -22,7 +22,6 @@ import { ModalOptions } from './modal-types';
   host: {
     class: 'tri-modal-header'
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TriOutletModule]
 })
 export class TriModalTitleComponent {

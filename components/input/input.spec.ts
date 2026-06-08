@@ -3,7 +3,6 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { BidiModule, Direction } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -18,10 +17,9 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { TRI_FORM_SIZE, TRI_FORM_VARIANT } from 'ng-zorro-antd/core/form';
+import { testDirectionality } from 'ng-zorro-antd/core/testing';
 import { TriSizeLDSType, TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
-import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
-import { TriInputWrapperComponent } from 'ng-zorro-antd/input/input-wrapper.component';
 import { TRI_SPACE_COMPACT_SIZE } from 'ng-zorro-antd/space';
 
 import { TriFormControlStatusType, TriFormModule } from '../form';
@@ -171,28 +169,7 @@ describe('input', () => {
     });
   });
 
-  describe('input RTL', () => {
-    let fixture: ComponentFixture<TriTestInputWithDirComponent>;
-    let inputElement: DebugElement;
-    let inputGroupElement: DebugElement;
-
-    beforeEach(() => {
-      fixture = TestBed.createComponent(TriTestInputWithDirComponent);
-      fixture.detectChanges();
-      inputElement = fixture.debugElement.query(By.directive(TriInputDirective));
-      inputGroupElement = fixture.debugElement.query(By.directive(TriInputWrapperComponent));
-    });
-
-    it('should className correct on dir change', () => {
-      expect(inputElement.nativeElement.classList).not.toContain('ant-input-rtl');
-      expect(inputGroupElement.nativeElement.classList).not.toContain('ant-input-group-wrapper-rtl');
-
-      fixture.componentInstance.dir = 'rtl';
-      fixture.detectChanges();
-      expect(inputElement.nativeElement.classList).toContain('ant-input-rtl');
-      expect(inputGroupElement.nativeElement.classList).toContain('ant-input-group-wrapper-rtl');
-    });
-  });
+  testDirectionality(() => TriTestInputWithInputComponent, By.directive(TriInputDirective), 'ant-input');
 
   describe('input with status', () => {
     let fixture: ComponentFixture<TriTestInputWithStatusComponent>;
@@ -423,23 +400,6 @@ describe('input', () => {
     });
   });
 });
-
-@Component({
-  imports: [BidiModule, TriInputModule, TriIconModule],
-  template: `
-    <div [dir]="dir">
-      <input tri-input />
-      <tri-input-wrapper>
-        <input type="text" tri-input />
-        <tri-icon inputAddonAfter type="setting" />
-      </tri-input-wrapper>
-    </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
-})
-export class TriTestInputWithDirComponent {
-  dir: Direction = 'ltr';
-}
 
 @Component({
   imports: [TriInputModule],

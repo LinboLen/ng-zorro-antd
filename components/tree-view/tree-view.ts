@@ -4,7 +4,7 @@
  */
 
 import { CdkTree } from '@angular/cdk/tree';
-import { ChangeDetectionStrategy, Component, forwardRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, forwardRef, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { TriAnimationTreeCollapseService } from 'ng-zorro-antd/core/animation';
 
@@ -23,7 +23,6 @@ import { TriTreeView } from './tree';
     </div>
   `,
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     TriAnimationTreeCollapseService,
     { provide: CdkTree, useExisting: forwardRef(() => TriTreeViewComponent) },

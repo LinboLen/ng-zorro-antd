@@ -3,12 +3,11 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import {
   ANIMATION_MODULE_TYPE,
   AnimationCallbackEvent,
   booleanAttribute,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   DestroyRef,
@@ -16,13 +15,11 @@ import {
   inject,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
   TemplateRef,
   ViewEncapsulation
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { TriNoAnimationDirective } from 'ng-zorro-antd/core/animation';
 import { TriConfigKey, onConfigChangeEventForComponent, WithConfig } from 'ng-zorro-antd/core/config';
@@ -41,7 +38,7 @@ export type TriAlertType = 'success' | 'info' | 'warning' | 'error';
       <div
         class="tri-alert"
         [noAnimation]="noAnimation"
-        [class.tri-alert-rtl]="dir === 'rtl'"
+        [class.tri-alert-rtl]="dir() === 'rtl'"
         [class.tri-alert-success]="type === 'success'"
         [class.tri-alert-info]="type === 'info'"
         [class.tri-alert-warning]="type === 'warning'"
@@ -97,14 +94,12 @@ export type TriAlertType = 'success' | 'info' | 'warning' | 'error';
       </div>
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class TriAlertComponent implements OnChanges, OnInit {
-  private cdr = inject(ChangeDetectorRef);
-  private directionality = inject(Directionality);
-  private readonly destroyRef = inject(DestroyRef);
+export class TriAlertComponent implements OnChanges {
+  private readonly cdr = inject(ChangeDetectorRef);
   private readonly animationType = inject(ANIMATION_MODULE_TYPE, { optional: true });
+  protected readonly dir = inject(Directionality).valueSignal;
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
   @Input() action: string | TemplateRef<void> | null = null;
@@ -123,21 +118,11 @@ export class TriAlertComponent implements OnChanges, OnInit {
   closed = false;
   iconTheme: 'outline' | 'fill' = 'fill';
   inferredIconType: string = 'info-circle';
-  dir: Direction = 'ltr';
   private isTypeSet = false;
   private isShowIconSet = false;
 
   constructor() {
     onConfigChangeEventForComponent(TRI_CONFIG_MODULE_NAME, () => this.cdr.markForCheck());
-  }
-
-  ngOnInit(): void {
-    this.directionality.change?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((direction: Direction) => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-
-    this.dir = this.directionality.value;
   }
 
   closeAlert(): void {

@@ -4,7 +4,6 @@
  */
 
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChild,
@@ -39,8 +38,7 @@ import { getConfigFromComponent } from './utils';
 @Component({
   selector: 'tri-modal',
   exportAs: 'triModal',
-  template: ``,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: ``
 })
 export class TriModalComponent<T extends ModalOptions = TriSafeAny, R = TriSafeAny>
   implements OnChanges, TriModalLegacyAPI<T, R>

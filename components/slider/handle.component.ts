@@ -5,7 +5,6 @@
 
 import { Direction } from '@angular/cdk/bidi';
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -46,7 +45,6 @@ import { TriSliderShowTooltip } from './typings';
     '(mouseleave)': 'leaveHandle()'
   },
   imports: [TriTooltipModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class TriSliderHandleComponent implements OnChanges {

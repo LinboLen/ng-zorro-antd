@@ -4,7 +4,7 @@
  */
 
 import { Directionality } from '@angular/cdk/bidi';
-import { ChangeDetectionStrategy, Component, computed, inject, input, ViewEncapsulation } from '@angular/core';
+import { Component, computed, inject, input, ViewEncapsulation } from '@angular/core';
 
 import { TriAnimationCollapseDirective } from 'ng-zorro-antd/core/animation';
 import { generateClassName, getClassListFromValue } from 'ng-zorro-antd/core/util';
@@ -15,7 +15,6 @@ const MENU_PREFIX = 'ant-menu';
   selector: '[tri-submenu-inline-child]',
   exportAs: 'triSubmenuInlineChild',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<ng-content />`,
   hostDirectives: [
     {
