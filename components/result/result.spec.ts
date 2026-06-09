@@ -46,16 +46,6 @@ export class TriTestResultStatusIconComponent {
   status: TriResultStatusType = 'success';
 }
 
-@Component({
-  selector: 'tri-test-status-icon-result',
-  imports: [TriResultModule],
-  template: `<tri-result [status]="status" title="Test Title" />`,
-  changeDetection: ChangeDetectionStrategy.Eager
-})
-export class TriTestResultStatusIconComponent {
-  status: TriResultStatusType = 'success';
-}
-
 describe('nz-result', () => {
   describe('basic', () => {
     let fixture: ComponentFixture<TriTestResultBasicComponent>;
@@ -119,55 +109,6 @@ describe('nz-result', () => {
   });
 
   testDirectionality(() => TriTestResultBasicComponent, By.directive(TriResultComponent), 'ant-result');
-
-  describe('default icon from status', () => {
-    let fixture: ComponentFixture<TriTestResultStatusIconComponent>;
-    let testComponent: TriTestResultStatusIconComponent;
-    let resultEl: DebugElement;
-
-    beforeEach(() => {
-      // todo: use zoneless
-      TestBed.configureTestingModule({
-        providers: [provideNzIconsTesting(), provideZoneChangeDetection()]
-      });
-
-      fixture = TestBed.createComponent(TriTestResultStatusIconComponent);
-      testComponent = fixture.componentInstance;
-      resultEl = fixture.debugElement.query(By.directive(TriResultComponent));
-    });
-
-    it('should show default icon based on status when nzIcon is not provided', () => {
-      testComponent.status = 'success';
-      fixture.detectChanges();
-
-      const iconView = resultEl.nativeElement.querySelector('.ant-result-icon');
-      expect(iconView.firstElementChild.classList).toContain('anticon-check-circle');
-    });
-
-    it('should show info icon when status is info', () => {
-      testComponent.status = 'info';
-      fixture.detectChanges();
-
-      const iconView = resultEl.nativeElement.querySelector('.ant-result-icon');
-      expect(iconView.firstElementChild.classList).toContain('anticon-exclamation-circle');
-    });
-
-    it('should show warning icon when status is warning', () => {
-      testComponent.status = 'warning';
-      fixture.detectChanges();
-
-      const iconView = resultEl.nativeElement.querySelector('.ant-result-icon');
-      expect(iconView.firstElementChild.classList).toContain('anticon-warning');
-    });
-
-    it('should show error icon when status is error', () => {
-      testComponent.status = 'error';
-      fixture.detectChanges();
-
-      const iconView = resultEl.nativeElement.querySelector('.ant-result-icon');
-      expect(iconView.firstElementChild.classList).toContain('anticon-close-circle');
-    });
-  });
 
   describe('default icon from status', () => {
     let fixture: ComponentFixture<TriTestResultStatusIconComponent>;

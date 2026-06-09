@@ -707,20 +707,6 @@ describe('NzDrawerComponent', () => {
       expect(fixture.componentInstance['maskAnimationLeave']()).toBe('ant-drawer-mask-motion-leave');
     });
   });
-  describe('animation', () => {
-    beforeEach(() => {
-      // todo: use zoneless
-      TestBed.configureTestingModule({
-        providers: [provideNzIconsTesting(), provideZoneChangeDetection()]
-      });
-    });
-
-    it('should get correct mask animation class', () => {
-      const fixture = TestBed.createComponent(TriDrawerComponent);
-      expect(fixture.componentInstance['maskAnimationEnter']()).toBe('ant-drawer-mask-motion-enter');
-      expect(fixture.componentInstance['maskAnimationLeave']()).toBe('ant-drawer-mask-motion-leave');
-    });
-  });
 });
 
 describe('NzDrawerService', () => {

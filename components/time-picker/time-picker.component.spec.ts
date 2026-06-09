@@ -651,41 +651,6 @@ describe('time-picker', () => {
       expect(prefixElement).not.toBeNull();
       expect(prefixElement.query(By.css('.anticon-clock-circle'))).not.toBeNull();
     });
-
-    it('should work correctly with placement in RTL mode', fakeAsync(() => {
-      testComponent.dir = 'rtl';
-      testComponent.placement = 'bottomLeft';
-      fixture.detectChanges();
-
-      dispatchMouseEvent(getPickerInput(fixture.debugElement), 'click');
-      fixture.detectChanges();
-      tick(500);
-      fixture.detectChanges();
-
-      const dropdown = queryFromOverlay('.ant-picker-dropdown');
-      expect(dropdown.classList.contains('ant-picker-dropdown-rtl')).toBe(true);
-      expect(dropdown.classList.contains('ant-picker-dropdown-placement-bottomLeft')).toBe(true);
-
-      triggerInputBlur(fixture.debugElement);
-      fixture.detectChanges();
-      tick(500);
-      fixture.detectChanges();
-    }));
-  });
-
-  describe('prefix with template', () => {
-    let fixture: ComponentFixture<TriTestTimePickerPrefixTemplateComponent>;
-
-    beforeEach(() => {
-      fixture = TestBed.createComponent(TriTestTimePickerPrefixTemplateComponent);
-      fixture.detectChanges();
-    });
-
-    it('should render prefix template with icon', () => {
-      const prefixElement = fixture.debugElement.query(By.css('.ant-picker-prefix'));
-      expect(prefixElement).not.toBeNull();
-      expect(prefixElement.query(By.css('.anticon-clock-circle'))).not.toBeNull();
-    });
   });
 
   describe('in form', () => {

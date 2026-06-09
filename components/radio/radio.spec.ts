@@ -461,40 +461,6 @@ describe('radio', () => {
       expect(radioGroupElement.classList).not.toContain('ant-radio-group-small');
     });
   });
-
-  describe('finalSize', () => {
-    let fixture: ComponentFixture<TestRadioGroupFinalSizeComponent>;
-    let radioGroupElement: HTMLElement;
-    let component: TestRadioGroupFinalSizeComponent;
-    const formSize = signal<TriSizeLDSType | undefined>(undefined);
-
-    beforeEach(() => {
-      TestBed.configureTestingModule({
-        providers: [{ provide: TRI_FORM_SIZE, useValue: formSize }]
-      });
-
-      fixture = TestBed.createComponent(TestRadioGroupFinalSizeComponent);
-      component = fixture.componentInstance;
-      radioGroupElement = fixture.debugElement.query(By.directive(TriRadioGroupComponent)).nativeElement;
-      fixture.detectChanges();
-    });
-
-    it('should prioritize formSize > nzSize', () => {
-      component.size = 'default';
-      formSize.set('large');
-      fixture.detectChanges();
-      expect(radioGroupElement.classList).toContain('ant-radio-group-large');
-
-      formSize.set('small');
-      fixture.detectChanges();
-      expect(radioGroupElement.classList).toContain('ant-radio-group-small');
-
-      formSize.set('default');
-      fixture.detectChanges();
-      expect(radioGroupElement.classList).not.toContain('ant-radio-group-large');
-      expect(radioGroupElement.classList).not.toContain('ant-radio-group-small');
-    });
-  });
 });
 
 @Component({
@@ -696,15 +662,6 @@ export class TriTestRadioGroupLabelNgModelComponent {
       checked: false
     }
   ];
-}
-
-@Component({
-  imports: [TriRadioModule],
-  template: `<tri-radio-group [size]="size" />`,
-  changeDetection: ChangeDetectionStrategy.Eager
-})
-export class TestRadioGroupFinalSizeComponent {
-  size: TriSizeLDSType = 'default';
 }
 
 @Component({
