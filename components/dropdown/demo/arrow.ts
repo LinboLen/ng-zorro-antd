@@ -23,5 +23,12 @@ import { TriFlexModule } from 'ng-zorro-antd/flex';
   `
 })
 export class TriDemoDropdownArrowComponent {
-  listOfPosition: TriPlacementType[] = ['bottomLeft', 'bottomCenter', 'bottomRight', 'topLeft', 'topCenter', 'topRight'];
+  readonly listOfPosition: TriPlacementType[] = [
+    'bottomLeft',
+    'bottomCenter',
+    'bottomRight',
+    'topLeft',
+    'topCenter',
+    'topRight'
+  ];
 }

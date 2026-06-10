@@ -1,16 +1,15 @@
-import { Component, model } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component } from '@angular/core';
 
 import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
 @Component({
   selector: 'tri-demo-tree-select-prefix-and-suffix',
-  imports: [FormsModule, TriTreeSelectModule],
+  imports: [TriTreeSelectModule],
   template: `
-    <tri-tree-select [nodes]="nodes" suffixIcon="smile" [(ngModel)]="value" defaultExpandAll />
+    <tri-tree-select [nodes]="nodes" suffixIcon="smile" defaultExpandAll />
     <br />
     <br />
-    <tri-tree-select [nodes]="nodes" prefix="Prefix" [(ngModel)]="value" defaultExpandAll />
+    <tri-tree-select [nodes]="nodes" prefix="Prefix" defaultExpandAll />
   `,
   styles: `
     nz-tree-select {
@@ -19,7 +18,6 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
   `
 })
 export class TriDemoTreeSelectPrefixAndSuffixComponent {
-  readonly value = model();
   readonly nodes = [
     {
       title: 'parent 1',

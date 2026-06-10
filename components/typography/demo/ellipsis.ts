@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriTypographyModule } from 'ng-zorro-antd/typography';
 
@@ -36,19 +36,20 @@ import { TriTypographyModule } from 'ng-zorro-antd/typography';
       ellipsis
       editable
       [ellipsisRows]="2"
-      [content]="dynamicContent"
+      [content]="dynamicContent()"
       (contentChange)="onChange($event)"
     ></p>
   `
 })
 export class TriDemoTypographyEllipsisComponent {
-  dynamicContent =
+  readonly dynamicContent = signal(
     'Ant Design, a design language for background applications, is refined by Ant UED Team. ' +
-    'Ant Design, a design language for background applications, is refined by Ant UED Team. ' +
-    'Ant Design, a design language for background applications, is refined by Ant UED Team. ' +
-    'Ant Design, a design language for background applications, is refined by Ant UED Team.';
+      'Ant Design, a design language for background applications, is refined by Ant UED Team. ' +
+      'Ant Design, a design language for background applications, is refined by Ant UED Team. ' +
+      'Ant Design, a design language for background applications, is refined by Ant UED Team.'
+  );
 
-  onChange(event: string): void {
-    this.dynamicContent = event;
+  onChange(content: string): void {
+    this.dynamicContent.set(content);
   }
 }

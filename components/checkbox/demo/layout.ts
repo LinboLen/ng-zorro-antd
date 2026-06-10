@@ -8,7 +8,7 @@ import { TriGridModule } from 'ng-zorro-antd/grid';
   selector: 'tri-demo-checkbox-layout',
   imports: [FormsModule, TriCheckboxModule, TriGridModule],
   template: `
-    <tri-checkbox-group [(ngModel)]="value" [style.width.%]="100" (ngModelChange)="log($event)">
+    <tri-checkbox-group ngModel="A" [style.width.%]="100">
       <tri-row>
         <tri-col span="8">
           <label tri-checkbox value="A">A</label>
@@ -29,10 +29,4 @@ import { TriGridModule } from 'ng-zorro-antd/grid';
     </tri-checkbox-group>
   `
 })
-export class TriDemoCheckboxLayoutComponent {
-  value = ['A'];
-
-  log(value: string[]): void {
-    console.log(value);
-  }
-}
+export class TriDemoCheckboxLayoutComponent {}

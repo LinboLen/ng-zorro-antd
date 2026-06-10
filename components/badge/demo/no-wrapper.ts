@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriBadgeModule } from 'ng-zorro-antd/badge';
@@ -12,10 +12,10 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   template: `
     <tri-flex gap="small" align="center">
       <tri-switch [(ngModel)]="show" />
-      <tri-badge standalone showZero [count]="show ? 11 : 0" [style]="{ backgroundColor: '#faad14' }" />
-      <tri-badge standalone [count]="show ? 25 : 0" />
-      <tri-badge standalone [count]="show ? iconTemplate : 0" />
-      <tri-badge standalone [count]="show ? 109 : 0" [style]="{ backgroundColor: '#52c41a' }" />
+      <tri-badge standalone showZero [count]="show() ? 11 : 0" [style]="{ backgroundColor: '#faad14' }" />
+      <tri-badge standalone [count]="show() ? 25 : 0" />
+      <tri-badge standalone [count]="show() ? iconTemplate : 0" />
+      <tri-badge standalone [count]="show() ? 109 : 0" [style]="{ backgroundColor: '#52c41a' }" />
     </tri-flex>
 
     <ng-template #iconTemplate>
@@ -24,5 +24,5 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   `
 })
 export class TriDemoBadgeNoWrapperComponent {
-  show = true;
+  readonly show = signal(true);
 }

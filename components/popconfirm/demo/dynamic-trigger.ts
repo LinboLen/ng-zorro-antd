@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriMessageService } from 'ng-zorro-antd/message';
@@ -12,7 +12,7 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
     <a
       tri-popconfirm
       popconfirmTitle="Are you sure delete this task?"
-      [condition]="switchValue"
+      [condition]="switchValue()"
       (onConfirm)="confirm()"
       (onCancel)="cancel()"
     >
@@ -27,7 +27,7 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
 export class TriDemoPopconfirmDynamicTriggerComponent {
   private readonly messageService = inject(TriMessageService);
 
-  switchValue = false;
+  readonly switchValue = signal(false);
 
   cancel(): void {
     this.messageService.info('click cancel');

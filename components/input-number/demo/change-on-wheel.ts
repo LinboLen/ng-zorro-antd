@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
@@ -17,7 +17,7 @@ import { TriInputNumberModule, TriInputNumberStepEvent } from 'ng-zorro-antd/inp
   `
 })
 export class TriDemoInputNumberChangeOnWheelComponent {
-  value = 3;
+  readonly value = signal(3);
 
   onChange(value: number): void {
     console.log(value);

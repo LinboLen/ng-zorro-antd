@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { TriTableModule } from 'ng-zorro-antd/table';
 
@@ -32,16 +32,10 @@ import { TriTableModule } from 'ng-zorro-antd/table';
     </tri-table>
   `
 })
-export class TriDemoTableEllipsisComponent implements OnInit {
-  listOfData: Array<{ name: string; age: number; address: string }> = [];
-
-  ngOnInit(): void {
-    for (let i = 0; i < 3; i++) {
-      this.listOfData.push({
-        name: `Edward King`,
-        age: 32,
-        address: `LondonLondonLondonLondonLondon`
-      });
-    }
-  }
+export class TriDemoTableEllipsisComponent {
+  readonly listOfData: Array<{ name: string; age: number; address: string }> = Array.from({ length: 3 }).map(() => ({
+    name: `Edward King`,
+    age: 32,
+    address: `LondonLondonLondonLondonLondon`
+  }));
 }

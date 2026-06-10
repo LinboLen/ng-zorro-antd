@@ -38,8 +38,8 @@ import { TriInputModule } from 'ng-zorro-antd/input';
   `
 })
 export class TriDemoCronExpressionFormComponent {
-  private fb = inject(FormBuilder);
-  form: FormGroup<{
+  private readonly fb = inject(FormBuilder);
+  readonly form: FormGroup<{
     username: FormControl<string | null>;
     cronLinux: FormControl<string | null>;
     cronSpring: FormControl<string | null>;

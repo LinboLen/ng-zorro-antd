@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import {
@@ -18,7 +18,7 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
       <label tri-radio-button value="flip">Flip</label>
       <label tri-radio-button value="fade">Fade (built-in)</label>
     </tri-radio-group>
-    <tri-carousel [effect]="strategy">
+    <tri-carousel [effect]="strategy()">
       @for (index of array; track index) {
         <div tri-carousel-content>
           <h3>{{ index }}</h3>
@@ -57,6 +57,6 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
   ]
 })
 export class TriDemoCarouselCustomComponent {
-  strategy = 'transform-no-loop';
-  array = [1, 2, 3, 4];
+  readonly strategy = signal('transform-no-loop');
+  readonly array = [1, 2, 3, 4];
 }

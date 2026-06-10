@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriCheckboxModule, TriCheckboxOption } from 'ng-zorro-antd/checkbox';
@@ -17,23 +17,23 @@ import { TriCheckboxModule, TriCheckboxOption } from 'ng-zorro-antd/checkbox';
   `
 })
 export class TriDemoCheckboxGroupComponent {
-  options1: TriCheckboxOption[] = [
+  readonly options1: TriCheckboxOption[] = [
     { label: 'Apple', value: 'Apple' },
     { label: 'Pear', value: 'Pear' },
     { label: 'Orange', value: 'Orange' }
   ];
-  options2: TriCheckboxOption[] = [
+  readonly options2: TriCheckboxOption[] = [
     { label: 'Apple', value: 'Apple' },
     { label: 'Pear', value: 'Pear' },
     { label: 'Orange', value: 'Orange', disabled: true }
   ];
-  options3: TriCheckboxOption[] = [
+  readonly options3: TriCheckboxOption[] = [
     { label: 'Apple', value: 'Apple' },
     { label: 'Pear', value: 'Pear' },
     { label: 'Orange', value: 'Orange' }
   ];
 
-  value = ['Apple'];
+  readonly value = signal(['Apple']);
 
   log(value: string[]): void {
     console.log(value);

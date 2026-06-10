@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriModalModule, TriModalService } from 'ng-zorro-antd/modal';
@@ -31,18 +31,18 @@ import { TriModalModule, TriModalService } from 'ng-zorro-antd/modal';
 export class TriDemoModalLocaleComponent {
   private readonly modalService = inject(TriModalService);
 
-  isVisible = false;
+  readonly isVisible = signal(false);
 
   showModal(): void {
-    this.isVisible = true;
+    this.isVisible.set(true);
   }
 
   handleOk(): void {
-    this.isVisible = false;
+    this.isVisible.set(false);
   }
 
   handleCancel(): void {
-    this.isVisible = false;
+    this.isVisible.set(false);
   }
 
   showConfirm(): void {

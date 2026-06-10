@@ -1,11 +1,10 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { TriAnchorModule } from 'ng-zorro-antd/anchor';
 
 @Component({
   selector: 'tri-demo-anchor-static',
   imports: [TriAnchorModule],
-  encapsulation: ViewEncapsulation.None,
   template: `
     <tri-anchor [affix]="false">
       <tri-link href="#components-anchor-demo-basic" title="Basic demo" />

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -16,8 +16,8 @@ const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,
   selector: 'tri-demo-list-loadmore',
   imports: [TriButtonModule, TriListModule, TriSkeletonModule],
   template: `
-    <tri-list class="demo-loadmore-list" [loading]="initLoading">
-      @for (item of list; track item) {
+    <tri-list class="demo-loadmore-list" [loading]="initLoading()">
+      @for (item of list(); track item) {
         <tri-list-item>
           @if (item.loading) {
             <tri-skeleton [avatar]="true" [active]="true" [title]="false" [loading]="true" />
@@ -41,7 +41,7 @@ const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,
         </tri-list-item>
       }
       <div class="loadmore" tri-list-load-more>
-        @if (!loadingMore) {
+        @if (!loadingMore()) {
           <button tri-button (click)="onLoadMore()">loading more</button>
         }
       </div>
@@ -63,15 +63,16 @@ export class TriDemoListLoadmoreComponent implements OnInit {
   private readonly http = inject(HttpClient);
   private readonly msg = inject(TriMessageService);
 
-  initLoading = true; // bug
-  loadingMore = false;
-  data: any[] = [];
-  list: Array<{ loading: boolean; name: any }> = [];
+  readonly initLoading = signal(true);
+  readonly loadingMore = signal(false);
+  readonly data = signal<any[]>([]);
+  readonly list = signal<Array<{ loading: boolean; name: any }>>([]);
+
   ngOnInit(): void {
     this.getData((res: any) => {
-      this.data = res.results;
-      this.list = res.results;
-      this.initLoading = false;
+      this.data.set(res.results);
+      this.list.set(res.results);
+      this.initLoading.set(false);
     });
   }
 
@@ -83,15 +84,15 @@ export class TriDemoListLoadmoreComponent implements OnInit {
   }
 
   onLoadMore(): void {
-    this.loadingMore = true;
-    this.list = this.data.concat([...Array(count)].fill({}).map(() => ({ loading: true, name: {} })));
+    this.loadingMore.set(true);
+    this.list.set(this.data().concat([...Array(count)].fill({}).map(() => ({ loading: true, name: {} }))));
     this.http
       .get(fakeDataUrl)
       .pipe(catchError(() => of({ results: [] })))
       .subscribe((res: any) => {
-        this.data = this.data.concat(res.results);
-        this.list = [...this.data];
-        this.loadingMore = false;
+        this.data.update(data => data.concat(res.results));
+        this.list.set([...this.data()]);
+        this.loadingMore.set(false);
       });
   }
 

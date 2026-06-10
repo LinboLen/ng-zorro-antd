@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriButtonModule, TriButtonSize } from 'ng-zorro-antd/button';
@@ -17,30 +17,30 @@ import { TriSpaceModule } from 'ng-zorro-antd/space';
     </tri-radio-group>
     <br />
     <br />
-    <button tri-button [size]="size" type="primary">Primary</button>
-    <button tri-button [size]="size" type="default">Default</button>
-    <button tri-button [size]="size" type="dashed">Dashed</button>
-    <a tri-button [size]="size" type="link">Link</a>
+    <button tri-button [size]="size()" type="primary">Primary</button>
+    <button tri-button [size]="size()" type="default">Default</button>
+    <button tri-button [size]="size()" type="dashed">Dashed</button>
+    <a tri-button [size]="size()" type="link">Link</a>
     <br />
-    <button tri-button type="primary" [size]="size">
+    <button tri-button type="primary" [size]="size()">
       <tri-icon type="download" />
     </button>
-    <button tri-button type="primary" [size]="size" shape="circle">
+    <button tri-button type="primary" [size]="size()" shape="circle">
       <tri-icon type="download" />
     </button>
-    <button tri-button type="primary" [size]="size" shape="round">
+    <button tri-button type="primary" [size]="size()" shape="round">
       <tri-icon type="download" />
     </button>
-    <button tri-button type="primary" [size]="size" shape="round">
+    <button tri-button type="primary" [size]="size()" shape="round">
       <tri-icon type="download" />
       Download
     </button>
-    <button tri-button type="primary" [size]="size">
+    <button tri-button type="primary" [size]="size()">
       <tri-icon type="download" />
       Download
     </button>
     <br />
-    <tri-space-compact [size]="size">
+    <tri-space-compact [size]="size()">
       <button tri-button type="primary">
         <tri-icon type="left" />
         Backward
@@ -59,5 +59,5 @@ import { TriSpaceModule } from 'ng-zorro-antd/space';
   `
 })
 export class TriDemoButtonSizeComponent {
-  size: TriButtonSize = 'large';
+  readonly size = signal<TriButtonSize>('large');
 }

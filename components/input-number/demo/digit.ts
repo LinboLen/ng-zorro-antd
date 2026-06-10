@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
@@ -9,5 +9,5 @@ import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
   template: `<tri-input-number [(ngModel)]="value" min="0" max="10" step="0.1" placeHolder="Digital" />`
 })
 export class TriDemoInputNumberDigitComponent {
-  value = 0.1;
+  readonly value = signal(0.1);
 }

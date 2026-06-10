@@ -1,111 +1,80 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriAutocompleteModule } from 'ng-zorro-antd/auto-complete';
+import { TriFlexModule } from 'ng-zorro-antd/flex';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriInputModule } from 'ng-zorro-antd/input';
 
-interface AutocompleteOptionGroups {
-  title: string;
-  count?: number;
-  children?: AutocompleteOptionGroups[];
-}
-
 @Component({
   selector: 'tri-demo-auto-complete-certain-category',
-  imports: [FormsModule, TriAutocompleteModule, TriIconModule, TriInputModule],
-  encapsulation: ViewEncapsulation.None,
+  imports: [FormsModule, TriAutocompleteModule, TriFlexModule, TriIconModule, TriInputModule],
   template: `
-    <div class="example-input">
-      <tri-input-wrapper>
-        <input
-          placeholder="input here"
-          tri-input
-          [(ngModel)]="inputValue"
-          (ngModelChange)="onChange($event)"
-          [autocomplete]="auto"
-        />
-        <tri-icon inputSuffix type="search" />
-      </tri-input-wrapper>
-      <tri-autocomplete #auto>
-        @for (group of optionGroups; track group.title) {
-          <tri-auto-optgroup [label]="groupTitle">
-            <ng-template #groupTitle>
-              <span>
-                {{ group.title }}
-                <a class="more-link" href="https://www.google.com/search?q=ng+zorro" target="_blank">更多</a>
-              </span>
-            </ng-template>
-            @for (option of group.children; track option.title) {
-              <tri-auto-option [label]="option.title" [value]="option.title">
+    <tri-input-search>
+      <input placeholder="input here" tri-input size="large" [(ngModel)]="value" [autocomplete]="auto" />
+    </tri-input-search>
+    <tri-autocomplete #auto>
+      @for (group of options; track group.title) {
+        <tri-auto-optgroup [label]="groupTitle">
+          <ng-template #groupTitle>
+            <tri-flex justify="space-between">
+              {{ group.title }}
+              <a href="https://www.google.com/search?q=ng+zorro" rel="noopener noreferrer" target="_blank">More</a>
+            </tri-flex>
+          </ng-template>
+          @for (option of group.children; track option.title) {
+            <tri-auto-option [label]="option.title" [value]="option.title">
+              <tri-flex justify="space-between">
                 {{ option.title }}
-                <span class="certain-search-item-count">{{ option.count }} 人 关注</span>
-              </tri-auto-option>
-            }
-          </tri-auto-optgroup>
-        }
-      </tri-autocomplete>
-    </div>
-  `,
-  styles: `
-    .certain-search-item-count {
-      position: absolute;
-      color: #999;
-      right: 16px;
-    }
-
-    .more-link {
-      float: right;
-    }
+                <span>
+                  <tri-icon type="user" />
+                  {{ option.count }}
+                </span>
+              </tri-flex>
+            </tri-auto-option>
+          }
+        </tri-auto-optgroup>
+      }
+    </tri-autocomplete>
   `
 })
-export class TriDemoAutoCompleteCertainCategoryComponent implements OnInit {
-  inputValue?: string;
-  optionGroups: AutocompleteOptionGroups[] = [];
-
-  onChange(value: string): void {
-    console.log(value);
-  }
-
-  ngOnInit(): void {
-    setTimeout(() => {
-      this.optionGroups = [
+export class TriDemoAutoCompleteCertainCategoryComponent {
+  value?: string;
+  readonly options = [
+    {
+      title: 'Libraries',
+      children: [
         {
-          title: '话题',
-          children: [
-            {
-              title: 'AntDesign',
-              count: 10000
-            },
-            {
-              title: 'AntDesign UI',
-              count: 10600
-            }
-          ]
+          title: 'AntDesign',
+          count: 10000
         },
         {
-          title: '问题',
-          children: [
-            {
-              title: 'AntDesign UI 有多好',
-              count: 60100
-            },
-            {
-              title: 'AntDesign 是啥',
-              count: 30010
-            }
-          ]
-        },
-        {
-          title: '文章',
-          children: [
-            {
-              title: 'AntDesign 是一个设计语言',
-              count: 100000
-            }
-          ]
+          title: 'AntDesign UI',
+          count: 10600
         }
-      ];
-    }, 1000);
-  }
+      ]
+    },
+    {
+      title: 'Solutions',
+      children: [
+        {
+          title: 'AntDesign UI FAQ',
+          count: 60100
+        },
+        {
+          title: 'AntDesign FAQ',
+          count: 30010
+        }
+      ]
+    },
+    {
+      title: 'Articles',
+      children: [
+        {
+          title: 'AntDesign design language',
+          count: 100000
+        }
+      ]
+    }
+  ];
 }

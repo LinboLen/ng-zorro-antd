@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
@@ -34,8 +34,8 @@ import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
   `
 })
 export class TriDemoImageControlledPreviewComponent {
-  private imageService = inject(TriImageService);
-  scaleStep = 0.5;
+  private readonly imageService = inject(TriImageService);
+  readonly scaleStep = signal(0.5);
   readonly images = [
     {
       src: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
@@ -44,6 +44,6 @@ export class TriDemoImageControlledPreviewComponent {
   ];
 
   onClick(): void {
-    this.imageService.preview(this.images, { zoom: 1, rotate: 0, scaleStep: this.scaleStep });
+    this.imageService.preview(this.images, { zoom: 1, rotate: 0, scaleStep: this.scaleStep() });
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriDividerModule } from 'ng-zorro-antd/divider';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -10,7 +10,7 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
   imports: [TriDividerModule, TriIconModule, TriInputModule, TriSelectModule],
   template: `
     <tri-select showSearch allowClear [dropdownRender]="renderTemplate" placeHolder="custom dropdown render">
-      @for (item of listOfItem; track item) {
+      @for (item of listOfItem(); track item) {
         <tri-option [label]="item" [value]="item" />
       }
     </tri-select>
@@ -45,13 +45,13 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
   `
 })
 export class TriDemoSelectCustomDropdownMenuComponent {
-  listOfItem = ['jack', 'lucy'];
+  readonly listOfItem = signal(['jack', 'lucy']);
   index = 0;
 
   addItem(input: HTMLInputElement): void {
     const value = input.value;
-    if (this.listOfItem.indexOf(value) === -1) {
-      this.listOfItem = [...this.listOfItem, input.value || `New item ${this.index++}`];
+    if (this.listOfItem().indexOf(value) === -1) {
+      this.listOfItem.update(listOfItem => [...listOfItem, value || `New item ${this.index++}`]);
     }
   }
 }

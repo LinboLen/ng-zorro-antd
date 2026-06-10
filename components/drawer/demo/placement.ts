@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
@@ -18,8 +18,8 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
     <button tri-button type="primary" (click)="open()">Open</button>
     <tri-drawer
       [closable]="false"
-      [visible]="visible"
-      [placement]="placement"
+      [visible]="visible()"
+      [placement]="placement()"
       title="Basic Drawer"
       (onClose)="close()"
     >
@@ -32,14 +32,14 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
   `
 })
 export class TriDemoDrawerPlacementComponent {
-  visible = false;
-  placement: TriDrawerPlacement = 'left';
+  readonly visible = signal(false);
+  readonly placement = signal<TriDrawerPlacement>('left');
 
   open(): void {
-    this.visible = true;
+    this.visible.set(true);
   }
 
   close(): void {
-    this.visible = false;
+    this.visible.set(false);
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriDrawerModule } from 'ng-zorro-antd/drawer';
@@ -13,10 +13,10 @@ import { TriSpaceModule } from 'ng-zorro-antd/space';
       <button *spaceItem tri-button type="primary" (click)="showLarge()">Open Large Size (736px)</button>
     </tri-space>
     <tri-drawer
-      [size]="size"
-      [visible]="visible"
+      [size]="size()"
+      [visible]="visible()"
       placement="right"
-      [title]="title"
+      title="Drawer {{ size() }}"
       [extra]="extra"
       (onClose)="close()"
     >
@@ -34,28 +34,24 @@ import { TriSpaceModule } from 'ng-zorro-antd/space';
   `
 })
 export class TriDemoDrawerSizeComponent {
-  visible = false;
-  size: 'large' | 'default' = 'default';
-
-  get title(): string {
-    return `${this.size} Drawer`;
-  }
+  readonly visible = signal(false);
+  readonly size = signal<'large' | 'default'>('default');
 
   showDefault(): void {
-    this.size = 'default';
+    this.size.set('default');
     this.open();
   }
 
   showLarge(): void {
-    this.size = 'large';
+    this.size.set('large');
     this.open();
   }
 
   open(): void {
-    this.visible = true;
+    this.visible.set(true);
   }
 
   close(): void {
-    this.visible = false;
+    this.visible.set(false);
   }
 }

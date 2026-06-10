@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriCascaderModule, TriCascaderOption } from 'ng-zorro-antd/cascader';
@@ -56,7 +56,7 @@ const options: TriCascaderOption[] = [
       <tri-cascader
         [options]="options"
         [ngModel]="values"
-        [open]="open"
+        [open]="open()"
         (selectionChange)="onSelectionChange($event)"
         (openChange)="onOpenChange($event)"
       />
@@ -65,8 +65,8 @@ const options: TriCascaderOption[] = [
 })
 export class TriDemoCascaderOpenComponent {
   readonly options = options;
-  values = ['zhejiang', 'hangzhou', 'xihu'];
-  open = false;
+  readonly values = ['zhejiang', 'hangzhou', 'xihu'];
+  readonly open = signal(false);
 
   onSelectionChange(selectedOptions: TriCascaderOption[]): void {
     console.log(selectedOptions);
@@ -74,7 +74,5 @@ export class TriDemoCascaderOpenComponent {
 
   onOpenChange(open: boolean): void {
     console.log(open);
-    // You can set the `open` variable in `(nzOpenChange)` to control the open state.
-    // this.open = open;
   }
 }

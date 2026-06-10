@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild, inject, model } from '@angular/core';
+import { Component, TemplateRef, ViewChild, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
@@ -38,7 +38,7 @@ export class TriDemoDrawerServiceComponent {
     $implicit: IDrawerData;
     drawerRef: TriDrawerRef<string>;
   }>;
-  readonly value = model('ng');
+  readonly value = signal('ng');
 
   openTemplate(): void {
     const drawerRef = this.drawerService.create({

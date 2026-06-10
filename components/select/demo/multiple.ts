@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriSelectModule } from 'ng-zorro-antd/select';
@@ -16,17 +16,14 @@ function alphabet(): string[] {
   imports: [FormsModule, TriSelectModule],
   template: `
     <tri-select
+      [options]="options"
       [maxTagCount]="3"
       [maxTagPlaceholder]="tagPlaceHolder"
       mode="multiple"
       allowClear
       placeHolder="Please select"
-      [(ngModel)]="listOfSelectedValue"
-    >
-      @for (item of listOfOption; track item) {
-        <tri-option [label]="item" [value]="item" />
-      }
-    </tri-select>
+      [(ngModel)]="value"
+    />
     <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
   `,
   styles: `
@@ -36,6 +33,6 @@ function alphabet(): string[] {
   `
 })
 export class TriDemoSelectMultipleComponent {
-  readonly listOfOption: string[] = alphabet();
-  listOfSelectedValue = ['a10', 'c12'];
+  readonly options = alphabet().map(item => ({ label: item, value: item }));
+  readonly value = signal(['a10', 'c12']);
 }

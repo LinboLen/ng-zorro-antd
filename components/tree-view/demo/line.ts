@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -46,7 +46,7 @@ const TREE_DATA: TreeNode[] = [
 
     <tri-tree-view [dataSource]="dataSource" [childrenAccessor]="childrenAccessor">
       <tri-tree-node *treeNodeDef="let node" treeNodeIndentLine [expandable]="false">
-        @if (showLeafIcon) {
+        @if (showLeafIcon()) {
           <tri-tree-node-toggle treeNodeNoopToggle>
             <tri-icon type="file" theme="outline" />
           </tri-tree-node-toggle>
@@ -74,7 +74,7 @@ export class TriDemoTreeViewLineComponent implements AfterViewInit, OnInit {
 
   readonly hasChild = (_: number, node: TreeNode): boolean => !!node.children?.length;
 
-  showLeafIcon = false;
+  readonly showLeafIcon = signal(false);
 
   dataSource!: TriTreeViewNestedDataSource<TreeNode>;
 

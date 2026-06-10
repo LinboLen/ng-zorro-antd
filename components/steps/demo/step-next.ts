@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriStepsModule } from 'ng-zorro-antd/steps';
@@ -7,25 +7,25 @@ import { TriStepsModule } from 'ng-zorro-antd/steps';
   selector: 'tri-demo-steps-step-next',
   imports: [TriButtonModule, TriStepsModule],
   template: `
-    <tri-steps [current]="current">
+    <tri-steps [current]="current()">
       <tri-step title="Finished" />
       <tri-step title="In Progress" />
       <tri-step title="Waiting" />
     </tri-steps>
 
-    <div class="steps-content">{{ index }}</div>
+    <div class="steps-content">{{ content() }}</div>
     <div class="steps-action">
-      @if (current > 0) {
+      @if (current() > 0) {
         <button tri-button type="default" (click)="pre()">
           <span>Previous</span>
         </button>
       }
-      @if (current < 2) {
+      @if (current() < 2) {
         <button tri-button type="default" (click)="next()">
           <span>Next</span>
         </button>
       }
-      @if (current === 2) {
+      @if (current() === 2) {
         <button tri-button type="primary" (click)="done()">
           <span>Done</span>
         </button>
@@ -53,41 +53,29 @@ import { TriStepsModule } from 'ng-zorro-antd/steps';
   `
 })
 export class TriDemoStepsStepNextComponent {
-  current = 0;
-
-  index = 'First-content';
+  readonly current = signal(0);
+  readonly content = computed(() => {
+    switch (this.current()) {
+      case 0:
+        return 'First-content';
+      case 1:
+        return 'Second-content';
+      case 2:
+        return 'third-content';
+      default:
+        return 'error';
+    }
+  });
 
   pre(): void {
-    this.current -= 1;
-    this.changeContent();
+    this.current.update(current => current - 1);
   }
 
   next(): void {
-    this.current += 1;
-    this.changeContent();
+    this.current.update(current => current + 1);
   }
 
   done(): void {
     console.log('done');
-  }
-
-  changeContent(): void {
-    switch (this.current) {
-      case 0: {
-        this.index = 'First-content';
-        break;
-      }
-      case 1: {
-        this.index = 'Second-content';
-        break;
-      }
-      case 2: {
-        this.index = 'third-content';
-        break;
-      }
-      default: {
-        this.index = 'error';
-      }
-    }
   }
 }

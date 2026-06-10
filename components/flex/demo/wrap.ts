@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
@@ -13,7 +13,7 @@ import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
       <span>Select wrap:</span>
       <tri-segmented [options]="wrapSegment" [(ngModel)]="selectedWrap" />
     </div>
-    <div class="btn-wrapper" tri-flex gap="middle" [wrap]="selectedWrap">
+    <div class="btn-wrapper" tri-flex gap="middle" [wrap]="selectedWrap()">
       @for (_ of array; track _) {
         <button style="width: 100px" tri-button type="primary">Button {{ _ }}</button>
       }
@@ -35,7 +35,7 @@ import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
   `
 })
 export class TriDemoFlexWrapComponent {
-  wrapSegment: TriWrap[] = ['wrap', 'wrap-reverse', 'nowrap'];
-  selectedWrap: TriWrap = 'wrap';
-  array = Array.from({ length: 20 }, (_, index) => index + 1);
+  readonly wrapSegment: TriWrap[] = ['wrap', 'wrap-reverse', 'nowrap'];
+  readonly selectedWrap = signal<TriWrap>('wrap');
+  readonly array = Array.from({ length: 20 }, (_, index) => index + 1);
 }

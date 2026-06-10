@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriGridModule } from 'ng-zorro-antd/grid';
 import { TriResizableModule, TriResizeEvent, TriResizeHandleOption } from 'ng-zorro-antd/resizable';
@@ -16,12 +16,12 @@ import { TriResizableModule, TriResizeEvent, TriResizeHandleOption } from 'ng-zo
         [minColumn]="3"
         [maxColumn]="20"
         [gridColumnCount]="24"
-        [span]="col"
+        [span]="col()"
       >
         <tri-resize-handles [directions]="directions" />
-        col-{{ col }}
+        col-{{ col() }}
       </div>
-      <div class="col right" tri-col [span]="24 - col">col-{{ 24 - col }}</div>
+      <div class="col right" tri-col [span]="24 - col()">col-{{ 24 - col() }}</div>
     </div>
   `,
   styles: `
@@ -42,7 +42,7 @@ import { TriResizableModule, TriResizeEvent, TriResizeHandleOption } from 'ng-zo
   `
 })
 export class TriDemoResizableGridComponent {
-  col = 8;
+  readonly col = signal(8);
   id = -1;
   directions: TriResizeHandleOption[] = [
     {
@@ -54,7 +54,7 @@ export class TriDemoResizableGridComponent {
   onResize({ col }: TriResizeEvent): void {
     cancelAnimationFrame(this.id);
     this.id = requestAnimationFrame(() => {
-      this.col = col!;
+      this.col.set(col!);
     });
   }
 }

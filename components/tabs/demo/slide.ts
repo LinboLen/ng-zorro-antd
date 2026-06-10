@@ -1,15 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
 import { TriRadioModule } from 'ng-zorro-antd/radio';
 import { TriTabPosition, TriTabsModule } from 'ng-zorro-antd/tabs';
 
+interface Tab {
+  name: string;
+  content: string;
+  disabled: boolean;
+}
+
 @Component({
   selector: 'tri-demo-tabs-slide',
   imports: [FormsModule, TriInputNumberModule, TriRadioModule, TriTabsModule],
   template: `
-    <tri-radio-group [(ngModel)]="tabPosition" style="margin-bottom: 8px;">
+    <tri-radio-group [(ngModel)]="position" style="margin-bottom: 8px;">
       <label tri-radio-button value="top">Horizontal</label>
       <label tri-radio-button value="left">Vertical</label>
     </tri-radio-group>
@@ -17,11 +23,11 @@ import { TriTabPosition, TriTabsModule } from 'ng-zorro-antd/tabs';
 
     <tri-tabs
       style="height:220px;"
-      [tabPosition]="tabPosition"
+      [tabPosition]="position()"
       [(selectedIndexChange)]="selectedIndex"
       (selectChange)="log([$event])"
     >
-      @for (tab of tabs; track tab) {
+      @for (tab of tabs(); track tab) {
         <tri-tab
           [title]="tab.name"
           [disabled]="tab.disabled"
@@ -37,22 +43,23 @@ import { TriTabPosition, TriTabsModule } from 'ng-zorro-antd/tabs';
   `
 })
 export class TriDemoTabsSlideComponent implements OnInit {
-  tabs: Array<{ name: string; content: string; disabled: boolean }> = [];
-  tabPosition: TriTabPosition = 'top';
-  selectedIndex = 27;
+  readonly tabs = signal<Tab[]>([]);
+  readonly position = signal<TriTabPosition>('top');
+  readonly selectedIndex = signal(27);
 
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  log(args: any[]): void {
+  log(args: unknown[]): void {
     console.log(args);
   }
 
   ngOnInit(): void {
+    const tabs: Tab[] = [];
     for (let i = 0; i < 30; i++) {
-      this.tabs.push({
+      tabs.push({
         name: `Tab ${i}`,
         disabled: i === 28,
         content: `Content of tab ${i}`
       });
     }
+    this.tabs.set(tabs);
   }
 }

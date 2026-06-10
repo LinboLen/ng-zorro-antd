@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriLayoutModule } from 'ng-zorro-antd/layout';
 import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
@@ -11,7 +11,7 @@ import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
       <tri-header>Header</tri-header>
       <tri-layout>
         <tri-sider
-          [width]="siderWidth"
+          [width]="siderWidth()"
           tri-resizable
           [minWidth]="50"
           [maxWidth]="300"
@@ -26,7 +26,7 @@ import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
           <div
             tri-resizable
             class="resizable-box"
-            [style.height.px]="contentHeight"
+            [style.height.px]="contentHeight()"
             [maxHeight]="300"
             [minHeight]="50"
             (resize)="onContentResize($event)"
@@ -97,21 +97,21 @@ import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
   `
 })
 export class TriDemoResizableLayoutComponent {
-  siderWidth = 120;
-  contentHeight = 200;
+  readonly siderWidth = signal(120);
+  readonly contentHeight = signal(200);
   id = -1;
 
   onSideResize({ width }: TriResizeEvent): void {
     cancelAnimationFrame(this.id);
     this.id = requestAnimationFrame(() => {
-      this.siderWidth = width!;
+      this.siderWidth.set(width!);
     });
   }
 
   onContentResize({ height }: TriResizeEvent): void {
     cancelAnimationFrame(this.id);
     this.id = requestAnimationFrame(() => {
-      this.contentHeight = height!;
+      this.contentHeight.set(height!);
     });
   }
 }

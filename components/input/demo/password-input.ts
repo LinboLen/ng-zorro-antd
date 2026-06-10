@@ -31,7 +31,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
       <tri-input-password [(visibleChange)]="passwordVisible" [style.flex]="1">
         <input tri-input placeholder="input password" [(ngModel)]="password" />
       </tri-input-password>
-      <button tri-button (click)="passwordVisible.set(!passwordVisible())">
+      <button tri-button (click)="togglePasswordVisibility()">
         {{ passwordVisible() ? 'Hide' : 'Show' }}
       </button>
     </tri-flex>
@@ -44,4 +44,8 @@ import { TriInputModule } from 'ng-zorro-antd/input';
 export class TriDemoInputPasswordInputComponent {
   readonly passwordVisible = signal(false);
   readonly password = signal('');
+
+  togglePasswordVisibility(): void {
+    this.passwordVisible.update(visible => !visible);
+  }
 }

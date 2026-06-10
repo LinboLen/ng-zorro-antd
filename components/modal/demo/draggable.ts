@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriModalModule } from 'ng-zorro-antd/modal';
@@ -27,19 +27,19 @@ import { TriModalModule } from 'ng-zorro-antd/modal';
   `
 })
 export class TriDemoModalDraggableComponent {
-  isVisible = false;
+  readonly isVisible = signal(false);
 
   showModal(): void {
-    this.isVisible = true;
+    this.isVisible.set(true);
   }
 
   handleOk(): void {
     console.log('Button ok clicked!');
-    this.isVisible = false;
+    this.isVisible.set(false);
   }
 
   handleCancel(): void {
     console.log('Button cancel clicked!');
-    this.isVisible = false;
+    this.isVisible.set(false);
   }
 }

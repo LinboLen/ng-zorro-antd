@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriRadioModule } from 'ng-zorro-antd/radio';
@@ -16,7 +16,7 @@ import { TriSelectModule, TriSelectPlacementType } from 'ng-zorro-antd/select';
     </tri-radio-group>
     <br />
     <br />
-    <tri-select [(ngModel)]="selectedValue" [dropdownMatchSelectWidth]="false" [placement]="placement">
+    <tri-select [(ngModel)]="value" [dropdownMatchSelectWidth]="false" [placement]="placement()">
       <tri-option value="HangZhou" label="HangZhou #310000" />
       <tri-option value="NingBo" label="NingBo #315000" />
       <tri-option value="WenZhou" label="WenZhou #325000" />
@@ -29,6 +29,6 @@ import { TriSelectModule, TriSelectPlacementType } from 'ng-zorro-antd/select';
   `
 })
 export class TriDemoSelectPlacementComponent {
-  placement: TriSelectPlacementType = 'topLeft';
-  selectedValue = 'HangZhou';
+  readonly placement = signal<TriSelectPlacementType>('topLeft');
+  readonly value = signal('HangZhou');
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriRadioModule } from 'ng-zorro-antd/radio';
@@ -13,7 +13,7 @@ import { TriTabsModule } from 'ng-zorro-antd/tabs';
       <label tri-radio-button value="default"><span>Default</span></label>
       <label tri-radio-button value="large"><span>Large</span></label>
     </tri-radio-group>
-    <tri-tabs [size]="size">
+    <tri-tabs [size]="size()">
       @for (tab of tabs; track tab) {
         <tri-tab [title]="'Tab ' + tab">Content of tab {{ tab }}</tri-tab>
       }
@@ -21,6 +21,6 @@ import { TriTabsModule } from 'ng-zorro-antd/tabs';
   `
 })
 export class TriDemoTabsSizeComponent {
-  size: 'large' | 'default' | 'small' = 'small';
-  tabs = [1, 2, 3];
+  readonly size = signal<'large' | 'default' | 'small'>('small');
+  readonly tabs = [1, 2, 3];
 }

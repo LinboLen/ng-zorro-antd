@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriCarouselModule } from 'ng-zorro-antd/carousel';
@@ -14,7 +14,7 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
       <label tri-radio-button value="left">Left</label>
       <label tri-radio-button value="right">Right</label>
     </tri-radio-group>
-    <tri-carousel [dotPosition]="dotPosition">
+    <tri-carousel [dotPosition]="dotPosition()">
       @for (index of array; track index) {
         <div tri-carousel-content>
           <h3>{{ index }}</h3>
@@ -44,6 +44,6 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
   `
 })
 export class TriDemoCarouselPositionComponent {
-  array = [1, 2, 3, 4];
-  dotPosition = 'bottom';
+  readonly array = [1, 2, 3, 4];
+  readonly dotPosition = signal<'bottom' | 'top' | 'left' | 'right'>('bottom');
 }

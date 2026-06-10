@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BehaviorSubject, combineLatest } from 'rxjs';
-import { auditTime, map } from 'rxjs/operators';
+import { auditTime, map, tap } from 'rxjs/operators';
 
 import { TriHighlightPipe } from 'ng-zorro-antd/core/highlight';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -87,14 +87,14 @@ function filterTreeData(data: TreeNode[], value: string): FilteredTreeResult {
     <tri-tree-view [dataSource]="dataSource" [levelAccessor]="levelAccessor">
       <tri-tree-node *treeNodeDef="let node" treeNodePadding [expandable]="false">
         <tri-tree-node-toggle treeNodeNoopToggle />
-        <span [innerHTML]="node.name | nzHighlight: searchValue : 'i' : 'highlight'"></span>
+        <span [innerHTML]="node.name | nzHighlight: searchValue() : 'i' : 'highlight'"></span>
       </tri-tree-node>
 
       <tri-tree-node *treeNodeDef="let node; treeNodeDefWhen: hasChild" treeNodePadding [expandable]="true">
         <tri-tree-node-toggle>
           <tri-icon type="caret-down" treeNodeToggleRotateIcon />
         </tri-tree-node-toggle>
-        <span [innerHTML]="node.name | nzHighlight: searchValue : 'i' : 'highlight'"></span>
+        <span [innerHTML]="node.name | nzHighlight: searchValue() : 'i' : 'highlight'"></span>
       </tri-tree-node>
     </tri-tree-view>
   `,
@@ -118,9 +118,9 @@ export class TriDemoTreeViewSearchComponent implements OnInit {
   flatNodeMap = new Map<FlatNode, TreeNode>();
   nestedNodeMap = new Map<TreeNode, FlatNode>();
   expandedNodes: TreeNode[] = [];
-  searchValue = '';
-  originData$ = new BehaviorSubject(TREE_DATA);
-  searchValue$ = new BehaviorSubject<string>('');
+  readonly searchValue = signal('');
+  readonly originData$ = new BehaviorSubject(TREE_DATA);
+  readonly searchValue$ = new BehaviorSubject<string>('');
 
   transformer = (node: TreeNode, level: number): FlatNode => {
     const existingNode = this.nestedNodeMap.get(node);
@@ -148,7 +148,7 @@ export class TriDemoTreeViewSearchComponent implements OnInit {
     this.originData$,
     this.searchValue$.pipe(
       auditTime(300),
-      map(value => (this.searchValue = value))
+      tap(value => this.searchValue.set(value))
     )
   ]).pipe(map(([data, value]) => (value ? filterTreeData(data, value) : new FilteredTreeResult(data))));
 
@@ -160,7 +160,7 @@ export class TriDemoTreeViewSearchComponent implements OnInit {
     this.filteredData$.subscribe(result => {
       this.dataSource.setData(result.treeData);
 
-      const hasSearchValue = !!this.searchValue;
+      const hasSearchValue = !!this.searchValue();
       // trans nested nodes to flat nodes
       const needsToExpanded = result.needsToExpanded.map(node => this.nestedNodeMap.get(node)!);
       const expandedNodes = this.expandedNodes.map(node => this.nestedNodeMap.get(node)!);

@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { TriDateMode, TriDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { TriSelectModule } from 'ng-zorro-antd/select';
 import { TriSpaceModule } from 'ng-zorro-antd/space';
 
@@ -17,10 +17,10 @@ import { TriSpaceModule } from 'ng-zorro-antd/space';
         <tri-option value="quarter" label="Quarter" />
         <tri-option value="year" label="Year" />
       </tri-select>
-      <tri-date-picker *spaceItem [mode]="mode" />
+      <tri-date-picker *spaceItem [mode]="mode()" />
     </tri-space>
   `
 })
 export class TriDemoDatePickerSwitchComponent {
-  mode = 'date';
+  readonly mode = signal<TriDateMode>('date');
 }

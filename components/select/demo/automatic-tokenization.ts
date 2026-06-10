@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 
 import { TriSelectModule } from 'ng-zorro-antd/select';
 
@@ -13,18 +12,9 @@ function alphabet(): string[] {
 
 @Component({
   selector: 'tri-demo-select-automatic-tokenization',
-  imports: [FormsModule, TriSelectModule],
+  imports: [TriSelectModule],
   template: `
-    <tri-select
-      [(ngModel)]="listOfTagOptions"
-      mode="tags"
-      [tokenSeparators]="[',']"
-      placeHolder="automatic tokenization"
-    >
-      @for (option of listOfOption; track option.value) {
-        <tri-option [label]="option.label" [value]="option.value" />
-      }
-    </tri-select>
+    <tri-select mode="tags" placeHolder="automatic tokenization" [options]="options" [tokenSeparators]="[',']" />
   `,
   styles: `
     nz-select {
@@ -33,9 +23,8 @@ function alphabet(): string[] {
   `
 })
 export class TriDemoSelectAutomaticTokenizationComponent {
-  readonly listOfOption: Array<{ label: string; value: string }> = alphabet().map(item => ({
+  readonly options = alphabet().map(item => ({
     label: item,
     value: item
   }));
-  listOfTagOptions: string[] = [];
 }

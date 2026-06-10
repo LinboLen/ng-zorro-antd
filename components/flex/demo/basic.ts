@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriFlexModule } from 'ng-zorro-antd/flex';
@@ -8,12 +8,12 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
   selector: 'tri-demo-flex-basic',
   imports: [FormsModule, TriFlexModule, TriRadioModule],
   template: `
-    <tri-radio-group [(ngModel)]="isVertical">
+    <tri-radio-group [(ngModel)]="vertical">
       <label tri-radio [value]="false">horizontal</label>
       <label tri-radio [value]="true">vertical</label>
     </tri-radio-group>
 
-    <div tri-flex [vertical]="isVertical">
+    <div tri-flex [vertical]="vertical()">
       <div class="flex-item"></div>
       <div class="flex-item even"></div>
       <div class="flex-item"></div>
@@ -37,5 +37,5 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
   `
 })
 export class TriDemoFlexBasicComponent {
-  isVertical = false;
+  readonly vertical = signal(false);
 }

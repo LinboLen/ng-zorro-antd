@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -10,7 +10,7 @@ import { TriUploadChangeParam, TriUploadFile, TriUploadModule } from 'ng-zorro-a
   template: `
     <tri-upload
       action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-      [fileList]="fileList"
+      [fileList]="fileList()"
       (change)="handleChange($event)"
     >
       <button tri-button>
@@ -21,14 +21,14 @@ import { TriUploadChangeParam, TriUploadFile, TriUploadModule } from 'ng-zorro-a
   `
 })
 export class TriDemoUploadFileListComponent {
-  fileList: TriUploadFile[] = [
+  readonly fileList = signal<TriUploadFile[]>([
     {
       uid: '-1',
       name: 'xxx.png',
       status: 'done',
       url: 'http://www.baidu.com/xxx.png'
     }
-  ];
+  ]);
 
   handleChange(info: TriUploadChangeParam): void {
     let fileList = [...info.fileList];
@@ -46,6 +46,6 @@ export class TriDemoUploadFileListComponent {
       return file;
     });
 
-    this.fileList = fileList;
+    this.fileList.set(fileList);
   }
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 import { TriColor, TriColorPickerModule } from 'ng-zorro-antd/color-picker';
@@ -26,12 +26,12 @@ import { FontType, TriWatermarkModule } from 'ng-zorro-antd/watermark';
   template: `
     <div style="display: flex;">
       <tri-watermark
-        [content]="form.value.content!"
-        [rotate]="form.value.rotate!"
-        [zIndex]="form.value.zIndex!"
-        [gap]="gap"
-        [offset]="offset"
-        [font]="font"
+        [content]="formValue().content"
+        [rotate]="formValue().rotate"
+        [zIndex]="formValue().zIndex"
+        [gap]="gap()"
+        [offset]="offset()"
+        [font]="font()"
       >
         <p tri-typography style="z-index: 10; position:relative;">
           The light-speed iteration of the digital world makes products more complex. However, human consciousness and
@@ -69,7 +69,7 @@ import { FontType, TriWatermarkModule } from 'ng-zorro-antd/watermark';
         <tri-form-item>
           <tri-form-label>Color</tri-form-label>
           <tri-form-control>
-            <tri-color-picker [value]="color" (onChange)="changeColor($event)" />
+            <tri-color-picker [value]="color()" (onChange)="changeColor($event)" />
           </tri-form-control>
         </tri-form-item>
         <tri-form-item>
@@ -129,9 +129,8 @@ import { FontType, TriWatermarkModule } from 'ng-zorro-antd/watermark';
 })
 export class TriDemoWatermarkCustomComponent implements OnInit {
   private readonly fb = inject(NonNullableFormBuilder);
-  private readonly cdr = inject(ChangeDetectorRef);
 
-  form = this.fb.group({
+  readonly form = this.fb.group({
     content: 'NG Ant Design',
     fontSize: 16,
     zIndex: 11,
@@ -141,32 +140,34 @@ export class TriDemoWatermarkCustomComponent implements OnInit {
     offsetX: 50,
     offsetY: 50
   });
-  color: string = 'rgba(0,0,0,.15)';
-  font: FontType = {
+  readonly formValue = signal(this.form.getRawValue());
+  readonly color = signal('rgba(0,0,0,.15)');
+  readonly font = signal<FontType>({
     color: 'rgba(0,0,0,.15)',
     fontSize: 16
-  };
-  gap: [number, number] = [100, 100];
-  offset: [number, number] = [50, 50];
+  });
+  readonly gap = signal<[number, number]>([100, 100]);
+  readonly offset = signal<[number, number]>([50, 50]);
 
   ngOnInit(): void {
-    this.form.valueChanges.subscribe(item => {
-      this.font = {
+    this.form.valueChanges.subscribe(() => {
+      const item = this.form.getRawValue();
+      this.formValue.set(item);
+      this.font.set({
         fontSize: item.fontSize,
-        color: this.color
-      };
-      this.gap = [item.gapX!, item.gapY!];
-      this.offset = [item.offsetX!, item.offsetY!];
-      this.cdr.markForCheck();
+        color: this.color()
+      });
+      this.gap.set([item.gapX, item.gapY]);
+      this.offset.set([item.offsetX, item.offsetY]);
     });
   }
 
   changeColor(value: { color: TriColor; format: string }): void {
-    this.color = value.color.toRgbString();
-    this.font = {
-      fontSize: this.form.value.fontSize,
-      color: value.color.toRgbString()
-    };
-    this.cdr.markForCheck();
+    const color = value.color.toRgbString();
+    this.color.set(color);
+    this.font.set({
+      fontSize: this.form.getRawValue().fontSize,
+      color
+    });
   }
 }

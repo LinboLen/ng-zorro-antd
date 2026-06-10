@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -25,6 +25,6 @@ import { TriInputModule } from 'ng-zorro-antd/input';
   `
 })
 export class TriDemoInputAllowClearComponent {
-  inputValue: string | null = null;
-  textValue: string | null = null;
+  readonly inputValue = signal('');
+  readonly textValue = signal('');
 }

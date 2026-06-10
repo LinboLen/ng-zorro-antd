@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriToCssUnitPipe } from 'ng-zorro-antd/pipes';
@@ -8,12 +8,12 @@ import { TriSliderModule } from 'ng-zorro-antd/slider';
   selector: 'tri-demo-pipes-css-unit',
   imports: [FormsModule, TriSliderModule, TriToCssUnitPipe],
   template: `
-    <tri-slider [(ngModel)]="radiusValue" [max]="100" [min]="0" />
+    <tri-slider [(ngModel)]="radius" [max]="100" [min]="0" />
 
     <div class="wrap">
-      <div class="box" [style.border-radius]="radiusValue | nzToCssUnit">Default</div>
-      <div class="box" [style.border-radius]="radiusValue | nzToCssUnit: '%'">%</div>
-      <div class="box" [style.border-radius]="radiusValue | nzToCssUnit: 'rem'">rem</div>
+      <div class="box" [style.border-radius]="radius() | nzToCssUnit">Default</div>
+      <div class="box" [style.border-radius]="radius() | nzToCssUnit: '%'">%</div>
+      <div class="box" [style.border-radius]="radius() | nzToCssUnit: 'rem'">rem</div>
     </div>
   `,
   styles: `
@@ -33,5 +33,5 @@ import { TriSliderModule } from 'ng-zorro-antd/slider';
   `
 })
 export class TriDemoPipesCssUnitComponent {
-  radiusValue = 0;
+  readonly radius = signal(0);
 }

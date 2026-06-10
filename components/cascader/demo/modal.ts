@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
@@ -52,37 +52,42 @@ const options: TriCascaderOption[] = [
   imports: [FormsModule, TriButtonModule, TriModalModule, TriCascaderModule],
   template: `
     <tri-modal
-      [(visibleChange)]="isVisible"
+      [visible]="isVisible()"
       title="Please select"
       (onCancel)="handleCancel($event)"
       (onOk)="handleOk($event)"
     >
-      <tri-cascader *modalContent [options]="options" [(ngModel)]="values" (ngModelChange)="onChanges($event)" />
+      <tri-cascader
+        *modalContent
+        [options]="options"
+        [ngModel]="values()"
+        (ngModelChange)="values.set($event); onChanges($event)"
+      />
     </tri-modal>
 
     <button tri-button (click)="open()">Open Dialog</button>
   `
 })
 export class TriDemoCascaderModalComponent {
-  options: TriCascaderOption[] = options;
-  values: string[] | null = null;
-  isVisible = false;
+  readonly options: TriCascaderOption[] = options;
+  readonly values = signal<string[] | null>(null);
+  readonly isVisible = signal(false);
 
   onChanges(values: string[]): void {
-    console.log(values, this.values);
+    console.log(values, this.values());
   }
 
   open(): void {
-    this.isVisible = true;
+    this.isVisible.set(true);
   }
 
   handleOk($event: MouseEvent): void {
-    console.log('Button ok clicked!', this.values, $event);
-    this.isVisible = false;
+    console.log('Button ok clicked!', this.values(), $event);
+    this.isVisible.set(false);
   }
 
   handleCancel($event: MouseEvent): void {
     console.log('Button cancel clicked!', $event);
-    this.isVisible = false;
+    this.isVisible.set(false);
   }
 }

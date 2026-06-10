@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { formatDistance } from 'date-fns';
 
@@ -24,20 +24,20 @@ import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
           tri-tooltip
           tooltipTitle="Like"
           type="like"
-          [theme]="likes > 0 ? 'twotone' : 'outline'"
+          [theme]="likes() > 0 ? 'twotone' : 'outline'"
           (click)="like()"
         />
-        <span class="count like">{{ likes }}</span>
+        <span class="count like">{{ likes() }}</span>
       </tri-comment-action>
       <tri-comment-action>
         <tri-icon
           tri-tooltip
           tooltipTitle="Dislike"
           type="dislike"
-          [theme]="dislikes > 0 ? 'twotone' : 'outline'"
+          [theme]="dislikes() > 0 ? 'twotone' : 'outline'"
           (click)="dislike()"
         />
-        <span class="count dislike">{{ dislikes }}</span>
+        <span class="count dislike">{{ dislikes() }}</span>
       </tri-comment-action>
       <tri-comment-action>Reply to</tri-comment-action>
     </tri-comment>
@@ -54,17 +54,17 @@ import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
   `
 })
 export class TriDemoCommentBasicComponent {
-  likes = 0;
-  dislikes = 0;
-  time = formatDistance(new Date(), new Date());
+  readonly likes = signal(0);
+  readonly dislikes = signal(0);
+  readonly time = formatDistance(new Date(), new Date());
 
   like(): void {
-    this.likes = 1;
-    this.dislikes = 0;
+    this.likes.set(1);
+    this.dislikes.set(0);
   }
 
   dislike(): void {
-    this.likes = 0;
-    this.dislikes = 1;
+    this.likes.set(0);
+    this.dislikes.set(1);
   }
 }

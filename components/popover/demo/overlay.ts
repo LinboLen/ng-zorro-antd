@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriPopoverModule } from 'ng-zorro-antd/popover';
@@ -15,9 +15,11 @@ import { TriPopoverModule } from 'ng-zorro-antd/popover';
       popoverTrigger="click"
       [popoverContent]="contentTemplate"
       [popoverOverlayClickable]="false"
-      [popoverVisible]="visible"
+      [popoverVisible]="visible()"
       (popoverVisibleChange)="visibleChange($event)"
-      >Click me</button
+    >
+      Click me
+    </button>
     >
     <ng-template #contentTemplate>
       <button tri-button size="small" type="primary" (click)="visibleChange(false)"> Close me </button>
@@ -25,9 +27,9 @@ import { TriPopoverModule } from 'ng-zorro-antd/popover';
   `
 })
 export class TriDemoPopoverOverlayComponent {
-  visible = false;
+  readonly visible = signal(false);
 
   visibleChange(value: boolean): void {
-    this.visible = value;
+    this.visible.set(value);
   }
 }

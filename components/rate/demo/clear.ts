@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriRateModule } from 'ng-zorro-antd/rate';
@@ -15,5 +15,5 @@ import { TriRateModule } from 'ng-zorro-antd/rate';
   `
 })
 export class TriDemoRateClearComponent {
-  value = 0;
+  readonly value = signal(0);
 }

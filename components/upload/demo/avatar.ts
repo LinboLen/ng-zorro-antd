@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -18,11 +18,11 @@ import { TriUploadFile, TriUploadModule } from 'ng-zorro-antd/upload';
       [beforeUpload]="beforeUpload"
       (change)="handleChange($event)"
     >
-      @if (!avatarUrl) {
-        <tri-icon class="upload-icon" [type]="loading ? 'loading' : 'plus'" />
+      @if (!avatarUrl()) {
+        <tri-icon class="upload-icon" [type]="loading() ? 'loading' : 'plus'" />
         <div class="tri-upload-text">Upload</div>
       } @else {
-        <img [src]="avatarUrl" style="width: 100%" />
+        <img [src]="avatarUrl()" style="width: 100%" />
       }
     </tri-upload>
   `,
@@ -36,8 +36,8 @@ import { TriUploadFile, TriUploadModule } from 'ng-zorro-antd/upload';
 export class TriDemoUploadAvatarComponent {
   private readonly messageService = inject(TriMessageService);
 
-  loading = false;
-  avatarUrl?: string;
+  readonly loading = signal(false);
+  readonly avatarUrl = signal<string | undefined>(undefined);
   beforeUpload = (file: TriUploadFile, _fileList: TriUploadFile[]): Observable<boolean> =>
     new Observable((observer: Observer<boolean>) => {
       const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
@@ -65,18 +65,18 @@ export class TriDemoUploadAvatarComponent {
   handleChange(info: { file: TriUploadFile }): void {
     switch (info.file.status) {
       case 'uploading':
-        this.loading = true;
+        this.loading.set(true);
         break;
       case 'done':
         // Get this url from response in real world.
         this.getBase64(info.file!.originFileObj!, (img: string) => {
-          this.loading = false;
-          this.avatarUrl = img;
+          this.loading.set(false);
+          this.avatarUrl.set(img);
         });
         break;
       case 'error':
         this.messageService.error('Network error');
-        this.loading = false;
+        this.loading.set(false);
         break;
     }
   }

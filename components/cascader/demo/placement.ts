@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriCascaderModule, TriCascaderOption, TriCascaderPlacement } from 'ng-zorro-antd/cascader';
 import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
@@ -52,15 +52,15 @@ const options: TriCascaderOption[] = [
     <tri-segmented [options]="placements" (valueChange)="setPlacement($event)" />
     <br />
     <br />
-    <tri-cascader [options]="options" [placement]="placement" />
+    <tri-cascader [options]="options" [placement]="placement()" />
   `
 })
 export class TriDemoCascaderPlacementComponent {
   readonly options: TriCascaderOption[] = options;
-  placement: TriCascaderPlacement = 'topLeft';
+  readonly placement = signal<TriCascaderPlacement>('topLeft');
   readonly placements: TriCascaderPlacement[] = ['topLeft', 'topRight', 'bottomLeft', 'bottomRight'];
 
   setPlacement(placement: string | number): void {
-    this.placement = placement as TriCascaderPlacement;
+    this.placement.set(placement as TriCascaderPlacement);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriTransferModule, TransferItem } from 'ng-zorro-antd/transfer';
@@ -21,14 +21,10 @@ import { TriTransferModule, TransferItem } from 'ng-zorro-antd/transfer';
     </tri-transfer>
   `
 })
-export class TriDemoTransferCustomItemComponent implements OnInit {
-  list: Array<TransferItem & { description: string; icon: string }> = [];
+export class TriDemoTransferCustomItemComponent {
+  readonly list = this.getData();
 
-  ngOnInit(): void {
-    this.getData();
-  }
-
-  getData(): void {
+  getData(): Array<TransferItem & { description: string; icon: string }> {
     const ret: Array<TransferItem & { description: string; icon: string }> = [];
     for (let i = 0; i < 20; i++) {
       ret.push({
@@ -39,7 +35,7 @@ export class TriDemoTransferCustomItemComponent implements OnInit {
         icon: `frown-o`
       });
     }
-    this.list = ret;
+    return ret;
   }
 
   select(ret: {}): void {

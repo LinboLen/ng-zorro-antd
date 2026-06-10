@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -14,11 +14,11 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
     <tri-list [dataSource]="listData" [renderItem]="item" itemLayout="vertical">
       <ng-template #item let-item>
         <tri-list-item
-          [content]="loading ? ' ' : item.content"
-          [actions]="loading ? [] : [starAction, likeAction, msgAction]"
-          [extra]="loading ? null : extra"
+          [content]="loading() ? ' ' : item.content"
+          [actions]="loading() ? [] : [starAction, likeAction, msgAction]"
+          [extra]="loading() ? null : extra"
         >
-          <tri-skeleton [loading]="loading" [active]="true" [avatar]="true">
+          <tri-skeleton [loading]="loading()" [active]="true" [avatar]="true">
             <ng-template #starAction>
               <tri-icon type="star-o" style="margin-right: 8px;" />
               156
@@ -46,8 +46,8 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   `
 })
 export class TriDemoSkeletonListComponent {
-  loading = true;
-  listData = new Array(3).fill({}).map((_i, index) => ({
+  readonly loading = signal(true);
+  readonly listData = new Array(3).fill({}).map((_i, index) => ({
     href: 'https://ng.ant.design',
     title: `ant design part ${index}`,
     avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',

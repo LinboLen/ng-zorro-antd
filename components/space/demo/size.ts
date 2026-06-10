@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
@@ -14,7 +14,7 @@ import { TriSpaceModule, TriSpaceSize } from 'ng-zorro-antd/space';
       <label tri-radio value="middle">Middle</label>
       <label tri-radio value="large">Large</label>
     </tri-radio-group>
-    <tri-space [size]="size">
+    <tri-space [size]="size()">
       <button *spaceItem tri-button type="primary">Button</button>
       <button *spaceItem tri-button type="default">Default</button>
       <button *spaceItem tri-button type="dashed">Dashed</button>
@@ -23,5 +23,5 @@ import { TriSpaceModule, TriSpaceSize } from 'ng-zorro-antd/space';
   `
 })
 export class TriDemoSpaceSizeComponent {
-  size: TriSpaceSize = 'small';
+  readonly size = signal<TriSpaceSize>('small');
 }

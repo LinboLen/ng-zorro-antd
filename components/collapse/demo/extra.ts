@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriCollapseModule } from 'ng-zorro-antd/collapse';
@@ -9,7 +9,7 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
   selector: 'tri-demo-collapse-extra',
   imports: [FormsModule, TriCollapseModule, TriIconModule, TriSelectModule],
   template: `
-    <tri-collapse [expandIconPosition]="expandIconPosition">
+    <tri-collapse [expandIconPosition]="expandIconPosition()">
       @for (panel of panels; track panel) {
         <tri-collapse-panel [header]="panel.name" [active]="panel.active" [extra]="extraTpl">
           <p style="margin:0;">
@@ -32,7 +32,7 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
   `
 })
 export class TriDemoCollapseExtraComponent {
-  expandIconPosition: 'start' | 'end' = 'start';
+  readonly expandIconPosition = signal<'start' | 'end'>('start');
 
   readonly panels = [
     {

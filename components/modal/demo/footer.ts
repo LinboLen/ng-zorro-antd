@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriModalModule } from 'ng-zorro-antd/modal';
@@ -30,28 +30,28 @@ import { TriModalModule } from 'ng-zorro-antd/modal';
       <ng-template #modalFooter>
         <span>Modal Footer:</span>
         <button tri-button type="default" (click)="handleCancel()">Custom Callback</button>
-        <button tri-button type="primary" (click)="handleOk()" [loading]="isConfirmLoading">Custom Submit</button>
+        <button tri-button type="primary" (click)="handleOk()" [loading]="isConfirmLoading()">Custom Submit</button>
       </ng-template>
     </tri-modal>
   `
 })
 export class TriDemoModalFooterComponent {
-  isVisible = false;
-  isConfirmLoading = false;
+  readonly isVisible = signal(false);
+  readonly isConfirmLoading = signal(false);
 
   showModal(): void {
-    this.isVisible = true;
+    this.isVisible.set(true);
   }
 
   handleOk(): void {
-    this.isConfirmLoading = true;
+    this.isConfirmLoading.set(true);
     setTimeout(() => {
-      this.isVisible = false;
-      this.isConfirmLoading = false;
+      this.isVisible.set(false);
+      this.isConfirmLoading.set(false);
     }, 1000);
   }
 
   handleCancel(): void {
-    this.isVisible = false;
+    this.isVisible.set(false);
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
@@ -9,9 +9,9 @@ const defaultOptions = ['Daily', 'Weekly', 'Monthly'];
   selector: 'tri-demo-segmented-dynamic',
   imports: [TriButtonModule, TriSegmentedModule],
   template: `
-    <tri-segmented [options]="options" />
+    <tri-segmented [options]="options()" />
     <br />
-    <button tri-button type="primary" [disabled]="moreLoaded" (click)="handleLoadMore()"> Load more options </button>
+    <button tri-button type="primary" [disabled]="moreLoaded()" (click)="handleLoadMore()"> Load more options </button>
   `,
   styles: `
     .ant-segmented {
@@ -20,12 +20,12 @@ const defaultOptions = ['Daily', 'Weekly', 'Monthly'];
   `
 })
 export class TriDemoSegmentedDynamicComponent {
-  options = [...defaultOptions];
+  readonly options = signal([...defaultOptions]);
 
-  moreLoaded = false;
+  readonly moreLoaded = signal(false);
 
   handleLoadMore(): void {
-    this.moreLoaded = true;
-    this.options = [...defaultOptions, 'Quarterly', 'Yearly'];
+    this.moreLoaded.set(true);
+    this.options.set([...defaultOptions, 'Quarterly', 'Yearly']);
   }
 }

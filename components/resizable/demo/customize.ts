@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
@@ -7,7 +7,7 @@ import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
   selector: 'tri-demo-resizable-customize',
   imports: [TriIconModule, TriResizableModule],
   template: `
-    <div class="box" tri-resizable (resize)="onResize($event)" [style.height.px]="height" [style.width.px]="width">
+    <div class="box" tri-resizable (resize)="onResize($event)" [style.height.px]="height()" [style.width.px]="width()">
       content
       <tri-resize-handle direction="bottomRight">
         <tri-icon class="bottom-right" type="caret-up" theme="outline" [rotate]="135" />
@@ -57,15 +57,15 @@ import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
   `
 })
 export class TriDemoResizableCustomizeComponent {
-  width = 400;
-  height = 200;
+  readonly width = signal(400);
+  readonly height = signal(200);
   id = -1;
 
   onResize({ width, height }: TriResizeEvent): void {
     cancelAnimationFrame(this.id);
     this.id = requestAnimationFrame(() => {
-      this.width = width!;
-      this.height = height!;
+      this.width.set(width!);
+      this.height.set(height!);
     });
   }
 }

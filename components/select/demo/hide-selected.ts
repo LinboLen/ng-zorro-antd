@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriSelectModule } from 'ng-zorro-antd/select';
@@ -9,7 +9,7 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
   template: `
     <tri-select mode="multiple" placeHolder="Inserted are removed" [(ngModel)]="listOfSelected">
       @for (option of listOfOption; track option) {
-        <tri-option [label]="option" [value]="option" [hide]="!isSelected(option)" />
+        <tri-option [label]="option" [value]="option" [hide]="isSelected(option)" />
       }
     </tri-select>
   `,
@@ -20,10 +20,10 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
   `
 })
 export class TriDemoSelectHideSelectedComponent {
-  listOfOption = ['Apples', 'Nails', 'Bananas', 'Helicopters'];
-  listOfSelected: string[] = [];
+  readonly listOfOption = ['Apples', 'Nails', 'Bananas', 'Helicopters'];
+  readonly listOfSelected = signal<string[]>([]);
 
   isSelected(value: string): boolean {
-    return this.listOfSelected.indexOf(value) !== -1;
+    return this.listOfSelected().indexOf(value) !== -1;
   }
 }

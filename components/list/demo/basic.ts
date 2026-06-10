@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriListModule } from 'ng-zorro-antd/list';
@@ -10,8 +10,8 @@ import { TriListModule } from 'ng-zorro-antd/list';
     <div style="margin-bottom: 8px;">
       <button tri-button (click)="change()">Switch Data</button>
     </div>
-    <tri-list itemLayout="horizontal" [loading]="loading">
-      @for (item of data; track item) {
+    <tri-list itemLayout="horizontal" [loading]="loading()">
+      @for (item of data(); track item) {
         <tri-list-item>
           <tri-list-item-meta
             avatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
@@ -29,8 +29,8 @@ import { TriListModule } from 'ng-zorro-antd/list';
   `
 })
 export class TriDemoListBasicComponent {
-  loading = false;
-  data = [
+  readonly loading = signal(false);
+  readonly data = signal([
     {
       title: 'Ant Design Title 1'
     },
@@ -43,18 +43,18 @@ export class TriDemoListBasicComponent {
     {
       title: 'Ant Design Title 4'
     }
-  ];
+  ]);
 
   change(): void {
-    this.loading = true;
-    if (this.data.length > 0) {
+    this.loading.set(true);
+    if (this.data().length > 0) {
       setTimeout(() => {
-        this.data = [];
-        this.loading = false;
+        this.data.set([]);
+        this.loading.set(false);
       }, 1000);
     } else {
       setTimeout(() => {
-        this.data = [
+        this.data.set([
           {
             title: 'Ant Design Title 1'
           },
@@ -67,8 +67,8 @@ export class TriDemoListBasicComponent {
           {
             title: 'Ant Design Title 4'
           }
-        ];
-        this.loading = false;
+        ]);
+        this.loading.set(false);
       }, 1000);
     }
   }

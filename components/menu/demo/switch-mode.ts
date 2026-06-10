@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriDividerModule } from 'ng-zorro-antd/divider';
@@ -16,7 +16,7 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
     Change Theme
     <br />
     <br />
-    <ul tri-menu [mode]="mode ? 'vertical' : 'inline'" [theme]="dark ? 'dark' : 'light'">
+    <ul tri-menu [mode]="mode() ? 'vertical' : 'inline'" [theme]="dark() ? 'dark' : 'light'">
       <li tri-submenu title="Navigation One" icon="mail">
         <ul>
           <li tri-menu-group title="Item 1">
@@ -61,6 +61,6 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   `
 })
 export class TriDemoMenuSwitchModeComponent {
-  mode = false;
-  dark = false;
+  readonly mode = signal(false);
+  readonly dark = signal(false);
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriAlertModule } from 'ng-zorro-antd/alert';
@@ -9,7 +9,7 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   selector: 'tri-demo-spin-delay-and-debounce',
   imports: [FormsModule, TriAlertModule, TriSpinModule, TriSwitchModule],
   template: `
-    <tri-spin [spinning]="isSpinning" [delay]="500">
+    <tri-spin [spinning]="isSpinning()" [delay]="500">
       <tri-alert
         type="info"
         message="Alert message title"
@@ -24,5 +24,5 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   `
 })
 export class TriDemoSpinDelayAndDebounceComponent {
-  isSpinning = false;
+  readonly isSpinning = signal(false);
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriDescriptionsModule } from 'ng-zorro-antd/descriptions';
@@ -28,7 +28,7 @@ import { TriListModule } from 'ng-zorro-antd/list';
         </tri-list-item>
       </ng-template>
     </tri-list>
-    <tri-drawer [visible]="visible" [width]="640" [closable]="false" (onClose)="close()">
+    <tri-drawer [visible]="visible()" [width]="640" [closable]="false" (onClose)="close()">
       <ng-container *drawerContent>
         <p class="title">User Profile</p>
         <tri-descriptions [column]="2" title="Personal">
@@ -76,7 +76,7 @@ import { TriListModule } from 'ng-zorro-antd/list';
   `
 })
 export class TriDemoDrawerUserProfileComponent {
-  data = [
+  readonly data = [
     {
       name: 'Lily'
     },
@@ -85,13 +85,13 @@ export class TriDemoDrawerUserProfileComponent {
     }
   ];
 
-  visible = false;
+  readonly visible = signal(false);
 
   open(): void {
-    this.visible = true;
+    this.visible.set(true);
   }
 
   close(): void {
-    this.visible = false;
+    this.visible.set(false);
   }
 }

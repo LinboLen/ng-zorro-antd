@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriCheckboxModule } from 'ng-zorro-antd/checkbox';
@@ -8,7 +8,7 @@ import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
   selector: 'tri-demo-input-number-keyboard',
   imports: [FormsModule, TriInputNumberModule, TriCheckboxModule],
   template: `
-    <tri-input-number [(ngModel)]="value" [keyboard]="keyboard" min="1" max="10" />
+    <tri-input-number [(ngModel)]="value" [keyboard]="keyboard()" min="1" max="10" />
     <label tri-checkbox [(ngModel)]="keyboard">Toggle Keyboard</label>
   `,
   styles: `
@@ -18,6 +18,6 @@ import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
   `
 })
 export class TriDemoInputNumberKeyboardComponent {
-  keyboard = true;
-  value = 3;
+  readonly keyboard = signal(true);
+  readonly value = signal(3);
 }

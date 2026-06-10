@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
@@ -19,7 +19,7 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
     <br />
     <br />
 
-    @if (inputElem) {
+    @if (inputElem()) {
       <input #input="nzInput" tri-input [(ngModel)]="value" />
     } @else {
       <textarea #input="nzInput" tri-input rows="2" [(ngModel)]="value"> </textarea>
@@ -27,8 +27,8 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   `
 })
 export class TriDemoInputFocusComponent {
-  value = 'NG-ZORRO love you!';
-  inputElem = true;
+  readonly value = signal('NG-ZORRO love you!');
+  readonly inputElem = signal(true);
 
   @ViewChild(TriInputDirective) input!: TriInputDirective;
 }

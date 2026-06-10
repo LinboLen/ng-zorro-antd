@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriResizableModule, TriResizeDirection, TriResizeEvent } from 'ng-zorro-antd/resizable';
 
@@ -13,9 +13,9 @@ import { TriResizableModule, TriResizeDirection, TriResizeEvent } from 'ng-zorro
       [minWidth]="80"
       [maxHeight]="200"
       [minHeight]="80"
-      [disabled]="disabled"
-      [style.height.px]="height"
-      [style.width.px]="width"
+      [disabled]="disabled()"
+      [style.height.px]="height()"
+      [style.width.px]="width()"
       (resize)="onResize($event)"
     >
       <tri-resize-handles />
@@ -37,18 +37,18 @@ import { TriResizableModule, TriResizeDirection, TriResizeEvent } from 'ng-zorro
   `
 })
 export class TriDemoResizableBasicComponent {
-  width = 400;
-  height = 200;
   id = -1;
-  disabled = false;
-  resizeDirection: TriResizeDirection | null = null;
+  readonly width = signal(400);
+  readonly height = signal(200);
+  readonly disabled = signal(false);
+  readonly resizeDirection = signal<TriResizeDirection | null>(null);
 
   onResize({ width, height, direction }: TriResizeEvent): void {
     cancelAnimationFrame(this.id);
     this.id = requestAnimationFrame(() => {
-      this.width = width!;
-      this.height = height!;
-      this.resizeDirection = direction!;
+      this.width.set(width!);
+      this.height.set(height!);
+      this.resizeDirection.set(direction!);
     });
   }
 }

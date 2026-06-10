@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -11,14 +11,14 @@ import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
   template: `
     <div class="wrapper">
       <button tri-button type="primary" (click)="toggleCollapsed()">
-        <tri-icon [type]="isCollapsed ? 'menu-unfold' : 'menu-fold'" />
+        <tri-icon [type]="isCollapsed() ? 'menu-unfold' : 'menu-fold'" />
       </button>
-      <ul tri-menu mode="inline" theme="dark" [inlineCollapsed]="isCollapsed">
+      <ul tri-menu mode="inline" theme="dark" [inlineCollapsed]="isCollapsed()">
         <li
           tri-menu-item
           tri-tooltip
           tooltipPlacement="right"
-          [tooltipTitle]="isCollapsed ? 'Navigation One' : ''"
+          [tooltipTitle]="isCollapsed() ? 'Navigation One' : ''"
           selected
         >
           <tri-icon type="mail" />
@@ -58,9 +58,9 @@ import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
   `
 })
 export class TriDemoMenuInlineCollapsedComponent {
-  isCollapsed = false;
+  readonly isCollapsed = signal(false);
 
   toggleCollapsed(): void {
-    this.isCollapsed = !this.isCollapsed;
+    this.isCollapsed.update(isCollapsed => !isCollapsed);
   }
 }

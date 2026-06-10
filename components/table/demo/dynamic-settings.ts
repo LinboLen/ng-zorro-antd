@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 import { TriDividerModule } from 'ng-zorro-antd/divider';
@@ -76,63 +76,63 @@ interface Setting {
     </div>
     <tri-table
       #dynamicTable
-      [scroll]="{ x: scrollX, y: scrollY }"
-      [data]="listOfData"
-      [tableLayout]="settingValue.tableLayout"
-      [bordered]="settingValue.bordered"
-      [simple]="settingValue.simple"
-      [loading]="settingValue.loading"
-      [paginationType]="settingValue.paginationType"
-      [paginationPosition]="settingValue.position"
-      [showSizeChanger]="settingValue.sizeChanger"
-      [frontPagination]="settingValue.pagination"
-      [showPagination]="settingValue.pagination"
-      [footer]="settingValue.footer ? 'Here is Footer' : null"
-      [title]="settingValue.title ? 'Here is Title' : null"
-      [size]="settingValue.size"
+      [scroll]="{ x: scrollX(), y: scrollY() }"
+      [data]="listOfData()"
+      [tableLayout]="settingValue().tableLayout"
+      [bordered]="settingValue().bordered"
+      [simple]="settingValue().simple"
+      [loading]="settingValue().loading"
+      [paginationType]="settingValue().paginationType"
+      [paginationPosition]="settingValue().position"
+      [showSizeChanger]="settingValue().sizeChanger"
+      [frontPagination]="settingValue().pagination"
+      [showPagination]="settingValue().pagination"
+      [footer]="settingValue().footer ? 'Here is Footer' : null"
+      [title]="settingValue().title ? 'Here is Title' : null"
+      [size]="settingValue().size"
       (currentPageDataChange)="currentPageDataChange($event)"
     >
       <thead>
-        @if (settingValue.header) {
+        @if (settingValue().header) {
           <tr>
-            @if (settingValue.expandable) {
-              <th width="40px" [left]="fixedColumn"></th>
+            @if (settingValue().expandable) {
+              <th width="40px" [left]="fixedColumn()"></th>
             }
-            @if (settingValue.checkbox) {
+            @if (settingValue().checkbox) {
               <th
                 width="60px"
-                [(checkedChange)]="allChecked"
-                [left]="fixedColumn"
-                [indeterminate]="indeterminate"
+                [checked]="allChecked()"
+                [left]="fixedColumn()"
+                [indeterminate]="indeterminate()"
                 (checkedChange)="checkAll($event)"
               ></th>
             }
-            <th [left]="fixedColumn">Name</th>
+            <th [left]="fixedColumn()">Name</th>
             <th>Age</th>
             <th>Address</th>
-            <th [right]="fixedColumn">Action</th>
+            <th [right]="fixedColumn()">Action</th>
           </tr>
         }
       </thead>
       <tbody>
         @for (data of dynamicTable.data; track data) {
           <tr>
-            @if (settingValue.expandable) {
-              <td [left]="fixedColumn" [(expandChange)]="data.expand"></td>
+            @if (settingValue().expandable) {
+              <td [left]="fixedColumn()" [(expandChange)]="data.expand"></td>
             }
-            @if (settingValue.checkbox) {
-              <td [left]="fixedColumn" [(checkedChange)]="data.checked" (checkedChange)="refreshStatus()"></td>
+            @if (settingValue().checkbox) {
+              <td [left]="fixedColumn()" [(checkedChange)]="data.checked" (checkedChange)="refreshStatus()"></td>
             }
-            <td [left]="fixedColumn">{{ data.name }}</td>
+            <td [left]="fixedColumn()">{{ data.name }}</td>
             <td>{{ data.age }}</td>
-            <td [ellipsis]="settingValue.ellipsis">{{ data.address }}</td>
-            <td [right]="fixedColumn" [ellipsis]="settingValue.ellipsis">
+            <td [ellipsis]="settingValue().ellipsis">{{ data.address }}</td>
+            <td [right]="fixedColumn()" [ellipsis]="settingValue().ellipsis">
               <a href="#">Delete</a>
               <tri-divider type="vertical" />
               <a href="#">More action</a>
             </td>
           </tr>
-          @if (settingValue.expandable) {
+          @if (settingValue().expandable) {
             <tr [expand]="data.expand">
               <span>{{ data.description }}</span>
             </tr>
@@ -151,16 +151,35 @@ interface Setting {
 export class TriDemoTableDynamicSettingsComponent implements OnInit {
   private readonly formBuilder = inject(NonNullableFormBuilder);
 
-  settingForm: FormGroup<{ [K in keyof Setting]: FormControl<Setting[K]> }>;
-  listOfData: readonly ItemData[] = [];
-  displayData: readonly ItemData[] = [];
-  allChecked = false;
-  indeterminate = false;
-  fixedColumn = false;
-  scrollX: string | null = null;
-  scrollY: string | null = null;
-  settingValue: Setting;
-  listOfSwitch = [
+  readonly settingForm: FormGroup<{ [K in keyof Setting]: FormControl<Setting[K]> }> = this.formBuilder.group({
+    bordered: [false],
+    loading: [false],
+    pagination: [true],
+    sizeChanger: [false],
+    title: [true],
+    header: [true],
+    footer: [true],
+    expandable: [true],
+    checkbox: [true],
+    fixHeader: [false],
+    noResult: [false],
+    ellipsis: [false],
+    simple: [false],
+    size: 'small' as TriTableSize,
+    paginationType: 'default' as TriTablePaginationType,
+    tableScroll: 'unset' as TableScroll,
+    tableLayout: 'auto' as TriTableLayout,
+    position: 'bottom' as TriTablePaginationPosition
+  });
+  readonly listOfData = signal<readonly ItemData[]>([]);
+  readonly displayData = signal<readonly ItemData[]>([]);
+  readonly allChecked = signal(false);
+  readonly indeterminate = signal(false);
+  readonly fixedColumn = signal(false);
+  readonly scrollX = signal<string | null>(null);
+  readonly scrollY = signal<string | null>(null);
+  readonly settingValue = signal(this.settingForm.value as Setting);
+  readonly listOfSwitch = [
     { name: 'Bordered', formControlName: 'bordered' },
     { name: 'Loading', formControlName: 'loading' },
     { name: 'Pagination', formControlName: 'pagination' },
@@ -175,7 +194,7 @@ export class TriDemoTableDynamicSettingsComponent implements OnInit {
     { name: 'Ellipsis', formControlName: 'ellipsis' },
     { name: 'Simple Pagination', formControlName: 'simple' }
   ];
-  listOfRadio = [
+  readonly listOfRadio = [
     {
       name: 'Size',
       formControlName: 'size',
@@ -222,20 +241,20 @@ export class TriDemoTableDynamicSettingsComponent implements OnInit {
   ];
 
   currentPageDataChange($event: readonly ItemData[]): void {
-    this.displayData = $event;
+    this.displayData.set($event);
     this.refreshStatus();
   }
 
   refreshStatus(): void {
-    const validData = this.displayData.filter(value => !value.disabled);
+    const validData = this.displayData().filter(value => !value.disabled);
     const allChecked = validData.length > 0 && validData.every(value => value.checked);
     const allUnChecked = validData.every(value => !value.checked);
-    this.allChecked = allChecked;
-    this.indeterminate = !allChecked && !allUnChecked;
+    this.allChecked.set(allChecked);
+    this.indeterminate.set(!allChecked && !allUnChecked);
   }
 
   checkAll(value: boolean): void {
-    this.displayData.forEach(data => {
+    this.displayData().forEach(data => {
       if (!data.disabled) {
         data.checked = value;
       }
@@ -258,49 +277,24 @@ export class TriDemoTableDynamicSettingsComponent implements OnInit {
     return data;
   }
 
-  constructor() {
-    this.settingForm = this.formBuilder.group({
-      bordered: [false],
-      loading: [false],
-      pagination: [true],
-      sizeChanger: [false],
-      title: [true],
-      header: [true],
-      footer: [true],
-      expandable: [true],
-      checkbox: [true],
-      fixHeader: [false],
-      noResult: [false],
-      ellipsis: [false],
-      simple: [false],
-      size: 'small' as TriTableSize,
-      paginationType: 'default' as TriTablePaginationType,
-      tableScroll: 'unset' as TableScroll,
-      tableLayout: 'auto' as TriTableLayout,
-      position: 'bottom' as TriTablePaginationPosition
-    });
-
-    this.settingValue = this.settingForm.value as Setting;
-  }
-
   ngOnInit(): void {
     this.settingForm.valueChanges.subscribe(value => {
-      this.settingValue = value as Setting;
+      this.settingValue.set(value as Setting);
     });
     this.settingForm.controls.tableScroll.valueChanges.subscribe(scroll => {
-      this.fixedColumn = scroll === 'fixed';
-      this.scrollX = scroll === 'scroll' || scroll === 'fixed' ? '100vw' : null;
+      this.fixedColumn.set(scroll === 'fixed');
+      this.scrollX.set(scroll === 'scroll' || scroll === 'fixed' ? '100vw' : null);
     });
     this.settingForm.controls.fixHeader.valueChanges.subscribe(fixed => {
-      this.scrollY = fixed ? '240px' : null;
+      this.scrollY.set(fixed ? '240px' : null);
     });
     this.settingForm.controls.noResult.valueChanges.subscribe(empty => {
       if (empty) {
-        this.listOfData = [];
+        this.listOfData.set([]);
       } else {
-        this.listOfData = this.generateData();
+        this.listOfData.set(this.generateData());
       }
     });
-    this.listOfData = this.generateData();
+    this.listOfData.set(this.generateData());
   }
 }

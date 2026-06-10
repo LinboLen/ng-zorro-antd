@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
@@ -29,7 +29,7 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
       tri-graph-zoom
       [graphData]="graphData"
       [autoSize]="true"
-      [rankDirection]="rankDirection"
+      [rankDirection]="rankDirection()"
       (graphInitialized)="graphInitialized($event)"
     >
       <ng-container *graphNode="let node">
@@ -98,8 +98,8 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
 export class TriDemoGraphCustomizedComponent {
   @ViewChild(TriGraphComponent, { static: true }) graphComponent!: TriGraphComponent;
   @ViewChild(TriGraphZoomDirective, { static: true }) zoomController!: TriGraphZoomDirective;
-  zoom = 0.5;
-  testDef: TriGraphDataDef = {
+  readonly zoom = 0.5;
+  readonly testDef: TriGraphDataDef = {
     nodes: [
       {
         id: '0',
@@ -268,8 +268,8 @@ export class TriDemoGraphCustomizedComponent {
       G0: ['4', '5', '15']
     }
   };
-  rankDirection: TriRankDirection = 'TB';
-  graphData = new TriGraphData(this.testDef);
+  readonly rankDirection = signal<TriRankDirection>('TB');
+  readonly graphData = new TriGraphData(this.testDef);
 
   expand(name: string): void {
     this.graphData.expand(name);

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriDrawerModule } from 'ng-zorro-antd/drawer';
@@ -14,9 +14,9 @@ import { TriTagModule } from 'ng-zorro-antd/tag';
     <button tri-button type="primary" (click)="open()">New Cookbook</button>
     <tri-drawer
       [closable]="false"
-      [offsetX]="childrenVisible ? 180 : 0"
+      [offsetX]="childrenVisible() ? 180 : 0"
       [width]="320"
-      [visible]="visible"
+      [visible]="visible()"
       title="Cookbook"
       (onClose)="close()"
     >
@@ -44,7 +44,7 @@ import { TriTagModule } from 'ng-zorro-antd/tag';
           </div>
         </div>
       </form>
-      <tri-drawer [closable]="false" [visible]="childrenVisible" title="Food" (onClose)="closeChildren()">
+      <tri-drawer [closable]="false" [visible]="childrenVisible()" title="Food" (onClose)="closeChildren()">
         <tri-list *drawerContent [dataSource]="vegetables" [renderItem]="item">
           <ng-template #item let-item>
             <tri-list-item [content]="item" />
@@ -55,23 +55,23 @@ import { TriTagModule } from 'ng-zorro-antd/tag';
   `
 })
 export class TriDemoDrawerMultiLevelDrawerComponent {
-  visible = false;
-  childrenVisible = false;
-  vegetables = ['asparagus', 'bamboo', 'potato', 'carrot', 'cilantro', 'potato', 'eggplant'];
+  readonly visible = signal(false);
+  readonly childrenVisible = signal(false);
+  readonly vegetables = ['asparagus', 'bamboo', 'potato', 'carrot', 'cilantro', 'potato', 'eggplant'];
 
   open(): void {
-    this.visible = true;
+    this.visible.set(true);
   }
 
   close(): void {
-    this.visible = false;
+    this.visible.set(false);
   }
 
   openChildren(): void {
-    this.childrenVisible = true;
+    this.childrenVisible.set(true);
   }
 
   closeChildren(): void {
-    this.childrenVisible = false;
+    this.childrenVisible.set(false);
   }
 }

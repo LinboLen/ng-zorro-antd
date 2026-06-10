@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriRadioModule } from 'ng-zorro-antd/radio';
@@ -7,17 +7,17 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
   selector: 'tri-demo-radio-radiogroup-options',
   imports: [FormsModule, TriRadioModule],
   template: `
-    <tri-radio-group [(ngModel)]="radioValue">
+    <tri-radio-group [(ngModel)]="value">
       @for (o of options; track o.value) {
         <label tri-radio [value]="o.value">{{ o.label }}</label>
       }
     </tri-radio-group>
-    <tri-radio-group [(ngModel)]="radioValue">
+    <tri-radio-group [(ngModel)]="value">
       @for (o of options; track o.value) {
         <label tri-radio [value]="o.value">{{ o.label }}</label>
       }
     </tri-radio-group>
-    <tri-radio-group [(ngModel)]="radioValue">
+    <tri-radio-group [(ngModel)]="value">
       @for (o of options; track o.value) {
         <label tri-radio [value]="o.value">{{ o.label }}</label>
       }
@@ -25,8 +25,8 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
   `
 })
 export class TriDemoRadioRadiogroupOptionsComponent {
-  radioValue = 'Apple';
-  options = [
+  readonly value = signal('Apple');
+  readonly options = [
     { label: 'Apple', value: 'Apple' },
     { label: 'Pear', value: 'Pear' },
     { label: 'Orange', value: 'Orange' }

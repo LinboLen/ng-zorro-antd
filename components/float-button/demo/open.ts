@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriFloatButtonModule } from 'ng-zorro-antd/float-button';
@@ -11,7 +11,7 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
     <div class="open">
       <tri-float-button-group
         icon="customer-service"
-        [open]="isOpen"
+        [open]="isOpen()"
         type="primary"
         trigger="click"
         style="right: 24px"
@@ -35,11 +35,9 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   `
 })
 export class TriDemoFloatButtonOpenComponent {
-  isOpen: boolean = true;
+  readonly isOpen = signal(true);
 
   onOpenChange(open: boolean): void {
     console.log(open);
-    // You can set the `isOpen` variable in `(nzOpenChange)` to control the open state.
-    // this.isOpen = open;
   }
 }

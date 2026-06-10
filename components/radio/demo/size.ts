@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriRadioModule } from 'ng-zorro-antd/radio';
@@ -7,7 +7,7 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
   selector: 'tri-demo-radio-size',
   imports: [FormsModule, TriRadioModule],
   template: `
-    <tri-radio-group [(ngModel)]="radioValue" size="large">
+    <tri-radio-group [(ngModel)]="value" size="large">
       <label tri-radio-button value="A">Hangzhou</label>
       <label tri-radio-button value="B">Shanghai</label>
       <label tri-radio-button value="C">Beijing</label>
@@ -15,7 +15,7 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
     </tri-radio-group>
     <br />
     <br />
-    <tri-radio-group [(ngModel)]="radioValue">
+    <tri-radio-group [(ngModel)]="value">
       <label tri-radio-button value="A">Hangzhou</label>
       <label tri-radio-button value="B">Shanghai</label>
       <label tri-radio-button value="C">Beijing</label>
@@ -23,7 +23,7 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
     </tri-radio-group>
     <br />
     <br />
-    <tri-radio-group [(ngModel)]="radioValue" size="small">
+    <tri-radio-group [(ngModel)]="value" size="small">
       <label tri-radio-button value="A">Hangzhou</label>
       <label tri-radio-button value="B">Shanghai</label>
       <label tri-radio-button value="C">Beijing</label>
@@ -32,5 +32,5 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
   `
 })
 export class TriDemoRadioSizeComponent {
-  radioValue = 'A';
+  readonly value = signal('A');
 }

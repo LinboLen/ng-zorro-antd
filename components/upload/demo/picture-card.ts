@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriModalModule } from 'ng-zorro-antd/modal';
@@ -20,7 +20,7 @@ const getBase64 = (file: File): Promise<string | ArrayBuffer | null> =>
       action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
       listType="picture-card"
       [(fileListChange)]="fileList"
-      [showButton]="fileList.length < 8"
+      [showButton]="fileList().length < 8"
       [preview]="handlePreview"
     >
       <div>
@@ -29,19 +29,19 @@ const getBase64 = (file: File): Promise<string | ArrayBuffer | null> =>
       </div>
     </tri-upload>
     <tri-modal
-      [visible]="previewVisible"
+      [visible]="previewVisible()"
       [content]="modalContent"
       [footer]="null"
-      (onCancel)="previewVisible = false"
+      (onCancel)="previewVisible.set(false)"
     >
       <ng-template #modalContent>
-        <img [src]="previewImage" style="width: 100%" />
+        <img [src]="previewImage()" style="width: 100%" />
       </ng-template>
     </tri-modal>
   `
 })
 export class TriDemoUploadPictureCardComponent {
-  fileList: TriUploadFile[] = [
+  readonly fileList = signal<TriUploadFile[]>([
     {
       uid: '-1',
       name: 'image.png',
@@ -78,15 +78,15 @@ export class TriDemoUploadPictureCardComponent {
       name: 'image.png',
       status: 'error'
     }
-  ];
-  previewImage: string | undefined = '';
-  previewVisible = false;
+  ]);
+  readonly previewImage = signal<string | undefined>('');
+  readonly previewVisible = signal(false);
 
   handlePreview = async (file: TriUploadFile): Promise<void> => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj!);
     }
-    this.previewImage = file.url || file.preview;
-    this.previewVisible = true;
+    this.previewImage.set(file.url || file.preview);
+    this.previewVisible.set(true);
   };
 }

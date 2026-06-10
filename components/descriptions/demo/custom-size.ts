@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
@@ -16,7 +16,7 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
     </tri-radio-group>
     <br />
     <br />
-    <tri-descriptions title="Custom Size" [extra]="extraTpl" bordered [size]="size">
+    <tri-descriptions title="Custom Size" [extra]="extraTpl" bordered [size]="size()">
       <tri-descriptions-item title="Product">Cloud Database</tri-descriptions-item>
       <tri-descriptions-item title="Billing">Prepaid</tri-descriptions-item>
       <tri-descriptions-item title="time">18:00:00</tri-descriptions-item>
@@ -40,7 +40,7 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
     </tri-descriptions>
     <br />
     <br />
-    <tri-descriptions title="Custom Size" [size]="size" [extra]="extraTpl">
+    <tri-descriptions title="Custom Size" [size]="size()" [extra]="extraTpl">
       <tri-descriptions-item title="Product">Cloud Database</tri-descriptions-item>
       <tri-descriptions-item title="Billing">Prepaid</tri-descriptions-item>
       <tri-descriptions-item title="Time">18:00:00</tri-descriptions-item>
@@ -54,5 +54,5 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
   `
 })
 export class TriDemoDescriptionsCustomSizeComponent {
-  size: TriDescriptionsSize = 'default';
+  readonly size = signal<TriDescriptionsSize>('default');
 }

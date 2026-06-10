@@ -1,8 +1,8 @@
-import { Component, model } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriFlexModule } from 'ng-zorro-antd/flex';
-import { TriSelectModule, TriSelectOptionInterface } from 'ng-zorro-antd/select';
+import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
   selector: 'tri-demo-select-prefix-and-suffix',
@@ -49,13 +49,13 @@ import { TriSelectModule, TriSelectOptionInterface } from 'ng-zorro-antd/select'
   `
 })
 export class TriDemoSelectPrefixAndSuffixComponent {
-  readonly options: TriSelectOptionInterface[] = [
+  readonly options = [
     { value: 'jack', label: 'Jack' },
     { value: 'lucy', label: 'Lucy' },
     { value: 'Yiminghe', label: 'yiminghe' },
     { value: 'disabled', label: 'Disabled', disabled: true }
   ];
 
-  value = model('lucy');
-  multipleValue = model(['lucy']);
+  readonly value = signal('lucy');
+  readonly multipleValue = signal(['lucy']);
 }

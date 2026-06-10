@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriDrawerModule } from 'ng-zorro-antd/drawer';
@@ -11,18 +11,18 @@ import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
     <button tri-button type="primary" (click)="open()">Open</button>
     <tri-drawer
       [closable]="false"
-      [visible]="visible"
+      [visible]="visible()"
       [bodyStyle]="{
         padding: 0,
         height: 'calc(100vh - 55px)'
       }"
-      [width]="width"
+      [width]="width()"
       placement="left"
       title="Resizable Drawer"
       (onClose)="close()"
     >
       <ng-container *drawerContent>
-        @if (visible) {
+        @if (visible()) {
           <div class="drawer-body" tri-resizable bounds="window" [minWidth]="256" (resize)="onResize($event)">
             <tri-resize-handles [directions]="['right']" />
             <p>Some contents...</p>
@@ -42,22 +42,22 @@ import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
   `
 })
 export class TriDemoResizableDrawerComponent {
-  width = 256;
-  visible = false;
+  readonly width = signal(256);
+  readonly visible = signal(false);
   id = -1;
 
   onResize({ width }: TriResizeEvent): void {
     cancelAnimationFrame(this.id);
     this.id = requestAnimationFrame(() => {
-      this.width = width!;
+      this.width.set(width!);
     });
   }
 
   open(): void {
-    this.visible = true;
+    this.visible.set(true);
   }
 
   close(): void {
-    this.visible = false;
+    this.visible.set(false);
   }
 }

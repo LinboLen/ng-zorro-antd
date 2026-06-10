@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
@@ -8,16 +8,16 @@ import { TriCheckboxModule } from 'ng-zorro-antd/checkbox';
   selector: 'tri-demo-checkbox-controller',
   imports: [FormsModule, TriButtonModule, TriCheckboxModule],
   template: `
-    <label tri-checkbox [(ngModel)]="isCheckedButton" [disabled]="isDisabledButton">
-      {{ isCheckedButton ? 'Checked' : 'Unchecked' }} - {{ isDisabledButton ? 'Disabled' : 'Enabled' }}
+    <label tri-checkbox [(ngModel)]="checked" [disabled]="disabled()">
+      {{ checked() ? 'Checked' : 'Unchecked' }} - {{ disabled() ? 'Disabled' : 'Enabled' }}
     </label>
     <br />
     <br />
-    <button tri-button type="primary" (click)="checkButton()" size="small">
-      {{ !isCheckedButton ? 'Checked' : 'Unchecked' }}
+    <button tri-button type="primary" (click)="toggleChecked()" size="small">
+      {{ checked() ? 'Uncheck' : 'Check' }}
     </button>
-    <button tri-button type="primary" (click)="disableButton()" size="small">
-      {{ isDisabledButton ? 'Enabled' : 'Disabled' }}
+    <button tri-button type="primary" (click)="toggleDisabled()" size="small">
+      {{ disabled() ? 'Enable' : 'Disable' }}
     </button>
   `,
   styles: `
@@ -27,14 +27,14 @@ import { TriCheckboxModule } from 'ng-zorro-antd/checkbox';
   `
 })
 export class TriDemoCheckboxControllerComponent {
-  isCheckedButton = true;
-  isDisabledButton = false;
+  readonly checked = signal(true);
+  readonly disabled = signal(false);
 
-  checkButton(): void {
-    this.isCheckedButton = !this.isCheckedButton;
+  toggleChecked(): void {
+    this.checked.update(checked => !checked);
   }
 
-  disableButton(): void {
-    this.isDisabledButton = !this.isDisabledButton;
+  toggleDisabled(): void {
+    this.disabled.update(disabled => !disabled);
   }
 }

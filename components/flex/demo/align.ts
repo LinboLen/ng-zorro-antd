@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
@@ -19,7 +19,7 @@ import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
       <tri-segmented [options]="alignSegment" [(ngModel)]="selectedLAlignment" />
     </div>
 
-    <div class="btn-wrappers" tri-flex [justify]="selectedJustification" [align]="selectedLAlignment">
+    <div class="btn-wrappers" tri-flex [justify]="selectedJustification()" [align]="selectedLAlignment()">
       <button tri-button type="primary">Primary</button>
       <button tri-button type="primary">Primary</button>
       <button tri-button type="primary">Primary</button>
@@ -42,7 +42,7 @@ import { TriSegmentedModule } from 'ng-zorro-antd/segmented';
   `
 })
 export class TriDemoFlexAlignComponent {
-  public justifySegment: TriJustify[] = [
+  readonly justifySegment: TriJustify[] = [
     'flex-start',
     'center',
     'flex-end',
@@ -50,7 +50,7 @@ export class TriDemoFlexAlignComponent {
     'space-around',
     'space-evenly'
   ];
-  public alignSegment: TriAlign[] = ['flex-start', 'center', 'flex-end'];
-  public selectedJustification: TriJustify = 'flex-start';
-  public selectedLAlignment: TriAlign = 'flex-start';
+  readonly alignSegment: TriAlign[] = ['flex-start', 'center', 'flex-end'];
+  readonly selectedJustification = signal<TriJustify>('flex-start');
+  readonly selectedLAlignment = signal<TriAlign>('flex-start');
 }

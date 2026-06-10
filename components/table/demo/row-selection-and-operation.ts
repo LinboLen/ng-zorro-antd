@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriTableModule } from 'ng-zorro-antd/table';
@@ -19,26 +19,26 @@ export interface Data {
       <button
         tri-button
         type="primary"
-        [disabled]="setOfCheckedId.size === 0"
-        [loading]="loading"
+        [disabled]="setOfCheckedId().size === 0"
+        [loading]="loading()"
         (click)="sendRequest()"
       >
         Send Request
       </button>
-      <span>Selected {{ setOfCheckedId.size }} items</span>
+      <span>Selected {{ setOfCheckedId().size }} items</span>
     </div>
     <tri-table
       #rowSelectionTable
       showPagination
       showSizeChanger
-      [data]="listOfData"
+      [data]="listOfData()"
       (currentPageDataChange)="onCurrentPageDataChange($event)"
     >
       <thead>
         <tr>
           <th
-            [checked]="checked"
-            [indeterminate]="indeterminate"
+            [checked]="checked()"
+            [indeterminate]="indeterminate()"
             label="Select all"
             (checkedChange)="onAllChecked($event)"
           ></th>
@@ -51,7 +51,7 @@ export interface Data {
         @for (data of rowSelectionTable.data; track data) {
           <tr>
             <td
-              [checked]="setOfCheckedId.has(data.id)"
+              [checked]="setOfCheckedId().has(data.id)"
               [disabled]="data.disabled"
               [label]="data.name"
               (checkedChange)="onItemChecked(data.id, $event)"
@@ -75,30 +75,35 @@ export interface Data {
   `
 })
 export class TriDemoTableRowSelectionAndOperationComponent implements OnInit {
-  checked = false;
-  loading = false;
-  indeterminate = false;
-  listOfData: readonly Data[] = [];
-  listOfCurrentPageData: readonly Data[] = [];
-  setOfCheckedId = new Set<number>();
+  readonly checked = signal(false);
+  readonly loading = signal(false);
+  readonly indeterminate = signal(false);
+  readonly listOfData = signal<readonly Data[]>([]);
+  readonly listOfCurrentPageData = signal<readonly Data[]>([]);
+  readonly setOfCheckedId = signal(new Set<number>());
 
   updateCheckedSet(id: number, checked: boolean): void {
-    if (checked) {
-      this.setOfCheckedId.add(id);
-    } else {
-      this.setOfCheckedId.delete(id);
-    }
+    this.setOfCheckedId.update(setOfCheckedId => {
+      const next = new Set(setOfCheckedId);
+      if (checked) {
+        next.add(id);
+      } else {
+        next.delete(id);
+      }
+      return next;
+    });
   }
 
   onCurrentPageDataChange(listOfCurrentPageData: readonly Data[]): void {
-    this.listOfCurrentPageData = listOfCurrentPageData;
+    this.listOfCurrentPageData.set(listOfCurrentPageData);
     this.refreshCheckedStatus();
   }
 
   refreshCheckedStatus(): void {
-    const listOfEnabledData = this.listOfCurrentPageData.filter(({ disabled }) => !disabled);
-    this.checked = listOfEnabledData.every(({ id }) => this.setOfCheckedId.has(id));
-    this.indeterminate = listOfEnabledData.some(({ id }) => this.setOfCheckedId.has(id)) && !this.checked;
+    const listOfEnabledData = this.listOfCurrentPageData().filter(({ disabled }) => !disabled);
+    const checked = listOfEnabledData.every(({ id }) => this.setOfCheckedId().has(id));
+    this.checked.set(checked);
+    this.indeterminate.set(listOfEnabledData.some(({ id }) => this.setOfCheckedId().has(id)) && !checked);
   }
 
   onItemChecked(id: number, checked: boolean): void {
@@ -107,30 +112,32 @@ export class TriDemoTableRowSelectionAndOperationComponent implements OnInit {
   }
 
   onAllChecked(checked: boolean): void {
-    this.listOfCurrentPageData
+    this.listOfCurrentPageData()
       .filter(({ disabled }) => !disabled)
       .forEach(({ id }) => this.updateCheckedSet(id, checked));
     this.refreshCheckedStatus();
   }
 
   sendRequest(): void {
-    this.loading = true;
-    const requestData = this.listOfData.filter(data => this.setOfCheckedId.has(data.id));
+    this.loading.set(true);
+    const requestData = this.listOfData().filter(data => this.setOfCheckedId().has(data.id));
     console.log(requestData);
     setTimeout(() => {
-      this.setOfCheckedId.clear();
+      this.setOfCheckedId.set(new Set<number>());
       this.refreshCheckedStatus();
-      this.loading = false;
+      this.loading.set(false);
     }, 1000);
   }
 
   ngOnInit(): void {
-    this.listOfData = new Array(100).fill(0).map((_, index) => ({
-      id: index,
-      name: `Edward King ${index}`,
-      age: 32,
-      address: `London, Park Lane no. ${index}`,
-      disabled: index % 2 === 0
-    }));
+    this.listOfData.set(
+      new Array(100).fill(0).map((_, index) => ({
+        id: index,
+        name: `Edward King ${index}`,
+        age: 32,
+        address: `London, Park Lane no. ${index}`,
+        disabled: index % 2 === 0
+      }))
+    );
   }
 }

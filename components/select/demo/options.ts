@@ -8,7 +8,7 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
   imports: [FormsModule, TriSelectModule],
   template: `
     <tri-select ngModel="lucy" [options]="listOfOption" />
-    <tri-select [(ngModel)]="selectedValue" allowClear placeHolder="Choose" [options]="listOfGroupOption" />
+    <tri-select ngModel="lucy" allowClear placeHolder="Choose" [options]="listOfGroupOption" />
   `,
   styles: `
     nz-select {
@@ -18,7 +18,6 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
   `
 })
 export class TriDemoSelectOptionsComponent {
-  selectedValue = 'lucy';
   readonly listOfOption = [
     { label: 'Jack', value: 'jack' },
     { label: 'Lucy', value: 'lucy' },

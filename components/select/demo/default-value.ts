@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriSelectModule } from 'ng-zorro-antd/select';
@@ -17,7 +17,7 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
     </tri-select>
     <br />
     <br />
-    <tri-select [(ngModel)]="selectedValue">
+    <tri-select [(ngModel)]="value">
       @for (option of listOfOption; track option) {
         <tri-option [label]="option" [value]="option" />
       }
@@ -31,8 +31,11 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
   `
 })
 export class TriDemoSelectDefaultValueComponent {
-  listOfOption = ['Option 01', 'Option 02'];
-  listOfSelectedValue = ['Default 01', 'Default 02'];
-  defaultOption = [...this.listOfSelectedValue];
-  selectedValue = 'Default';
+  readonly listOfOption = ['Option 01', 'Option 02'];
+  readonly listOfSelectedValue = signal(['Default 01', 'Default 02']);
+  readonly value = signal('Default');
+
+  get defaultOption(): string[] {
+    return this.listOfSelectedValue();
+  }
 }

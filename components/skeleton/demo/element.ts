@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriDividerModule } from 'ng-zorro-antd/divider';
@@ -21,28 +21,28 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
       <tri-skeleton-element
         *spaceItem
         type="button"
-        [active]="elementActive"
-        [size]="elementSize"
-        [shape]="buttonShape"
+        [active]="elementActive()"
+        [size]="elementSize()"
+        [shape]="buttonShape()"
       />
       <tri-skeleton-element
         *spaceItem
         type="avatar"
-        [active]="elementActive"
-        [size]="elementSize"
-        [shape]="avatarShape"
+        [active]="elementActive()"
+        [size]="elementSize()"
+        [shape]="avatarShape()"
       />
       <tri-skeleton-element
         *spaceItem
         type="input"
-        [active]="elementActive"
-        [size]="elementSize"
+        [active]="elementActive()"
+        [size]="elementSize()"
         style="width:200px"
       />
     </tri-space>
     <br />
     <br />
-    <tri-skeleton-element type="image" [active]="elementActive" />
+    <tri-skeleton-element type="image" [active]="elementActive()" />
     <tri-divider />
     <div tri-row align="middle" [gutter]="8">
       <div tri-col span="10">
@@ -81,8 +81,8 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   `
 })
 export class TriDemoSkeletonElementComponent {
-  elementActive = false;
-  buttonShape: TriSkeletonButtonShape = 'default';
-  avatarShape: TriSkeletonAvatarShape = 'circle';
-  elementSize: TriSkeletonInputSize = 'default';
+  readonly elementActive = signal(false);
+  readonly buttonShape = signal<TriSkeletonButtonShape>('default');
+  readonly avatarShape = signal<TriSkeletonAvatarShape>('circle');
+  readonly elementSize = signal<TriSkeletonInputSize>('default');
 }

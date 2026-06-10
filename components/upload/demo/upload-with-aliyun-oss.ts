@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -25,8 +25,8 @@ import { TriUploadChangeParam, TriUploadFile, TriUploadModule } from 'ng-zorro-a
   `
 })
 export class TriDemoUploadUploadWithAliyunOssComponent {
-  files: TriUploadFile[] = [];
-  mockOSSData = {
+  readonly files = signal<TriUploadFile[]>([]);
+  readonly mockOSSData = {
     dir: 'user-dir/',
     expire: '1577811661',
     host: '//www.mocky.io/v2/5cc8019d300000980a055e76',

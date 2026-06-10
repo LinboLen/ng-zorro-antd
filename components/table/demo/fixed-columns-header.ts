@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { TriTableModule } from 'ng-zorro-antd/table';
 
@@ -50,16 +50,10 @@ interface ItemData {
     </tri-table>
   `
 })
-export class TriDemoTableFixedColumnsHeaderComponent implements OnInit {
-  listOfData: ItemData[] = [];
-
-  ngOnInit(): void {
-    for (let i = 0; i < 100; i++) {
-      this.listOfData.push({
-        name: `Edward King ${i}`,
-        age: 32,
-        address: `London`
-      });
-    }
-  }
+export class TriDemoTableFixedColumnsHeaderComponent {
+  readonly listOfData: ItemData[] = Array.from({ length: 100 }).map((_, i) => ({
+    name: `Edward King ${i}`,
+    age: 32,
+    address: `London`
+  }));
 }

@@ -7,7 +7,7 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
   selector: 'tri-demo-select-optgroup',
   imports: [FormsModule, TriSelectModule],
   template: `
-    <tri-select [(ngModel)]="selectedValue" allowClear placeHolder="Choose" showSearch>
+    <tri-select ngModel="lucy" allowClear placeHolder="Choose" showSearch>
       <tri-option-group label="Manager">
         <tri-option value="jack" label="Jack" />
         <tri-option value="lucy" label="Lucy" />
@@ -23,6 +23,4 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
     }
   `
 })
-export class TriDemoSelectOptgroupComponent {
-  selectedValue = 'lucy';
-}
+export class TriDemoSelectOptgroupComponent {}

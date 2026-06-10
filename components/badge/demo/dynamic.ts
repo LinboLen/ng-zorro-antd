@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriBadgeModule } from 'ng-zorro-antd/badge';
@@ -14,7 +14,7 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   template: `
     <div tri-flex vertical gap="middle">
       <div tri-flex gap="large" align="center">
-        <tri-badge [count]="count">
+        <tri-badge [count]="count()">
           <a class="head-example"></a>
         </tri-badge>
         <tri-space-compact>
@@ -24,7 +24,7 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
         </tri-space-compact>
       </div>
       <div tri-flex gap="large" align="center">
-        <tri-badge [dot]="dot">
+        <tri-badge [dot]="dot()">
           <a class="head-example"></a>
         </tri-badge>
         <tri-switch [(ngModel)]="dot" />
@@ -43,18 +43,18 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   `
 })
 export class TriDemoBadgeDynamicComponent {
-  count = 5;
-  dot = true;
+  readonly count = signal(5);
+  readonly dot = signal(true);
 
   addCount(): void {
-    this.count++;
+    this.count.update(count => count + 1);
   }
 
   minusCount(): void {
-    this.count = Math.max(0, this.count - 1);
+    this.count.update(count => Math.max(0, count - 1));
   }
 
   random(): void {
-    this.count = Math.floor(Math.random() * 100);
+    this.count.set(Math.floor(Math.random() * 100));
   }
 }

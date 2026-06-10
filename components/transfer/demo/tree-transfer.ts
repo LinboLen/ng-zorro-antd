@@ -39,14 +39,14 @@ import { TriTreeComponent, TriTreeModule } from 'ng-zorro-antd/tree';
 })
 export class TriDemoTransferTreeTransferComponent {
   @ViewChild('tree', { static: true }) tree!: TriTreeComponent;
-  list: TriTreeNodeOptions[] = [
+  readonly list: TriTreeNodeOptions[] = [
     { key: '0', id: 0, title: '0-0', isLeaf: true },
     { key: '1', id: 1, parentid: 0, title: '0-1' },
     { key: '2', id: 2, parentid: 1, title: '0-1-0', isLeaf: true },
     { key: '3', id: 3, parentid: 1, title: '0-1-1', isLeaf: true },
     { key: '4', id: 4, title: '0-3', isLeaf: true }
   ];
-  treeData = this.generateTree(this.list);
+  readonly treeData = this.generateTree(this.list);
   checkedNodeList: TriTreeNode[] = [];
 
   private generateTree(arr: TriTreeNodeOptions[]): TriTreeNodeOptions[] {

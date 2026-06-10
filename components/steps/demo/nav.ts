@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriStepsModule } from 'ng-zorro-antd/steps';
 
@@ -6,7 +6,7 @@ import { TriStepsModule } from 'ng-zorro-antd/steps';
   selector: 'tri-demo-steps-nav',
   imports: [TriStepsModule],
   template: `
-    <tri-steps type="navigation" size="small" [current]="index" (indexChange)="onIndexChange($event)">
+    <tri-steps type="navigation" size="small" [current]="index()" (indexChange)="onIndexChange($event)">
       <tri-step title="Step 1" subtitle="00:00:05" status="finish" description="This is a description." />
       <tri-step title="Step 2" subtitle="00:01:02" status="process" description="This is a description." />
       <tri-step
@@ -16,13 +16,13 @@ import { TriStepsModule } from 'ng-zorro-antd/steps';
         description="This is a description."
       />
     </tri-steps>
-    <tri-steps type="navigation" [current]="index" (indexChange)="onIndexChange($event)">
+    <tri-steps type="navigation" [current]="index()" (indexChange)="onIndexChange($event)">
       <tri-step title="Step 1" status="finish" />
       <tri-step title="Step 2" status="process" />
       <tri-step title="Step 3" status="wait" />
       <tri-step title="Step 4" status="wait" />
     </tri-steps>
-    <tri-steps type="navigation" size="small" [current]="index" (indexChange)="onIndexChange($event)">
+    <tri-steps type="navigation" size="small" [current]="index()" (indexChange)="onIndexChange($event)">
       <tri-step title="finish 1" status="finish" />
       <tri-step title="finish 2" status="finish" />
       <tri-step title="current process" status="process" />
@@ -37,9 +37,9 @@ import { TriStepsModule } from 'ng-zorro-antd/steps';
   `
 })
 export class TriDemoStepsNavComponent {
-  index = 0;
+  readonly index = signal(0);
 
   onIndexChange(event: number): void {
-    this.index = event;
+    this.index.set(event);
   }
 }

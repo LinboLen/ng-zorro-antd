@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriMarks, TriSliderModule } from 'ng-zorro-antd/slider';
@@ -21,9 +21,9 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   `
 })
 export class TriDemoSliderReverseComponent {
-  reverse = true;
+  readonly reverse = signal(true);
 
-  marks: TriMarks = {
+  readonly marks: TriMarks = {
     0: '0°C',
     26: '26°C',
     37: '37°C',

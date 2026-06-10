@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriSwitchModule } from 'ng-zorro-antd/switch';
@@ -10,7 +10,7 @@ import { TriTransferModule, TransferItem } from 'ng-zorro-antd/transfer';
   template: `
     <tri-transfer
       [dataSource]="list"
-      [disabled]="disabled"
+      [disabled]="disabled()"
       [titles]="['Source', 'Target']"
       (selectChange)="select($event)"
       [selectedKeys]="['0', '2', '3']"
@@ -20,21 +20,14 @@ import { TriTransferModule, TransferItem } from 'ng-zorro-antd/transfer';
     <tri-switch [(ngModel)]="disabled" checkedChildren="disabled" unCheckedChildren="disabled" />
   `
 })
-export class TriDemoTransferBasicComponent implements OnInit {
-  list: TransferItem[] = [];
-  disabled = false;
-
-  ngOnInit(): void {
-    for (let i = 0; i < 20; i++) {
-      this.list.push({
-        key: i.toString(),
-        title: `content${i + 1}`,
-        disabled: i % 3 < 1
-      });
-    }
-
-    [2, 3].forEach(idx => (this.list[idx].direction = 'right'));
-  }
+export class TriDemoTransferBasicComponent {
+  readonly list: TransferItem[] = Array.from({ length: 20 }).map((_, i) => ({
+    key: i.toString(),
+    title: `content${i + 1}`,
+    disabled: i % 3 < 1,
+    direction: [2, 3].includes(i) ? 'right' : undefined
+  }));
+  readonly disabled = signal(false);
 
   select(ret: {}): void {
     console.log('nzSelectChange', ret);

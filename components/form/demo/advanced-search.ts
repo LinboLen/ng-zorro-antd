@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormRecord, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
@@ -12,7 +12,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
   template: `
     <form tri-form [formGroup]="validateForm" class="tri-advanced-search-form">
       <div tri-row [gutter]="24">
-        @for (control of controlArray; track control) {
+        @for (control of controlArray(); track control.index) {
           <div tri-col [span]="8" [hidden]="!control.show">
             <tri-form-item>
               <tri-form-label [for]="'field' + control.index">Field {{ control.index }}</tri-form-label>
@@ -34,7 +34,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
           <button tri-button (click)="resetForm()">Clear</button>
           <a class="collapse" (click)="toggleCollapse()">
             Collapse
-            <tri-icon [type]="isCollapse ? 'down' : 'up'" />
+            <tri-icon [type]="isCollapse() ? 'down' : 'up'" />
           </a>
         </div>
       </div>
@@ -78,16 +78,19 @@ import { TriInputModule } from 'ng-zorro-antd/input';
   `
 })
 export class TriDemoFormAdvancedSearchComponent implements OnInit {
-  private fb = inject(NonNullableFormBuilder);
-  validateForm: FormRecord<FormControl<string>> = this.fb.record({});
-  controlArray: Array<{ index: number; show: boolean }> = [];
-  isCollapse = true;
+  private readonly fb = inject(NonNullableFormBuilder);
+  readonly validateForm: FormRecord<FormControl<string>> = this.fb.record({});
+  readonly controlArray = signal<Array<{ index: number; show: boolean }>>([]);
+  readonly isCollapse = signal(true);
 
   toggleCollapse(): void {
-    this.isCollapse = !this.isCollapse;
-    this.controlArray.forEach((c, index) => {
-      c.show = this.isCollapse ? index < 6 : true;
-    });
+    this.isCollapse.update(isCollapse => !isCollapse);
+    this.controlArray.update(controlArray =>
+      controlArray.map((control, index) => ({
+        ...control,
+        show: this.isCollapse() ? index < 6 : true
+      }))
+    );
   }
 
   resetForm(): void {
@@ -95,9 +98,11 @@ export class TriDemoFormAdvancedSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const controlArray: Array<{ index: number; show: boolean }> = [];
     for (let i = 0; i < 10; i++) {
-      this.controlArray.push({ index: i, show: i < 6 });
+      controlArray.push({ index: i, show: i < 6 });
       this.validateForm.addControl(`field${i}`, this.fb.control(''));
     }
+    this.controlArray.set(controlArray);
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import type { TriPlacement } from 'ng-zorro-antd/core/types';
@@ -17,9 +17,9 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
     </tri-radio-group>
     <br />
     <br />
-    <tri-date-picker [placement]="placement" />
+    <tri-date-picker [placement]="placement()" />
     <br />
-    <tri-range-picker [placement]="placement" />
+    <tri-range-picker [placement]="placement()" />
   `,
   styles: `
     nz-date-picker,
@@ -29,5 +29,5 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
   `
 })
 export class TriDemoDatePickerPlacementComponent {
-  placement: TriPlacement = 'bottomLeft';
+  readonly placement = signal<TriPlacement>('bottomLeft');
 }

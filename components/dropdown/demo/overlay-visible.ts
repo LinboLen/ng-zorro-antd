@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriDropdownModule } from 'ng-zorro-antd/dropdown';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -15,11 +15,15 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
       <ul tri-menu>
         <li tri-menu-item>Clicking me will not close the menu.</li>
         <li tri-menu-item>Clicking me will not close the menu also.</li>
-        <li tri-menu-item (click)="visible = false">Clicking me will close the menu</li>
+        <li tri-menu-item (click)="close()">Clicking me will close the menu</li>
       </ul>
     </tri-dropdown-menu>
   `
 })
 export class TriDemoDropdownOverlayVisibleComponent {
-  visible = false;
+  readonly visible = signal(false);
+
+  close(): void {
+    this.visible.set(false);
+  }
 }

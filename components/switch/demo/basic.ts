@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriSwitchModule } from 'ng-zorro-antd/switch';
@@ -9,5 +9,5 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   template: `<tri-switch [(ngModel)]="switchValue" />`
 })
 export class TriDemoSwitchBasicComponent {
-  switchValue = false;
+  readonly switchValue = signal(false);
 }

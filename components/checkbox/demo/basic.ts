@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriCheckboxModule } from 'ng-zorro-antd/checkbox';
@@ -9,5 +9,5 @@ import { TriCheckboxModule } from 'ng-zorro-antd/checkbox';
   template: `<label tri-checkbox [(ngModel)]="checked">Checkbox</label>`
 })
 export class TriDemoCheckboxBasicComponent {
-  checked = true;
+  readonly checked = signal(true);
 }

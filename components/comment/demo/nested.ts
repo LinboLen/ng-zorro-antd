@@ -27,7 +27,7 @@ import { TriCommentModule } from 'ng-zorro-antd/comment';
   `
 })
 export class TriDemoCommentNestedComponent {
-  data = {
+  readonly data = {
     author: 'Han Solo',
     avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
     content:

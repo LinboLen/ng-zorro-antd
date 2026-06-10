@@ -1,18 +1,16 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 
 import { TriFormatEmitEvent, TriTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
 @Component({
   selector: 'tri-demo-tree-select-async',
-  imports: [FormsModule, TriTreeSelectModule],
+  imports: [TriTreeSelectModule],
   template: `
     <tri-tree-select
       style="width: 250px"
       placeHolder="Please select"
       [expandedKeys]="expandKeys"
-      [(ngModel)]="value"
       [dropdownMatchSelectWidth]="true"
       [dropdownStyle]="{ 'max-height': '300px' }"
       [nodes]="nodes"
@@ -22,8 +20,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
   `
 })
 export class TriDemoTreeSelectAsyncComponent {
-  expandKeys = ['0-0'];
-  value?: string;
+  readonly expandKeys = ['0-0'];
   readonly nodes = [
     {
       title: 'Node1',

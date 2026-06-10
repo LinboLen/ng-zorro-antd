@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
@@ -20,5 +20,5 @@ import { TriInputNumberModule } from 'ng-zorro-antd/input-number';
   `
 })
 export class TriDemoInputNumberFocusComponent {
-  value = 9999;
+  readonly value = signal(9999);
 }

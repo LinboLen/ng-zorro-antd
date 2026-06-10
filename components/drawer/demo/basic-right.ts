@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriDrawerModule } from 'ng-zorro-antd/drawer';
@@ -10,7 +10,7 @@ import { TriDrawerModule } from 'ng-zorro-antd/drawer';
     <button tri-button type="primary" (click)="open()">Open</button>
     <tri-drawer
       [closable]="false"
-      [visible]="visible"
+      [visible]="visible()"
       placement="right"
       title="Basic Drawer"
       (onClose)="close()"
@@ -24,13 +24,13 @@ import { TriDrawerModule } from 'ng-zorro-antd/drawer';
   `
 })
 export class TriDemoDrawerBasicRightComponent {
-  visible = false;
+  readonly visible = signal(false);
 
   open(): void {
-    this.visible = true;
+    this.visible.set(true);
   }
 
   close(): void {
-    this.visible = false;
+    this.visible.set(false);
   }
 }

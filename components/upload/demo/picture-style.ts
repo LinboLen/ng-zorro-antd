@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -21,7 +21,7 @@ import { TriUploadFile, TriUploadModule } from 'ng-zorro-antd/upload';
   `
 })
 export class TriDemoUploadPictureStyleComponent {
-  fileList: TriUploadFile[] = [
+  readonly fileList = signal<TriUploadFile[]>([
     {
       uid: '0',
       name: 'xxx.png',
@@ -40,5 +40,5 @@ export class TriDemoUploadPictureStyleComponent {
       name: 'zzz.png',
       status: 'error'
     }
-  ];
+  ]);
 }

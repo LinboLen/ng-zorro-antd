@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 
 import { TriSelectModule } from 'ng-zorro-antd/select';
 
@@ -13,14 +12,8 @@ function alphabet(): string[] {
 
 @Component({
   selector: 'tri-demo-select-tags',
-  imports: [FormsModule, TriSelectModule],
-  template: `
-    <tri-select mode="tags" placeHolder="Tag Mode" [(ngModel)]="listOfTagOptions">
-      @for (option of listOfOption; track option) {
-        <tri-option [label]="option" [value]="option" />
-      }
-    </tri-select>
-  `,
+  imports: [TriSelectModule],
+  template: `<tri-select [options]="options" mode="tags" placeHolder="Tag Mode" />`,
   styles: `
     nz-select {
       width: 100%;
@@ -28,6 +21,5 @@ function alphabet(): string[] {
   `
 })
 export class TriDemoSelectTagsComponent {
-  readonly listOfOption: string[] = alphabet();
-  listOfTagOptions: string[] = [];
+  readonly options = alphabet().map(item => ({ label: item, value: item }));
 }

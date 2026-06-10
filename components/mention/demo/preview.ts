@@ -1,5 +1,5 @@
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
@@ -26,7 +26,7 @@ import { TriTabsModule } from 'ng-zorro-antd/tabs';
         </tri-mention>
       </tri-tab>
       <tri-tab title="Preview">
-        <pre [innerHTML]="preview"></pre>
+        <pre [innerHTML]="preview()"></pre>
       </tri-tab>
     </tri-tabs>
   `
@@ -34,9 +34,9 @@ import { TriTabsModule } from 'ng-zorro-antd/tabs';
 export class TriDemoMentionPreviewComponent {
   private readonly sanitizer = inject(DomSanitizer);
 
-  inputValue: string = 'Switch tab view preview @NG-ZORRO ';
-  preview?: SafeHtml;
-  suggestions = ['NG-ZORRO', 'angular', 'Reactive-Extensions'];
+  readonly inputValue = signal('Switch tab view preview @NG-ZORRO ');
+  readonly preview = signal<SafeHtml | undefined>(undefined);
+  readonly suggestions = ['NG-ZORRO', 'angular', 'Reactive-Extensions'];
 
   constructor() {
     this.renderPreView();
@@ -54,13 +54,14 @@ export class TriDemoMentionPreviewComponent {
   }
 
   renderPreView(): void {
-    if (this.inputValue) {
+    const inputValue = this.inputValue();
+    if (inputValue) {
       const regex = this.getRegExp('@');
-      const previewValue = this.inputValue.replace(
+      const previewValue = inputValue.replace(
         regex,
         match => `<a target="_blank" href="https://github.com/${match.trim().substring(1)}">${match}</a>`
       );
-      this.preview = this.sanitizer.bypassSecurityTrustHtml(previewValue);
+      this.preview.set(this.sanitizer.bypassSecurityTrustHtml(previewValue));
     }
   }
 }

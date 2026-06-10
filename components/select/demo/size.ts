@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriRadioModule } from 'ng-zorro-antd/radio';
@@ -23,32 +23,28 @@ function alphabet(): string[] {
     </tri-radio-group>
     <br />
     <br />
-    <tri-select [(ngModel)]="singleValue" [size]="size">
-      @for (option of listOfOption; track option) {
-        <tri-option [label]="option" [value]="option" />
-      }
-    </tri-select>
+    <tri-select [options]="options" [(ngModel)]="singleValue" [size]="size()" />
     <br />
     <br />
-    <tri-select [(ngModel)]="singleValue" [size]="size" showSearch>
-      @for (option of listOfOption; track option) {
-        <tri-option [label]="option" [value]="option" />
-      }
-    </tri-select>
+    <tri-select [options]="options" [(ngModel)]="singleValue" [size]="size()" showSearch />
     <br />
     <br />
-    <tri-select [(ngModel)]="multipleValue" [size]="size" mode="multiple" placeHolder="Please select">
-      @for (option of listOfOption; track option) {
-        <tri-option [label]="option" [value]="option" />
-      }
-    </tri-select>
+    <tri-select
+      [options]="options"
+      [(ngModel)]="multipleValue"
+      [size]="size()"
+      mode="multiple"
+      placeHolder="Please select"
+    />
     <br />
     <br />
-    <tri-select [(ngModel)]="tagValue" [size]="size" mode="tags" placeHolder="Please select">
-      @for (option of listOfOption; track option) {
-        <tri-option [label]="option" [value]="option" />
-      }
-    </tri-select>
+    <tri-select
+      [options]="options"
+      [(ngModel)]="tagValue"
+      [size]="size()"
+      mode="tags"
+      placeHolder="Please select"
+    />
   `,
   styles: `
     nz-select {
@@ -57,9 +53,10 @@ function alphabet(): string[] {
   `
 })
 export class TriDemoSelectSizeComponent {
-  readonly listOfOption: string[] = alphabet();
-  size: TriSelectSizeType = 'default';
-  singleValue = 'a10';
-  multipleValue = ['a10', 'c12'];
-  tagValue = ['a10', 'c12', 'tag'];
+  readonly options = alphabet().map(item => ({ label: item, value: item }));
+
+  readonly size = signal<TriSelectSizeType>('default');
+  readonly singleValue = signal('a10');
+  readonly multipleValue = signal(['a10', 'c12']);
+  readonly tagValue = signal(['a10', 'c12', 'tag']);
 }

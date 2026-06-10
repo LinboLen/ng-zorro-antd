@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriAvatarModule } from 'ng-zorro-antd/avatar';
@@ -12,11 +12,11 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   imports: [FormsModule, TriAvatarModule, TriCardModule, TriIconModule, TriSwitchModule, TriSkeletonModule],
   template: `
     <tri-switch [(ngModel)]="loading" />
-    <tri-card style="width: 300px;margin-top: 16px" [loading]="loading">
+    <tri-card style="width: 300px;margin-top: 16px" [loading]="loading()">
       <tri-card-meta [avatar]="avatarTemplate" title="Card title" description="This is the description" />
     </tri-card>
     <tri-card style="width: 300px;margin-top: 16px" [actions]="[actionSetting, actionEdit, actionEllipsis]">
-      <tri-skeleton [active]="true" [loading]="loading" [avatar]="{ size: 'large' }">
+      <tri-skeleton [active]="true" [loading]="loading()" [avatar]="{ size: 'large' }">
         <tri-card-meta [avatar]="avatarTemplate" title="Card title" description="This is the description" />
       </tri-skeleton>
     </tri-card>
@@ -35,5 +35,5 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   `
 })
 export class TriDemoCardLoadingComponent {
-  loading = true;
+  readonly loading = signal(true);
 }

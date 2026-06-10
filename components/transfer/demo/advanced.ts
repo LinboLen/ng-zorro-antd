@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriMessageService } from 'ng-zorro-antd/message';
@@ -9,7 +9,7 @@ import { TriTransferModule, TransferItem } from 'ng-zorro-antd/transfer';
   imports: [TriButtonModule, TriTransferModule],
   template: `
     <tri-transfer
-      [dataSource]="list"
+      [dataSource]="list()"
       showSearch
       [operations]="['to right', 'to left']"
       [listStyle]="{ 'width.px': 250, 'height.px': 300 }"
@@ -30,13 +30,13 @@ import { TriTransferModule, TransferItem } from 'ng-zorro-antd/transfer';
 export class TriDemoTransferAdvancedComponent implements OnInit {
   private readonly messageService = inject(TriMessageService);
 
-  list: TransferItem[] = [];
+  readonly list = signal<TransferItem[]>([]);
 
   ngOnInit(): void {
-    this.getData();
+    this.list.set(this.getData());
   }
 
-  getData(): void {
+  getData(): TransferItem[] {
     const ret: TransferItem[] = [];
     for (let i = 0; i < 20; i++) {
       ret.push({
@@ -46,11 +46,11 @@ export class TriDemoTransferAdvancedComponent implements OnInit {
         direction: Math.random() * 2 > 1 ? 'right' : undefined
       });
     }
-    this.list = ret;
+    return ret;
   }
 
   reload(direction: string): void {
-    this.getData();
+    this.list.set(this.getData());
     this.messageService.success(`your clicked ${direction}!`);
   }
 

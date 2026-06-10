@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriInputModule } from 'ng-zorro-antd/input';
@@ -6,8 +6,8 @@ import { TriInputModule } from 'ng-zorro-antd/input';
 @Component({
   selector: 'tri-demo-input-basic',
   imports: [FormsModule, TriInputModule],
-  template: ` <input tri-input placeholder="Basic usage" [(ngModel)]="value" /> `
+  template: `<input tri-input placeholder="Basic usage" [(ngModel)]="value" />`
 })
 export class TriDemoInputBasicComponent {
-  value?: string;
+  readonly value = signal('');
 }

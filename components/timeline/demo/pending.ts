@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriTimelineModule } from 'ng-zorro-antd/timeline';
@@ -7,7 +7,7 @@ import { TriTimelineModule } from 'ng-zorro-antd/timeline';
   selector: 'tri-demo-timeline-pending',
   imports: [TriButtonModule, TriTimelineModule],
   template: `
-    <tri-timeline pending="Recording..." [reverse]="reverse">
+    <tri-timeline pending="Recording..." [reverse]="reverse()">
       <tri-timeline-item>Create a services site 2015-09-01</tri-timeline-item>
       <tri-timeline-item>Solve initial network problems 2015-09-01</tri-timeline-item>
       <tri-timeline-item>Technical testing 2015-09-01</tri-timeline-item>
@@ -18,9 +18,9 @@ import { TriTimelineModule } from 'ng-zorro-antd/timeline';
   `
 })
 export class TriDemoTimelinePendingComponent {
-  reverse = false;
+  readonly reverse = signal(false);
 
   toggleReverse(): void {
-    this.reverse = !this.reverse;
+    this.reverse.update(reverse => !reverse);
   }
 }

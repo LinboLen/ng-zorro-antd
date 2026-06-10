@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild, inject } from '@angular/core';
+import { Component, TemplateRef, ViewChild, effect, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriCascaderModule } from 'ng-zorro-antd/cascader';
@@ -29,12 +29,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
     TriTreeSelectModule
   ],
   template: `
-    <tri-switch
-      unCheckedChildren="default"
-      checkedChildren="customize"
-      [(ngModel)]="customize"
-      (ngModelChange)="onConfigChange()"
-    />
+    <tri-switch unCheckedChildren="default" checkedChildren="customize" [(ngModel)]="customize" />
 
     <tri-divider />
 
@@ -81,14 +76,14 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
 export class TriDemoEmptyConfigComponent {
   private readonly configService = inject(TriConfigService);
 
-  @ViewChild('customTpl', { static: false }) customTpl?: TemplateRef<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+  @ViewChild('customTpl', { static: false }) customTpl?: TemplateRef<string>;
 
-  customize = false;
-  onConfigChange(): void {
-    if (this.customize) {
-      this.configService.set('empty', { nzDefaultEmptyContent: this.customTpl });
-    } else {
-      this.configService.set('empty', { nzDefaultEmptyContent: undefined });
-    }
+  readonly customize = signal(false);
+
+  constructor() {
+    effect(() => {
+      const template = this.customize() ? this.customTpl : undefined;
+      this.configService.set('empty', { nzDefaultEmptyContent: template });
+    });
   }
 }

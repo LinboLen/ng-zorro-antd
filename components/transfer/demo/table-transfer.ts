@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriSwitchModule } from 'ng-zorro-antd/switch';
@@ -11,9 +11,9 @@ import { TriTransferModule, TransferChange, TransferItem, TransferSelectChange }
   imports: [FormsModule, TriSwitchModule, TriTableModule, TriTagModule, TriTransferModule],
   template: `
     <tri-transfer
-      [dataSource]="list"
-      [disabled]="disabled"
-      [showSearch]="showSearch"
+      [dataSource]="list()"
+      [disabled]="disabled()"
+      [showSearch]="showSearch()"
       [showSelectAll]="false"
       [renderList]="[renderList, renderList]"
       (selectChange)="select($event)"
@@ -65,32 +65,26 @@ import { TriTransferModule, TransferChange, TransferItem, TransferSelectChange }
         </tri-table>
       </ng-template>
     </tri-transfer>
-    <div style="margin-top: 8px;">
-      <tri-switch [(ngModel)]="disabled" checkedChildren="disabled" unCheckedChildren="disabled" />
-      <tri-switch [(ngModel)]="showSearch" checkedChildren="showSearch" unCheckedChildren="showSearch" />
-    </div>
+    <br />
+    <tri-switch [(ngModel)]="disabled" checkedChildren="disabled" unCheckedChildren="disabled" />
+    <tri-switch [(ngModel)]="showSearch" checkedChildren="showSearch" unCheckedChildren="showSearch" />
   `
 })
-export class TriDemoTransferTableTransferComponent implements OnInit {
-  list: TransferItem[] = [];
-  $asTransferItems = (data: unknown): TransferItem[] => data as TransferItem[];
-  disabled = false;
-  showSearch = false;
-
-  ngOnInit(): void {
-    for (let i = 0; i < 20; i++) {
-      this.list.push({
-        key: i.toString(),
-        title: `content${i + 1}`,
-        description: `description of content${i + 1}`,
-        disabled: i % 4 === 0,
-        tag: ['cat', 'dog', 'bird'][i % 3],
-        checked: false
-      });
-    }
-
-    [2, 3].forEach(idx => (this.list[idx].direction = 'right'));
-  }
+export class TriDemoTransferTableTransferComponent {
+  readonly list = signal<TransferItem[]>(
+    Array.from({ length: 20 }).map((_, i) => ({
+      key: i.toString(),
+      title: `content${i + 1}`,
+      description: `description of content${i + 1}`,
+      disabled: i % 4 === 0,
+      tag: ['cat', 'dog', 'bird'][i % 3],
+      checked: false,
+      direction: [2, 3].includes(i) ? 'right' : undefined
+    }))
+  );
+  readonly $asTransferItems = (data: unknown): TransferItem[] => data as TransferItem[];
+  readonly disabled = signal(false);
+  readonly showSearch = signal(false);
 
   select(ret: TransferSelectChange): void {
     console.log('nzSelectChange', ret);
@@ -100,15 +94,19 @@ export class TriDemoTransferTableTransferComponent implements OnInit {
     console.log('nzChange', ret);
     const listKeys = ret.list.map(l => l.key);
     const hasOwnKey = (e: TransferItem): boolean => e.hasOwnProperty('key');
-    this.list = this.list.map(e => {
-      if (listKeys.includes(e.key) && hasOwnKey(e)) {
-        if (ret.to === 'left') {
-          delete e.hide;
-        } else if (ret.to === 'right') {
-          e.hide = false;
+    this.list.update(list =>
+      list.map(e => {
+        if (listKeys.includes(e.key) && hasOwnKey(e)) {
+          if (ret.to === 'left') {
+            const next = { ...e };
+            delete next.hide;
+            return next;
+          } else if (ret.to === 'right') {
+            return { ...e, hide: false };
+          }
         }
-      }
-      return e;
-    });
+        return e;
+      })
+    );
   }
 }

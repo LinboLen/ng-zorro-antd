@@ -1,4 +1,4 @@
-import { Component, inject, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Component, inject, signal, TemplateRef, ViewContainerRef } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriModalRef, TriModalService, TRI_MODAL_DATA, TriModalModule } from 'ng-zorro-antd/modal';
@@ -29,7 +29,7 @@ interface IModalData {
     </ng-template>
     <ng-template #tplFooter let-ref="modalRef">
       <button tri-button (click)="ref.destroy()">Destroy</button>
-      <button tri-button type="primary" (click)="destroyTplModal(ref)" [loading]="tplModalButtonLoading">
+      <button tri-button type="primary" (click)="destroyTplModal(ref)" [loading]="tplModalButtonLoading()">
         Close after submit
       </button>
     </ng-template>
@@ -58,8 +58,7 @@ export class TriDemoModalServiceComponent {
   private readonly modalService = inject(TriModalService);
   private readonly viewContainerRef = inject(ViewContainerRef);
 
-  tplModalButtonLoading = false;
-  disabled = false;
+  readonly tplModalButtonLoading = signal(false);
 
   createModal(): void {
     this.modalService.create({
@@ -82,9 +81,9 @@ export class TriDemoModalServiceComponent {
   }
 
   destroyTplModal(modelRef: TriModalRef): void {
-    this.tplModalButtonLoading = true;
+    this.tplModalButtonLoading.set(true);
     setTimeout(() => {
-      this.tplModalButtonLoading = false;
+      this.tplModalButtonLoading.set(false);
       modelRef.destroy();
     }, 1000);
   }
@@ -103,7 +102,7 @@ export class TriDemoModalServiceComponent {
         {
           label: 'change component title from outside',
           onClick: componentInstance => {
-            componentInstance!.title = 'title in inner component is changed';
+            componentInstance!.title.set('title in inner component is changed');
           }
         }
       ]
@@ -115,7 +114,7 @@ export class TriDemoModalServiceComponent {
 
     // delay until modal instance created
     setTimeout(() => {
-      instance.subtitle = 'sub title is changed';
+      instance.subtitle.set('sub title is changed');
     }, 2000);
   }
 
@@ -182,8 +181,8 @@ export class TriDemoModalServiceComponent {
   selector: 'tri-modal-custom-component',
   imports: [TriButtonModule],
   template: `
-    <h2>{{ title }}</h2>
-    <h4>{{ subtitle }}</h4>
+    <h2>{{ title() }}</h2>
+    <h4>{{ subtitle() }}</h4>
     <p>
       My favorite framework is {{ modalData.favoriteFramework }} and my favorite library is
       {{ modalData.favoriteLibrary }}
@@ -196,8 +195,8 @@ export class TriModalCustomComponent {
   readonly modalRef = inject(TriModalRef);
   readonly modalData = inject<IModalData>(TRI_MODAL_DATA);
 
-  @Input() title?: string;
-  @Input() subtitle?: string;
+  readonly title = signal<string | undefined>(undefined);
+  readonly subtitle = signal<string | undefined>(undefined);
 
   destroyModal(): void {
     this.modalRef.destroy({ data: 'this the result data' });

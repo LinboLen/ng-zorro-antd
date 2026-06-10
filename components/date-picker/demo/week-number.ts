@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
@@ -14,9 +14,9 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
     </tri-radio-group>
     <br />
     <br />
-    <tri-date-picker [showWeekNumber]="showWeekNumber" />
+    <tri-date-picker [showWeekNumber]="showWeekNumber()" />
     <br />
-    <tri-range-picker [showWeekNumber]="showWeekNumber" />
+    <tri-range-picker [showWeekNumber]="showWeekNumber()" />
   `,
   styles: `
     nz-date-picker,
@@ -26,5 +26,5 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
   `
 })
 export class TriDemoDatePickerWeekNumberComponent {
-  showWeekNumber: boolean = false;
+  readonly showWeekNumber = signal(false);
 }

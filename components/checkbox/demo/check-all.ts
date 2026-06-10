@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriCheckboxModule, TriCheckboxOption } from 'ng-zorro-antd/checkbox';
@@ -10,36 +10,29 @@ import { TriDividerModule } from 'ng-zorro-antd/divider';
   template: `
     <label
       tri-checkbox
-      [(ngModel)]="allChecked"
-      (ngModelChange)="updateAllChecked()"
-      [indeterminate]="value.length > 0 && value.length !== options.length"
+      [ngModel]="allChecked()"
+      (ngModelChange)="onAllCheckedChange($event)"
+      [indeterminate]="indeterminate()"
     >
       Check all
     </label>
 
     <tri-divider />
 
-    <tri-checkbox-group [options]="options" [(ngModel)]="value" (ngModelChange)="updateSingleChecked()" />
+    <tri-checkbox-group [options]="options" [(ngModel)]="value" />
   `
 })
 export class TriDemoCheckboxCheckAllComponent {
-  isAllCheckedFirstChange = true;
-  allChecked = false;
-  value: Array<string | number> = ['Apple', 'Orange'];
-  options: TriCheckboxOption[] = [
+  readonly value = signal<Array<TriCheckboxOption['value']>>(['Apple', 'Orange']);
+  readonly options: TriCheckboxOption[] = [
     { label: 'Apple', value: 'Apple' },
     { label: 'Pear', value: 'Pear' },
     { label: 'Orange', value: 'Orange' }
   ];
+  readonly allChecked = computed(() => this.value().length === this.options.length);
+  readonly indeterminate = computed(() => this.value().length > 0 && !this.allChecked());
 
-  updateAllChecked(): void {
-    if (!this.isAllCheckedFirstChange) {
-      this.value = this.allChecked ? this.options.map(item => item.value) : [];
-    }
-    this.isAllCheckedFirstChange = false;
-  }
-
-  updateSingleChecked(): void {
-    this.allChecked = this.value.length === this.options.length;
+  onAllCheckedChange(checked: boolean): void {
+    this.value.set(checked ? this.options.map(item => item.value) : []);
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriSelectModule } from 'ng-zorro-antd/select';
@@ -8,25 +8,23 @@ import { TriTabPosition, TriTabsModule } from 'ng-zorro-antd/tabs';
   selector: 'tri-demo-tabs-position',
   imports: [FormsModule, TriSelectModule, TriTabsModule],
   template: `
-    <div style="margin-bottom: 16px;">
+    <div>
       Tab position:
-      <tri-select [(ngModel)]="position" style="width: 80px;">
-        @for (option of options; track option.value) {
-          <tri-option [label]="option.label" [value]="option.value" />
-        }
-      </tri-select>
+      <tri-select [options]="options" [(ngModel)]="position" style="width: 80px;" />
     </div>
-    <tri-tabs [tabPosition]="position">
+    <br />
+    <br />
+    <tri-tabs [tabPosition]="position()">
       @for (tab of tabs; track tab) {
-        <tri-tab [title]="'Tab ' + tab">Content of tab {{ tab }}</tri-tab>
+        <tri-tab title="Tab {{ tab }}">Content of tab {{ tab }}</tri-tab>
       }
     </tri-tabs>
   `
 })
 export class TriDemoTabsPositionComponent {
-  position: TriTabPosition = 'top';
-  tabs = [1, 2, 3];
-  options = [
+  readonly position = signal<TriTabPosition>('top');
+  readonly tabs = [1, 2, 3];
+  readonly options = [
     { value: 'top', label: 'top' },
     { value: 'left', label: 'left' },
     { value: 'right', label: 'right' },

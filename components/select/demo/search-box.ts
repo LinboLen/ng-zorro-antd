@@ -1,26 +1,21 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, inject, signal } from '@angular/core';
 
 import { TriSelectModule } from 'ng-zorro-antd/select';
 
 @Component({
   selector: 'tri-demo-select-search-box',
-  imports: [FormsModule, TriSelectModule],
+  imports: [TriSelectModule],
   template: `
     <tri-select
+      [options]="options()"
       showSearch
       serverSearch
       placeHolder="input search text"
-      [(ngModel)]="selectedValue"
       [showArrow]="false"
-      [filterOption]="filterOption"
+      [filterOption]="filterFn"
       (onSearch)="search($event)"
-    >
-      @for (item of listOfOption; track item) {
-        <tri-option [label]="item" [value]="item" />
-      }
-    </tri-select>
+    />
   `,
   styles: `
     nz-select {
@@ -31,14 +26,15 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
 export class TriDemoSelectSearchBoxComponent {
   private readonly http = inject(HttpClient);
 
-  selectedValue: string | null = null;
-  listOfOption: string[] = [];
-  readonly filterOption = (): boolean => true;
+  readonly options = signal<Array<{ label: string; value: string }>>([]);
+  readonly filterFn = (): boolean => true;
+
   search(value: string): void {
     this.http
       .jsonp<{ result: Array<[string, string]> }>(`https://suggest.taobao.com/sug?code=utf-8&q=${value}`, 'callback')
       .subscribe(data => {
-        this.listOfOption = data.result.map(([item]) => item);
+        const options = data.result.map(([item]) => ({ label: item, value: item }));
+        this.options.set(options);
       });
   }
 }

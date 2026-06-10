@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriDatePickerModule, TriDatePickerSizeType } from 'ng-zorro-antd/date-picker';
@@ -15,15 +15,15 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
     </tri-radio-group>
     <br />
     <br />
-    <tri-date-picker [size]="size" />
+    <tri-date-picker [size]="size()" />
     <br />
-    <tri-date-picker mode="week" [size]="size" />
+    <tri-date-picker mode="week" [size]="size()" />
     <br />
-    <tri-date-picker mode="month" [size]="size" />
+    <tri-date-picker mode="month" [size]="size()" />
     <br />
-    <tri-date-picker mode="quarter" [size]="size" />
+    <tri-date-picker mode="quarter" [size]="size()" />
     <br />
-    <tri-range-picker [size]="size" />
+    <tri-range-picker [size]="size()" />
   `,
   styles: `
     nz-date-picker,
@@ -33,5 +33,5 @@ import { TriRadioModule } from 'ng-zorro-antd/radio';
   `
 })
 export class TriDemoDatePickerSizeComponent {
-  size: TriDatePickerSizeType = 'default';
+  readonly size = signal<TriDatePickerSizeType>('default');
 }

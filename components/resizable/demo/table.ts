@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
 import { TriTableModule } from 'ng-zorro-antd/table';
@@ -10,7 +10,7 @@ import { TriTableModule } from 'ng-zorro-antd/table';
     <tri-table #basicTable [data]="listOfData">
       <thead>
         <tr>
-          @for (col of cols; track col) {
+          @for (col of cols(); track col) {
             @if (col.width) {
               <th
                 tri-resizable
@@ -54,7 +54,7 @@ import { TriTableModule } from 'ng-zorro-antd/table';
   `
 })
 export class TriDemoResizableTableComponent {
-  cols: Array<{ title: string; width?: string }> = [
+  readonly cols = signal<Array<{ title: string; width?: string }>>([
     {
       title: 'Name',
       width: '180px'
@@ -70,9 +70,9 @@ export class TriDemoResizableTableComponent {
     {
       title: 'Actions'
     }
-  ];
+  ]);
 
-  listOfData = [
+  readonly listOfData = [
     {
       key: '1',
       name: 'John Brown',
@@ -94,6 +94,6 @@ export class TriDemoResizableTableComponent {
   ];
 
   onResize({ width }: TriResizeEvent, col: string): void {
-    this.cols = this.cols.map(e => (e.title === col ? { ...e, width: `${width}px` } : e));
+    this.cols.update(cols => cols.map(e => (e.title === col ? { ...e, width: `${width}px` } : e)));
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
 
@@ -11,8 +11,8 @@ import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
       tri-resizable
       lockAspectRatio
       (resize)="onResize($event)"
-      [style.height.px]="height"
-      [style.width.px]="width"
+      [style.height.px]="height()"
+      [style.width.px]="width()"
     >
       <tri-resize-handles />
       content
@@ -33,15 +33,15 @@ import { TriResizableModule, TriResizeEvent } from 'ng-zorro-antd/resizable';
   `
 })
 export class TriDemoResizableLockAspectRatioComponent {
-  width = 400;
-  height = 200;
+  readonly width = signal(400);
+  readonly height = signal(200);
   id = -1;
 
   onResize({ width, height }: TriResizeEvent): void {
     cancelAnimationFrame(this.id);
     this.id = requestAnimationFrame(() => {
-      this.width = width!;
-      this.height = height!;
+      this.width.set(width!);
+      this.height.set(height!);
     });
   }
 }

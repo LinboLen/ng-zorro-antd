@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
@@ -10,7 +10,7 @@ import { TriColorPickerModule } from 'ng-zorro-antd/color-picker';
   template: `
     <tri-color-picker [flipFlop]="flipFlop" [(ngModel)]="color" />
     <ng-template #flipFlop>
-      <button tri-button type="primary" [style.background-color]="color">Color</button>
+      <button tri-button type="primary" [style.background-color]="color()">Color</button>
     </ng-template>
   `,
   styles: `
@@ -20,5 +20,5 @@ import { TriColorPickerModule } from 'ng-zorro-antd/color-picker';
   `
 })
 export class TriDemoColorPickerFlipFlopComponent {
-  color = '#1677ff';
+  readonly color = signal('#1677ff');
 }
