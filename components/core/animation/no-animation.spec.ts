@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ANIMATION_MODULE_TYPE, ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ANIMATION_MODULE_TYPE, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
@@ -17,8 +17,7 @@ import {
 
 @Component({
   template: `<div #element [noAnimation]="noAnimation()" data-testid="test-element"></div>`,
-  imports: [TriNoAnimationDirective],
-  changeDetection: ChangeDetectionStrategy.Eager
+  imports: [TriNoAnimationDirective]
 })
 class TestComponent {
   noAnimation = signal(false);
@@ -32,7 +31,6 @@ describe('NzNoAnimationDirective', () => {
 
   describe('without NoopAnimations', () => {
     beforeEach(() => {
-      TestBed.configureTestingModule({});
       fixture = TestBed.createComponent(TestComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
@@ -40,14 +38,15 @@ describe('NzNoAnimationDirective', () => {
 
     it('should not add animation disabled class when nzNoAnimation is false', () => {
       const element = fixture.nativeElement.querySelector('[data-testid="test-element"]');
-      expect(element.classList.contains(TRI_NO_ANIMATION_CLASS)).toBeFalse();
+      expect(element.classList.contains(TRI_NO_ANIMATION_CLASS)).toBe(false);
     });
 
     it('should add animation disabled class when nzNoAnimation is true', async () => {
       component.noAnimation.set(true);
+      fixture.detectChanges();
       await fixture.whenStable();
       const element = fixture.nativeElement.querySelector('[data-testid="test-element"]');
-      expect(element.classList.contains(TRI_NO_ANIMATION_CLASS)).toBeTrue();
+      expect(element.classList.contains(TRI_NO_ANIMATION_CLASS)).toBe(true);
     });
   });
 
@@ -63,14 +62,15 @@ describe('NzNoAnimationDirective', () => {
 
     it('should add animation disabled class even when nzNoAnimation is false', () => {
       const element = fixture.nativeElement.querySelector('[data-testid="test-element"]');
-      expect(element.classList.contains(TRI_NO_ANIMATION_CLASS)).toBeTrue();
+      expect(element.classList.contains(TRI_NO_ANIMATION_CLASS)).toBe(true);
     });
 
     it('should keep animation disabled class when nzNoAnimation is true', async () => {
       component.noAnimation.set(true);
+      fixture.detectChanges();
       await fixture.whenStable();
       const element = fixture.nativeElement.querySelector('[data-testid="test-element"]');
-      expect(element.classList.contains(TRI_NO_ANIMATION_CLASS)).toBeTrue();
+      expect(element.classList.contains(TRI_NO_ANIMATION_CLASS)).toBe(true);
     });
   });
 });
@@ -92,7 +92,7 @@ describe('provideNzNoAnimation', () => {
     fixture.detectChanges();
 
     const element = fixture.nativeElement.querySelector('[data-testid="test-element"]');
-    expect(element.classList.contains(TRI_NO_ANIMATION_CLASS)).toBeTrue();
+    expect(element.classList.contains(TRI_NO_ANIMATION_CLASS)).toBe(true);
   });
 });
 

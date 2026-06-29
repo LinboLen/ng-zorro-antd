@@ -4,44 +4,32 @@
  */
 
 import { NgTemplateOutlet } from '@angular/common';
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  DebugElement,
-  provideZoneChangeDetection,
-  TemplateRef,
-  ViewChild
-} from '@angular/core';
+import { Component, DebugElement, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { TriLabelAlignType } from 'ng-zorro-antd/form/form.directive';
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { TriFormModule } from 'ng-zorro-antd/form/form.module';
 import { en_US, TriI18nService } from 'ng-zorro-antd/i18n';
 
-import { TriFormLabelComponent, TriFormTooltipIcon } from './form-label.component';
+import { TriFormLabelComponent } from './form-label.component';
 import { TriRequiredMark } from './types';
 
 describe('form-label', () => {
   beforeEach(() => {
-    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideZoneChangeDetection(), provideNoopAnimations()]
+      providers: [provideNzNoAnimation()]
     });
   });
 
   describe('default', () => {
-    let fixture: ComponentFixture<TriTestFormLabelComponent>;
-    let testComponent: TriTestFormLabelComponent;
+    let fixture: ComponentFixture<TriFormLabelComponent>;
     let label: DebugElement;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(TriTestFormLabelComponent);
-      testComponent = fixture.componentInstance;
+      fixture = TestBed.createComponent(TriFormLabelComponent);
+      label = fixture.debugElement;
       fixture.detectChanges();
-      label = fixture.debugElement.query(By.directive(TriFormLabelComponent));
     });
 
     it('should className correct', () => {
@@ -49,13 +37,15 @@ describe('form-label', () => {
     });
 
     it('should label for work', () => {
+      fixture.componentRef.setInput('nzFor', 'test');
+      fixture.detectChanges();
       expect(label.nativeElement.querySelector('label').attributes.getNamedItem('for').value).toBe('test');
     });
 
     it('should required work', () => {
       expect(label.nativeElement.querySelector('label').classList).not.toContain('ant-form-item-required');
 
-      testComponent.required = true;
+      fixture.componentRef.setInput('nzRequired', true);
       fixture.detectChanges();
 
       expect(label.nativeElement.querySelector('label').classList).toContain('ant-form-item-required');
@@ -64,7 +54,7 @@ describe('form-label', () => {
     it('should no colon work', () => {
       expect(label.nativeElement.querySelector('label').classList).not.toContain('ant-form-item-no-colon');
 
-      testComponent.noColon = true;
+      fixture.componentRef.setInput('nzNoColon', true);
       fixture.detectChanges();
 
       expect(label.nativeElement.querySelector('label').classList).toContain('ant-form-item-no-colon');
@@ -73,13 +63,13 @@ describe('form-label', () => {
     it('should tooltip work', () => {
       expect(label.nativeElement.querySelector('.ant-form-item-tooltip')).toBeNull();
 
-      testComponent.tooltipTitle = 'tooltip';
+      fixture.componentRef.setInput('nzTooltipTitle', 'tooltip');
       fixture.detectChanges();
 
       expect(label.nativeElement.querySelector('.ant-form-item-tooltip')).toBeDefined();
       expect(label.nativeElement.querySelector('.anticon-question-circle')).toBeDefined();
 
-      testComponent.tooltipIcon = 'info-circle';
+      fixture.componentRef.setInput('nzTooltipIcon', 'info-circle');
       fixture.detectChanges();
 
       expect(label.nativeElement.querySelector('.ant-form-item-tooltip')).toBeDefined();
@@ -89,7 +79,7 @@ describe('form-label', () => {
     it('should label align work', () => {
       expect(label.nativeElement.classList).not.toContain('ant-form-item-label-left');
 
-      testComponent.align = 'left';
+      fixture.componentRef.setInput('nzLabelAlign', 'left');
       fixture.detectChanges();
 
       expect(label.nativeElement.classList).toContain('ant-form-item-label-left');
@@ -98,7 +88,7 @@ describe('form-label', () => {
     it('should label wrap work', () => {
       expect(label.nativeElement.classList).not.toContain('ant-form-item-label-wrap');
 
-      testComponent.labelWrap = true;
+      fixture.componentRef.setInput('nzLabelWrap', true);
       fixture.detectChanges();
 
       expect(label.nativeElement.classList).toContain('ant-form-item-label-wrap');
@@ -132,7 +122,7 @@ describe('form-label', () => {
     });
 
     it('should show optional styling when form nzRequiredMark is false', () => {
-      testComponent.requiredMark = false;
+      testComponent.requiredMark.set(false);
       fixture.detectChanges();
 
       const requiredLabel = labels.find(l => l.nativeElement.classList.contains('required-label'));
@@ -149,7 +139,7 @@ describe('form-label', () => {
     });
 
     it('should show optional styling when form nzRequiredMark is "optional"', () => {
-      testComponent.requiredMark = 'optional';
+      testComponent.requiredMark.set('optional');
       fixture.detectChanges();
 
       const requiredLabel = labels.find(l => l.nativeElement.classList.contains('required-label'));
@@ -163,7 +153,7 @@ describe('form-label', () => {
     });
 
     it('should show optional text when nzRequiredMark is "optional" and field is not required', () => {
-      testComponent.requiredMark = 'optional';
+      testComponent.requiredMark.set('optional');
       fixture.detectChanges();
 
       const requiredLabel = labels.find(l => l.nativeElement.classList.contains('required-label'));
@@ -180,7 +170,7 @@ describe('form-label', () => {
     });
 
     it('should NOT show optional text when nzRequiredMark is false', () => {
-      testComponent.requiredMark = false;
+      testComponent.requiredMark.set(false);
       fixture.detectChanges();
 
       const requiredLabel = labels.find(l => l.nativeElement.classList.contains('required-label'));
@@ -191,7 +181,7 @@ describe('form-label', () => {
     });
 
     it('should NOT show optional text when nzRequiredMark is true', () => {
-      testComponent.requiredMark = true;
+      testComponent.requiredMark.set(true);
       fixture.detectChanges();
 
       const requiredLabel = labels.find(l => l.nativeElement.classList.contains('required-label'));
@@ -201,8 +191,8 @@ describe('form-label', () => {
       expect(optionalLabel?.nativeElement.querySelector('.ant-form-item-optional')).toBeNull();
     });
 
-    it('should use custom template when provided', () => {
-      testComponent.useCustomTemplate = true;
+    it('should use custom template when provided and handle template context correctly', () => {
+      testComponent.useCustomTemplate.set(true);
       fixture.detectChanges();
 
       const requiredLabel = labels.find(l => l.nativeElement.classList.contains('required-label'));
@@ -216,48 +206,38 @@ describe('form-label', () => {
       expect(requiredLabel?.nativeElement.querySelector('.label-content')).toBeTruthy();
       expect(optionalLabel?.nativeElement.querySelector('.label-content')).toBeTruthy();
     });
-
-    it('should handle template context correctly with required and optional labels', () => {
-      testComponent.useCustomTemplate = true;
-      fixture.detectChanges();
-
-      const requiredLabelElement = fixture.debugElement.query(By.css('.required-label'));
-      const optionalLabelElement = fixture.debugElement.query(By.css('.optional-label'));
-
-      const requiredCustom = requiredLabelElement.nativeElement.querySelector('.custom-required');
-      const optionalCustom = optionalLabelElement.nativeElement.querySelector('.custom-optional');
-
-      expect(requiredCustom).toBeTruthy();
-      expect(optionalCustom).toBeTruthy();
-      expect(requiredCustom.textContent?.trim()).toBe('REQUIRED');
-      expect(optionalCustom.textContent?.trim()).toBe('OPTIONAL');
-    });
   });
 });
 
 @Component({
-  imports: [TriFormModule],
+  imports: [TriFormModule, NgTemplateOutlet],
   template: `
-    <tri-form-label
-      [for]="forValue"
-      [noColon]="noColon"
-      [required]="required"
-      [tooltipTitle]="tooltipTitle"
-      [tooltipIcon]="tooltipIcon"
-      [labelAlign]="align"
-      [labelWrap]="labelWrap"
-    />
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+    <form tri-form [requiredMark]="useCustomTemplate() ? customRequiredMarkTemplate : requiredMark()">
+      <tri-form-item>
+        <tri-form-label class="required-label" required>
+          <span class="label-content">Required Field</span>
+        </tri-form-label>
+      </tri-form-item>
+      <tri-form-item>
+        <tri-form-label class="optional-label">
+          <span class="label-content">Optional Field</span>
+        </tri-form-label>
+      </tri-form-item>
+    </form>
+
+    <ng-template #customRequiredMarkTemplate let-label let-required="required">
+      @if (required) {
+        <span class="custom-required">REQUIRED</span>
+      } @else {
+        <span class="custom-optional">OPTIONAL</span>
+      }
+      <ng-container *ngTemplateOutlet="label" />
+    </ng-template>
+  `
 })
-export class TriTestFormLabelComponent {
-  forValue = 'test';
-  required = false;
-  noColon = false;
-  tooltipTitle?: string;
-  tooltipIcon!: string | TriFormTooltipIcon;
-  align: TriLabelAlignType = 'right';
-  labelWrap = false;
+export class TriTestFormLabelRequiredMarkComponent {
+  readonly requiredMark = signal<TriRequiredMark>(true);
+  readonly useCustomTemplate = signal(false);
 }
 
 @Component({

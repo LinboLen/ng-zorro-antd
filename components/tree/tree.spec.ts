@@ -3,19 +3,14 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import {
-  ApplicationRef,
-  ChangeDetectionStrategy,
-  Component,
-  provideZoneChangeDetection,
-  TemplateRef,
-  ViewChild
-} from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { ApplicationRef, Component, signal, TemplateRef, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable, of } from 'rxjs';
 
-import { dispatchMouseEvent, dispatchTouchEvent } from 'ng-zorro-antd/core/testing';
+import { vi } from 'vitest';
+
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
+import { dispatchMouseEvent, dispatchTouchEvent, updateNonSignalsInput } from 'ng-zorro-antd/core/testing';
 import { TriFormatEmitEvent, TriTreeNode, TriTreeNodeOptions } from 'ng-zorro-antd/core/tree';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
@@ -27,7 +22,7 @@ describe('tree', () => {
   beforeEach(() => {
     // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideNzIconsTesting(), provideNoopAnimations(), provideZoneChangeDetection()]
+      providers: [provideNzIconsTesting(), provideNzNoAnimation()]
     });
   });
 
@@ -58,92 +53,85 @@ describe('tree', () => {
         expect(enableCheckbox.length).toEqual(3);
       });
 
-      it('should expand the specified node based on nzExpandedKeys', fakeAsync(() => {
-        component.defaultExpandedKeys = ['0-1'];
+      it('should expand the specified node based on nzExpandedKeys', async () => {
+        component.defaultExpandedKeys.set(['0-1']);
         fixture.detectChanges();
         const shownNodes = nativeElement.querySelectorAll('nz-tree-node[builtin]');
         expect(shownNodes.length).toEqual(4);
-        tick(300);
-        fixture.detectChanges();
+        await stabilize(fixture, 300);
         // leaf node should not be included
         expect(component.treeComponent.getExpandedNodeList().length).toEqual(1);
-      }));
+      });
 
-      it('should expand all nodes while setting nzExpandAll', fakeAsync(() => {
-        component.expandAll = true;
+      it('should expand all nodes while setting nzExpandAll', async () => {
+        component.expandAll.set(true);
         fixture.detectChanges();
         const shownNodes = nativeElement.querySelectorAll('nz-tree-node[builtin]');
         expect(shownNodes.length).toEqual(7);
-        tick(300);
-        fixture.detectChanges();
+        await stabilize(fixture, 300);
         // leaf node should not be included
         expect(component.treeComponent.getExpandedNodeList().length).toEqual(4);
-      }));
+      });
 
-      it('should render checkbox state of nodes based on nzCheckedKeys', fakeAsync(() => {
-        component.expandAll = true; // Just for testing the selected state
-        component.defaultCheckedKeys = ['0-0-0', '0-0-1'];
+      it('should render checkbox state of nodes based on nzCheckedKeys', async () => {
+        component.expandAll.set(true); // Just for testing the selected state
+        component.defaultCheckedKeys.set(['0-0-0', '0-0-1']);
         fixture.detectChanges();
         const checkedNodes = nativeElement.querySelectorAll('.ant-tree-checkbox-checked');
         const halfCheckedNodes = nativeElement.querySelectorAll('.ant-tree-checkbox-indeterminate');
         expect(checkedNodes.length).toEqual(2);
         expect(halfCheckedNodes.length).toEqual(1);
-        tick(300);
-        fixture.detectChanges();
+        await stabilize(fixture, 300);
         expect(component.treeComponent.getCheckedNodeList().length).toEqual(2);
         expect(component.treeComponent.getHalfCheckedNodeList().length).toEqual(1);
-      }));
+      });
 
-      it('node check should not affect other nodes based on nzCheckStrictly', fakeAsync(() => {
-        component.expandAll = true;
-        component.checkStrictly = true;
-        component.defaultCheckedKeys = ['0-0-0', '0-0-1'];
+      it('node check should not affect other nodes based on nzCheckStrictly', async () => {
+        component.expandAll.set(true);
+        component.checkStrictly.set(true);
+        component.defaultCheckedKeys.set(['0-0-0', '0-0-1']);
         fixture.detectChanges();
         const checkedNodes = nativeElement.querySelectorAll('.ant-tree-checkbox-checked');
         const halfCheckedNodes = nativeElement.querySelectorAll('.ant-tree-checkbox-indeterminate');
         expect(checkedNodes.length).toEqual(2);
         expect(halfCheckedNodes.length).toEqual(0);
-        tick(300);
-        fixture.detectChanges();
+        await stabilize(fixture, 300);
         expect(component.treeComponent.getCheckedNodeList().length).toEqual(2);
         expect(component.treeComponent.getHalfCheckedNodeList().length).toEqual(0);
-      }));
+      });
 
-      it('should select nodes based on nzSelectedKeys', fakeAsync(() => {
-        component.defaultSelectedKeys = ['0-0', '0-1'];
+      it('should select nodes based on nzSelectedKeys', async () => {
+        component.defaultSelectedKeys.set(['0-0', '0-1']);
         fixture.detectChanges();
         // nzMultiple is true
         const selectedNodes = nativeElement.querySelectorAll('.ant-tree-node-selected');
         expect(selectedNodes.length).toEqual(2);
-        tick(300);
-        fixture.detectChanges();
+        await stabilize(fixture, 300);
         expect(component.treeComponent.getSelectedNodeList().length).toEqual(2);
-      }));
+      });
 
-      it('should select only one nodes based on nzMultiple:false', fakeAsync(() => {
-        component.multiple = false;
-        component.defaultSelectedKeys = ['0-0', '0-1'];
+      it('should select only one nodes based on nzMultiple:false', async () => {
+        component.multiple.set(false);
+        component.defaultSelectedKeys.set(['0-0', '0-1']);
         fixture.detectChanges();
         // nzMultiple is false
         const selectedNodes = nativeElement.querySelectorAll('.ant-tree-node-selected');
         expect(selectedNodes.length).toEqual(1);
-        tick(300);
-        fixture.detectChanges();
+        await stabilize(fixture, 300);
         expect(component.treeComponent.getSelectedNodeList().length).toEqual(1);
-      }));
+      });
 
-      it('should match nodes based on nzSearchValue', fakeAsync(() => {
-        component.searchValue = '0-0-1';
+      it('should match nodes based on nzSearchValue', async () => {
+        component.searchValue.set('0-0-1');
         fixture.detectChanges();
         // will expand 0-0 only
         const expandedNodes = nativeElement.querySelectorAll('.ant-tree-switcher_open');
         const matchedNodes = nativeElement.querySelectorAll('.font-highlight');
         expect(expandedNodes.length).toEqual(1);
         expect(matchedNodes.length).toEqual(1);
-        tick(300);
-        fixture.detectChanges();
+        await stabilize(fixture, 300);
         expect(component.treeComponent.getMatchedNodeList().length).toEqual(1);
-      }));
+      });
 
       [
         {
@@ -183,77 +171,72 @@ describe('tree', () => {
           then: { matchedNodeList: 3, nzFlattenNodes: 4 }
         }
       ].forEach(({ title, when, then }) => {
-        it(
-          title,
-          fakeAsync(() => {
-            // Given
-            component.searchValue = when.searchValue ?? '';
-            component.virtualHeight = when.virtualHeight ?? null;
-            component.hideUnMatched = when.hideUnMatched;
-            // When
-            fixture.detectChanges();
-            tick(300);
-            fixture.detectChanges();
-            // Then
-            expect(component.treeComponent.getMatchedNodeList().length)
-              .withContext('treeComponent.getMatchedNodeList().length')
-              .toBe(then.matchedNodeList);
-            expect(component.treeComponent.flattenNodes.length)
-              .withContext('treeComponent.nzFlattenNodes.length')
-              .toBe(then.nzFlattenNodes);
-            expect(nativeElement.querySelectorAll('nz-tree-node').length)
-              .withContext('number of displayed nz-tree-node elements')
-              .toBe(then.nzFlattenNodes);
-          })
-        );
+        it(title, async () => {
+          // Given
+          component.searchValue.set(when.searchValue ?? '');
+          component.virtualHeight.set(when.virtualHeight ?? null);
+          component.hideUnMatched.set(when.hideUnMatched);
+          // When
+          fixture.detectChanges();
+          await stabilize(fixture, 300);
+          // Then
+          expect(component.treeComponent.getMatchedNodeList().length, 'treeComponent.getMatchedNodeList().length').toBe(
+            then.matchedNodeList
+          );
+          expect(component.treeComponent.flattenNodes.length, 'treeComponent.nzFlattenNodes.length').toBe(
+            then.nzFlattenNodes
+          );
+          expect(
+            nativeElement.querySelectorAll('nz-tree-node').length,
+            'number of displayed nz-tree-node elements'
+          ).toBe(then.nzFlattenNodes);
+        });
       });
 
-      it('should match nodes based on nzSearchFunc', fakeAsync(() => {
-        component.searchFunc = (data: TriTreeNodeOptions): boolean => data.title === component.searchValue;
-        component.searchValue = '0-0';
+      it('should match nodes based on nzSearchFunc', async () => {
+        component.searchFunc.set((data: TriTreeNodeOptions): boolean => data.title === component.searchValue());
+        component.searchValue.set('0-0');
         fixture.detectChanges();
         let expandedNodes = nativeElement.querySelectorAll('.ant-tree-switcher_open');
         let matchedNodes = nativeElement.querySelectorAll('.font-highlight');
         expect(expandedNodes.length).toEqual(0);
         expect(matchedNodes.length).toEqual(1);
-        tick(300);
-        fixture.detectChanges();
+        await stabilize(fixture, 300);
         expect(component.treeComponent.getMatchedNodeList().length).toEqual(1);
 
-        component.searchValue = '0-0-';
+        component.searchValue.set('0-0-');
         fixture.detectChanges();
         expandedNodes = nativeElement.querySelectorAll('.ant-tree-switcher_open');
         matchedNodes = nativeElement.querySelectorAll('.font-highlight');
         expect(expandedNodes.length).toEqual(0);
         expect(matchedNodes.length).toEqual(0);
-      }));
+      });
 
-      it('should keep parent expanded state of matched nodes based on nzHideUnMatched', fakeAsync(() => {
-        component.hideUnMatched = true;
+      it('should keep parent expanded state of matched nodes based on nzHideUnMatched', async () => {
+        component.hideUnMatched.set(true);
         fixture.detectChanges();
-        component.searchValue = '0-0-1';
+        component.searchValue.set('0-0-1');
         fixture.detectChanges();
         // will expand 0-0 but not matched
         const node = nativeElement.querySelector('.ant-tree-switcher')!;
         dispatchMouseEvent(node, 'click');
         fixture.detectChanges();
-        tick();
-        fixture.detectChanges();
+        await stabilize(fixture);
         // 0-1 0-2 hidden, others are not shown because not expanded
         const hiddenNodes = nativeElement.querySelectorAll('nz-tree-node[builtin][style*="display: none;"]');
         expect(hiddenNodes.length).toEqual(2);
-      }));
+      });
 
       describe('change detection behavior', () => {
         it('should not run change detection when the `nz-tree-node` is clicked', () => {
-          component.selectMode = true;
+          component.selectMode.set(true);
           fixture.detectChanges();
 
           const appRef = TestBed.inject(ApplicationRef);
           const event = new MouseEvent('mousedown');
 
-          spyOn(appRef, 'tick');
-          spyOn(event, 'preventDefault').and.callThrough();
+          vi.spyOn(appRef, 'tick');
+          vi.spyOn(event, 'preventDefault');
 
           const treeNode = nativeElement.querySelector('nz-tree-node')!;
           treeNode.dispatchEvent(event);
@@ -266,7 +249,7 @@ describe('tree', () => {
 
     describe('basic style of tree', () => {
       it('should render tree with line based on nzShowLine', () => {
-        component.showLine = true;
+        component.showLine.set(true);
         fixture.detectChanges();
         const lineTreeIcon = nativeElement.querySelectorAll('.anticon-plus-square');
         expect(lineTreeIcon.length).toEqual(2); // one is leaf node
@@ -283,15 +266,15 @@ describe('tree', () => {
       });
 
       it('should not trigger checkbox if node is disabled ', () => {
-        const spy = spyOn(component, 'nzEvent');
-        component.nodes = [
+        const spy = vi.spyOn(component, 'nzEvent');
+        component.nodes.set([
           {
             title: '0-0',
             key: '0-0',
             disableCheckbox: true,
             disabled: true
           }
-        ];
+        ]);
         fixture.detectChanges();
         const node = nativeElement.querySelector('.ant-tree-checkbox') as HTMLElement;
         dispatchMouseEvent(node, 'click');
@@ -299,26 +282,26 @@ describe('tree', () => {
       });
 
       it('should should custom icon', () => {
-        component.nodes = [
+        component.nodes.set([
           {
             title: '0-0',
             key: '0-0',
             icon: 'smile'
           }
-        ];
+        ]);
         fixture.detectChanges();
         const node = nativeElement.querySelector('.ant-tree-icon__customize .anticon-smile') as HTMLElement;
         expect(node).toBeDefined();
       });
 
       it('should should show loading icon', () => {
-        component.nodes = [
+        component.nodes.set([
           {
             title: '0-0',
             key: '0-0'
           }
-        ];
-        component.asyncData = true;
+        ]);
+        component.asyncData.set(true);
         fixture.detectChanges();
         const targetNode = nativeElement.querySelector('.ant-tree-switcher') as HTMLElement;
         dispatchMouseEvent(targetNode, 'click');
@@ -339,8 +322,8 @@ describe('tree', () => {
     });
 
     describe('mouse event trigger', () => {
-      it('should select node when clicking', fakeAsync(() => {
-        const spy = spyOn(component, 'nzEvent');
+      it('should select node when clicking', async () => {
+        const spy = vi.spyOn(component, 'nzEvent');
         expect(spy).not.toHaveBeenCalled();
 
         // get first node 0-0
@@ -349,48 +332,45 @@ describe('tree', () => {
         fixture.detectChanges();
         expect(spy).toHaveBeenCalledTimes(1);
         expect(nativeElement.querySelector('.ant-tree-node-content-wrapper.ant-tree-node-selected')).toBeDefined();
-        tick(300);
-        fixture.detectChanges();
+        await stabilize(fixture, 300);
         expect(component.treeComponent.getSelectedNodeList().length).toEqual(1);
-      }));
+      });
 
-      it('should expand node when clicking switcher', fakeAsync(() => {
-        const spy = spyOn(component, 'nzEvent');
+      it('should expand node when clicking switcher', async () => {
+        const spy = vi.spyOn(component, 'nzEvent');
         // get first node 0-0
         const node = nativeElement.querySelector('.ant-tree-switcher')!;
         dispatchMouseEvent(node, 'click');
         fixture.detectChanges();
         expect(spy).toHaveBeenCalledTimes(1);
         expect(nativeElement.querySelector('.ant-tree-switcher.ant-tree-switcher_open')).toBeDefined();
-        tick(300);
-        fixture.detectChanges();
+        await stabilize(fixture, 300);
         expect(component.treeComponent.getExpandedNodeList().length).toEqual(1);
-      }));
+      });
 
-      it('should check node when clicking checkbox', fakeAsync(() => {
-        const spy = spyOn(component, 'nzEvent');
+      it('should check node when clicking checkbox', async () => {
+        const spy = vi.spyOn(component, 'nzEvent');
         // get first node 0-0
         const node = nativeElement.querySelector('.ant-tree-checkbox')!;
         dispatchMouseEvent(node, 'click');
         fixture.detectChanges();
         expect(spy).toHaveBeenCalledTimes(1);
         expect(nativeElement.querySelector('.ant-tree-checkbox.ant-tree-checkbox-checked')).toBeDefined();
-        tick(300);
-        fixture.detectChanges();
+        await stabilize(fixture, 300);
         expect(component.treeComponent.getCheckedNodeList().length).toEqual(1);
-      }));
+      });
 
-      it('should trigger contextmenu event', fakeAsync(() => {
-        const spy = spyOn(component, 'nzEvent');
+      it('should trigger contextmenu event', async () => {
+        const spy = vi.spyOn(component, 'nzEvent');
         // get first node 0-0
         const node = nativeElement.querySelector('.ant-tree-node-content-wrapper')!;
         dispatchMouseEvent(node, 'contextmenu');
         fixture.detectChanges();
         expect(spy).toHaveBeenCalledTimes(1);
-      }));
+      });
 
-      it('should trigger dblclick event', fakeAsync(() => {
-        const spy = spyOn(component, 'nzEvent');
+      it('should trigger dblclick event', async () => {
+        const spy = vi.spyOn(component, 'nzEvent');
         // get first node 0-0
         const node = nativeElement.querySelector('.ant-tree-node-content-wrapper')!;
         dispatchMouseEvent(node, 'dblclick');
@@ -398,7 +378,7 @@ describe('tree', () => {
         // Maybe needs to change
         // In actual user behavior, click event may be triggered twice
         expect(spy).toHaveBeenCalledTimes(1);
-      }));
+      });
     });
   });
 
@@ -407,31 +387,31 @@ describe('tree', () => {
     let component: TriTestTreeDraggableComponent;
     let nativeElement: Element;
 
-    let dragStartSpy: jasmine.Spy;
-    let dragEnterSpy: jasmine.Spy;
-    let dragOverSpy: jasmine.Spy;
-    let dragLeaveSpy: jasmine.Spy;
-    let dropSpy: jasmine.Spy;
-    let dragEndSpy: jasmine.Spy;
+    let dragStartSpy: ReturnType<typeof vi.spyOn>;
+    let dragEnterSpy: ReturnType<typeof vi.spyOn>;
+    let dragOverSpy: ReturnType<typeof vi.spyOn>;
+    let dragLeaveSpy: ReturnType<typeof vi.spyOn>;
+    let dropSpy: ReturnType<typeof vi.spyOn>;
+    let dragEndSpy: ReturnType<typeof vi.spyOn>;
 
     beforeEach(() => {
       fixture = TestBed.createComponent(TriTestTreeDraggableComponent);
       component = fixture.componentInstance;
       nativeElement = fixture.debugElement.nativeElement;
 
-      dragStartSpy = spyOn(component, 'onDragStart').and.callThrough();
-      dragEnterSpy = spyOn(component, 'onDragEnter').and.callThrough();
-      dragOverSpy = spyOn(component, 'onDragOver').and.callThrough();
-      dragLeaveSpy = spyOn(component, 'onDragLeave').and.callThrough();
-      dropSpy = spyOn(component, 'onDrop').and.callThrough();
-      dragEndSpy = spyOn(component, 'onDragEnd').and.callThrough();
+      dragStartSpy = vi.spyOn(component, 'onDragStart');
+      dragEnterSpy = vi.spyOn(component, 'onDragEnter');
+      dragOverSpy = vi.spyOn(component, 'onDragOver');
+      dragLeaveSpy = vi.spyOn(component, 'onDragLeave');
+      dropSpy = vi.spyOn(component, 'onDrop');
+      dragEndSpy = vi.spyOn(component, 'onDragEnd');
       fixture.detectChanges();
     });
 
     describe('drag event trigger', () => {
-      it('should trigger dragstart event', fakeAsync(() => {
+      it('should trigger dragstart event', async () => {
         // dragstart needs to collapse expanded node
-        component.defaultExpandedKeys = ['0-1'];
+        component.defaultExpandedKeys.set(['0-1']);
         fixture.detectChanges();
         let expandedNodes = nativeElement.querySelectorAll('.ant-tree-switcher_open');
         expect(expandedNodes.length).toEqual(1);
@@ -440,10 +420,10 @@ describe('tree', () => {
         fixture.detectChanges();
         expandedNodes = nativeElement.querySelectorAll('.ant-tree-switcher_open');
         expect(expandedNodes.length).toEqual(0);
-      }));
+      });
 
       // fixture.detectChanges() will stop event
-      it('should trigger drag event', fakeAsync(() => {
+      it('should trigger drag event', async () => {
         const dragNode = nativeElement.querySelector("[title='0-2']") as HTMLElement;
         const dropNode = nativeElement.querySelector("[title='0-0']") as HTMLElement;
         const passedNode = nativeElement.querySelector("[title='0-1']") as HTMLElement;
@@ -481,9 +461,9 @@ describe('tree', () => {
         // dragenter expands 0-1/0-1
         shownNodes = nativeElement.querySelectorAll('nz-tree-node[builtin]');
         expect(shownNodes.length).toEqual(7);
-      }));
+      });
 
-      xit('should trigger drag over event', fakeAsync(() => {
+      it.skip('should trigger drag over event', async () => {
         //  ============ over with different position in next test ==============
         /**
          * nzTreeService#calcDropPosition
@@ -516,29 +496,29 @@ describe('tree', () => {
         dispatchMouseEvent(passedNode, 'dragover', x + 50, y - 6);
         elementNode = nativeElement.querySelector('nz-tree-node[builtin]:nth-child(2)') as HTMLElement;
         expect(elementNode.classList).toContain('drag-over-gap-top');
-        tick(150);
+        await sleep(150);
         // drag-over
         dispatchMouseEvent(passedNode, 'dragover', x + 50, y + 12);
         elementNode = nativeElement.querySelector('nz-tree-node[builtin]:nth-child(2)') as HTMLElement;
         expect(elementNode.classList).toContain('drag-over');
-        tick(150);
+        await sleep(150);
         // drag-over-gap-bottom
         dispatchMouseEvent(passedNode, 'dragover', x + 50, y + 18);
         elementNode = nativeElement.querySelector('nz-tree-node[builtin]:nth-child(2)') as HTMLElement;
         expect(elementNode.classList).toContain('drag-over-gap-bottom');
-        tick(150);
+        await sleep(150);
         // ======= enter check, expand passing nodes ========
         expect(dragEnterSpy).toHaveBeenCalledTimes(1);
         expect(dragOverSpy).toHaveBeenCalledTimes(3);
         fixture.detectChanges();
         shownNodes = nativeElement.querySelectorAll('nz-tree-node[builtin]');
         expect(shownNodes.length).toEqual(4);
-      }));
+      });
 
-      it('should drop as nzBeforeDrop', fakeAsync(() => {
+      it('should drop as nzBeforeDrop', async () => {
         const dragNode = nativeElement.querySelector("[title='0-2']") as HTMLElement;
         const dropNode = nativeElement.querySelector("[title='0-0']") as HTMLElement;
-        component.beforeDrop = (): Observable<boolean> => of(true);
+        component.beforeDrop.set(() => of(true));
         fixture.detectChanges();
         expect(
           (nativeElement.querySelector("[title='0-2']") as HTMLElement).querySelector('.ant-tree-indent')
@@ -548,17 +528,16 @@ describe('tree', () => {
         dispatchTouchEvent(dropNode, 'dragover');
         // drop 0-2 to 0-0
         dispatchTouchEvent(dropNode, 'drop');
-        tick(300);
-        fixture.detectChanges();
+        await stabilize(fixture, 300);
         expect(
           (nativeElement.querySelector("[title='0-2']") as HTMLElement).querySelector('.ant-tree-indent')
         ).toBeDefined();
-      }));
+      });
 
-      it('should nzBlockNode work', fakeAsync(() => {
+      it('should nzBlockNode work', async () => {
         const treeElement = nativeElement.querySelector('.ant-tree') as HTMLElement;
         expect(treeElement.classList).toContain('ant-tree-block-node');
-      }));
+      });
     });
   });
 
@@ -581,43 +560,43 @@ describe('tree', () => {
     });
 
     describe('search case-insensitive', () => {
-      it('should list matches independent on casing', fakeAsync(() => {
+      it('should list matches independent on casing', async () => {
         fixture.detectChanges();
         expect(getVisibleNodes().length).toEqual(3);
 
-        component.searchValue = 'foo';
+        component.searchValue.set('foo');
         fixture.detectChanges();
         expect(getVisibleNodes().length).toEqual(2);
         expect(getVisibleNodes('Foo').length).toEqual(1);
         expect(getVisibleNodes('foo').length).toEqual(1);
 
-        component.searchValue = 'Foo';
+        component.searchValue.set('Foo');
         fixture.detectChanges();
         expect(getVisibleNodes().length).toEqual(2);
         expect(getVisibleNodes('Foo').length).toEqual(1);
         expect(getVisibleNodes('foo').length).toEqual(1);
 
-        component.searchValue = 'baz';
+        component.searchValue.set('baz');
         fixture.detectChanges();
         expect(getVisibleNodes().length).toEqual(2);
         expect(getVisibleNodes('Foo').length).toEqual(1);
         expect(getVisibleNodes('Baz Bar').length).toEqual(1);
-      }));
+      });
     });
 
     describe('highlight case-insensitive', () => {
-      it('should highlight matched node', fakeAsync(() => {
+      it('should highlight matched node', async () => {
         fixture.detectChanges();
         expect(getVisibleNodes().length).toEqual(3);
 
-        component.searchValue = 'baz';
+        component.searchValue.set('baz');
         fixture.detectChanges();
         expect(getVisibleNodes().length).toEqual(2);
         expect(getVisibleNodes('Foo').length).toEqual(1);
         expect(getVisibleNodes('Baz Bar').length).toEqual(1);
         const highlightedNode = getVisibleNodes('Baz Bar')[0].querySelector('.font-highlight');
         expect(highlightedNode?.textContent).toEqual('Baz');
-      }));
+      });
     });
   });
 });
@@ -628,23 +607,23 @@ describe('tree', () => {
     <button (click)="changeIcon(expandedIconTpl)">Custom expand icon</button>
     <tri-tree
       #treeComponent
-      [data]="nodes"
+      [data]="nodes()"
       showIcon
       [checkable]="true"
-      [showLine]="showLine"
-      [checkStrictly]="checkStrictly"
-      [checkedKeys]="defaultCheckedKeys"
-      [expandedKeys]="defaultExpandedKeys"
-      [selectedKeys]="defaultSelectedKeys"
-      [multiple]="multiple"
-      [searchValue]="searchValue"
-      [searchFunc]="searchFunc"
-      [virtualHeight]="virtualHeight"
-      [hideUnMatched]="hideUnMatched"
-      [expandAll]="expandAll"
-      [expandedIcon]="expandedIcon"
-      [asyncData]="asyncData"
-      [selectMode]="selectMode"
+      [showLine]="showLine()"
+      [checkStrictly]="checkStrictly()"
+      [checkedKeys]="defaultCheckedKeys()"
+      [expandedKeys]="defaultExpandedKeys()"
+      [selectedKeys]="defaultSelectedKeys()"
+      [multiple]="multiple()"
+      [searchValue]="searchValue()"
+      [searchFunc]="searchFunc()"
+      [virtualHeight]="virtualHeight()"
+      [hideUnMatched]="hideUnMatched()"
+      [expandAll]="expandAll()"
+      [expandedIcon]="expandedIcon()"
+      [asyncData]="asyncData()"
+      [selectMode]="selectMode()"
       (searchValueChange)="event($event)"
       (click)="event($event)"
       (dblClick)="event($event)"
@@ -660,21 +639,23 @@ describe('tree', () => {
 })
 export class TriTestTreeBasicControlledComponent {
   @ViewChild('treeComponent', { static: true }) treeComponent!: TriTreeComponent;
-  searchValue: string = '';
-  multiple = true;
-  expandAll = false;
-  asyncData = false;
-  selectMode = false;
-  checkStrictly = false;
-  showLine = false;
-  defaultCheckedKeys: string[] = [];
-  defaultSelectedKeys: string[] = [];
-  defaultExpandedKeys: string[] = [];
-  expandedIcon?: TemplateRef<{ $implicit: TriTreeNode; origin: TriTreeNodeOptions }>;
-  searchFunc?: (node: TriTreeNodeOptions) => boolean;
-  virtualHeight: string | null = null;
-  hideUnMatched = false;
-  nodes: TriTreeNodeOptions[] | TriTreeNode[] = [
+  readonly searchValue = signal('');
+  readonly multiple = signal(true);
+  readonly expandAll = signal(false);
+  readonly asyncData = signal(false);
+  readonly selectMode = signal(false);
+  readonly checkStrictly = signal(false);
+  readonly showLine = signal(false);
+  readonly defaultCheckedKeys = signal<string[]>([]);
+  readonly defaultSelectedKeys = signal<string[]>([]);
+  readonly defaultExpandedKeys = signal<string[]>([]);
+  readonly expandedIcon = signal<TemplateRef<{ $implicit: TriTreeNode; origin: TriTreeNodeOptions }> | undefined>(
+    undefined
+  );
+  readonly searchFunc = signal<((node: TriTreeNodeOptions) => boolean) | undefined>(undefined);
+  readonly virtualHeight = signal<string | null>(null);
+  readonly hideUnMatched = signal(false);
+  readonly nodes = signal<TriTreeNodeOptions[] | TriTreeNode[]>([
     {
       title: '0-0',
       key: '0-0',
@@ -705,13 +686,13 @@ export class TriTestTreeBasicControlledComponent {
       disabled: true,
       isLeaf: true
     }
-  ];
+  ]);
 
   event(_data: TriFormatEmitEvent): void {}
 
   // Just for testing
   changeIcon(template: TemplateRef<{ $implicit: TriTreeNode; origin: TriTreeNodeOptions }>): void {
-    this.expandedIcon = template;
+    this.expandedIcon.set(template);
   }
 }
 
@@ -720,10 +701,10 @@ export class TriTestTreeBasicControlledComponent {
   template: `
     <tri-tree
       blockNode
-      [data]="nodes"
+      [data]="nodes()"
       draggable
-      [expandedKeys]="defaultExpandedKeys"
-      [beforeDrop]="beforeDrop"
+      [expandedKeys]="defaultExpandedKeys()"
+      [beforeDrop]="beforeDrop()"
       (onDragStart)="onDragStart()"
       (onDragEnter)="onDragEnter()"
       (onDragLeave)="onDragLeave()"
@@ -731,13 +712,12 @@ export class TriTestTreeBasicControlledComponent {
       (onDrop)="onDrop()"
       (onDragEnd)="onDragEnd()"
     />
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestTreeDraggableComponent {
   @ViewChild(TriTreeComponent, { static: true }) treeComponent!: TriTreeComponent;
-  defaultExpandedKeys: string[] = [];
-  nodes: TriTreeNodeOptions[] | TriTreeNode[] = [
+  readonly defaultExpandedKeys = signal<string[]>([]);
+  readonly nodes = signal<TriTreeNodeOptions[] | TriTreeNode[]>([
     {
       title: '0-0',
       key: '0-0',
@@ -768,8 +748,8 @@ export class TriTestTreeDraggableComponent {
       disabled: true,
       isLeaf: true
     }
-  ];
-  beforeDrop?: () => Observable<boolean>;
+  ]);
+  readonly beforeDrop = signal<(() => Observable<boolean>) | undefined>(undefined);
 
   onDragStart(): void {}
 
@@ -788,22 +768,21 @@ export class TriTestTreeDraggableComponent {
   imports: [TriTreeModule],
   template: `
     <tri-tree
-      [data]="nodes"
-      [searchValue]="searchValue"
-      [expandAll]="expandAll"
-      [asyncData]="asyncData"
-      [hideUnMatched]="hideUnMatched"
+      [data]="nodes()"
+      [searchValue]="searchValue()"
+      [expandAll]="expandAll()"
+      [asyncData]="asyncData()"
+      [hideUnMatched]="hideUnMatched()"
     />
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestTreeBasicSearchComponent {
   @ViewChild(TriTreeComponent, { static: true }) treeComponent!: TriTreeComponent;
-  searchValue!: string;
-  expandAll = true;
-  asyncData = false;
-  hideUnMatched = true;
-  nodes: TriTreeNodeOptions[] | TriTreeNode[] = [
+  readonly searchValue = signal<string>('');
+  readonly expandAll = signal(true);
+  readonly asyncData = signal(false);
+  readonly hideUnMatched = signal(true);
+  readonly nodes = signal<TriTreeNodeOptions[] | TriTreeNode[]>([
     {
       title: 'Foo',
       key: '0-1',
@@ -814,5 +793,15 @@ export class TriTestTreeBasicSearchComponent {
       key: '0-2',
       isLeaf: true
     }
-  ];
+  ]);
+}
+
+async function stabilize<T>(fixture: ComponentFixture<T>, ms?: number): Promise<void> {
+  fixture.detectChanges();
+  await updateNonSignalsInput(fixture, ms);
+  fixture.detectChanges();
+}
+
+async function sleep(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }

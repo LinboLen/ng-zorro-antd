@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
+import { Component, DebugElement, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -27,9 +27,8 @@ describe('skeleton', () => {
   let dl: DebugElement;
 
   beforeEach(() => {
-    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideNzIconsTesting(), provideZoneChangeDetection()]
+      providers: [provideNzIconsTesting()]
     });
   });
 
@@ -43,7 +42,7 @@ describe('skeleton', () => {
   describe('#nzActive', () => {
     it('should active work', () => {
       expect(dl.nativeElement.querySelector('.ant-skeleton-active')).toBeFalsy();
-      testComp.active = true;
+      testComp.active.set(true);
       fixture.detectChanges();
       expect(dl.nativeElement.querySelector('.ant-skeleton-active')).toBeTruthy();
     });
@@ -52,26 +51,26 @@ describe('skeleton', () => {
   describe('#nzTitle', () => {
     it('should basic width prop work', () => {
       expect(dl.nativeElement.querySelector('.ant-skeleton-title')).toBeFalsy();
-      testComp.title = true;
-      testComp.avatar = false;
-      testComp.paragraph = true;
+      testComp.title.set(true);
+      testComp.avatar.set(false);
+      testComp.paragraph.set(true);
       fixture.detectChanges();
       expect(dl.nativeElement.querySelector('.ant-skeleton-title').style.width).toBe('38%');
-      testComp.avatar = true;
+      testComp.avatar.set(true);
       fixture.detectChanges();
       expect(dl.nativeElement.querySelector('.ant-skeleton-title').style.width).toBe('50%');
-      testComp.paragraph = false;
+      testComp.paragraph.set(false);
       fixture.detectChanges();
       expect(dl.nativeElement.querySelector('.ant-skeleton-title').style.width).toBe('');
     });
     it('should customize width props work', () => {
-      testComp.title = true;
+      testComp.title.set(true);
       fixture.detectChanges();
       expect(dl.nativeElement.querySelector('.ant-skeleton-title').style.width).toBe('');
-      testComp.title = { width: '50%' };
+      testComp.title.set({ width: '50%' });
       fixture.detectChanges();
       expect(dl.nativeElement.querySelector('.ant-skeleton-title').style.width).toBe('50%');
-      testComp.title = { width: 200 };
+      testComp.title.set({ width: 200 });
       fixture.detectChanges();
       expect(dl.nativeElement.querySelector('.ant-skeleton-title').style.width).toBe('200px');
     });
@@ -79,19 +78,19 @@ describe('skeleton', () => {
 
   describe('#nzAvatar', () => {
     it('should basic avatar props work', () => {
-      testComp.title = true;
-      testComp.avatar = true;
-      testComp.paragraph = false;
+      testComp.title.set(true);
+      testComp.avatar.set(true);
+      testComp.paragraph.set(false);
       fixture.detectChanges();
       expect(dl.nativeElement.querySelector('.ant-skeleton-avatar-square')).toBeTruthy();
       expect(dl.nativeElement.querySelector('.ant-skeleton-with-avatar')).toBeTruthy();
-      testComp.paragraph = true;
+      testComp.paragraph.set(true);
       fixture.detectChanges();
       expect(dl.nativeElement.querySelector('.ant-skeleton-avatar-circle')).toBeTruthy();
     });
     for (const type of ['square', 'circle']) {
       it(`should customize shape ${type} work`, () => {
-        testComp.avatar = { shape: type } as TriSkeletonAvatar;
+        testComp.avatar.set({ shape: type } as TriSkeletonAvatar);
         fixture.detectChanges();
         expect(dl.query(By.css(`.ant-skeleton-avatar-${type}`)) !== null).toBe(true);
       });
@@ -101,7 +100,7 @@ describe('skeleton', () => {
       { size: 'small', cls: 'sm' }
     ]) {
       it(`should customize size ${type.size} work`, () => {
-        testComp.avatar = { size: type.size } as TriSkeletonAvatar;
+        testComp.avatar.set({ size: type.size } as TriSkeletonAvatar);
         fixture.detectChanges();
         expect(dl.query(By.css(`.ant-skeleton-avatar-${type.cls}`)) !== null).toBe(true);
       });
@@ -110,15 +109,15 @@ describe('skeleton', () => {
 
   describe('#nzParagraph', () => {
     it('should basic rows and width work', () => {
-      testComp.title = true;
-      testComp.avatar = true;
-      testComp.paragraph = true;
+      testComp.title.set(true);
+      testComp.avatar.set(true);
+      testComp.paragraph.set(true);
       fixture.detectChanges();
       let paragraphs = dl.nativeElement.querySelectorAll('.ant-skeleton-paragraph > li');
       expect(paragraphs.length).toBe(2);
       expect(paragraphs[0].style.width).toBe('');
       expect(paragraphs[1].style.width).toBe('');
-      testComp.avatar = false;
+      testComp.avatar.set(false);
       fixture.detectChanges();
       paragraphs = dl.nativeElement.querySelectorAll('.ant-skeleton-paragraph > li');
       expect(paragraphs.length).toBe(3);
@@ -126,26 +125,26 @@ describe('skeleton', () => {
       expect(paragraphs[2].style.width).toBe('61%');
     });
     it('should width type is string or number work', () => {
-      testComp.paragraph = { width: 100 };
+      testComp.paragraph.set({ width: 100 });
       fixture.detectChanges();
       let paragraphs = dl.nativeElement.querySelectorAll('.ant-skeleton-paragraph > li');
       expect(paragraphs[0].style.width).toBe('');
       expect(paragraphs[1].style.width).toBe('100px');
       expect(paragraphs[2]).toBeFalsy();
-      testComp.paragraph = { width: 100, rows: 3 };
+      testComp.paragraph.set({ width: 100, rows: 3 });
       fixture.detectChanges();
       paragraphs = dl.nativeElement.querySelectorAll('.ant-skeleton-paragraph > li');
       expect(paragraphs[1].style.width).toBe('');
       expect(paragraphs[2].style.width).toBe('100px');
     });
     it('should define width type is Array work', () => {
-      testComp.paragraph = { width: [200, '100px', '90%'] };
+      testComp.paragraph.set({ width: [200, '100px', '90%'] });
       fixture.detectChanges();
       let paragraphs = dl.nativeElement.querySelectorAll('.ant-skeleton-paragraph > li');
       expect(paragraphs[0].style.width).toBe('200px');
       expect(paragraphs[1].style.width).toBe('100px');
       expect(paragraphs[2]).toBeFalsy();
-      testComp.paragraph = { width: [200, '100px', '90%'], rows: 4 };
+      testComp.paragraph.set({ width: [200, '100px', '90%'], rows: 4 });
       fixture.detectChanges();
       paragraphs = dl.nativeElement.querySelectorAll('.ant-skeleton-paragraph > li');
       expect(paragraphs[2].style.width).toBe('90%');
@@ -156,7 +155,7 @@ describe('skeleton', () => {
   describe('#nzRound', () => {
     it('should round work', () => {
       expect(dl.nativeElement.querySelector('.ant-skeleton-round')).toBeFalsy();
-      testComp.round = true;
+      testComp.round.set(true);
       fixture.detectChanges();
       expect(dl.nativeElement.querySelector('.ant-skeleton-round')).toBeTruthy();
     });
@@ -169,9 +168,8 @@ describe('skeleton element', () => {
   let dl: DebugElement;
 
   beforeEach(() => {
-    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideNzIconsTesting(), provideZoneChangeDetection()]
+      providers: [provideNzIconsTesting()]
     });
   });
 
@@ -184,26 +182,26 @@ describe('skeleton element', () => {
 
   it('should nzActive work', () => {
     expect(dl.nativeElement.querySelector('.ant-skeleton-active')).toBeFalsy();
-    testComp.active = true;
+    testComp.active.set(true);
     fixture.detectChanges();
     expect(dl.nativeElement.querySelector('.ant-skeleton-active')).toBeTruthy();
-    testComp.useSuite = 4;
+    testComp.useSuite.set(4);
     fixture.detectChanges();
     expect(dl.nativeElement.querySelector('.ant-skeleton-active')).toBeTruthy();
   });
 
   it('should nzSize work', () => {
     expect(dl.nativeElement.querySelector('.ant-skeleton-avatar-lg')).toBeFalsy();
-    testComp.size = 'large';
+    testComp.size.set('large');
     fixture.detectChanges();
     expect(dl.nativeElement.querySelector('.ant-skeleton-avatar-lg')).toBeTruthy();
-    testComp.size = 40;
+    testComp.size.set(40);
     fixture.detectChanges();
     expect(dl.nativeElement.querySelector('.ant-skeleton-avatar').style.width).toBe('40px');
     expect(dl.nativeElement.querySelector('.ant-skeleton-avatar').style.height).toBe('40px');
     expect(dl.nativeElement.querySelector('.ant-skeleton-avatar').style.lineHeight).toBe('40px');
     // number size only work in 'avatar' type
-    testComp.useSuite = 2;
+    testComp.useSuite.set(2);
     fixture.detectChanges();
     expect(dl.nativeElement.querySelector('.ant-skeleton-button').style.width).toBeFalsy();
   });
@@ -211,15 +209,15 @@ describe('skeleton element', () => {
   it('should nzShape work', () => {
     fixture.detectChanges();
     expect(dl.nativeElement.querySelector('.ant-skeleton-avatar-circle')).toBeNull();
-    testComp.shape = 'circle';
+    testComp.shape.set('circle');
     fixture.detectChanges();
     expect(dl.nativeElement.querySelector('.ant-skeleton-avatar-circle')).toBeTruthy();
-    testComp.shape = 'square';
+    testComp.shape.set('square');
     fixture.detectChanges();
     expect(dl.nativeElement.querySelector('.ant-skeleton-avatar-square')).toBeTruthy();
 
-    testComp.useSuite = 2;
-    testComp.shape = 'round';
+    testComp.useSuite.set(2);
+    testComp.shape.set('round');
     fixture.detectChanges();
     expect(dl.nativeElement.querySelector('.ant-skeleton-button-round')).toBeTruthy();
   });
@@ -227,7 +225,7 @@ describe('skeleton element', () => {
   it('should image svg work', () => {
     fixture.detectChanges();
     expect(dl.nativeElement.querySelector('svg')).toBeNull();
-    testComp.useSuite = 4;
+    testComp.useSuite.set(4);
     fixture.detectChanges();
     expect(dl.nativeElement.querySelector('svg')).toBeTruthy();
   });
@@ -237,46 +235,45 @@ describe('skeleton element', () => {
   imports: [TriSkeletonModule],
   template: `
     <tri-skeleton
-      [active]="active"
-      [avatar]="avatar"
-      [title]="title"
-      [paragraph]="paragraph"
-      [round]="round"
+      [active]="active()"
+      [avatar]="avatar()"
+      [title]="title()"
+      [paragraph]="paragraph()"
+      [round]="round()"
     />
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestSkeletonComponent {
-  active: boolean = false;
-  round: boolean = false;
-  avatar: TriSkeletonAvatar | boolean = false;
-  title: TriSkeletonTitle | boolean = false;
-  paragraph: TriSkeletonParagraph | boolean = false;
+  readonly active = signal(false);
+  readonly round = signal(false);
+  readonly avatar = signal<TriSkeletonAvatar | boolean>(false);
+  readonly title = signal<TriSkeletonTitle | boolean>(false);
+  readonly paragraph = signal<TriSkeletonParagraph | boolean>(false);
 }
 
 @Component({
   imports: [TriSkeletonModule],
   template: `
-    @switch (useSuite) {
+    @switch (useSuite()) {
       @case (1) {
-        <tri-skeleton-element type="avatar" [active]="active" [size]="size" [shape]="$any(shape)" />
+        <tri-skeleton-element type="avatar" [active]="active()" [size]="size()" [shape]="$any(shape())" />
       }
       @case (2) {
-        <tri-skeleton-element type="button" [active]="active" [size]="$any(size)" [shape]="shape" />
+        <tri-skeleton-element type="button" [active]="active()" [size]="$any(size())" [shape]="shape()" />
       }
       @case (3) {
-        <tri-skeleton-element type="input" [active]="active" [size]="$any(size)" />
+        <tri-skeleton-element type="input" [active]="active()" [size]="$any(size())" />
       }
       @case (4) {
-        <tri-skeleton-element type="image" [active]="active" />
+        <tri-skeleton-element type="image" [active]="active()" />
       }
     }
   `,
   changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestSkeletonElementComponent {
-  useSuite = 1;
-  active: boolean = false;
-  size: TriSkeletonAvatarSize | TriSkeletonButtonSize | TriSkeletonInputSize = 'default';
-  shape: TriSkeletonAvatarShape | TriSkeletonButtonShape = 'default';
+  readonly useSuite = signal(1);
+  readonly active = signal(false);
+  readonly size = signal<TriSkeletonAvatarSize | TriSkeletonButtonSize | TriSkeletonInputSize | number>('default');
+  readonly shape = signal<TriSkeletonAvatarShape | TriSkeletonButtonShape>('default');
 }

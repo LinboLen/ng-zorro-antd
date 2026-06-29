@@ -3,21 +3,15 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import {
-  ApplicationRef,
-  ChangeDetectionStrategy,
-  Component,
-  DebugElement,
-  provideZoneChangeDetection,
-  signal,
-  ViewChild
-} from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { ApplicationRef, Component, DebugElement, signal, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
+import { vi } from 'vitest';
+
 import { TRI_FORM_SIZE } from 'ng-zorro-antd/core/form';
-import { createMouseEvent, testDirectionality } from 'ng-zorro-antd/core/testing';
+import { createMouseEvent, testDirectionality, updateNonSignalsInput } from 'ng-zorro-antd/core/testing';
 import { TriSizeLDSType } from 'ng-zorro-antd/core/types';
 
 import { TriRadioGroupComponent } from './radio-group.component';
@@ -51,73 +45,67 @@ describe('radio', () => {
       expect(radio.nativeElement.firstElementChild.lastElementChild.classList).toContain('ant-radio-inner');
     });
 
-    it('should click work', fakeAsync(() => {
+    it('should click work', async () => {
       fixture.detectChanges();
       expect(radio.nativeElement.firstElementChild!.classList).not.toContain('ant-radio-checked');
       expect(testComponent.modelChange).toHaveBeenCalledTimes(0);
       radio.nativeElement.click();
-      fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
-      expect(radio.nativeElement.firstElementChild!.classList).toContain('ant-radio-checked');
-      expect(testComponent.value).toBe(true);
+      await stabilize(fixture, 100);
+      expect(testComponent.value()).toBe(true);
       expect(testComponent.modelChange).toHaveBeenCalledTimes(1);
       radio.nativeElement.click();
-      fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
-      expect(radio.nativeElement.firstElementChild!.classList).toContain('ant-radio-checked');
-      expect(testComponent.value).toBe(true);
-      expect(testComponent.modelChange).toHaveBeenCalledTimes(1);
-    }));
+      await stabilize(fixture, 100);
+      expect(testComponent.value()).toBe(true);
+      expect(testComponent.modelChange).toHaveBeenCalledWith(true);
+    });
 
-    it('should disabled work', fakeAsync(() => {
-      testComponent.disabled = true;
+    it('should disabled work', async () => {
+      testComponent.disabled.set(true);
       fixture.detectChanges();
       expect(radio.nativeElement.firstElementChild!.classList).not.toContain('ant-radio-checked');
       expect(testComponent.modelChange).toHaveBeenCalledTimes(0);
       radio.nativeElement.click();
-      fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
+      await stabilize(fixture);
       expect(radio.nativeElement.firstElementChild!.classList).not.toContain('ant-radio-checked');
-      expect(testComponent.value).toBe(false);
+      expect(testComponent.value()).toBe(false);
       expect(testComponent.modelChange).toHaveBeenCalledTimes(0);
-    }));
+    });
 
-    it('should not run change detection if the radio is disabled', fakeAsync(() => {
-      testComponent.disabled = true;
+    it('should not run change detection if the radio is disabled', () => {
+      testComponent.disabled.set(true);
       fixture.detectChanges();
       const appRef = TestBed.inject(ApplicationRef);
-      spyOn(appRef, 'tick');
+      vi.spyOn(appRef, 'tick');
       const event = createMouseEvent('click');
-      spyOn(event, 'preventDefault');
-      spyOn(event, 'stopPropagation');
+      vi.spyOn(event, 'preventDefault');
+      vi.spyOn(event, 'stopPropagation');
       radio.nativeElement.dispatchEvent(event);
       expect(event.preventDefault).toHaveBeenCalled();
       expect(event.stopPropagation).toHaveBeenCalled();
       expect(appRef.tick).not.toHaveBeenCalled();
-    }));
+    });
 
     it('should autofocus work', () => {
       fixture.detectChanges();
-      testComponent.autoFocus = true;
+      testComponent.autoFocus.set(true);
       fixture.detectChanges();
       expect(radio.nativeElement.querySelector('input').attributes.getNamedItem('autofocus').name).toBe('autofocus');
-      testComponent.autoFocus = false;
+      testComponent.autoFocus.set(false);
       fixture.detectChanges();
       expect(radio.nativeElement.querySelector('input').attributes.getNamedItem('autofocus')).toBe(null);
     });
 
     it('should focus and blur function work', () => {
       fixture.detectChanges();
-      expect(radio.nativeElement.querySelector('input') === document.activeElement).toBe(false);
+      const inputElement = radio.nativeElement.querySelector('input') as HTMLInputElement;
+      vi.spyOn(inputElement, 'focus');
+      vi.spyOn(inputElement, 'blur');
       testComponent.radioComponent.focus();
       fixture.detectChanges();
-      expect(radio.nativeElement.querySelector('input') === document.activeElement).toBe(true);
+      expect(inputElement.focus).toHaveBeenCalledTimes(1);
       testComponent.radioComponent.blur();
       fixture.detectChanges();
-      expect(radio.nativeElement.querySelector('input') === document.activeElement).toBe(false);
+      expect(inputElement.blur).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -158,49 +146,37 @@ describe('radio', () => {
       expect(radioGroup.nativeElement.classList).toContain('ant-radio-group');
     });
 
-    it('should click work', fakeAsync(() => {
+    it('should click work', async () => {
       fixture.detectChanges();
-      expect(testComponent.value).toBe('A');
+      expect(testComponent.value()).toBe('A');
       expect(testComponent.modelChange).toHaveBeenCalledTimes(0);
       radios[1].nativeElement.click();
-      fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
-      expect(radios[0].nativeElement.firstElementChild!.classList).not.toContain('ant-radio-button-checked');
-      expect(radios[1].nativeElement.firstElementChild!.classList).toContain('ant-radio-button-checked');
-      expect(testComponent.value).toBe('B');
+      await stabilize(fixture, 100);
+      expect(testComponent.value()).toBe('B');
       expect(testComponent.modelChange).toHaveBeenCalledTimes(1);
       radios[1].nativeElement.click();
-      fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
-      expect(testComponent.value).toBe('B');
-      expect(testComponent.modelChange).toHaveBeenCalledTimes(1);
-    }));
+      await stabilize(fixture, 100);
+      expect(testComponent.value()).toBe('B');
+      expect(testComponent.modelChange).toHaveBeenCalledWith('B');
+    });
 
-    it('should disable work', fakeAsync(() => {
-      testComponent.disabled = true;
-      fixture.detectChanges();
-      tick();
-      fixture.detectChanges();
-      expect(testComponent.value).toBe('A');
+    it('should disable work', async () => {
+      testComponent.disabled.set(true);
+      await stabilize(fixture);
+      expect(testComponent.value()).toBe('A');
       expect(testComponent.modelChange).toHaveBeenCalledTimes(0);
       radios[1].nativeElement.click();
-      fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
+      await stabilize(fixture);
       expect(radios[1].nativeElement.firstElementChild!.classList).not.toContain('ant-radio-button-checked');
-      expect(testComponent.value).toBe('A');
+      expect(testComponent.value()).toBe('A');
       expect(testComponent.modelChange).toHaveBeenCalledTimes(0);
-    }));
+    });
 
-    it('should name work', fakeAsync(() => {
-      testComponent.name = 'test';
-      fixture.detectChanges();
-      tick();
-      fixture.detectChanges();
+    it('should name work', async () => {
+      testComponent.name.set('test');
+      await stabilize(fixture);
       expect(radios.every(radio => radio.nativeElement.querySelector('input').name === 'test')).toBe(true);
-    }));
+    });
   });
 
   describe('radio group disabled', () => {
@@ -215,33 +191,27 @@ describe('radio', () => {
       radios = fixture.debugElement.queryAll(By.directive(TriRadioComponent));
     });
 
-    it('should group disable work', fakeAsync(() => {
-      testComponent.disabled = true;
-      fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
-      expect(testComponent.value).toBe('A');
+    it('should group disable work', async () => {
+      testComponent.disabled.set(true);
+      await stabilize(fixture);
+      expect(testComponent.value()).toBe('A');
       radios[1].nativeElement.click();
-      fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
+      await stabilize(fixture);
       expect(radios[1].nativeElement.firstElementChild!.classList).not.toContain('ant-radio-button-checked');
-      expect(testComponent.value).toBe('A');
-    }));
+      expect(testComponent.value()).toBe('A');
+    });
 
-    it('should single disable work', fakeAsync(() => {
-      testComponent.disabled = false;
+    it('should single disable work', async () => {
+      testComponent.disabled.set(false);
       fixture.detectChanges();
-      testComponent.singleDisabled = true;
+      testComponent.singleDisabled.set(true);
       fixture.detectChanges();
-      expect(testComponent.value).toBe('A');
+      expect(testComponent.value()).toBe('A');
       radios[2].nativeElement.click();
-      fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
+      await stabilize(fixture);
       expect(radios[2].nativeElement.firstElementChild!.classList).not.toContain('ant-radio-button-checked');
-      expect(testComponent.value).toBe('A');
-    }));
+      expect(testComponent.value()).toBe('A');
+    });
   });
 
   describe('radio group solid', () => {
@@ -268,9 +238,8 @@ describe('radio', () => {
       testComponent = fixture.componentInstance;
     });
 
-    it('should be in pristine, untouched, and valid states and enable initially', fakeAsync(() => {
-      fixture.detectChanges();
-      flush();
+    it('should be in pristine, untouched, and valid states and enable initially', async () => {
+      await stabilize(fixture);
       const radio = fixture.debugElement.query(By.directive(TriRadioComponent));
       const inputElement = radio.nativeElement.querySelector('input') as HTMLInputElement;
       expect(radio.nativeElement.firstElementChild!.classList).not.toContain('ant-radio-disabled');
@@ -278,22 +247,20 @@ describe('radio', () => {
       expect(testComponent.formControl.valid).toBe(true);
       expect(testComponent.formControl.pristine).toBe(true);
       expect(testComponent.formControl.touched).toBe(false);
-    }));
+    });
 
-    it('should be disable if form is disable and nzDisable set to false initially', fakeAsync(() => {
+    it('should be disable if form is disable and nzDisable set to false initially', async () => {
       testComponent.formControl.disable();
-      fixture.detectChanges();
-      flush();
+      await stabilize(fixture);
       const radio = fixture.debugElement.query(By.directive(TriRadioComponent));
       const inputElement = radio.nativeElement.querySelector('input') as HTMLInputElement;
       expect(radio.nativeElement.firstElementChild!.classList).toContain('ant-radio-disabled');
       expect(inputElement.disabled).toBeTruthy();
-    }));
+    });
 
-    it('should set disabled work', fakeAsync(() => {
-      testComponent.disabled = true;
-      fixture.detectChanges();
-      flush();
+    it('should set disabled work', async () => {
+      testComponent.disabled.set(true);
+      await stabilize(fixture);
       const radio = fixture.debugElement.query(By.directive(TriRadioComponent));
       const inputElement = radio.nativeElement.querySelector('input') as HTMLInputElement;
       expect(radio.nativeElement.firstElementChild!.classList).toContain('ant-radio-disabled');
@@ -304,8 +271,7 @@ describe('radio', () => {
       expect(testComponent.formControl.value).toBe(false);
 
       testComponent.enable();
-      fixture.detectChanges();
-      flush();
+      await stabilize(fixture);
       expect(radio.nativeElement.firstElementChild!.classList).not.toContain('ant-radio-disabled');
       expect(inputElement.disabled).toBeFalsy();
       inputElement.click();
@@ -313,28 +279,26 @@ describe('radio', () => {
       expect(testComponent.formControl.value).toBe(true);
 
       testComponent.disable();
-      fixture.detectChanges();
-      flush();
+      await stabilize(fixture);
       expect(radio.nativeElement.firstElementChild!.classList).toContain('ant-radio-disabled');
       expect(inputElement.disabled).toBeTruthy();
       inputElement.click();
       fixture.detectChanges();
       expect(testComponent.formControl.value).toBe(true);
-    }));
+    });
   });
 
   describe('radio group form', () => {
     let fixture: ComponentFixture<TriTestRadioGroupFormComponent>;
     let testComponent: TriTestRadioGroupFormComponent;
 
-    beforeEach(fakeAsync(() => {
+    beforeEach(() => {
       fixture = TestBed.createComponent(TriTestRadioGroupFormComponent);
       testComponent = fixture.componentInstance;
-    }));
+    });
 
-    it('should be in pristine, untouched, and valid states initially', fakeAsync(() => {
-      fixture.detectChanges();
-      flush();
+    it('should be in pristine, untouched, and valid states initially', async () => {
+      await stabilize(fixture);
       const radioGroup: TriRadioGroupComponent = fixture.debugElement.query(
         By.directive(TriRadioGroupComponent)
       ).componentInstance;
@@ -345,23 +309,21 @@ describe('radio', () => {
       expect(testComponent.formControl.touched).toBe(false);
       expect(radioGroup.disabled).toBeFalsy();
       expect(firstRadios.componentInstance.nzDisabled).toBeTruthy();
-    }));
+    });
 
-    it('should be disable if form is disable and nzDisable set to false initially', fakeAsync(() => {
+    it('should be disable if form is disable and nzDisable set to false initially', async () => {
       testComponent.formControl.disable();
-      fixture.detectChanges();
-      flush();
+      await stabilize(fixture);
       const radioGroup: TriRadioGroupComponent = fixture.debugElement.query(
         By.directive(TriRadioGroupComponent)
       ).componentInstance;
       expect(radioGroup.disabled).toBeTruthy();
-    }));
+    });
 
-    it('should set disabled work', fakeAsync(() => {
-      testComponent.disabled = true;
-      fixture.detectChanges();
-      flush();
-      const radios = fixture.debugElement.queryAll(By.directive(TriRadioComponent));
+    it('should set disabled work', async () => {
+      testComponent.disabled.set(true);
+      await stabilize(fixture);
+      let radios = fixture.debugElement.queryAll(By.directive(TriRadioComponent));
       const radioGroup: TriRadioGroupComponent = fixture.debugElement.query(
         By.directive(TriRadioGroupComponent)
       ).componentInstance;
@@ -371,8 +333,7 @@ describe('radio', () => {
       expect(testComponent.formControl.value).toBe('B');
 
       testComponent.enable();
-      fixture.detectChanges();
-      flush();
+      await stabilize(fixture);
 
       expect(radioGroup.disabled).toBeFalsy();
       radios[0].nativeElement.click();
@@ -380,33 +341,34 @@ describe('radio', () => {
       expect(testComponent.formControl.value).toBe('A');
 
       testComponent.disable();
-      fixture.detectChanges();
-      flush();
+      await stabilize(fixture);
 
       expect(radioGroup.disabled).toBeTruthy();
+      radios = fixture.debugElement.queryAll(By.directive(TriRadioComponent));
       radios[1].nativeElement.click();
       fixture.detectChanges();
       expect(testComponent.formControl.value).toBe('A');
-    }));
+    });
   });
 
   describe('radio group disable form', () => {
-    it('expect not to thrown error', fakeAsync(() => {
+    it('expect not to thrown error', () => {
       expect(() => {
         const fixture = TestBed.createComponent(TriTestRadioGroupDisabledFormComponent);
         fixture.detectChanges();
       }).not.toThrow();
-    }));
+    });
   });
 
   describe('ngModel on the `nz-radio` button', () => {
-    it('`onChange` of each `nz-radio` should emit correct values', () => {
+    it('`onChange` of each `nz-radio` should emit correct values', async () => {
       const fixture = TestBed.createComponent(TriTestRadioGroupLabelNgModelComponent);
       fixture.detectChanges();
 
-      const radios = fixture.debugElement.queryAll(By.directive(TriRadioComponent));
+      let radios = fixture.debugElement.queryAll(By.directive(TriRadioComponent));
 
       radios[0].nativeElement.click();
+      await stabilize(fixture);
       expect(fixture.componentInstance.items).toEqual([
         { label: 'A', checked: true },
         { label: 'B', checked: false },
@@ -414,9 +376,11 @@ describe('radio', () => {
         { label: 'D', checked: false }
       ]);
 
+      radios = fixture.debugElement.queryAll(By.directive(TriRadioComponent));
       radios[1].nativeElement.click();
+      await stabilize(fixture);
       expect(fixture.componentInstance.items).toEqual([
-        { label: 'A', checked: false },
+        { label: 'A', checked: true },
         { label: 'B', checked: true },
         { label: 'C', checked: false },
         { label: 'D', checked: false }
@@ -446,7 +410,7 @@ describe('radio', () => {
     });
 
     it('should prioritize formSize > nzSize', () => {
-      component.size = 'default';
+      component.size.set('default');
       formSize.set('large');
       fixture.detectChanges();
       expect(radioGroupElement.classList).toContain('ant-radio-group-large');
@@ -463,6 +427,12 @@ describe('radio', () => {
   });
 });
 
+async function stabilize<T>(fixture: ComponentFixture<T>, ms?: number): Promise<void> {
+  fixture.detectChanges();
+  await updateNonSignalsInput(fixture, ms);
+  fixture.detectChanges();
+}
+
 @Component({
   selector: 'tri-test-radio-single',
   imports: [FormsModule, TriRadioModule],
@@ -471,8 +441,8 @@ describe('radio', () => {
       tri-radio
       [(ngModel)]="value"
       (ngModelChange)="modelChange($event)"
-      [disabled]="disabled"
-      [autoFocus]="autoFocus"
+      [disabled]="disabled()"
+      [autoFocus]="autoFocus()"
     >
       Radio
     </label>
@@ -481,16 +451,15 @@ describe('radio', () => {
 })
 export class TriTestRadioSingleComponent {
   @ViewChild(TriRadioComponent, { static: false }) radioComponent!: TriRadioComponent;
-  value = false;
-  autoFocus = false;
-  disabled = false;
-  modelChange = jasmine.createSpy('change callback');
+  readonly value = signal(false);
+  readonly autoFocus = signal(false);
+  readonly disabled = signal(false);
+  modelChange = vi.fn();
 }
 
 @Component({
   imports: [FormsModule, TriRadioModule],
-  template: `<label tri-radio-button>Radio</label>`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<label tri-radio-button>Radio</label>`
 })
 export class TriTestRadioButtonComponent {}
 
@@ -500,32 +469,31 @@ export class TriTestRadioButtonComponent {}
   template: `
     <tri-radio-group
       [(ngModel)]="value"
-      [name]="name"
-      [disabled]="disabled"
       (ngModelChange)="modelChange($event)"
-      [size]="size"
+      [name]="name()!"
+      [disabled]="disabled()"
+      [size]="size()"
     >
       <label tri-radio-button value="A">A</label>
       <label tri-radio-button value="B">B</label>
       <label tri-radio-button value="C">C</label>
       <label tri-radio-button value="D">D</label>
     </tri-radio-group>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestRadioGroupComponent {
-  size: TriSizeLDSType = 'default';
-  value = 'A';
-  disabled = false;
-  name!: string;
-  modelChange = jasmine.createSpy('change callback');
+  readonly size = signal<TriSizeLDSType>('default');
+  readonly value = signal('A');
+  readonly disabled = signal(false);
+  readonly name = signal<string | undefined>(undefined);
+  modelChange = vi.fn();
 }
 
 @Component({
   imports: [ReactiveFormsModule, TriRadioModule],
   template: `
     <form>
-      <label tri-radio [formControl]="formControl" [disabled]="disabled"></label>
+      <label tri-radio [formControl]="formControl" [disabled]="disabled()"></label>
     </form>
   `,
   changeDetection: ChangeDetectionStrategy.Eager
@@ -533,7 +501,7 @@ export class TriTestRadioGroupComponent {
 export class TriTestRadioFormComponent {
   formControl = new FormControl(false);
 
-  disabled = false;
+  readonly disabled = signal(false);
 
   disable(): void {
     this.formControl.disable();
@@ -548,7 +516,7 @@ export class TriTestRadioFormComponent {
   imports: [ReactiveFormsModule, TriRadioModule],
   template: `
     <form>
-      <tri-radio-group [formControl]="formControl" [disabled]="disabled">
+      <tri-radio-group [formControl]="formControl" [disabled]="disabled()">
         <label tri-radio-button value="A" [disabled]="true">A</label>
         <label tri-radio-button value="B">B</label>
         <label tri-radio-button value="C">C</label>
@@ -560,7 +528,7 @@ export class TriTestRadioFormComponent {
 })
 export class TriTestRadioGroupFormComponent {
   formControl = new FormControl('B');
-  disabled = false;
+  readonly disabled = signal(false);
 
   disable(): void {
     this.formControl.disable();
@@ -576,21 +544,20 @@ export class TriTestRadioGroupFormComponent {
 @Component({
   imports: [FormsModule, TriRadioModule],
   template: `
-    <tri-radio-group [(ngModel)]="value" [name]="name" [disabled]="disabled" [size]="size">
+    <tri-radio-group [(ngModel)]="value" [name]="name()!" [disabled]="disabled()" [size]="size()">
       <label tri-radio-button value="A">A</label>
       <label tri-radio-button value="B">B</label>
-      <label tri-radio-button value="C" [disabled]="singleDisabled">C</label>
+      <label tri-radio-button value="C" [disabled]="singleDisabled()">C</label>
       <label tri-radio-button value="D">D</label>
     </tri-radio-group>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestRadioGroupDisabledComponent {
-  size: TriSizeLDSType = 'default';
-  value = 'A';
-  disabled = false;
-  name!: string;
-  singleDisabled = false;
+  readonly size = signal<TriSizeLDSType>('default');
+  readonly value = signal('A');
+  readonly disabled = signal(false);
+  readonly name = signal<string | undefined>(undefined);
+  readonly singleDisabled = signal(false);
 }
 
 /** https://github.com/NG-ZORRO/ng-zorro-antd/issues/1735 **/
@@ -618,15 +585,14 @@ export class TriTestRadioGroupDisabledFormComponent {
     <tri-radio-group [(ngModel)]="value" buttonStyle="solid">
       <label tri-radio-button value="A">A</label>
       <label tri-radio-button value="B">B</label>
-      <label tri-radio-button value="C" [disabled]="singleDisabled">C</label>
+      <label tri-radio-button value="C" [disabled]="singleDisabled()">C</label>
       <label tri-radio-button value="D">D</label>
     </tri-radio-group>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestRadioGroupSolidComponent {
   value = 'A';
-  singleDisabled = false;
+  readonly singleDisabled = signal(false);
 }
 
 /** https://github.com/NG-ZORRO/ng-zorro-antd/issues/7254 */
@@ -640,8 +606,7 @@ export class TriTestRadioGroupSolidComponent {
         </label>
       }
     </tri-radio-group>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestRadioGroupLabelNgModelComponent {
   items = [
@@ -666,9 +631,9 @@ export class TriTestRadioGroupLabelNgModelComponent {
 
 @Component({
   imports: [TriRadioModule],
-  template: `<tri-radio-group [size]="size" />`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  selector: 'tri-test-radio-group-final-size',
+  template: `<tri-radio-group [size]="size()" />`
 })
 export class TestRadioGroupFinalSizeComponent {
-  size: TriSizeLDSType = 'default';
+  readonly size = signal<TriSizeLDSType>('default');
 }

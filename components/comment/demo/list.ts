@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { addDays, formatDistance } from 'date-fns';
 
@@ -10,7 +10,7 @@ import { TriListModule } from 'ng-zorro-antd/list';
   selector: 'tri-demo-comment-list',
   imports: [TriAvatarModule, TriCommentModule, TriListModule],
   template: `
-    <tri-list [dataSource]="data" [renderItem]="item" itemLayout="horizontal">
+    <tri-list [dataSource]="data()" [renderItem]="item" itemLayout="horizontal">
       <ng-template #item let-item>
         <tri-comment [author]="item.author" [datetime]="item.datetime">
           <tri-avatar tri-comment-avatar icon="user" [src]="item.avatar" />
@@ -24,7 +24,7 @@ import { TriListModule } from 'ng-zorro-antd/list';
   `
 })
 export class TriDemoCommentListComponent {
-  data = [
+  readonly data = signal([
     {
       author: 'Han Solo',
       avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
@@ -41,5 +41,5 @@ export class TriDemoCommentListComponent {
         '(Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
       datetime: formatDistance(new Date(), addDays(new Date(), 2))
     }
-  ];
+  ]);
 }

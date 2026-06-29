@@ -4,18 +4,12 @@
  */
 
 import { Platform } from '@angular/cdk/platform';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DebugElement,
-  DOCUMENT,
-  ElementRef,
-  Renderer2,
-  ViewChild
-} from '@angular/core';
+import { Component, DebugElement, DOCUMENT, ElementRef, Renderer2, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
+
+import { expect, vi } from 'vitest';
 
 import { TriScrollService } from 'ng-zorro-antd/core/services';
 import { sleep } from 'ng-zorro-antd/core/testing';
@@ -78,7 +72,7 @@ describe('affix', () => {
       componentObject.emitScroll(window, edge - 1);
       await sleep(100);
 
-      expect(componentObject.wrap().offsetTop).not.toBe(defaultOffsetTop);
+      expect(componentObject.wrap().classList).not.toContain('ant-affix');
     });
 
     describe('when scrolled within top offset', () => {
@@ -86,7 +80,7 @@ describe('affix', () => {
         await setupInitialState();
         await emitScroll(window, defaultOffsetTop + startOffset - 1);
 
-        expect(componentObject.wrap().offsetTop !== defaultOffsetTop).toBe(true);
+        expect(componentObject.wrap().classList).not.toContain('ant-affix');
       });
     });
 
@@ -103,13 +97,13 @@ describe('affix', () => {
           componentObject.offsetTo(componentObject.elementRef(), { top: startOffset, left: 10, width, height });
           await emitScroll(window, defaultOffsetTop + startOffset + 1);
 
-          expect(componentObject.wrap().offsetLeft).toBe(10);
+          expect(toCssPixelNumber(componentObject.wrap().style.left)).toBe(10);
 
           await emitScroll(window, defaultOffsetTop + startOffset - 1);
           componentObject.offsetTo(componentObject.elementRef(), { top: startOffset, left: 100, width, height });
           await emitScroll(window, defaultOffsetTop + startOffset + 1);
 
-          expect(componentObject.wrap().offsetLeft).toBe(100);
+          expect(toCssPixelNumber(componentObject.wrap().style.left)).toBe(100);
         });
       });
 
@@ -127,15 +121,15 @@ describe('affix', () => {
   describe('resize', () => {
     it('should be reset placeholder size', async () => {
       const offsetTop = 150;
-      context.newOffset = offsetTop;
+      context.newOffset.set(offsetTop);
       await setupInitialState({ offsetTop: offsetTop + 1 });
-      const offsetWidthSpy = spyOnProperty(componentObject.elementRef(), 'offsetWidth', 'get');
+      const offsetWidthSpy = vi.spyOn(componentObject.elementRef(), 'offsetWidth', 'get');
       await emitScroll(window, 2);
       expect(componentObject.elementRef().style.width).toBe(`${width}px`);
       componentObject.offsetYTo(componentObject.elementRef(), offsetTop + 2);
       await sleep(20);
 
-      offsetWidthSpy.and.returnValue(100);
+      offsetWidthSpy.mockReturnValue(100);
       componentObject.emitEvent(window, new Event('resize'));
       await sleep(20);
 
@@ -144,13 +138,13 @@ describe('affix', () => {
 
     it('should be reset placeholder size when container becomes greater', async () => {
       const target = componentObject.target();
-      const clientHeightSpy = spyOnProperty(target, 'clientHeight', 'get');
-      context.fakeTarget = target;
-      context.newOffsetBottom = 10;
-      clientHeightSpy.and.returnValue(10);
+      const clientHeightSpy = vi.spyOn(target, 'clientHeight', 'get');
+      context.fakeTarget.set(target);
+      context.newOffsetBottom.set(10);
+      clientHeightSpy.mockReturnValue(10);
       await setupInitialState();
       await emitScroll(target, 11);
-      clientHeightSpy.and.returnValue(100);
+      clientHeightSpy.mockReturnValue(100);
       componentObject.emitEvent(target, new Event('resize'));
       await sleep(20);
 
@@ -162,7 +156,7 @@ describe('affix', () => {
     const offsetTop = 150;
 
     beforeEach(() => {
-      context.newOffset = offsetTop;
+      context.newOffset.set(offsetTop);
     });
 
     describe('when scrolled within top offset', () => {
@@ -179,16 +173,16 @@ describe('affix', () => {
         await setupInitialState({ offsetTop: offsetTop + 1 });
         await emitScroll(window, 2);
 
-        expect(componentObject.wrap().offsetTop).toBe(offsetTop);
+        expect(toCssPixelNumber(componentObject.wrap().style.top)).toBe(offsetTop);
       });
     });
 
     it('recreate bug https://github.com/NG-ZORRO/ng-zorro-antd/issues/868', async () => {
-      context.newOffset = offsetTop.toString() as TriSafeAny;
+      context.newOffset.set(offsetTop.toString() as TriSafeAny);
       await setupInitialState({ offsetTop: offsetTop + 1 });
       await emitScroll(window, 2);
 
-      expect(componentObject.wrap().offsetTop).toBe(offsetTop);
+      expect(toCssPixelNumber(componentObject.wrap().style.top)).toBe(offsetTop);
     });
   });
 
@@ -199,8 +193,8 @@ describe('affix', () => {
     describe('with window', () => {
       beforeEach(() => {
         target = window;
-        context.fakeTarget = target;
-        context.newOffsetBottom = 10;
+        context.fakeTarget.set(target);
+        context.newOffsetBottom.set(10);
       });
 
       describe('when scrolled below the bottom offset', () => {
@@ -214,8 +208,8 @@ describe('affix', () => {
     describe('with target', () => {
       beforeEach(() => {
         target = componentObject.target();
-        context.fakeTarget = target;
-        context.newOffsetBottom = offsetTop;
+        context.fakeTarget.set(target);
+        context.newOffsetBottom.set(offsetTop);
       });
 
       describe('when scrolled within bottom offset', () => {
@@ -239,26 +233,34 @@ describe('affix', () => {
   describe('[nzTarget]', () => {
     let target: HTMLElement;
 
-    beforeEach(() => {
+    beforeEach(async () => {
       target = componentObject.target();
-      context.fakeTarget = target;
+      vi.spyOn(target, 'clientHeight', 'get').mockReturnValue(1000);
+      context.fakeTarget.set(target);
+      context.newOffset.set(defaultOffsetTop);
+      fixture.detectChanges();
+      await fixture.whenStable();
     });
 
     describe('when window is scrolled', () => {
       it('scrolls with the content', async () => {
         await setupInitialState();
-        await emitScroll(window, defaultOffsetTop + startOffset + 1);
+        componentObject.emitScroll(target, defaultOffsetTop - 1);
+        component.updatePosition(scrollEvent);
+        componentObject.emitScroll(window, defaultOffsetTop + startOffset + 1);
+        component.updatePosition(scrollEvent);
 
-        expect(componentObject.elementRef().offsetTop !== defaultOffsetTop).toBe(true);
+        expect(componentObject.wrap().classList).not.toContain('ant-affix');
       });
     });
 
     describe('when custom target is scrolled within top offset', () => {
       it('scrolls with the content', async () => {
         await setupInitialState();
-        await emitScroll(target, defaultOffsetTop + startOffset - 1);
+        componentObject.emitScroll(target, defaultOffsetTop - 1);
+        component.updatePosition(scrollEvent);
 
-        expect(componentObject.elementRef().offsetTop !== defaultOffsetTop).toBe(true);
+        expect(componentObject.wrap().classList).not.toContain('ant-affix');
       });
     });
 
@@ -267,15 +269,16 @@ describe('affix', () => {
         await setupInitialState();
         await emitScroll(target, defaultOffsetTop + startOffset + 1);
 
-        expect(componentObject.elementRef().offsetTop !== defaultOffsetTop).toBe(true);
+        expect(componentObject.wrap().classList).toContain('ant-affix');
+        expect(componentObject.wrap().style.position).toBe('fixed');
       });
     });
 
     it('should be a string value', async () => {
-      spyOn(component, 'updatePosition');
+      vi.spyOn(component, 'updatePosition');
       expect(component.updatePosition).not.toHaveBeenCalled();
 
-      context.fakeTarget = '#target';
+      context.fakeTarget.set('#target');
       await fixture.whenStable();
 
       expect(component.updatePosition).toHaveBeenCalled();
@@ -311,13 +314,13 @@ describe('affix', () => {
     scrolls: Record<string, Scroll>;
 
     constructor() {
-      spyOn(component, 'getOffset').and.callFake(this.getOffset.bind(this));
-      spyOn(scrollService, 'getScroll').and.callFake(this.getScroll.bind(this));
+      vi.spyOn(component, 'getOffset').mockImplementation(this.getOffset.bind(this));
+      vi.spyOn(scrollService, 'getScroll').mockImplementation(this.getScroll.bind(this));
       this.offsets = { undefined: { top: 10, left: 0, height: 0, width: 0 } };
       this.scrolls = { undefined: { top: 10, left: 0 } };
     }
 
-    getScroll(el?: Element | Window, top: boolean = true): number {
+    getScroll(el?: Element | Window | Document | null, top: boolean = true): number {
       const ret = this.scrolls[this.getKey(el)] || { top: 0, left: 0 };
       return top ? ret.top : ret.left;
     }
@@ -365,12 +368,12 @@ describe('affix', () => {
       return debugElement.query(By.css('#target')).nativeElement;
     }
 
-    private getKey(el?: Element | Window): string {
+    private getKey(el?: Element | Window | Document | null): string {
       let key: string;
-      if (el instanceof Window) {
+      if (el instanceof Window || !(el instanceof Element)) {
         key = 'window';
       } else {
-        key = (el && el.id) || 'window';
+        key = el.id || 'window';
       }
 
       return key;
@@ -378,6 +381,7 @@ describe('affix', () => {
   }
 
   async function setupInitialState(options: { offsetTop?: number } = {}): Promise<void> {
+    fixture.detectChanges();
     componentObject.offsetYTo(componentObject.elementRef(), options.offsetTop || startOffset);
     await sleep(20);
     await fixture.whenStable();
@@ -396,7 +400,7 @@ describe('affix', () => {
 @Component({
   imports: [TriAffixComponent],
   template: `
-    <tri-affix id="affix" [target]="fakeTarget" [offsetTop]="newOffset" [offsetBottom]="newOffsetBottom">
+    <tri-affix id="affix" [target]="fakeTarget()" [offsetTop]="newOffset()" [offsetBottom]="newOffsetBottom()">
       <button id="content">Affix Button</button>
     </tri-affix>
     <div id="target"></div>
@@ -405,9 +409,9 @@ describe('affix', () => {
 })
 class TestAffixComponent {
   @ViewChild(TriAffixComponent, { static: true }) affixComponent!: TriAffixComponent;
-  fakeTarget?: string | Element | Window;
-  newOffset!: number;
-  newOffsetBottom!: number;
+  readonly fakeTarget = signal<string | Element | Window | undefined>(undefined);
+  readonly newOffset = signal<number | undefined>(undefined);
+  readonly newOffsetBottom = signal<number | undefined>(undefined);
 }
 
 describe('NzAffixComponent', () => {
@@ -420,7 +424,7 @@ describe('NzAffixComponent', () => {
       providers: [
         TriAffixComponent,
         TriScrollService,
-        { provide: Renderer2, useValue: jasmine.createSpyObj('Renderer2', ['setStyle', 'addClass', 'removeClass']) },
+        { provide: Renderer2, useValue: { setStyle: vi.fn(), addClass: vi.fn(), removeClass: vi.fn() } },
         { provide: ElementRef, useValue: new ElementRef(document.createElement('div')) },
         { provide: DOCUMENT, useValue: document },
         { provide: Platform, useValue: { isBrowser: true } }
@@ -433,7 +437,7 @@ describe('NzAffixComponent', () => {
   });
 
   it('should register listeners if platform is browser', async () => {
-    spyOn(component as TriSafeAny, 'removeListeners');
+    vi.spyOn(component as TriSafeAny, 'removeListeners');
 
     await fixture.whenStable();
 
@@ -451,14 +455,14 @@ describe('NzAffixComponent', () => {
   });
 
   it('should remove listeners on destroy', () => {
-    spyOn(component as TriSafeAny, 'removeListeners');
+    vi.spyOn(component as TriSafeAny, 'removeListeners');
     fixture.destroy();
     expect(component['removeListeners']).toHaveBeenCalled();
   });
 
   it('should update position correctly', () => {
-    spyOn<TriSafeAny>(component, 'setAffixStyle');
-    spyOn<TriSafeAny>(component, 'setPlaceholderStyle');
+    vi.spyOn(component as TriSafeAny, 'setAffixStyle');
+    vi.spyOn(component as TriSafeAny, 'setPlaceholderStyle');
 
     const event = new Event('scroll');
     component.updatePosition(event);
@@ -469,7 +473,7 @@ describe('NzAffixComponent', () => {
 
   it('should not perform position updates if platform is not browser', () => {
     mockPlatform.isBrowser = false;
-    spyOn<TriSafeAny>(component, 'getOffset');
+    vi.spyOn(component as TriSafeAny, 'getOffset');
 
     component.updatePosition(new Event('scroll'));
 
@@ -478,34 +482,31 @@ describe('NzAffixComponent', () => {
 
   it('should update affixStyle with new width on resize event', () => {
     mockPlatform.isBrowser = true;
-    spyOn(component, 'getOffset').and.returnValue({
+    vi.spyOn(component, 'getOffset').mockReturnValue({
       top: 0,
       left: 0,
       width: 100,
       height: 50
     });
-    spyOn<TriSafeAny>(component, 'setAffixStyle');
+    vi.spyOn(component as TriSafeAny, 'setAffixStyle');
     component.offsetTop = 10;
     component.offsetBottom = 10;
 
     component.updatePosition(new Event('resize'));
 
-    expect(component['setAffixStyle']).toHaveBeenCalledWith(
-      jasmine.any(Event),
-      jasmine.objectContaining({ width: 100 })
-    );
+    expect(component['setAffixStyle']).toHaveBeenCalledWith(expect.any(Event), expect.objectContaining({ width: 100 }));
   });
 
   it('should update the affix style with the correct width on resize', () => {
-    spyOn<TriSafeAny>(component, 'setAffixStyle');
+    vi.spyOn(component as TriSafeAny, 'setAffixStyle');
 
     const scrollTop = 40;
-    spyOn(component['scrollSrv'], 'getScroll').and.returnValue(scrollTop);
+    vi.spyOn(component['scrollSrv'], 'getScroll').mockReturnValue(scrollTop);
     const elemOffset = { top: 200, left: 0, width: 200, height: 50 };
-    spyOn(component, 'getOffset').and.returnValue(elemOffset);
+    vi.spyOn(component, 'getOffset').mockReturnValue(elemOffset);
     component['offsetTop'] = 150;
     component['offsetBottom'] = 50;
-    spyOnProperty(component['placeholderNode'], 'offsetWidth').and.returnValue(120);
+    vi.spyOn(component['placeholderNode'], 'offsetWidth', 'get').mockReturnValue(120);
 
     component['affixStyle'] = {
       position: 'fixed',

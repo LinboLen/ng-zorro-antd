@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection, ViewChild } from '@angular/core';
+import { Component, DebugElement, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -32,7 +32,7 @@ describe('divider', () => {
   describe('#nzDashed', () => {
     for (const value of [true, false]) {
       it(`[${value}]`, () => {
-        context.dashed = value;
+        context.dashed.set(value);
         fixture.detectChanges();
         expect(dl.query(By.css('.ant-divider-dashed')) != null).toBe(value);
       });
@@ -42,7 +42,7 @@ describe('divider', () => {
   describe('#nzType', () => {
     for (const value of ['horizontal', 'vertical'] as const) {
       it(`[${value}]`, () => {
-        context.type = value;
+        context.type.set(value);
         fixture.detectChanges();
         expect(dl.query(By.css(`.ant-divider-${value}`)) != null).toBe(true);
       });
@@ -55,7 +55,7 @@ describe('divider', () => {
       { text: undefined, ret: false }
     ]) {
       it(`[${item.text}]`, () => {
-        context.text = item.text;
+        context.text.set(item.text);
         fixture.detectChanges();
         expect(dl.query(By.css('.ant-divider-inner-text')) != null).toBe(item.ret);
       });
@@ -64,16 +64,16 @@ describe('divider', () => {
     it('should be custom template', () => {
       const fixture = TestBed.createComponent(TestDividerTextTemplateComponent);
       fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css('.anticon-plus')) != null).toBe(true);
+      expect(fixture.debugElement.query(By.css('.anticon-plus'))).not.toBeNull();
     });
   });
 
   describe('#nzOrientation', () => {
     (['center', 'left', 'right'] as const).forEach(type => {
       it(`with ${type}`, () => {
-        context.orientation = type;
+        context.orientation.set(type);
         fixture.detectChanges();
-        expect(dl.query(By.css(`.ant-divider-with-text-${type}`)) != null).toBe(true);
+        expect(dl.query(By.css(`.ant-divider-with-text-${type}`))).not.toBeNull();
       });
     });
   });
@@ -81,9 +81,9 @@ describe('divider', () => {
   describe('#nzVariant', () => {
     (['dashed', 'dotted'] as const).forEach(type => {
       it(`with ${type}`, () => {
-        context.comp.variant = type;
+        context.variant.set(type);
         fixture.detectChanges();
-        expect(dl.query(By.css(`.ant-divider-${type}`)) != null).toBe(true);
+        expect(dl.query(By.css(`.ant-divider-${type}`))).not.toBeNull();
       });
     });
 
@@ -95,7 +95,7 @@ describe('divider', () => {
   describe('#nzPlain', () => {
     for (const value of [true, false]) {
       it(`[${value}]`, () => {
-        context.comp.plain = value;
+        context.plain.set(value);
         fixture.detectChanges();
         expect(dl.query(By.css('.ant-divider-plain')) != null).toBe(value);
       });
@@ -113,7 +113,7 @@ describe('divider', () => {
 
     (['small', 'middle', 'large'] as const).forEach(size => {
       it(`with ${size}`, () => {
-        context.comp.size = size;
+        context.size.set(size);
         fixture.detectChanges();
         const el = dl.query(By.css('.ant-divider'))!.nativeElement as HTMLElement;
         expect(el.classList.contains('ant-divider-sm')).toBe(size === 'small');
@@ -126,15 +126,15 @@ describe('divider', () => {
 
   describe('#with text class', () => {
     it('should have ant-divider-with-text when nzText set', () => {
-      context.text = 'text';
+      context.text.set('text');
       fixture.detectChanges();
-      expect(dl.query(By.css('.ant-divider-with-text')) != null).toBe(true);
+      expect(dl.query(By.css('.ant-divider-with-text'))).not.toBeNull();
     });
 
     it('should not have ant-divider-with-text when nzText removed', () => {
-      context.text = undefined;
+      context.text.set(undefined);
       fixture.detectChanges();
-      expect(dl.query(By.css('.ant-divider-with-text')) == null).toBe(true);
+      expect(dl.query(By.css('.ant-divider-with-text'))).toBeNull();
     });
   });
 });
@@ -142,16 +142,27 @@ describe('divider', () => {
 @Component({
   imports: [TriDividerModule],
   template: `
-    <tri-divider #comp [dashed]="dashed" [type]="type" [text]="text" [orientation]="orientation" />
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+    <tri-divider
+      #comp
+      [dashed]="dashed()"
+      [type]="type()"
+      [text]="text()"
+      [orientation]="orientation()"
+      [variant]="variant()"
+      [plain]="plain()"
+      [size]="size()"
+    />
+  `
 })
 class TestDividerComponent {
   @ViewChild('comp', { static: false }) comp!: TriDividerComponent;
-  dashed = false;
-  type: 'vertical' | 'horizontal' = 'horizontal';
-  text?: string = 'with text';
-  orientation!: 'left' | 'right' | 'center';
+  readonly dashed = signal(false);
+  readonly type = signal<'vertical' | 'horizontal'>('horizontal');
+  readonly text = signal<string | undefined>('with text');
+  readonly orientation = signal<'left' | 'right' | 'center'>('center');
+  readonly variant = signal<'dashed' | 'dotted' | 'solid'>('solid');
+  readonly plain = signal(false);
+  readonly size = signal<'small' | 'middle' | 'large' | undefined>(undefined);
 }
 
 @Component({
@@ -163,7 +174,6 @@ class TestDividerComponent {
         Add
       </ng-template>
     </tri-divider>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 class TestDividerTextTemplateComponent {}

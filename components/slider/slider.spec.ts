@@ -5,12 +5,14 @@
 
 import { DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
-import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
+import { Component, DebugElement, signal } from '@angular/core';
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { AbstractControl, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
+import { vi } from 'vitest';
+
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import {
   dispatchFakeEvent,
   dispatchKeyboardEvent,
@@ -39,7 +41,7 @@ describe('slider', () => {
   beforeEach(() => {
     // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideNzIconsTesting(), provideNoopAnimations(), provideZoneChangeDetection()]
+      providers: [provideNzIconsTesting(), provideNzNoAnimation()]
     });
   });
 
@@ -112,7 +114,7 @@ describe('slider', () => {
     });
 
     it('should not change value without emitting a change event', () => {
-      const onChangeSpy = jasmine.createSpy('slider onChange');
+      const onChangeSpy = vi.fn();
 
       sliderInstance.onAfterChange.subscribe(onChangeSpy);
       sliderInstance.value = 50;
@@ -136,7 +138,7 @@ describe('slider', () => {
 
     beforeEach(() => {
       fixture = TestBed.createComponent(TriTestSliderComponent);
-      fixture.componentInstance.disabled = true;
+      fixture.componentInstance.disabled.set(true);
       fixture.detectChanges();
 
       getReferenceFromFixture(fixture);
@@ -159,7 +161,7 @@ describe('slider', () => {
     });
 
     it('should not emit change when disabled', () => {
-      const onChangeSpy = jasmine.createSpy('slider onChange');
+      const onChangeSpy = vi.fn();
       sliderInstance.onAfterChange.subscribe(onChangeSpy);
 
       dispatchSlideEventSequence(sliderNativeElement, 0, 0.5);
@@ -190,29 +192,33 @@ describe('slider', () => {
       overlayContainerElement = oc.getContainerElement();
     }));
 
-    it('should always display tooltips if set to `always`', fakeAsync(() => {
-      testComponent.show = 'always';
+    beforeEach(() => vi.useFakeTimers());
+    afterEach(() => vi.useRealTimers());
+
+    it('should always display tooltips if set to `always`', async () => {
+      testComponent.show.set('always');
       fixture.detectChanges();
-      tick(400);
+      vi.advanceTimersByTime(400);
+      await fixture.whenStable();
       fixture.detectChanges();
       expect(overlayContainerElement.textContent).toContain('0');
 
       dispatchClickEventSequence(sliderNativeElement, 0.13);
       fixture.detectChanges();
+      await fixture.whenStable();
       expect(overlayContainerElement.textContent).toContain('13');
 
       // Always show tooltip even when the handle is not hovered.
       fixture.detectChanges();
+      await fixture.whenStable();
       expect(overlayContainerElement.textContent).toContain('13');
+    });
 
-      tick(400);
-    }));
-
-    it('should never display tooltips if set to `never`', fakeAsync(() => {
+    it('should never display tooltips if set to `never`', () => {
       const handlerHost = sliderNativeElement.querySelector('nz-slider-handle')!;
 
-      testComponent.show = 'never';
-      tick(400);
+      testComponent.show.set('never');
+      vi.advanceTimersByTime(400);
       fixture.detectChanges();
       expect(overlayContainerElement.textContent).not.toContain('0');
 
@@ -223,7 +229,7 @@ describe('slider', () => {
       dispatchMouseEvent(handlerHost, 'mouseenter');
       fixture.detectChanges();
       expect(overlayContainerElement.textContent).not.toContain('13');
-    }));
+    });
   });
 
   describe('show template tooltip', () => {
@@ -244,23 +250,27 @@ describe('slider', () => {
       overlayContainerElement = oc.getContainerElement();
     }));
 
-    it('should preview template tooltip', fakeAsync(() => {
-      testComponent.show = 'always';
+    beforeEach(() => vi.useFakeTimers());
+    afterEach(() => vi.useRealTimers());
+
+    it('should preview template tooltip', async () => {
+      testComponent.show.set('always');
       fixture.detectChanges();
-      tick(400);
+      vi.advanceTimersByTime(400);
+      await fixture.whenStable();
       fixture.detectChanges();
       expect(overlayContainerElement.textContent).toContain('Slider value: 0');
 
       dispatchClickEventSequence(sliderNativeElement, 0.13);
       fixture.detectChanges();
+      await fixture.whenStable();
       expect(overlayContainerElement.textContent).toContain('Slider value: 13');
 
       // Always show tooltip even when the handle is not hovered.
       fixture.detectChanges();
+      await fixture.whenStable();
       expect(overlayContainerElement.textContent).toContain('Slider value: 13');
-
-      tick(400);
-    }));
+    });
   });
 
   describe('setting value', () => {
@@ -275,8 +285,9 @@ describe('slider', () => {
       sliderNativeElement = sliderInstance.slider.nativeElement;
     });
 
-    it('should set the default value from the attribute', () => {
-      fixture.whenStable().then(() => expect(sliderInstance.value).toBe(26));
+    it('should set the default value from the attribute', async () => {
+      await fixture.whenStable();
+      expect(sliderInstance.value).toBe(26);
     });
 
     it('should set the correct value on click', () => {
@@ -368,9 +379,9 @@ describe('slider', () => {
     });
 
     // TODO: Pass this testing by increase precision
-    xit('should round the value inside the label based on the provided step', () => {
+    it.skip('should round the value inside the label based on the provided step', () => {
       const testStep = (step: number, expected: string): void => {
-        fixture.componentInstance.step = step;
+        fixture.componentInstance.step.set(step);
         fixture.detectChanges();
         dispatchSlideEventSequence(sliderNativeElement, 0, 0.333333);
 
@@ -384,7 +395,7 @@ describe('slider', () => {
     });
 
     it('should not add decimals to the value if it is a whole number', () => {
-      fixture.componentInstance.step = 0.1;
+      fixture.componentInstance.step.set(0.1);
       fixture.detectChanges();
 
       dispatchSlideEventSequence(sliderNativeElement, 0, 1);
@@ -483,19 +494,17 @@ describe('slider', () => {
       trackFillElement = sliderNativeElement.querySelector('.ant-slider-track') as HTMLElement;
     });
 
-    it('should set the value equal to the max value', () => {
-      fixture.whenStable().then(() => {
-        expect(sliderInstance.value).toBe(6);
-        expect(sliderInstance.min).toBe(4);
-        expect(sliderInstance.max).toBe(6);
-      });
+    it('should set the value equal to the max value', async () => {
+      await fixture.whenStable();
+      expect(sliderInstance.value).toBe(6);
+      expect(sliderInstance.min).toBe(4);
+      expect(sliderInstance.max).toBe(6);
     });
 
-    it('should set the fill to the max value', () => {
-      fixture.whenStable().then(() => {
-        fixture.detectChanges();
-        expect(trackFillElement.style.width).toBe('100%');
-      });
+    it('should set the fill to the max value', async () => {
+      await fixture.whenStable();
+      fixture.detectChanges();
+      expect(trackFillElement.style.width).toBe('100%');
     });
   });
 
@@ -511,19 +520,17 @@ describe('slider', () => {
       trackFillElement = sliderNativeElement.querySelector('.ant-slider-track') as HTMLElement;
     });
 
-    it('should set the value equal to the middle value', () => {
-      fixture.whenStable().then(() => {
-        expect(sliderInstance.value).toBe(0);
-        expect(sliderInstance.min).toBe(-5);
-        expect(sliderInstance.max).toBe(5);
-      });
+    it('should set the value equal to the middle value', async () => {
+      await fixture.whenStable();
+      expect(sliderInstance.value).toBe(0);
+      expect(sliderInstance.min).toBe(-5);
+      expect(sliderInstance.max).toBe(5);
     });
 
-    it('should set the fill to the middle value', () => {
-      fixture.whenStable().then(() => {
-        fixture.detectChanges();
-        expect(trackFillElement.style.width).toBe('50%');
-      });
+    it('should set the fill to the middle value', async () => {
+      await fixture.whenStable();
+      fixture.detectChanges();
+      expect(trackFillElement.style.width).toBe('50%');
     });
   });
 
@@ -679,12 +686,12 @@ describe('slider', () => {
       expect(sliderNativeElement.textContent).toContain('(22%)');
       expect(sliderNativeElement.textContent).toContain('(36%)');
 
-      testComponent.range = true;
+      testComponent.range.set(true);
       fixture.detectChanges();
 
       dispatchClickEventSequence(sliderNativeElement, 0.1);
 
-      // Potentially a bug of jasmine or karma. Event handler makes calling stack destroyed.
+      // Dispatching the second click in the same stack breaks the event handler state.
       // dispatchClickEventSequence(sliderNativeElement, 0.8);
       fixture.detectChanges();
 
@@ -698,13 +705,13 @@ describe('slider', () => {
       expect(trackFillElement.style.width).toBe('33%');
       expect(trackFillElement.style.visibility).toBe('visible');
 
-      testComponent.included = false;
+      testComponent.included.set(false);
       fixture.detectChanges();
       expect(trackFillElement.style.visibility).toBe('hidden');
     });
 
     it('should stop at one mark other than step, and show correct tooltip', () => {
-      testComponent.step = 10;
+      testComponent.step.set(10);
       fixture.detectChanges();
 
       dispatchSlideEventSequence(sliderNativeElement, 0.15, 0.34, true);
@@ -714,16 +721,16 @@ describe('slider', () => {
     });
 
     it('should stop at new steps when step=null or dots=true', () => {
-      testComponent.marks = { 15: { style: { color: 'red' }, label: '15' }, 33: '33' } as any; // eslint-disable-line @typescript-eslint/no-explicit-any
-      testComponent.step = null;
+      testComponent.marks.set({ 15: { style: { color: 'red' }, label: '15' }, 33: '33' } as any); // eslint-disable-line @typescript-eslint/no-explicit-any
+      testComponent.step.set(null);
       fixture.detectChanges();
 
       dispatchSlideEventSequence(sliderNativeElement, 0, 0.09);
       fixture.detectChanges();
       expect(sliderInstance.value).toBe(15);
 
-      testComponent.step = 1;
-      testComponent.dots = true;
+      testComponent.step.set(1);
+      testComponent.dots.set(true);
       fixture.detectChanges();
 
       dispatchSlideEventSequence(sliderNativeElement, 0, 0.66);
@@ -731,7 +738,8 @@ describe('slider', () => {
       expect(sliderInstance.value).toBe(33);
     });
 
-    it('should show/hide tooltip when enter/leave a handler', fakeAsync(() => {
+    it('should show/hide tooltip when enter/leave a handler', () => {
+      vi.useFakeTimers();
       const handlerHost = sliderNativeElement.querySelector('nz-slider-handle')!;
 
       dispatchClickEventSequence(sliderNativeElement, 0.13);
@@ -742,23 +750,24 @@ describe('slider', () => {
       expect(overlayContainerElement.textContent).toContain('VALUE-13');
 
       dispatchMouseEvent(handlerHost, 'mouseleave');
-      tick(400); // wait for tooltip's animations
+      vi.advanceTimersByTime(400);
       expect(overlayContainerElement.textContent).not.toContain('VALUE-13');
-    }));
+      vi.useRealTimers();
+    });
 
     // fix #5699, Slider should work with decimals as well
-    it('should work with decimals', fakeAsync(() => {
-      testComponent.marks = {
+    it('should work with decimals', () => {
+      testComponent.marks.set({
         0.5: '0.5',
         0.8: '0.8',
         1: '1',
         1.2: '1.2',
         1.5: '1.5',
         2: '2'
-      };
-      testComponent.min = 0.5;
-      testComponent.max = 2;
-      testComponent.step = null;
+      });
+      testComponent.min.set(0.5);
+      testComponent.max.set(2);
+      testComponent.step.set(null);
       fixture.detectChanges();
 
       dispatchClickEventSequence(sliderNativeElement, 0.13);
@@ -768,7 +777,7 @@ describe('slider', () => {
       dispatchClickEventSequence(sliderNativeElement, 0.6);
       fixture.detectChanges();
       expect(sliderInstance.value).toBe(1.5);
-    }));
+    });
   });
 
   describe('slider as a custom form control', () => {
@@ -785,12 +794,12 @@ describe('slider', () => {
       getReferenceFromFixture(fixture);
     });
 
-    it('should have correct initial value', fakeAsync(() => {
+    it('should have correct initial value', () => {
       fixture.detectChanges();
       const firstElementChildSlider = sliderDebugElement.nativeElement.firstElementChild;
       expect(sliderInstance.value).toBe(42);
       expect(firstElementChildSlider!.classList).not.toContain('ant-slider-disabled');
-    }));
+    });
 
     it('should not update the control when the value is updated', () => {
       expect(sliderControl.value).toBe(42);
@@ -825,7 +834,7 @@ describe('slider', () => {
       expect(sliderInstance.disabled).toBe(true);
     });
     it('should disable work', () => {
-      testComponent.disabled = true;
+      testComponent.disabled.set(true);
       fixture.detectChanges();
       const sliderElement = sliderDebugElement.nativeElement;
 
@@ -900,7 +909,7 @@ describe('slider', () => {
     });
 
     it('should work for range slider', () => {
-      testComponent.range = true;
+      testComponent.range.set(true);
       sliderInstance.activeValueIndex = 0;
       fixture.detectChanges();
 
@@ -918,7 +927,7 @@ describe('slider', () => {
     });
 
     it('should trigger nzOnAfterChange', () => {
-      const onChangeSpy = jasmine.createSpy('slider onChange');
+      const onChangeSpy = vi.fn();
 
       sliderInstance.onAfterChange.subscribe(onChangeSpy);
       dispatchKeyboardEvent(sliderNativeElement, 'keydown', RIGHT_ARROW);
@@ -928,7 +937,7 @@ describe('slider', () => {
     });
 
     it('should work for range slider when activeValueIndex is undefined', () => {
-      testComponent.range = true;
+      testComponent.range.set(true);
       fixture.detectChanges();
 
       const handleElements = sliderNativeElement.querySelectorAll('nz-slider-handle');
@@ -953,12 +962,12 @@ describe('slider', () => {
       dispatchKeyboardEvent(sliderNativeElement, 'keydown', RIGHT_ARROW);
       expect(sliderInstance.value).toBe(1);
 
-      testComponent.disabled = true;
+      testComponent.disabled.set(true);
       fixture.detectChanges();
       dispatchKeyboardEvent(sliderNativeElement, 'keydown', RIGHT_ARROW);
       expect(sliderInstance.value).toBe(1);
 
-      testComponent.disabled = false;
+      testComponent.disabled.set(false);
       fixture.detectChanges();
       dispatchKeyboardEvent(sliderNativeElement, 'keydown', RIGHT_ARROW);
       expect(sliderInstance.value).toBe(2);
@@ -981,19 +990,17 @@ const styles = `
 
 @Component({
   imports: [TriSliderModule],
-  template: `<tri-slider [disabled]="disabled" />`,
-  styles: [styles],
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<tri-slider [disabled]="disabled()" />`,
+  styles: [styles]
 })
 class TriTestSliderComponent {
-  disabled = false;
+  readonly disabled = signal(false);
 }
 
 @Component({
   imports: [TriSliderModule],
   template: `<tri-slider [min]="min" [max]="max" />`,
-  styles: [styles],
-  changeDetection: ChangeDetectionStrategy.Eager
+  styles: [styles]
 })
 class SliderWithMinAndMaxComponent {
   min = 4;
@@ -1003,15 +1010,13 @@ class SliderWithMinAndMaxComponent {
 @Component({
   imports: [FormsModule, TriSliderModule],
   template: `<tri-slider [ngModel]="26" />`,
-  styles: [styles],
-  changeDetection: ChangeDetectionStrategy.Eager
+  styles: [styles]
 })
 class SliderWithValueComponent {}
 
 @Component({
   imports: [TriSliderModule],
-  template: `<tri-slider [marks]="marks" />`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<tri-slider [marks]="marks" />`
 })
 class SliderWithMarksComponent {
   marks: Record<number, string> = { 100: '(100%)', 0: '(0%)' };
@@ -1019,92 +1024,92 @@ class SliderWithMarksComponent {
 
 @Component({
   imports: [TriSliderModule],
-  template: `<tri-slider [step]="step" />`,
-  styles: [styles],
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<tri-slider [step]="step()" />`,
+  styles: [styles]
 })
 class SliderWithStepComponent {
-  step = 25;
+  readonly step = signal(25);
 }
 
 @Component({
+  selector: 'tri-test-slider-with-value-smaller-than-min',
   imports: [FormsModule, TriSliderModule],
   template: `<tri-slider [ngModel]="3" [min]="4" [max]="6" />`,
-  styles: [styles],
-  changeDetection: ChangeDetectionStrategy.Eager
+  styles: [styles]
 })
 class SliderWithValueSmallerThanMinComponent {}
 
 @Component({
+  selector: 'tri-test-slider-with-value-zero',
   imports: [FormsModule, TriSliderModule],
   template: `<tri-slider [ngModel]="0" [min]="-5" [max]="5" />`,
-  styles: [styles],
-  changeDetection: ChangeDetectionStrategy.Eager
+  styles: [styles]
 })
 class SliderWithValueZeroComponent {}
 
 @Component({
+  selector: 'tri-test-slider-with-value-greater-than-max',
   imports: [FormsModule, TriSliderModule],
   template: `<tri-slider [ngModel]="7" [min]="4" [max]="6" />`,
-  styles: [styles],
-  changeDetection: ChangeDetectionStrategy.Eager
+  styles: [styles]
 })
 class SliderWithValueGreaterThanMaxComponent {}
 
 @Component({
+  selector: 'tri-test-vertical-slider',
   imports: [TriSliderModule],
   template: `<tri-slider vertical />`,
-  styles: [styles],
-  changeDetection: ChangeDetectionStrategy.Eager
+  styles: [styles]
 })
 class VerticalSliderComponent {}
 
 @Component({
+  selector: 'tri-test-reverse-slider',
   imports: [TriSliderModule],
   template: `
     <tri-slider reverse [marks]="marks" />
     <tri-slider reverse range />
     <tri-slider vertical reverse />
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 class ReverseSliderComponent {
   marks: Record<number, string> = { 100: '(100%)', 0: '(0%)' };
 }
 
 @Component({
+  selector: 'tri-test-reverse-slider-with-min-and-max',
   imports: [TriSliderModule],
   template: `<tri-slider [min]="4" [max]="6" reverse />`,
-  styles: [styles],
-  changeDetection: ChangeDetectionStrategy.Eager
+  styles: [styles]
 })
 class ReverseSliderWithMinAndMaxComponent {}
 
 @Component({
+  selector: 'tri-test-mixed-slider',
   imports: [TriSliderModule],
   template: `
     <tri-slider
-      [range]="range"
-      [step]="step"
-      [marks]="marks"
-      [dots]="dots"
-      [included]="included"
+      [range]="range()"
+      [step]="step()"
+      [marks]="marks()"
+      [dots]="dots()"
+      [included]="included()"
       [tipFormatter]="tipFormatter"
-      [min]="min"
-      [max]="max"
+      [min]="min()"
+      [max]="max()"
     />
   `,
   styles: [styles],
   changeDetection: ChangeDetectionStrategy.Eager
 })
 class MixedSliderComponent {
-  dots = false;
-  included = true;
-  marks: Record<number, string> = { 22: '(22%)', 36: '(36%)' };
-  max = 100;
-  min = 0;
-  range = false;
-  step: number | null = 1;
+  readonly dots = signal(false);
+  readonly included = signal(true);
+  readonly marks = signal<Record<number, string>>({ 22: '(22%)', 36: '(36%)' });
+  readonly max = signal(100);
+  readonly min = signal(0);
+  readonly range = signal(false);
+  readonly step = signal<number | null>(1);
 
   tipFormatter(value: number): string {
     return `VALUE-${value}`;
@@ -1112,10 +1117,11 @@ class MixedSliderComponent {
 }
 
 @Component({
+  selector: 'tri-test-slider-with-form-control',
   imports: [ReactiveFormsModule, TriSliderModule],
   template: `
     <form>
-      <tri-slider [formControl]="formControl" [disabled]="disabled" />
+      <tri-slider [formControl]="formControl" [disabled]="disabled()" />
     </form>
   `,
   styles: [styles],
@@ -1124,7 +1130,7 @@ class MixedSliderComponent {
 class SliderWithFormControlComponent {
   formControl = new FormControl(42);
 
-  disabled = false;
+  readonly disabled = signal(false);
 
   disable(): void {
     this.formControl.disable();
@@ -1136,38 +1142,40 @@ class SliderWithFormControlComponent {
 }
 
 @Component({
+  selector: 'tri-test-slider-show-tooltip',
   imports: [FormsModule, TriSliderModule],
-  template: `<tri-slider [tooltipVisible]="show" [ngModel]="value" />`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<tri-slider [tooltipVisible]="show()" [ngModel]="value" />`,
+  styles: [styles]
 })
 class SliderShowTooltipComponent {
-  show: TriSliderShowTooltip = 'default';
+  readonly show = signal<TriSliderShowTooltip>('default');
 
   value = 0;
 }
 
 @Component({
+  selector: 'tri-test-slider-keyboard',
   imports: [TriSliderModule],
-  template: `<tri-slider [range]="range" [disabled]="disabled" />`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<tri-slider [range]="range()" [disabled]="disabled()" />`
 })
 class TriTestSliderKeyboardComponent {
-  range = false;
-  disabled = false;
+  readonly range = signal(false);
+  readonly disabled = signal(false);
 }
 
 @Component({
+  selector: 'tri-test-slider-show-template-tooltip',
   imports: [FormsModule, TriSliderModule],
   template: `
-    <tri-slider [tooltipVisible]="show" [ngModel]="value" [tipFormatter]="titleTemplate" />
+    <tri-slider [tooltipVisible]="show()" [ngModel]="value" [tipFormatter]="titleTemplate" />
     <ng-template #titleTemplate let-value>
       <span>Slider value: {{ value }}</span>
     </ng-template>
   `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  styles: [styles]
 })
 class SliderShowTemplateTooltipComponent {
-  show: TriSliderShowTooltip = 'default';
+  readonly show = signal<TriSliderShowTooltip>('default');
   value = 0;
 }
 
@@ -1242,7 +1250,6 @@ function dispatchSlideStartEvent(sliderElement: HTMLElement, percent: number): v
   const y = dimensions.top + dimensions.height * percent;
 
   dispatchMouseenterEvent(sliderElement);
-
   dispatchMouseEvent(sliderElement, 'mousedown', x, y);
 }
 

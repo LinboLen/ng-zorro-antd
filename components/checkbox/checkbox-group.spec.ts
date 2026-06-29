@@ -3,9 +3,11 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, provideZoneChangeDetection } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
+
+import { updateNonSignalsInput } from 'ng-zorro-antd/core/testing';
 
 import { TriCheckboxOption } from './checkbox-group.component';
 import { TriCheckboxModule } from './checkbox.module';
@@ -32,24 +34,24 @@ describe('checkbox group', () => {
   it('should be render option elements', () => {
     let elements = getOptionElements();
     for (let index = 0; index < elements.length; index++) {
-      expect(elements[index].textContent?.trim()).toBe((component.options[index] as TriCheckboxOption).label);
+      expect(elements[index].textContent?.trim()).toBe((component.options()[index] as TriCheckboxOption).label);
     }
-    component.options = [1, 2, 3];
+    component.options.set([1, 2, 3]);
     fixture.detectChanges();
     elements = getOptionElements();
     for (let index = 0; index < elements.length; index++) {
-      expect(elements[index].textContent?.trim()).toBe(component.options[index].toString());
+      expect(elements[index].textContent?.trim()).toBe(component.options()[index].toString());
     }
-    component.options = ['a', 'b', 'c'];
+    component.options.set(['a', 'b', 'c']);
     fixture.detectChanges();
     elements = getOptionElements();
     for (let index = 0; index < elements.length; index++) {
-      expect(elements[index].textContent?.trim()).toBe(component.options[index]);
+      expect(elements[index].textContent?.trim()).toBe(component.options()[index].toString());
     }
   });
 
   it('should be name work', () => {
-    component.name = 'zorro';
+    component.name.set('zorro');
     fixture.detectChanges();
     const elements = getOptionElements();
     for (const element of elements) {
@@ -58,7 +60,7 @@ describe('checkbox group', () => {
   });
 
   it('should be apply disabled class', () => {
-    component.disabled = true;
+    component.disabled.set(true);
     fixture.detectChanges();
     for (const element of getOptionElements()) {
       expect(element.classList).toContain('ant-checkbox-wrapper-disabled');
@@ -66,8 +68,7 @@ describe('checkbox group', () => {
   });
 
   it('should be set disabled by ng control', async () => {
-    component.controlDisabled = true;
-    fixture.detectChanges();
+    component.controlDisabled.set(true);
     await fixture.whenStable();
     for (const element of getOptionElements()) {
       expect(element.classList).toContain('ant-checkbox-wrapper-disabled');
@@ -75,8 +76,7 @@ describe('checkbox group', () => {
   });
 
   it('should be change value', async () => {
-    component.value = ['A'];
-    fixture.detectChanges();
+    component.value.set(['A']);
     await fixture.whenStable();
     let checkedOptionElements = getOptionElements().filter(ele =>
       ele.classList.contains('ant-checkbox-wrapper-checked')
@@ -84,16 +84,14 @@ describe('checkbox group', () => {
     expect(checkedOptionElements.length).toBe(1);
     expect(checkedOptionElements[0].textContent?.trim()).toBe('A');
 
-    component.value = ['A', 'B'];
-    fixture.detectChanges();
+    component.value.set(['A', 'B']);
     await fixture.whenStable();
     checkedOptionElements = getOptionElements().filter(ele => ele.classList.contains('ant-checkbox-wrapper-checked'));
     expect(checkedOptionElements.length).toBe(2);
     expect(checkedOptionElements[0].textContent?.trim()).toBe('A');
     expect(checkedOptionElements[1].textContent?.trim()).toBe('B');
 
-    component.value = [];
-    fixture.detectChanges();
+    component.value.set([]);
     await fixture.whenStable();
     checkedOptionElements = getOptionElements().filter(ele => ele.classList.contains('ant-checkbox-wrapper-checked'));
     expect(checkedOptionElements.length).toBe(0);
@@ -124,7 +122,7 @@ describe('checkbox group with custom layout', () => {
   });
 
   it('should be apply disabled class', () => {
-    component.disabled = true;
+    component.disabled.set(true);
     fixture.detectChanges();
     for (const element of getOptionElements()) {
       expect(element.classList).toContain('ant-checkbox-wrapper-disabled');
@@ -132,26 +130,29 @@ describe('checkbox group with custom layout', () => {
   });
 
   it('should be change value', async () => {
-    component.value = ['A'];
+    component.value.set(['A']);
     fixture.detectChanges();
-    await fixture.whenStable();
+    await updateNonSignalsInput(fixture);
+    fixture.detectChanges();
     let checkedOptionElements = getOptionElements().filter(ele =>
       ele.classList.contains('ant-checkbox-wrapper-checked')
     );
     expect(checkedOptionElements.length).toBe(1);
     expect(checkedOptionElements[0].textContent?.trim()).toBe('A');
 
-    component.value = ['A', 'B'];
+    component.value.set(['A', 'B']);
     fixture.detectChanges();
-    await fixture.whenStable();
+    await updateNonSignalsInput(fixture);
+    fixture.detectChanges();
     checkedOptionElements = getOptionElements().filter(ele => ele.classList.contains('ant-checkbox-wrapper-checked'));
     expect(checkedOptionElements.length).toBe(2);
     expect(checkedOptionElements[0].textContent?.trim()).toBe('A');
     expect(checkedOptionElements[1].textContent?.trim()).toBe('B');
 
-    component.value = [];
+    component.value.set([]);
     fixture.detectChanges();
-    await fixture.whenStable();
+    await updateNonSignalsInput(fixture);
+    fixture.detectChanges();
     checkedOptionElements = getOptionElements().filter(ele => ele.classList.contains('ant-checkbox-wrapper-checked'));
     expect(checkedOptionElements.length).toBe(0);
   });
@@ -160,15 +161,15 @@ describe('checkbox group with custom layout', () => {
     const checkboxElements = getOptionElements();
     checkboxElements[0].click();
     fixture.detectChanges();
-    expect(component.value).toEqual(['A']);
+    expect(component.value()).toEqual(['A']);
 
     checkboxElements[1].click();
     fixture.detectChanges();
-    expect(component.value).toEqual(['A', 'B']);
+    expect(component.value()).toEqual(['A', 'B']);
 
     checkboxElements[0].click();
     fixture.detectChanges();
-    expect(component.value).toEqual(['B']);
+    expect(component.value()).toEqual(['B']);
   });
 
   function getOptionElements(): HTMLElement[] {
@@ -180,39 +181,38 @@ describe('checkbox group with custom layout', () => {
   imports: [TriCheckboxModule, FormsModule],
   template: `
     <tri-checkbox-group
-      [options]="options"
-      [name]="name"
-      [disabled]="disabled"
+      [options]="options()"
+      [name]="name()"
+      [disabled]="disabled()"
       [(ngModel)]="value"
-      [disabled]="controlDisabled"
+      [disabled]="controlDisabled()"
     />
   `,
   changeDetection: ChangeDetectionStrategy.Eager
 })
 class CheckboxGroupTestComponent {
-  options: string[] | number[] | TriCheckboxOption[] = [
+  readonly options = signal<string[] | number[] | TriCheckboxOption[]>([
     { label: 'A', value: 'A' },
     { label: 'B', value: 'B' },
     { label: 'C', value: 'C' }
-  ];
-  value: string[] = [];
-  disabled = false;
-  controlDisabled = false;
-  name: string | null = null;
+  ]);
+  readonly value = signal<string[]>([]);
+  readonly disabled = signal(false);
+  readonly controlDisabled = signal(false);
+  readonly name = signal<string | null>(null);
 }
 
 @Component({
   imports: [TriCheckboxModule, FormsModule],
   template: `
-    <tri-checkbox-group [disabled]="disabled" [(ngModel)]="value">
+    <tri-checkbox-group [disabled]="disabled()" [(ngModel)]="value">
       <label tri-checkbox value="A">A</label>
       <label tri-checkbox value="B">B</label>
       <label tri-checkbox value="C">C</label>
     </tri-checkbox-group>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 class CheckboxGroupWithCustomLayoutTestComponent {
-  value: string[] = [];
-  disabled = false;
+  readonly value = signal<string[]>([]);
+  readonly disabled = signal(false);
 }

@@ -16,6 +16,48 @@ tag: '{{version}}'
 
 ---
 
+## 22.0.0-alpha.1
+
+`2026-06-12`
+
+- 支持 Angular v22
+- 所有组件均使用 OnPush
+
+> **注意**: v22 仍然处于预览阶段，未来版本可能会包含破坏性变更。
+
+### ⚠ BREAKING CHANGES
+
+移除以下在过去的版本中标记为废弃的 API:
+
+| Module                        | API                                                                                  |
+| ----------------------------- | ------------------------------------------------------------------------------------ |
+| `ng-zorro-antd/button`        | `NzButtonComponent#nzSearch`                                                         |
+| `ng-zorro-antd/cascader`      | `NzCascaderComponent#nzDisplayWith`                                                  |
+| `ng-zorro-antd/collapse`      | `nz-collapse-panel[nzDisabled]`                                                      |
+| `ng-zorro-antd/core/form`     | `NzFormNoStatusService`                                                              |
+| `ng-zorro-antd/core/services` | `NzBreakpointKey`                                                                    |
+| `ng-zorro-antd/dropdown`      | `NzDropDownModule`                                                                   |
+| `ng-zorro-antd/grid`          | `EmbeddedProperty`                                                                   |
+| `ng-zorro-antd/input`         | `textarea[nzAutosize]`, `AutoSizeType`, `NzAutosizeDirective`                        |
+| `ng-zorro-antd/input`         | `nz-input-group`, `NzInputGroupComponent`, `NzInputGroupWhitSuffixOrPrefixDirective` |
+| `ng-zorro-antd/input`         | `[nz-input-group-slot]`, `NzInputGroupSlotComponent`                                 |
+| `ng-zorro-antd/input`         | `NzInputDirective#nzStepperless`                                                     |
+| `ng-zorro-antd/message`       | `NzMessageData#state`                                                                |
+| `ng-zorro-antd/modal`         | `nzOnOk` / `nzOnCancel` input usage                                                  |
+| `ng-zorro-antd/tooltip`       | `cdkConnectedOverlayPush`                                                            |
+| `ng-zorro-antd/transfer`      | `NzTransferSearchComponent`, `[nz-transfer-search]`                                  |
+| `ng-zorro-antd/upload`        | `nz-upload[nzTransformFile]`, `NzUploadTransformFileType`                            |
+| `ng-zorro-antd/upload`        | `ZipButtonOptions#transformFile`                                                     |
+
+## 21.3.2
+
+`2026-06-27`
+
+### Bug Fixes
+
+- **schematics:** 确保 schematics 以 commonjs 格式发布 ([#9848](https://github.com/NG-ZORRO/ng-zorro-antd/issues/9848)) ([1196369](https://github.com/NG-ZORRO/ng-zorro-antd/commit/1196369990a04b9d52283efd64dfcb0f99532bd7))
+- **select:** 防止下拉选项溢出 ([#9849](https://github.com/NG-ZORRO/ng-zorro-antd/issues/9849)) ([a2b5d1f](https://github.com/NG-ZORRO/ng-zorro-antd/commit/a2b5d1f9229465be97b163a62564ef774ecd3cf9))
+
 ## 21.3.1
 
 `2026-06-05`

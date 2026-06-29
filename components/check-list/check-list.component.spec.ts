@@ -4,17 +4,13 @@
  */
 
 import { OverlayContainer } from '@angular/cdk/overlay';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DebugElement,
-  provideZoneChangeDetection,
-  TemplateRef
-} from '@angular/core';
-import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
+import { Component, DebugElement, TemplateRef, signal } from '@angular/core';
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
+import { vi } from 'vitest';
+
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { dispatchMouseEvent } from 'ng-zorro-antd/core/testing';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
@@ -31,14 +27,13 @@ describe('check-list', () => {
 
   function waitingForTooltipToggling(): void {
     fixture.detectChanges();
-    tick(500);
+    vi.advanceTimersByTime(500);
     fixture.detectChanges();
   }
 
   beforeEach(() => {
-    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideNoopAnimations(), provideNzIconsTesting(), provideZoneChangeDetection()]
+      providers: [provideNzNoAnimation(), provideNzIconsTesting()]
     });
   });
 
@@ -54,55 +49,59 @@ describe('check-list', () => {
     overlayContainerElement = oc.getContainerElement();
   }));
 
+  beforeEach(() => vi.useFakeTimers());
+
   afterEach(() => {
     overlayContainer.ngOnDestroy();
   });
 
+  afterEach(() => vi.useRealTimers());
+
   it('basic', () => {
     expect(resultEl.nativeElement.classList).toContain('ant-check-list');
-    expect(!!resultEl.nativeElement.querySelector('.ant-check-list-button .ant-check-list-icon')).toBeTrue();
-    expect(!!resultEl.nativeElement.querySelector('.ant-check-list-button .ant-check-list-description')).toBeTrue();
+    expect(resultEl.nativeElement.querySelector('.ant-check-list-button .ant-check-list-icon')).not.toBeNull();
+    expect(resultEl.nativeElement.querySelector('.ant-check-list-button .ant-check-list-description')).not.toBeNull();
   });
 
-  it('nzVisible', fakeAsync(() => {
-    testComponent.visible = true;
+  it('nzVisible', () => {
+    testComponent.visible.set(true);
     fixture.detectChanges();
     waitingForTooltipToggling();
-    expect(!!overlayContainerElement.querySelector('.ant-popover-inner-content')).toBeTrue();
-    expect(!!overlayContainerElement.querySelector('.ant-popover-inner-content .ant-check-list-header')).toBeTrue();
+    expect(overlayContainerElement.querySelector('.ant-popover-inner-content')).not.toBeNull();
+    expect(overlayContainerElement.querySelector('.ant-popover-inner-content .ant-check-list-header')).not.toBeNull();
     expect(
-      !!overlayContainerElement.querySelector(
+      overlayContainerElement.querySelector(
         '.ant-popover-inner-content .ant-check-list-header .ant-check-list-header-title'
       )
-    ).toBeTrue();
-  }));
+    ).not.toBeNull();
+  });
 
-  it('nzItems', fakeAsync(() => {
-    testComponent.visible = true;
-    testComponent.items = [
+  it('nzItems', () => {
+    testComponent.visible.set(true);
+    testComponent.items.set([
       {
         description: 'Step 1',
         onClick: () => {}
       }
-    ];
+    ]);
     fixture.detectChanges();
     waitingForTooltipToggling();
-    expect(!!overlayContainerElement.querySelector('.ant-check-list-steps')).toBeTrue();
-  }));
+    expect(overlayContainerElement.querySelector('.ant-check-list-steps')).not.toBeNull();
+  });
 
-  it('nzProgress', fakeAsync(() => {
-    testComponent.visible = true;
+  it('nzProgress', () => {
+    testComponent.visible.set(true);
     fixture.detectChanges();
     waitingForTooltipToggling();
-    expect(!!overlayContainerElement.querySelector('.ant-check-list-progressBar')).toBeTrue();
-    testComponent.progress = false;
+    expect(overlayContainerElement.querySelector('.ant-check-list-progressBar')).not.toBeNull();
+    testComponent.progress.set(false);
     fixture.detectChanges();
-    expect(!overlayContainerElement.querySelector('.ant-check-list-progressBar')).toBeTrue();
-  }));
+    expect(overlayContainerElement.querySelector('.ant-check-list-progressBar')).toBeNull();
+  });
 
-  it('nzIndex', fakeAsync(() => {
-    testComponent.visible = true;
-    testComponent.items = [
+  it('nzIndex', () => {
+    testComponent.visible.set(true);
+    testComponent.items.set([
       {
         description: 'Step 1',
         onClick: () => {}
@@ -111,7 +110,7 @@ describe('check-list', () => {
         description: 'Step 2',
         onClick: () => {}
       }
-    ];
+    ]);
     fixture.detectChanges();
     waitingForTooltipToggling();
     expect(overlayContainerElement.querySelectorAll('.ant-check-list-steps').length).toBe(2);
@@ -125,8 +124,8 @@ describe('check-list', () => {
     expect((overlayContainerElement.querySelector('.ant-progress-text') as HTMLElement).innerText).toBe('0%');
     expect(overlayContainerElement.querySelectorAll('.ant-check-list-steps-item-arrows').length).toBe(1);
 
-    testComponent.index = 2;
-    testComponent.items = [
+    testComponent.index.set(2);
+    testComponent.items.set([
       {
         description: 'Step 1',
         checked: true,
@@ -136,7 +135,7 @@ describe('check-list', () => {
         description: 'Step 2',
         onClick: () => {}
       }
-    ];
+    ]);
     fixture.detectChanges();
     expect(
       (
@@ -154,8 +153,8 @@ describe('check-list', () => {
     ).toBe('Step 2');
     expect((overlayContainerElement.querySelector('.ant-progress-text') as HTMLElement).innerText).toBe('50%');
 
-    testComponent.index = 3;
-    testComponent.items = [
+    testComponent.index.set(3);
+    testComponent.items.set([
       {
         description: 'Step 1',
         checked: true,
@@ -166,63 +165,63 @@ describe('check-list', () => {
         checked: true,
         onClick: () => {}
       }
-    ];
+    ]);
     fixture.detectChanges();
-    expect(!overlayContainerElement.querySelector('.ant-check-list-progressBar')).toBeTrue();
-    expect(!!overlayContainerElement.querySelector('.ant-check-list-header-finish')).toBeTrue();
-  }));
+    expect(overlayContainerElement.querySelector('.ant-check-list-progressBar')).toBeNull();
+    expect(overlayContainerElement.querySelector('.ant-check-list-header-finish')).not.toBeNull();
+  });
 
-  it('lose the list when you are finished', fakeAsync(() => {
-    testComponent.visible = true;
-    testComponent.items = [
+  it('lose the list when you are finished', () => {
+    testComponent.visible.set(true);
+    testComponent.items.set([
       {
         description: 'Step 1',
         onClick: () => {}
       }
-    ];
-    testComponent.index = 2;
+    ]);
+    testComponent.index.set(2);
     fixture.detectChanges();
     waitingForTooltipToggling();
     const dom = overlayContainerElement.querySelector('.ant-check-list-header-finish .ant-btn');
     if (dom) {
       dispatchMouseEvent(dom, 'click');
       waitingForTooltipToggling();
-      expect(!overlayContainerElement.querySelector('.ant-popover-inner-content')).toBeTrue();
+      expect(overlayContainerElement.querySelector('.ant-popover-inner-content')).toBeNull();
     }
-  }));
+  });
 
-  it('icon close List', fakeAsync(() => {
-    testComponent.visible = true;
+  it('icon close List', () => {
+    testComponent.visible.set(true);
     fixture.detectChanges();
     waitingForTooltipToggling();
     const dom = overlayContainerElement.querySelector('.ant-check-list-header-extra .anticon');
     if (dom) {
       dispatchMouseEvent(dom, 'click');
       waitingForTooltipToggling();
-      expect(!overlayContainerElement.querySelector('.ant-popover-inner-content')).toBeTrue();
+      expect(overlayContainerElement.querySelector('.ant-popover-inner-content')).toBeNull();
     }
-  }));
+  });
 
-  it('actively close the list', fakeAsync(() => {
-    testComponent.visible = true;
+  it('actively close the list', () => {
+    testComponent.visible.set(true);
     fixture.detectChanges();
     waitingForTooltipToggling();
     const dom = overlayContainerElement.querySelector('.ant-check-list-footer');
     if (dom) {
       dispatchMouseEvent(dom, 'click');
       waitingForTooltipToggling();
-      expect(!!overlayContainerElement.querySelector('.ant-check-list-close-check')).toBeTrue();
+      expect(overlayContainerElement.querySelector('.ant-check-list-close-check')).not.toBeNull();
       const btnDom = overlayContainerElement.querySelector('.ant-check-list-close-check-action .ant-btn');
       if (btnDom) {
         dispatchMouseEvent(btnDom, 'click');
         waitingForTooltipToggling();
-        expect(!overlayContainerElement.querySelector('.ant-popover-inner-content')).toBeTrue();
+        expect(overlayContainerElement.querySelector('.ant-popover-inner-content')).toBeNull();
       }
     }
-  }));
+  });
 
-  it('actively close hidden lists', fakeAsync(() => {
-    testComponent.visible = true;
+  it('actively close hidden lists', () => {
+    testComponent.visible.set(true);
     fixture.detectChanges();
     waitingForTooltipToggling();
     const footer = overlayContainerElement.querySelector('.ant-check-list-footer');
@@ -230,16 +229,16 @@ describe('check-list', () => {
     dispatchMouseEvent(footer!, 'click');
     waitingForTooltipToggling();
 
-    expect(!!overlayContainerElement.querySelector('.ant-check-list-close-check')).toBeTrue();
+    expect(overlayContainerElement.querySelector('.ant-check-list-close-check')).not.toBeNull();
     expect(
-      !!overlayContainerElement.querySelector('.ant-check-list-close-check .ant-check-list-close-check-title')
-    ).toBeTrue();
+      overlayContainerElement.querySelector('.ant-check-list-close-check .ant-check-list-close-check-title')
+    ).not.toBeNull();
     expect(
-      !!overlayContainerElement.querySelector('.ant-check-list-close-check .ant-check-list-close-check-action')
-    ).toBeTrue();
+      overlayContainerElement.querySelector('.ant-check-list-close-check .ant-check-list-close-check-action')
+    ).not.toBeNull();
     expect(
-      !!overlayContainerElement.querySelector('.ant-check-list-close-check .ant-check-list-close-check-other')
-    ).toBeTrue();
+      overlayContainerElement.querySelector('.ant-check-list-close-check .ant-check-list-close-check-other')
+    ).not.toBeNull();
 
     // close manually
     const labelEl = overlayContainerElement.querySelector('.ant-check-list-close-check-other .ant-checkbox-wrapper');
@@ -251,35 +250,35 @@ describe('check-list', () => {
     dispatchMouseEvent(btnEl!, 'click');
     waitingForTooltipToggling();
     expect(overlayContainerElement.querySelector('.ant-check-list')).toBeNull();
-  }));
+  });
 
   it('nzTriggerRender ', () => {
-    testComponent.triggerRender = 'Check List';
+    testComponent.triggerRender.set('Check List');
     fixture.detectChanges();
     expect((resultEl.nativeElement.querySelector('.ant-check-list-button') as HTMLElement).innerText).toBe(
       'Check List'
     );
   });
 
-  it('nzTitle', fakeAsync(() => {
-    testComponent.title = 'Check List';
-    testComponent.visible = true;
+  it('nzTitle', () => {
+    testComponent.title.set('Check List');
+    testComponent.visible.set(true);
     fixture.detectChanges();
     waitingForTooltipToggling();
     expect((overlayContainerElement.querySelector('.ant-check-list-header-title') as HTMLElement).innerText).toBe(
       'Check List'
     );
-  }));
+  });
 
-  it('nzFooter', fakeAsync(() => {
-    testComponent.footer = 'Check List';
-    testComponent.visible = true;
+  it('nzFooter', () => {
+    testComponent.footer.set('Check List');
+    testComponent.visible.set(true);
     fixture.detectChanges();
     waitingForTooltipToggling();
     expect((overlayContainerElement.querySelector('.ant-check-list-footer') as HTMLElement).innerText).toBe(
       'Check List'
     );
-  }));
+  });
 });
 
 @Component({
@@ -287,23 +286,22 @@ describe('check-list', () => {
   imports: [TriCheckListModule],
   template: `
     <tri-check-list
-      [visible]="visible"
-      [items]="items"
-      [index]="index"
-      [progress]="progress"
-      [triggerRender]="triggerRender"
-      [title]="title"
-      [footer]="footer"
+      [visible]="visible()"
+      [items]="items()"
+      [index]="index()"
+      [progress]="progress()"
+      [triggerRender]="triggerRender()"
+      [title]="title()"
+      [footer]="footer()"
     />
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestCheckListBasicComponent {
-  visible: boolean = false;
-  items: TriItemProps[] = [];
-  index: number = 1;
-  progress: boolean = true;
-  triggerRender: TemplateRef<void> | string | null = null;
-  title: TemplateRef<void> | string | null = null;
-  footer: TemplateRef<void> | string | null = null;
+  readonly visible = signal<boolean>(false);
+  readonly items = signal<TriItemProps[]>([]);
+  readonly index = signal<number>(1);
+  readonly progress = signal<boolean>(true);
+  readonly triggerRender = signal<TemplateRef<void> | string | null>(null);
+  readonly title = signal<TemplateRef<void> | string | null>(null);
+  readonly footer = signal<TemplateRef<void> | string | null>(null);
 }

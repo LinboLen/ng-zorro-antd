@@ -4,11 +4,11 @@
  */
 
 import { SelectionModel } from '@angular/cdk/collections';
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
@@ -24,7 +24,7 @@ describe('checkbox component for tree view', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      providers: [provideNzIconsTesting(), provideNoopAnimations()]
+      providers: [provideNzIconsTesting(), provideNzNoAnimation()]
     });
     fixture = TestBed.createComponent(TriTestTreeViewCheckBoxComponent);
     testComponent = fixture.componentInstance;
@@ -156,8 +156,7 @@ const TREE_DATA: TreeNode[] = [
         </tri-tree-node-option>
       </tri-tree-node>
     </tri-tree-view>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestTreeViewCheckBoxComponent implements OnInit {
   @ViewChild(TriTreeViewComponent, { static: true }) tree!: TriTreeViewComponent<FlatNode>;

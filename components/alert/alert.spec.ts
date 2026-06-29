@@ -3,17 +3,12 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  DebugElement,
-  TemplateRef,
-  ViewChild
-} from '@angular/core';
+import { ChangeDetectorRef, Component, DebugElement, signal, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
+
+import { vi } from 'vitest';
 
 import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { TriConfigService } from 'ng-zorro-antd/core/config';
@@ -52,7 +47,7 @@ describe('alert', () => {
       expect(alert.nativeElement.firstElementChild!.classList).not.toContain('ant-alert-banner');
       expect(alert.nativeElement.querySelector('.ant-alert').classList).toContain(`ant-alert-info`);
       expect(alert.nativeElement.querySelector('.ant-alert-icon')).toBeNull();
-      testComponent.banner = true;
+      testComponent.banner.set(true);
       await updateNonSignalsInput(fixture);
       expect(alert.nativeElement.firstElementChild!.classList).toContain('ant-alert-banner');
       expect(alert.nativeElement.querySelector('.ant-alert').classList).toContain(`ant-alert-info`);
@@ -60,7 +55,7 @@ describe('alert', () => {
     });
 
     it('should closeable work', async () => {
-      testComponent.closeable = true;
+      testComponent.closeable.set(true);
       await updateNonSignalsInput(fixture);
       expect(testComponent.onClose).toHaveBeenCalledTimes(0);
       expect(alert.nativeElement.querySelector('.anticon-close')).toBeDefined();
@@ -73,38 +68,38 @@ describe('alert', () => {
 
     it('should closeText work', async () => {
       expect(alert.nativeElement.querySelector('.ant-alert-close-icon')).toBeNull();
-      testComponent.closeText = 'closeText';
+      testComponent.closeText.set('closeText');
       await updateNonSignalsInput(fixture);
       expect(alert.nativeElement.querySelector('.ant-alert-close-icon').innerText).toBe('closeText');
-      testComponent.closeText = testComponent.template;
+      testComponent.closeText.set(testComponent.template);
       await updateNonSignalsInput(fixture);
       expect(alert.nativeElement.querySelector('.ant-alert-close-icon').innerText).toBe('template');
     });
 
     it('should description work', async () => {
       expect(alert.nativeElement.querySelector('.ant-alert-description').innerText).toBe('description');
-      testComponent.description = testComponent.template;
+      testComponent.description.set(testComponent.template);
       await updateNonSignalsInput(fixture);
       expect(alert.nativeElement.querySelector('.ant-alert-description').innerText).toBe('template');
     });
 
     it('should message work', async () => {
       expect(alert.nativeElement.querySelector('.ant-alert-message').innerText).toBe('message');
-      testComponent.message = testComponent.template;
+      testComponent.message.set(testComponent.template);
       await updateNonSignalsInput(fixture);
       expect(alert.nativeElement.querySelector('.ant-alert-message').innerText).toBe('template');
     });
 
     it('should showIcon work', async () => {
       expect(alert.nativeElement.querySelector('.ant-alert-icon')).toBeNull();
-      testComponent.showIcon = true;
+      testComponent.showIcon.set(true);
       await updateNonSignalsInput(fixture);
       expect(alert.nativeElement.querySelector('.ant-alert-icon')).toBeDefined();
     });
 
     it('should iconType work', async () => {
-      testComponent.showIcon = true;
-      testComponent.iconType = 'lock';
+      testComponent.showIcon.set(true);
+      testComponent.iconType.set('lock');
       await updateNonSignalsInput(fixture);
       expect(alert.nativeElement.querySelector('.ant-alert-icon').firstElementChild.classList).toContain('anticon');
       expect(alert.nativeElement.querySelector('.ant-alert-icon').firstElementChild.classList).toContain(
@@ -115,14 +110,14 @@ describe('alert', () => {
     it('should type work', async () => {
       const listOfType: TriAlertType[] = ['success', 'info', 'warning', 'error'];
       for (const type of listOfType) {
-        testComponent.type = type;
+        testComponent.type.set(type);
         await updateNonSignalsInput(fixture);
         expect(alert.nativeElement.querySelector('.ant-alert').classList).toContain(`ant-alert-${type}`);
       }
     });
 
     it('should action work', async () => {
-      testComponent.action = testComponent.template;
+      testComponent.action.set(testComponent.template);
       await updateNonSignalsInput(fixture);
       expect(alert.nativeElement.querySelector('.ant-alert-action').classList).not.toBeNull();
     });
@@ -132,7 +127,7 @@ describe('alert', () => {
     let fixture: ComponentFixture<TriDemoTestBannerComponent>;
     let alert: DebugElement;
 
-    beforeEach(async () => {
+    beforeEach(() => {
       fixture = TestBed.createComponent(TriDemoTestBannerComponent);
       alert = fixture.debugElement.query(By.directive(TriAlertComponent));
       fixture.autoDetectChanges();
@@ -151,7 +146,7 @@ describe('alert', () => {
       const alert = fixture.debugElement.query(By.directive(TriAlertComponent));
       await fixture.whenStable();
       expect(alert.nativeElement.querySelector('.ant-alert-icon')).toBeDefined();
-      expect(alert.nativeElement.querySelector('.ant-alert-icon').firstElementChild).not.toContain('anticon');
+      expect(alert.nativeElement.querySelector('.ant-alert-icon').firstElementChild.classList).not.toContain('anticon');
     });
   });
 
@@ -164,38 +159,36 @@ describe('alert', () => {
   template: `
     <ng-template #template>template</ng-template>
     <tri-alert
-      [banner]="banner"
-      [closeable]="closeable"
-      [closeText]="closeText"
-      [description]="description"
-      [message]="message"
-      [showIcon]="showIcon"
-      [iconType]="iconType"
-      [type]="type"
-      [action]="action"
+      [banner]="banner()"
+      [closeable]="closeable()"
+      [closeText]="closeText()"
+      [description]="description()"
+      [message]="message()"
+      [showIcon]="showIcon()"
+      [iconType]="iconType()"
+      [type]="type()"
+      [action]="action()"
       (onClose)="onClose($event)"
     />
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriDemoTestBasicComponent {
   @ViewChild('template', { static: false }) template!: TemplateRef<void>;
-  action: string | TemplateRef<void> | null = null;
-  banner = false;
-  closeable = false;
-  closeText: string | TemplateRef<void> | null = null;
-  description: string | TemplateRef<void> = 'description';
-  message: string | TemplateRef<void> = 'message';
-  showIcon = false;
-  iconType: string | null = null;
-  type: TriAlertType = 'info';
-  onClose = jasmine.createSpy('close callback');
+  readonly action = signal<string | TemplateRef<void> | null>(null);
+  readonly banner = signal(false);
+  readonly closeable = signal(false);
+  readonly closeText = signal<string | TemplateRef<void> | null>(null);
+  readonly description = signal<string | TemplateRef<void>>('description');
+  readonly message = signal<string | TemplateRef<void>>('message');
+  readonly showIcon = signal(false);
+  readonly iconType = signal<string | null>(null);
+  readonly type = signal<TriAlertType>('info');
+  onClose = vi.fn();
 }
 
 @Component({
   imports: [TriAlertModule],
-  template: `<tri-alert banner />`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<tri-alert banner />`
 })
 export class TriDemoTestBannerComponent {}
 
@@ -226,10 +219,10 @@ describe('NzAlertComponent', () => {
 
   beforeEach(() => {
     configChangeEvent$ = new Subject<string>();
-    const nzConfigServiceSpy = jasmine.createSpyObj('NzConfigService', {
-      getConfigChangeEventForComponent: configChangeEvent$.asObservable(),
-      getConfigForComponent: {}
-    });
+    const nzConfigServiceSpy = {
+      getConfigChangeEventForComponent: vi.fn().mockReturnValue(configChangeEvent$.asObservable()),
+      getConfigForComponent: vi.fn().mockReturnValue({})
+    };
 
     TestBed.configureTestingModule({
       providers: [
@@ -237,7 +230,10 @@ describe('NzAlertComponent', () => {
         { provide: TriConfigService, useValue: nzConfigServiceSpy },
         {
           provide: ChangeDetectorRef,
-          useValue: jasmine.createSpyObj('ChangeDetectorRef', ['markForCheck', 'detectChanges'])
+          useValue: {
+            markForCheck: vi.fn(),
+            detectChanges: vi.fn()
+          }
         }
       ]
     });
@@ -278,7 +274,7 @@ describe('NzAlertComponent', () => {
 
   it('should call cdr.markForCheck on config change event', async () => {
     fixture.detectChanges();
-    spyOn(cdr, 'markForCheck');
+    vi.spyOn(cdr, 'markForCheck');
 
     configChangeEvent$.next('alert');
     await fixture.whenStable();
@@ -302,11 +298,11 @@ describe('NzAlertComponent Animation', () => {
   });
 
   it('should add animation classes and emit onClose when animation ends', () => {
-    spyOn(component.onClose, 'emit');
+    vi.spyOn(component.onClose, 'emit');
     const element = fixture.nativeElement.querySelector('.ant-alert');
     const mockEvent = {
       target: element,
-      animationComplete: jasmine.createSpy('animationComplete')
+      animationComplete: vi.fn()
     } as TriSafeAny;
 
     component.onLeaveAnimationDone(mockEvent);
@@ -325,11 +321,11 @@ describe('NzAlertComponent Animation', () => {
 
   it('should handle no animation', () => {
     component.noAnimation = true;
-    spyOn(component.onClose, 'emit');
+    vi.spyOn(component.onClose, 'emit');
     const element = fixture.nativeElement.querySelector('.ant-alert');
     const mockEvent = {
       target: element,
-      animationComplete: jasmine.createSpy('animationComplete')
+      animationComplete: vi.fn()
     } as TriSafeAny;
 
     component.onLeaveAnimationDone(mockEvent);

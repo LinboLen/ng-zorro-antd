@@ -4,11 +4,13 @@
  */
 
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { ChangeDetectionStrategy, Component, TemplateRef, ViewChild } from '@angular/core';
-import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { vi } from 'vitest';
 
 import { TriConfigService, provideNzConfig } from 'ng-zorro-antd/core/config';
-import { dispatchEvent, dispatchMouseEvent, sleep } from 'ng-zorro-antd/core/testing';
+import { dispatchEvent, dispatchMouseEvent } from 'ng-zorro-antd/core/testing';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
 import { TriNotificationComponent } from './notification.component';
@@ -16,8 +18,7 @@ import { TriNotificationService } from './notification.service';
 
 @Component({
   selector: 'tri-test-notification',
-  template: `<ng-template let-data="data">test template content {{ data }}</ng-template>`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<ng-template let-data="data">test template content {{ data }}</ng-template>`
 })
 class TriTestNotificationComponent {
   @ViewChild(TemplateRef, { static: true }) demoTemplateRef!: TemplateRef<{
@@ -40,29 +41,28 @@ describe('notification', () => {
   // mock animationend event
   async function animationEnd(): Promise<void> {
     dispatchEvent(getMessageElement(), new AnimationEvent('animationend', { animationName: 'antNotificationFadeOut' }));
-    await fixture.whenStable();
+    await stabilize();
+  }
+
+  async function stabilize(ms?: number): Promise<void> {
+    if (ms) vi.advanceTimersByTime(ms);
+    await Promise.resolve();
+    fixture.detectChanges();
   }
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [provideNzConfig({ notification: { nzMaxStack: 2 } }), provideNzIconsTesting(), TriNotificationService]
     });
-
+    notificationService = TestBed.inject(TriNotificationService);
+    overlayContainer = TestBed.inject(OverlayContainer);
+    configService = TestBed.inject(TriConfigService);
     fixture = TestBed.createComponent(TriTestNotificationComponent);
   });
 
-  beforeEach(inject(
-    [TriNotificationService, OverlayContainer, TriConfigService],
-    (n: TriNotificationService, oc: OverlayContainer, c: TriConfigService) => {
-      notificationService = n;
-      overlayContainer = oc;
-      configService = c;
-    }
-  ));
-
-  afterEach(() => {
-    notificationService.remove();
-  });
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
+  afterEach(() => notificationService.remove());
 
   it('should open a message box with success', () => {
     notificationService.success('test-title', 'SUCCESS');
@@ -151,52 +151,50 @@ describe('notification', () => {
 
   it('should auto closed by 1s', async () => {
     notificationService.create('', '', 'EXISTS', { nzDuration: 1000 });
-    await fixture.whenStable();
+    await stabilize();
 
     overlayContainerElement = overlayContainer.getContainerElement();
     expect(overlayContainerElement.textContent).toContain('EXISTS');
 
-    await sleep(1000);
+    vi.advanceTimersByTime(1000);
     await animationEnd();
     expect(overlayContainerElement.textContent).not.toContain('EXISTS');
   });
 
   it('should not destroy when hovered', async () => {
     notificationService.create('', '', 'EXISTS', { nzDuration: 2500 });
-    await fixture.whenStable();
+    await stabilize();
 
     overlayContainerElement = overlayContainer.getContainerElement();
     const messageElement = getMessageElement();
     dispatchMouseEvent(messageElement, 'mouseenter');
-    await sleep(2500);
-    await fixture.whenStable();
+    await stabilize(2500);
     expect(overlayContainerElement.textContent).toContain('EXISTS');
 
     dispatchMouseEvent(messageElement, 'mouseleave');
-    await sleep(2500);
+    vi.advanceTimersByTime(2500);
     await animationEnd();
     expect(overlayContainerElement.textContent).not.toContain('EXISTS');
-  }, 6000);
+  });
 
   it('should not destroyed automatically but manually', async () => {
     const filledMessage = notificationService.success('title', 'SUCCESS', { nzDuration: 0 });
     fixture.detectChanges();
 
-    await sleep(5000);
-    await fixture.whenStable();
+    await stabilize(5000);
     overlayContainerElement = overlayContainer.getContainerElement();
     expect(overlayContainerElement.textContent).toContain('SUCCESS');
 
     notificationService.remove(filledMessage.messageId);
-    await fixture.whenStable();
+    await stabilize();
     expect(overlayContainerElement.textContent).not.toContain('SUCCESS');
-  }, 6000);
+  });
 
   it('should keep the balance of messages length and then remove all', async () => {
     for (const id of [1, 2, 3]) {
       const content = `SUCCESS-${id}`;
       notificationService.success('', content);
-      await fixture.whenStable();
+      await stabilize();
 
       overlayContainerElement = overlayContainer.getContainerElement();
       expect(overlayContainerElement.textContent).toContain(content);
@@ -207,15 +205,14 @@ describe('notification', () => {
     }
 
     notificationService.remove();
-    await fixture.whenStable();
+    await stabilize();
     expect(overlayContainerElement.textContent).not.toContain('SUCCESS-3');
     expect((notificationService as any).container).toBeUndefined(); // eslint-disable-line @typescript-eslint/no-explicit-any
   });
 
   it('should destroy without animation', async () => {
     notificationService.error('', 'EXISTS', { nzDuration: 1000, nzAnimate: false });
-    await sleep(1000);
-    await fixture.whenStable();
+    await stabilize(1000);
     overlayContainerElement = overlayContainer.getContainerElement();
     expect(overlayContainerElement.textContent).not.toContain('EXISTS');
   });
@@ -259,7 +256,7 @@ describe('notification', () => {
     overlayContainerElement = overlayContainer.getContainerElement();
     expect(overlayContainerElement.textContent).toContain('oldData');
     notificationService.template(fixture.componentInstance.demoTemplateRef, { nzData: 'newData', nzKey: 'exists' });
-    await fixture.whenStable();
+    await stabilize();
     expect(overlayContainerElement.textContent).toContain('newData');
   });
 
@@ -271,7 +268,7 @@ describe('notification', () => {
     expect(messageId).toEqual('exists');
 
     messageId = notificationService.create('success', 'Title', 'SHOULD NOT CHANGE', { nzKey: 'exists' }).messageId;
-    await fixture.whenStable();
+    await stabilize();
     expect(messageId).toEqual('exists');
     expect(overlayContainerElement.textContent).not.toContain('EXISTS');
     expect(overlayContainerElement.textContent).toContain('Title');

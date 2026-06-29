@@ -4,18 +4,10 @@
  */
 
 import { OverlayContainer } from '@angular/cdk/overlay';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideZoneChangeDetection,
-  TemplateRef,
-  ViewChild,
-  inject
-} from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, inject as testingInject, TestBed } from '@angular/core/testing';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { Component, TemplateRef, ViewChild, inject, signal } from '@angular/core';
+import { ComponentFixture, inject as testingInject, TestBed } from '@angular/core/testing';
 
-import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 
 import { TriModalRef } from './modal-ref';
 import { TriModalTitleDirective } from './modal-title.directive';
@@ -30,13 +22,9 @@ describe('modal title directive', () => {
   let modalService: TriModalService;
 
   beforeEach(() => {
-    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [TriModalService, provideNoopAnimations(), provideZoneChangeDetection()]
+      providers: [TriModalService, provideNzNoAnimation()]
     });
-  });
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(TestDirectiveTitleComponent);
     testComponent = fixture.componentInstance;
     fixture.detectChanges();
@@ -56,27 +44,22 @@ describe('modal title directive', () => {
   it('should work with template', () => {
     testComponent.showModal();
     fixture.detectChanges();
-    expect(testComponent.isVisible).toBe(true);
+    expect(testComponent.isVisible()).toBe(true);
     const modalRef = testComponent.modalComponent.getModalRef();
     expect(modalRef!.getConfig().title).toEqual(testComponent.modalTitleDir);
-
-    testComponent.handleCancel();
-    fixture.detectChanges();
   });
 
-  it('should work with template when init opened', fakeAsync(() => {
-    const initOpenedComponentFixture = TestBed.createComponent(TestDirectiveTitleWithInitOpenedComponent);
-    const initOpenedComponent = initOpenedComponentFixture.componentInstance;
-    initOpenedComponentFixture.detectChanges();
-    expect(initOpenedComponent.isVisible).toBe(true);
-    flush();
-    initOpenedComponentFixture.detectChanges();
+  it('should work with template when init opened', async () => {
+    const fixture = TestBed.createComponent(TestDirectiveTitleWithInitOpenedComponent);
+    const initOpenedComponent = fixture.componentInstance;
+    fixture.detectChanges();
+    expect(initOpenedComponent.isVisible()).toBe(true);
+
+    await fixture.whenStable();
+    fixture.detectChanges();
     const modalRef = initOpenedComponent.modalComponent.getModalRef();
-
     expect(modalRef!.getConfig().title).toEqual(initOpenedComponent.modalTitleDir);
-
-    initOpenedComponentFixture.detectChanges();
-  }));
+  });
 
   it('should work with service', () => {
     const modalRef = modalService.create({ content: TestDirectiveTitleInServiceComponent, title: '' });
@@ -96,20 +79,19 @@ describe('modal title directive', () => {
       </div>
       <div *modalTitle>Custom Modal Title</div>
     </tri-modal>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 class TestDirectiveTitleComponent {
-  isVisible = false;
+  readonly isVisible = signal(false);
   @ViewChild(TriModalComponent) modalComponent!: TriModalComponent;
-  @ViewChild(TriModalTitleDirective, { static: true, read: TemplateRef }) modalTitleDir!: TemplateRef<TriSafeAny>;
+  @ViewChild(TriModalTitleDirective, { static: true, read: TemplateRef }) modalTitleDir!: TemplateRef<void>;
 
   handleCancel(): void {
-    this.isVisible = false;
+    this.isVisible.set(false);
   }
 
   showModal(): void {
-    this.isVisible = true;
+    this.isVisible.set(true);
   }
 }
 
@@ -122,24 +104,22 @@ class TestDirectiveTitleComponent {
       </div>
       <div *modalTitle>Custom Modal Title</div>
     </tri-modal>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 class TestDirectiveTitleWithInitOpenedComponent {
-  isVisible = true;
+  readonly isVisible = signal(true);
   @ViewChild(TriModalComponent) modalComponent!: TriModalComponent;
-  @ViewChild(TriModalTitleDirective, { static: true, read: TemplateRef }) modalTitleDir!: TemplateRef<TriSafeAny>;
+  @ViewChild(TriModalTitleDirective, { static: true, read: TemplateRef }) modalTitleDir!: TemplateRef<void>;
 }
 
 @Component({
   imports: [TriModalModule],
-  template: `<div *modalTitle>Custom Modal Title</div>`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<div *modalTitle>Custom Modal Title</div>`
 })
 class TestDirectiveTitleInServiceComponent {
   readonly modalRef = inject(TriModalRef);
 
-  @ViewChild(TriModalTitleDirective, { static: true, read: TemplateRef }) modalTitleDir!: TemplateRef<TriSafeAny>;
+  @ViewChild(TriModalTitleDirective, { static: true, read: TemplateRef }) modalTitleDir!: TemplateRef<void>;
 
   handleCancel(): void {
     this.modalRef.close();

@@ -18,7 +18,7 @@ import { TriResizableModule, TriResizeEvent, TriResizeHandleOption } from 'ng-zo
         [gridColumnCount]="24"
         [span]="col()"
       >
-        <tri-resize-handles [directions]="directions" />
+        <tri-resize-handles [directions]="directions()" />
         col-{{ col() }}
       </div>
       <div class="col right" tri-col [span]="24 - col()">col-{{ 24 - col() }}</div>
@@ -44,12 +44,12 @@ import { TriResizableModule, TriResizeEvent, TriResizeHandleOption } from 'ng-zo
 export class TriDemoResizableGridComponent {
   readonly col = signal(8);
   id = -1;
-  directions: TriResizeHandleOption[] = [
+  readonly directions = signal<TriResizeHandleOption[]>([
     {
       direction: 'right',
       cursorType: 'grid'
     }
-  ];
+  ]);
 
   onResize({ col }: TriResizeEvent): void {
     cancelAnimationFrame(this.id);

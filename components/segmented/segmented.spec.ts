@@ -4,17 +4,20 @@
  */
 
 import { DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
-import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { Component, DebugElement, signal } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
+
+import { vi } from 'vitest';
 
 import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import {
   dispatchEvent,
   dispatchKeyboardEvent,
   dispatchMouseEvent,
-  testDirectionality
+  testDirectionality,
+  updateNonSignalsInput
 } from 'ng-zorro-antd/core/testing';
 import { TriSizeLDSType } from 'ng-zorro-antd/core/types';
 
@@ -24,9 +27,8 @@ import { TriSegmentedOptions } from './types';
 
 describe('segmented', () => {
   beforeEach(() => {
-    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideNzNoAnimation(), provideZoneChangeDetection()]
+      providers: [provideNzNoAnimation()]
     });
   });
 
@@ -42,7 +44,7 @@ describe('segmented', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(TriSegmentedTestComponent);
       component = fixture.componentInstance;
-      spyOn(component, 'handleValueChange');
+      vi.spyOn(component, 'handleValueChange');
       segmentedComponent = fixture.debugElement.query(By.directive(TriSegmentedComponent));
       fixture.detectChanges();
     });
@@ -50,17 +52,17 @@ describe('segmented', () => {
     it('should support block mode', () => {
       const segmentedElement: HTMLElement = segmentedComponent.nativeElement;
       expect(segmentedElement.classList).not.toContain('ant-segmented-block');
-      component.block = true;
+      component.block.set(true);
       fixture.detectChanges();
       expect(segmentedElement.classList).toContain('ant-segmented-block');
     });
 
     it('should support size', () => {
       const segmentedElement: HTMLElement = segmentedComponent.nativeElement;
-      component.size = 'large';
+      component.size.set('large');
       fixture.detectChanges();
       expect(segmentedElement.classList).toContain('ant-segmented-lg');
-      component.size = 'small';
+      component.size.set('small');
       fixture.detectChanges();
       expect(segmentedElement.classList).toContain('ant-segmented-sm');
     });
@@ -68,25 +70,23 @@ describe('segmented', () => {
     it('should support vertical mode', () => {
       const segmentedElement: HTMLElement = segmentedComponent.nativeElement;
       expect(segmentedElement.classList).not.toContain('ant-segmented-vertical');
-      component.vertical = true;
+      component.vertical.set(true);
       fixture.detectChanges();
       expect(segmentedElement.classList).toContain('ant-segmented-vertical');
     });
 
-    it('should support round shape and trigger animation state on interaction', fakeAsync(() => {
+    it('should support round shape and trigger animation state on interaction', async () => {
       const segmentedElement: HTMLElement = segmentedComponent.nativeElement;
       expect(segmentedElement.classList).not.toContain('ant-segmented-shape-round');
-      component.shape = 'round';
+      component.shape.set('round');
       fixture.detectChanges();
       expect(segmentedElement.classList).toContain('ant-segmented-shape-round');
       const theSecondElement = getSegmentedOptionByIndex(1);
-      tick(0);
-      fixture.detectChanges();
+      await stabilize(fixture);
       dispatchMouseEvent(theSecondElement, 'click');
-      tick(100);
-      fixture.detectChanges();
+      await stabilize(fixture, 100);
       expect(segmentedElement.classList).toContain('ant-segmented-shape-round');
-    }));
+    });
 
     it('should be auto selected the first option when if no value is set', async () => {
       const theFirstElement = getSegmentedOptionByIndex(0);
@@ -116,13 +116,13 @@ describe('segmented', () => {
     });
 
     it('should support object options', async () => {
-      component.options = [
+      component.options.set([
         'Daily',
         { label: 'Weekly', value: 'Weekly', disabled: true },
         'Monthly',
         { label: 'Quarterly', value: 'Quarterly', disabled: true },
         'Yearly'
-      ];
+      ]);
       fixture.detectChanges();
       await fixture.whenStable();
       fixture.detectChanges();
@@ -153,7 +153,7 @@ describe('segmented', () => {
       const theFirstElement = getSegmentedOptionByIndex(0);
       const theSecondElement = getSegmentedOptionByIndex(1);
 
-      component.disabled = true;
+      component.disabled.set(true);
       fixture.detectChanges();
       await fixture.whenStable();
       fixture.detectChanges();
@@ -179,62 +179,55 @@ describe('segmented', () => {
         theThirdElement = getSegmentedOptionByIndex(2);
       });
 
-      it('should right arrow works', fakeAsync(() => {
+      it('should right arrow works', async () => {
         dispatchKeyboardEvent(theFirstElement, 'keydown', RIGHT_ARROW);
-        tick(100);
-        fixture.detectChanges();
+        await stabilize(fixture, 100);
         expect(theFirstElement.classList).not.toContain('ant-segmented-item-selected');
         expect(theSecondElement.classList).toContain('ant-segmented-item-selected');
 
         dispatchKeyboardEvent(theSecondElement, 'keydown', RIGHT_ARROW);
-        tick(100);
-        fixture.detectChanges();
+        await stabilize(fixture, 100);
         expect(theSecondElement.classList).not.toContain('ant-segmented-item-selected');
         expect(theThirdElement.classList).toContain('ant-segmented-item-selected');
 
         // when the last item is selected, the first item should be selected
         dispatchKeyboardEvent(theThirdElement, 'keydown', RIGHT_ARROW);
-        tick(100);
-        fixture.detectChanges();
+        await stabilize(fixture, 100);
         expect(theThirdElement.classList).not.toContain('ant-segmented-item-selected');
         expect(theFirstElement.classList).toContain('ant-segmented-item-selected');
-      }));
+      });
 
-      it('should left arrow works', fakeAsync(() => {
+      it('should left arrow works', async () => {
         // when the first item is selected, the last item should be selected
         dispatchKeyboardEvent(theFirstElement, 'keydown', LEFT_ARROW);
-        tick(100);
-        fixture.detectChanges();
+        await stabilize(fixture, 100);
         expect(theFirstElement.classList).not.toContain('ant-segmented-item-selected');
         expect(theThirdElement.classList).toContain('ant-segmented-item-selected');
 
         dispatchKeyboardEvent(theThirdElement, 'keydown', LEFT_ARROW);
-        tick(100);
-        fixture.detectChanges();
+        await stabilize(fixture, 100);
         expect(theThirdElement.classList).not.toContain('ant-segmented-item-selected');
         expect(theSecondElement.classList).toContain('ant-segmented-item-selected');
 
         dispatchKeyboardEvent(theSecondElement, 'keydown', LEFT_ARROW);
-        tick(100);
-        fixture.detectChanges();
+        await stabilize(fixture, 100);
         expect(theSecondElement.classList).not.toContain('ant-segmented-item-selected');
         expect(theFirstElement.classList).toContain('ant-segmented-item-selected');
-      }));
+      });
 
-      it('should not work if the segmented component is disabled', fakeAsync(() => {
-        component.disabled = true;
+      it('should not work if the segmented component is disabled', async () => {
+        component.disabled.set(true);
         fixture.detectChanges();
 
-        const offsetSpy = spyOn(segmentedComponent.componentInstance, 'onOffset');
+        const offsetSpy = vi.spyOn(segmentedComponent.componentInstance, 'onOffset');
 
         dispatchKeyboardEvent(theFirstElement, 'keydown', LEFT_ARROW);
-        tick(100);
-        fixture.detectChanges();
+        await stabilize(fixture, 100);
         expect(offsetSpy).not.toHaveBeenCalled();
-      }));
+      });
 
-      it('should not work if the segmented item is disabled', fakeAsync(() => {
-        component.options = [
+      it('should not work if the segmented item is disabled', async () => {
+        component.options.set([
           {
             value: 1,
             label: '1',
@@ -248,19 +241,18 @@ describe('segmented', () => {
             value: 3,
             label: '3'
           }
-        ];
+        ]);
         fixture.detectChanges();
 
-        const offsetSpy = spyOn(segmentedComponent.componentInstance, 'onOffset');
+        const offsetSpy = vi.spyOn(segmentedComponent.componentInstance, 'onOffset');
 
         dispatchKeyboardEvent(theFirstElement, 'keydown', LEFT_ARROW);
-        tick(100);
-        fixture.detectChanges();
+        await stabilize(fixture, 100);
         expect(offsetSpy).not.toHaveBeenCalled();
-      }));
+      });
 
-      it('should skip the disabled item', fakeAsync(() => {
-        component.options = [
+      it('should skip the disabled item', async () => {
+        component.options.set([
           {
             value: 1,
             label: '1'
@@ -274,21 +266,19 @@ describe('segmented', () => {
             value: 3,
             label: '3'
           }
-        ];
+        ]);
         fixture.detectChanges();
 
         dispatchKeyboardEvent(theFirstElement, 'keydown', RIGHT_ARROW);
-        tick(100);
-        fixture.detectChanges();
+        await stabilize(fixture, 100);
         expect(theFirstElement.classList).not.toContain('ant-segmented-item-selected');
         expect(theThirdElement.classList).toContain('ant-segmented-item-selected');
 
         dispatchKeyboardEvent(theFirstElement, 'keydown', LEFT_ARROW);
-        tick(100);
-        fixture.detectChanges();
+        await stabilize(fixture, 100);
         expect(theThirdElement.classList).not.toContain('ant-segmented-item-selected');
         expect(theFirstElement.classList).toContain('ant-segmented-item-selected');
-      }));
+      });
     });
   });
 
@@ -335,7 +325,7 @@ describe('segmented', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(TriSegmentedNgModelTestComponent);
       component = fixture.componentInstance;
-      spyOn(component, 'handleValueChange');
+      vi.spyOn(component, 'handleValueChange');
       segmentedComponent = fixture.debugElement.query(By.directive(TriSegmentedComponent));
       fixture.detectChanges();
     });
@@ -350,7 +340,7 @@ describe('segmented', () => {
       expect(theFirstElement.classList).toContain('ant-segmented-item-selected');
       expect(component.handleValueChange).toHaveBeenCalledTimes(0);
 
-      component.value = 2;
+      component.value.set(2);
       fixture.detectChanges();
       await fixture.whenStable();
       fixture.detectChanges();
@@ -365,7 +355,7 @@ describe('segmented', () => {
 
       expect(theFirstElement.classList).toContain('ant-segmented-item-selected');
       expect(theSecondElement.classList).not.toContain('ant-segmented-item-selected');
-      expect(component.value).toBe(1);
+      expect(component.value()).toBe(1);
       expect(component.handleValueChange).toHaveBeenCalledTimes(1);
     });
   });
@@ -413,7 +403,7 @@ describe('segmented', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(TriSegmentedVerticalTestComponent);
       component = fixture.componentInstance;
-      spyOn(component, 'handleValueChange');
+      vi.spyOn(component, 'handleValueChange');
       segmentedComponent = fixture.debugElement.query(By.directive(TriSegmentedComponent));
       fixture.detectChanges();
     });
@@ -457,47 +447,41 @@ describe('segmented', () => {
         theThirdElement = getSegmentedOptionByIndex(2);
       });
 
-      it('should down arrow works', fakeAsync(() => {
+      it('should down arrow works', async () => {
         dispatchKeyboardEvent(theFirstElement, 'keydown', DOWN_ARROW);
-        tick(100);
-        fixture.detectChanges();
+        await stabilize(fixture, 100);
         expect(theFirstElement.classList).not.toContain('ant-segmented-item-selected');
         expect(theSecondElement.classList).toContain('ant-segmented-item-selected');
 
         dispatchKeyboardEvent(theSecondElement, 'keydown', DOWN_ARROW);
-        tick(100);
-        fixture.detectChanges();
+        await stabilize(fixture, 100);
         expect(theSecondElement.classList).not.toContain('ant-segmented-item-selected');
         expect(theThirdElement.classList).toContain('ant-segmented-item-selected');
 
         // when the last item is selected, the first item should be selected
         dispatchKeyboardEvent(theThirdElement, 'keydown', DOWN_ARROW);
-        tick(100);
-        fixture.detectChanges();
+        await stabilize(fixture, 100);
         expect(theThirdElement.classList).not.toContain('ant-segmented-item-selected');
         expect(theFirstElement.classList).toContain('ant-segmented-item-selected');
-      }));
+      });
 
-      it('should up arrow works', fakeAsync(() => {
+      it('should up arrow works', async () => {
         // when the first item is selected, the last item should be selected
         dispatchKeyboardEvent(theFirstElement, 'keydown', UP_ARROW);
-        tick(100);
-        fixture.detectChanges();
+        await stabilize(fixture, 100);
         expect(theFirstElement.classList).not.toContain('ant-segmented-item-selected');
         expect(theThirdElement.classList).toContain('ant-segmented-item-selected');
 
         dispatchKeyboardEvent(theThirdElement, 'keydown', UP_ARROW);
-        tick(100);
-        fixture.detectChanges();
+        await stabilize(fixture, 100);
         expect(theThirdElement.classList).not.toContain('ant-segmented-item-selected');
         expect(theSecondElement.classList).toContain('ant-segmented-item-selected');
 
         dispatchKeyboardEvent(theSecondElement, 'keydown', UP_ARROW);
-        tick(100);
-        fixture.detectChanges();
+        await stabilize(fixture, 100);
         expect(theSecondElement.classList).not.toContain('ant-segmented-item-selected');
         expect(theFirstElement.classList).toContain('ant-segmented-item-selected');
-      }));
+      });
     });
   });
 
@@ -523,7 +507,7 @@ describe('segmented', () => {
     });
 
     it('should support custom radio group name', () => {
-      component.name = 'custom_name';
+      component.name.set('custom_name');
       fixture.detectChanges();
       const theFirstElement = getSegmentedOptionByIndex(0);
       expect(theFirstElement.querySelector('input')?.getAttribute('name')).toBe('custom_name');
@@ -547,7 +531,7 @@ describe('segmented animation', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TriSegmentedTestComponent);
     component = fixture.componentInstance;
-    spyOn(component, 'handleValueChange');
+    vi.spyOn(component, 'handleValueChange');
     segmentedComponent = fixture.debugElement.query(By.directive(TriSegmentedComponent));
   });
 
@@ -555,7 +539,7 @@ describe('segmented animation', () => {
     await fixture.whenStable();
     const segmentedComponentInstance = fixture.debugElement.query(By.directive(TriSegmentedComponent)).componentInstance;
 
-    expect(segmentedComponentInstance.showThumb()).toBeFalse();
+    expect(segmentedComponentInstance.showThumb()).toBe(false);
     expect(getThumbElement()).toBeFalsy();
   });
 
@@ -566,7 +550,7 @@ describe('segmented animation', () => {
 
     dispatchMouseEvent(theSecondElement, 'click');
     await fixture.whenStable();
-    expect(segmentedComponentInstance.showThumb()).toBeTrue();
+    expect(segmentedComponentInstance.showThumb()).toBe(true);
 
     const thumbElement = getThumbElement();
     expect(thumbElement.style.transform).toContain('translateX');
@@ -574,12 +558,12 @@ describe('segmented animation', () => {
 
     dispatchEvent(thumbElement, new TransitionEvent('transitionend', { propertyName: 'transform' }));
     await fixture.whenStable();
-    expect(segmentedComponentInstance.showThumb()).toBeFalse();
+    expect(segmentedComponentInstance.showThumb()).toBe(false);
     expect(theSecondElement.classList).toContain('ant-segmented-item-selected');
   });
 
   it('should animate thumb correctly in vertical mode', async () => {
-    component.vertical = true;
+    component.vertical.set(true);
     await fixture.whenStable();
 
     const segmentedComponentInstance = fixture.debugElement.query(By.directive(TriSegmentedComponent)).componentInstance;
@@ -587,7 +571,7 @@ describe('segmented animation', () => {
 
     dispatchMouseEvent(theSecondElement, 'click');
     await fixture.whenStable();
-    expect(segmentedComponentInstance.showThumb()).toBeTrue();
+    expect(segmentedComponentInstance.showThumb()).toBe(true);
 
     const thumbElement = getThumbElement();
     expect(thumbElement.style.transform).toContain('translateY');
@@ -595,35 +579,40 @@ describe('segmented animation', () => {
 
     dispatchEvent(thumbElement, new TransitionEvent('transitionend', { propertyName: 'transform' }));
     await fixture.whenStable();
-    expect(segmentedComponentInstance.showThumb()).toBeFalse();
+    expect(segmentedComponentInstance.showThumb()).toBe(false);
     expect(theSecondElement.classList).toContain('ant-segmented-item-selected');
   });
 });
 
+async function stabilize<T>(fixture: ComponentFixture<T>, ms?: number): Promise<void> {
+  fixture.detectChanges();
+  await updateNonSignalsInput(fixture, ms);
+  fixture.detectChanges();
+}
+
 @Component({
-  imports: [FormsModule, TriSegmentedModule],
+  imports: [TriSegmentedModule],
   template: `
     <tri-segmented
-      [size]="size"
-      [options]="options"
-      [disabled]="disabled"
-      [block]="block"
-      [vertical]="vertical"
-      [shape]="shape"
-      [name]="name"
+      [size]="size()"
+      [options]="options()"
+      [disabled]="disabled()"
+      [block]="block()"
+      [vertical]="vertical()"
+      [shape]="shape()"
+      [name]="name()"
       (valueChange)="handleValueChange($event)"
     />
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriSegmentedTestComponent {
-  size: TriSizeLDSType = 'default';
-  options: TriSegmentedOptions = [1, 2, 3];
-  block = false;
-  disabled = false;
-  vertical = false;
-  shape: 'default' | 'round' = 'default';
-  name?: string;
+  readonly size = signal<TriSizeLDSType>('default');
+  readonly options = signal<TriSegmentedOptions>([1, 2, 3]);
+  readonly block = signal(false);
+  readonly disabled = signal(false);
+  readonly vertical = signal(false);
+  readonly shape = signal<'default' | 'round'>('default');
+  readonly name = signal<string | undefined>(undefined);
 
   handleValueChange(_e: string | number): void {
     // empty
@@ -632,8 +621,7 @@ export class TriSegmentedTestComponent {
 
 @Component({
   imports: [TriSegmentedModule],
-  template: `<tri-segmented [options]="options" />`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<tri-segmented [options]="options" />`
 })
 export class TriSegmentedDomStructureTestComponent {
   options: TriSegmentedOptions = [
@@ -645,12 +633,11 @@ export class TriSegmentedDomStructureTestComponent {
 
 @Component({
   imports: [FormsModule, TriSegmentedModule],
-  template: `<tri-segmented [options]="options" [(ngModel)]="value" (ngModelChange)="handleValueChange($event)" />`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: ` <tri-segmented [options]="options()" [(ngModel)]="value" (ngModelChange)="handleValueChange($event)" /> `
 })
 export class TriSegmentedNgModelTestComponent {
-  options: TriSegmentedOptions = [1, 2, 3];
-  value: number | string = 1;
+  readonly options = signal<TriSegmentedOptions>([1, 2, 3]);
+  readonly value = signal<number | string>(1);
 
   handleValueChange(_e: string | number): void {
     // empty
@@ -659,21 +646,19 @@ export class TriSegmentedNgModelTestComponent {
 
 @Component({
   imports: [ReactiveFormsModule, TriSegmentedModule],
-  template: `<tri-segmented [options]="options" [formControl]="formControl" />`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<tri-segmented [options]="options()" [formControl]="formControl" />`
 })
 export class TriSegmentedInReactiveFormTestComponent {
-  options = ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly'];
+  readonly options = signal(['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly']);
   formControl = new FormControl('Weekly');
 }
 
 @Component({
   imports: [FormsModule, TriSegmentedModule],
-  template: `<tri-segmented [options]="options" vertical (valueChange)="handleValueChange($event)" />`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<tri-segmented [options]="options()" vertical (valueChange)="handleValueChange($event)" />`
 })
 export class TriSegmentedVerticalTestComponent {
-  options: TriSegmentedOptions = [1, 2, 3];
+  readonly options = signal<TriSegmentedOptions>([1, 2, 3]);
 
   handleValueChange(_e: string | number): void {
     // empty

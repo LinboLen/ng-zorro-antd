@@ -3,18 +3,12 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DebugElement,
-  provideZoneChangeDetection,
-  TemplateRef,
-  ViewChild
-} from '@angular/core';
+import { Component, DebugElement, signal, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { testDirectionality } from 'ng-zorro-antd/core/testing';
 import { TriShapeSCType } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
@@ -26,9 +20,8 @@ import { TriFloatButtonBadge, TriFloatButtonType } from './typings';
 
 describe('float-button', () => {
   beforeEach(() => {
-    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideNzIconsTesting(), provideNoopAnimations(), provideZoneChangeDetection()]
+      providers: [provideNzIconsTesting(), provideNzNoAnimation()]
     });
   });
 
@@ -47,21 +40,21 @@ describe('float-button', () => {
     });
 
     it('nzType', () => {
-      testComponent.type = 'primary';
+      testComponent.type.set('primary');
       fixture.detectChanges();
       const view = resultEl.nativeElement.querySelector('.ant-float-btn > .ant-btn-primary');
       expect(view.tagName).toBe('BUTTON');
     });
 
     it('nzShape', () => {
-      testComponent.shape = 'square';
+      testComponent.shape.set('square');
       fixture.detectChanges();
       expect(resultEl.nativeElement.classList).toContain('ant-float-btn-square');
     });
 
     it('nzHref && nzTarget', () => {
-      testComponent.target = '_blank';
-      testComponent.href = 'https://ng.ant.design/';
+      testComponent.target.set('_blank');
+      testComponent.href.set('https://ng.ant.design/');
       fixture.detectChanges();
       const view = resultEl.nativeElement.querySelector('.ant-float-btn > .ant-btn');
       expect(view.getAttribute('href') === 'https://ng.ant.design/').toBe(true);
@@ -69,14 +62,14 @@ describe('float-button', () => {
     });
 
     it('nzIcon', () => {
-      testComponent.icon = testComponent._icon;
+      testComponent.icon.set(testComponent._icon);
       fixture.detectChanges();
       const view = resultEl.nativeElement.getElementsByClassName('anticon-question-circle')[0];
       expect(view.getAttribute('nztype') === 'question-circle').toBe(true);
     });
 
     it('should nzIcon support passing nzType string only', () => {
-      testComponent.icon = 'file-search';
+      testComponent.icon.set('file-search');
       fixture.detectChanges();
       const view = resultEl.nativeElement.querySelector('nz-icon');
       expect(view.classList).toContain('anticon-file-search');
@@ -85,13 +78,13 @@ describe('float-button', () => {
     it('nzOnClick', () => {
       resultEl.nativeElement.getElementsByClassName('ant-btn')[0].dispatchEvent(new MouseEvent('click'));
       fixture.detectChanges();
-      expect(testComponent.isClick).toBe(true);
+      expect(testComponent.isClick()).toBe(true);
     });
 
     it('nzBadge', () => {
       expect(resultEl.nativeElement.querySelector('.ant-badge')).toBeNull();
       expect(floatButtonComponent.badge()).toBeNull();
-      testComponent.badge = { nzCount: 5 };
+      testComponent.badge.set({ nzCount: 5 });
       fixture.detectChanges();
       expect(floatButtonComponent.badge()).toEqual({
         nzCount: 5
@@ -108,13 +101,13 @@ describe('float-button', () => {
   imports: [TriFloatButtonModule, TriIconModule],
   template: `
     <tri-float-button
-      [icon]="icon"
-      [description]="description"
-      [href]="href"
-      [target]="target"
-      [type]="type"
-      [shape]="shape"
-      [badge]="badge"
+      [icon]="icon()"
+      [description]="description()"
+      [href]="href()"
+      [target]="target()"
+      [type]="type()"
+      [shape]="shape()"
+      [badge]="badge()"
       (onClick)="onClick($event)"
     />
     <ng-template #icon>
@@ -125,20 +118,20 @@ describe('float-button', () => {
   changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestFloatButtonBasicComponent {
-  href: string | null = null;
-  target: string | null = null;
-  type: TriFloatButtonType = 'default';
-  shape: TriShapeSCType = 'circle';
-  icon: string | TemplateRef<void> | null = null;
-  description: TemplateRef<void> | null = null;
-  badge: TriFloatButtonBadge | null = null;
+  readonly href = signal<string | null>(null);
+  readonly target = signal<string | null>(null);
+  readonly type = signal<TriFloatButtonType>('default');
+  readonly shape = signal<TriShapeSCType>('circle');
+  readonly icon = signal<string | TemplateRef<void> | null>(null);
+  readonly description = signal<TemplateRef<void> | null>(null);
+  readonly badge = signal<TriFloatButtonBadge | null>(null);
 
   @ViewChild('icon', { static: false }) _icon!: TemplateRef<void>;
   @ViewChild('description', { static: false }) _description!: TemplateRef<void>;
 
-  isClick: boolean = false;
+  readonly isClick = signal(false);
 
   onClick(value: boolean): void {
-    this.isClick = value;
+    this.isClick.set(value);
   }
 }

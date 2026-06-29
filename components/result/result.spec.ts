@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, DebugElement } from '@angular/core';
+import { Component, DebugElement, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -18,32 +18,36 @@ import { TriResultModule } from './result.module';
   selector: 'tri-test-basic-result',
   imports: [TriIconModule, TriResultModule],
   template: `
-    <tri-result [icon]="icon" [status]="status" [title]="title" [subTitle]="subtitle" [extra]="extra">
+    <tri-result
+      [icon]="icon()"
+      [status]="status()"
+      [title]="title()"
+      [subTitle]="subtitle()"
+      [extra]="extra()"
+    >
       <tri-icon tri-result-icon type="up" theme="outline" />
       <div tri-result-title>Content Title</div>
       <div tri-result-subtitle>Content SubTitle</div>
       <div tri-result-content>Content</div>
       <div tri-result-extra>Content Extra</div>
     </tri-result>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestResultBasicComponent {
-  icon?: string = 'success';
-  title?: string = 'Title';
-  status: TriResultStatusType = 'error';
-  subtitle?: string = 'SubTitle';
-  extra?: string = 'Extra';
+  readonly icon = signal<string | undefined>('success');
+  readonly title = signal<string | undefined>('Title');
+  readonly status = signal<TriResultStatusType>('error');
+  readonly subtitle = signal<string | undefined>('SubTitle');
+  readonly extra = signal<string | undefined>('Extra');
 }
 
 @Component({
   selector: 'tri-test-status-icon-result',
   imports: [TriResultModule],
-  template: `<tri-result [status]="status" title="Test Title" />`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<tri-result [status]="status()" title="Test Title" />`
 })
 export class TriTestResultStatusIconComponent {
-  status: TriResultStatusType = 'success';
+  readonly status = signal<TriResultStatusType>('success');
 }
 
 describe('nz-result', () => {
@@ -79,7 +83,10 @@ describe('nz-result', () => {
     });
 
     it('should content work', () => {
-      testComponent.icon = testComponent.title = testComponent.subtitle = testComponent.extra = undefined;
+      testComponent.icon.set(undefined);
+      testComponent.title.set(undefined);
+      testComponent.subtitle.set(undefined);
+      testComponent.extra.set(undefined);
       fixture.detectChanges();
 
       const iconView = resultEl.nativeElement.querySelector('.ant-result-icon');
@@ -97,7 +104,7 @@ describe('nz-result', () => {
     });
 
     it('should icon overlap status', () => {
-      testComponent.icon = 'smile-o';
+      testComponent.icon.set('smile-o');
       fixture.detectChanges();
 
       const iconView = resultEl.nativeElement.querySelector('.ant-result-icon');
@@ -126,7 +133,7 @@ describe('nz-result', () => {
     });
 
     it('should show default icon based on status when nzIcon is not provided', () => {
-      testComponent.status = 'success';
+      testComponent.status.set('success');
       fixture.detectChanges();
 
       const iconView = resultEl.nativeElement.querySelector('.ant-result-icon');
@@ -134,7 +141,7 @@ describe('nz-result', () => {
     });
 
     it('should show info icon when status is info', () => {
-      testComponent.status = 'info';
+      testComponent.status.set('info');
       fixture.detectChanges();
 
       const iconView = resultEl.nativeElement.querySelector('.ant-result-icon');
@@ -142,7 +149,7 @@ describe('nz-result', () => {
     });
 
     it('should show warning icon when status is warning', () => {
-      testComponent.status = 'warning';
+      testComponent.status.set('warning');
       fixture.detectChanges();
 
       const iconView = resultEl.nativeElement.querySelector('.ant-result-icon');
@@ -150,7 +157,7 @@ describe('nz-result', () => {
     });
 
     it('should show error icon when status is error', () => {
-      testComponent.status = 'error';
+      testComponent.status.set('error');
       fixture.detectChanges();
 
       const iconView = resultEl.nativeElement.querySelector('.ant-result-icon');

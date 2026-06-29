@@ -5,21 +5,11 @@
 
 import { CdkScrollable } from '@angular/cdk/overlay';
 import { CdkPortalOutlet, PortalModule } from '@angular/cdk/portal';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  EventEmitter,
-  OnInit,
-  Output,
-  ViewChild,
-  inject
-} from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
-import { TriI18nService, TriModalI18nInterface } from 'ng-zorro-antd/i18n';
+import { TriI18nPipe } from 'ng-zorro-antd/i18n';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriPipesModule } from 'ng-zorro-antd/pipes';
 
@@ -29,6 +19,15 @@ import { BaseModalContainerComponent } from './modal-container.directive';
 @Component({
   selector: 'tri-modal-confirm-container',
   exportAs: 'triModalConfirmContainer',
+  imports: [
+    TriPipesModule,
+    TriI18nPipe,
+    TriIconModule,
+    TriModalCloseComponent,
+    TriOutletModule,
+    PortalModule,
+    TriButtonModule
+  ],
   template: `
     <div
       #modalElement
@@ -68,7 +67,7 @@ import { BaseModalContainerComponent } from './modal-container.directive';
                   [loading]="cancelLoading"
                   [disabled]="cancelDisabled"
                 >
-                  {{ config.nzCancelText || locale.cancelText }}
+                  {{ config.nzCancelText || ('Modal.cancelText' | nzI18n) }}
                 </button>
               }
               @if (okText !== null) {
@@ -81,7 +80,7 @@ import { BaseModalContainerComponent } from './modal-container.directive';
                   [disabled]="okDisabled"
                   [danger]="okDanger"
                 >
-                  {{ config.nzOkText || locale.okText }}
+                  {{ config.nzOkText || ('Modal.okText' | nzI18n) }}
                 </button>
               }
             </div>
@@ -91,8 +90,6 @@ import { BaseModalContainerComponent } from './modal-container.directive';
     </div>
   `,
   hostDirectives: [CdkScrollable],
-  // Using OnPush for modal caused footer can not to detect changes. we can fix it when 8.x.
-  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     tabindex: '-1',
     role: 'dialog',
@@ -101,12 +98,9 @@ import { BaseModalContainerComponent } from './modal-container.directive';
     '[class.tri-modal-centered]': 'centered',
     '[style.zIndex]': 'config.nzZIndex',
     '(click)': 'onContainerClick($event)'
-  },
-  imports: [TriPipesModule, TriIconModule, TriModalCloseComponent, TriOutletModule, PortalModule, TriButtonModule]
+  }
 })
 export class TriModalConfirmContainerComponent extends BaseModalContainerComponent implements OnInit {
-  private i18n = inject(TriI18nService);
-
   @ViewChild(CdkPortalOutlet, { static: true }) set _portalOutlet(portalOutlet: CdkPortalOutlet) {
     this.portalOutlet = portalOutlet;
   }
@@ -115,15 +109,6 @@ export class TriModalConfirmContainerComponent extends BaseModalContainerCompone
   }
   @Output() override readonly cancelTriggered = new EventEmitter<void>();
   @Output() override readonly okTriggered = new EventEmitter<void>();
-  locale!: TriModalI18nInterface;
-
-  constructor() {
-    super();
-
-    this.i18n.localeChange.pipe(takeUntilDestroyed()).subscribe(() => {
-      this.locale = this.i18n.getLocaleData('Modal');
-    });
-  }
 
   ngOnInit(): void {
     this.setupMouseListeners(this.modalElementRef);

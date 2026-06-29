@@ -20,7 +20,7 @@ import { TriConfigService } from 'ng-zorro-antd/core/config';
 import { warn } from 'ng-zorro-antd/core/logger';
 import { overlayZIndexSetter } from 'ng-zorro-antd/core/overlay';
 import { IndexableObject, TriSafeAny } from 'ng-zorro-antd/core/types';
-import { isNotNil } from 'ng-zorro-antd/core/util';
+import { isNotNil, isTemplateRef } from 'ng-zorro-antd/core/util';
 
 import { MODAL_MASK_CLASS_NAME, TRI_CONFIG_MODULE_NAME, TRI_MODAL_DATA } from './modal-config';
 import { TriModalConfirmContainerComponent } from './modal-confirm-container.component';
@@ -34,10 +34,10 @@ type ContentType<T> = ComponentType<T> | TemplateRef<T> | string;
 
 @Injectable()
 export class TriModalService implements OnDestroy {
-  private injector = inject(Injector);
-  private configService = inject(TriConfigService);
-  private directionality = inject(Directionality);
-  private parentModal = inject(TriModalService, { skipSelf: true, optional: true });
+  private readonly injector = inject(Injector);
+  private readonly configService = inject(TriConfigService);
+  private readonly directionality = inject(Directionality);
+  private readonly parentModal = inject(TriModalService, { skipSelf: true, optional: true });
 
   private openModalsAtThisLevel: TriModalRef[] = [];
   private readonly afterAllClosedAtThisLevel = new Subject<void>();
@@ -53,7 +53,7 @@ export class TriModalService implements OnDestroy {
 
   readonly afterAllClose: Observable<void> = defer(() =>
     this.openModals.length ? this._afterAllClosed : this._afterAllClosed.pipe(startWith(undefined))
-  ) as Observable<void>;
+  );
 
   create<T, D = TriSafeAny, R = TriSafeAny>(config: ModalOptions<T, D, R>): TriModalRef<T, R> {
     return this.open<T, D, R>(config.content as ComponentType<T>, config);
@@ -132,7 +132,7 @@ export class TriModalService implements OnDestroy {
   }
 
   private createOverlay(config: ModalOptions): OverlayRef {
-    const globalConfig: TriSafeAny = this.configService.getConfigForComponent(TRI_CONFIG_MODULE_NAME) || {};
+    const globalConfig = this.configService.getConfigForComponent(TRI_CONFIG_MODULE_NAME) || {};
 
     return createOverlayRef(this.injector, {
       hasBackdrop: true,
@@ -179,12 +179,12 @@ export class TriModalService implements OnDestroy {
   ): TriModalRef<T, R> {
     const modalRef = new TriModalRef<T, R>(overlayRef, config, modalContainer);
 
-    if (componentOrTemplateRef instanceof TemplateRef) {
+    if (isTemplateRef(componentOrTemplateRef)) {
       modalContainer.attachTemplatePortal(
         new TemplatePortal<T>(componentOrTemplateRef, null!, {
           $implicit: config.data,
           modalRef
-        } as TriSafeAny)
+        } as T)
       );
     } else if (isNotNil(componentOrTemplateRef) && typeof componentOrTemplateRef !== 'string') {
       const injector = this.createInjector<T, D, R>(modalRef, config);

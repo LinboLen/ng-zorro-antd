@@ -3,12 +3,13 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { NO_ERRORS_SCHEMA, provideZoneChangeDetection } from '@angular/core';
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { testDirectionality } from 'ng-zorro-antd/core/testing';
-import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { vi } from 'vitest';
+
+import { testDirectionality, updateNonSignalsInput } from 'ng-zorro-antd/core/testing';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
 import { TriCommentComponent } from './comment.component';
@@ -19,18 +20,9 @@ import { TriDemoCommentNestedComponent } from './demo/nested';
 
 describe('comment', () => {
   beforeEach(() => {
-    // todo: use zoneless
     TestBed.configureTestingModule({
       providers: [provideNzIconsTesting(), provideZoneChangeDetection()],
       schemas: [NO_ERRORS_SCHEMA]
-    });
-    [
-      TriDemoCommentBasicComponent,
-      TriDemoCommentListComponent,
-      TriDemoCommentEditorComponent,
-      TriDemoCommentNestedComponent
-    ].forEach(comp => {
-      (comp as TriSafeAny).ɵcmp.onPush = false;
     });
   });
 
@@ -92,15 +84,15 @@ describe('comment', () => {
       );
     });
 
-    it('should list work', () => {
+    it('should list work', async () => {
       const fixture = TestBed.createComponent(TriDemoCommentListComponent);
       const component = fixture.componentInstance;
-      fixture.detectChanges();
+      fixture.autoDetectChanges();
+      await fixture.whenStable();
       let comments = fixture.debugElement.queryAll(By.directive(TriCommentComponent));
-      fixture.detectChanges();
-      expect(component.data.length === comments.length).toBeTruthy();
+      expect(component.data().length === comments.length).toBeTruthy();
 
-      component.data.forEach((e, i) => {
+      component.data().forEach((e, i) => {
         const comment = comments[i];
         expect(comment.nativeElement.querySelector('nz-avatar[nz-comment-avatar]')).toBeTruthy();
         expect(comment.nativeElement.querySelector('.ant-comment-content-author-name').innerText).toBe(e.author);
@@ -108,43 +100,49 @@ describe('comment', () => {
         expect(comment.nativeElement.querySelector('.ant-comment-content-author-time').innerText).toBe(e.datetime);
       });
 
-      component.data = [{ ...component.data[0] }];
-      fixture.detectChanges();
+      component.data.set([{ ...component.data()[0] }]);
+      await fixture.whenStable();
       comments = fixture.debugElement.queryAll(By.directive(TriCommentComponent));
-      expect(component.data.length === comments.length).toBeTruthy();
+      expect(component.data().length === comments.length).toBeTruthy();
     });
 
-    it('should editor work', fakeAsync(() => {
-      const fixture = TestBed.createComponent(TriDemoCommentEditorComponent);
-      const component = fixture.componentInstance;
-      fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css('nz-comment .ant-comment-content-detail textarea'))).toBeTruthy();
-      let comments = fixture.debugElement.queryAll(By.css('nz-list nz-comment'));
-      expect(comments.length).toBe(0);
-      expect(component.data().length).toBe(0);
+    describe('editor async submit', () => {
+      beforeEach(() => vi.useFakeTimers());
+      afterEach(() => vi.useRealTimers());
 
-      component.value.set('Test Comment 0');
-      component.handleSubmit();
-      tick(1000);
-      fixture.detectChanges();
+      it('should editor work', async () => {
+        const fixture = TestBed.createComponent(TriDemoCommentEditorComponent);
+        const component = fixture.componentInstance;
+        fixture.autoDetectChanges();
+        await fixture.whenStable();
+        expect(fixture.debugElement.query(By.css('nz-comment .ant-comment-content-detail textarea'))).toBeTruthy();
+        let comments = fixture.debugElement.queryAll(By.css('nz-list nz-comment'));
+        expect(comments.length).toBe(0);
+        expect(component.data().length).toBe(0);
 
-      component.value.set('Test Comment 1');
-      component.handleSubmit();
-      tick(1000);
-      fixture.detectChanges();
+        component.value.set('Test Comment 0');
+        component.handleSubmit();
+        vi.advanceTimersByTime(800);
+        await updateNonSignalsInput(fixture);
 
-      comments = fixture.debugElement.queryAll(By.css('nz-list nz-comment'));
-      expect(comments.length).toBeGreaterThan(0);
+        component.value.set('Test Comment 1');
+        component.handleSubmit();
+        vi.advanceTimersByTime(800);
+        await updateNonSignalsInput(fixture);
 
-      const data = component.data();
-      data.forEach((e, i) => {
-        const comment = comments[i];
-        expect(comment.nativeElement.querySelector('nz-avatar[nz-comment-avatar]')).toBeTruthy();
-        expect(comment.nativeElement.querySelector('.ant-comment-content-author-name').innerText).toBe(e.author);
-        expect(comment.nativeElement.querySelector('.ant-comment-content-detail p').innerText).toBe(e.content);
-        expect(comment.nativeElement.querySelector('.ant-comment-content-author-time').innerText).toBe(e.displayTime);
+        comments = fixture.debugElement.queryAll(By.css('nz-list nz-comment'));
+        expect(comments.length).toBeGreaterThan(0);
+
+        const data = component.data();
+        data.forEach((e, i) => {
+          const comment = comments[i];
+          expect(comment.nativeElement.querySelector('nz-avatar[nz-comment-avatar]')).toBeTruthy();
+          expect(comment.nativeElement.querySelector('.ant-comment-content-author-name').innerText).toBe(e.author);
+          expect(comment.nativeElement.querySelector('.ant-comment-content-detail p').innerText).toBe(e.content);
+          expect(comment.nativeElement.querySelector('.ant-comment-content-author-time').innerText).toBe(e.displayTime);
+        });
       });
-    }));
+    });
 
     it('should nested work', () => {
       const fixture = TestBed.createComponent(TriDemoCommentNestedComponent);

@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -37,7 +37,7 @@ describe('transition-patch', () => {
     const component = fixture.componentInstance;
     const buttonElement = fixture.debugElement.query(By.directive(TriTransitionPatchDirective)).nativeElement;
     expect(buttonElement.getAttribute('hidden')).toBeFalsy();
-    component.hidden = true;
+    component.hidden.set(true);
     fixture.detectChanges();
     expect(buttonElement.getAttribute('hidden')).toBe('');
   });
@@ -47,38 +47,34 @@ describe('transition-patch', () => {
     const component = fixture.componentInstance;
     const buttonElement = fixture.debugElement.query(By.directive(TriTransitionPatchDirective)).nativeElement;
     expect(buttonElement.getAttribute('hidden')).toBeFalsy();
-    component.hidden = undefined;
+    component.hidden.set(undefined);
     fixture.detectChanges();
-    expect(buttonElement.hasAttribute('hidden')).toBeFalse();
+    expect(buttonElement.hasAttribute('hidden')).toBe(false);
   });
 });
 
 @Component({
   imports: [TriButtonModule, TriTransitionPatchModule],
-  template: `<button tri-button></button>`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<button tri-button></button>`
 })
 export class TestTransitionPatchComponent {}
 
 @Component({
   imports: [TriButtonModule, TriTransitionPatchModule],
-  template: `<button tri-button hidden></button>`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<button tri-button hidden></button>`
 })
 export class TestTransitionPatchHiddenComponent {}
 
 @Component({
   imports: [TriButtonModule, TriTransitionPatchModule],
-  template: `<button tri-button hidden="abc"></button>`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<button tri-button hidden="abc"></button>`
 })
 export class TestTransitionPatchRestoreComponent {}
 
 @Component({
   imports: [TriButtonModule, TriTransitionPatchModule],
-  template: `<button tri-button [hidden]="hidden"></button>`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<button tri-button [hidden]="hidden()"></button>`
 })
 export class TestTransitionPatchHiddenBindingComponent {
-  hidden?: boolean = false;
+  readonly hidden = signal<unknown>(false);
 }

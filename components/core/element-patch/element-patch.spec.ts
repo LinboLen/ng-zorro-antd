@@ -24,8 +24,7 @@ describe('nz-element', () => {
 
 @Component({
   imports: [TriElementPatchDirective],
-  template: `<button tri-element>Action</button> `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<button tri-element>Action</button> `
 })
 export class TriTestElementPatchComponent {
   @ViewChild(TriElementPatchDirective) element!: TriElementPatchDirective;

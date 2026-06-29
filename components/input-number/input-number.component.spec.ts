@@ -4,22 +4,15 @@
  */
 
 import { DOWN_ARROW, ENTER, UP_ARROW } from '@angular/cdk/keycodes';
-import {
-  ApplicationRef,
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  provideZoneChangeDetection,
-  signal,
-  viewChild,
-  type WritableSignal
-} from '@angular/core';
+import { ApplicationRef, Component, ElementRef, signal, viewChild, type WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
+import { vi } from 'vitest';
+
 import { TRI_FORM_SIZE, TRI_FORM_VARIANT } from 'ng-zorro-antd/core/form';
-import { dispatchEvent, dispatchKeyboardEvent } from 'ng-zorro-antd/core/testing';
+import { dispatchEvent, dispatchKeyboardEvent, updateNonSignalsInput } from 'ng-zorro-antd/core/testing';
 import { TriSizeLDSType, TriStatus, TriVariant } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 import { TRI_SPACE_COMPACT_SIZE } from 'ng-zorro-antd/space';
@@ -44,37 +37,37 @@ describe('input-number', () => {
   });
 
   it('should set id', () => {
-    component.id = 'test-id';
+    component.id.set('test-id');
     fixture.detectChanges();
     expect(hostElement.querySelector('input')!.id).toBe('test-id');
   });
 
   it('should be apply size class', () => {
-    component.size = 'large';
+    component.size.set('large');
     fixture.detectChanges();
     expect(hostElement.classList).toContain('ant-input-number-lg');
-    component.size = 'small';
+    component.size.set('small');
     fixture.detectChanges();
     expect(hostElement.classList).toContain('ant-input-number-sm');
   });
 
   it('should be set placeholder', () => {
-    component.placeholder = 'Enter a number';
+    component.placeholder.set('Enter a number');
     fixture.detectChanges();
     expect(hostElement.querySelector('input')!.placeholder).toBe('Enter a number');
   });
 
   it('should be set status', () => {
-    component.status = 'error';
+    component.status.set('error');
     fixture.detectChanges();
     expect(hostElement.classList).toContain('ant-input-number-status-error');
-    component.status = 'warning';
+    component.status.set('warning');
     fixture.detectChanges();
     expect(hostElement.classList).toContain('ant-input-number-status-warning');
   });
 
   it('should be set step', () => {
-    component.step = 5;
+    component.step.set(5);
     fixture.detectChanges();
     expect(hostElement.querySelector('input')!.step).toBe('5');
     upStepByKeyboard();
@@ -86,8 +79,8 @@ describe('input-number', () => {
   });
 
   it('should be update value through the handler', () => {
-    component.min = 1;
-    component.max = 2;
+    component.min.set(1);
+    component.max.set(2);
     fixture.detectChanges();
     upStepByHandler();
     expect(component.value).toBe(1);
@@ -102,7 +95,7 @@ describe('input-number', () => {
   });
 
   it('should be update value through the handler with floating numbers', () => {
-    component.step = 0.1;
+    component.step.set(0.1);
     fixture.detectChanges();
     upStepByHandler();
     expect(component.value).toBe(0.1);
@@ -132,19 +125,19 @@ describe('input-number', () => {
     });
 
     it('with min & max', () => {
-      component.min = -5;
-      component.max = 5;
+      component.min.set(-5);
+      component.max.set(5);
       fixture.detectChanges();
 
       for (let index = 0; index < 10; index++) {
         upStepByHandler({ shiftKey: true });
       }
-      expect(component.value).toBe(component.max);
+      expect(component.value).toBe(component.max());
 
       for (let index = 0; index < 10; index++) {
         downStepByHandler({ shiftKey: true });
       }
-      expect(component.value).toBe(component.min);
+      expect(component.value).toBe(component.min());
     });
   });
 
@@ -180,8 +173,8 @@ describe('input-number', () => {
     });
 
     it('with range', () => {
-      component.min = 1;
-      component.max = 10;
+      component.min.set(1);
+      component.max.set(10);
 
       // Running change detection (first time)
       TestBed.inject(ApplicationRef).tick();
@@ -211,8 +204,8 @@ describe('input-number', () => {
     });
 
     it('with formatter', () => {
-      component.formatter = (value: number): string => `${value}%`;
-      component.parser = (value: string): number => parseFloat(value?.replace('%', ''));
+      component.formatter.set((value: number): string => `${value}%`);
+      component.parser.set((value: string): number => parseFloat(value?.replace('%', '')));
 
       // Running change detection (first time)
       TestBed.inject(ApplicationRef).tick();
@@ -249,28 +242,28 @@ describe('input-number', () => {
   });
 
   it('should be apply out-of-range class', async () => {
-    component.min = 1;
-    component.max = 2;
+    component.min.set(1);
+    component.max.set(2);
     component.value = 3;
     fixture.detectChanges();
-    await fixture.whenStable();
+    await updateNonSignalsInput(fixture);
     expect(hostElement.classList).toContain('ant-input-number-out-of-range');
 
     component.value = 0;
     fixture.detectChanges();
-    await fixture.whenStable();
+    await updateNonSignalsInput(fixture);
     expect(hostElement.classList).toContain('ant-input-number-out-of-range');
   });
 
   describe('should be set min and max with precision', () => {
     beforeEach(() => {
-      component.precision = 0;
+      component.precision.set(0);
       component.value = null;
     });
 
     it('max > 0', () => {
-      component.min = Number.MIN_SAFE_INTEGER;
-      component.max = 1.5;
+      component.min.set(Number.MIN_SAFE_INTEGER);
+      component.max.set(1.5);
 
       // Running change detection (first time)
       TestBed.inject(ApplicationRef).tick();
@@ -286,8 +279,8 @@ describe('input-number', () => {
     });
 
     it('max < 0', () => {
-      component.min = Number.MIN_SAFE_INTEGER;
-      component.max = -1.5;
+      component.min.set(Number.MIN_SAFE_INTEGER);
+      component.max.set(-1.5);
 
       // Running change detection (first time)
       TestBed.inject(ApplicationRef).tick();
@@ -303,8 +296,8 @@ describe('input-number', () => {
     });
 
     it('min > 0', () => {
-      component.min = 1.5;
-      component.max = Number.MAX_SAFE_INTEGER;
+      component.min.set(1.5);
+      component.max.set(Number.MAX_SAFE_INTEGER);
 
       // Running change detection (first time)
       TestBed.inject(ApplicationRef).tick();
@@ -320,8 +313,8 @@ describe('input-number', () => {
     });
 
     it('min < 0', () => {
-      component.min = -1.5;
-      component.max = Number.MAX_SAFE_INTEGER;
+      component.min.set(-1.5);
+      component.max.set(Number.MAX_SAFE_INTEGER);
 
       // Running change detection (first time)
       TestBed.inject(ApplicationRef).tick();
@@ -338,7 +331,7 @@ describe('input-number', () => {
   });
 
   it('should set value with precision', () => {
-    component.precision = 1;
+    component.precision.set(1);
 
     // Running change detection (first time)
     TestBed.inject(ApplicationRef).tick();
@@ -355,22 +348,22 @@ describe('input-number', () => {
   });
 
   it('should be set disabled', () => {
-    component.disabled = true;
+    component.disabled.set(true);
     fixture.detectChanges();
     expect(hostElement.querySelector('input')!.disabled).toBeTruthy();
     expect(hostElement.classList).toContain('ant-input-number-disabled');
   });
 
   it('should be set disabled by ng control', async () => {
-    component.controlDisabled = true;
+    component.controlDisabled.set(true);
     fixture.detectChanges();
-    await fixture.whenStable();
+    await updateNonSignalsInput(fixture);
     expect(hostElement.querySelector('input')!.disabled).toBeTruthy();
     expect(hostElement.classList).toContain('ant-input-number-disabled');
   });
 
   it('should be set readonly', () => {
-    component.readonly = true;
+    component.readonly.set(true);
     fixture.detectChanges();
     expect(hostElement.querySelector('input')!.readOnly).toBeTruthy();
     expect(hostElement.classList).toContain('ant-input-number-readonly');
@@ -386,7 +379,8 @@ describe('input-number', () => {
 
     component.value = 555;
     fixture.detectChanges();
-    await fixture.whenStable();
+    await updateNonSignalsInput(fixture);
+    fixture.detectChanges();
 
     component.inputNumber()._focus({ cursor: 'start' });
     expect(input.selectionStart).toBe(0);
@@ -401,7 +395,7 @@ describe('input-number', () => {
 
   describe('should variant work', () => {
     it('outlined', () => {
-      component.variant = 'outlined';
+      component.variant.set('outlined');
       fixture.detectChanges();
       expect(hostElement.classList).toContain('ant-input-number-outlined');
     });
@@ -409,7 +403,7 @@ describe('input-number', () => {
     it('filled', () => {
       fixture.detectChanges();
       expect(hostElement.classList).not.toContain('ant-input-number-filled');
-      component.variant = 'filled';
+      component.variant.set('filled');
       fixture.detectChanges();
       expect(hostElement.classList).toContain('ant-input-number-filled');
     });
@@ -417,7 +411,7 @@ describe('input-number', () => {
     it('borderless', () => {
       fixture.detectChanges();
       expect(hostElement.classList).not.toContain('ant-input-number-borderless');
-      component.variant = 'borderless';
+      component.variant.set('borderless');
       fixture.detectChanges();
       expect(hostElement.classList).toContain('ant-input-number-borderless');
     });
@@ -425,7 +419,7 @@ describe('input-number', () => {
     it('underlined', () => {
       fixture.detectChanges();
       expect(hostElement.classList).not.toContain('ant-input-number-underlined');
-      component.variant = 'underlined';
+      component.variant.set('underlined');
       fixture.detectChanges();
       expect(hostElement.classList).toContain('ant-input-number-underlined');
     });
@@ -437,7 +431,7 @@ describe('input-number', () => {
     downStepByKeyboard();
     expect(component.value).toBe(0);
 
-    component.keyboard = false;
+    component.keyboard.set(false);
     fixture.detectChanges();
     upStepByKeyboard();
     expect(component.value).toBe(0);
@@ -452,44 +446,44 @@ describe('input-number', () => {
     expect(component.value).toBe(0);
 
     component.value = 0;
-    component.disabled = true;
+    component.disabled.set(true);
     fixture.detectChanges();
     dispatchEvent(input, new WheelEvent('wheel', { deltaY: 100 }));
     expect(component.value).toBe(0);
 
     component.value = 1;
-    component.disabled = false;
-    component.readonly = true;
+    component.disabled.set(false);
+    component.readonly.set(true);
     fixture.detectChanges();
     dispatchEvent(input, new WheelEvent('wheel', { deltaY: 100 }));
     expect(component.value).toBe(1);
   });
 
   it('should be work onStep', () => {
-    const onStep = spyOn(component, 'onStep');
+    const onStep = vi.spyOn(component, 'onStep');
     const input = hostElement.querySelector('input')!;
 
     upStepByKeyboard();
-    expect(onStep).toHaveBeenCalledWith({ value: 1, offset: component.step, type: 'up', emitter: 'keyboard' });
+    expect(onStep).toHaveBeenCalledWith({ value: 1, offset: component.step(), type: 'up', emitter: 'keyboard' });
 
     downStepByKeyboard();
-    expect(onStep).toHaveBeenCalledWith({ value: 0, offset: component.step, type: 'down', emitter: 'keyboard' });
+    expect(onStep).toHaveBeenCalledWith({ value: 0, offset: component.step(), type: 'down', emitter: 'keyboard' });
 
     dispatchEvent(input, new WheelEvent('wheel', { deltaY: -100 }));
-    expect(onStep).toHaveBeenCalledWith({ value: 1, offset: component.step, type: 'up', emitter: 'wheel' });
+    expect(onStep).toHaveBeenCalledWith({ value: 1, offset: component.step(), type: 'up', emitter: 'wheel' });
 
     dispatchEvent(input, new WheelEvent('wheel', { deltaY: 100 }));
-    expect(onStep).toHaveBeenCalledWith({ value: 0, offset: component.step, type: 'down', emitter: 'wheel' });
+    expect(onStep).toHaveBeenCalledWith({ value: 0, offset: component.step(), type: 'down', emitter: 'wheel' });
 
     upStepByHandler();
-    expect(onStep).toHaveBeenCalledWith({ value: 1, offset: component.step, type: 'up', emitter: 'handler' });
+    expect(onStep).toHaveBeenCalledWith({ value: 1, offset: component.step(), type: 'up', emitter: 'handler' });
 
     downStepByHandler();
-    expect(onStep).toHaveBeenCalledWith({ value: 0, offset: component.step, type: 'down', emitter: 'handler' });
+    expect(onStep).toHaveBeenCalledWith({ value: 0, offset: component.step(), type: 'down', emitter: 'handler' });
   });
 
   it('should be hide controls', () => {
-    component.controls = false;
+    component.controls.set(false);
     fixture.detectChanges();
     expect(hostElement.querySelector('.ant-input-number-handler-wrap')).toBeNull();
   });
@@ -547,13 +541,13 @@ describe('input-number', () => {
 
   function upStepByHandler(eventInit?: MouseEventInit): void {
     const handler = hostElement.querySelector('.ant-input-number-handler-up')!;
-    handler.dispatchEvent(new MouseEvent('mousedown', eventInit));
-    handler.dispatchEvent(new MouseEvent('mouseup'));
+    handler.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, ...eventInit }));
+    handler.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
   }
   function downStepByHandler(eventInit?: MouseEventInit): void {
     const handler = hostElement.querySelector('.ant-input-number-handler-down')!;
-    handler.dispatchEvent(new MouseEvent('mousedown', eventInit));
-    handler.dispatchEvent(new MouseEvent('mouseup'));
+    handler.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, ...eventInit }));
+    handler.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
   }
 
   function upStepByKeyboard(): void {
@@ -611,19 +605,19 @@ describe('input-number with affixes or addons', () => {
   });
 
   it('should be apply disabled class', () => {
-    component.disabled = true;
+    component.disabled.set(true);
     fixture.detectChanges();
     expect(component.withContentAffixes().nativeElement.classList).toContain('ant-input-number-affix-wrapper-disabled');
   });
 
   it('should be apply readonly class', () => {
-    component.readonly = true;
+    component.readonly.set(true);
     fixture.detectChanges();
     expect(component.withContentAffixes().nativeElement.classList).toContain('ant-input-number-affix-wrapper-readonly');
   });
 
   it('should be apply borderless class', () => {
-    component.variant = 'borderless';
+    component.variant.set('borderless');
     fixture.detectChanges();
     expect(component.withContentAffixes().nativeElement.classList).toContain(
       'ant-input-number-affix-wrapper-borderless'
@@ -632,7 +626,7 @@ describe('input-number with affixes or addons', () => {
 
   describe('should be apply variant class', () => {
     it('outlined', () => {
-      component.variant = 'outlined';
+      component.variant.set('outlined');
       fixture.detectChanges();
       expect(component.withContentAffixes().nativeElement.classList).toContain(
         'ant-input-number-affix-wrapper-outlined'
@@ -644,7 +638,7 @@ describe('input-number with affixes or addons', () => {
       expect(component.withContentAffixes().nativeElement.classList).not.toContain(
         'ant-input-number-affix-wrapper-filled'
       );
-      component.variant = 'filled';
+      component.variant.set('filled');
       fixture.detectChanges();
       expect(component.withContentAffixes().nativeElement.classList).toContain('ant-input-number-affix-wrapper-filled');
     });
@@ -654,7 +648,7 @@ describe('input-number with affixes or addons', () => {
       expect(component.withContentAffixes().nativeElement.classList).not.toContain(
         'ant-input-number-affix-wrapper-borderless'
       );
-      component.variant = 'borderless';
+      component.variant.set('borderless');
       fixture.detectChanges();
       expect(component.withContentAffixes().nativeElement.classList).toContain(
         'ant-input-number-affix-wrapper-borderless'
@@ -666,7 +660,7 @@ describe('input-number with affixes or addons', () => {
       expect(component.withContentAffixes().nativeElement.classList).not.toContain(
         'ant-input-number-affix-wrapper-borderless'
       );
-      component.variant = 'underlined';
+      component.variant.set('underlined');
       fixture.detectChanges();
       expect(component.withContentAffixes().nativeElement.classList).toContain(
         'ant-input-number-affix-wrapper-underlined'
@@ -704,6 +698,7 @@ describe('finalSize', () => {
     fixture.detectChanges();
     expect(inputNumberElement.classList).toContain('ant-input-number-lg');
   });
+
   it('should set correctly the size from the compactSize signal', () => {
     TestBed.configureTestingModule({
       providers: [{ provide: TRI_SPACE_COMPACT_SIZE, useValue: compactSizeSignal }]
@@ -713,11 +708,11 @@ describe('finalSize', () => {
     fixture.detectChanges();
     expect(inputNumberElement.classList).toContain('ant-input-number-lg');
   });
+
   it('should set correctly the size from the size input ', () => {
-    TestBed.configureTestingModule({});
     fixture = TestBed.createComponent(TestInputNumberFinalSizeComponent);
     inputNumberElement = fixture.debugElement.query(By.directive(TriInputNumberComponent)).nativeElement;
-    fixture.componentInstance.size = 'large';
+    fixture.componentInstance.size.set('large');
     fixture.detectChanges();
     expect(inputNumberElement.classList).toContain('ant-input-number-lg');
   });
@@ -763,7 +758,6 @@ describe('finalVariant', () => {
   });
 
   it('should use nzVariant when no formVariant is provided', () => {
-    TestBed.configureTestingModule({});
     fixture = TestBed.createComponent(TestInputNumberFinalVariantComponent);
     inputNumberElement = fixture.debugElement.query(By.directive(TriInputNumberComponent)).nativeElement;
     fixture.componentInstance.variant.set('filled');
@@ -776,49 +770,48 @@ describe('finalVariant', () => {
   imports: [TriInputNumberModule, FormsModule],
   template: `
     <tri-input-number
-      [id]="id"
-      [size]="size"
-      [placeHolder]="placeholder"
-      [status]="status"
-      [step]="step"
-      [min]="min"
-      [max]="max"
-      [precision]="precision"
-      [disabled]="disabled"
-      [readOnly]="readonly"
-      [variant]="variant"
-      [keyboard]="keyboard"
-      [controls]="controls"
-      [parser]="parser"
-      [formatter]="formatter"
+      [id]="id()"
+      [size]="size()"
+      [placeHolder]="placeholder()"
+      [status]="status()"
+      [step]="step()"
+      [min]="min()"
+      [max]="max()"
+      [precision]="precision()"
+      [disabled]="disabled()"
+      [readOnly]="readonly()"
+      [variant]="variant()"
+      [keyboard]="keyboard()"
+      [controls]="controls()"
+      [parser]="parser()"
+      [formatter]="formatter()"
       [(ngModel)]="value"
-      [disabled]="controlDisabled"
-      [changeOnWheel]="changeOnWheel"
+      [disabled]="controlDisabled()"
+      [changeOnWheel]="changeOnWheel()"
       (onStep)="onStep($event)"
     />
   `,
   changeDetection: ChangeDetectionStrategy.Eager
 })
 class InputNumberTestComponent {
-  id: string | null = null;
-  size: TriSizeLDSType = 'default';
-  placeholder: string | null = null;
-  status: TriStatus = '';
-  step = 1;
-  min = Number.MIN_SAFE_INTEGER;
-  max = Number.MAX_SAFE_INTEGER;
-  precision: null | number = null;
-  disabled = false;
-  readonly = false;
-  variant: TriVariant = 'outlined';
-  keyboard = true;
-  controls = true;
-  changeOnWheel = true;
-  parser: ((value: string) => number) | undefined = undefined;
-  formatter: ((value: number) => string) | undefined = undefined;
-
+  readonly id = signal<string | null>(null);
+  readonly size = signal<TriSizeLDSType>('default');
+  readonly placeholder = signal<string | null>(null);
+  readonly status = signal<TriStatus>('');
+  readonly step = signal(1);
+  readonly min = signal(Number.MIN_SAFE_INTEGER);
+  readonly max = signal(Number.MAX_SAFE_INTEGER);
+  readonly precision = signal<null | number>(null);
+  readonly disabled = signal(false);
+  readonly readonly = signal(false);
+  readonly variant = signal<TriVariant>('outlined');
+  readonly keyboard = signal(true);
+  readonly controls = signal(true);
+  readonly changeOnWheel = signal(true);
+  readonly parser = signal<((value: string) => number) | undefined>(undefined);
+  readonly formatter = signal<((value: number) => string) | undefined>(undefined);
+  readonly controlDisabled = signal(false);
   value: number | null = null;
-  controlDisabled = false;
   inputNumber = viewChild.required(TriInputNumberComponent);
 
   get displayValue(): string {
@@ -835,12 +828,12 @@ class InputNumberTestComponent {
       #withPropAffixes
       prefix="Prefix"
       suffix="Suffix"
-      [disabled]="disabled"
-      [readOnly]="readonly"
-      [variant]="variant"
+      [disabled]="disabled()"
+      [readOnly]="readonly()"
+      [variant]="variant()"
     />
 
-    <tri-input-number #withContentAffixes [disabled]="disabled" [readOnly]="readonly" [variant]="variant">
+    <tri-input-number #withContentAffixes [disabled]="disabled()" [readOnly]="readonly()" [variant]="variant()">
       <span inputPrefix>Prefix</span>
       <span inputSuffix>Suffix</span>
     </tri-input-number>
@@ -849,12 +842,12 @@ class InputNumberTestComponent {
       #withPropAddons
       addonBefore="Before"
       addonAfter="After"
-      [disabled]="disabled"
-      [readOnly]="readonly"
-      [variant]="variant"
+      [disabled]="disabled()"
+      [readOnly]="readonly()"
+      [variant]="variant()"
     />
 
-    <tri-input-number #withContentAddons [disabled]="disabled" [readOnly]="readonly" [variant]="variant">
+    <tri-input-number #withContentAddons [disabled]="disabled()" [readOnly]="readonly()" [variant]="variant()">
       <span inputAddonBefore>Before</span>
       <span inputAddonAfter>After</span>
     </tri-input-number>
@@ -865,24 +858,23 @@ class InputNumberTestComponent {
       suffix="Suffix"
       addonBefore="Before"
       addonAfter="After"
-      [disabled]="disabled"
-      [readOnly]="readonly"
-      [variant]="variant"
+      [disabled]="disabled()"
+      [readOnly]="readonly()"
+      [variant]="variant()"
     />
 
-    <tri-input-number #withContentMix [disabled]="disabled" [readOnly]="readonly" [variant]="variant">
+    <tri-input-number #withContentMix [disabled]="disabled()" [readOnly]="readonly()" [variant]="variant()">
       <span inputPrefix>Prefix</span>
       <span inputSuffix>Suffix</span>
       <span inputAddonBefore>Before</span>
       <span inputAddonAfter>After</span>
     </tri-input-number>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 class InputNumberWithAffixesAndAddonsTestComponent {
-  disabled = false;
-  readonly = false;
-  variant: TriVariant = 'outlined';
+  readonly disabled = signal(false);
+  readonly readonly = signal(false);
+  readonly variant = signal<TriVariant>('outlined');
 
   readonly withPropAffixes = viewChild.required('withPropAffixes', { read: ElementRef });
   readonly withContentAffixes = viewChild.required('withContentAffixes', { read: ElementRef });
@@ -894,17 +886,16 @@ class InputNumberWithAffixesAndAddonsTestComponent {
 
 @Component({
   imports: [TriInputNumberModule],
-  template: `<tri-input-number [size]="size" />`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  selector: 'tri-test-input-number-final-size',
+  template: `<tri-input-number [size]="size()" />`
 })
 class TestInputNumberFinalSizeComponent {
-  size: TriSizeLDSType = 'default';
+  readonly size = signal<TriSizeLDSType>('default');
 }
 
 @Component({
   imports: [TriInputNumberModule],
-  template: `<tri-input-number [variant]="variant()" />`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<tri-input-number [variant]="variant()" />`
 })
 class TestInputNumberFinalVariantComponent {
   readonly variant = signal<TriVariant | undefined>(undefined);

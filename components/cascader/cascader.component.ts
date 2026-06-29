@@ -1130,6 +1130,7 @@ export class TriCascaderComponent
     if (this.disabled) {
       this.closeMenu();
     }
+    this.cdr.markForCheck();
   }
 
   closeMenu(): void {

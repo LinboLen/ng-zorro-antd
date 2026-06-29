@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TriCascaderModule, TriCascaderOption } from 'ng-zorro-antd/cascader';
@@ -56,9 +56,7 @@ const getOptions = (): TriCascaderOption[] => [
 })
 export class TriDemoCascaderMultipleComponent {
   readonly options: TriCascaderOption[] = getOptions();
-  values: TriSafeAny[][] | null = null;
+  readonly values = signal<TriSafeAny[][]>([]);
 
-  onChanges(values: TriSafeAny[][]): void {
-    console.log(values, this.values);
-  }
+  onChanges(_values: TriSafeAny[][]): void {}
 }

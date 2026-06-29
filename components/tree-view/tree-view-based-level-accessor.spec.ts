@@ -4,14 +4,15 @@
  */
 
 import { SelectionModel } from '@angular/cdk/collections';
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 
 import { cloneDeep } from 'lodash';
 
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
+import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
@@ -21,13 +22,13 @@ import { TriTreeNodeIndentLineDirective } from './indent';
 import { TriTreeNodeComponent } from './node';
 import { TriTreeNodePaddingDirective } from './padding';
 import { TriTreeViewComponent } from './tree-view';
-import { waitForNextAnimationFrame } from './tree-view-based-children-accessor.spec';
+import { waitForNextAnimationFrame } from './tree-view-testing';
 import { TriTreeViewModule } from './tree-view.module';
 
 describe('tree-view based on nzLevelAccessor', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideNzIconsTesting(), provideNoopAnimations()]
+      providers: [provideNzIconsTesting(), provideNzNoAnimation()]
     });
   });
 
@@ -99,7 +100,7 @@ describe('tree-view based on nzLevelAccessor', () => {
     it('should nzDirectoryTree work', async () => {
       const treeView = fixture.debugElement.query(By.css('nz-tree-view'));
       expect(treeView.nativeElement.classList).not.toContain('ant-tree-directory');
-      testComponent.directoryTree = true;
+      testComponent.directoryTree.set(true);
       fixture.changeDetectorRef.markForCheck();
       await fixture.whenStable();
       expect(treeView.nativeElement.classList).toContain('ant-tree-directory');
@@ -109,7 +110,7 @@ describe('tree-view based on nzLevelAccessor', () => {
     it('should nzBlockNode work', async () => {
       const treeView = fixture.debugElement.query(By.css('nz-tree-view'));
       expect(treeView.nativeElement.classList).not.toContain('ant-tree-block-node');
-      testComponent.blockNode = true;
+      testComponent.blockNode.set(true);
       fixture.changeDetectorRef.markForCheck();
       await fixture.whenStable();
       expect(treeView.nativeElement.classList).toContain('ant-tree-block-node');
@@ -258,24 +259,33 @@ describe('tree-view based on nzLevelAccessor', () => {
       const { tree } = testComponent;
       tree.expandAll();
       // wait for auditTime(0, animationFrameScheduler)
+      fixture.detectChanges();
       await waitForNextAnimationFrame();
       await fixture.whenStable();
+      fixture.detectChanges();
     });
 
     it('should nzTreeNodeIndentLine work', () => {
       const nodes = fixture.debugElement.queryAll(By.directive(TriTreeNodeIndentLineDirective));
       expect(nodes.length).toBe(8);
-      const [parent_1, parent_1_1, leaf_1_1_1, leaf_1_1_2, parent_1_2, leaf_1_2_1, parent_2, leaf_2_1] = nodes.map(
-        node => node.componentInstance as TriTreeNodeComponent<FlatNode>
+      nodes.forEach(node => {
+        (node.injector.get(TriTreeNodeIndentLineDirective) as TriSafeAny).buildIndents();
+      });
+      fixture.detectChanges();
+      const nodeMap = new Map(
+        nodes.map(node => {
+          const treeNode = node.componentInstance as TriTreeNodeComponent<FlatNode>;
+          return [treeNode.data.name, treeNode];
+        })
       );
-      expect(parent_1.indents()).toEqual([]);
-      expect(parent_1_1.indents()).toEqual([true]);
-      expect(leaf_1_1_1.indents()).toEqual([true, true]);
-      expect(leaf_1_1_2.indents()).toEqual([true, true]);
-      expect(parent_1_2.indents()).toEqual([true]);
-      expect(leaf_1_2_1.indents()).toEqual([true, false]);
-      expect(parent_2.indents()).toEqual([]);
-      expect(leaf_2_1.indents()).toEqual([false]);
+      expect(nodeMap.get('parent 1')!.indents()).toEqual([]);
+      expect(nodeMap.get('parent 1-1')!.indents()).toEqual([true]);
+      expect(nodeMap.get('leaf 1-1-1')!.indents()).toEqual([true, true]);
+      expect(nodeMap.get('leaf 1-1-2')!.indents()).toEqual([true, true]);
+      expect(nodeMap.get('parent 1-2')!.indents()).toEqual([true]);
+      expect(nodeMap.get('leaf 1-2-1')!.indents()).toEqual([true, false]);
+      expect(nodeMap.get('parent 2')!.indents()).toEqual([]);
+      expect(nodeMap.get('leaf 2-1')!.indents()).toEqual([false]);
     });
   });
 });
@@ -331,8 +341,8 @@ const flattenNodes = [
     <tri-tree-view
       [dataSource]="dataSource"
       [levelAccessor]="levelAccessor"
-      [directoryTree]="directoryTree"
-      [blockNode]="blockNode"
+      [directoryTree]="directoryTree()"
+      [blockNode]="blockNode()"
     >
       <tri-tree-node *treeNodeDef="let node" treeNodePadding [expandable]="false">
         <tri-tree-node-option
@@ -357,8 +367,7 @@ const flattenNodes = [
         </tri-tree-node-option>
       </tri-tree-node>
     </tri-tree-view>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestTreeViewBasicWithLevelAccessorComponent implements OnInit {
   @ViewChild(TriTreeViewComponent, { static: true }) tree!: TriTreeViewComponent<FlatNode>;
@@ -378,8 +387,8 @@ export class TriTestTreeViewBasicWithLevelAccessorComponent implements OnInit {
   );
   selectListSelection = new SelectionModel<FlatNode>(true);
   dataSource!: TriTreeViewFlatDataSource<TreeNode, FlatNode>;
-  directoryTree: boolean = false;
-  blockNode: boolean = false;
+  readonly directoryTree = signal(false);
+  readonly blockNode = signal(false);
 
   ngOnInit(): void {
     this.dataSource = new TriTreeViewFlatDataSource(this.tree, this.treeFlattener, TREE_DATA);
@@ -409,8 +418,7 @@ export class TriTestTreeViewBasicWithLevelAccessorComponent implements OnInit {
         </tri-tree-node-option>
       </tri-tree-node>
     </tri-tree-view>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestTreeViewLineComponent implements OnInit {
   @ViewChild(TriTreeViewComponent, { static: true }) tree!: TriTreeViewComponent<FlatNode>;

@@ -3,12 +3,14 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, NO_ERRORS_SCHEMA, provideZoneChangeDetection } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { Component, NO_ERRORS_SCHEMA, signal } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Subject } from 'rxjs';
 
+import { vi } from 'vitest';
+
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { TriConfigService } from 'ng-zorro-antd/core/config';
 import { testDirectionality } from 'ng-zorro-antd/core/testing';
 import { TriSizeDSType } from 'ng-zorro-antd/core/types';
@@ -29,9 +31,8 @@ import { TriDemoCardTabsComponent } from './demo/tabs';
 
 describe('card', () => {
   beforeEach(() => {
-    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideNoopAnimations(), provideNzIconsTesting(), provideZoneChangeDetection()],
+      providers: [provideNzNoAnimation(), provideNzIconsTesting()],
       schemas: [NO_ERRORS_SCHEMA]
     });
   });
@@ -126,7 +127,7 @@ describe('card', () => {
     const card = fixture.debugElement.query(By.directive(TriCardComponent));
     fixture.detectChanges();
     expect(card.nativeElement.classList).not.toContain('ant-card-small');
-    fixture.componentInstance.size = 'small';
+    fixture.componentInstance.size.set('small');
     fixture.detectChanges();
     expect(card.nativeElement.classList).toContain('ant-card-small');
   });
@@ -137,16 +138,15 @@ describe('card', () => {
 @Component({
   imports: [TriCardModule],
   template: `
-    <tri-card [size]="size">
+    <tri-card [size]="size()">
       <p>Card content</p>
       <p>Card content</p>
       <p>Card content</p>
     </tri-card>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 class TestCardSizeComponent {
-  size: TriSizeDSType = 'default';
+  readonly size = signal<TriSizeDSType>('default');
 }
 
 describe('card component', () => {
@@ -156,10 +156,10 @@ describe('card component', () => {
 
   beforeEach(() => {
     configChangeEvent$ = new Subject<void>();
-    const nzConfigServiceSpy = jasmine.createSpyObj('NzConfigService', {
-      getConfigChangeEventForComponent: configChangeEvent$.asObservable(),
-      getConfigForComponent: {}
-    });
+    const nzConfigServiceSpy = {
+      getConfigChangeEventForComponent: vi.fn().mockReturnValue(configChangeEvent$.asObservable()),
+      getConfigForComponent: vi.fn().mockReturnValue({})
+    };
 
     TestBed.configureTestingModule({
       imports: [TriCardModule, TriCardModule],
@@ -170,11 +170,10 @@ describe('card component', () => {
     component = fixture.componentInstance;
   });
 
-  it('should call markForCheck when changing nzConfig', fakeAsync(() => {
-    spyOn(component['cdr'], 'markForCheck');
+  it('should call markForCheck when changing nzConfig', () => {
+    vi.spyOn(component['cdr'], 'markForCheck');
     fixture.detectChanges();
     configChangeEvent$.next();
-    tick();
     expect(component['cdr'].markForCheck).toHaveBeenCalled();
-  }));
+  });
 });

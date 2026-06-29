@@ -7,23 +7,17 @@ import { Directionality } from '@angular/cdk/bidi';
 import { ENTER, TAB } from '@angular/cdk/keycodes';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import {
-  ApplicationRef,
-  ChangeDetectionStrategy,
-  Component,
-  DebugElement,
-  provideZoneChangeDetection,
-  TemplateRef,
-  ViewChild
-} from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ApplicationRef, Component, DebugElement, TemplateRef, ViewChild, signal } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable, Observer, of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
+import { vi } from 'vitest';
+
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
-import { dispatchKeyboardEvent, provideMockDirectionality } from 'ng-zorro-antd/core/testing';
+import { dispatchKeyboardEvent, provideMockDirectionality, sleep } from 'ng-zorro-antd/core/testing';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { TriI18nService } from 'ng-zorro-antd/i18n';
 import en_US from 'ng-zorro-antd/i18n/languages/en_US';
@@ -110,7 +104,7 @@ describe('upload', () => {
       it('should be upload a file', () => {
         expect(instance._nzChange).toBeUndefined();
         pageObject.postFile(FILE);
-        const req = httpMock.expectOne(instance.action as string);
+        const req = httpMock.expectOne(instance.action() as string);
         pageObject.expectChange();
         req.flush({});
         pageObject.expectChange('success');
@@ -119,7 +113,7 @@ describe('upload', () => {
 
       it('should notify progress when upload a large file', () => {
         pageObject.postLarge();
-        const req = httpMock.expectOne(instance.action as string);
+        const req = httpMock.expectOne(instance.action() as string);
         req.event({ type: 1, loaded: 0, total: 0 });
         pageObject.expectChange('progress');
         req.event({ type: 1, loaded: 10, total: 100 });
@@ -133,23 +127,23 @@ describe('upload', () => {
 
       it('should be error when using 404 http', () => {
         pageObject.postLarge();
-        const req = httpMock.expectOne(instance.action as string);
+        const req = httpMock.expectOne(instance.action() as string);
         req.error(new ProgressEvent('network'), { status: 404, statusText: 'not found' });
         pageObject.expectChange('error');
         httpMock.verify();
       });
 
       it('should limit 2 file when allow multiple', () => {
-        instance.limit = 2;
-        instance.multiple = true;
+        instance.limit.set(2);
+        instance.multiple.set(true);
         fixture.detectChanges();
         expect(instance._beforeUploadList.length).toBe(0);
         pageObject.postFile([...PNG_SMALL.target.files, ...PNG_SMALL.target.files, ...PNG_SMALL.target.files]);
-        expect(instance._beforeUploadList.length).toBe(instance.limit);
+        expect(instance._beforeUploadList.length).toBe(instance.limit());
       });
 
       it('should limit png file type', () => {
-        instance.fileType = 'image/png';
+        instance.fileType.set('image/png');
         fixture.detectChanges();
         expect(instance._beforeUploadList.length).toBe(0);
         pageObject.postFile(JPG_SMALL.target.files);
@@ -157,7 +151,7 @@ describe('upload', () => {
       });
 
       it('should limit 1kb size', () => {
-        instance.size = 1;
+        instance.size.set(1);
         fixture.detectChanges();
         expect(instance._beforeUploadList.length).toBe(0);
         pageObject.postLarge();
@@ -166,7 +160,7 @@ describe('upload', () => {
 
       it('should be abort when user canceled', () => {
         pageObject.postLarge();
-        const req = httpMock.expectOne(instance.action as string);
+        const req = httpMock.expectOne(instance.action() as string);
         req.event({ type: 1, loaded: 10, total: 100 });
         pageObject.expectLength(1);
         pageObject.getByCss('.anticon-delete').nativeElement.click();
@@ -193,7 +187,7 @@ describe('upload', () => {
       });
 
       it('should be upload a file via drag', () => {
-        instance.type = 'drag';
+        instance.type.set('drag');
         fixture.detectChanges();
         instance.comp.fileDrop({ type: 'dragover' } as TriSafeAny);
         instance.comp.fileDrop({ type: 'dragover' } as TriSafeAny);
@@ -202,7 +196,7 @@ describe('upload', () => {
       });
 
       it('should be show uploading status when via drag', () => {
-        instance.type = 'drag';
+        instance.type.set('drag');
         instance.fileList = [
           {
             uid: 1,
@@ -237,7 +231,7 @@ describe('upload', () => {
       describe('[nzActive]', () => {
         it('should be return string when is function', () => {
           const url = `/new-url`;
-          instance.action = () => url;
+          instance.action.set(() => url);
           fixture.detectChanges();
           pageObject.postSmall();
           const req = httpMock.expectOne(() => true);
@@ -246,7 +240,7 @@ describe('upload', () => {
 
         it('should be return Observable when is function', () => {
           const url = `/new-url-with-observable`;
-          instance.action = () => of(url);
+          instance.action.set(() => of(url));
           fixture.detectChanges();
           pageObject.postSmall();
           const req = httpMock.expectOne(() => true);
@@ -256,37 +250,37 @@ describe('upload', () => {
 
       describe('[nzData]', () => {
         it('should custom form data vis function', () => {
-          instance.data = () => ({ a: 1 });
+          instance.data.set(() => ({ a: 1 }));
           fixture.detectChanges();
           pageObject.postSmall();
-          const req = httpMock.expectOne(instance.action as string);
+          const req = httpMock.expectOne(instance.action() as string);
           expect((req.request.body as FormData).get('a')).toBe('1');
           req.flush({});
           httpMock.verify();
         });
 
         it('should custom form data via object', () => {
-          instance.data = { a: 1 };
+          instance.data.set({ a: 1 });
           fixture.detectChanges();
           pageObject.postSmall();
-          const req = httpMock.expectOne(instance.action as string);
+          const req = httpMock.expectOne(instance.action() as string);
           expect((req.request.body as FormData).get('a')).toBe('1');
           req.flush({});
           httpMock.verify();
         });
 
         it('should custom form data via Observable', () => {
-          instance.data = () => of({ a: 1 });
+          instance.data.set(() => of({ a: 1 }));
           fixture.detectChanges();
           pageObject.postSmall();
-          const req = httpMock.expectOne(instance.action as string);
+          const req = httpMock.expectOne(instance.action() as string);
           expect((req.request.body as FormData).get('a')).toBe('1');
           req.flush({});
           httpMock.verify();
         });
 
         it('should custom filter work', () => {
-          instance.filter = [{ name: 'custom', fn: () => [] }];
+          instance.filter.set([{ name: 'custom', fn: () => [] }]);
           fixture.detectChanges();
           expect(instance._beforeUploadList.length).toBe(0);
           pageObject.postLarge();
@@ -295,44 +289,44 @@ describe('upload', () => {
       });
 
       it('[nzDisabled]', () => {
-        instance.disabled = true;
+        instance.disabled.set(true);
         fixture.detectChanges();
         expect(pageObject.getByCss('.ant-upload-disabled') != null).toBe(true);
       });
 
       describe('[nzHeaders]', () => {
         it('should custom form data vis function', () => {
-          instance.headers = () => ({ a: '1' });
+          instance.headers.set(() => ({ a: '1' }));
           fixture.detectChanges();
           pageObject.postSmall();
-          const req = httpMock.expectOne(instance.action as string);
+          const req = httpMock.expectOne(instance.action() as string);
           expect(req.request.headers.get('a')).toBe('1');
           req.flush({});
           httpMock.verify();
         });
 
         it('should custom form data vis object', () => {
-          instance.headers = { a: '1' };
+          instance.headers.set({ a: '1' });
           fixture.detectChanges();
           pageObject.postSmall();
-          const req = httpMock.expectOne(instance.action as string);
+          const req = httpMock.expectOne(instance.action() as string);
           expect(req.request.headers.get('a')).toBe('1');
           req.flush({});
           httpMock.verify();
         });
 
         it('should custom form data vis Observable', () => {
-          instance.headers = () => of({ a: '1' });
+          instance.headers.set(() => of({ a: '1' }));
           fixture.detectChanges();
           pageObject.postSmall();
-          const req = httpMock.expectOne(instance.action as string);
+          const req = httpMock.expectOne(instance.action() as string);
           expect(req.request.headers.get('a')).toBe('1');
           req.flush({});
           httpMock.verify();
         });
 
         it('should be allow null header', () => {
-          instance.headers = null;
+          instance.headers.set(null);
           fixture.detectChanges();
           pageObject.postSmall().expectChange();
         });
@@ -340,13 +334,13 @@ describe('upload', () => {
 
       describe('when nzType is drag', () => {
         it('should working', () => {
-          instance.type = 'drag';
+          instance.type.set('drag');
           fixture.detectChanges();
           expect(pageObject.getByCss('.ant-upload-drag') != null).toBe(true);
         });
 
         it('should be remove item', () => {
-          instance.type = 'drag';
+          instance.type.set('drag');
           instance.fileList = [
             {
               uid: 1,
@@ -364,17 +358,17 @@ describe('upload', () => {
       });
 
       it('[nzShowButton]', () => {
-        instance.showButton = false;
+        instance.showButton.set(false);
         fixture.detectChanges();
-        const btnAreaEl = pageObject.getByCss(`.ant-upload-${instance.type}`);
+        const btnAreaEl = pageObject.getByCss(`.ant-upload-${instance.type()}`);
         expect(btnAreaEl.styles.display).toBe('none');
       });
 
       it('[nzWithCredentials]', () => {
-        instance.withCredentials = true;
+        instance.withCredentials.set(true);
         fixture.detectChanges();
         pageObject.postSmall();
-        const req = httpMock.expectOne(instance.action as string);
+        const req = httpMock.expectOne(instance.action() as string);
         expect(req.request.withCredentials).toBe(true);
         req.flush({});
         httpMock.verify();
@@ -382,7 +376,7 @@ describe('upload', () => {
 
       describe('[nzBeforeUpload]', () => {
         it('should be allow null', () => {
-          instance.beforeUpload = null;
+          instance.beforeUpload.set(null);
           fixture.detectChanges();
           expect(instance._beforeUpload).toBe(false);
           pageObject.postSmall();
@@ -391,8 +385,8 @@ describe('upload', () => {
 
         describe('using observable', () => {
           it('can return true', () => {
-            spyOn(instance, 'nzChange');
-            instance.beforeUpload = (): Observable<TriSafeAny> => of(true);
+            vi.spyOn(instance, 'nzChange').mockImplementation(() => {});
+            instance.beforeUpload.set((): Observable<TriSafeAny> => of(true));
             fixture.detectChanges();
             pageObject.postSmall();
             expect(instance.change).toHaveBeenCalled();
@@ -400,10 +394,10 @@ describe('upload', () => {
 
           it('can return same file', () => {
             let ret = false;
-            instance.beforeUpload = (file: TriUploadFile): Observable<TriSafeAny> => {
+            instance.beforeUpload.set((file: TriUploadFile): Observable<TriSafeAny> => {
               ret = true;
               return of(file);
-            };
+            });
             fixture.detectChanges();
             pageObject.postSmall();
             expect(ret).toBe(true);
@@ -411,10 +405,10 @@ describe('upload', () => {
 
           it('can return a string file', () => {
             let ret = false;
-            instance.beforeUpload = (): Observable<TriSafeAny> => {
+            instance.beforeUpload.set((): Observable<TriSafeAny> => {
               ret = true;
               return of('file');
-            };
+            });
             fixture.detectChanges();
             pageObject.postSmall();
             expect(ret).toBe(true);
@@ -422,10 +416,10 @@ describe('upload', () => {
 
           it('can return a blob file', () => {
             let ret = false;
-            instance.beforeUpload = (): Observable<TriSafeAny> => {
+            instance.beforeUpload.set((): Observable<TriSafeAny> => {
               ret = true;
               return of(new Blob([JSON.stringify(1, null, 2)], { type: 'application/json' }));
-            };
+            });
             fixture.detectChanges();
             pageObject.postSmall();
             expect(ret).toBe(true);
@@ -433,7 +427,7 @@ describe('upload', () => {
 
           it('cancel upload when return a false value', () => {
             expect(instance._nzChange).toBeUndefined();
-            instance.beforeUpload = (): Observable<TriSafeAny> => of(false);
+            instance.beforeUpload.set((): Observable<TriSafeAny> => of(false));
             fixture.detectChanges();
             pageObject.postSmall();
             expect(instance._nzChange).toBeUndefined();
@@ -441,9 +435,9 @@ describe('upload', () => {
 
           it('should be console.warn error', () => {
             let warnMsg = '';
-            console.warn = jasmine.createSpy().and.callFake((...res: string[]) => (warnMsg = res.join(' ')));
+            console.warn = vi.fn().mockImplementation((...res: string[]) => (warnMsg = res.join(' ')));
             expect(instance._nzChange).toBeUndefined();
-            instance.beforeUpload = (): Observable<TriSafeAny> => throwError(() => '');
+            instance.beforeUpload.set((): Observable<TriSafeAny> => throwError(() => ''));
             fixture.detectChanges();
             pageObject.postSmall();
             expect(warnMsg).toContain(`Unhandled upload beforeUpload error`);
@@ -451,99 +445,102 @@ describe('upload', () => {
         });
 
         describe('using promise', () => {
-          it('should upload when promise resolves to true', fakeAsync(() => {
+          beforeEach(() => vi.useFakeTimers());
+          afterEach(() => vi.useRealTimers());
+
+          it('should upload when promise resolves to true', () => {
             let hookExecuted = false;
-            instance.beforeUpload = (): Promise<boolean> => {
+            instance.beforeUpload.set((): Promise<boolean> => {
               hookExecuted = true;
               return Promise.resolve(true);
-            };
+            });
             fixture.detectChanges();
             pageObject.postSmall();
-            tick();
+            vi.advanceTimersByTime(0);
             expect(hookExecuted).toBe(true);
-          }));
+          });
 
-          it('should upload when promise resolves to file', fakeAsync(() => {
+          it('should upload when promise resolves to file', () => {
             let hookExecuted = false;
-            instance.beforeUpload = (file: TriUploadFile): Promise<TriUploadFile> => {
+            instance.beforeUpload.set((file: TriUploadFile): Promise<TriUploadFile> => {
               hookExecuted = true;
               return Promise.resolve(file);
-            };
+            });
             fixture.detectChanges();
             pageObject.postSmall();
-            tick();
+            vi.advanceTimersByTime(0);
             expect(hookExecuted).toBe(true);
-          }));
+          });
 
-          it('should upload with blob when promise resolves to blob', fakeAsync(() => {
+          it('should upload with blob when promise resolves to blob', () => {
             let hookExecuted = false;
             const testBlob = new Blob(['test content'], { type: 'text/plain' });
-            instance.beforeUpload = (): Promise<Blob> => {
+            instance.beforeUpload.set((): Promise<Blob> => {
               hookExecuted = true;
               return Promise.resolve(testBlob);
-            };
+            });
             fixture.detectChanges();
             pageObject.postSmall();
-            tick();
+            vi.advanceTimersByTime(0);
             expect(hookExecuted).toBe(true);
-          }));
+          });
 
-          it('should cancel upload when promise resolves to false', fakeAsync(() => {
+          it('should cancel upload when promise resolves to false', () => {
             expect(instance._nzChange).toBeUndefined();
-            instance.beforeUpload = (): Promise<boolean> => Promise.resolve(false);
+            instance.beforeUpload.set((): Promise<boolean> => Promise.resolve(false));
             fixture.detectChanges();
             pageObject.postSmall();
-            tick();
+            vi.advanceTimersByTime(0);
             expect(instance._nzChange).toBeUndefined();
-          }));
+          });
 
-          it('should work with promise that resolves to boolean true', fakeAsync(() => {
+          it('should work with promise that resolves to boolean true', () => {
             let hookCalled = false;
-            instance.beforeUpload = (): Promise<boolean> => {
+            instance.beforeUpload.set((): Promise<boolean> => {
               hookCalled = true;
               return Promise.resolve(true);
-            };
+            });
             fixture.detectChanges();
             pageObject.postSmall();
-            tick();
+            vi.advanceTimersByTime(0);
             expect(hookCalled).toBe(true);
-          }));
+          });
 
-          it('should cancel upload when promise rejects with false', fakeAsync(() => {
+          it('should cancel upload when promise rejects with false', () => {
             expect(instance._nzChange).toBeUndefined();
-            instance.beforeUpload = (): Promise<boolean> => Promise.reject(false);
+            instance.beforeUpload.set((): Promise<boolean> => Promise.reject(false));
             fixture.detectChanges();
             pageObject.postSmall();
-            tick();
+            vi.advanceTimersByTime(0);
             expect(instance._nzChange).toBeUndefined();
-          }));
+          });
         });
       });
 
       describe('[nzFilter]', () => {
         it('should be custom limit', () => {
-          instance.multiple = true;
-          instance.limit = 1;
-          instance.filter = [
+          instance.multiple.set(true);
+          instance.limit.set(1);
+          instance.filter.set([
             {
               name: 'limit',
-              fn: (fileList: TriUploadFile[]) => fileList.slice(-instance.limit)
+              fn: (fileList: TriUploadFile[]) => fileList.slice(-instance.limit())
             }
-          ];
+          ]);
           fixture.detectChanges();
           expect(instance._beforeUploadList.length).toBe(0);
           pageObject.postFile([...PNG_SMALL.target.files, ...PNG_SMALL.target.files, ...PNG_SMALL.target.files]);
-          expect(instance._beforeUploadList.length).toBe(instance.limit);
+          expect(instance._beforeUploadList.length).toBe(instance.limit());
         });
 
         it('should be custom size', () => {
-          instance.size = 1;
-          instance.filter = [
+          instance.size.set(1);
+          instance.filter.set([
             {
               name: 'size',
-              fn: (fileList: TriUploadFile[]) => fileList.filter(w => w.size! / 1024 <= instance.size)
+              fn: (fileList: TriUploadFile[]) => fileList.filter(w => w.size! / 1024 <= instance.size())
             }
-          ];
+          ]);
           fixture.detectChanges();
           expect(instance._beforeUploadList.length).toBe(0);
           pageObject.postLarge();
@@ -551,13 +548,13 @@ describe('upload', () => {
         });
 
         it('should be custom type', () => {
-          instance.fileType = 'image/png';
-          instance.filter = [
+          instance.fileType.set('image/png');
+          instance.filter.set([
             {
               name: 'type',
-              fn: (fileList: TriUploadFile[]) => fileList.filter(w => ~[instance.fileType].indexOf(w.type))
+              fn: (fileList: TriUploadFile[]) => fileList.filter(w => ~[instance.fileType()].indexOf(w.type))
             }
-          ];
+          ]);
           fixture.detectChanges();
           expect(instance._beforeUploadList.length).toBe(0);
           pageObject.postFile(JPG_SMALL.target.files);
@@ -566,7 +563,7 @@ describe('upload', () => {
 
         describe('with Observable', () => {
           it('should working', () => {
-            instance.filter = [
+            instance.filter.set([
               {
                 name: 'f1',
                 fn: (fileList: TriUploadFile[]) =>
@@ -583,7 +580,7 @@ describe('upload', () => {
                     observer.complete();
                   })
               }
-            ];
+            ]);
             fixture.detectChanges();
             expect(instance._beforeUploadList.length).toBe(0);
             pageObject.postFile([...PNG_SMALL.target.files, ...PNG_SMALL.target.files, ...PNG_SMALL.target.files]);
@@ -592,8 +589,8 @@ describe('upload', () => {
 
           it('should be console.warn error', () => {
             let warnMsg = '';
-            console.warn = jasmine.createSpy().and.callFake((...res: string[]) => (warnMsg = res.join(' ')));
-            instance.filter = [
+            console.warn = vi.fn().mockImplementation((...res: string[]) => (warnMsg = res.join(' ')));
+            instance.filter.set([
               {
                 name: 'f1',
                 fn: () =>
@@ -601,7 +598,7 @@ describe('upload', () => {
                     observer.error('filter error');
                   })
               }
-            ];
+            ]);
             fixture.detectChanges();
             pageObject.postFile(PNG_SMALL.target.files);
             expect(warnMsg).toContain(`Unhandled upload filter error`);
@@ -614,7 +611,7 @@ describe('upload', () => {
         fixture.detectChanges();
         expect(instance._nzChange).toBeUndefined();
         pageObject.postFile(FILE);
-        const req = httpMock.expectOne(instance.action as string);
+        const req = httpMock.expectOne(instance.action() as string);
         pageObject.expectChange();
         req.flush({});
         pageObject.expectChange('success');
@@ -651,27 +648,26 @@ describe('upload', () => {
         });
 
         it('should be return a Observable', () => {
-          instance.onRemove = () => of(false);
+          instance.onRemove.set(() => of(false));
           fixture.detectChanges();
           expect(dl.queryAll(By.css('.anticon-delete')).length).toBe(count);
           dl.query(By.css('.anticon-delete')).nativeElement.click();
           expect(dl.queryAll(By.css('.anticon-delete')).length).toBe(count);
         });
 
-        it('should be return a Observable includes a delay operation', (done: () => void) => {
+        it('should be return a Observable includes a delay operation', async () => {
           const DELAY = 20;
-          instance.onRemove = () => of(true).pipe(delay(DELAY));
+          instance.onRemove.set(() => of(true).pipe(delay(DELAY)));
           fixture.detectChanges();
           expect(dl.queryAll(By.css('.anticon-delete')).length).toBe(count);
           dl.query(By.css('.anticon-delete')).nativeElement.click();
-          setTimeout(() => {
-            expect(dl.queryAll(By.css('.anticon-delete')).length).toBe(count - 1);
-            done();
-          }, DELAY + 1);
+          await sleep(DELAY + 1);
+          fixture.detectChanges();
+          expect(dl.queryAll(By.css('.anticon-delete')).length).toBe(count - 1);
         });
 
         it('should be return a truth value', () => {
-          instance.onRemove = () => true;
+          instance.onRemove.set(() => true);
           fixture.detectChanges();
           expect(dl.queryAll(By.css('.anticon-delete')).length).toBe(count);
           dl.query(By.css('.anticon-delete')).nativeElement.click();
@@ -679,7 +675,7 @@ describe('upload', () => {
         });
 
         it('should be return a falsy value', () => {
-          instance.onRemove = () => false;
+          instance.onRemove.set(() => false);
           fixture.detectChanges();
           expect(dl.queryAll(By.css('.anticon-delete')).length).toBe(count);
           dl.query(By.css('.anticon-delete')).nativeElement.click();
@@ -687,7 +683,7 @@ describe('upload', () => {
         });
 
         it('should be with null', () => {
-          instance.onRemove = undefined;
+          instance.onRemove.set(undefined);
           fixture.detectChanges();
           expect(dl.queryAll(By.css('.anticon-delete')).length).toBe(count);
           dl.query(By.css('.anticon-delete')).nativeElement.click();
@@ -698,7 +694,7 @@ describe('upload', () => {
       describe('[nzListType]', () => {
         describe(`should be only allow type is picture or picture-card generate thumbnail`, () => {
           it('with text', () => {
-            instance.listType = 'text';
+            instance.listType.set('text');
             fixture.detectChanges();
             pageObject.postSmall();
             fixture.detectChanges();
@@ -706,7 +702,7 @@ describe('upload', () => {
           });
 
           it('with picture', () => {
-            instance.listType = 'picture';
+            instance.listType.set('picture');
             fixture.detectChanges();
             pageObject.postSmall();
             fixture.detectChanges();
@@ -723,7 +719,7 @@ describe('upload', () => {
             status: 'uploading'
           } as TriSafeAny
         ];
-        instance.iconRender = instance.customIconRender;
+        instance.iconRender.set(instance.customIconRender);
         fixture.detectChanges();
         const el = pageObject.getByCss(`.customIconRender`);
         expect(el != null).toBe(true);
@@ -738,7 +734,7 @@ describe('upload', () => {
             status: 'uploading'
           } as TriSafeAny
         ];
-        instance.fileListRender = instance._fileListRender;
+        instance.fileListRender.set(instance._fileListRender);
         fixture.detectChanges();
         const el = pageObject.getByCss(`.fileListRender`);
         expect(el != null).toBe(true);
@@ -747,7 +743,7 @@ describe('upload', () => {
 
       describe('[nzMaxCount]', () => {
         it('should replace existing file when nzMaxCount is 1', () => {
-          instance.maxCount = 1;
+          instance.maxCount.set(1);
           instance.fileList = [
             {
               uid: 1,
@@ -762,7 +758,7 @@ describe('upload', () => {
 
           // Upload a new file
           pageObject.postSmall();
-          const req = httpMock.expectOne(instance.action as string);
+          const req = httpMock.expectOne(instance.action() as string);
           req.flush({});
 
           // Should replace the existing file
@@ -771,39 +767,39 @@ describe('upload', () => {
         });
 
         it('should limit files when nzMaxCount is greater than 1', () => {
-          instance.maxCount = 2;
+          instance.maxCount.set(2);
           instance.fileList = [];
           fixture.detectChanges();
 
           // Upload first file
           pageObject.postSmall();
-          let req = httpMock.expectOne(instance.action as string);
+          let req = httpMock.expectOne(instance.action() as string);
           req.flush({});
           expect(instance.fileList.length).toBe(1);
 
           // Upload second file
           pageObject.postFile([new File(['content'], 'second.png', { type: 'image/png' })]);
-          req = httpMock.expectOne(instance.action as string);
+          req = httpMock.expectOne(instance.action() as string);
           req.flush({});
           expect(instance.fileList.length).toBe(2);
 
           // Upload third file - upload happens but file is not added to list due to max count
           pageObject.postFile([new File(['content'], 'third.png', { type: 'image/png' })]);
-          req = httpMock.expectOne(instance.action as string);
+          req = httpMock.expectOne(instance.action() as string);
           req.flush({});
           // File list should still be 2 because max count prevents adding more files
           expect(instance.fileList.length).toBe(2);
         });
 
         it('should allow unlimited files when nzMaxCount is undefined', () => {
-          instance.maxCount = undefined;
+          instance.maxCount.set(undefined);
           instance.fileList = [];
           fixture.detectChanges();
 
           // Upload multiple files
           for (let i = 0; i < 5; i++) {
             pageObject.postFile([new File(['content'], `file${i}.png`, { type: 'image/png' })]);
-            const req = httpMock.expectOne(instance.action as string);
+            const req = httpMock.expectOne(instance.action() as string);
             req.flush({});
           }
 
@@ -812,81 +808,81 @@ describe('upload', () => {
 
         it('should only accept positive values for nzMaxCount', () => {
           // Test with positive value (should limit)
-          instance.maxCount = 2;
+          instance.maxCount.set(2);
           instance.fileList = [];
           fixture.detectChanges();
 
           // Upload first file
           pageObject.postSmall();
-          let req = httpMock.expectOne(instance.action as string);
+          let req = httpMock.expectOne(instance.action() as string);
           req.flush({});
           expect(instance.fileList.length).toBe(1);
 
           // Upload second file
           pageObject.postFile([new File(['content'], 'second.png', { type: 'image/png' })]);
-          req = httpMock.expectOne(instance.action as string);
+          req = httpMock.expectOne(instance.action() as string);
           req.flush({});
           expect(instance.fileList.length).toBe(2);
 
           // Upload third file - should not be added due to limit
           pageObject.postFile([new File(['content'], 'third.png', { type: 'image/png' })]);
-          req = httpMock.expectOne(instance.action as string);
+          req = httpMock.expectOne(instance.action() as string);
           req.flush({});
           expect(instance.fileList.length).toBe(2); // Still 2, not 3
         });
 
         it('should handle edge cases for nzMaxCount', () => {
           // Test with 0 (should behave like undefined - no limit)
-          instance.maxCount = 0;
+          instance.maxCount.set(0);
           instance.fileList = [];
           fixture.detectChanges();
 
           pageObject.postSmall();
-          let req = httpMock.expectOne(instance.action as string);
+          let req = httpMock.expectOne(instance.action() as string);
           req.flush({});
           expect(instance.fileList.length).toBe(1);
 
           // Add another file to confirm no limit with 0
           pageObject.postFile([new File(['content'], 'second.png', { type: 'image/png' })]);
-          req = httpMock.expectOne(instance.action as string);
+          req = httpMock.expectOne(instance.action() as string);
           req.flush({});
           expect(instance.fileList.length).toBe(2);
 
           // Test with negative value (should behave like undefined - no limit)
-          instance.maxCount = -1;
+          instance.maxCount.set(-1);
           fixture.detectChanges();
 
           pageObject.postFile([new File(['content'], 'third.png', { type: 'image/png' })]);
-          req = httpMock.expectOne(instance.action as string);
+          req = httpMock.expectOne(instance.action() as string);
           req.flush({});
           expect(instance.fileList.length).toBe(3);
         });
 
         it('should work with existing nzLimit when both are set', () => {
-          instance.maxCount = 3;
-          instance.limit = 2; // This should be overridden by nzMaxCount logic
-          instance.multiple = true;
+          instance.maxCount.set(3);
+          instance.limit.set(2); // This should be overridden by nzMaxCount logic
+          instance.multiple.set(true);
           fixture.detectChanges();
 
           // Upload files one by one to test the maxCount behavior
           pageObject.postSmall();
-          let req = httpMock.expectOne(instance.action as string);
+          let req = httpMock.expectOne(instance.action() as string);
           req.flush({});
           expect(instance.fileList.length).toBe(1);
 
           pageObject.postFile([new File(['content'], 'second.png', { type: 'image/png' })]);
-          req = httpMock.expectOne(instance.action as string);
+          req = httpMock.expectOne(instance.action() as string);
           req.flush({});
           expect(instance.fileList.length).toBe(2);
 
           pageObject.postFile([new File(['content'], 'third.png', { type: 'image/png' })]);
-          req = httpMock.expectOne(instance.action as string);
+          req = httpMock.expectOne(instance.action() as string);
           req.flush({});
           expect(instance.fileList.length).toBe(3);
 
           // Fourth file - upload happens but file is not added to list due to max count
           pageObject.postFile([new File(['content'], 'fourth.png', { type: 'image/png' })]);
-          req = httpMock.expectOne(instance.action as string);
+          req = httpMock.expectOne(instance.action() as string);
           req.flush({});
           // File list should still be 3 because max count prevents adding more files
           expect(instance.fileList.length).toBe(3);
@@ -897,19 +893,19 @@ describe('upload', () => {
     describe('CORS', () => {
       it('should be auto setting [X-Requested-With]', () => {
         pageObject.postSmall();
-        const req = httpMock.expectOne(instance.action as string);
+        const req = httpMock.expectOne(instance.action() as string);
         expect(req.request.headers.get('X-Requested-With')).toBe('XMLHttpRequest');
         req.flush({});
         httpMock.verify();
       });
 
       it('should be allow override [X-Requested-With]', () => {
-        instance.headers = {
+        instance.headers.set({
           'X-Requested-With': null
-        };
+        });
         fixture.detectChanges();
         pageObject.postSmall();
-        const req = httpMock.expectOne(instance.action as string);
+        const req = httpMock.expectOne(instance.action() as string);
         expect(req.request.headers.has('X-Requested-With')).toBe(false);
         req.flush({});
         httpMock.verify();
@@ -919,7 +915,7 @@ describe('upload', () => {
     describe('[test boundary]', () => {
       it('clean a not exists request', () => {
         instance.comp.uploadComp.reqs = {};
-        instance.show = false;
+        instance.show.set(false);
         fixture.detectChanges();
         expect(true).toBe(true);
       });
@@ -929,7 +925,7 @@ describe('upload', () => {
       private files: TriSafeAny;
 
       constructor() {
-        spyOn(this.btnComp, 'onClick').and.callFake(() =>
+        vi.spyOn(this.btnComp, 'onClick').mockImplementation(() =>
           this.btnComp.onChange({ target: { files: this.files } } as TriSafeAny)
         );
       }
@@ -1001,8 +997,8 @@ describe('upload', () => {
         describe('change detection', () => {
           it('should not run change detection when the <input type=file> is being clicked', () => {
             const appRef = TestBed.inject(ApplicationRef);
-            spyOn(appRef, 'tick');
-            spyOn(instance.comp.file.nativeElement, 'click');
+            vi.spyOn(appRef, 'tick').mockImplementation(() => {});
+            vi.spyOn(instance.comp.file.nativeElement, 'click').mockImplementation(() => {});
             expect(instance.comp.file.nativeElement.click).not.toHaveBeenCalled();
             fixture.debugElement.query(By.css('div')).nativeElement.click();
             // Caretaker note: previously click events on the `nz-upload-btn` elements did trigger
@@ -1014,7 +1010,7 @@ describe('upload', () => {
 
         describe('via onClick', () => {
           it('', () => {
-            spyOn(instance.comp.file.nativeElement, 'click');
+            vi.spyOn(instance.comp.file.nativeElement, 'click').mockImplementation(() => {});
             expect(instance.comp.file.nativeElement.click).not.toHaveBeenCalled();
             instance.comp.onClick();
             expect(instance.comp.file.nativeElement.click).toHaveBeenCalled();
@@ -1022,7 +1018,7 @@ describe('upload', () => {
 
           it(', when nzOpenFileDialogOnClick is false', () => {
             instance.options.openFileDialogOnClick = false;
-            spyOn(instance.comp.file.nativeElement, 'click');
+            vi.spyOn(instance.comp.file.nativeElement, 'click').mockImplementation(() => {});
             expect(instance.comp.file.nativeElement.click).not.toHaveBeenCalled();
             instance.comp.onClick();
             expect(instance.comp.file.nativeElement.click).not.toHaveBeenCalled();
@@ -1032,8 +1028,8 @@ describe('upload', () => {
         describe('via onKeyDown', () => {
           it('normal', () => {
             const appRef = TestBed.inject(ApplicationRef);
-            spyOn(appRef, 'tick');
-            spyOn(instance.comp, 'onClick');
+            vi.spyOn(appRef, 'tick').mockImplementation(() => {});
+            vi.spyOn(instance.comp, 'onClick').mockImplementation(() => {});
             expect(instance.comp.onClick).not.toHaveBeenCalled();
             const uploadBtn = fixture.debugElement.query(By.css('div')).nativeElement;
             dispatchKeyboardEvent(uploadBtn, 'keydown', ENTER);
@@ -1043,8 +1039,8 @@ describe('upload', () => {
 
           it('when expect Enter', () => {
             const appRef = TestBed.inject(ApplicationRef);
-            spyOn(appRef, 'tick');
-            spyOn(instance.comp, 'onClick');
+            vi.spyOn(appRef, 'tick').mockImplementation(() => {});
+            vi.spyOn(instance.comp, 'onClick').mockImplementation(() => {});
             expect(instance.comp.onClick).not.toHaveBeenCalled();
             const uploadBtn = fixture.debugElement.query(By.css('div')).nativeElement;
             dispatchKeyboardEvent(uploadBtn, 'keydown', TAB);
@@ -1055,7 +1051,7 @@ describe('upload', () => {
 
         describe('via Drop', () => {
           it('normal', () => {
-            spyOn(instance.comp, 'uploadFiles');
+            vi.spyOn(instance.comp, 'uploadFiles').mockImplementation(() => {});
             expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
             instance.comp.onFileDrop({
               type: 'dragend',
@@ -1066,7 +1062,7 @@ describe('upload', () => {
           });
 
           it('when dragover event', () => {
-            spyOn(instance.comp, 'uploadFiles');
+            vi.spyOn(instance.comp, 'uploadFiles').mockImplementation(() => {});
             expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
             instance.comp.onFileDrop({ type: 'dragover', preventDefault: () => {} } as TriSafeAny);
             expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
@@ -1075,7 +1071,7 @@ describe('upload', () => {
           it('limit gif using resource type', () => {
             instance.options.accept = 'image/gif';
             fixture.detectChanges();
-            spyOn(instance.comp, 'uploadFiles');
+            vi.spyOn(instance.comp, 'uploadFiles').mockImplementation(() => {});
             expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
             instance.comp.onFileDrop({
               type: 'dragend',
@@ -1088,7 +1084,7 @@ describe('upload', () => {
           it('limit gif using file name', () => {
             instance.options.accept = '.gif';
             fixture.detectChanges();
-            spyOn(instance.comp, 'uploadFiles');
+            vi.spyOn(instance.comp, 'uploadFiles').mockImplementation(() => {});
             expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
             instance.comp.onFileDrop({
               type: 'dragend',
@@ -1101,7 +1097,7 @@ describe('upload', () => {
           it('allow type image/*', () => {
             instance.options.accept = 'image/*';
             fixture.detectChanges();
-            spyOn(instance.comp, 'uploadFiles');
+            vi.spyOn(instance.comp, 'uploadFiles').mockImplementation(() => {});
             expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
             instance.comp.onFileDrop({
               type: 'dragend',
@@ -1114,7 +1110,7 @@ describe('upload', () => {
           it(`allow type [ 'image/png', 'image/jpg' ]`, () => {
             instance.options.accept = ['image/png', 'image/jpg'];
             fixture.detectChanges();
-            spyOn(instance.comp, 'uploadFiles');
+            vi.spyOn(instance.comp, 'uploadFiles').mockImplementation(() => {});
             expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
             instance.comp.onFileDrop({
               type: 'dragend',
@@ -1126,7 +1122,7 @@ describe('upload', () => {
         });
 
         it('via onChange', () => {
-          spyOn(instance.comp, 'uploadFiles');
+          vi.spyOn(instance.comp, 'uploadFiles').mockImplementation(() => {});
           expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
           instance.comp.onChange(PNG_SMALL as TriSafeAny);
           expect(instance.comp.uploadFiles).toHaveBeenCalled();
@@ -1154,7 +1150,7 @@ describe('upload', () => {
           beforeEach(() => (instance.options.directory = true));
 
           it('should working', () => {
-            spyOn(instance.comp, 'uploadFiles');
+            vi.spyOn(instance.comp, 'uploadFiles').mockImplementation(() => {});
             const files = {
               name: 'foo',
               children: [
@@ -1180,7 +1176,7 @@ describe('upload', () => {
 
           it('should be ignore invalid extension', () => {
             instance.options.accept = ['.webp'];
-            spyOn(instance.comp, 'uploadFiles');
+            vi.spyOn(instance.comp, 'uploadFiles').mockImplementation(() => {});
             const files = {
               name: 'foo',
               children: [
@@ -1208,28 +1204,28 @@ describe('upload', () => {
         });
 
         it('[onClick]', () => {
-          spyOn<TriSafeAny>(instance.comp, 'file');
-          expect(instance.comp.file).not.toHaveBeenCalled();
+          vi.spyOn(instance.comp.file.nativeElement, 'click').mockImplementation(() => {});
+          expect(instance.comp.file.nativeElement.click).not.toHaveBeenCalled();
           instance.comp.onClick();
-          expect(instance.comp.file).not.toHaveBeenCalled();
+          expect(instance.comp.file.nativeElement.click).not.toHaveBeenCalled();
         });
 
         it('[onKeyDown]', () => {
-          spyOn(instance.comp, 'onClick');
+          vi.spyOn(instance.comp, 'onClick').mockImplementation(() => {});
           expect(instance.comp.onClick).not.toHaveBeenCalled();
           // instance.comp.onKeyDown(null);
           // expect(instance.comp.onClick).not.toHaveBeenCalled();
         });
 
         it('[onFileDrop]', () => {
-          spyOn(instance.comp, 'uploadFiles');
+          vi.spyOn(instance.comp, 'uploadFiles').mockImplementation(() => {});
           expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
           instance.comp.onFileDrop({ type: 'dragover', preventDefault: () => {} } as TriSafeAny);
           expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
         });
 
         it('[onChange]', () => {
-          spyOn(instance.comp, 'uploadFiles');
+          vi.spyOn(instance.comp, 'uploadFiles').mockImplementation(() => {});
           expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
           // instance.comp.onChange(null);
           // expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
@@ -1265,12 +1261,7 @@ describe('upload', () => {
 
       beforeEach(() => {
         TestBed.configureTestingModule({
-          // todo: use zoneless
-          providers: [
-            provideZoneChangeDetection(),
-            provideHttpClient(withInterceptorsFromDi()),
-            provideHttpClientTesting()
-          ]
+          providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
         });
         fixture = TestBed.createComponent(TriUploadBtnComponent);
         comp = fixture.debugElement.componentInstance;
@@ -1292,23 +1283,26 @@ describe('upload', () => {
         http = TestBed.inject(HttpTestingController);
       });
 
-      it('should uploading a png file', fakeAsync(() => {
-        spyOn<TriSafeAny>(comp.options, 'onStart');
-        spyOn<TriSafeAny>(comp.options, 'onProgress');
-        spyOn<TriSafeAny>(comp.options, 'onSuccess');
+      beforeEach(() => vi.useFakeTimers());
+      afterEach(() => vi.useRealTimers());
+
+      it('should uploading a png file', () => {
+        vi.spyOn(comp.options as TriSafeAny, 'onStart').mockImplementation(() => {});
+        vi.spyOn(comp.options as TriSafeAny, 'onProgress').mockImplementation(() => {});
+        vi.spyOn(comp.options as TriSafeAny, 'onSuccess').mockImplementation(() => {});
         comp.onChange(PNG_SMALL as TriSafeAny);
-        tick(1);
+        vi.advanceTimersByTime(1);
         const req = http.expectOne('/test');
         req.event({ type: 1, loaded: 10, total: 100 });
         req.flush('ok');
         expect(comp.options.onProgress).toHaveBeenCalled();
         expect(comp.options.onStart).toHaveBeenCalled();
         expect(comp.options.onSuccess).toHaveBeenCalled();
-      }));
+      });
 
-      it('should contain the parameters of http request', fakeAsync(() => {
+      it('should contain the parameters of http request', () => {
         comp.onChange(PNG_SMALL as TriSafeAny);
-        tick(1);
+        vi.advanceTimersByTime(1);
         const req = http.expectOne('/test');
         expect(req.request.withCredentials).toBe(true);
         expect(req.request.headers.get('token')).toBe('asdf');
@@ -1316,10 +1310,10 @@ describe('upload', () => {
         expect(body.has('avatar')).toBe(true);
         expect(body.has('a')).toBe(true);
         req.flush('ok');
-      }));
+      });
 
       it('should filter size', () => {
-        spyOn<TriSafeAny>(comp.options, 'onStart');
+        vi.spyOn(comp.options as TriSafeAny, 'onStart').mockImplementation(() => {});
         comp.options.filters = [
           {
             name: '',
@@ -1331,34 +1325,34 @@ describe('upload', () => {
       });
 
       it('should be no request when beforeUpload is false', () => {
-        spyOn<TriSafeAny>(comp.options, 'beforeUpload').and.returnValue(false);
-        spyOn<TriSafeAny>(comp.options, 'onStart');
+        vi.spyOn(comp.options as TriSafeAny, 'beforeUpload').mockReturnValue(false);
+        vi.spyOn(comp.options as TriSafeAny, 'onStart').mockImplementation(() => {});
         comp.onChange(PNG_SMALL as TriSafeAny);
         expect(comp.options.beforeUpload).toHaveBeenCalled();
         expect(comp.options.onStart).not.toHaveBeenCalled();
       });
 
-      it('should handle promise-based beforeUpload that resolves to true', fakeAsync(() => {
-        spyOn<TriSafeAny>(comp.options, 'onStart');
+      it('should handle promise-based beforeUpload that resolves to true', async () => {
+        vi.spyOn(comp.options as TriSafeAny, 'onStart').mockImplementation(() => {});
         comp.options.beforeUpload = (): Promise<boolean> => Promise.resolve(true);
         comp.onChange(PNG_SMALL as TriSafeAny);
-        tick();
+        await Promise.resolve();
         const req = http.expectOne('/test');
         expect(comp.options.onStart).toHaveBeenCalled();
         req.flush('ok');
-      }));
+      });
 
-      it('should not start upload when promise-based beforeUpload resolves to false', fakeAsync(() => {
-        spyOn<TriSafeAny>(comp.options, 'onStart');
+      it('should not start upload when promise-based beforeUpload resolves to false', async () => {
+        vi.spyOn(comp.options as TriSafeAny, 'onStart').mockImplementation(() => {});
         comp.options.beforeUpload = (): Promise<boolean> => Promise.resolve(false);
         comp.onChange(PNG_SMALL as TriSafeAny);
-        tick();
+        await Promise.resolve();
         expect(comp.options.onStart).not.toHaveBeenCalled();
         http.expectNone('/test');
-      }));
+      });
 
-      it('should handle promise-based beforeUpload with file transformation', fakeAsync(() => {
-        spyOn<TriSafeAny>(comp.options, 'onStart');
+      it('should handle promise-based beforeUpload with file transformation', async () => {
+        vi.spyOn(comp.options as TriSafeAny, 'onStart').mockImplementation(() => {});
         const baseFile = new File(['modified'], 'modified.txt', { type: 'text/plain' });
         const transformedFile: TriUploadFile = {
           ...baseFile,
@@ -1371,46 +1365,47 @@ describe('upload', () => {
         };
         comp.options.beforeUpload = (): Promise<TriUploadFile> => Promise.resolve(transformedFile);
         comp.onChange(PNG_SMALL as TriSafeAny);
-        tick();
+        await Promise.resolve();
         const req = http.expectOne('/test');
         expect(comp.options.onStart).toHaveBeenCalled();
         req.flush('ok');
-      }));
+      });
 
-      it('should handle promise rejection in beforeUpload', fakeAsync(() => {
+      it('should handle promise rejection in beforeUpload', async () => {
         let warnMsg = '';
-        console.warn = jasmine.createSpy().and.callFake((...res: string[]) => (warnMsg = res.join(' ')));
-        spyOn<TriSafeAny>(comp.options, 'onStart');
+        console.warn = vi.fn().mockImplementation((...res: string[]) => (warnMsg = res.join(' ')));
+        vi.spyOn(comp.options as TriSafeAny, 'onStart').mockImplementation(() => {});
         comp.options.beforeUpload = (): Promise<boolean> => Promise.reject(new Error('Validation failed'));
         comp.onChange(PNG_SMALL as TriSafeAny);
-        tick();
+        await Promise.resolve();
+        await Promise.resolve();
         expect(comp.options.onStart).not.toHaveBeenCalled();
         expect(warnMsg).toContain('Unhandled upload beforeUpload error');
         http.expectNone('/test');
-      }));
+      });
 
-      it('should error when request error', fakeAsync(() => {
-        spyOn<TriSafeAny>(comp.options, 'onStart');
-        spyOn<TriSafeAny>(comp.options, 'onSuccess');
-        spyOn<TriSafeAny>(comp.options, 'onError');
+      it('should error when request error', () => {
+        vi.spyOn(comp.options as TriSafeAny, 'onStart').mockImplementation(() => {});
+        vi.spyOn(comp.options as TriSafeAny, 'onSuccess').mockImplementation(() => {});
+        vi.spyOn(comp.options as TriSafeAny, 'onError').mockImplementation(() => {});
         comp.onChange(PNG_SMALL as TriSafeAny);
-        tick(1);
+        vi.advanceTimersByTime(1);
         http.expectOne('/test').error({ status: 403 } as unknown as ProgressEvent);
         expect(comp.options.onStart).toHaveBeenCalled();
         expect(comp.options.onError).toHaveBeenCalled();
         expect(comp.options.onSuccess).not.toHaveBeenCalled();
-      }));
+      });
 
       it('should custom request', () => {
         comp.options.customRequest = () => of(true).subscribe(() => {});
-        spyOn<TriSafeAny>(comp.options, 'customRequest');
+        vi.spyOn(comp.options as TriSafeAny, 'customRequest');
         comp.onChange(PNG_SMALL as TriSafeAny);
         expect(comp.options.customRequest).toHaveBeenCalled();
       });
 
       it('should be warn "Must return Subscription type in [nzCustomRequest] property"', () => {
         let warnMsg = '';
-        console.warn = jasmine.createSpy().and.callFake((...res: string[]) => (warnMsg = res.join(' ')));
+        vi.spyOn(console, 'warn').mockImplementation((...res: string[]) => (warnMsg = res.join(' ')));
         comp.options.customRequest = (() => {}) as TriSafeAny;
         comp.onChange(PNG_SMALL as TriSafeAny);
         expect(warnMsg).toContain(`Must return Subscription type in '[nzCustomRequest]' property`);
@@ -1455,36 +1450,36 @@ describe('upload', () => {
   selector: 'tri-test-upload',
   imports: [TriButtonModule, TriIconModule, TriUploadModule],
   template: `
-    @if (show) {
+    @if (show()) {
       <tri-upload
         #upload
-        [type]="type"
-        [limit]="limit"
-        [size]="size"
-        [fileType]="fileType"
+        [type]="type()"
+        [limit]="limit()"
+        [size]="size()"
+        [fileType]="fileType()"
         [accept]="accept"
-        [action]="action"
-        [beforeUpload]="beforeUpload"
+        [action]="action()"
+        [beforeUpload]="beforeUpload()"
         [customRequest]="customRequest"
-        [data]="data"
-        [filter]="filter"
-        [(fileListChange)]="fileList"
-        [disabled]="disabled"
-        [headers]="headers"
-        [listType]="listType"
-        [multiple]="multiple"
+        [data]="data()"
+        [filter]="filter()"
+        [fileList]="fileList"
+        [disabled]="disabled()"
+        [headers]="headers()"
+        [listType]="listType()"
+        [multiple]="multiple()"
         [name]="name"
         [showUploadList]="showUploadList"
-        [showButton]="showButton"
-        [withCredentials]="withCredentials"
+        [showButton]="showButton()"
+        [withCredentials]="withCredentials()"
         [preview]="onPreview"
         [previewFile]="previewFile"
-        [remove]="onRemove"
+        [remove]="onRemove()"
         [directory]="directory"
-        [iconRender]="iconRender"
-        [fileListRender]="fileListRender"
-        [maxCount]="maxCount"
-        (fileListChange)="fileListChange($event)"
+        [iconRender]="iconRender()"
+        [fileListRender]="fileListRender()"
+        [maxCount]="maxCount()"
+        (fileListChange)="nzFileList = $event; fileListChange($event)"
         (change)="change($event)"
       >
         <button tri-button>
@@ -1506,45 +1501,53 @@ class TestUploadComponent {
   @ViewChild('upload', { static: false }) comp!: TriUploadComponent;
   @ViewChild('customIconRender', { static: false }) customIconRender!: TriIconRenderTemplate;
   @ViewChild('fileListRender', { static: false }) _fileListRender!: TemplateRef<{ $implicit: TriUploadFile[] }>;
-  show = true;
-  type: TriUploadType = 'select';
-  limit = 0;
-  size = 0;
-  fileType: TriSafeAny;
+  readonly show = signal(true);
+  readonly type = signal<TriUploadType>('select');
+  readonly limit = signal(0);
+  readonly size = signal(0);
+  readonly fileType = signal<TriSafeAny>(undefined);
   accept = 'image/png';
-  action: string | ((file: TriUploadFile) => string | Observable<string>) = '/upload';
+  readonly action = signal<string | ((file: TriUploadFile) => string | Observable<string>)>('/upload');
   _beforeUpload = false;
   _beforeUploadList: TriUploadFile[] = [];
-  beforeUpload: TriSafeAny = (_file: TriUploadFile, fileList: TriUploadFile[]): TriSafeAny => {
+  readonly beforeUpload = signal<TriSafeAny>((_file: TriUploadFile, fileList: TriUploadFile[]): TriSafeAny => {
     this._beforeUpload = true;
     this._beforeUploadList = fileList;
     return true;
-  };
+  });
   customRequest: TriSafeAny;
-  data: TriSafeAny;
-  filter: UploadFilter[] = [];
-  fileList: TriUploadFile[] = [];
-  disabled = false;
-  headers: TriSafeAny = {};
-  listType: TriUploadListType = 'text';
-  multiple = false;
+  readonly data = signal<TriSafeAny>(undefined);
+  readonly filter = signal<UploadFilter[]>([]);
+  private readonly fileListValue = signal<TriUploadFile[] | null>([]);
+
+  get fileList(): TriUploadFile[] {
+    return this.fileListValue()!;
+  }
+
+  set fileList(value: TriUploadFile[] | null) {
+    this.fileListValue.set(value);
+  }
+  readonly disabled = signal(false);
+  readonly headers = signal<TriSafeAny>({});
+  readonly listType = signal<TriUploadListType>('text');
+  readonly multiple = signal(false);
   name = 'file';
   showUploadList: boolean | TriShowUploadList = true;
-  showButton = true;
-  withCredentials = false;
-  iconRender: TriIconRenderTemplate | null = null;
-  fileListRender: TemplateRef<{ $implicit: TriUploadFile[] }> | null = null;
-  maxCount: number | undefined = undefined;
+  readonly showButton = signal(true);
+  readonly withCredentials = signal(false);
+  readonly iconRender = signal<TriIconRenderTemplate | null>(null);
+  readonly fileListRender = signal<TemplateRef<{ $implicit: TriUploadFile[] }> | null>(null);
+  readonly maxCount = signal<number | undefined>(undefined);
   _onPreview = false;
   onPreview = (): void => {
     this._onPreview = true;
   };
   previewFile!: (file: TriUploadFile) => Observable<string>;
   _onRemove = false;
-  onRemove: undefined | ((file: TriUploadFile) => boolean | Observable<boolean>) = (): boolean => {
+  readonly onRemove = signal<undefined | ((file: TriUploadFile) => boolean | Observable<boolean>)>((): boolean => {
     this._onRemove = true;
     return true;
-  };
+  });
   _nzChange!: TriUploadChangeParam;
 
   change(value: TriUploadChangeParam): void {
@@ -1561,8 +1564,7 @@ class TestUploadComponent {
 @Component({
   selector: 'tri-test-upload-btn',
   imports: [TriUploadBtnComponent],
-  template: `<div tri-upload-btn #btn [options]="options" class="test">UPLOAD</div>`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<div tri-upload-btn #btn [options]="options" class="test">UPLOAD</div>`
 })
 class TestUploadBtnComponent {
   @ViewChild('btn', { static: false }) comp!: TriUploadBtnComponent;

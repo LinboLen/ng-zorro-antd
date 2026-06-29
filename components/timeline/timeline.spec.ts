@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection, ViewChild } from '@angular/core';
+import { Component, DebugElement, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -47,10 +47,10 @@ describe('nz-timeline', () => {
     it('should color work', () => {
       fixture.detectChanges();
       expect(items[0].querySelector('.ant-timeline-item-head')!.classList).toContain('ant-timeline-item-head-blue');
-      testComponent.color = 'red';
+      testComponent.color.set('red');
       fixture.detectChanges();
       expect(items[0].querySelector('.ant-timeline-item-head')!.classList).toContain('ant-timeline-item-head-red');
-      testComponent.color = 'green';
+      testComponent.color.set('green');
       fixture.detectChanges();
       expect(items[0].querySelector('.ant-timeline-item-head')!.classList).toContain('ant-timeline-item-head-green');
     });
@@ -64,7 +64,7 @@ describe('nz-timeline', () => {
     it('should last work', () => {
       fixture.detectChanges();
       expect(items.length).toBe(4);
-      testComponent.last = true;
+      testComponent.last.set(true);
       fixture.detectChanges();
       items = Array.from((fixture.debugElement.nativeElement as HTMLElement).querySelectorAll('.ant-timeline-item'));
       expect(items.length).toBe(5);
@@ -74,18 +74,18 @@ describe('nz-timeline', () => {
     it('should pending work', () => {
       fixture.detectChanges();
       expect(timeline.nativeElement.querySelector('.ant-timeline-item-pending')).toBeNull();
-      testComponent.pending = true;
+      testComponent.pending.set(true);
       fixture.detectChanges();
       expect(timeline.nativeElement.querySelector('.ant-timeline-item-pending').innerText).toBe('');
-      testComponent.pending = 'pending';
+      testComponent.pending.set('pending');
       fixture.detectChanges();
       expect(timeline.nativeElement.querySelector('.ant-timeline-item-pending').innerText).toBe('pending');
     });
 
     it('should reverse work', () => {
       fixture.detectChanges();
-      testComponent.pending = true;
-      testComponent.reverse = true;
+      testComponent.pending.set(true);
+      testComponent.reverse.set(true);
       fixture.detectChanges();
       expect(timeline.nativeElement.firstElementChild.firstElementChild!.classList).toContain(
         'ant-timeline-item-pending'
@@ -96,7 +96,7 @@ describe('nz-timeline', () => {
 
     it('should alternate position work', () => {
       fixture.detectChanges();
-      testComponent.mode = 'alternate';
+      testComponent.mode.set('alternate');
       fixture.detectChanges();
       expect(timeline.nativeElement.firstElementChild!.classList).toContain('ant-timeline-alternate');
       expect(items[0].classList).toContain('ant-timeline-item-left');
@@ -106,7 +106,7 @@ describe('nz-timeline', () => {
 
     it('should alternate right position work', () => {
       fixture.detectChanges();
-      testComponent.mode = 'right';
+      testComponent.mode.set('right');
       fixture.detectChanges();
       expect(timeline.nativeElement.firstElementChild!.classList).toContain('ant-timeline-right');
       expect(items[0].classList).toContain('ant-timeline-item-right');
@@ -227,25 +227,24 @@ describe('nz-timeline', () => {
   selector: 'tri-test-basic-timeline',
   template: `
     <ng-template #dotTemplate>template</ng-template>
-    <tri-timeline [pending]="pending" [reverse]="reverse" [mode]="mode">
-      <tri-timeline-item [color]="color" [dot]="dot">Create a services site 2015-09-01</tri-timeline-item>
+    <tri-timeline [pending]="pending()" [reverse]="reverse()" [mode]="mode()">
+      <tri-timeline-item [color]="color()" [dot]="dot()">Create a services site 2015-09-01</tri-timeline-item>
       <tri-timeline-item [dot]="dotTemplate">Solve initial network problems 2015-09-01</tri-timeline-item>
       <tri-timeline-item>Technical testing 2015-09-01</tri-timeline-item>
       <tri-timeline-item>Network problems being solved 2015-09-01</tri-timeline-item>
-      @if (last) {
+      @if (last()) {
         <tri-timeline-item>Network problems being solved 2015-09-01</tri-timeline-item>
       }
     </tri-timeline>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestTimelineBasicComponent {
-  color = 'blue';
-  dot = 'dot';
-  pending: boolean | string = false;
-  last = false;
-  reverse = false;
-  mode: TriTimelineMode = 'left';
+  readonly color = signal('blue');
+  readonly dot = signal('dot');
+  readonly pending = signal<boolean | string>(false);
+  readonly last = signal(false);
+  readonly reverse = signal(false);
+  readonly mode = signal<TriTimelineMode>('left');
 }
 
 @Component({
@@ -257,8 +256,7 @@ export class TriTestTimelineBasicComponent {
       <tri-timeline-item color="#781241">Technical testing 2015-09-01</tri-timeline-item>
       <tri-timeline-item color="red">Network problems being solved 2015-09-01</tri-timeline-item>
     </tri-timeline>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestTimelineCustomColorComponent {}
 
@@ -270,8 +268,7 @@ export class TriTestTimelineCustomColorComponent {}
       <tri-timeline-item>Technical testing 2015-09-01</tri-timeline-item>
       <tri-timeline-item>Network problems being solved 2015-09-01</tri-timeline-item>
     </tri-timeline>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestTimelinePendingComponent {}
 
@@ -282,8 +279,7 @@ export class TriTestTimelinePendingComponent {}
       <tri-timeline-item position="right">Right</tri-timeline-item>
       <tri-timeline-item position="left">Left</tri-timeline-item>
     </tri-timeline>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestTimelineCustomPositionComponent {}
 
@@ -291,7 +287,7 @@ export class TriTestTimelineCustomPositionComponent {}
   imports: [TriTimelineModule],
   template: `
     <tri-timeline mode="custom">
-      @for (item of data; track item) {
+      @for (item of data(); track item) {
         <tri-timeline-item>{{ item }}</tri-timeline-item>
       }
     </tri-timeline>
@@ -302,8 +298,8 @@ export class TriTestTimelineCustomPositionComponent {}
 export class TriTestTimelineClearItemsComponent {
   @ViewChild(TriTimelineComponent)
   timeLine!: TriTimelineComponent;
-  data = [1, 2, 3];
+  readonly data = signal([1, 2, 3]);
   reset(): void {
-    this.data = [];
+    this.data.set([]);
   }
 }

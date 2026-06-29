@@ -3,16 +3,8 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DebugElement,
-  provideZoneChangeDetection,
-  signal,
-  viewChild,
-  type WritableSignal
-} from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
+import { Component, DebugElement, signal, viewChild, WritableSignal } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
@@ -28,7 +20,6 @@ import { TriInputModule } from './input.module';
 
 describe('input', () => {
   beforeEach(() => {
-    // todo: use zoneless
     TestBed.configureTestingModule({
       providers: [provideNzIconsTesting(), provideZoneChangeDetection()]
     });
@@ -55,17 +46,17 @@ describe('input', () => {
       it('should disabled work', () => {
         fixture.detectChanges();
         expect(inputElement.nativeElement.classList).not.toContain('ant-input-disabled');
-        testComponent.disabled = true;
+        testComponent.disabled.set(true);
         fixture.detectChanges();
         expect(inputElement.nativeElement.classList).toContain('ant-input-disabled');
       });
 
       it('should nzSize work', () => {
-        testComponent.size = 'small';
+        testComponent.size.set('small');
         fixture.detectChanges();
         expect(inputElement.nativeElement.classList).toContain('ant-input');
         expect(inputElement.nativeElement.classList).toContain('ant-input-sm');
-        testComponent.size = 'large';
+        testComponent.size.set('large');
         fixture.detectChanges();
         expect(inputElement.nativeElement.classList).toContain('ant-input');
         expect(inputElement.nativeElement.classList).toContain('ant-input-lg');
@@ -78,7 +69,7 @@ describe('input', () => {
         testComponent.inputDirective().blur();
         expect(document.activeElement).not.toBe(input);
 
-        testComponent.value = 'NG-ZORRO';
+        testComponent.value.set('NG-ZORRO');
         fixture.detectChanges();
         await fixture.whenStable();
 
@@ -86,16 +77,16 @@ describe('input', () => {
         expect(input.selectionStart).toBe(0);
         expect(input.selectionEnd).toBe(0);
         testComponent.inputDirective().focus({ cursor: 'end' });
-        expect(input.selectionStart).toBe(testComponent.value.length);
-        expect(input.selectionEnd).toBe(testComponent.value.length);
+        expect(input.selectionStart).toBe(testComponent.value().length);
+        expect(input.selectionEnd).toBe(testComponent.value().length);
         testComponent.inputDirective().focus({ cursor: 'all' });
         expect(input.selectionStart).toBe(0);
-        expect(input.selectionEnd).toBe(testComponent.value.length);
+        expect(input.selectionEnd).toBe(testComponent.value().length);
       });
 
       describe('should variant work', () => {
         it('outlined', () => {
-          testComponent.variant = 'outlined';
+          testComponent.variant.set('outlined');
           fixture.detectChanges();
           expect(inputElement.nativeElement.classList).toContain('ant-input-outlined');
         });
@@ -103,7 +94,7 @@ describe('input', () => {
         it('filled', () => {
           fixture.detectChanges();
           expect(inputElement.nativeElement.classList).not.toContain('ant-input-filled');
-          testComponent.variant = 'filled';
+          testComponent.variant.set('filled');
           fixture.detectChanges();
           expect(inputElement.nativeElement.classList).toContain('ant-input-filled');
         });
@@ -111,7 +102,7 @@ describe('input', () => {
         it('borderless', () => {
           fixture.detectChanges();
           expect(inputElement.nativeElement.classList).not.toContain('ant-input-borderless');
-          testComponent.variant = 'borderless';
+          testComponent.variant.set('borderless');
           fixture.detectChanges();
           expect(inputElement.nativeElement.classList).toContain('ant-input-borderless');
         });
@@ -119,7 +110,7 @@ describe('input', () => {
         it('underlined', () => {
           fixture.detectChanges();
           expect(inputElement.nativeElement.classList).not.toContain('ant-input-borderless');
-          testComponent.variant = 'underlined';
+          testComponent.variant.set('underlined');
           fixture.detectChanges();
           expect(inputElement.nativeElement.classList).toContain('ant-input-underlined');
         });
@@ -156,16 +147,14 @@ describe('input', () => {
         inputElement = fixture.debugElement.query(By.directive(TriInputDirective));
       });
 
-      it('should set disabled work', fakeAsync(() => {
-        flush();
+      it('should set disabled work', () => {
         expect(inputElement.nativeElement.classList).not.toContain('ant-input-disabled');
         expect(inputElement.nativeElement.getAttribute('disabled')).toBeNull();
         testComponent.disable();
-        flush();
         fixture.detectChanges();
         expect(inputElement.nativeElement.classList).toContain('ant-input-disabled');
         expect(inputElement.nativeElement.getAttribute('disabled')).toBe('true');
-      }));
+      });
     });
   });
 
@@ -185,11 +174,11 @@ describe('input', () => {
       fixture.detectChanges();
       expect(inputElement.nativeElement.classList).toContain('ant-input-status-error');
 
-      fixture.componentInstance.status = 'warning';
+      fixture.componentInstance.status.set('warning');
       fixture.detectChanges();
       expect(inputElement.nativeElement.className).toContain('ant-input-status-warning');
 
-      fixture.componentInstance.status = '';
+      fixture.componentInstance.status.set('');
       fixture.detectChanges();
       expect(inputElement.nativeElement.className).not.toContain('ant-input-status-warning');
     });
@@ -210,25 +199,192 @@ describe('input', () => {
       expect(inputElement.nativeElement.classList).toContain('ant-input-status-error');
       expect(inputElement.nativeElement.nextSibling.classList).toContain('ant-form-item-feedback-icon-error');
 
-      fixture.componentInstance.status = 'success';
+      fixture.componentInstance.status.set('success');
       fixture.detectChanges();
       expect(inputElement.nativeElement.classList).toContain('ant-input-status-success');
       expect(inputElement.nativeElement.nextSibling.classList).toContain('ant-form-item-feedback-icon-success');
 
-      fixture.componentInstance.status = 'warning';
+      fixture.componentInstance.status.set('warning');
       fixture.detectChanges();
       expect(inputElement.nativeElement.classList).toContain('ant-input-status-warning');
       expect(inputElement.nativeElement.nextSibling.classList).toContain('ant-form-item-feedback-icon-warning');
 
-      fixture.componentInstance.status = 'validating';
+      fixture.componentInstance.status.set('validating');
       fixture.detectChanges();
       expect(inputElement.nativeElement.classList).toContain('ant-input-status-validating');
       expect(inputElement.nativeElement.nextSibling.classList).toContain('ant-form-item-feedback-icon-validating');
 
-      fixture.componentInstance.feedback = false;
+      fixture.componentInstance.feedback.set(false);
       fixture.detectChanges();
       expect(inputElement.nativeElement.classList).toContain('ant-input-status-validating');
-      expect(inputElement.nativeElement.nextSibling?.classList).not.toContain('ant-form-item-feedback-icon');
+      expect(inputElement.nativeElement.nextSibling?.classList?.contains('ant-form-item-feedback-icon') ?? false).toBe(
+        false
+      );
+    });
+  });
+
+  describe('input with type', () => {
+    let fixture: ComponentFixture<TriTestInputWithTypeComponent>;
+    let inputElement: DebugElement;
+    let component: TriTestInputWithTypeComponent;
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(TriTestInputWithTypeComponent);
+      fixture.detectChanges();
+      inputElement = fixture.debugElement.query(By.directive(TriInputDirective));
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+
+    it('should type correct', () => {
+      expect(inputElement.nativeElement.type).toEqual('text');
+
+      component.type.set('password');
+      fixture.detectChanges();
+      expect(inputElement.nativeElement.type).toEqual('password');
+
+      component.type.set('number');
+      fixture.detectChanges();
+      expect(inputElement.nativeElement.type).toEqual('number');
+
+      component.type.set('');
+      fixture.detectChanges();
+      expect(inputElement.nativeElement.type).toEqual('text');
+    });
+  });
+
+  describe('finalSize', () => {
+    let fixture: ComponentFixture<TestInputFinalSizeComponent>;
+    let inputElement: HTMLButtonElement;
+    let component: TestInputFinalSizeComponent;
+    let formSizeSignal: WritableSignal<TriSizeLDSType | undefined>;
+    let compactSizeSignal: WritableSignal<TriSizeLDSType>;
+
+    beforeEach(() => {
+      compactSizeSignal = signal<TriSizeLDSType>('large');
+      formSizeSignal = signal<TriSizeLDSType | undefined>('default');
+    });
+
+    afterEach(() => {
+      TestBed.resetTestingModule();
+    });
+
+    it('should set correctly the size from the formSize signal', () => {
+      TestBed.configureTestingModule({
+        providers: [
+          { provide: TRI_FORM_SIZE, useValue: formSizeSignal },
+          { provide: TRI_SPACE_COMPACT_SIZE, useValue: compactSizeSignal }
+        ]
+      });
+      fixture = TestBed.createComponent(TestInputFinalSizeComponent);
+      component = fixture.componentInstance;
+      inputElement = fixture.debugElement.query(By.directive(TriInputDirective)).nativeElement;
+      fixture.detectChanges();
+      formSizeSignal.set('large');
+      fixture.detectChanges();
+      expect(inputElement.classList).toContain('ant-input-lg');
+    });
+
+    it('should set correctly the size from the compactSize signal', () => {
+      TestBed.configureTestingModule({
+        providers: [{ provide: TRI_SPACE_COMPACT_SIZE, useValue: compactSizeSignal }]
+      });
+      fixture = TestBed.createComponent(TestInputFinalSizeComponent);
+      component = fixture.componentInstance;
+      inputElement = fixture.debugElement.query(By.directive(TriInputDirective)).nativeElement;
+      fixture.detectChanges();
+      compactSizeSignal.set('large');
+      fixture.detectChanges();
+      expect(inputElement.classList).toContain('ant-input-lg');
+    });
+
+    it('should set correctly the size from the nzSize input', () => {
+      fixture = TestBed.createComponent(TestInputFinalSizeComponent);
+      component = fixture.componentInstance;
+      inputElement = fixture.debugElement.query(By.directive(TriInputDirective)).nativeElement;
+      fixture.detectChanges();
+      component.size.set('large');
+      fixture.detectChanges();
+      expect(inputElement.classList).toContain('ant-input-lg');
+    });
+  });
+
+  describe('finalVariant', () => {
+    let fixture: ComponentFixture<TestInputFinalVariantComponent>;
+    let inputElement: HTMLElement;
+    let component: TestInputFinalVariantComponent;
+    let formVariantSignal: WritableSignal<TriVariant>;
+
+    beforeEach(() => {
+      formVariantSignal = signal<TriVariant>('outlined');
+    });
+
+    afterEach(() => {
+      TestBed.resetTestingModule();
+    });
+
+    it('should set correctly the variant from the formVariant signal', () => {
+      TestBed.configureTestingModule({
+        providers: [{ provide: TRI_FORM_VARIANT, useValue: formVariantSignal }]
+      });
+      fixture = TestBed.createComponent(TestInputFinalVariantComponent);
+      component = fixture.componentInstance;
+      inputElement = fixture.debugElement.query(By.directive(TriInputDirective)).nativeElement;
+      fixture.detectChanges();
+      formVariantSignal.set('filled');
+      fixture.detectChanges();
+      expect(inputElement.classList).toContain('ant-input-filled');
+    });
+
+    it('should prioritize any explicit nzVariant over formVariant', () => {
+      TestBed.configureTestingModule({
+        providers: [{ provide: TRI_FORM_VARIANT, useValue: formVariantSignal }]
+      });
+      fixture = TestBed.createComponent(TestInputFinalVariantComponent);
+      component = fixture.componentInstance;
+      inputElement = fixture.debugElement.query(By.directive(TriInputDirective)).nativeElement;
+      fixture.detectChanges();
+      formVariantSignal.set('filled');
+      component.variant.set('borderless');
+      fixture.detectChanges();
+      expect(inputElement.classList).toContain('ant-input-borderless');
+      expect(inputElement.classList).not.toContain('ant-input-filled');
+    });
+
+    it('should prioritize nzVariant over formVariant when nzVariant is explicitly set', () => {
+      TestBed.configureTestingModule({
+        providers: [{ provide: TRI_FORM_VARIANT, useValue: formVariantSignal }]
+      });
+      fixture = TestBed.createComponent(TestInputFinalVariantComponent);
+      component = fixture.componentInstance;
+      inputElement = fixture.debugElement.query(By.directive(TriInputDirective)).nativeElement;
+      fixture.detectChanges();
+      formVariantSignal.set('filled');
+      component.variant.set('outlined');
+      fixture.detectChanges();
+      expect(inputElement.classList).not.toContain('ant-input-filled');
+      expect(inputElement.classList).not.toContain('ant-input-borderless');
+      expect(inputElement.classList).not.toContain('ant-input-underlined');
+    });
+
+    it('should use nzVariant when no formVariant is provided', () => {
+      fixture = TestBed.createComponent(TestInputFinalVariantComponent);
+      component = fixture.componentInstance;
+      inputElement = fixture.debugElement.query(By.directive(TriInputDirective)).nativeElement;
+      fixture.detectChanges();
+      component.variant.set('underlined');
+      fixture.detectChanges();
+      expect(inputElement.classList).toContain('ant-input-underlined');
+    });
+
+    it('should fallback to outlined when neither nzVariant nor formVariant is set', () => {
+      fixture = TestBed.createComponent(TestInputFinalVariantComponent);
+      component = fixture.componentInstance;
+      inputElement = fixture.debugElement.query(By.directive(TriInputDirective)).nativeElement;
+      fixture.detectChanges();
+      expect(inputElement.classList).not.toContain('ant-input-filled');
+      expect(inputElement.classList).not.toContain('ant-input-borderless');
+      expect(inputElement.classList).not.toContain('ant-input-underlined');
     });
   });
 
@@ -403,21 +559,19 @@ describe('input', () => {
 
 @Component({
   imports: [TriInputModule],
-  template: `<input tri-input [size]="size" [disabled]="disabled" [variant]="variant" [value]="value" />`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<input tri-input [size]="size()" [disabled]="disabled()" [variant]="variant()" [value]="value()" />`
 })
 export class TriTestInputWithInputComponent {
-  size: TriSizeLDSType = 'default';
-  disabled = false;
-  variant: TriVariant = 'outlined';
-  value = 'NzTestInput';
+  readonly size = signal<TriSizeLDSType>('default');
+  readonly disabled = signal(false);
+  readonly variant = signal<TriVariant>('outlined');
+  readonly value = signal('NzTestInput');
   inputDirective = viewChild.required(TriInputDirective);
 }
 
 @Component({
   imports: [TriInputModule],
-  template: `<textarea tri-input></textarea>`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<textarea tri-input></textarea>`
 })
 export class TriTestInputWithTextAreaComponent {}
 
@@ -441,11 +595,10 @@ export class TriTestInputFormComponent {
 // status
 @Component({
   imports: [TriInputModule],
-  template: `<input tri-input [status]="status" />`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<input tri-input [status]="status()" />`
 })
 export class TriTestInputWithStatusComponent {
-  status: TriStatus = 'error';
+  readonly status = signal<TriStatus>('error');
 }
 
 @Component({
@@ -453,7 +606,7 @@ export class TriTestInputWithStatusComponent {
   template: `
     <form tri-form>
       <tri-form-item>
-        <tri-form-control [hasFeedback]="feedback" [validateStatus]="status">
+        <tri-form-control [hasFeedback]="feedback()" [validateStatus]="status()">
           <input tri-input />
         </tri-form-control>
       </tri-form-item>
@@ -462,8 +615,32 @@ export class TriTestInputWithStatusComponent {
   changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestInputInFormComponent {
-  status: TriFormControlStatusType = 'error';
-  feedback = true;
+  readonly status = signal<TriFormControlStatusType>('error');
+  readonly feedback = signal(true);
+}
+
+@Component({
+  imports: [TriInputModule],
+  template: `<input tri-input [type]="type()" />`
+})
+export class TriTestInputWithTypeComponent {
+  readonly type = signal<string | null>(null);
+}
+
+@Component({
+  imports: [TriInputModule],
+  template: `<input tri-input [size]="size()" />`
+})
+export class TestInputFinalSizeComponent {
+  readonly size = signal<TriSizeLDSType>('default');
+}
+
+@Component({
+  imports: [TriInputModule],
+  template: `<input tri-input [variant]="variant()" />`
+})
+export class TestInputFinalVariantComponent {
+  readonly variant = signal<TriVariant | undefined>(undefined);
 }
 
 @Component({

@@ -3,11 +3,12 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, provideZoneChangeDetection } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
+import { Component, signal } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
+import { updateNonSignalsInput } from 'ng-zorro-antd/core/testing';
 import { TriInputModule } from 'ng-zorro-antd/input/input.module';
 import { TriTextareaCountComponent } from 'ng-zorro-antd/input/textarea-count.component';
 
@@ -35,13 +36,13 @@ describe('textarea-count', () => {
       expect(textareaCountElement.getAttribute('data-count')).toBe('0');
     });
 
-    it('should count update work', fakeAsync(() => {
-      testComponent.inputValue = 'test';
+    it('should count update work', async () => {
+      testComponent.inputValue.set('test');
       fixture.detectChanges();
-      flush();
+      await updateNonSignalsInput(fixture);
 
       expect(textareaCountElement.getAttribute('data-count')).toBe('4');
-    }));
+    });
   });
 
   describe('with-max-length', () => {
@@ -60,13 +61,13 @@ describe('textarea-count', () => {
       expect(textareaCountElement.getAttribute('data-count')).toBe('0/100');
     });
 
-    it('should count update with max length work', fakeAsync(() => {
-      testComponent.inputValue = 'test';
+    it('should count update with max length work', async () => {
+      testComponent.inputValue.set('test');
       fixture.detectChanges();
-      flush();
+      await updateNonSignalsInput(fixture);
 
       expect(textareaCountElement.getAttribute('data-count')).toBe('4/100');
-    }));
+    });
   });
 });
 
@@ -76,11 +77,10 @@ describe('textarea-count', () => {
     <tri-textarea-count>
       <textarea rows="4" tri-input [(ngModel)]="inputValue"></textarea>
     </tri-textarea-count>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestInputTextareaCountWithoutMaxComponent {
-  inputValue = '';
+  readonly inputValue = signal('');
 }
 
 @Component({
@@ -89,9 +89,8 @@ export class TriTestInputTextareaCountWithoutMaxComponent {
     <tri-textarea-count [maxCharacterCount]="100">
       <textarea rows="4" tri-input [(ngModel)]="inputValue"></textarea>
     </tri-textarea-count>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestInputTextareaCountWithMaxComponent {
-  inputValue = '';
+  readonly inputValue = signal('');
 }

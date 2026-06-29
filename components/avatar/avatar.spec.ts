@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, ViewChild, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -31,8 +31,8 @@ function getType(dl: DebugElement): string {
 
 describe('avatar group', () => {
   let fixture: ComponentFixture<TestAvatarGroupComponent>;
-  beforeEach(async () => {
-    TestBed.configureTestingModule({});
+
+  beforeEach(() => {
     fixture = TestBed.createComponent(TestAvatarGroupComponent);
     fixture.autoDetectChanges();
   });
@@ -66,22 +66,18 @@ describe('avatar', () => {
   });
 
   describe('#nzSrc', () => {
-    it('#nzSrc', () => {
-      expect(context).not.toBeNull();
-    });
-
     it('should tolerate error src', async () => {
       const event = createFakeEvent('error');
       expect(getType(dl)).toBe('image');
       expect(context.comp.hasSrc).toBe(true);
       // Manually dispatch error.
-      context.src = '';
+      context.src.set('');
       await updateNonSignalsInput(fixture);
       context.comp.imgError(event);
       await updateNonSignalsInput(fixture);
       expect(getType(dl)).toBe('icon');
       expect(context.comp.hasSrc).toBe(false);
-      context.src = imageBase64;
+      context.src.set(imageBase64);
       await updateNonSignalsInput(fixture);
       expect(context.comp.hasSrc).toBe(true);
       expect(getType(dl)).toBe('image');
@@ -93,43 +89,43 @@ describe('avatar', () => {
       expect(getType(dl)).toBe('image');
       expect(context.comp.hasSrc).toBe(true);
       // Manually dispatch error.
-      context.src = 'Invalid image src';
+      context.src.set('Invalid image src');
       await updateNonSignalsInput(fixture);
       context.comp.imgError(event);
       expect(getType(dl)).toBe('image');
       expect(context.comp.hasSrc).toBe(true);
-      context.src = imageBase64;
+      context.src.set(imageBase64);
       await updateNonSignalsInput(fixture);
       expect(context.comp.hasSrc).toBe(true);
       expect(getType(dl)).toBe('image');
     });
 
     it('#nzSrcSet', async () => {
-      context.srcSet = '1.png';
+      context.srcSet.set('1.png');
       await updateNonSignalsInput(fixture);
       const el = getImageElement();
-      expect(el.srcset).toBe(context.srcSet);
+      expect(el.srcset).toBe('1.png');
     });
 
     it('#nzAlt', async () => {
-      context.alt = 'alt';
+      context.alt.set('alt');
       await updateNonSignalsInput(fixture);
       const el = getImageElement();
-      expect(el.alt).toBe(context.alt);
+      expect(el.alt).toBe('alt');
     });
   });
 
   it('#nzIcon', async () => {
-    context.src = undefined;
-    context.text = undefined;
+    context.src.set(undefined);
+    context.text.set(undefined);
     await updateNonSignalsInput(fixture);
     expect(getType(dl)).toBe('icon');
   });
 
   describe('#nzText', () => {
     beforeEach(async () => {
-      context.src = undefined;
-      context.icon = undefined;
+      context.src.set(undefined);
+      context.icon.set(undefined);
       await updateNonSignalsInput(fixture);
     });
 
@@ -138,14 +134,14 @@ describe('avatar', () => {
     });
 
     it('should be normal font-size', async () => {
-      context.text = 'a';
+      context.text.set('a');
       await updateNonSignalsInput(fixture);
       const scale = getScaleFromCSSTransform(dl.nativeElement.querySelector('.ant-avatar-string')!.style.transform!);
       expect(scale).toBe(1);
     });
 
     it('should be auto set font-size', async () => {
-      context.text = 'LongUsername';
+      context.text.set('LongUsername');
       await updateNonSignalsInput(fixture);
       context.comp['calcStringSize']();
       const scale = getScaleFromCSSTransform(dl.nativeElement.querySelector('.ant-avatar-string')!.style.transform!);
@@ -155,9 +151,10 @@ describe('avatar', () => {
     describe('nzGap', () => {
       let firstScale: number;
       let avatarText: HTMLElement;
+
       beforeEach(async () => {
-        context.gap = 4;
-        context.text = 'Username';
+        context.gap.set(4);
+        context.text.set('Username');
         await updateNonSignalsInput(fixture);
         avatarText = dl.nativeElement.querySelector('.ant-avatar-string')!;
         context.comp['calcStringSize']();
@@ -165,13 +162,13 @@ describe('avatar', () => {
       });
 
       it('should be set gap', async () => {
-        context.gap = 8;
+        context.gap.set(8);
         await updateNonSignalsInput(fixture);
 
         let scale = getScaleFromCSSTransform(avatarText.style.transform);
         expect(scale).toBeLessThan(firstScale);
 
-        context.gap = 2;
+        context.gap.set(2);
         await updateNonSignalsInput(fixture);
 
         scale = getScaleFromCSSTransform(avatarText.style.transform);
@@ -179,13 +176,13 @@ describe('avatar', () => {
       });
 
       it('Should be set to default when the limit is exceeded', async () => {
-        context.gap = 1000;
+        context.gap.set(1000);
         await updateNonSignalsInput(fixture);
 
         let scale = getScaleFromCSSTransform(avatarText.style.transform);
         expect(scale).toEqual(firstScale);
 
-        context.gap = -1000;
+        context.gap.set(-1000);
         await updateNonSignalsInput(fixture);
 
         scale = getScaleFromCSSTransform(avatarText.style.transform);
@@ -197,7 +194,7 @@ describe('avatar', () => {
   describe('#nzShape', () => {
     for (const type of ['square', 'circle'] as const) {
       it(type, async () => {
-        context.shape = type;
+        context.shape.set(type);
         await updateNonSignalsInput(fixture);
         expect(dl.query(By.css(`.ant-avatar-${type}`)) !== null).toBe(true);
       });
@@ -210,16 +207,16 @@ describe('avatar', () => {
       { size: 'small', cls: 'sm' }
     ] as const) {
       it(item.size, async () => {
-        context.size = item.size;
+        context.size.set(item.size);
         await updateNonSignalsInput(fixture);
         expect(dl.query(By.css(`.ant-avatar-${item.cls}`)) !== null).toBe(true);
       });
     }
 
     it('custom size', async () => {
-      context.size = 64;
-      context.icon = undefined;
-      context.src = undefined;
+      context.size.set(64);
+      context.icon.set(undefined);
+      context.src.set(undefined);
       await updateNonSignalsInput(fixture);
       const size = `${64}px`;
       const hostStyle = dl.nativeElement.querySelector('nz-avatar').style;
@@ -228,17 +225,17 @@ describe('avatar', () => {
       expect(hostStyle.lineHeight === size).toBe(true);
       expect(hostStyle.fontSize === ``).toBe(true);
 
-      context.icon = 'user';
+      context.icon.set('user');
       await updateNonSignalsInput(fixture);
-      expect(hostStyle.fontSize === `${context.size / 2}px`).toBe(true);
+      expect(hostStyle.fontSize === `${64 / 2}px`).toBe(true);
     });
 
     it('should set `lineHeight` on the text element considering `nzSize`', async () => {
       const size = 64;
-      context.icon = undefined;
-      context.src = undefined;
-      context.size = size;
-      context.text = 'LongUsername';
+      context.icon.set(undefined);
+      context.src.set(undefined);
+      context.size.set(size);
+      context.text.set('LongUsername');
       await updateNonSignalsInput(fixture);
       const textEl = document.querySelector<HTMLElement>('.ant-avatar-string')!;
       context.comp['calcStringSize']();
@@ -247,14 +244,12 @@ describe('avatar', () => {
       expect(textEl.style.lineHeight).toEqual(`${size}px`);
     });
 
-    // this case will fail in local environment but pass in CI. Ignore it first.
-
-    it('[IGNORE_LOCAL] should have 0 for avatarWidth if element.width is falsy`', async () => {
+    it('should have 0 for avatarWidth if element.width is falsy`', async () => {
       const size = 64;
-      context.icon = undefined;
-      context.src = undefined;
-      context.size = size;
-      context.text = 'LongUsername';
+      context.icon.set(undefined);
+      context.src.set(undefined);
+      context.size.set(size);
+      context.text.set('LongUsername');
       context.comp.hasText = true;
 
       await updateNonSignalsInput(fixture);
@@ -271,12 +266,9 @@ describe('avatar', () => {
 
       const scale = getScaleFromCSSTransform(textEl.style.transform);
 
-      // avatarWidth = 0
-      // childrenWidth = 86
-      // offset = 8
-      // avatarWidth = 0
-      // scale = (0 - 8) / 86
-      expect(scale).toBe(-0.0930233);
+      // When avatar width is falsy, calcStringSize falls back to a negative gap:
+      // (avatarWidth - 8) / textWidth, where avatarWidth is normalized to 0.
+      expect(scale).toBeCloseTo(-8 / textEl.offsetWidth);
     });
   });
 
@@ -286,7 +278,7 @@ describe('avatar', () => {
     });
 
     it('should allow providing a binding for the `loading` attribute', async () => {
-      context.loading = 'lazy';
+      context.loading.set('lazy');
       await updateNonSignalsInput(fixture);
       expect(getImageElement().loading).toEqual('lazy');
     });
@@ -298,7 +290,7 @@ describe('avatar', () => {
     });
 
     it('should allow providing a binding for the `fetchpriority` attribute', async () => {
-      context.fetchPriority = 'high';
+      context.fetchPriority.set('high');
       await updateNonSignalsInput(fixture);
       expect(getImageElement().fetchPriority).toEqual('high');
     });
@@ -320,7 +312,7 @@ describe('avatar', () => {
     it('should be show text when image loaded error and icon not exists', async () => {
       const event = createFakeEvent('error');
       expect(getType(dl)).toBe('image');
-      context.icon = undefined;
+      context.icon.set(undefined);
       await updateNonSignalsInput(fixture);
       context.comp.imgError(event);
       await updateNonSignalsInput(fixture);
@@ -330,8 +322,8 @@ describe('avatar', () => {
     it('should be show empty when image loaded error and icon & text not exists', async () => {
       const event = createFakeEvent('error');
       expect(getType(dl)).toBe('image');
-      context.icon = undefined;
-      context.text = undefined;
+      context.icon.set(undefined);
+      context.text.set(undefined);
       await updateNonSignalsInput(fixture);
       context.comp.imgError(event);
       await updateNonSignalsInput(fixture);
@@ -349,41 +341,38 @@ function getScaleFromCSSTransform(transform: string): number {
   template: `
     <tri-avatar
       #comp
-      [shape]="shape"
-      [size]="size"
-      [icon]="icon"
-      [text]="text"
-      [gap]="gap"
-      [src]="src"
-      [srcSet]="srcSet"
-      [alt]="alt"
-      [loading]="loading"
-      [fetchPriority]="fetchPriority"
+      [shape]="shape()"
+      [size]="size()"
+      [icon]="icon()"
+      [text]="text()"
+      [gap]="gap()"
+      [src]="src()"
+      [srcSet]="srcSet()"
+      [alt]="alt()"
+      [loading]="loading()"
+      [fetchPriority]="fetchPriority()"
     />
   `,
   styles: `
-    @import '../style/testing.less';
-    @import './style/index.less';
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+    @import './style/testing.less';
+  `
 })
 class TestAvatarComponent {
   @ViewChild('comp', { static: false }) comp!: TriAvatarComponent;
-  shape: TriShapeSCType = 'square';
-  size: TriSizeLDSType | number = 'large';
-  gap = 4;
-  icon?: string = 'user';
-  text?: string = 'A';
-  src?: string = imageBase64;
-  srcSet?: string;
-  alt?: string;
-  loading?: 'eager' | 'lazy';
-  fetchPriority?: 'high' | 'low' | 'auto';
+  readonly shape = signal<TriShapeSCType>('square');
+  readonly size = signal<TriSizeLDSType | number>('large');
+  readonly gap = signal(4);
+  readonly icon = signal<string | undefined>('user');
+  readonly text = signal<string | undefined>('A');
+  readonly src = signal<string | undefined>(imageBase64);
+  readonly srcSet = signal<string | undefined>(undefined);
+  readonly alt = signal<string | undefined>(undefined);
+  readonly loading = signal<'eager' | 'lazy' | undefined>(undefined);
+  readonly fetchPriority = signal<'high' | 'low' | 'auto' | undefined>(undefined);
 }
 
 @Component({
   imports: [TriAvatarModule],
-  template: `<tri-avatar-group />`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<tri-avatar-group />`
 })
 class TestAvatarGroupComponent {}

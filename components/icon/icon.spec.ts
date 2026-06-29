@@ -3,15 +3,8 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DebugElement,
-  NgModule,
-  inject,
-  provideZoneChangeDetection
-} from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { Component, DebugElement, NgModule, inject, signal } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import {
@@ -25,6 +18,7 @@ import {
 } from '@ant-design/icons-angular/icons';
 
 import { TriConfigService } from 'ng-zorro-antd/core/config';
+import { updateNonSignalsInput } from 'ng-zorro-antd/core/testing';
 
 import { TriIconDirective } from './icon.directive';
 import { TriIconModule } from './icon.module';
@@ -68,52 +62,52 @@ describe('nz-icon', () => {
     });
 
     it('should change class name when type changes', () => {
-      testComponent.type = 'question-circle';
+      testComponent.type.set('question-circle');
       fixture.detectChanges();
       expect(icons[0].nativeElement.classList.contains('anticon')).toBe(true);
       expect(icons[0].nativeElement.classList.contains('anticon-question-circle')).toBe(true);
       expect(icons[0].nativeElement.classList.contains('anticon-question')).not.toBe(true);
     });
 
-    it('should support spin and cancel', fakeAsync(() => {
+    it('should support spin and cancel', async () => {
       fixture.detectChanges();
-      tick(1000);
+      await updateNonSignalsInput(fixture);
       fixture.detectChanges();
       // Only test fails. Don't know why.
       // expect(icons[0].nativeElement.firstChild.classList.contains('anticon-spin')).toBe(true);
 
-      testComponent.spin = false;
+      testComponent.spin.set(false);
       fixture.detectChanges();
-      tick(1000);
+      await updateNonSignalsInput(fixture);
       fixture.detectChanges();
       expect(icons[0].nativeElement.firstChild.classList.contains('anticon-spin')).toBe(false);
-    }));
+    });
 
-    it('should make loading spin', fakeAsync(() => {
+    it('should make loading spin', async () => {
       fixture.detectChanges();
-      tick(1000);
+      await updateNonSignalsInput(fixture);
       fixture.detectChanges();
       // expect(icons[1].nativeElement.firstChild.classList.contains('anticon-spin')).toBe(true);
-    }));
+    });
 
-    it('should rotate work', fakeAsync(() => {
+    it('should rotate work', async () => {
       fixture.detectChanges();
-      tick(1000);
+      await updateNonSignalsInput(fixture);
       fixture.detectChanges();
       expect(icons[0].nativeElement.firstChild.style.transform).toBeFalsy();
 
-      testComponent.rotate = 120;
+      testComponent.rotate.set(120);
       fixture.detectChanges();
-      tick(1000);
+      await updateNonSignalsInput(fixture);
       fixture.detectChanges();
       expect(icons[0].nativeElement.firstChild.style.transform).toBe('rotate(120deg)');
 
-      testComponent.rotate = 0;
+      testComponent.rotate.set(0);
       fixture.detectChanges();
-      tick(1000);
+      await updateNonSignalsInput(fixture);
       fixture.detectChanges();
       expect(icons[0].nativeElement.firstChild.style.transform).toBeFalsy();
-    }));
+    });
   });
 
   describe('custom', () => {
@@ -227,18 +221,17 @@ describe('nz-icon injection', () => {
 @Component({
   imports: [TriIconModule],
   template: `
-    <tri-icon [type]="type" [theme]="theme" [spin]="spin" [rotate]="rotate" />
-    <tri-icon type="loading" [theme]="theme" />
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+    <tri-icon [type]="type()" [theme]="theme()" [spin]="spin()" [rotate]="rotate()" />
+    <tri-icon type="loading" [theme]="theme()" />
+  `
 })
 export class TriTestIconExtensionsComponent {
   public readonly iconService = inject(TriIconService);
 
-  type = 'question';
-  theme: 'fill' | 'outline' | 'twotone' = 'outline';
-  spin = true;
-  rotate = 0;
+  readonly type = signal('question');
+  readonly theme = signal<'fill' | 'outline' | 'twotone'>('outline');
+  readonly spin = signal(true);
+  readonly rotate = signal(0);
 }
 
 @Component({
@@ -251,8 +244,7 @@ export class TriTestIconExtensionsComponent {
         />
       </svg>
     </tri-icon>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestIconCustomComponent {}
 
@@ -262,8 +254,7 @@ export class TriTestIconCustomComponent {}
     <tri-icon iconfont="icon-tuichu" />
     <tri-icon iconfont="icon-facebook" />
     <tri-icon iconfont="icon-twitter" />
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestIconIconfontComponent {
   private readonly iconService = inject(TriIconService);
@@ -281,22 +272,22 @@ export class TriTestIconIconfontComponent {
 class ChildModule {}
 
 @Component({
+  selector: 'tri-test-icon-multi-injection',
   imports: [TriIconModule, ChildModule],
   template: `
     <tri-icon type="home" />
     <tri-icon type="question" />
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 class TriTestIconMultiInjectionComponent {}
 
 @Component({
+  selector: 'tri-test-icon-multi-injection-standalone',
   imports: [TriIconModule],
   providers: [provideNzIconsPatch([QuestionOutline])],
   template: `
     <tri-icon type="home" />
     <tri-icon type="question" />
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 class TriTestIconMultiInjectionStandaloneComponent {}

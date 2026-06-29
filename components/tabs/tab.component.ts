@@ -46,6 +46,8 @@ export const TRI_TAB_SET = new InjectionToken<TriSafeAny>(typeof ngDevMode !== '
   `
 })
 export class TriTabComponent implements OnChanges, OnDestroy {
+  readonly closestTabSet = inject(TRI_TAB_SET);
+
   @Input() title: string | TemplateRef<TabTemplateContext> = '';
   @Input({ transform: booleanAttribute }) closable = false;
   @Input() closeIcon: string | TemplateRef<TriSafeAny> = 'close';
@@ -59,13 +61,12 @@ export class TriTabComponent implements OnChanges, OnDestroy {
   @ContentChild(TriTabLinkTemplateDirective, { static: false }) tabLinkTemplateDirective!: TriTabLinkTemplateDirective;
   @ContentChild(TriTabDirective, { static: false, read: TemplateRef }) template: TemplateRef<void> | null = null;
   @ContentChild(TriTabLinkDirective, { static: false }) linkDirective!: TriTabLinkDirective;
-  @ViewChild('contentTemplate', { static: true }) contentTemplate!: TemplateRef<TriSafeAny>;
+  @ViewChild('contentTemplate', { static: true }) contentTemplate!: TemplateRef<void>;
 
-  isActive: boolean = false;
+  isActive = false;
   hasBeenActive = false;
   position: number | null = null;
   origin: number | null = null;
-  closestTabSet = inject(TRI_TAB_SET);
 
   readonly stateChanges = new Subject<void>();
 

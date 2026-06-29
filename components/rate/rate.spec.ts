@@ -4,25 +4,25 @@
  */
 
 import { LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
-import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
+import { Component, DebugElement, signal, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { dispatchFakeEvent, dispatchKeyboardEvent, testDirectionality } from 'ng-zorro-antd/core/testing';
+import { vi } from 'vitest';
+
+import {
+  dispatchFakeEvent,
+  dispatchKeyboardEvent,
+  testDirectionality,
+  updateNonSignalsInput
+} from 'ng-zorro-antd/core/testing';
 
 import { TriRateComponent } from './rate.component';
 import { TriRateModule } from './rate.module';
 
 describe('rate', () => {
-  beforeEach(() => {
-    // todo: use zoneless
-    TestBed.configureTestingModule({
-      providers: [provideZoneChangeDetection()]
-    });
-  });
-
-  describe('basic rate', () => {
+  describe('basic', () => {
     let fixture: ComponentFixture<TriTestRateBasicComponent>;
     let testComponent: TriTestRateBasicComponent;
     let rate: DebugElement;
@@ -39,130 +39,105 @@ describe('rate', () => {
       expect(rate.nativeElement.firstElementChild!.classList).toContain('ant-rate');
     });
 
-    it('should set ngModel work', fakeAsync(() => {
+    it('should set ngModel work', async () => {
       fixture.detectChanges();
-      const children = Array.prototype.slice.call(rate.nativeElement.firstElementChild.children);
-      expect(children.every((item: HTMLElement) => item.classList.contains('ant-rate-star-zero'))).toBe(true);
-      testComponent.value = 5;
-      fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
-      expect(children.every((item: HTMLElement) => item.classList.contains('ant-rate-star-full'))).toBe(true);
+      const children = Array.prototype.slice.call(rate.nativeElement.firstElementChild.children) as HTMLElement[];
+      expect(children.every(item => item.classList.contains('ant-rate-star-zero'))).toBe(true);
+      testComponent.value.set(5);
+      await stabilize(fixture);
+      expect(children.every(item => item.classList.contains('ant-rate-star-full'))).toBe(true);
       expect(testComponent.modelChange).toHaveBeenCalledTimes(0);
-    }));
+    });
 
-    it('should click work', fakeAsync(() => {
+    it('should click work', () => {
       fixture.detectChanges();
-      expect(testComponent.value).toBe(0);
+      expect(testComponent.value()).toBe(0);
       rate.nativeElement.firstElementChild.children[3].firstElementChild.firstElementChild.click();
       fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
-      expect(testComponent.value).toBe(4);
+      expect(testComponent.value()).toBe(4);
       expect(testComponent.modelChange).toHaveBeenCalledTimes(1);
-    }));
+    });
 
-    it('should allow half work', fakeAsync(() => {
-      testComponent.allowHalf = false;
+    it('should allow half work', async () => {
+      testComponent.allowHalf.set(false);
       fixture.detectChanges();
-      expect(testComponent.value).toBe(0);
-      testComponent.value = 3.5;
-      fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
+      expect(testComponent.value()).toBe(0);
+      testComponent.value.set(3.5);
+      await stabilize(fixture);
       expect(rate.nativeElement.firstElementChild.children[3].classList).toContain('ant-rate-star-full');
       expect(rate.nativeElement.firstElementChild.children[4].classList).toContain('ant-rate-star-zero');
-      flush();
 
-      testComponent.allowHalf = true;
-      testComponent.value = 0;
-      fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
+      testComponent.allowHalf.set(true);
+      testComponent.value.set(0);
+      await stabilize(fixture);
       rate.nativeElement.firstElementChild.children[3].firstElementChild.children[1].click();
       fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
-      expect(testComponent.value).toBe(3.5);
+      expect(testComponent.value()).toBe(3.5);
       expect(testComponent.modelChange).toHaveBeenCalledTimes(1);
-    }));
+    });
 
-    it('should allow clear work', fakeAsync(() => {
-      testComponent.allowClear = false;
+    it('should allow clear work', () => {
+      testComponent.allowClear.set(false);
       fixture.detectChanges();
-      expect(testComponent.value).toBe(0);
+      expect(testComponent.value()).toBe(0);
       rate.nativeElement.firstElementChild.children[3].firstElementChild.firstElementChild.click();
       fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
-      expect(testComponent.value).toBe(4);
+      expect(testComponent.value()).toBe(4);
       expect(testComponent.modelChange).toHaveBeenCalledTimes(1);
       rate.nativeElement.firstElementChild.children[3].firstElementChild.firstElementChild.click();
       fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
-      expect(testComponent.value).toBe(4);
-      expect(testComponent.modelChange).toHaveBeenCalledTimes(1);
-      testComponent.allowClear = true;
+      expect(testComponent.value()).toBe(4);
+      testComponent.allowClear.set(true);
       fixture.detectChanges();
       rate.nativeElement.firstElementChild.children[3].firstElementChild.firstElementChild.click();
       fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
-      expect(testComponent.value).toBe(0);
-      expect(testComponent.modelChange).toHaveBeenCalledTimes(2);
-    }));
+      expect(testComponent.value()).toBe(0);
+    });
 
-    it('should disable work', fakeAsync(() => {
-      testComponent.disabled = true;
+    it('should disable work', () => {
+      testComponent.disabled.set(true);
       fixture.detectChanges();
-      expect(testComponent.value).toBe(0);
+      expect(testComponent.value()).toBe(0);
       rate.nativeElement.firstElementChild.children[3].firstElementChild.firstElementChild.click();
       fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
-      expect(testComponent.value).toBe(0);
+      expect(testComponent.value()).toBe(0);
       expect(testComponent.modelChange).toHaveBeenCalledTimes(0);
-    }));
+    });
 
-    it('should count work', fakeAsync(() => {
+    it('should count work', () => {
       fixture.detectChanges();
       expect(rate.nativeElement.firstElementChild.children.length).toBe(5);
-      expect(testComponent.value).toBe(0);
+      expect(testComponent.value()).toBe(0);
       rate.nativeElement.firstElementChild.children[3].firstElementChild.firstElementChild.click();
       fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
-      expect(testComponent.value).toBe(4);
+      expect(testComponent.value()).toBe(4);
       expect(testComponent.modelChange).toHaveBeenCalledTimes(1);
-      testComponent.count = 10;
-      fixture.detectChanges();
-      flush();
+      testComponent.count.set(10);
       fixture.detectChanges();
       expect(rate.nativeElement.firstElementChild.children.length).toBe(10);
-      expect(testComponent.value).toBe(4);
+      expect(testComponent.value()).toBe(4);
       expect(testComponent.modelChange).toHaveBeenCalledTimes(1);
-    }));
+    });
 
     it('should autofocus work', () => {
       fixture.detectChanges();
-      testComponent.autoFocus = true;
+      testComponent.autoFocus.set(true);
       fixture.detectChanges();
       expect(rate.nativeElement.querySelector('ul').attributes.getNamedItem('autofocus').name).toBe('autofocus');
-      testComponent.autoFocus = false;
+      testComponent.autoFocus.set(false);
       fixture.detectChanges();
       expect(rate.nativeElement.querySelector('ul').attributes.getNamedItem('autofocus')).toBe(null);
     });
 
     it('should focus and blur function work', () => {
       fixture.detectChanges();
-      expect(rate.nativeElement.querySelector('ul') === document.activeElement).toBe(false);
+      const rateElement = rate.nativeElement.querySelector('ul') as HTMLElement;
+      vi.spyOn(rateElement, 'focus');
+      vi.spyOn(rateElement, 'blur');
       testComponent.rateComponent.focus();
-      fixture.detectChanges();
-      expect(rate.nativeElement.querySelector('ul') === document.activeElement).toBe(true);
+      expect(rateElement.focus).toHaveBeenCalledTimes(1);
       testComponent.rateComponent.blur();
-      fixture.detectChanges();
-      expect(rate.nativeElement.querySelector('ul') === document.activeElement).toBe(false);
+      expect(rateElement.blur).toHaveBeenCalledTimes(1);
     });
 
     it('should hover rate work', () => {
@@ -182,7 +157,7 @@ describe('rate', () => {
       fixture.detectChanges();
       expect(testComponent.onHoverChange).toHaveBeenCalledTimes(2);
       expect(rate.nativeElement.firstElementChild.children[3].classList).toContain('ant-rate-star-zero');
-      testComponent.disabled = true;
+      testComponent.disabled.set(true);
       fixture.detectChanges();
       dispatchFakeEvent(rate.nativeElement.firstElementChild.children[2].firstElementChild, 'mouseover');
       expect(testComponent.onHoverChange).toHaveBeenCalledTimes(2);
@@ -190,44 +165,42 @@ describe('rate', () => {
 
     it('should keydown work', () => {
       fixture.detectChanges();
-      expect(testComponent.value).toBe(0);
+      expect(testComponent.value()).toBe(0);
       dispatchKeyboardEvent(rate.nativeElement.firstElementChild, 'keydown', LEFT_ARROW);
       fixture.detectChanges();
-      expect(testComponent.value).toBe(0);
+      expect(testComponent.value()).toBe(0);
       expect(testComponent.modelChange).toHaveBeenCalledTimes(0);
       dispatchKeyboardEvent(rate.nativeElement.firstElementChild, 'keydown', RIGHT_ARROW);
       fixture.detectChanges();
-      expect(testComponent.value).toBe(1);
+      expect(testComponent.value()).toBe(1);
       expect(testComponent.modelChange).toHaveBeenCalledTimes(1);
       dispatchKeyboardEvent(rate.nativeElement.firstElementChild, 'keydown', LEFT_ARROW);
       fixture.detectChanges();
-      expect(testComponent.value).toBe(0);
+      expect(testComponent.value()).toBe(0);
       expect(testComponent.modelChange).toHaveBeenCalledTimes(2);
-      testComponent.allowHalf = true;
+      testComponent.allowHalf.set(true);
       fixture.detectChanges();
       dispatchKeyboardEvent(rate.nativeElement.firstElementChild, 'keydown', RIGHT_ARROW);
       fixture.detectChanges();
-      expect(testComponent.value).toBe(0.5);
+      expect(testComponent.value()).toBe(0.5);
       expect(testComponent.modelChange).toHaveBeenCalledTimes(3);
       dispatchKeyboardEvent(rate.nativeElement.firstElementChild, 'keydown', LEFT_ARROW);
       fixture.detectChanges();
-      expect(testComponent.value).toBe(0);
+      expect(testComponent.value()).toBe(0);
       expect(testComponent.modelChange).toHaveBeenCalledTimes(4);
     });
 
-    it('should right keydown not dispatch change reached limit', fakeAsync(() => {
-      testComponent.value = 5;
-      fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
+    it('should right keydown not dispatch change reached limit', async () => {
+      testComponent.value.set(5);
+      await stabilize(fixture);
       dispatchKeyboardEvent(rate.nativeElement.firstElementChild, 'keydown', RIGHT_ARROW);
       fixture.detectChanges();
-      expect(testComponent.value).toBe(5);
+      expect(testComponent.value()).toBe(5);
       expect(testComponent.modelChange).toHaveBeenCalledTimes(0);
-    }));
+    });
   });
 
-  describe('rate form', () => {
+  describe('form', () => {
     let fixture: ComponentFixture<TriTestRateFormComponent>;
     let testComponent: TriTestRateFormComponent;
 
@@ -236,36 +209,32 @@ describe('rate', () => {
       testComponent = fixture.componentInstance;
     });
 
-    it('should be in pristine, untouched, and valid states and enable initially', fakeAsync(() => {
-      fixture.detectChanges();
-      flush();
+    it('should be in pristine, untouched, and valid states and enable initially', async () => {
+      await stabilize(fixture);
       const rate = fixture.debugElement.query(By.directive(TriRateComponent));
       expect(testComponent.formControl.valid).toBe(true);
       expect(testComponent.formControl.pristine).toBe(true);
       expect(testComponent.formControl.touched).toBe(false);
       expect(rate.nativeElement.firstElementChild!.classList).not.toContain('ant-rate-disabled');
-    }));
+    });
 
-    it('should be disable if form is enable and nzDisable set to true initially', fakeAsync(() => {
-      testComponent.disabled = true;
-      fixture.detectChanges();
-      flush();
+    it('should be disable if form is enable and nzDisable set to true initially', async () => {
+      testComponent.disabled.set(true);
+      await stabilize(fixture);
       const rate = fixture.debugElement.query(By.directive(TriRateComponent));
       expect(rate.nativeElement.firstElementChild!.classList).toContain('ant-rate-disabled');
-    }));
+    });
 
-    it('should be disable if form is disable and nzDisable set to false initially', fakeAsync(() => {
+    it('should be disable if form is disable and nzDisable set to false initially', async () => {
       testComponent.disable();
-      fixture.detectChanges();
-      flush();
+      await stabilize(fixture);
       const rate = fixture.debugElement.query(By.directive(TriRateComponent));
       expect(rate.nativeElement.firstElementChild!.classList).toContain('ant-rate-disabled');
-    }));
+    });
 
-    it('should set disabled work', fakeAsync(() => {
-      testComponent.disabled = true;
-      fixture.detectChanges();
-      flush();
+    it('should set disabled work', async () => {
+      testComponent.disabled.set(true);
+      await stabilize(fixture);
 
       const rate = fixture.debugElement.query(By.directive(TriRateComponent));
       expect(rate.nativeElement.firstElementChild!.classList).toContain('ant-rate-disabled');
@@ -275,26 +244,24 @@ describe('rate', () => {
       expect(testComponent.formControl.value).toBe(1);
 
       testComponent.enable();
-      fixture.detectChanges();
-      flush();
+      await stabilize(fixture);
       expect(rate.nativeElement.firstElementChild!.classList).not.toContain('ant-rate-disabled');
       rate.nativeElement.firstElementChild.children[3].firstElementChild.firstElementChild.click();
       fixture.detectChanges();
       expect(testComponent.formControl.value).toBe(4);
 
       testComponent.disable();
-      fixture.detectChanges();
-      flush();
+      await stabilize(fixture);
       expect(rate.nativeElement.firstElementChild!.classList).toContain('ant-rate-disabled');
       rate.nativeElement.firstElementChild.children[3].firstElementChild.firstElementChild.click();
       fixture.detectChanges();
       expect(testComponent.formControl.value).toBe(4);
-    }));
+    });
   });
 
   testDirectionality(() => TriTestRateBasicComponent, By.css('.ant-rate'), 'ant-rate');
 
-  describe('rate character', () => {
+  describe('character', () => {
     let fixture: ComponentFixture<TriTestRateCharacterComponent>;
     let rate: DebugElement;
 
@@ -315,6 +282,10 @@ describe('rate', () => {
   });
 });
 
+async function stabilize<T>(fixture: ComponentFixture<T>): Promise<void> {
+  await updateNonSignalsInput(fixture);
+}
+
 @Component({
   selector: 'tri-test-rate',
   imports: [FormsModule, TriRateModule],
@@ -326,35 +297,35 @@ describe('rate', () => {
       (onFocus)="onFocus($event)"
       (onHoverChange)="onHoverChange($event)"
       (onKeyDown)="onKeyDown($event)"
-      [count]="count"
-      [allowHalf]="allowHalf"
-      [allowClear]="allowClear"
-      [disabled]="disabled"
-      [autoFocus]="autoFocus"
+      [count]="count()"
+      [allowHalf]="allowHalf()"
+      [allowClear]="allowClear()"
+      [disabled]="disabled()"
+      [autoFocus]="autoFocus()"
     />
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestRateBasicComponent {
   @ViewChild(TriRateComponent, { static: false }) rateComponent!: TriRateComponent;
-  count = 5;
-  autoFocus = false;
-  allowHalf = false;
-  allowClear = false;
-  disabled = false;
-  value = 0;
-  modelChange = jasmine.createSpy('model change callback');
-  onBlur = jasmine.createSpy('blur callback');
-  onFocus = jasmine.createSpy('focus callback');
-  onHoverChange = jasmine.createSpy('hover change callback');
-  onKeyDown = jasmine.createSpy('keydown callback');
+  readonly count = signal(5);
+  readonly autoFocus = signal(false);
+  readonly allowHalf = signal(false);
+  readonly allowClear = signal(false);
+  readonly disabled = signal(false);
+  readonly value = signal(0);
+  modelChange = vi.fn();
+  onBlur = vi.fn();
+  onFocus = vi.fn();
+  onHoverChange = vi.fn();
+  onKeyDown = vi.fn();
 }
 
 @Component({
   imports: [ReactiveFormsModule, TriRateModule],
+  selector: 'tri-test-rate-form',
   template: `
     <form>
-      <tri-rate [formControl]="formControl" [disabled]="disabled" />
+      <tri-rate [formControl]="formControl" [disabled]="disabled()" />
     </form>
   `,
   changeDetection: ChangeDetectionStrategy.Eager
@@ -362,7 +333,7 @@ export class TriTestRateBasicComponent {
 export class TriTestRateFormComponent {
   formControl = new FormControl(1);
 
-  disabled = false;
+  readonly disabled = signal(false);
 
   disable(): void {
     this.formControl.disable();

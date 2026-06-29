@@ -3,20 +3,13 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import {
-  ApplicationRef,
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  NgZone,
-  provideZoneChangeDetection,
-  ViewChild
-} from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ApplicationRef, Component, ElementRef, NgZone, signal, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { dispatchMouseEvent, dispatchTouchEvent, MockNgZone } from 'ng-zorro-antd/core/testing';
-import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { vi } from 'vitest';
+
+import { dispatchMouseEvent, dispatchTouchEvent, MockNgZone, updateNonSignalsInput } from 'ng-zorro-antd/core/testing';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 import { TriResizableModule } from 'ng-zorro-antd/resizable/resizable.module';
 
@@ -31,7 +24,7 @@ import { DEFAULT_RESIZE_DIRECTION } from './resize-handles.component';
 describe('resizable', () => {
   let zone: MockNgZone;
 
-  beforeEach(fakeAsync(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         // todo: use zoneless
@@ -46,16 +39,7 @@ describe('resizable', () => {
         }
       ]
     });
-    [
-      TriDemoResizableBasicComponent,
-      TriDemoResizableCustomizeComponent,
-      TriDemoResizableGridComponent,
-      TriDemoResizableLockAspectRatioComponent,
-      TriDemoResizablePreviewComponent
-    ].forEach(comp => {
-      (comp as TriSafeAny).ɵcmp.onPush = false;
-    });
-  }));
+  });
 
   describe('basic', () => {
     let fixture: ComponentFixture<TriDemoResizableBasicComponent>;
@@ -79,7 +63,7 @@ describe('resizable', () => {
 
     it('should toggle the `nz-resizable-handle-box-hover` class when `mouseenter` and `mouseleave` events are fired and should not run change detection', () => {
       const appRef = TestBed.inject(ApplicationRef);
-      spyOn(appRef, 'tick');
+      vi.spyOn(appRef, 'tick');
       dispatchMouseEvent(resizableEle, 'mouseenter');
       const handles = resizableEle.querySelectorAll('.nz-resizable-handle');
       expect(handles.length).toBe(8);
@@ -95,13 +79,13 @@ describe('resizable', () => {
 
     it('should not run change detection on `mousedown` event on the `nz-resize-handle`', () => {
       const appRef = TestBed.inject(ApplicationRef);
-      spyOn(appRef, 'tick');
+      vi.spyOn(appRef, 'tick');
       const nzResizeHandle = resizableEle.querySelector('nz-resize-handle')!;
       dispatchMouseEvent(nzResizeHandle, 'mousedown');
       expect(appRef.tick).toHaveBeenCalledTimes(0);
     });
 
-    it('should maximum size work', done => {
+    it('should maximum size work', async () => {
       const rect = resizableEle.getBoundingClientRect();
       const handel = resizableEle.querySelector('.nz-resizable-handle-bottomRight') as HTMLElement;
       mouseMoveTrigger(
@@ -118,15 +102,13 @@ describe('resizable', () => {
       zone.simulateZoneExit();
       fixture.detectChanges();
       fixture.detectChanges();
-      afterNextFrameRender(() => {
-        fixture.detectChanges();
-        expect(testComponent.width()).toBe(600);
-        expect(testComponent.height()).toBe(200);
-        done();
-      });
+      await afterNextFrameRender();
+      fixture.detectChanges();
+      expect(testComponent.width()).toBe(600);
+      expect(testComponent.height()).toBe(200);
     });
 
-    it('should minimum size work', done => {
+    it('should minimum size work', async () => {
       const rect = resizableEle.getBoundingClientRect();
       const handel = resizableEle.querySelector('.nz-resizable-handle-bottomRight') as HTMLElement;
       mouseMoveTrigger(
@@ -141,12 +123,10 @@ describe('resizable', () => {
         }
       );
       fixture.detectChanges();
-      afterNextFrameRender(() => {
-        fixture.detectChanges();
-        expect(testComponent.width()).toBe(80);
-        expect(testComponent.height()).toBe(80);
-        done();
-      });
+      await afterNextFrameRender();
+      fixture.detectChanges();
+      expect(testComponent.width()).toBe(80);
+      expect(testComponent.height()).toBe(80);
     });
 
     describe('should resize work', () => {
@@ -161,7 +141,7 @@ describe('resizable', () => {
         expect(testComponent.height()).toBe(200);
       });
 
-      it('should touch event work', done => {
+      it('should touch event work', async () => {
         const handle = resizableEle.querySelector('.nz-resizable-handle-top') as HTMLElement;
         touchMoveTrigger(
           handle,
@@ -175,13 +155,11 @@ describe('resizable', () => {
           }
         );
         fixture.detectChanges();
-        afterNextFrameRender(() => {
-          fixture.detectChanges();
-          expect(testComponent.height()).toBeLessThanOrEqual(200);
-          expect(testComponent.height()).toBeGreaterThanOrEqual(100);
-          expect(testComponent.resizeDirection()).toEqual('top');
-          done();
-        });
+        await afterNextFrameRender();
+        fixture.detectChanges();
+        expect(testComponent.height()).toBeLessThanOrEqual(200);
+        expect(testComponent.height()).toBeGreaterThanOrEqual(100);
+        expect(testComponent.resizeDirection()).toEqual('top');
       });
 
       /**
@@ -189,7 +167,7 @@ describe('resizable', () => {
        *  |       |
        *  +-------+
        */
-      it('top', done => {
+      it('top', async () => {
         const handle = resizableEle.querySelector('.nz-resizable-handle-top') as HTMLElement;
         mouseMoveTrigger(
           handle,
@@ -203,13 +181,11 @@ describe('resizable', () => {
           }
         );
         fixture.detectChanges();
-        afterNextFrameRender(() => {
-          fixture.detectChanges();
-          expect(testComponent.height()).toBeLessThanOrEqual(200);
-          expect(testComponent.height()).toBeGreaterThanOrEqual(100);
-          expect(testComponent.resizeDirection()).toEqual('top');
-          done();
-        });
+        await afterNextFrameRender();
+        fixture.detectChanges();
+        expect(testComponent.height()).toBeLessThanOrEqual(200);
+        expect(testComponent.height()).toBeGreaterThanOrEqual(100);
+        expect(testComponent.resizeDirection()).toEqual('top');
       });
 
       /**
@@ -217,7 +193,7 @@ describe('resizable', () => {
        *  |       |
        *  +---↑---+
        */
-      it('bottom', done => {
+      it('bottom', async () => {
         const handle = resizableEle.querySelector('.nz-resizable-handle-bottom') as HTMLElement;
         mouseMoveTrigger(
           handle,
@@ -231,13 +207,11 @@ describe('resizable', () => {
           }
         );
         fixture.detectChanges();
-        afterNextFrameRender(() => {
-          fixture.detectChanges();
-          expect(testComponent.height()).toBeLessThanOrEqual(200);
-          expect(testComponent.height()).toBeGreaterThanOrEqual(100);
-          expect(testComponent.resizeDirection()).toEqual('bottom');
-          done();
-        });
+        await afterNextFrameRender();
+        fixture.detectChanges();
+        expect(testComponent.height()).toBeLessThanOrEqual(200);
+        expect(testComponent.height()).toBeGreaterThanOrEqual(100);
+        expect(testComponent.resizeDirection()).toEqual('bottom');
       });
 
       /**
@@ -245,7 +219,7 @@ describe('resizable', () => {
        *  →       |
        *  +-------+
        */
-      it('left', done => {
+      it('left', async () => {
         const handle = resizableEle.querySelector('.nz-resizable-handle-left') as HTMLElement;
         mouseMoveTrigger(
           handle,
@@ -259,13 +233,11 @@ describe('resizable', () => {
           }
         );
         fixture.detectChanges();
-        afterNextFrameRender(() => {
-          fixture.detectChanges();
-          expect(testComponent.width()).toBeLessThanOrEqual(400);
-          expect(testComponent.width()).toBeGreaterThanOrEqual(300);
-          expect(testComponent.resizeDirection()).toEqual('left');
-          done();
-        });
+        await afterNextFrameRender();
+        fixture.detectChanges();
+        expect(testComponent.width()).toBeLessThanOrEqual(400);
+        expect(testComponent.width()).toBeGreaterThanOrEqual(300);
+        expect(testComponent.resizeDirection()).toEqual('left');
       });
 
       /**
@@ -273,7 +245,7 @@ describe('resizable', () => {
        *  |       ←
        *  +-------+
        */
-      it('right', done => {
+      it('right', async () => {
         const handle = resizableEle.querySelector('.nz-resizable-handle-right') as HTMLElement;
         mouseMoveTrigger(
           handle,
@@ -287,13 +259,11 @@ describe('resizable', () => {
           }
         );
         fixture.detectChanges();
-        afterNextFrameRender(() => {
-          fixture.detectChanges();
-          expect(testComponent.width()).toBeLessThanOrEqual(400);
-          expect(testComponent.width()).toBeGreaterThanOrEqual(300);
-          expect(testComponent.resizeDirection()).toEqual('right');
-          done();
-        });
+        await afterNextFrameRender();
+        fixture.detectChanges();
+        expect(testComponent.width()).toBeLessThanOrEqual(400);
+        expect(testComponent.width()).toBeGreaterThanOrEqual(300);
+        expect(testComponent.resizeDirection()).toEqual('right');
       });
 
       /**
@@ -301,7 +271,7 @@ describe('resizable', () => {
        *  |       |
        *  +------+
        */
-      it('topRight', done => {
+      it('topRight', async () => {
         const handle = resizableEle.querySelector('.nz-resizable-handle-topRight') as HTMLElement;
         mouseMoveTrigger(
           handle,
@@ -315,15 +285,13 @@ describe('resizable', () => {
           }
         );
         fixture.detectChanges();
-        afterNextFrameRender(() => {
-          fixture.detectChanges();
-          expect(testComponent.width()).toBeLessThanOrEqual(400);
-          expect(testComponent.width()).toBeGreaterThanOrEqual(300);
-          expect(testComponent.height()).toBeLessThanOrEqual(210);
-          expect(testComponent.height()).toBeGreaterThanOrEqual(100);
-          expect(testComponent.resizeDirection()).toEqual('topRight');
-          done();
-        });
+        await afterNextFrameRender();
+        fixture.detectChanges();
+        expect(testComponent.width()).toBeLessThanOrEqual(400);
+        expect(testComponent.width()).toBeGreaterThanOrEqual(300);
+        expect(testComponent.height()).toBeLessThanOrEqual(210);
+        expect(testComponent.height()).toBeGreaterThanOrEqual(100);
+        expect(testComponent.resizeDirection()).toEqual('topRight');
       });
 
       /**
@@ -331,7 +299,7 @@ describe('resizable', () => {
        *  |       |
        *  +-------+
        */
-      it('topLeft', done => {
+      it('topLeft', async () => {
         const handle = resizableEle.querySelector('.nz-resizable-handle-topLeft') as HTMLElement;
         mouseMoveTrigger(
           handle,
@@ -345,15 +313,13 @@ describe('resizable', () => {
           }
         );
         fixture.detectChanges();
-        afterNextFrameRender(() => {
-          fixture.detectChanges();
-          expect(testComponent.width()).toBeLessThanOrEqual(400);
-          expect(testComponent.width()).toBeGreaterThanOrEqual(300);
-          expect(testComponent.height()).toBeLessThanOrEqual(200);
-          expect(testComponent.height()).toBeGreaterThanOrEqual(100);
-          expect(testComponent.resizeDirection()).toEqual('topLeft');
-          done();
-        });
+        await afterNextFrameRender();
+        fixture.detectChanges();
+        expect(testComponent.width()).toBeLessThanOrEqual(400);
+        expect(testComponent.width()).toBeGreaterThanOrEqual(300);
+        expect(testComponent.height()).toBeLessThanOrEqual(200);
+        expect(testComponent.height()).toBeGreaterThanOrEqual(100);
+        expect(testComponent.resizeDirection()).toEqual('topLeft');
       });
 
       /**
@@ -361,7 +327,7 @@ describe('resizable', () => {
        *  |       |
        *  +-------↖
        */
-      it('bottomRight', done => {
+      it('bottomRight', async () => {
         const handle = resizableEle.querySelector('.nz-resizable-handle-bottomRight') as HTMLElement;
         mouseMoveTrigger(
           handle,
@@ -375,15 +341,13 @@ describe('resizable', () => {
           }
         );
         fixture.detectChanges();
-        afterNextFrameRender(() => {
-          fixture.detectChanges();
-          expect(testComponent.width()).toBeLessThanOrEqual(400);
-          expect(testComponent.width()).toBeGreaterThanOrEqual(300);
-          expect(testComponent.height()).toBeLessThanOrEqual(190);
-          expect(testComponent.height()).toBeGreaterThanOrEqual(100);
-          expect(testComponent.resizeDirection()).toEqual('bottomRight');
-          done();
-        });
+        await afterNextFrameRender();
+        fixture.detectChanges();
+        expect(testComponent.width()).toBeLessThanOrEqual(400);
+        expect(testComponent.width()).toBeGreaterThanOrEqual(300);
+        expect(testComponent.height()).toBeLessThanOrEqual(190);
+        expect(testComponent.height()).toBeGreaterThanOrEqual(100);
+        expect(testComponent.resizeDirection()).toEqual('bottomRight');
       });
 
       /**
@@ -391,7 +355,7 @@ describe('resizable', () => {
        *  |       |
        *  ↗-------+
        */
-      it('bottomLeft', done => {
+      it('bottomLeft', async () => {
         const handle = resizableEle.querySelector('.nz-resizable-handle-bottomLeft') as HTMLElement;
         mouseMoveTrigger(
           handle,
@@ -406,19 +370,17 @@ describe('resizable', () => {
         );
         fixture.detectChanges();
 
-        afterNextFrameRender(() => {
-          fixture.detectChanges();
-          expect(testComponent.width()).toBeLessThanOrEqual(400);
-          expect(testComponent.width()).toBeGreaterThanOrEqual(300);
-          expect(testComponent.height()).toBeLessThanOrEqual(200);
-          expect(testComponent.height()).toBeGreaterThanOrEqual(100);
-          expect(testComponent.resizeDirection()).toEqual('bottomLeft');
-          done();
-        });
+        await afterNextFrameRender();
+        fixture.detectChanges();
+        expect(testComponent.width()).toBeLessThanOrEqual(400);
+        expect(testComponent.width()).toBeGreaterThanOrEqual(300);
+        expect(testComponent.height()).toBeLessThanOrEqual(200);
+        expect(testComponent.height()).toBeGreaterThanOrEqual(100);
+        expect(testComponent.resizeDirection()).toEqual('bottomLeft');
       });
     });
 
-    it('should disabled work', done => {
+    it('should disabled work', async () => {
       testComponent.disabled.set(true);
       fixture.detectChanges();
       expect(resizableEle.classList).toContain('nz-resizable-disabled');
@@ -437,11 +399,9 @@ describe('resizable', () => {
         }
       );
       fixture.detectChanges();
-      afterNextFrameRender(() => {
-        fixture.detectChanges();
-        expect(testComponent.width()).toBe(400);
-        done();
-      });
+      await afterNextFrameRender();
+      fixture.detectChanges();
+      expect(testComponent.width()).toBe(400);
     });
   });
 
@@ -457,7 +417,7 @@ describe('resizable', () => {
       fixture.detectChanges();
     });
 
-    it('should customize handles', done => {
+    it('should customize handles', async () => {
       const bottomRightHandel = resizableEle.querySelector('.nz-resizable-handle-bottomRight') as HTMLElement;
       expect(bottomRightHandel.querySelector('.bottom-right')).toBeTruthy();
       const rightHandel = resizableEle.querySelector('.nz-resizable-handle-right') as HTMLElement;
@@ -477,13 +437,11 @@ describe('resizable', () => {
       );
       zone.simulateZoneExit();
       fixture.detectChanges();
-      afterNextFrameRender(() => {
-        fixture.detectChanges();
-        zone.simulateZoneExit();
-        fixture.detectChanges();
-        expect(testComponent.width()).toBeGreaterThanOrEqual(600);
-        done();
-      });
+      await afterNextFrameRender();
+      fixture.detectChanges();
+      zone.simulateZoneExit();
+      fixture.detectChanges();
+      expect(testComponent.width()).toBeGreaterThanOrEqual(600);
     });
   });
 
@@ -499,7 +457,7 @@ describe('resizable', () => {
       fixture.detectChanges();
     });
 
-    it('should lock aspect ratio when resize', done => {
+    it('should lock aspect ratio when resize', async () => {
       const rect = resizableEle.getBoundingClientRect();
       const leftHandel = resizableEle.querySelector('.nz-resizable-handle-right') as HTMLElement;
       const topHandel = resizableEle.querySelector('.nz-resizable-handle-top') as HTMLElement;
@@ -517,41 +475,37 @@ describe('resizable', () => {
         }
       );
       fixture.detectChanges();
-      afterNextFrameRender(() => {
-        fixture.detectChanges();
-        mouseMoveTrigger(
-          bottomRightHandel,
-          {
-            x: rect.right,
-            y: rect.bottom
-          },
-          {
-            x: rect.right - 123,
-            y: rect.bottom - 321
-          }
-        );
-        fixture.detectChanges();
-        afterNextFrameRender(() => {
-          fixture.detectChanges();
-          mouseMoveTrigger(
-            topHandel,
-            {
-              x: rect.right,
-              y: rect.top
-            },
-            {
-              x: rect.right,
-              y: rect.top + 100
-            }
-          );
-          fixture.detectChanges();
-          afterNextFrameRender(() => {
-            fixture.detectChanges();
-            expect(Math.round(testComponent.width() / testComponent.height())).toBe(ratio);
-            done();
-          });
-        });
-      });
+      await afterNextFrameRender();
+      fixture.detectChanges();
+      mouseMoveTrigger(
+        bottomRightHandel,
+        {
+          x: rect.right,
+          y: rect.bottom
+        },
+        {
+          x: rect.right - 123,
+          y: rect.bottom - 321
+        }
+      );
+      fixture.detectChanges();
+      await afterNextFrameRender();
+      fixture.detectChanges();
+      mouseMoveTrigger(
+        topHandel,
+        {
+          x: rect.right,
+          y: rect.top
+        },
+        {
+          x: rect.right,
+          y: rect.top + 100
+        }
+      );
+      fixture.detectChanges();
+      await afterNextFrameRender();
+      fixture.detectChanges();
+      expect(Math.round(testComponent.width() / testComponent.height())).toBe(ratio);
     });
   });
 
@@ -588,7 +542,7 @@ describe('resizable', () => {
       fixture.detectChanges();
     });
 
-    it('should grid work', done => {
+    it('should grid work', async () => {
       const rect = resizableEle.getBoundingClientRect();
       const handle = resizableEle.querySelector('.nz-resizable-handle-right') as HTMLElement;
       mouseMoveTrigger(
@@ -603,39 +557,36 @@ describe('resizable', () => {
         }
       );
       fixture.detectChanges();
-      afterNextFrameRender(() => {
-        fixture.detectChanges();
-        expect(testComponent.col()).toBe(3);
-        mouseMoveTrigger(
-          handle,
-          {
-            x: rect.right,
-            y: rect.bottom
-          },
-          {
-            x: 9999,
-            y: rect.bottom
-          }
-        );
-        fixture.detectChanges();
-        afterNextFrameRender(() => {
-          fixture.detectChanges();
-          expect(testComponent.col()).toBe(20);
-          done();
-        });
-      });
+      await afterNextFrameRender();
+      fixture.detectChanges();
+      expect(testComponent.col()).toBe(3);
+      mouseMoveTrigger(
+        handle,
+        {
+          x: rect.right,
+          y: rect.bottom
+        },
+        {
+          x: 9999,
+          y: rect.bottom
+        }
+      );
+      fixture.detectChanges();
+      await afterNextFrameRender();
+      fixture.detectChanges();
+      expect(testComponent.col()).toBe(20);
     });
 
-    it('should cursor type work', () => {
+    it('should cursor type work', async () => {
       expect(resizableEle.querySelector('.nz-resizable-handle-cursor-type-window')).toBeFalsy();
       expect(resizableEle.querySelector('.nz-resizable-handle-cursor-type-grid')).toBeTruthy();
-      testComponent.directions = [
+      testComponent.directions.set([
         {
           direction: 'right',
           cursorType: 'window'
         }
-      ];
-      fixture.detectChanges();
+      ]);
+      await updateNonSignalsInput(fixture);
       expect(resizableEle.querySelector('.nz-resizable-handle-cursor-type-window')).toBeTruthy();
       expect(resizableEle.querySelector('.nz-resizable-handle-cursor-type-grid')).toBeFalsy();
     });
@@ -653,7 +604,7 @@ describe('resizable', () => {
       fixture.detectChanges();
     });
 
-    it('should parent bounds work', done => {
+    it('should parent bounds work', async () => {
       const rect = resizableEle.getBoundingClientRect();
       const handle = resizableEle.querySelector('.nz-resizable-handle-bottomRight') as HTMLElement;
       mouseMoveTrigger(
@@ -669,17 +620,17 @@ describe('resizable', () => {
       );
       fixture.detectChanges();
 
-      afterNextFrameRender(() => {
-        fixture.detectChanges();
-        expect(testComponent.width).toBe(200);
-        expect(testComponent.height).toBe(200);
-        done();
-      });
+      await afterNextFrameRender();
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+      expect(testComponent.width).toBe(200);
+      expect(testComponent.height).toBe(200);
     });
 
-    it('should element ref bounds work', done => {
+    it('should element ref bounds work', async () => {
       const rect = resizableEle.getBoundingClientRect();
       testComponent.bounds = testComponent.boxRef;
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       const handle = resizableEle.querySelector('.nz-resizable-handle-bottomRight') as HTMLElement;
       mouseMoveTrigger(
@@ -695,17 +646,17 @@ describe('resizable', () => {
       );
       fixture.detectChanges();
 
-      afterNextFrameRender(() => {
-        fixture.detectChanges();
-        expect(testComponent.width).toBe(256);
-        expect(testComponent.height).toBe(256);
-        done();
-      });
+      await afterNextFrameRender();
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+      expect(testComponent.width).toBe(256);
+      expect(testComponent.height).toBe(256);
     });
 
-    it('should window bounds work', done => {
+    it('should window bounds work', async () => {
       const rect = resizableEle.getBoundingClientRect();
       testComponent.bounds = 'window';
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       const handle = resizableEle.querySelector('.nz-resizable-handle-bottomRight') as HTMLElement;
       mouseMoveTrigger(
@@ -721,33 +672,33 @@ describe('resizable', () => {
       );
       fixture.detectChanges();
 
-      afterNextFrameRender(() => {
-        fixture.detectChanges();
-        expect(testComponent.width).toBe(300);
-        expect(testComponent.height).toBe(300);
-        testComponent.maxHeight = window.innerHeight * 2;
-        testComponent.maxWidth = window.innerWidth * 2;
-        fixture.detectChanges();
-        mouseMoveTrigger(
-          handle,
-          {
-            x: rect.right,
-            y: rect.bottom
-          },
-          {
-            x: rect.right + window.innerWidth,
-            y: rect.bottom + window.innerHeight
-          }
-        );
-        fixture.detectChanges();
+      await afterNextFrameRender();
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+      expect(testComponent.width).toBe(300);
+      expect(testComponent.height).toBe(300);
+      testComponent.maxHeight = window.innerHeight * 2;
+      testComponent.maxWidth = window.innerWidth * 2;
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+      mouseMoveTrigger(
+        handle,
+        {
+          x: rect.right,
+          y: rect.bottom
+        },
+        {
+          x: rect.right + window.innerWidth,
+          y: rect.bottom + window.innerHeight
+        }
+      );
+      fixture.detectChanges();
 
-        afterNextFrameRender(() => {
-          fixture.detectChanges();
-          expect(testComponent.width).toBe(window.innerWidth);
-          expect(testComponent.height).toBe(window.innerHeight);
-          done();
-        });
-      });
+      await afterNextFrameRender();
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+      expect(testComponent.width).toBe(window.innerWidth);
+      expect(testComponent.height).toBe(window.innerHeight);
     });
   });
 });
@@ -764,8 +715,8 @@ function touchMoveTrigger(el: HTMLElement, from: { x: number; y: number }, to: {
   dispatchTouchEvent(window.document, 'touchend');
 }
 
-function afterNextFrameRender(callbackFn: () => void): void {
-  setTimeout(callbackFn, 16);
+function afterNextFrameRender(): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, 16));
 }
 
 @Component({
@@ -800,17 +751,56 @@ function afterNextFrameRender(callbackFn: () => void): void {
       width: 200px;
       height: 200px;
     }
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 class TriTestResizableBoundsComponent {
   @ViewChild('boxRef', { static: false }) boxRef!: ElementRef<HTMLDivElement>;
-  bounds: 'window' | 'parent' | ElementRef = 'parent';
-  maxWidth = 300;
-  maxHeight = 300;
-  width = 100;
-  height = 100;
+  private readonly boundsSignal = signal<'window' | 'parent' | ElementRef>('parent');
+  private readonly maxWidthSignal = signal(300);
+  private readonly maxHeightSignal = signal(300);
+  private readonly widthSignal = signal(100);
+  private readonly heightSignal = signal(100);
   id = -1;
+
+  get bounds(): 'window' | 'parent' | ElementRef {
+    return this.boundsSignal();
+  }
+
+  set bounds(value: 'window' | 'parent' | ElementRef) {
+    this.boundsSignal.set(value);
+  }
+
+  get maxWidth(): number {
+    return this.maxWidthSignal();
+  }
+
+  set maxWidth(value: number) {
+    this.maxWidthSignal.set(value);
+  }
+
+  get maxHeight(): number {
+    return this.maxHeightSignal();
+  }
+
+  set maxHeight(value: number) {
+    this.maxHeightSignal.set(value);
+  }
+
+  get width(): number {
+    return this.widthSignal();
+  }
+
+  set width(value: number) {
+    this.widthSignal.set(value);
+  }
+
+  get height(): number {
+    return this.heightSignal();
+  }
+
+  set height(value: number) {
+    this.heightSignal.set(value);
+  }
 
   onResize({ width, height }: TriResizeEvent): void {
     cancelAnimationFrame(this.id);

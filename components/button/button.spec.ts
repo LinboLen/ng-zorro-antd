@@ -3,17 +3,11 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import {
-  ApplicationRef,
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  provideZoneChangeDetection,
-  signal,
-  WritableSignal
-} from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ApplicationRef, Component, signal, WritableSignal } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+
+import { vi } from 'vitest';
 
 import { TRI_FORM_SIZE } from 'ng-zorro-antd/core/form';
 import { testDirectionality } from 'ng-zorro-antd/core/testing';
@@ -49,67 +43,67 @@ describe('button', () => {
 
     it('should apply classname based on nzDanger', () => {
       expect(buttonElement.classList).not.toContain('ant-btn-dangerous');
-      component.danger = true;
+      component.danger.set(true);
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-dangerous');
     });
 
     it('should apply classname based on nzGhost', () => {
       expect(buttonElement.classList).not.toContain('ant-btn-background-ghost');
-      component.ghost = true;
+      component.ghost.set(true);
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-background-ghost');
     });
 
     it('should apply classname based on nzLoading', () => {
       expect(buttonElement.classList).not.toContain('ant-btn-loading');
-      component.loading = true;
+      component.loading.set(true);
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-loading');
     });
 
     it('should apply classname based on nzBlock', () => {
       expect(buttonElement.classList).not.toContain('ant-btn-block');
-      component.block = true;
+      component.block.set(true);
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-block');
     });
 
     it('should apply classname based on nzType', () => {
-      component.type = 'default';
+      component.type.set('default');
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-default');
-      component.type = 'primary';
+      component.type.set('primary');
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-primary');
-      component.type = 'link';
+      component.type.set('link');
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-link');
-      component.type = 'dashed';
+      component.type.set('dashed');
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-dashed');
-      component.type = null;
+      component.type.set(null);
       fixture.detectChanges();
       expect(buttonElement.className).toBe('ant-btn');
     });
 
     it('should apply classname based on nzShape', () => {
-      component.shape = 'round';
+      component.shape.set('round');
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-round');
-      component.shape = 'circle';
+      component.shape.set('circle');
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-circle');
     });
 
     it('should apply classname based on nzSize', () => {
-      component.size = 'large';
+      component.size.set('large');
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-lg');
-      component.size = 'small';
+      component.size.set('small');
       fixture.detectChanges();
       expect(buttonElement.classList).toContain('ant-btn-sm');
-      component.size = 'default';
+      component.size.set('default');
       fixture.detectChanges();
       expect(buttonElement.className).toBe('ant-btn');
     });
@@ -122,7 +116,8 @@ describe('button', () => {
       fixture = TestBed.createComponent(TestButtonBindingComponent);
     });
 
-    it('should hide icon when loading correct', fakeAsync(() => {
+    it('should hide icon when loading correct', () => {
+      vi.useFakeTimers();
       fixture.detectChanges();
       const buttonElement = fixture.debugElement.query(By.directive(TriButtonComponent)).nativeElement;
       expect(buttonElement.classList.contains('ant-btn-loading')).toBe(false);
@@ -135,12 +130,13 @@ describe('button', () => {
       expect(buttonElement.classList.contains('ant-btn-loading')).toBe(true);
       expect(buttonElement.firstElementChild!.classList.contains('ant-btn-loading-icon')).toBe(true);
       expect(buttonElement.querySelector('.anticon-poweroff').style.cssText).toBe('display: none;');
-      tick(1000);
+      vi.advanceTimersByTime(1000);
       fixture.detectChanges();
       expect(buttonElement.classList.contains('ant-btn-loading')).toBe(false);
       expect(buttonElement.firstElementChild!.classList.contains('ant-btn-loading-icon')).toBe(false);
       expect(buttonElement.querySelector('.anticon-poweroff').style.cssText).toBe('');
-    }));
+      vi.useRealTimers();
+    });
   });
 
   describe('insert span', () => {
@@ -223,23 +219,23 @@ describe('button', () => {
 
     it('should not trigger change detection when the button is clicked', () => {
       const appRef = TestBed.inject(ApplicationRef);
-      const spy = spyOn(appRef, 'tick').and.callThrough();
+      const spy = vi.spyOn(appRef, 'tick');
       buttonElement.dispatchEvent(new MouseEvent('click'));
       buttonElement.dispatchEvent(new MouseEvent('click'));
-      // Previously, it would've caused `tick()` to be called 2 times, because 2 click events have been triggered.
+      // Previously, it would've caused ApplicationRef.tick to be called twice.
       expect(spy).toHaveBeenCalledTimes(0);
     });
 
-    it('prevent default and stop propagation when the button state is loading', fakeAsync(() => {
-      component.loading = true;
+    it('prevent default and stop propagation when the button state is loading', () => {
+      component.loading.set(true);
       fixture.detectChanges();
       const event = new MouseEvent('click');
-      const preventDefaultSpy = spyOn(event, 'preventDefault').and.callThrough();
-      const stopImmediatePropagationSpy = spyOn(event, 'stopImmediatePropagation').and.callThrough();
+      const preventDefaultSpy = vi.spyOn(event, 'preventDefault');
+      const stopImmediatePropagationSpy = vi.spyOn(event, 'stopImmediatePropagation');
       buttonElement.dispatchEvent(event);
       expect(preventDefaultSpy).toHaveBeenCalledTimes(1);
       expect(stopImmediatePropagationSpy).toHaveBeenCalledTimes(1);
-    }));
+    });
   });
 });
 
@@ -255,11 +251,11 @@ describe('anchor', () => {
   });
 
   it('should prevent default and stop propagation when the anchor is disabled', () => {
-    component.disabled = true;
+    component.disabled.set(true);
     fixture.detectChanges();
     const event = new MouseEvent('click');
-    const preventDefaultSpy = spyOn(event, 'preventDefault').and.callThrough();
-    const stopImmediatePropagationSpy = spyOn(event, 'stopImmediatePropagation').and.callThrough();
+    const preventDefaultSpy = vi.spyOn(event, 'preventDefault');
+    const stopImmediatePropagationSpy = vi.spyOn(event, 'stopImmediatePropagation');
     anchorElement.dispatchEvent(event);
     expect(preventDefaultSpy).toHaveBeenCalledTimes(1);
     expect(stopImmediatePropagationSpy).toHaveBeenCalledTimes(1);
@@ -306,7 +302,7 @@ describe('finalSize', () => {
   it('should set correctly the size from the component input', () => {
     fixture = TestBed.createComponent(TestButtonFinalSizeComponent);
     buttonElement = fixture.debugElement.query(By.directive(TriButtonComponent)).nativeElement;
-    fixture.componentInstance.size = 'large';
+    fixture.componentInstance.size.set('large');
     fixture.detectChanges();
     expect(buttonElement.classList).toContain('ant-btn-lg');
   });
@@ -317,13 +313,13 @@ describe('finalSize', () => {
   template: `
     <button
       tri-button
-      [type]="type"
-      [ghost]="ghost"
-      [loading]="loading"
-      [danger]="danger"
-      [shape]="shape"
-      [block]="block"
-      [size]="size"
+      [type]="type()"
+      [ghost]="ghost()"
+      [loading]="loading()"
+      [danger]="danger()"
+      [shape]="shape()"
+      [block]="block()"
+      [size]="size()"
     >
       button
     </button>
@@ -331,20 +327,20 @@ describe('finalSize', () => {
   changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestButtonComponent {
-  @Input() block: boolean = false;
-  @Input() ghost: boolean = false;
-  @Input() loading: boolean = false;
-  @Input() danger: boolean = false;
-  @Input() type: TriButtonType = null;
-  @Input() shape: TriButtonShape = null;
-  @Input() size: TriButtonSize = 'default';
+  readonly block = signal(false);
+  readonly ghost = signal(false);
+  readonly loading = signal(false);
+  readonly danger = signal(false);
+  readonly type = signal<TriButtonType>(null);
+  readonly shape = signal<TriButtonShape>(null);
+  readonly size = signal<TriButtonSize>('default');
 }
 
 // https://github.com/NG-ZORRO/ng-zorro-antd/issues/2191
 @Component({
   imports: [TriIconModule, TriButtonModule],
   template: `
-    <button tri-button type="primary" (click)="load()" [loading]="loading">
+    <button tri-button type="primary" (click)="load()" [loading]="loading()">
       <tri-icon type="poweroff" />
       {{ 'Click me!' }}
     </button>
@@ -352,10 +348,10 @@ export class TestButtonComponent {
   changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestButtonBindingComponent {
-  loading = false;
+  readonly loading = signal(false);
   load(): void {
-    this.loading = true;
-    setTimeout(() => (this.loading = false), 1000);
+    this.loading.set(true);
+    setTimeout(() => this.loading.set(false), 1000);
   }
 }
 
@@ -442,11 +438,18 @@ export class TestButtonIconOnlyLoadingComponent {}
 
 @Component({
   imports: [TriButtonModule],
-  template: '<a tri-button [disabled]="disabled">anchor</a>',
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: '<a tri-button [disabled]="disabled()">anchor</a>'
 })
 export class TestAnchorComponent {
-  disabled = false;
+  readonly disabled = signal(false);
+}
+
+@Component({
+  imports: [TriButtonModule],
+  template: ` <button tri-button [size]="size()">Button</button> `
+})
+export class TestButtonFinalSizeComponent {
+  readonly size = signal<TriButtonSize>('default');
 }
 
 @Component({

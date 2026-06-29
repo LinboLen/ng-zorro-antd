@@ -3,10 +3,12 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { Component, DebugElement, ViewChild, signal } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
+
+import { vi } from 'vitest';
 
 import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
@@ -23,8 +25,7 @@ describe('upload-list', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        // todo: use zoneless
-        providers: [provideZoneChangeDetection(), provideNzIconsTesting(), provideNzNoAnimation()]
+        providers: [provideNzIconsTesting(), provideNzNoAnimation()]
       });
       fixture = TestBed.createComponent(TestUploadListComponent);
       dl = fixture.debugElement;
@@ -35,7 +36,7 @@ describe('upload-list', () => {
     describe('[listType]', () => {
       for (const type of ['text', 'picture', 'picture-card']) {
         it(`with [${type}]`, () => {
-          instance.listType = type as TriUploadListType;
+          instance.listType.set(type as TriUploadListType);
           fixture.detectChanges();
           expect(dl.query(By.css(`.ant-upload-list-${type}`)) != null).toBe(true);
         });
@@ -43,24 +44,24 @@ describe('upload-list', () => {
     });
 
     it('[items]', () => {
-      expect(dl.queryAll(By.css(`.ant-upload-list-item`)).length).toBe(instance.items.length);
+      expect(dl.queryAll(By.css(`.ant-upload-list-item`)).length).toBe(instance.items().length);
     });
 
     describe('[icons]', () => {
       it('should be show preview', () => {
         expect(instance._onPreview).toBe(false);
         const actions = dl.queryAll(By.css('.ant-upload-list-item-actions'));
-        expect(actions.length).toBe(instance.items.length);
+        expect(actions.length).toBe(instance.items().length);
         actions[0].query(By.css('a')).nativeElement.click();
         fixture.detectChanges();
         expect(instance._onPreview).toBe(true);
       });
 
       it('should be hide preview', () => {
-        instance.icons = {
+        instance.icons.set({
           showPreviewIcon: false,
           showRemoveIcon: true
-        };
+        });
         fixture.detectChanges();
         const actions = dl.queryAll(By.css('.ant-upload-list-item-actions a'));
         expect(actions.length).toBe(0);
@@ -70,17 +71,17 @@ describe('upload-list', () => {
       it('should be show remove', () => {
         expect(instance._onRemove).toBe(false);
         const actions = dl.queryAll(By.css('.ant-upload-list-item-actions'));
-        expect(actions.length).toBe(instance.items.length);
+        expect(actions.length).toBe(instance.items().length);
         actions[0].query(By.css('.anticon-delete')).nativeElement.click();
         fixture.detectChanges();
         expect(instance._onRemove).toBe(true);
       });
 
       it('should be hide remove', () => {
-        instance.icons = {
+        instance.icons.set({
           showPreviewIcon: true,
           showRemoveIcon: false
-        };
+        });
         fixture.detectChanges();
         const actions = dl.queryAll(By.css('.ant-upload-list-item-actions .anticon-delete'));
         expect(actions.length).toBe(0);
@@ -97,14 +98,14 @@ describe('upload-list', () => {
 
       it('should be invalid handle preview when is a null', () => {
         expect(instance._onPreview).toBe(false);
-        instance.onPreview = undefined;
+        instance.onPreview.set(undefined);
         fixture.detectChanges();
         dl.query(By.css('.ant-upload-list-item-actions a')).nativeElement.click();
         expect(instance._onPreview).toBe(false);
       });
 
-      it('should support linkProps as object', fakeAsync(() => {
-        instance.items = [
+      it('should support linkProps as object', async () => {
+        instance.items.set([
           {
             uid: '-1',
             name: 'foo.png',
@@ -114,17 +115,15 @@ describe('upload-list', () => {
               download: 'image'
             }
           }
-        ];
-        fixture.detectChanges();
-        tick();
-        fixture.detectChanges();
+        ]);
+        await fixture.whenStable();
         const el = dl.query(By.css('.ant-upload-list-item-name')).nativeElement as HTMLElement;
         expect(el.attributes.getNamedItem('download')!.textContent).toBe('image');
-      }));
+      });
 
-      it('should support linkProps as json stringify', fakeAsync(() => {
+      it('should support linkProps as json stringify', async () => {
         const linkPropsString = JSON.stringify({ download: 'image' });
-        instance.items = [
+        instance.items.set([
           {
             uid: '-1',
             name: 'foo.png',
@@ -132,13 +131,11 @@ describe('upload-list', () => {
             url: 'http://www.baidu.com/xxx.png',
             linkProps: linkPropsString
           }
-        ];
-        fixture.detectChanges();
-        tick();
-        fixture.detectChanges();
+        ]);
+        await fixture.whenStable();
         const el = dl.query(By.css('.ant-upload-list-item-name')).nativeElement as HTMLElement;
         expect(el.attributes.getNamedItem('download')!.textContent).toBe('image');
-      }));
+      });
     });
 
     describe('[onRemove]', () => {
@@ -150,7 +147,7 @@ describe('upload-list', () => {
 
       it('should be invalid handle remove when is a null', () => {
         expect(instance._onRemove).toBe(false);
-        instance.onRemove = null;
+        instance.onRemove.set(null);
         fixture.detectChanges();
         dl.query(By.css('.ant-upload-list-item-actions .anticon-delete')).nativeElement.click();
         expect(instance._onRemove).toBe(false);
@@ -190,17 +187,18 @@ describe('upload-list', () => {
         });
       });
 
-      it('#previewIsImage', fakeAsync(() => {
-        instance.previewIsImage = () => true;
-        instance.listType = 'picture';
-        instance.items = [{}];
-        fixture.detectChanges();
-        tick();
-        expect(instance.items[0].isImageUrl).toBe(true);
-      }));
+      it('#previewIsImage', async () => {
+        instance.previewIsImage.set(() => true);
+        instance.listType.set('picture');
+        instance.items.set([{}]);
+        await fixture.whenStable();
+        expect(instance.items()[0].isImageUrl).toBe(true);
+      });
     });
 
     describe('[genThumb]', () => {
+      afterEach(() => vi.unstubAllGlobals());
+
       class MockImage {
         width = 1;
         height = 2;
@@ -213,44 +211,48 @@ describe('upload-list', () => {
         set src(_: string) {}
       }
 
-      it('should be generate thumb when is valid image data', fakeAsync(() => {
-        spyOn(window as TriSafeAny, 'Image').and.returnValue(new MockImage());
+      it('should be generate thumb when is valid image data', async () => {
+        vi.stubGlobal('Image', class extends MockImage {});
 
-        instance.listType = 'picture';
-        instance.items = [{ originFileObj: new File([''], '1.png', { type: 'image/' }), thumbUrl: undefined }];
-        fixture.detectChanges();
-        tick();
-        expect(instance.items[0].thumbUrl.length).toBeGreaterThan(1);
-      }));
+        instance.listType.set('picture');
+        instance.items.set([{ originFileObj: new File([''], '1.png', { type: 'image/' }), thumbUrl: undefined }]);
+        await fixture.whenStable();
+        expect(instance.items()[0].thumbUrl.length).toBeGreaterThan(1);
+      });
 
-      it('should be generate thumb when width greater than height', fakeAsync(() => {
+      it('should be generate thumb when width greater than height', async () => {
         const img = new MockImage();
         img.width = 2;
         img.height = 1;
-        spyOn(window as TriSafeAny, 'Image').and.returnValue(img);
+        vi.stubGlobal(
+          'Image',
+          class {
+            constructor() {
+              return img;
+            }
+          }
+        );
 
-        instance.listType = 'picture';
-        instance.items = [{ originFileObj: new File([''], '1.png', { type: 'image/' }), thumbUrl: undefined }];
-        fixture.detectChanges();
-        tick();
-        expect(instance.items[0].thumbUrl.length).toBeGreaterThan(1);
-      }));
-
-      it('should be ignore thumb when is invalid image data', () => {
-        instance.listType = 'picture';
-        instance.items = [{ originFileObj: new File([''], '1.pdf', { type: 'pdf' }), thumbUrl: undefined }];
-        fixture.detectChanges();
-        expect(instance.items[0].thumbUrl).toBe('');
+        instance.listType.set('picture');
+        instance.items.set([{ originFileObj: new File([''], '1.png', { type: 'image/' }), thumbUrl: undefined }]);
+        await fixture.whenStable();
+        expect(instance.items()[0].thumbUrl.length).toBeGreaterThan(1);
       });
 
-      it('should be customize preview file', fakeAsync(() => {
-        instance.previewFile = () => of('11');
-        instance.listType = 'picture';
-        instance.items = [{ originFileObj: new File([''], '1.png', { type: 'image/' }), thumbUrl: undefined }];
+      it('should be ignore thumb when is invalid image data', () => {
+        instance.listType.set('picture');
+        instance.items.set([{ originFileObj: new File([''], '1.pdf', { type: 'pdf' }), thumbUrl: undefined }]);
         fixture.detectChanges();
-        tick();
-        expect(instance.items[0].thumbUrl).toBe('11');
-      }));
+        expect(instance.items()[0].thumbUrl).toBe('');
+      });
+
+      it('should be customize preview file', async () => {
+        instance.previewFile.set(() => of('11'));
+        instance.listType.set('picture');
+        instance.items.set([{ originFileObj: new File([''], '1.png', { type: 'image/' }), thumbUrl: undefined }]);
+        await fixture.whenStable();
+        expect(instance.items()[0].thumbUrl).toBe('11');
+      });
     });
   });
 
@@ -311,21 +313,20 @@ describe('upload-list', () => {
   template: `
     <tri-upload-list
       #list
-      [listType]="listType"
-      [items]="items"
-      [icons]="icons"
-      [onPreview]="onPreview"
-      [previewFile]="previewFile"
-      [previewIsImage]="previewIsImage"
-      [onRemove]="onRemove!"
+      [listType]="listType()"
+      [items]="items()"
+      [icons]="icons()"
+      [onPreview]="onPreview()"
+      [previewFile]="previewFile()"
+      [previewIsImage]="previewIsImage()"
+      [onRemove]="onRemove()!"
     />
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 class TestUploadListComponent {
   @ViewChild('list', { static: false }) comp!: TriUploadListComponent;
-  listType: TriUploadListType = 'picture-card';
-  items: TriSafeAny[] = [
+  readonly listType = signal<TriUploadListType>('picture-card');
+  readonly items = signal<TriSafeAny[]>([
     {
       uid: 1,
       name: 'xxx.png',
@@ -346,19 +347,19 @@ class TestUploadListComponent {
       response: 'Server Error 500', // custom error message to show
       url: 'http://www.baidu.com/zzz.png'
     }
-  ];
-  icons: TriShowUploadList = {
+  ]);
+  readonly icons = signal<TriShowUploadList>({
     showPreviewIcon: true,
     showRemoveIcon: true
-  };
+  });
   _onPreview = false;
-  onPreview: VoidFunction | undefined = (): void => {
+  readonly onPreview = signal<VoidFunction | undefined>((): void => {
     this._onPreview = true;
-  };
-  previewFile!: (file: TriUploadFile) => Observable<string>;
-  previewIsImage!: (file: TriUploadFile) => boolean;
+  });
+  readonly previewFile = signal<((file: TriUploadFile) => Observable<string>) | undefined>(undefined);
+  readonly previewIsImage = signal<((file: TriUploadFile) => boolean) | undefined>(undefined);
   _onRemove = false;
-  onRemove: null | ((file: TriUploadFile) => void) = (): void => {
+  readonly onRemove = signal<null | ((file: TriUploadFile) => void)>((): void => {
     this._onRemove = true;
-  };
+  });
 }

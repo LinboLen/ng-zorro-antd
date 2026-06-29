@@ -3,23 +3,16 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import {
-  ApplicationRef,
-  ChangeDetectionStrategy,
-  Component,
-  DebugElement,
-  OnInit,
-  provideZoneChangeDetection,
-  TemplateRef,
-  ViewChild
-} from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ApplicationRef, Component, DebugElement, OnInit, TemplateRef, ViewChild, signal } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { testDirectionality } from 'ng-zorro-antd/core/testing';
+import { vi } from 'vitest';
+
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
+import { testDirectionality, updateNonSignalsInput } from 'ng-zorro-antd/core/testing';
 import { TriSafeAny, TriStatus } from 'ng-zorro-antd/core/types';
 import { TriFormControlStatusType, TriFormModule } from 'ng-zorro-antd/form';
 import en_US from 'ng-zorro-antd/i18n/languages/en_US';
@@ -48,9 +41,8 @@ describe('transfer', () => {
   let pageObject: TransferPageObject<AbstractTestTransferComponent>;
 
   beforeEach(() => {
-    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideZoneChangeDetection(), provideNzIconsTesting(), provideNoopAnimations()]
+      providers: [provideNzIconsTesting(), provideNzNoAnimation()]
     });
     fixture = TestBed.createComponent(TestTransferComponent);
     debugElement = fixture.debugElement;
@@ -61,7 +53,7 @@ describe('transfer', () => {
 
   describe('[default]', () => {
     it('should be from left to right when via nzTargetKeys property', () => {
-      instance.targetKeys = ['0', '1'];
+      instance.targetKeys.set(['0', '1']);
       fixture.detectChanges();
 
       const leftKeys = instance.comp.leftDataSource.map(e => e.key);
@@ -79,17 +71,14 @@ describe('transfer', () => {
       fixture.detectChanges();
 
       expect(
-        instance.comp.selectedKeys.every(e => {
-          const data = instance.comp.dataSource.find(d => d.key === e);
-          return !!data?.checked;
-        })
+        instance.comp.selectedKeys.every(e => !!instance.comp.dataSource.find(d => d.key === e)?.checked)
       ).toBe(true);
     });
 
     it('nzOneWay', () => {
-      instance.oneWay = true;
+      instance.oneWay.set(true);
       fixture.detectChanges();
-      expect(!pageObject.rightList.querySelector('.ant-transfer-list-header .ant-transfer-list-checkbox')).toBeTrue();
+      expect(!pageObject.rightList.querySelector('.ant-transfer-list-header .ant-transfer-list-checkbox')).toBe(true);
       expect(debugElement.queryAll(By.css('.ant-transfer-operation .ant-btn')).length).toBe(1);
       expect(
         debugElement.query(By.css('.ant-transfer-operation .ant-btn .anticon')).nativeElement.getAttribute('nztype')
@@ -160,8 +149,9 @@ describe('transfer', () => {
     });
 
     it('should be custom filter option', () => {
-      instance.filterOption = (inputValue: string, item: TriSafeAny): boolean =>
-        item.description.indexOf(inputValue) > -1;
+      instance.filterOption.set(
+        (inputValue: string, item: TriSafeAny): boolean => item.description.indexOf(inputValue) > -1
+      );
       fixture.detectChanges();
       pageObject.expectLeft(LEFT_COUNT).search('left', 'description of content1');
       expect(pageObject.leftList.querySelectorAll('.ant-transfer-list-content-item').length).toBe(1);
@@ -193,7 +183,7 @@ describe('transfer', () => {
     });
 
     it('should be checkbox is disabled toggle select when setting disabled prop', () => {
-      instance.dataSource = [{ title: `content`, disabled: true }];
+      instance.dataSource.set([{ title: `content`, disabled: true }]);
       fixture.detectChanges();
       expect(instance.comp.leftDataSource.filter(w => w.checked).length).toBe(0);
       pageObject.checkItem('left', 0);
@@ -225,7 +215,7 @@ describe('transfer', () => {
       pageObject.checkItem('right', 0);
       expect(instance.comp.rightDataSource.filter(w => w.checked).length).toBe(1);
       window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Shift' }));
-      expect(instance.comp.isShiftPressed).toBeTrue();
+      expect(instance.comp.isShiftPressed).toBe(true);
       fixture.detectChanges();
       const multiSelectEndIndex = 9;
       pageObject.checkItem('right', multiSelectEndIndex);
@@ -233,33 +223,33 @@ describe('transfer', () => {
         COUNT - LEFT_COUNT - DISABLED - multiSelectEndIndex + 1
       );
       window.dispatchEvent(new KeyboardEvent('keyup', { key: 'Shift' }));
-      expect(instance.comp.isShiftPressed).toBeFalse();
+      expect(instance.comp.isShiftPressed).toBe(false);
     });
 
     describe('#notFoundContent', () => {
       it('should be the left and right list have data', () => {
-        instance.dataSource = [{ title: `content0`, direction: 'right' }, { title: `content1` }];
+        instance.dataSource.set([{ title: `content0`, direction: 'right' }, { title: `content1` }]);
         fixture.detectChanges();
         expect(pageObject.rightList.querySelector('nz-embed-empty')).toBeFalsy();
         expect(pageObject.leftList.querySelector('nz-embed-empty')).toBeFalsy();
       });
 
       it('should be the right list is no data', () => {
-        instance.dataSource = [{ title: `content0` }, { title: `content1` }];
+        instance.dataSource.set([{ title: `content0` }, { title: `content1` }]);
         fixture.detectChanges();
         expect(pageObject.rightList.querySelector('nz-embed-empty')).toBeTruthy();
         expect(pageObject.leftList.querySelector('nz-embed-empty')).toBeFalsy();
       });
 
       it('should be the left list is no data', () => {
-        instance.dataSource = [{ title: `content0`, direction: 'right' }];
+        instance.dataSource.set([{ title: `content0`, direction: 'right' }]);
         fixture.detectChanges();
         expect(pageObject.rightList.querySelector('nz-embed-empty')).toBeFalsy();
         expect(pageObject.leftList.querySelector('nz-embed-empty')).toBeTruthy();
       });
 
       it('should be the left and right list is no data', () => {
-        instance.dataSource = [];
+        instance.dataSource.set([]);
         fixture.detectChanges();
         expect(pageObject.rightList.querySelector('nz-embed-empty')).toBeTruthy();
         expect(pageObject.leftList.querySelector('nz-embed-empty')).toBeTruthy();
@@ -267,15 +257,15 @@ describe('transfer', () => {
     });
 
     describe('#nzDisabled', () => {
-      it('should working', async () => {
-        instance.disabled = true;
+      it('should work', async () => {
+        instance.disabled.set(true);
         fixture.autoDetectChanges();
         await fixture.whenStable();
         expect(debugElement.queryAll(By.css('.ant-transfer-disabled')).length).toBe(1);
         // All operation buttons muse be disabled
         expect(debugElement.queryAll(By.css('.ant-transfer-operation .ant-btn[disabled]')).length).toBe(2);
         // All search inputs must be disabled
-        expect(debugElement.queryAll(By.css('.ant-transfer-list-search.ant-input-disabled')).length).toBe(2);
+        expect(debugElement.queryAll(By.css('.ant-transfer-list-search input[disabled]')).length).toBe(2);
         // All items must be disabled
         expect(debugElement.queryAll(By.css('.ant-transfer-list-content-item-disabled')).length).toBe(COUNT);
         // All checkboxes (include 2 check-all) must be disabled
@@ -285,15 +275,15 @@ describe('transfer', () => {
       it('should be disabled clear', async () => {
         pageObject.expectLeft(LEFT_COUNT).search('left', '1');
         expect(pageObject.leftList.querySelectorAll('.ant-transfer-list-content-item').length).toBe(1);
-        instance.disabled = true;
-        fixture.detectChanges();
-        await fixture.whenStable();
+        instance.disabled.set(true);
+        // The search box clear icon visibility is debounced by the input-affix
+        // control, so wait for that small async update before clicking it.
+        await updateNonSignalsInput(fixture, 50);
         const clearBtn = pageObject.leftList.querySelector(
           '.ant-transfer-list-search .ant-input-clear-icon:not(.ant-input-clear-icon-hidden)'
         ) as HTMLElement | null;
         clearBtn?.click();
-        fixture.detectChanges();
-        await fixture.whenStable();
+        await updateNonSignalsInput(fixture, 50);
         expect(pageObject.leftList.querySelectorAll('.ant-transfer-list-content-item').length).toBe(1);
       });
 
@@ -304,7 +294,7 @@ describe('transfer', () => {
       });
 
       it('should be disabled check all when all options are disabled', () => {
-        instance.dataSource = [{ title: `content`, disabled: true }];
+        instance.dataSource.set([{ title: `content`, disabled: true }]);
         fixture.detectChanges();
         const cls = '[data-direction="left"] .ant-transfer-list-header .ant-checkbox-disabled';
         expect(debugElement.queryAll(By.css(cls)).length).toBe(1);
@@ -314,13 +304,13 @@ describe('transfer', () => {
     it('#nzShowSelectAll', () => {
       const cls = `[data-direction="left"] .ant-transfer-list-header .ant-checkbox`;
       expect(debugElement.queryAll(By.css(cls)).length).toBe(1);
-      instance.showSelectAll = false;
+      instance.showSelectAll.set(false);
       fixture.detectChanges();
       expect(debugElement.queryAll(By.css(cls)).length).toBe(0);
     });
 
     it('#nzRenderList', () => {
-      instance.renderList = [instance.renderListTpl, instance.renderListTpl];
+      instance.renderList.set([instance.renderListTpl, instance.renderListTpl]);
       fixture.detectChanges();
       expect(debugElement.queryAll(By.css('.ant-transfer-customize-list')).length).toBe(1);
       expect(debugElement.queryAll(By.css('.transfer-renderList')).length).toBe(2);
@@ -368,8 +358,8 @@ describe('transfer', () => {
         const appRef = TestBed.inject(ApplicationRef);
         const event = new MouseEvent('click');
 
-        spyOn(appRef, 'tick');
-        spyOn(event, 'stopPropagation').and.callThrough();
+        vi.spyOn(appRef, 'tick');
+        vi.spyOn(event, 'stopPropagation');
 
         const [label] = fixture.nativeElement.querySelectorAll('.ant-transfer-list-content-item label');
 
@@ -393,8 +383,8 @@ describe('transfer', () => {
       pageObject.rightBtn.click();
       fixture.detectChanges();
 
-      expect(selectAll).not.toHaveClass('ant-checkbox-checked');
-      expect(selectAll).not.toHaveClass('ant-checkbox-indeterminate');
+      expect(selectAll.classList.contains('ant-checkbox-checked')).toBe(false);
+      expect(selectAll.classList.contains('ant-checkbox-indeterminate')).toBe(false);
     });
   });
 
@@ -430,20 +420,16 @@ describe('transfer', () => {
     let fixture: ComponentFixture<Test996Component>;
 
     // https://github.com/NG-ZORRO/ng-zorro-antd/issues/996
-    it('#996', fakeAsync(() => {
+    it('#996', async () => {
       fixture = TestBed.createComponent(Test996Component);
       pageObject = new TransferPageObject(fixture);
       fixture.detectChanges();
-      expect(
-        pageObject.getEl('[data-direction="right"] .ant-transfer-list-header .ant-checkbox').classList
-      ).not.toContain('ant-checkbox-checked');
+      const checkbox = pageObject.getEl('[data-direction="right"] .ant-transfer-list-header .ant-checkbox');
+      expect(checkbox.classList).not.toContain('ant-checkbox-checked');
       pageObject.checkItem('right', 1);
-      tick(50);
-      fixture.detectChanges();
-      expect(pageObject.getEl('[data-direction="right"] .ant-transfer-list-header .ant-checkbox').classList).toContain(
-        'ant-checkbox-checked'
-      );
-    }));
+      await fixture.whenStable();
+      expect(checkbox.classList).toContain('ant-checkbox-checked');
+    });
   });
 
   describe('transfer status', () => {
@@ -462,11 +448,11 @@ describe('transfer', () => {
       fixture.detectChanges();
       expect(componentElement.className).toContain('ant-transfer-status-error');
 
-      testComponent.status = 'warning';
+      testComponent.status.set('warning');
       fixture.detectChanges();
       expect(componentElement.className).toContain('ant-transfer-status-warning');
 
-      testComponent.status = '';
+      testComponent.status.set('');
       fixture.detectChanges();
       expect(componentElement.className).not.toContain('ant-transfer-status-warning');
     });
@@ -488,15 +474,15 @@ describe('transfer', () => {
       fixture.detectChanges();
       expect(componentElement.classList).toContain('ant-transfer-status-error');
 
-      testComponent.status = 'warning';
+      testComponent.status.set('warning');
       fixture.detectChanges();
       expect(componentElement.classList).toContain('ant-transfer-status-warning');
 
-      testComponent.status = 'success';
+      testComponent.status.set('success');
       fixture.detectChanges();
       expect(componentElement.classList).toContain('ant-transfer-status-success');
 
-      testComponent.feedback = false;
+      testComponent.feedback.set(false);
       fixture.detectChanges();
       expect(componentElement.classList).not.toContain('ant-transfer-has-feedback');
     });
@@ -588,7 +574,7 @@ describe('transfer', () => {
 });
 
 testDirectionality(() => TestTransferComponent, By.directive(TriTransferComponent), 'ant-transfer', {
-  providers: [provideZoneChangeDetection(), provideNzIconsTesting(), provideNoopAnimations()]
+  providers: [provideNzIconsTesting(), provideNzNoAnimation()]
 });
 
 interface AbstractTestTransferComponent {
@@ -601,23 +587,23 @@ interface AbstractTestTransferComponent {
   template: `
     <tri-transfer
       #comp
-      [dataSource]="dataSource"
-      [renderList]="renderList"
-      [showSelectAll]="showSelectAll"
-      [disabled]="disabled"
+      [dataSource]="dataSource()"
+      [renderList]="renderList()"
+      [showSelectAll]="showSelectAll()"
+      [disabled]="disabled()"
       [titles]="['Source', 'Target']"
       [operations]="['to right', 'to left']"
       [itemUnit]="itemUnit"
       [itemsUnit]="itemsUnit"
       [listStyle]="listStyle"
       [showSearch]="showSearch"
-      [filterOption]="filterOption"
+      [filterOption]="filterOption()"
       [searchPlaceholder]="searchPlaceholder"
       [notFoundContent]="notFoundContent"
       [canMove]="canMove"
       [footer]="footer"
-      [targetKeys]="targetKeys"
-      [oneWay]="oneWay"
+      [targetKeys]="targetKeys()"
+      [oneWay]="oneWay()"
       (searchChange)="search($event)"
       (selectChange)="select($event)"
       (change)="change($event)"
@@ -634,20 +620,20 @@ interface AbstractTestTransferComponent {
 class TestTransferComponent implements OnInit, AbstractTestTransferComponent {
   @ViewChild('comp', { static: false }) comp!: TriTransferComponent;
   @ViewChild('renderList', { static: false }) renderListTpl!: TemplateRef<void>;
-  dataSource: TriSafeAny[] = [];
-  renderList: Array<TemplateRef<void> | null> = [null, null];
-  disabled = false;
-  showSelectAll = true;
+  readonly dataSource = signal<TriSafeAny[]>([]);
+  readonly renderList = signal<Array<TemplateRef<void> | null>>([null, null]);
+  readonly disabled = signal(false);
+  readonly showSelectAll = signal(true);
   selectedKeys = ['0', '1', '2'];
-  targetKeys: string[] = [];
+  readonly targetKeys = signal<string[]>([]);
   itemUnit = 'item';
   itemsUnit = 'items';
   listStyle = { 'width.px': 300, 'height.px': 300 };
   showSearch = true;
-  filterOption?: (inputValue: string, item: TriSafeAny) => boolean;
+  readonly filterOption = signal<((inputValue: string, item: TriSafeAny) => boolean) | undefined>(undefined);
   searchPlaceholder = '请输入搜索内容';
   notFoundContent = '列表为空';
-  oneWay = false;
+  readonly oneWay = signal(false);
 
   canMove(arg: TransferCanMove): Observable<TransferItem[]> {
     // if (arg.direction === 'right' && arg.list.length > 0) arg.list.splice(0, 1);
@@ -675,7 +661,7 @@ class TestTransferComponent implements OnInit, AbstractTestTransferComponent {
         disabled: i === 20
       });
     }
-    this.dataSource = ret;
+    this.dataSource.set(ret);
   }
 
   search(_: TransferSearchChange): void {}
@@ -694,8 +680,7 @@ class TestTransferComponent implements OnInit, AbstractTestTransferComponent {
         {{ item.title }}
       </ng-template>
     </tri-transfer>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 class TestTransferCustomRenderComponent implements OnInit, AbstractTestTransferComponent {
   @ViewChild('comp', { static: false }) comp!: TriTransferComponent;
@@ -721,8 +706,7 @@ class TestTransferCustomRenderComponent implements OnInit, AbstractTestTransferC
 // https://github.com/NG-ZORRO/ng-zorro-antd/issues/996
 @Component({
   imports: [TriTransferModule],
-  template: `<tri-transfer [dataSource]="list" />`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<tri-transfer [dataSource]="list" />`
 })
 class Test996Component implements OnInit {
   @ViewChild(TriTransferComponent, { static: true }) comp!: TriTransferComponent;
@@ -739,11 +723,10 @@ class Test996Component implements OnInit {
 
 @Component({
   imports: [TriTransferModule],
-  template: `<tri-transfer [dataSource]="[]" [status]="status" />`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<tri-transfer [dataSource]="[]" [status]="status()" />`
 })
 export class TriTestTransferStatusComponent {
-  status: TriStatus = 'error';
+  readonly status = signal<TriStatus>('error');
 }
 
 @Component({
@@ -751,7 +734,7 @@ export class TriTestTransferStatusComponent {
   template: `
     <form tri-form>
       <tri-form-item>
-        <tri-form-control [hasFeedback]="feedback" [validateStatus]="status">
+        <tri-form-control [hasFeedback]="feedback()" [validateStatus]="status()">
           <tri-transfer [dataSource]="[]" />
         </tri-form-control>
       </tri-form-item>
@@ -760,6 +743,6 @@ export class TriTestTransferStatusComponent {
   changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestTransferInFormComponent {
-  status: TriFormControlStatusType = 'error';
-  feedback = true;
+  readonly status = signal<TriFormControlStatusType>('error');
+  readonly feedback = signal(true);
 }

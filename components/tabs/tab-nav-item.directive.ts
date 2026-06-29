@@ -12,13 +12,13 @@ import { TriTabComponent } from './tab.component';
   selector: '[triTabNavItem]'
 })
 export class TriTabNavItemDirective implements FocusableOption {
-  @Input({ transform: booleanAttribute }) disabled: boolean = false;
-  @Input() tab!: TriTabComponent;
-  @Input({ transform: booleanAttribute }) active: boolean = false;
+  public readonly elementRef: ElementRef<HTMLElement> = inject(ElementRef<HTMLElement>);
+  private el = this.elementRef.nativeElement;
+  private parentElement = this.el.parentElement!;
 
-  public elementRef: ElementRef<HTMLElement> = inject(ElementRef<HTMLElement>);
-  private el: HTMLElement = this.elementRef.nativeElement;
-  private parentElement: HTMLElement = this.el.parentElement!;
+  @Input() tab!: TriTabComponent;
+  @Input({ transform: booleanAttribute }) disabled = false;
+  @Input({ transform: booleanAttribute }) active = false;
 
   focus(): void {
     this.el.focus({ preventScroll: true });

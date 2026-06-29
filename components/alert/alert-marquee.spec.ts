@@ -3,11 +3,13 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, DebugElement, signal } from '@angular/core';
+import { Component, DebugElement, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
+import { vi } from 'vitest';
+
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
 import { TriAlertMarqueeComponent } from './alert-marquee.component';
@@ -16,7 +18,7 @@ import { TriAlertModule } from './alert.module';
 describe('NzAlertMarqueeComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideNzIconsTesting(), provideNoopAnimations()]
+      providers: [provideNzIconsTesting(), provideNzNoAnimation()]
     });
   });
 
@@ -57,7 +59,7 @@ describe('NzAlertMarqueeComponent', () => {
 
     it('should not set aria-hidden on the first track', () => {
       const tracks = marquee.nativeElement.querySelectorAll('.ant-alert-marquee-track');
-      expect(tracks[0].hasAttribute('aria-hidden')).toBeFalse();
+      expect(tracks[0].hasAttribute('aria-hidden')).toBe(false);
     });
   });
 
@@ -66,7 +68,7 @@ describe('NzAlertMarqueeComponent', () => {
     let marquee: DebugElement;
 
     beforeEach(async () => {
-      spyOnProperty(HTMLElement.prototype, 'offsetWidth', 'get').and.returnValue(500);
+      vi.spyOn(HTMLElement.prototype, 'offsetWidth', 'get').mockReturnValue(500);
       fixture = TestBed.createComponent(TriTestMarqueeBasicComponent);
       marquee = fixture.debugElement.query(By.directive(TriAlertMarqueeComponent));
       fixture.autoDetectChanges();
@@ -159,8 +161,7 @@ describe('NzAlertMarqueeComponent', () => {
   imports: [TriAlertModule],
   template: `
     <tri-alert-marquee [pauseOnHover]="pauseOnHover()" [speed]="speed()"> Scrolling message </tri-alert-marquee>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestMarqueeBasicComponent {
   readonly pauseOnHover = signal(false);
@@ -174,7 +175,6 @@ export class TriTestMarqueeBasicComponent {
     <ng-template #message>
       <tri-alert-marquee>Loop banner text</tri-alert-marquee>
     </ng-template>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestMarqueeInsideAlertComponent {}

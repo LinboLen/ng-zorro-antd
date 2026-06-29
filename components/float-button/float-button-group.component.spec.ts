@@ -3,9 +3,11 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
+import { Component, DebugElement, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+
+import { vi } from 'vitest';
 
 import { testDirectionality } from 'ng-zorro-antd/core/testing';
 import { TriFourDirectionType, TriShapeSCType } from 'ng-zorro-antd/core/types';
@@ -17,9 +19,8 @@ import { TriFloatButtonModule } from './float-button.module';
 
 describe('nz-float-button-group', () => {
   beforeEach(() => {
-    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideNzIconsTesting(), provideZoneChangeDetection()]
+      providers: [provideNzIconsTesting()]
     });
   });
 
@@ -43,7 +44,7 @@ describe('nz-float-button-group', () => {
     });
 
     it('nzShape', () => {
-      testComponent.shape = 'square';
+      testComponent.shape.set('square');
       fixture.detectChanges();
       expect(resultEl.nativeElement.classList).toContain('ant-float-btn-group-square');
       const innerButtons = [
@@ -56,40 +57,40 @@ describe('nz-float-button-group', () => {
     });
 
     it('nzTrigger hover', () => {
-      testComponent.trigger = 'hover';
+      testComponent.trigger.set('hover');
       fixture.detectChanges();
       resultEl.nativeElement.getElementsByClassName('ant-float-btn')[0].dispatchEvent(new MouseEvent('mouseover'));
       fixture.detectChanges();
       expect(resultEl.nativeElement.getElementsByClassName('anticon')[0].getAttribute('nztype') === 'close').toBe(true);
-      expect(testComponent.isClick).toBe(true);
+      expect(testComponent.isClick()).toBe(true);
       resultEl.nativeElement.dispatchEvent(new MouseEvent('mouseleave'));
       fixture.detectChanges();
       expect(resultEl.nativeElement.getElementsByClassName('anticon')[0].getAttribute('nztype') === 'close').toBe(
         false
       );
-      expect(testComponent.isClick).toBe(false);
+      expect(testComponent.isClick()).toBe(false);
     });
 
     it('nzTrigger click', () => {
-      testComponent.trigger = 'click';
+      testComponent.trigger.set('click');
       fixture.detectChanges();
       resultEl.nativeElement.getElementsByClassName('ant-btn')[0].dispatchEvent(new MouseEvent('click'));
       fixture.detectChanges();
       expect(resultEl.nativeElement.getElementsByClassName('anticon')[0].getAttribute('nztype') === 'close').toBe(true);
-      expect(testComponent.isClick).toBe(true);
+      expect(testComponent.isClick()).toBe(true);
       resultEl.nativeElement.getElementsByClassName('ant-btn')[0].dispatchEvent(new MouseEvent('click'));
       fixture.detectChanges();
       expect(resultEl.nativeElement.getElementsByClassName('anticon')[0].getAttribute('nztype') === 'close').toBe(
         false
       );
-      expect(testComponent.isClick).toBe(false);
+      expect(testComponent.isClick()).toBe(false);
     });
 
     it('nzOpen true', () => {
-      testComponent.open = true;
-      testComponent.trigger = 'click';
+      testComponent.open.set(true);
+      testComponent.trigger.set('click');
       fixture.detectChanges();
-      const openChangeSpy = spyOn(groupComponent.openChange, 'emit');
+      const openChangeSpy = vi.spyOn(groupComponent.openChange, 'emit');
       resultEl.nativeElement.getElementsByClassName('ant-btn')[0].dispatchEvent(new MouseEvent('click'));
       fixture.detectChanges();
       expect(resultEl.nativeElement.getElementsByClassName('anticon')[0].getAttribute('nztype') === 'close').toBe(true);
@@ -98,10 +99,10 @@ describe('nz-float-button-group', () => {
     });
 
     it('nzOpen false', () => {
-      testComponent.open = false;
-      testComponent.trigger = 'click';
+      testComponent.open.set(false);
+      testComponent.trigger.set('click');
       fixture.detectChanges();
-      const openChangeSpy = spyOn(groupComponent.openChange, 'emit');
+      const openChangeSpy = vi.spyOn(groupComponent.openChange, 'emit');
       resultEl.nativeElement.getElementsByClassName('ant-btn')[0].dispatchEvent(new MouseEvent('click'));
       fixture.detectChanges();
       expect(resultEl.nativeElement.getElementsByClassName('anticon')[0].getAttribute('nztype') === 'close').toBe(
@@ -112,10 +113,10 @@ describe('nz-float-button-group', () => {
     });
 
     it('nzOpenChange should emit in controlled mode', () => {
-      testComponent.open = true;
-      testComponent.trigger = 'click';
+      testComponent.open.set(true);
+      testComponent.trigger.set('click');
       fixture.detectChanges();
-      const openChangeSpy = spyOn(groupComponent.openChange, 'emit');
+      const openChangeSpy = vi.spyOn(groupComponent.openChange, 'emit');
       resultEl.nativeElement.getElementsByClassName('ant-btn')[0].dispatchEvent(new MouseEvent('click'));
       fixture.detectChanges();
       expect(openChangeSpy).toHaveBeenCalledWith(false);
@@ -123,45 +124,45 @@ describe('nz-float-button-group', () => {
 
     describe('float-button-group placement', () => {
       it('should set correct class for nzPlacement top', () => {
-        testComponent.trigger = 'click';
-        testComponent.placement = 'top';
+        testComponent.trigger.set('click');
+        testComponent.placement.set('top');
         fixture.detectChanges();
         expect(resultEl.nativeElement.classList).toContain('ant-float-btn-group-top');
         // is not menu mode
-        testComponent.trigger = null;
+        testComponent.trigger.set(null);
         fixture.detectChanges();
         expect(resultEl.nativeElement.classList).not.toContain('ant-float-btn-group-top');
       });
 
       it('should set correct class for nzPlacement bottom', () => {
-        testComponent.trigger = 'click';
-        testComponent.placement = 'bottom';
+        testComponent.trigger.set('click');
+        testComponent.placement.set('bottom');
         fixture.detectChanges();
         expect(resultEl.nativeElement.classList).toContain('ant-float-btn-group-bottom');
         // is not menu mode
-        testComponent.trigger = null;
+        testComponent.trigger.set(null);
         fixture.detectChanges();
         expect(resultEl.nativeElement.classList).not.toContain('ant-float-btn-group-bottom');
       });
 
       it('should set correct class for nzPlacement left', () => {
-        testComponent.trigger = 'click';
-        testComponent.placement = 'left';
+        testComponent.trigger.set('click');
+        testComponent.placement.set('left');
         fixture.detectChanges();
         expect(resultEl.nativeElement.classList).toContain('ant-float-btn-group-left');
         // is not menu mode
-        testComponent.trigger = null;
+        testComponent.trigger.set(null);
         fixture.detectChanges();
         expect(resultEl.nativeElement.classList).not.toContain('ant-float-btn-group-left');
       });
 
       it('should set correct class for nzPlacement right', () => {
-        testComponent.trigger = 'click';
-        testComponent.placement = 'right';
+        testComponent.trigger.set('click');
+        testComponent.placement.set('right');
         fixture.detectChanges();
         expect(resultEl.nativeElement.classList).toContain('ant-float-btn-group-right');
         // is not menu mode
-        testComponent.trigger = null;
+        testComponent.trigger.set(null);
         fixture.detectChanges();
         expect(resultEl.nativeElement.classList).not.toContain('ant-float-btn-group-right');
       });
@@ -172,7 +173,7 @@ describe('nz-float-button-group', () => {
         const { enterAnimation, leaveAnimation } = groupComponent;
         expect(enterAnimation()).toBe('ant-float-btn-enter-top');
         expect(leaveAnimation()).toBe('ant-float-btn-leave-top');
-        testComponent.placement = 'right';
+        testComponent.placement.set('right');
         fixture.detectChanges();
         expect(enterAnimation()).toBe('ant-float-btn-enter-right');
         expect(leaveAnimation()).toBe('ant-float-btn-leave-right');
@@ -193,24 +194,23 @@ describe('nz-float-button-group', () => {
   template: `
     <tri-float-button-group
       icon="question-circle"
-      [shape]="shape"
-      [trigger]="trigger"
-      [open]="open"
-      [placement]="placement"
+      [shape]="shape()"
+      [trigger]="trigger()"
+      [open]="open()"
+      [placement]="placement()"
       (onOpenChange)="onClick($event)"
     />
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestFloatButtonGroupBasicComponent {
-  shape: TriShapeSCType = 'circle';
-  trigger: 'click' | 'hover' | null = null;
-  open: boolean | null = null;
-  placement: TriFourDirectionType = 'top';
+  readonly shape = signal<TriShapeSCType>('circle');
+  readonly trigger = signal<'click' | 'hover' | null>(null);
+  readonly open = signal<boolean | null>(null);
+  readonly placement = signal<TriFourDirectionType>('top');
 
-  isClick: boolean = false;
+  readonly isClick = signal(false);
 
   onClick(value: boolean): void {
-    this.isClick = value;
+    this.isClick.set(value);
   }
 }

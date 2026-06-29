@@ -4,10 +4,12 @@
  */
 
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { ChangeDetectionStrategy, Component, ElementRef, provideZoneChangeDetection, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { Component, ElementRef, ViewChild, signal } from '@angular/core';
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 
+import { vi } from 'vitest';
+
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { dispatchMouseEvent } from 'ng-zorro-antd/core/testing';
 
 import { TriPopoverDirective } from './popover';
@@ -20,9 +22,8 @@ describe('popover', () => {
   let overlayContainerElement: HTMLElement;
 
   beforeEach(() => {
-    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideNoopAnimations(), provideZoneChangeDetection()]
+      providers: [provideNzNoAnimation()]
     });
     fixture = TestBed.createComponent(TriPopoverTestComponent);
     component = fixture.componentInstance;
@@ -33,6 +34,9 @@ describe('popover', () => {
     overlayContainer = oc;
     overlayContainerElement = oc.getContainerElement();
   }));
+
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
 
   afterEach(() => {
     overlayContainer.ngOnDestroy();
@@ -53,11 +57,11 @@ describe('popover', () => {
 
   function waitingForTooltipToggling(): void {
     fixture.detectChanges();
-    tick(500);
+    vi.advanceTimersByTime(500);
     fixture.detectChanges();
   }
 
-  it('should support string', fakeAsync(() => {
+  it('should support string', () => {
     const triggerElement = component.stringPopover.nativeElement;
 
     expect(getTitleTextContent()).toBeNull();
@@ -72,9 +76,9 @@ describe('popover', () => {
     waitingForTooltipToggling();
     expect(getTitleTextContent()).toBeNull();
     expect(getInnerTextContent()).toBeNull();
-  }));
+  });
 
-  it('should support template', fakeAsync(() => {
+  it('should support template', () => {
     const triggerElement = component.templatePopover.nativeElement;
 
     expect(getTitleTextContent()).toBeNull();
@@ -89,30 +93,30 @@ describe('popover', () => {
     waitingForTooltipToggling();
     expect(getTitleTextContent()).toBeNull();
     expect(getInnerTextContent()).toBeNull();
-  }));
+  });
 
   // changing content on the directive should be synced to the component
-  it('should set `setContent` proxy to `nzContent`', fakeAsync(() => {
+  it('should set `setContent` proxy to `nzContent`', () => {
     const triggerElement = component.changePopover.nativeElement;
 
     dispatchMouseEvent(triggerElement, 'mouseenter');
     waitingForTooltipToggling();
     expect(getInnerTextContent()).toContain('content');
 
-    component.content = 'changed-content';
+    component.content.set('changed-content');
     fixture.detectChanges();
     expect(getInnerTextContent()).toContain('changed-content');
-  }));
+  });
 
-  it('should nzPopoverBackdrop work', fakeAsync(() => {
+  it('should nzPopoverBackdrop work', () => {
     const triggerElement = component.backdropPopover.nativeElement;
     dispatchMouseEvent(triggerElement, 'click');
     waitingForTooltipToggling();
     const boundingBox = overlayContainerElement.children[0];
     expect(boundingBox.children[0].classList).toContain('cdk-overlay-backdrop');
-  }));
+  });
 
-  it('should prohibit hiding popover when nzPopoverOverlayClickable is false', fakeAsync(() => {
+  it('should prohibit hiding popover when nzPopoverOverlayClickable is false', () => {
     const triggerElement = component.hideTemplate.nativeElement;
 
     dispatchMouseEvent(triggerElement, 'click');
@@ -122,32 +126,32 @@ describe('popover', () => {
     dispatchMouseEvent(document.body, 'click');
     waitingForTooltipToggling();
     expect(overlayContainerElement.textContent).toContain('content-string');
-  }));
+  });
 
-  it('should change overlayClass when the nzPopoverOverlayClassName is changed', fakeAsync(() => {
+  it('should change overlayClass when the nzPopoverOverlayClassName is changed', () => {
     const triggerElement = component.stringPopover.nativeElement;
 
     dispatchMouseEvent(triggerElement, 'mouseenter');
     waitingForTooltipToggling();
 
-    component.class = 'testClass2';
+    component.class.set('testClass2');
     fixture.detectChanges();
 
     expect(overlayContainerElement.querySelector<HTMLElement>('.testClass')).toBeNull();
     expect(overlayContainerElement.querySelector<HTMLElement>('.testClass2')).not.toBeNull();
-  }));
+  });
 
-  it('should nzPopoverOverlayClassName support classes listed in the string (space delimited)', fakeAsync(() => {
+  it('should nzPopoverOverlayClassName support classes listed in the string (space delimited)', () => {
     const triggerElement = component.stringPopover.nativeElement;
-    component.class = 'testClass1 testClass2';
+    component.class.set('testClass1 testClass2');
 
     dispatchMouseEvent(triggerElement, 'mouseenter');
     waitingForTooltipToggling();
 
     expect(overlayContainerElement.querySelector('.testClass1.testClass2')).not.toBeNull();
-  }));
+  });
 
-  it('should support context', fakeAsync(() => {
+  it('should support context', () => {
     const triggerElement = component.contextPopover.nativeElement;
 
     expect(getTitleTextContent()).toBeNull();
@@ -156,7 +160,7 @@ describe('popover', () => {
     waitingForTooltipToggling();
     expect(getTitleTextContent()).toContain('titleContextTest');
     expect(getInnerTextContent()).toContain('contentContextTest');
-  }));
+  });
 });
 
 @Component({
@@ -167,13 +171,13 @@ describe('popover', () => {
       tri-popover
       popoverTitle="title-string"
       popoverContent="content-string"
-      [popoverOverlayClassName]="class"
+      [popoverOverlayClassName]="class()"
       >Show</a
     >
 
     <a #templatePopover tri-popover [popoverTitle]="templateTitle" [popoverContent]="templateContent">Show</a>
 
-    <a #changePopover tri-popover popoverTitle="title-change" [popoverContent]="content"></a>
+    <a #changePopover tri-popover popoverTitle="title-change" [popoverContent]="content()"></a>
 
     <a
       #backdropPopover
@@ -234,7 +238,7 @@ export class TriPopoverTestComponent {
   @ViewChild('contextPopover', { static: false, read: TriPopoverDirective })
   contextPopoverNzPopoverDirective!: TriPopoverDirective;
 
-  content = 'content';
+  readonly content = signal('content');
   visible = false;
-  class = 'testClass';
+  readonly class = signal('testClass');
 }

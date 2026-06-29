@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, provideZoneChangeDetection } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -18,17 +18,16 @@ describe('space', () => {
   let fixture: ComponentFixture<SpaceTestComponent>;
 
   beforeEach(() => {
-    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideNzIconsTesting(), provideZoneChangeDetection()]
+      providers: [provideNzIconsTesting()]
     });
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SpaceTestComponent);
     component = fixture.componentInstance;
-    component.size = 'small';
-    component.direction = 'horizontal';
+    component.size.set('small');
+    component.direction.set('horizontal');
     fixture.detectChanges();
   });
 
@@ -40,12 +39,12 @@ describe('space', () => {
     expect(spaceElement.style.columnGap).toBe('8px');
     expect(spaceElement.style.rowGap).toBe('8px');
 
-    component.size = 'middle';
+    component.size.set('middle');
     fixture.detectChanges();
     expect(spaceElement.style.columnGap).toBe('16px');
     expect(spaceElement.style.rowGap).toBe('16px');
 
-    component.size = 'large';
+    component.size.set('large');
     fixture.detectChanges();
     expect(spaceElement.style.columnGap).toBe('24px');
     expect(spaceElement.style.rowGap).toBe('24px');
@@ -55,12 +54,12 @@ describe('space', () => {
     const spaceComponent = fixture.debugElement.query(By.directive(TriSpaceComponent));
     const spaceElement = spaceComponent.nativeElement as HTMLElement;
 
-    component.size = 36;
+    component.size.set(36);
     fixture.detectChanges();
     expect(spaceElement.style.columnGap).toBe('36px');
     expect(spaceElement.style.rowGap).toBe('36px');
 
-    component.size = [36, 18];
+    component.size.set([36, 18]);
     fixture.detectChanges();
     expect(spaceElement.style.columnGap).toBe('36px');
     expect(spaceElement.style.rowGap).toBe('18px');
@@ -73,8 +72,10 @@ describe('space', () => {
     // default wrap is false
     expect(spaceElement.style.flexWrap).toBeFalsy();
 
-    component.wrap = true;
+    component.wrap.set(true);
     fixture.detectChanges();
+    expect(spaceElement.style.columnGap).toBe('36px');
+    expect(spaceElement.style.rowGap).toBe('36px');
 
     expect(spaceElement.style.flexWrap).toBe('wrap');
   });
@@ -83,17 +84,17 @@ describe('space', () => {
     const spaceComponent = fixture.debugElement.query(By.directive(TriSpaceComponent));
     const spaceElement = spaceComponent.nativeElement as HTMLElement;
 
-    component.direction = 'vertical';
+    component.direction.set('vertical');
     fixture.detectChanges();
     expect(spaceElement.classList).toContain('ant-space-vertical');
 
-    component.direction = 'horizontal';
+    component.direction.set('horizontal');
     fixture.detectChanges();
     expect(spaceElement.classList).toContain('ant-space-horizontal');
   });
 
   it('should set align', () => {
-    component.direction = 'vertical';
+    component.direction.set('vertical');
     fixture.detectChanges();
 
     const spaceComponent = fixture.debugElement.query(By.directive(TriSpaceComponent));
@@ -104,19 +105,19 @@ describe('space', () => {
       expect(className.indexOf('ant-space-align') === -1).toBe(true);
     });
 
-    component.direction = 'horizontal';
+    component.direction.set('horizontal');
     fixture.detectChanges();
 
     expect(spaceNativeElement.classList).toContain('ant-space-align-center');
 
-    component.align = 'end';
+    component.align.set('end');
     fixture.detectChanges();
 
     expect(spaceNativeElement.classList).toContain('ant-space-align-end');
   });
 
   it('should render split', () => {
-    component.showSplit = true;
+    component.showSplit.set(true);
     fixture.detectChanges();
 
     const spaceComponent = fixture.debugElement.query(By.directive(TriSpaceComponent));
@@ -129,7 +130,7 @@ describe('space', () => {
     expect(spaceElement.style.columnGap).toBe('8px');
     expect(spaceElement.style.rowGap).toBe('8px');
 
-    component.show = true;
+    component.show.set(true);
     fixture.detectChanges();
 
     items = fixture.debugElement.queryAll(By.css('.ant-space-item'));
@@ -146,15 +147,15 @@ describe('space', () => {
   imports: [TriSpaceModule],
   template: `
     <tri-space
-      [split]="showSplit ? spaceSplit : null"
-      [size]="size"
-      [direction]="direction"
-      [align]="align"
-      [wrap]="wrap"
+      [split]="showSplit() ? spaceSplit : null"
+      [size]="size()"
+      [direction]="direction()"
+      [align]="align()"
+      [wrap]="wrap()"
     >
       <div *spaceItem>item</div>
       <div *spaceItem>item</div>
-      @if (show) {
+      @if (show()) {
         <div *spaceItem>item</div>
       }
     </tri-space>
@@ -164,10 +165,10 @@ describe('space', () => {
   changeDetection: ChangeDetectionStrategy.Eager
 })
 class SpaceTestComponent {
-  size: TriSpaceSize | [TriSpaceSize, TriSpaceSize] = 'small';
-  direction: TriSpaceDirection = 'horizontal';
-  show = false;
-  align?: TriSpaceAlign;
-  wrap?: boolean;
-  showSplit = false;
+  readonly size = signal<TriSpaceSize | [TriSpaceSize, TriSpaceSize]>('small');
+  readonly direction = signal<TriSpaceDirection>('horizontal');
+  readonly show = signal(false);
+  readonly align = signal<TriSpaceAlign | undefined>(undefined);
+  readonly wrap = signal<boolean | undefined>(undefined);
+  readonly showSplit = signal(false);
 }

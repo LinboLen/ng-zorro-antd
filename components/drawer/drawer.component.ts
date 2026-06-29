@@ -156,7 +156,7 @@ export class TriDrawerComponent<T extends {} = TriSafeAny, R = TriSafeAny, D ext
 {
   private readonly renderer = inject(Renderer2);
   private readonly injector = inject(Injector);
-  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly cdr = inject(ChangeDetectorRef);
   private readonly focusTrapFactory = inject(FocusTrapFactory);
   private readonly viewContainerRef = inject(ViewContainerRef);
   private readonly overlayKeyboardDispatcher = inject(OverlayKeyboardDispatcher);
@@ -312,7 +312,7 @@ export class TriDrawerComponent<T extends {} = TriSafeAny, R = TriSafeAny, D ext
     this.updateOverlayStyle();
     this.updateBodyOverflow();
     this.templateContext = { $implicit: this.data || this.contentParams, drawerRef: this as TriDrawerRef<R> };
-    this.changeDetectorRef.detectChanges();
+    this.cdr.detectChanges();
   }
 
   ngAfterViewInit(): void {
@@ -349,11 +349,11 @@ export class TriDrawerComponent<T extends {} = TriSafeAny, R = TriSafeAny, D ext
   private triggerPlacementChangeCycleOnce(): void {
     if (!this.noAnimation) {
       this.placementChanging = true;
-      this.changeDetectorRef.markForCheck();
+      this.cdr.markForCheck();
       clearTimeout(this.placementChangeTimeoutId);
       this.placementChangeTimeoutId = setTimeout(() => {
         this.placementChanging = false;
-        this.changeDetectorRef.markForCheck();
+        this.cdr.markForCheck();
       }, this.getAnimationDuration());
     }
   }
@@ -364,7 +364,7 @@ export class TriDrawerComponent<T extends {} = TriSafeAny, R = TriSafeAny, D ext
     this.visibleChange.emit(false);
     this.updateOverlayStyle();
     this.overlayKeyboardDispatcher.remove(this.overlayRef!);
-    this.changeDetectorRef.detectChanges();
+    this.cdr.detectChanges();
     setTimeout(() => {
       this.updateBodyOverflow();
       this.restoreFocus();
@@ -386,10 +386,10 @@ export class TriDrawerComponent<T extends {} = TriSafeAny, R = TriSafeAny, D ext
     this.updateBodyOverflow();
     this.savePreviouslyFocusedElement();
     this.trapFocus();
-    this.changeDetectorRef.detectChanges();
+    this.cdr.detectChanges();
     setTimeout(() => {
       this.inAnimation = false;
-      this.changeDetectorRef.detectChanges();
+      this.cdr.detectChanges();
       this.afterOpen.next();
     }, this.getAnimationDuration());
   }

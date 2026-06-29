@@ -141,7 +141,7 @@ export class TriModalRef<T = TriSafeAny, R = TriSafeAny> implements TriModalLega
   updateConfig(config: ModalOptions): void {
     Object.assign(this.config, config);
     this.containerInstance.bindBackdropStyle();
-    this.containerInstance.cdr.markForCheck();
+    this.containerInstance.markForCheck();
   }
 
   getState(): TriModalState {

@@ -4,7 +4,7 @@
  */
 
 import { Directionality } from '@angular/cdk/bidi';
-import { ChangeDetectionStrategy, Component, signal, WritableSignal } from '@angular/core';
+import { Component, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 

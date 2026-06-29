@@ -4,10 +4,12 @@
  */
 
 import { PlatformLocation } from '@angular/common';
-import { ApplicationRef, DOCUMENT, NgZone, provideZoneChangeDetection } from '@angular/core';
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ApplicationRef, DOCUMENT, NgZone } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 
-import { MockNgZone } from 'ng-zorro-antd/core/testing';
+import { vi } from 'vitest';
+
+import { MockNgZone, nextAnimationFrame } from 'ng-zorro-antd/core/testing';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 import { TriScrollService } from './scroll';
@@ -24,11 +26,11 @@ describe('NzScrollService', () => {
   }
 
   class MockDocumentElement {
-    scrollTop = jasmine.createSpy('scrollTop');
+    scrollTop = vi.fn();
   }
 
   class MockElement {
-    scrollTop = jasmine.createSpy('scrollTop');
+    scrollTop = vi.fn();
   }
 
   class MockPlatformLocation {
@@ -36,7 +38,7 @@ describe('NzScrollService', () => {
   }
 
   beforeEach(() => {
-    spyOn(window, 'scrollBy');
+    vi.spyOn(window, 'scrollBy');
   });
 
   beforeEach(() => {
@@ -51,7 +53,7 @@ describe('NzScrollService', () => {
 
     document = TestBed.inject<MockDocument>(DOCUMENT);
     scrollService = TestBed.inject(TriScrollService);
-    ngZone = TestBed.inject(NgZone) as MockNgZone;
+    ngZone = TestBed.inject(NgZone) as unknown as MockNgZone;
   });
 
   describe('#setScrollTop', () => {
@@ -107,6 +109,7 @@ describe('NzScrollService', () => {
       mockWin.window = mockWin;
       expect(scrollService.getScroll(mockWin)).toBe(10);
     });
+
     it('should be return scrollTop when target is html element', () => {
       const mockEl: TriSafeAny = { scrollTop: 10 };
       expect(scrollService.getScroll(mockEl)).toBe(10);
@@ -114,35 +117,36 @@ describe('NzScrollService', () => {
   });
 
   describe('change detection behavior', () => {
-    // The `requestAnimationFrame` is mocked as `setTimeout(fn, 16)`.
-    const tickAnimationFrame = (): void => tick(16);
-
-    it('should not trigger change detection when calling `scrollTo`', fakeAsync(() => {
+    it('should not trigger change detection when calling `scrollTo`', async () => {
       const appRef = TestBed.inject(ApplicationRef);
-      spyOn(appRef, 'tick');
+      vi.spyOn(appRef, 'tick');
 
       scrollService.scrollTo();
-
-      tickAnimationFrame();
-
+      await nextAnimationFrame();
       expect(appRef.tick).not.toHaveBeenCalled();
-    }));
+    });
 
-    it('should call the custom callback within the Angular zone', fakeAsync(() => {
+    it('should call the custom callback within the Angular zone', async () => {
       let callbackCalled = false;
-      spyOn(ngZone, 'run').and.callThrough();
+      let resolveCallback!: () => void;
+      // Wait for the callback itself instead of a fixed frame delay. In CI, RAF can run
+      // after `nextAnimationFrame()`, which would make the `ngZone.run` assertion flaky.
+      const callbackDone = new Promise<void>(resolve => {
+        resolveCallback = resolve;
+      });
+      vi.spyOn(ngZone, 'run');
 
       scrollService.scrollTo(undefined, undefined, {
         duration: 0,
         callback: () => {
           callbackCalled = true;
+          resolveCallback();
         }
       });
 
-      tickAnimationFrame();
-
+      await callbackDone;
       expect(ngZone.run).toHaveBeenCalled();
-      expect(callbackCalled).toBeTrue();
-    }));
+      expect(callbackCalled).toBe(true);
+    });
   });
 });

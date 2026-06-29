@@ -7,6 +7,8 @@ import { ChangeDetectionStrategy, Component, EventEmitter, SimpleChanges } from 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Subscription } from 'rxjs';
 
+import { vi } from 'vitest';
+
 import { TriResizeObserverDirective } from 'ng-zorro-antd/cdk/resize-observer/resize-observer.directive';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -31,7 +33,7 @@ describe('resize observer', () => {
   it('should call subscribe when all the conditions are met', () => {
     directive['currentSubscription'] = null;
     directive.resizeObserverDisabled = false;
-    spyOn<TriSafeAny>(directive, 'subscribe');
+    vi.spyOn(directive as TriSafeAny, 'subscribe');
     directive.ngAfterContentInit();
     expect(directive['subscribe']).toHaveBeenCalled();
   });
@@ -39,7 +41,7 @@ describe('resize observer', () => {
   it('should not call subscribe when nzResizeObserverDisabled is true', () => {
     directive['currentSubscription'] = null;
     directive.resizeObserverDisabled = true;
-    spyOn<TriSafeAny>(directive, 'subscribe');
+    vi.spyOn(directive as TriSafeAny, 'subscribe');
     directive.ngAfterContentInit();
     expect(directive['subscribe']).not.toHaveBeenCalled();
   });
@@ -47,7 +49,7 @@ describe('resize observer', () => {
   it('should not call subscribe when currentSubscription is truthy', () => {
     directive['currentSubscription'] = new Subscription();
     directive.resizeObserverDisabled = false;
-    spyOn<TriSafeAny>(directive, 'subscribe');
+    vi.spyOn(directive as TriSafeAny, 'subscribe');
     directive.ngAfterContentInit();
     expect(directive['subscribe']).not.toHaveBeenCalled();
   });
@@ -56,7 +58,7 @@ describe('resize observer', () => {
     const change = {
       nzResizeObserve: {}
     };
-    spyOn<TriSafeAny>(directive, 'unsubscribe');
+    vi.spyOn(directive as TriSafeAny, 'unsubscribe');
     directive.resizeObserverDisabled = true;
     directive.ngOnChanges(change as unknown as SimpleChanges);
     expect(directive['unsubscribe']).toHaveBeenCalled();
@@ -66,14 +68,14 @@ describe('resize observer', () => {
     const change = {
       nzResizeObserve: {}
     };
-    spyOn<TriSafeAny>(directive, 'subscribe');
+    vi.spyOn(directive as TriSafeAny, 'subscribe');
     directive.resizeObserverDisabled = false;
     directive.ngOnChanges(change as unknown as SimpleChanges);
     expect(directive['subscribe']).toHaveBeenCalled();
   });
 
   it('should call correct methods when calling subscribe', () => {
-    spyOn<TriSafeAny>(directive, 'unsubscribe');
+    vi.spyOn(directive as TriSafeAny, 'unsubscribe');
     directive['subscribe']();
     expect(directive['unsubscribe']).toHaveBeenCalled();
   });
@@ -82,7 +84,7 @@ describe('resize observer', () => {
     const element = document.createElement('div');
     directive['nzResizeObserver'].observe(element);
     fixture.detectChanges();
-    spyOn<TriSafeAny>(directive['nzResizeObserver'], 'cleanupObserver');
+    vi.spyOn(directive['nzResizeObserver'] as TriSafeAny, 'cleanupObserver');
     fixture.destroy();
     expect(directive['nzResizeObserver']['cleanupObserver']).toHaveBeenCalled();
   });
@@ -90,14 +92,13 @@ describe('resize observer', () => {
   it('should return correct resizeObserver if it is supported', () => {
     // eslint-disable-next-line no-global-assign
     ResizeObserver = undefined as TriSafeAny;
-    const result = directive['nzResizeObserver']['nzResizeObserverFactory'].create(jasmine.createSpy('callback'));
+    const result = directive['nzResizeObserver']['nzResizeObserverFactory'].create(vi.fn());
     expect(result).toEqual(null);
   });
 });
 
 @Component({
   template: `<div resizeObserver></div>`,
-  imports: [TriResizeObserverDirective],
-  changeDetection: ChangeDetectionStrategy.Eager
+  imports: [TriResizeObserverDirective]
 })
 class TestHostComponent {}

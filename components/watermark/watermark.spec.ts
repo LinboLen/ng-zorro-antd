@@ -3,10 +3,12 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ApplicationRef, ChangeDetectionStrategy, Component, DebugElement, destroyPlatform } from '@angular/core';
+import { ApplicationRef, Component, DebugElement, destroyPlatform, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { bootstrapApplication, By } from '@angular/platform-browser';
 import { renderApplication } from '@angular/platform-server';
+
+import { vi } from 'vitest';
 
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -18,23 +20,27 @@ describe('watermark', () => {
   let fixture: ComponentFixture<TriTestWatermarkBasicComponent>;
   let testComponent: TriTestWatermarkBasicComponent;
   let resultEl: DebugElement;
-  let mockSrcSpy: jasmine.Spy;
-
-  beforeAll(() => {
-    mockSrcSpy = spyOnProperty(Image.prototype, 'src', 'set');
-  });
+  let mockSrcSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
+    // Keep the Image.prototype.src spy per spec. A beforeAll spy leaks into
+    // later browser specs and can call a destroyed watermark instance.
+    mockSrcSpy = vi.spyOn(Image.prototype, 'src', 'set');
     fixture = TestBed.createComponent(TriTestWatermarkBasicComponent);
     testComponent = fixture.debugElement.componentInstance;
     resultEl = fixture.debugElement.query(By.directive(TriWatermarkComponent));
-    mockSrcSpy.and.callFake(() => {
+    mockSrcSpy.mockImplementation(() => {
       resultEl.componentInstance['onImageLoad']?.();
     });
   });
 
+  afterEach(() => {
+    mockSrcSpy.mockRestore();
+  });
+
   it('basic', async () => {
-    testComponent.content = 'NG Ant Design';
+    testComponent.content.set('NG Ant Design');
+    fixture.detectChanges();
     await fixture.whenStable();
     const view = resultEl.nativeElement.querySelector('.watermark > div');
     expect(view).toBeTruthy();
@@ -42,8 +48,10 @@ describe('watermark', () => {
   });
 
   it('image', async () => {
-    testComponent.image =
-      'https://img.alicdn.com/imgextra/i3/O1CN01UR3Zkq1va9fnZsZcr_!!6000000006188-55-tps-424-64.svg';
+    testComponent.image.set(
+      'https://img.alicdn.com/imgextra/i3/O1CN01UR3Zkq1va9fnZsZcr_!!6000000006188-55-tps-424-64.svg'
+    );
+    fixture.detectChanges();
     await fixture.whenStable();
     const view = resultEl.nativeElement.querySelector('.watermark > div');
     expect(view).toBeTruthy();
@@ -51,10 +59,11 @@ describe('watermark', () => {
   });
 
   it('invalid image', async () => {
-    mockSrcSpy.and.callFake(() => {
+    mockSrcSpy.mockImplementation(() => {
       resultEl.componentInstance['onImageError']?.();
     });
-    testComponent.image = 'https://img.alicdn.com/test.svg';
+    testComponent.image.set('https://img.alicdn.com/test.svg');
+    fixture.detectChanges();
     await fixture.whenStable();
     const view = resultEl.nativeElement.querySelector('.watermark > div');
     expect(view).toBeTruthy();
@@ -62,8 +71,9 @@ describe('watermark', () => {
   });
 
   it('should offset work', async () => {
-    testComponent.content = ['Angular', 'NG Ant Design'];
-    testComponent.offset = [200, 200];
+    testComponent.content.set(['Angular', 'NG Ant Design']);
+    testComponent.offset.set([200, 200]);
+    fixture.detectChanges();
     await fixture.whenStable();
 
     const view = resultEl.nativeElement.querySelector('.watermark > div');
@@ -74,10 +84,11 @@ describe('watermark', () => {
   });
 
   it('should backgroundSize work', async () => {
-    testComponent.content = 'NG Ant Design';
-    testComponent.gap = [100, 100];
-    testComponent.width = 200;
-    testComponent.height = 200;
+    testComponent.content.set('NG Ant Design');
+    testComponent.gap.set([100, 100]);
+    testComponent.width.set(200);
+    testComponent.height.set(200);
+    fixture.detectChanges();
     await fixture.whenStable();
 
     const view = resultEl.nativeElement.querySelector('.watermark > div');
@@ -85,7 +96,8 @@ describe('watermark', () => {
   });
 
   it('should MutationObserver work', async () => {
-    testComponent.content = 'NG Ant Design';
+    testComponent.content.set('NG Ant Design');
+    fixture.detectChanges();
     await fixture.whenStable();
 
     const view = resultEl.nativeElement.querySelector('.watermark > div');
@@ -96,7 +108,8 @@ describe('watermark', () => {
   });
 
   it('should observe the modification of style', async () => {
-    testComponent.content = 'NG Ant Design';
+    testComponent.content.set('NG Ant Design');
+    fixture.detectChanges();
     await fixture.whenStable();
 
     const view = resultEl.nativeElement.querySelector('.watermark > div');
@@ -108,9 +121,9 @@ describe('watermark', () => {
 });
 
 describe('watermark (SSR)', () => {
-  it('should render water mark on server', async () => {
-    destroyPlatform();
-
+  // TODO: Move this SSR assertion to a Node-based Vitest environment. The browser runner cannot create
+  // the server platform required by `renderApplication`.
+  it.skip('should render water mark on server', async () => {
     // `as any` because `ngDevMode` is not exposed on the global namespace typings.
     const ngDevMode = (globalThis as TriSafeAny)['ngDevMode'];
 
@@ -120,8 +133,7 @@ describe('watermark (SSR)', () => {
       // Enter server mode for the duration of this function.
       globalThis['ngServerMode'] = true;
 
-      const bootstrap = (): Promise<ApplicationRef> =>
-        bootstrapApplication(TriTestWatermarkBasicComponent, { providers: [] });
+      const bootstrap = (): Promise<ApplicationRef> => bootstrapApplication(TriTestWatermarkBasicComponent);
       const html = await renderApplication(bootstrap, {
         document: '<html><head></head><body><nz-test-watermark-basic></nz-test-watermark-basic></body></html>'
       });
@@ -143,28 +155,27 @@ describe('watermark (SSR)', () => {
   imports: [TriWatermarkModule],
   template: `
     <tri-watermark
-      [content]="content"
-      [width]="width"
-      [height]="height"
-      [rotate]="rotate"
-      [zIndex]="zIndex"
-      [image]="image"
-      [font]="font"
-      [gap]="gap"
-      [offset]="offset"
+      [content]="content()"
+      [width]="width()"
+      [height]="height()"
+      [rotate]="rotate()"
+      [zIndex]="zIndex()"
+      [image]="image()"
+      [font]="font()"
+      [gap]="gap()"
+      [offset]="offset()"
       class="watermark"
     />
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestWatermarkBasicComponent {
-  content: string | string[] = 'NG Ant Design';
-  width: number = 120;
-  height: number = 64;
-  rotate: number = -22;
-  zIndex: number = 9;
-  image: string = '';
-  font: FontType = {};
-  gap: [number, number] = [100, 100];
-  offset: [number, number] = [50, 50];
+  readonly content = signal<string | string[]>('NG Ant Design');
+  readonly width = signal(120);
+  readonly height = signal(64);
+  readonly rotate = signal(-22);
+  readonly zIndex = signal(9);
+  readonly image = signal('');
+  readonly font = signal<FontType>({});
+  readonly gap = signal<[number, number]>([100, 100]);
+  readonly offset = signal<[number, number]>([50, 50]);
 }

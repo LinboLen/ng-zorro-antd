@@ -596,6 +596,7 @@ export class TriTreeSelectComponent extends TriTreeBase implements ControlValueA
       if (this.showSearch || this.isMultiple) {
         this.focusOnInput();
       }
+      this.cdr.markForCheck();
     }
   }
 

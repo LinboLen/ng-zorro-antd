@@ -5,22 +5,15 @@
 
 import { Directionality } from '@angular/cdk/bidi';
 import { ConnectedOverlayPositionChange, OverlayContainer } from '@angular/cdk/overlay';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DebugElement,
-  ElementRef,
-  provideZoneChangeDetection,
-  QueryList,
-  ViewChild,
-  ViewChildren
-} from '@angular/core';
-import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
+import { Component, DebugElement, ElementRef, QueryList, signal, ViewChild, ViewChildren } from '@angular/core';
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+
+import { vi } from 'vitest';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
-import { dispatchFakeEvent, provideMockDirectionality } from 'ng-zorro-antd/core/testing';
+import { dispatchFakeEvent, provideMockDirectionality, updateNonSignalsInput } from 'ng-zorro-antd/core/testing';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
@@ -36,14 +29,8 @@ describe('menu', () => {
   let overlayContainerElement: HTMLElement;
 
   beforeEach(() => {
-    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [
-        provideNzIconsTesting(),
-        provideNzNoAnimation(),
-        provideZoneChangeDetection(),
-        provideMockDirectionality()
-      ]
+      providers: [provideNzIconsTesting(), provideNzNoAnimation(), provideMockDirectionality()]
     });
   });
 
@@ -128,22 +115,22 @@ describe('menu', () => {
         expect(secondLevelItems.every(item => item.nativeElement.style.paddingLeft === '72px')).toBe(true);
       });
 
-      it('should click expand', fakeAsync(() => {
+      it('should click expand', async () => {
         fixture.detectChanges();
         const ul = submenus[0].nativeElement.querySelector('.ant-menu');
         const title = submenus[0].nativeElement.querySelector('.ant-menu-submenu-title');
         expect(ul.style.height).toBe('0px');
         title.click();
         fixture.detectChanges();
-        tick(500);
+        await stabilize(fixture, 500);
         expect(ul.style.height).not.toBe('0px');
         expect(submenus[0].nativeElement.classList.contains('ant-menu-submenu-open')).toBe(true);
         title.click();
         fixture.detectChanges();
-        tick(500);
+        await stabilize(fixture, 500);
         expect(ul.style.height).toBe('0px');
         expect(submenus[0].nativeElement.classList.contains('ant-menu-submenu-open')).toBe(false);
-      }));
+      });
     });
 
     describe('inline-collapsed', () => {
@@ -161,12 +148,12 @@ describe('menu', () => {
       it('should className correct', () => {
         fixture.detectChanges();
         expect(menu.nativeElement.className).toBe('ant-menu ant-menu-root ant-menu-dark ant-menu-inline');
-        testComponent.isCollapsed = true;
+        testComponent.isCollapsed.set(true);
         fixture.detectChanges();
         expect(menu.nativeElement.className).toBe(
           'ant-menu ant-menu-root ant-menu-dark ant-menu-vertical ant-menu-inline-collapsed'
         );
-        testComponent.isCollapsed = false;
+        testComponent.isCollapsed.set(false);
         fixture.detectChanges();
         expect(menu.nativeElement.className).toBe('ant-menu ant-menu-root ant-menu-dark ant-menu-inline');
       });
@@ -176,18 +163,18 @@ describe('menu', () => {
         let ul = submenus[0].nativeElement.querySelector('.ant-menu');
         const title = submenus[0].nativeElement.querySelector('.ant-menu-submenu-title');
         expect(ul.style.height).toBe('0px');
-        testComponent.isCollapsed = true;
+        testComponent.isCollapsed.set(true);
         fixture.detectChanges();
-        testComponent.isCollapsed = false;
+        testComponent.isCollapsed.set(false);
         fixture.detectChanges();
         ul = submenus[0].nativeElement.querySelector('.ant-menu');
         expect(ul.style.height).toBe('0px');
         title.click();
         fixture.detectChanges();
         expect(ul.style.height).not.toBe('0px');
-        testComponent.isCollapsed = true;
+        testComponent.isCollapsed.set(true);
         fixture.detectChanges();
-        testComponent.isCollapsed = false;
+        testComponent.isCollapsed.set(false);
         fixture.detectChanges();
         expect(ul.style.height).not.toBe('0px');
       });
@@ -201,24 +188,24 @@ describe('menu', () => {
         submenus = fixture.debugElement.queryAll(By.directive(TriSubMenuComponent));
       });
 
-      it('should collapsed self work', fakeAsync(() => {
+      it('should collapsed self work', async () => {
         fixture.detectChanges();
         const ul = submenus[0].nativeElement.querySelector('.ant-menu');
         const title = submenus[0].nativeElement.querySelector('.ant-menu-submenu-title');
         expect(ul.style.height).not.toBe('0px');
         title.click();
         fixture.detectChanges();
-        tick(500);
+        await stabilize(fixture, 500);
         expect(ul.style.height).toBe('0px');
         expect(submenus[0].nativeElement.classList.contains('ant-menu-submenu-open')).toBe(false);
         title.click();
         fixture.detectChanges();
-        tick(500);
+        await stabilize(fixture, 500);
         expect(ul.style.height).not.toBe('0px');
         expect(submenus[0].nativeElement.classList.contains('ant-menu-submenu-open')).toBe(true);
-      }));
+      });
 
-      it('should collapsed other work', fakeAsync(() => {
+      it('should collapsed other work', async () => {
         fixture.detectChanges();
         const firstUl = submenus[0].nativeElement.querySelector('.ant-menu');
         const secondUl = submenus[1].nativeElement.querySelector('.ant-menu');
@@ -227,12 +214,12 @@ describe('menu', () => {
         expect(submenus[0].nativeElement.classList.contains('ant-menu-submenu-open')).toBe(true);
         secondTitle.click();
         fixture.detectChanges();
-        tick(500);
+        await stabilize(fixture, 500);
         expect(firstUl.style.height).toBe('0px');
         expect(submenus[0].nativeElement.classList.contains('ant-menu-submenu-open')).toBe(false);
         expect(secondUl.style.height).not.toBe('0px');
         expect(submenus[1].nativeElement.classList.contains('ant-menu-submenu-open')).toBe(true);
-      }));
+      });
     });
 
     describe('theme', () => {
@@ -248,7 +235,7 @@ describe('menu', () => {
       it('should className correct', () => {
         fixture.detectChanges();
         expect(menu.nativeElement.className).toBe('ant-menu ant-menu-root ant-menu-dark ant-menu-inline');
-        testComponent.theme = false;
+        testComponent.theme.set(false);
         fixture.detectChanges();
         expect(menu.nativeElement.className).toBe('ant-menu ant-menu-root ant-menu-inline ant-menu-light');
       });
@@ -272,7 +259,7 @@ describe('menu', () => {
         expect(submenus.every(submenu => submenu.nativeElement.classList.contains('ant-menu-submenu-inline'))).toBe(
           true
         );
-        testComponent.mode = true;
+        testComponent.mode.set(true);
         fixture.detectChanges();
         expect(menu.nativeElement.className).toBe('ant-menu ant-menu-root ant-menu-light ant-menu-vertical');
         expect(submenus.every(submenu => submenu.nativeElement.classList.contains('ant-menu-submenu-inline'))).toBe(
@@ -297,17 +284,17 @@ describe('menu', () => {
         submenu = fixture.debugElement.query(By.directive(TriSubMenuComponent));
       });
 
-      it('should overlay work', fakeAsync(() => {
+      it('should overlay work', async () => {
         fixture.detectChanges();
         expect(overlayContainerElement.textContent).toBe('');
-        testComponent.open = true;
+        testComponent.open.set(true);
         fixture.detectChanges();
         expect(overlayContainerElement.textContent).not.toBe('');
-      }));
+      });
 
       it('should submenu mouseenter work', () => {
         fixture.detectChanges();
-        const mouseenterCallback = jasmine.createSpy('mouseenter callback');
+        const mouseenterCallback = vi.fn();
         const subs = testComponent.subs.toArray();
         const title = submenu.nativeElement.querySelector('.ant-menu-submenu-title');
 
@@ -320,7 +307,7 @@ describe('menu', () => {
 
       it('should have "hover" as default trigger', () => {
         fixture.detectChanges();
-        const mouseenterCallback = jasmine.createSpy('mouseenter callback');
+        const mouseenterCallback = vi.fn();
         const subs = testComponent.subs.toArray();
         const title = submenu.nativeElement.querySelector('.ant-menu-submenu-title');
 
@@ -332,9 +319,9 @@ describe('menu', () => {
       });
 
       it('should have not open with mouse hover if trigger is set to "click"', () => {
-        testComponent.triggerSubMenuAction = 'click';
+        testComponent.triggerSubMenuAction.set('click');
         fixture.detectChanges();
-        const mouseenterCallback = jasmine.createSpy('mouseenter callback');
+        const mouseenterCallback = vi.fn();
         const subs = testComponent.subs.toArray();
         const title = submenu.nativeElement.querySelector('.ant-menu-submenu-title');
 
@@ -345,9 +332,9 @@ describe('menu', () => {
       });
 
       it('should open with mouse click if trigger is set to "click"', () => {
-        testComponent.triggerSubMenuAction = 'click';
+        testComponent.triggerSubMenuAction.set('click');
         fixture.detectChanges();
-        const mouseenterCallback = jasmine.createSpy('mouseenter callback');
+        const mouseenterCallback = vi.fn();
         const subs = testComponent.subs.toArray();
         const title = submenu.nativeElement.querySelector('.ant-menu-submenu-title');
         (subs[0].submenuService as TriSafeAny).isMouseEnterTitleOrOverlay$.subscribe(mouseenterCallback);
@@ -358,7 +345,7 @@ describe('menu', () => {
 
       it('should submenu mouseleave work', () => {
         fixture.detectChanges();
-        const mouseleaveCallback = jasmine.createSpy('mouseleave callback');
+        const mouseleaveCallback = vi.fn();
         const subs = testComponent.subs.toArray();
         const title = submenu.nativeElement.querySelector('.ant-menu-submenu-title');
 
@@ -370,9 +357,9 @@ describe('menu', () => {
       });
 
       it('should nested submenu work', () => {
-        testComponent.open = true;
+        testComponent.open.set(true);
         fixture.detectChanges();
-        const nestedCallback = jasmine.createSpy('nested callback');
+        const nestedCallback = vi.fn();
         const subs = testComponent.subs.toArray();
 
         (subs[0].submenuService as TriSafeAny).isChildSubMenuOpen$.subscribe(nestedCallback);
@@ -384,10 +371,10 @@ describe('menu', () => {
       });
 
       it('should nested submenu disabled work', () => {
-        testComponent.open = true;
-        testComponent.disabled = true;
+        testComponent.open.set(true);
+        testComponent.disabled.set(true);
         fixture.detectChanges();
-        const nestedCallback = jasmine.createSpy('nested callback');
+        const nestedCallback = vi.fn();
         const subs = testComponent.subs.toArray();
 
         (subs[0].submenuService as TriSafeAny).isChildSubMenuOpen$.subscribe(nestedCallback);
@@ -397,22 +384,22 @@ describe('menu', () => {
         expect(nestedCallback).toHaveBeenCalledTimes(1);
       });
 
-      it('should click menu and other submenu menu not active', fakeAsync(() => {
-        testComponent.open = true;
+      it('should click menu and other submenu menu not active', async () => {
+        testComponent.open.set(true);
         fixture.detectChanges();
         const subs = testComponent.subs.toArray();
         dispatchFakeEvent(testComponent.menuitem1.nativeElement, 'mouseenter');
         fixture.detectChanges();
         testComponent.menuitem1.nativeElement.click();
         fixture.detectChanges();
-        tick(500);
+        await stabilize(fixture, 500);
         expect(subs[1].isActive).toBe(false);
-      }));
+      });
 
       it('should click submenu menu item close', () => {
-        testComponent.open = true;
+        testComponent.open.set(true);
         fixture.detectChanges();
-        const nestedCallback = jasmine.createSpy('nested callback');
+        const nestedCallback = vi.fn();
         const subs = testComponent.subs.toArray();
         subs[1].open = true;
         fixture.detectChanges();
@@ -425,9 +412,9 @@ describe('menu', () => {
       });
 
       it('should click submenu disabled menu item not close', () => {
-        testComponent.open = true;
+        testComponent.open.set(true);
         fixture.detectChanges();
-        const nestedCallback = jasmine.createSpy('nested callback');
+        const nestedCallback = vi.fn();
         const subs = testComponent.subs.toArray();
 
         (subs[1].submenuService as TriSafeAny).isMouseEnterTitleOrOverlay$.subscribe(nestedCallback);
@@ -437,18 +424,25 @@ describe('menu', () => {
         expect(nestedCallback).toHaveBeenCalledTimes(0);
       });
 
-      it('should width change correct', () => {
+      it('should width change correct', async () => {
         fixture.detectChanges();
-        testComponent.open = true;
-        fixture.detectChanges();
-        const overlayPane = overlayContainerElement.querySelector('.cdk-overlay-pane') as HTMLElement;
+        const submenu = testComponent.subs.first;
+        // The overlay width follows the trigger's measured width. Mock the measurement
+        // explicitly so the assertion does not depend on browser layout in the test host.
+        vi.spyOn(submenu.cdkOverlayOrigin!.nativeElement, 'getBoundingClientRect').mockImplementation(
+          () => ({ width: testComponent.width() }) as DOMRect
+        );
+        testComponent.open.set(true);
+        await stabilize(fixture);
+        let overlayPane = overlayContainerElement.querySelector('.cdk-overlay-pane') as HTMLElement;
         expect(overlayPane.style.width).toBe('200px');
-        testComponent.open = false;
+        testComponent.open.set(false);
         fixture.detectChanges();
-        testComponent.width = 300;
+        testComponent.width.set(300);
         fixture.detectChanges();
-        testComponent.open = true;
-        fixture.detectChanges();
+        testComponent.open.set(true);
+        await stabilize(fixture);
+        overlayPane = overlayContainerElement.querySelector('.cdk-overlay-pane') as HTMLElement;
         expect(overlayPane.style.width).toBe('300px');
       });
 
@@ -470,7 +464,7 @@ describe('menu', () => {
           }
         } as ConnectedOverlayPositionChange;
         fixture.detectChanges();
-        testComponent.open = true;
+        testComponent.open.set(true);
         const subs = testComponent.subs.toArray();
         subs[1].open = true;
         fixture.detectChanges();
@@ -482,17 +476,18 @@ describe('menu', () => {
         expect(subs[1].position).toBe('right');
       });
 
-      it('should `nzMenuClassName` work', fakeAsync(() => {
+      it('should `nzMenuClassName` work', async () => {
         fixture.detectChanges();
-        testComponent.open = true;
+        testComponent.open.set(true);
         fixture.detectChanges();
+        await stabilize(fixture);
         expect((overlayContainerElement.querySelector('.submenu') as HTMLUListElement).classList).toContain(
           'ant-menu-sub'
         );
-      }));
+      });
 
       it('should nested submenu `nzMenuClassName` work', () => {
-        testComponent.open = true;
+        testComponent.open.set(true);
         fixture.detectChanges();
         const subs = testComponent.subs.toArray();
         subs[0].open = true;
@@ -517,43 +512,45 @@ describe('menu', () => {
         submenu = fixture.debugElement.query(By.directive(TriSubMenuComponent));
       });
 
-      it('should click expand', fakeAsync(() => {
+      it('should click expand', async () => {
         fixture.detectChanges();
         const ul = submenu.nativeElement.querySelector('.ant-menu');
         const title = submenu.nativeElement.querySelector('.ant-menu-submenu-title');
         expect(ul.style.height).toBe('0px');
         title.click();
         fixture.detectChanges();
-        tick(500);
+        await stabilize(fixture, 500);
         expect(ul.style.height).not.toBe('0px');
         expect(submenu.nativeElement.classList.contains('ant-menu-submenu-open')).toBe(true);
-      }));
+      });
 
-      it('should `nzMenuClassName` work', fakeAsync(() => {
+      it('should `nzMenuClassName` work', async () => {
         fixture.detectChanges();
+        await stabilize(fixture);
         expect(submenu.nativeElement.querySelector('.ant-menu-sub').className).toContain('submenu');
-      }));
+      });
 
-      it('should `nzMenuClassName` multi class names work', fakeAsync(() => {
+      it('should `nzMenuClassName` multi class names work', async () => {
         fixture.detectChanges();
-        testComponent.submenuClassName = 'submenu submenu-1';
+        testComponent.submenuClassName.set('submenu submenu-1');
         fixture.detectChanges();
+        await stabilize(fixture);
         expect(submenu.nativeElement.querySelector('.ant-menu-sub').className).toContain('submenu');
         expect(submenu.nativeElement.querySelector('.ant-menu-sub').className).toContain('submenu-1');
-      }));
+      });
 
-      it('should disabled work', fakeAsync(() => {
-        testComponent.disabled = true;
+      it('should disabled work', async () => {
+        testComponent.disabled.set(true);
         fixture.detectChanges();
         const ul = submenu.nativeElement.querySelector('.ant-menu');
         const title = submenu.nativeElement.querySelector('.ant-menu-submenu-title');
         expect(ul.style.height).toBe('0px');
         title.click();
         fixture.detectChanges();
-        tick(500);
+        await stabilize(fixture, 500);
         expect(ul.style.height).toBe('0px');
         expect(submenu.nativeElement.classList.contains('ant-menu-submenu-open')).toBe(false);
-      }));
+      });
     });
 
     describe('submenu default selected', () => {
@@ -581,7 +578,7 @@ describe('menu', () => {
       menu = fixture.debugElement.query(By.directive(TriMenuDirective));
       directionality = TestBed.inject(Directionality);
 
-      testComponent.open = true;
+      testComponent.open.set(true);
       directionality.valueSignal.set('rtl');
       fixture.detectChanges();
     });
@@ -616,10 +613,10 @@ describe('menu', () => {
     <ul tri-menu mode="horizontal">
       <li
         tri-submenu
-        [triggerSubMenuAction]="triggerSubMenuAction"
+        [triggerSubMenuAction]="triggerSubMenuAction()"
         menuClassName="submenu"
-        [open]="open"
-        [style.width.px]="width"
+        [open]="open()"
+        [style.width.px]="width()"
       >
         <span title>
           <tri-icon type="setting" />
@@ -638,7 +635,7 @@ describe('menu', () => {
             <ul>
               <li tri-menu-item #menuitem1>Option 3</li>
               <li tri-menu-item>Option 4</li>
-              <li tri-submenu menuClassName="nested-submenu" [disabled]="disabled">
+              <li tri-submenu menuClassName="nested-submenu" [disabled]="disabled()">
                 <span title>Sub Menu</span>
                 <ul>
                   <li tri-menu-item #menuitem>Option 5</li>
@@ -661,10 +658,10 @@ describe('menu', () => {
   changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestMenuHorizontalComponent {
-  width = 200;
-  open = false;
-  disabled = false;
-  triggerSubMenuAction: TriSubmenuTrigger = 'hover';
+  readonly width = signal(200);
+  readonly open = signal(false);
+  readonly disabled = signal(false);
+  readonly triggerSubMenuAction = signal<TriSubmenuTrigger>('hover');
   @ViewChildren(TriSubMenuComponent) subs!: QueryList<TriSubMenuComponent>;
   @ViewChild('menuitem', { static: false, read: ElementRef }) menuitem!: ElementRef;
   @ViewChild('menuitem1', { static: false, read: ElementRef }) menuitem1!: ElementRef;
@@ -674,8 +671,8 @@ export class TriTestMenuHorizontalComponent {
 @Component({
   imports: [TriIconModule, TriMenuModule],
   template: `
-    <ul tri-menu mode="inline" [inlineCollapsed]="collapse">
-      <li tri-submenu [menuClassName]="submenuClassName" [disabled]="disabled">
+    <ul tri-menu mode="inline" [inlineCollapsed]="collapse()">
+      <li tri-submenu [menuClassName]="submenuClassName()" [disabled]="disabled()">
         <span title>
           <tri-icon type="mail" />
           Navigation One
@@ -690,9 +687,9 @@ export class TriTestMenuHorizontalComponent {
   changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestMenuInlineComponent {
-  disabled = false;
-  collapse = false;
-  submenuClassName = 'submenu';
+  readonly disabled = signal(false);
+  readonly collapse = signal(false);
+  readonly submenuClassName = signal('submenu');
   @ViewChild(TriSubMenuComponent, { static: true }) submenu!: TriSubMenuComponent;
 }
 
@@ -823,9 +820,9 @@ export class TriTestSubMenuSelectedComponent {}
   template: `
     <div class="wrapper">
       <button tri-button type="primary" (click)="toggleCollapsed()">
-        <tri-icon [type]="isCollapsed ? 'menu-unfold' : 'menu-fold'" />
+        <tri-icon [type]="isCollapsed() ? 'menu-unfold' : 'menu-fold'" />
       </button>
-      <ul tri-menu mode="inline" theme="dark" [inlineCollapsed]="isCollapsed">
+      <ul tri-menu mode="inline" theme="dark" [inlineCollapsed]="isCollapsed()">
         <li tri-menu-item selected>
           <tri-icon type="mail" />
           <span>Navigation One</span>
@@ -851,14 +848,13 @@ export class TriTestSubMenuSelectedComponent {}
         </li>
       </ul>
     </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestMenuInlineCollapsedComponent {
-  isCollapsed = false;
+  readonly isCollapsed = signal(false);
 
   toggleCollapsed(): void {
-    this.isCollapsed = !this.isCollapsed;
+    this.isCollapsed.update(v => !v);
   }
 }
 
@@ -942,7 +938,7 @@ export class TriTestMenuSiderCurrentComponent {
 @Component({
   imports: [TriMenuModule],
   template: `
-    <ul tri-menu [mode]="mode ? 'vertical' : 'inline'" [theme]="dark ? 'dark' : 'light'">
+    <ul tri-menu [mode]="mode() ? 'vertical' : 'inline'" [theme]="dark() ? 'dark' : 'light'">
       <li tri-submenu title="Navigation One" icon="mail">
         <ul>
           <li tri-menu-group title="Item 1">
@@ -983,14 +979,14 @@ export class TriTestMenuSiderCurrentComponent {
   changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestMenuSwitchModeComponent {
-  mode = false;
-  dark = false;
+  readonly mode = signal(false);
+  readonly dark = signal(false);
 }
 
 @Component({
   imports: [TriMenuModule],
   template: `
-    <ul tri-menu mode="inline" style="width: 240px;" [theme]="theme ? 'dark' : 'light'">
+    <ul tri-menu mode="inline" style="width: 240px;" [theme]="theme() ? 'dark' : 'light'">
       <li tri-submenu open title="Navigation One" icon="mail">
         <ul>
           <li tri-menu-group title="Item 1">
@@ -1027,9 +1023,14 @@ export class TriTestMenuSwitchModeComponent {
         </ul>
       </li>
     </ul>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestMenuThemeComponent {
-  theme = true;
+  readonly theme = signal(true);
+}
+
+async function stabilize<T>(fixture: ComponentFixture<T>, ms?: number): Promise<void> {
+  fixture.detectChanges();
+  await updateNonSignalsInput(fixture, ms);
+  fixture.detectChanges();
 }

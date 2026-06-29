@@ -11,19 +11,17 @@ import {
   AfterContentChecked,
   AfterContentInit,
   booleanAttribute,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   contentChildren,
   ContentChildren,
   DestroyRef,
-  EventEmitter,
   forwardRef,
   inject,
   input,
   Input,
   NgZone,
-  Output,
+  output,
   QueryList,
   TemplateRef,
   ViewChild,
@@ -34,7 +32,7 @@ import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { merge, Observable, of, Subscription } from 'rxjs';
 import { delay, filter, first, startWith } from 'rxjs/operators';
 
-import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
 import { PREFIX } from 'ng-zorro-antd/core/logger';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { TriSafeAny, TriSizeLDSType } from 'ng-zorro-antd/core/types';
@@ -58,15 +56,12 @@ import { TriTabNavBarComponent } from './tab-nav-bar.component';
 import { TriTabNavItemDirective } from './tab-nav-item.directive';
 import { TRI_TAB_SET, TriTabComponent } from './tab.component';
 
-const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'tabs';
-
 let nextId = 0;
 
 @Component({
   selector: 'tri-tabs',
   exportAs: 'triTabs',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     {
       provide: TRI_TAB_SET,
@@ -195,13 +190,13 @@ let nextId = 0;
   ]
 })
 export class TriTabsComponent implements AfterContentChecked, AfterContentInit {
-  readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
+  readonly _nzModuleName: TriConfigKey = 'tabs';
 
-  public configService = inject(TriConfigService);
-  private ngZone = inject(NgZone);
-  private cdr = inject(ChangeDetectorRef);
   protected readonly dir = inject(Directionality).valueSignal;
-  private destroyRef = inject(DestroyRef);
+  private readonly ngZone = inject(NgZone);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly router = inject(Router, { optional: true });
 
   @Input()
   get selectedIndex(): number | null {
@@ -227,12 +222,11 @@ export class TriTabsComponent implements AfterContentChecked, AfterContentInit {
   @Input({ transform: booleanAttribute }) destroyInactiveTabPane = false;
 
   readonly indicator = input<TriIndicator>();
-
-  @Output() readonly selectChange: EventEmitter<TriTabChangeEvent> = new EventEmitter<TriTabChangeEvent>(true);
-  @Output() readonly selectedIndexChange: EventEmitter<number> = new EventEmitter<number>();
-  @Output() readonly tabListScroll = new EventEmitter<TriTabScrollEvent>();
-  @Output() readonly close = new EventEmitter<{ index: number }>();
-  @Output() readonly add = new EventEmitter<void>();
+  readonly selectChange = output<TriTabChangeEvent>();
+  readonly selectedIndexChange = output<number>();
+  readonly tabListScroll = output<TriTabScrollEvent>();
+  readonly close = output<{ index: number }>();
+  readonly add = output();
 
   get position(): TriTabPositionMode {
     return ['top', 'bottom'].indexOf(this.tabPosition) === -1 ? 'vertical' : 'horizontal';
@@ -246,12 +240,8 @@ export class TriTabsComponent implements AfterContentChecked, AfterContentInit {
     return this.type === 'editable-card';
   }
 
-  get line(): boolean {
-    return this.type === 'line';
-  }
-
   get inkBarAnimated(): boolean {
-    return this.line && (typeof this.animated === 'boolean' ? this.animated : this.animated.inkBar);
+    return this.type === 'line' && (typeof this.animated === 'boolean' ? this.animated : this.animated.inkBar);
   }
 
   get tabPaneAnimated(): boolean {
@@ -276,7 +266,6 @@ export class TriTabsComponent implements AfterContentChecked, AfterContentInit {
   #selectedIndex: number | null = null;
   private tabLabelSubscription = Subscription.EMPTY;
   private canDeactivateSubscription = Subscription.EMPTY;
-  private router = inject(Router, { optional: true });
 
   constructor() {
     this.tabSetId = nextId++;
@@ -292,9 +281,6 @@ export class TriTabsComponent implements AfterContentChecked, AfterContentInit {
     this.ngZone.runOutsideAngular(() => {
       Promise.resolve().then(() => this.setUpRouter());
     });
-
-    this.subscribeToTabLabels();
-    this.subscribeToAllTabChanges();
 
     // Subscribe to changes of the number of tabs, to be
     // able to re-render the content as new tabs are added or removed.
@@ -319,6 +305,8 @@ export class TriTabsComponent implements AfterContentChecked, AfterContentInit {
       this.subscribeToTabLabels();
       this.cdr.markForCheck();
     });
+
+    this.subscribeToAllTabChanges();
   }
 
   ngAfterContentChecked(): void {
@@ -393,10 +381,7 @@ export class TriTabsComponent implements AfterContentChecked, AfterContentInit {
   }
 
   private subscribeToTabLabels(): void {
-    if (this.tabLabelSubscription) {
-      this.tabLabelSubscription.unsubscribe();
-    }
-
+    this.tabLabelSubscription.unsubscribe();
     this.tabLabelSubscription = merge(...this.tabs.map(tab => tab.stateChanges)).subscribe(() =>
       this.cdr.markForCheck()
     );
@@ -411,8 +396,7 @@ export class TriTabsComponent implements AfterContentChecked, AfterContentInit {
 
   canDeactivateFun(pre: number, next: number): Observable<boolean> {
     if (typeof this.canDeactivate === 'function') {
-      const observable = wrapIntoObservable(this.canDeactivate(pre, next));
-      return observable.pipe(first(), takeUntilDestroyed(this.destroyRef));
+      return wrapIntoObservable(this.canDeactivate(pre, next)).pipe(first(), takeUntilDestroyed(this.destroyRef));
     } else {
       return of(true);
     }
@@ -473,10 +457,7 @@ export class TriTabsComponent implements AfterContentChecked, AfterContentInit {
       }
       merge(this.router.events.pipe(filter(e => e instanceof NavigationEnd)), this.tabLinks.changes)
         .pipe(startWith(true), delay(0), takeUntilDestroyed(this.destroyRef))
-        .subscribe(() => {
-          this.updateRouterActive();
-          this.cdr.markForCheck();
-        });
+        .subscribe(() => this.updateRouterActive());
     }
   }
 
@@ -486,7 +467,10 @@ export class TriTabsComponent implements AfterContentChecked, AfterContentInit {
       if (index !== this.#selectedIndex) {
         this.setSelectedIndex(index);
       }
-      Promise.resolve().then(() => (this.hideAll = index === -1));
+      Promise.resolve().then(() => {
+        this.hideAll = index === -1;
+        this.cdr.markForCheck();
+      });
     }
   }
 
@@ -501,14 +485,16 @@ export class TriTabsComponent implements AfterContentChecked, AfterContentInit {
   }
 
   private isLinkActive(router: Router | null): (link?: RouterLink | null) => boolean {
-    return (link?: RouterLink | null) =>
-      link
-        ? !!router?.isActive(link.urlTree || '', {
-            paths: this.linkExact ? 'exact' : 'subset',
-            queryParams: this.linkExact ? 'exact' : 'subset',
-            fragment: 'ignored',
-            matrixParams: 'ignored'
-          })
-        : false;
+    return (link?: RouterLink | null): boolean => {
+      if (!router || !link) {
+        return false;
+      }
+      return router.isActive(link.urlTree || '', {
+        paths: this.linkExact ? 'exact' : 'subset',
+        queryParams: this.linkExact ? 'exact' : 'subset',
+        fragment: 'ignored',
+        matrixParams: 'ignored'
+      });
+    };
   }
 }

@@ -3,12 +3,12 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, DebugElement, provideZoneChangeDetection } from '@angular/core';
+import { Component, DebugElement, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { TriColorBlockComponent, TriColorPickerModule } from 'ng-zorro-antd/color-picker';
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { TriSizeLDSType } from 'ng-zorro-antd/core/types';
 
 describe('color-block', () => {
@@ -19,7 +19,7 @@ describe('color-block', () => {
   beforeEach(() => {
     // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideNoopAnimations(), provideZoneChangeDetection()]
+      providers: [provideNzNoAnimation()]
     });
   });
 
@@ -37,7 +37,7 @@ describe('color-block', () => {
   });
 
   it('color-block color', () => {
-    component.color = '#ff6600';
+    component.color.set('#ff6600');
     fixture.detectChanges();
     expect(resultEl.nativeElement.querySelector('.ant-color-picker-color-block-inner').style.backgroundColor).toBe(
       'rgb(255, 102, 0)'
@@ -45,12 +45,12 @@ describe('color-block', () => {
   });
 
   it('color-block size', () => {
-    component.size = 'small';
+    component.size.set('small');
     fixture.detectChanges();
     expect(resultEl.nativeElement.querySelector('ng-antd-color-block').parentNode.classList).toContain(
       'ant-color-picker-inline-sm'
     );
-    component.size = 'large';
+    component.size.set('large');
     fixture.detectChanges();
     expect(resultEl.nativeElement.querySelector('ng-antd-color-block').parentNode.classList).toContain(
       'ant-color-picker-inline-lg'
@@ -60,21 +60,20 @@ describe('color-block', () => {
   it('color-block click', () => {
     fixture.detectChanges();
     resultEl.nativeElement.querySelector('.ant-color-picker-color-block').click();
-    expect(component.isClick).toBeTrue();
+    expect(component.isClick()).toBe(true);
   });
 });
 
 @Component({
   imports: [TriColorPickerModule],
-  template: ` <tri-color-block [color]="color" [size]="size" (onClick)="clickHandle()" /> `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<tri-color-block [color]="color()" [size]="size()" (onClick)="clickHandle()" />`
 })
 export class TriTestColorBlockComponent {
-  color = '#1677ff';
-  size: TriSizeLDSType = 'default';
-  isClick: boolean = false;
+  readonly color = signal('#1677ff');
+  readonly size = signal<TriSizeLDSType>('default');
+  readonly isClick = signal(false);
 
   clickHandle(): void {
-    this.isClick = true;
+    this.isClick.set(true);
   }
 }

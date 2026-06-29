@@ -4,13 +4,13 @@
  */
 
 import { Location } from '@angular/common';
-import { provideZoneChangeDetection } from '@angular/core';
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
+import { vi } from 'vitest';
+
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { testDirectionality } from 'ng-zorro-antd/core/testing';
-import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
 import { TriDemoPageHeaderBasicComponent } from './demo/basic';
@@ -24,21 +24,11 @@ describe('page-header', () => {
   let location: Location;
 
   beforeEach(() => {
-    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideNoopAnimations(), provideNzIconsTesting(), provideZoneChangeDetection()]
-    });
-    [
-      TriDemoPageHeaderBasicComponent,
-      TriDemoPageHeaderBreadcrumbComponent,
-      TriDemoPageHeaderContentComponent,
-      TriDemoPageHeaderGhostComponent,
-      TriDemoPageHeaderResponsiveComponent
-    ].forEach(comp => {
-      (comp as TriSafeAny).ɵcmp.onPush = false;
+      providers: [provideNzNoAnimation(), provideNzIconsTesting()]
     });
     location = TestBed.inject(Location);
-    spyOn(location, 'getState').and.returnValue({ navigationId: 2 });
+    vi.spyOn(location, 'getState').mockReturnValue({ navigationId: 2 });
   });
 
   it('should basic work', () => {
@@ -78,7 +68,7 @@ describe('page-header', () => {
   it('should default call location back when nzBack not has observers', () => {
     const fixture = TestBed.createComponent(TriDemoPageHeaderResponsiveComponent);
     const pageHeader = fixture.debugElement.query(By.directive(TriPageHeaderComponent));
-    spyOn(location, 'back');
+    vi.spyOn(location, 'back');
     fixture.detectChanges();
     expect(location.back).not.toHaveBeenCalled();
     const back = pageHeader.nativeElement.querySelector('.ant-page-header-back');
@@ -87,28 +77,26 @@ describe('page-header', () => {
     expect(location.back).toHaveBeenCalled();
   });
 
-  it('should not show the back button if there is no history of navigation', fakeAsync(() => {
+  it('should not show the back button if there is no history of navigation', async () => {
     const fixture = TestBed.createComponent(TriDemoPageHeaderResponsiveComponent);
     const pageHeader = fixture.debugElement.query(By.directive(TriPageHeaderComponent));
-    spyOn(location, 'getState').and.returnValue({ navigationId: 1 });
-    fixture.detectChanges();
+    vi.spyOn(location, 'getState').mockReturnValue({ navigationId: 1 });
+    fixture.autoDetectChanges();
     pageHeader.componentInstance.ngAfterViewInit();
-    tick();
-    fixture.detectChanges();
+    await fixture.whenStable();
     const back = pageHeader.nativeElement.querySelector('.ant-page-header-back-button');
     expect(back).toBeNull();
-  }));
+  });
 
-  it('should show the back button if there is history of navigation', fakeAsync(() => {
+  it('should show the back button if there is history of navigation', async () => {
     const fixture = TestBed.createComponent(TriDemoPageHeaderResponsiveComponent);
     const pageHeader = fixture.debugElement.query(By.directive(TriPageHeaderComponent));
-    fixture.detectChanges();
+    fixture.autoDetectChanges();
     pageHeader.componentInstance.ngAfterViewInit();
-    tick();
-    fixture.detectChanges();
+    await fixture.whenStable();
     const back = pageHeader.nativeElement.querySelector('.ant-page-header-back-button');
     expect(back as HTMLDivElement).toBeTruthy();
-  }));
+  });
 
   it('should content work', () => {
     const fixture = TestBed.createComponent(TriDemoPageHeaderContentComponent);
@@ -160,7 +148,7 @@ describe('page-header', () => {
     const fixture = TestBed.createComponent(TriDemoPageHeaderBasicComponent);
     const pageHeader = fixture.debugElement.query(By.directive(TriPageHeaderComponent));
     const context = fixture.componentInstance;
-    spyOn(context, 'onBack');
+    vi.spyOn(context, 'onBack');
     fixture.detectChanges();
     expect(context.onBack).not.toHaveBeenCalled();
     const back = pageHeader.nativeElement.querySelector('.ant-page-header-back');
@@ -171,5 +159,5 @@ describe('page-header', () => {
 });
 
 testDirectionality(() => TriDemoPageHeaderBasicComponent, By.directive(TriPageHeaderComponent), 'ant-page-header', {
-  providers: [provideNoopAnimations(), provideNzIconsTesting(), provideZoneChangeDetection()]
+  providers: [provideNzNoAnimation(), provideNzIconsTesting()]
 });

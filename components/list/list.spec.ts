@@ -4,18 +4,13 @@
  */
 
 import { AsyncPipe } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DebugElement,
-  provideZoneChangeDetection,
-  TemplateRef,
-  ViewChild
-} from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { Component, DebugElement, signal, TemplateRef, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Observable, timer } from 'rxjs';
+import { timer } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+import { vi } from 'vitest';
 
 import { testDirectionality } from 'ng-zorro-antd/core/testing';
 import { TriDirectionVHType, TriSizeLDSType } from 'ng-zorro-antd/core/types';
@@ -48,7 +43,7 @@ describe('list', () => {
         { type: 'vertical', ret: true }
       ]) {
         it(`[${item.type}]`, () => {
-          context.itemLayout = item.type as TriDirectionVHType;
+          context.itemLayout.set(item.type as TriDirectionVHType);
           fixture.detectChanges();
           expect(dl.query(By.css(`.ant-list-${item.type}`)) != null).toBe(item.ret);
         });
@@ -58,7 +53,7 @@ describe('list', () => {
     describe('#nzBordered', () => {
       for (const value of [true, false]) {
         it(`[${value}]`, () => {
-          context.bordered = value;
+          context.bordered.set(value);
           fixture.detectChanges();
           expect(dl.query(By.css('.ant-list-bordered')) != null).toBe(value);
         });
@@ -67,12 +62,13 @@ describe('list', () => {
 
     describe('#nzHeader', () => {
       it('with string', () => {
-        expect(dl.query(By.css('.ant-list-header')) != null).toBe(true);
+        expect(dl.query(By.css('.ant-list-header'))).not.toBeNull();
       });
+
       it('with custom template', () => {
         const fixtureTemp = TestBed.createComponent(TestListWithTemplateComponent);
         fixtureTemp.detectChanges();
-        expect(fixtureTemp.debugElement.query(By.css('.list-header')) != null).toBe(true);
+        expect(fixtureTemp.debugElement.query(By.css('.list-header'))).not.toBeNull();
       });
     });
 
@@ -82,19 +78,22 @@ describe('list', () => {
         fixtureTemp = TestBed.createComponent(TestListWithTemplateComponent);
         fixtureTemp.detectChanges();
       });
+
       it('with string', () => {
         expect(dl.query(By.css('.ant-list-footer')) != null).toBe(true);
       });
+
       it('with custom template', () => {
         const footerEl = fixtureTemp.debugElement.query(By.css('.ant-list-footer'));
         expect((footerEl.nativeElement as HTMLDivElement).innerText).toBe(
-          fixtureTemp.componentInstance._footer as string
+          fixtureTemp.componentInstance._footer() as string
         );
       });
+
       it('change string to template', () => {
         const footerEl = fixtureTemp.debugElement.query(By.css('.ant-list-footer'));
         expect((footerEl.nativeElement as HTMLDivElement).innerText).toBe(
-          fixtureTemp.componentInstance._footer as string
+          fixtureTemp.componentInstance._footer() as string
         );
         (fixtureTemp.debugElement.query(By.css('#change')).nativeElement as HTMLButtonElement).click();
         fixtureTemp.detectChanges();
@@ -109,7 +108,7 @@ describe('list', () => {
         { type: 'large', cls: '.ant-list-lg' }
       ]) {
         it(`[${item.type}]`, () => {
-          context.size = item.type as TriSizeLDSType;
+          context.size.set(item.type as TriSizeLDSType);
           fixture.detectChanges();
           expect(dl.query(By.css(item.cls)) != null).toBe(true);
         });
@@ -119,7 +118,7 @@ describe('list', () => {
     describe('#nzSplit', () => {
       for (const value of [true, false]) {
         it(`[${value}]`, () => {
-          context.split = value;
+          context.split.set(value);
           fixture.detectChanges();
           expect(dl.query(By.css('.ant-list-split')) != null).toBe(value);
         });
@@ -129,15 +128,15 @@ describe('list', () => {
     describe('#nzLoading', () => {
       for (const value of [true, false]) {
         it(`[${value}]`, () => {
-          context.loading = value;
+          context.loading.set(value);
           fixture.detectChanges();
           expect(dl.query(By.css('.ant-list-loading')) != null).toBe(value);
         });
       }
 
       it('should be minimum area block when data is empty', () => {
-        context.loading = true;
-        context.data = [];
+        context.loading.set(true);
+        context.data.set([]);
         fixture.detectChanges();
         expect(dl.query(By.css('.ant-spin-nested-loading'))).not.toBeNull();
       });
@@ -145,48 +144,54 @@ describe('list', () => {
 
     describe('#nzDataSource', () => {
       it('should working', () => {
-        expect(dl.queryAll(By.css('nz-list-item')).length).toBe(context.data!.length);
+        expect(dl.queryAll(By.css('nz-list-item')).length).toBe(context.data()!.length);
       });
 
       it('should be render empty text when data source is empty', () => {
         expect(dl.queryAll(By.css('.ant-list-empty-text')).length).toBe(0);
-        context.data = [];
+        context.data.set([]);
         fixture.detectChanges();
         expect(dl.queryAll(By.css('.ant-list-empty-text')).length).toBe(1);
       });
 
       it('should be ignore empty text when unspecified data source', () => {
-        context.data = undefined;
+        context.data.set(undefined!);
         fixture.detectChanges();
         expect(dl.queryAll(By.css('.ant-list-empty-text')).length).toBe(0);
       });
     });
 
     it('#nzGrid', () => {
-      const colCls = `.ant-col-${context.grid.span}`;
-      expect(dl.queryAll(By.css(colCls)).length).toBe(context.data!.length);
+      const colCls = `.ant-col-${context.grid().span}`;
+      expect(dl.queryAll(By.css(colCls)).length).toBe(context.data()!.length);
     });
 
     it('#loadMore', () => {
-      expect(dl.query(By.css('.loadmore')) != null).toBe(true);
+      expect(dl.query(By.css('.loadmore'))).not.toBeNull();
     });
 
     it('#pagination', () => {
-      expect(dl.query(By.css('.pagination')) != null).toBe(true);
+      expect(dl.query(By.css('.pagination'))).not.toBeNull();
     });
 
     it('should be use split main and extra when item layout is vertical', () => {
-      context.itemLayout = 'vertical';
+      context.itemLayout.set('vertical');
       fixture.detectChanges();
-      expect(dl.query(By.css('.ant-list-item-main')) != null).toBe(true);
-      expect(dl.query(By.css('.ant-list-item-extra')) != null).toBe(true);
+      expect(dl.query(By.css('.ant-list-item-main'))).not.toBeNull();
+      expect(dl.query(By.css('.ant-list-item-extra'))).not.toBeNull();
     });
 
-    it('should display the asynchronous action', fakeAsync(() => {
-      tick(2000);
-      fixture.detectChanges();
-      expect(dl.query(By.css('.ant-list-item-action')) != null).toBe(true);
-    }));
+    describe('asynchronous action', () => {
+      beforeEach(() => vi.useFakeTimers());
+      afterEach(() => vi.useRealTimers());
+
+      it('should display the asynchronous action', async () => {
+        vi.advanceTimersByTime(500);
+        await Promise.resolve();
+        fixture.detectChanges();
+        expect(dl.query(By.css('.ant-list-item-action'))).not.toBeNull();
+      });
+    });
   });
 
   describe('item', () => {
@@ -213,7 +218,7 @@ describe('list', () => {
 
     it('#nzNoFlex', () => {
       expect(fixtureTemp.debugElement.query(By.css('#item-string .ant-list-item-no-flex')) != null).toBe(false);
-      fixtureTemp.componentInstance.noFlex = true;
+      fixtureTemp.componentInstance.noFlex.set(true);
       fixtureTemp.detectChanges();
       expect(fixtureTemp.debugElement.query(By.css('#item-string .ant-list-item-no-flex')) != null).toBe(true);
     });
@@ -242,7 +247,7 @@ describe('list', () => {
 });
 
 testDirectionality(() => TestListComponent, By.directive(TriListComponent), 'ant-list', {
-  providers: [provideNzIconsTesting(), provideZoneChangeDetection()]
+  providers: [provideNzIconsTesting()]
 });
 
 @Component({
@@ -251,15 +256,15 @@ testDirectionality(() => TestListComponent, By.directive(TriListComponent), 'ant
   template: `
     <tri-list
       #comp
-      [dataSource]="data"
-      [itemLayout]="itemLayout"
-      [bordered]="bordered"
+      [dataSource]="data()"
+      [itemLayout]="itemLayout()"
+      [bordered]="bordered()"
       [footer]="footer"
       [header]="header"
-      [loading]="loading"
-      [size]="size"
-      [split]="split"
-      [grid]="grid"
+      [loading]="loading()"
+      [size]="size()"
+      [split]="split()"
+      [grid]="grid()"
       [renderItem]="item"
       [loadMore]="loadMore"
       [pagination]="pagination"
@@ -288,51 +293,48 @@ testDirectionality(() => TestListComponent, By.directive(TriListComponent), 'ant
         <span class="extra-content">extra content</span>
       </ng-template>
     </tri-list>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 class TestListComponent {
   @ViewChild('comp', { static: false }) comp!: TriListComponent;
-  itemLayout: TriDirectionVHType = 'horizontal';
-  bordered = false;
+  readonly itemLayout = signal<TriDirectionVHType>('horizontal');
+  readonly bordered = signal(false);
   footer = 'footer';
   header = 'header';
-  loading = false;
-  size: TriSizeLDSType = 'default';
-  split = true;
-  data?: string[] = [
+  readonly loading = signal(false);
+  readonly size = signal<TriSizeLDSType>('default');
+  readonly split = signal(true);
+  readonly data = signal<string[]>([
     'Racing car sprays burning fuel into crowd.',
     'Japanese princess to wed commoner.',
-    'Racing car sprays burning fuel into crowd.',
-    'Japanese princess to wed commoner.'
-  ];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  grid: any = { gutter: 16, span: 12 };
-  actions$: Observable<string[]> = timer(500).pipe(map(() => ['Edit', 'Delete']));
+    'Australian walks 100km after outback crash.',
+    'Man charged over missing wedding girl.'
+  ]);
+  readonly grid = signal({ gutter: 16, span: 12 });
+  readonly actions$ = timer(500).pipe(map(() => ['Edit', 'Delete']));
 }
 
 @Component({
   imports: [TriListModule],
   template: `
-    <button (click)="footer = footer" id="change">change</button>
-    <tri-list [footer]="footer" [header]="header">
+    <button (click)="footer.set(footer)" id="change">change</button>
+    <tri-list [footer]="footer()" [header]="header">
       <ng-template #nzFooter><p class="list-footer">footer</p></ng-template>
       <ng-template #nzHeader><p class="list-header">header</p></ng-template>
     </tri-list>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 class TestListWithTemplateComponent {
   @ViewChild('nzFooter', { static: false }) footer!: TemplateRef<void>;
 
-  _footer: string | TemplateRef<void> = 'footer with string';
+  readonly _footer = signal<string | TemplateRef<void>>('footer with string');
 }
 
 @Component({
   imports: [TriIconModule, TriListModule],
   template: `
     <tri-list id="item-string">
-      <tri-list-item content="content" [actions]="[action]" [extra]="extra" [noFlex]="noFlex">
+      <tri-list-item content="content" [actions]="[action]" [extra]="extra" [noFlex]="noFlex()">
         <ng-template #action>
           <tri-icon type="star-o" style="margin-right: 8px;" />
           156
@@ -362,9 +364,8 @@ class TestListWithTemplateComponent {
         </tri-list-item-meta>
       </tri-list-item>
     </tri-list>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 class TestListItemComponent {
-  noFlex = false;
+  readonly noFlex = signal(false);
 }

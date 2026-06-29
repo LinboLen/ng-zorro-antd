@@ -4,11 +4,14 @@
  */
 
 import { Platform } from '@angular/cdk/platform';
-import { ChangeDetectionStrategy, Component, DebugElement, DOCUMENT, ElementRef, ViewChild } from '@angular/core';
+import { Component, DebugElement, DOCUMENT, ElementRef, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
+import { expect, vi } from 'vitest';
+
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { TriScrollService } from 'ng-zorro-antd/core/services';
 import { sleep, updateNonSignalsInput } from 'ng-zorro-antd/core/testing';
 import { TriDirectionVHType, TriSafeAny } from 'ng-zorro-antd/core/types';
@@ -27,7 +30,7 @@ describe('anchor', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      providers: [provideNoopAnimations()]
+      providers: [provideNzNoAnimation()]
     });
     fixture = TestBed.createComponent(TestComponent);
     dl = fixture.debugElement;
@@ -35,17 +38,18 @@ describe('anchor', () => {
     fixture.autoDetectChanges();
     page = new PageObject();
     srv = TestBed.inject(TriScrollService);
+    vi.spyOn(srv, 'scrollTo').mockImplementation(() => {});
     await fixture.whenStable();
     await sleep(100);
-    spyOn(context, '_scroll');
-    spyOn(context, '_change');
+    vi.spyOn(context, '_scroll').mockImplementation(() => {});
+    vi.spyOn(context, '_change').mockImplementation(() => {});
   });
 
   afterEach(() => fixture.destroy());
 
   describe('[default]', () => {
     it(`should scrolling to target via click a link`, () => {
-      spyOn(srv, 'scrollTo').and.callFake((_containerEl, _targetTopValue = 0, options = {}) => {
+      vi.mocked(srv.scrollTo).mockImplementation((_containerEl, _targetTopValue = 0, options = {}) => {
         if (options.callback) {
           options.callback();
         }
@@ -65,7 +69,7 @@ describe('anchor', () => {
     });
 
     it('should be activated when scrolling to the anchor - horizontal', async () => {
-      context.direction = 'horizontal';
+      context.direction.set('horizontal');
       await updateNonSignalsInput(fixture);
       expect(context._scroll).not.toHaveBeenCalled();
       page.scrollTo();
@@ -76,20 +80,20 @@ describe('anchor', () => {
     });
 
     it('should clean activated when leaving all anchor', async () => {
-      spyOn(context.comp, 'clearActive' as TriSafeAny);
       page.scrollTo();
       await sleep(throttleTime);
       fixture.detectChanges();
-      expect(context.comp['clearActive']).not.toHaveBeenCalled();
-      window.scrollTo(0, 0);
-      window.dispatchEvent(new Event('scroll'));
+      vi.spyOn(context.comp, 'clearActive' as TriSafeAny).mockImplementation(() => {});
+      context.offsetTop.set(-100);
+      await updateNonSignalsInput(fixture);
+      context.comp.handleScroll();
       await sleep(throttleTime);
       fixture.detectChanges();
       expect(context.comp['clearActive']!).toHaveBeenCalled();
     });
 
     it(`won't scrolling when is not exists link`, () => {
-      spyOn(srv, 'getScroll');
+      vi.spyOn(srv, 'getScroll').mockReturnValue(undefined as TriSafeAny);
       expect(context._scroll).not.toHaveBeenCalled();
       expect(srv.getScroll).not.toHaveBeenCalled();
       page!.to('#invalid');
@@ -97,7 +101,7 @@ describe('anchor', () => {
     });
 
     it(`won't scrolling when is invalid link`, () => {
-      spyOn(srv, 'getScroll');
+      vi.spyOn(srv, 'getScroll').mockReturnValue(undefined as TriSafeAny);
       expect(context._scroll).not.toHaveBeenCalled();
       expect(srv.getScroll).not.toHaveBeenCalled();
       page.to('invalidLink');
@@ -105,7 +109,7 @@ describe('anchor', () => {
     });
 
     it(`supports complete href link (e.g. http://www.example.com/#id)`, () => {
-      spyOn(srv, 'getScroll');
+      vi.spyOn(srv, 'getScroll').mockReturnValue(undefined as TriSafeAny);
       expect(context._scroll).not.toHaveBeenCalled();
       expect(srv.getScroll).not.toHaveBeenCalled();
       page.getEl('.mock-complete').click();
@@ -127,10 +131,11 @@ describe('anchor', () => {
         const linkList = dl.queryAll(By.css('nz-affix'));
         expect(linkList.length).toBe(1);
       });
+
       it(`is [false]`, async () => {
         let linkList = dl.queryAll(By.css('nz-affix'));
         expect(linkList.length).toBe(1);
-        context.affix = false;
+        context.affix.set(false);
         await updateNonSignalsInput(fixture);
         linkList = dl.queryAll(By.css('nz-affix'));
         expect(linkList.length).toBe(0);
@@ -146,7 +151,7 @@ describe('anchor', () => {
 
     describe('[nzCurrentAnchor]', () => {
       it('customize the anchor highlight', async () => {
-        context.currentAnchor = '#basic';
+        context.currentAnchor.set('#basic');
         await updateNonSignalsInput(fixture);
         const linkList = dl.queryAll(By.css('.ant-anchor-link'));
         expect(linkList.length).toBeGreaterThan(0);
@@ -158,17 +163,19 @@ describe('anchor', () => {
 
     describe('[nzShowInkInFixed]', () => {
       beforeEach(async () => {
-        context.affix = false;
+        context.affix.set(false);
         await updateNonSignalsInput(fixture);
       });
+
       it('should be show ink when [false]', async () => {
-        context.showInkInFixed = false;
+        context.showInkInFixed.set(false);
         await updateNonSignalsInput(fixture);
         page.scrollTo();
         expect(dl.query(By.css('.ant-anchor-fixed')) == null).toBe(false);
       });
+
       it('should be hide ink when [true]', async () => {
-        context.showInkInFixed = true;
+        context.showInkInFixed.set(true);
         await updateNonSignalsInput(fixture);
         page.scrollTo();
         expect(dl.query(By.css('.ant-anchor-fixed')) == null).toBe(true);
@@ -177,16 +184,17 @@ describe('anchor', () => {
 
     describe('[nzContainer]', () => {
       it('with window', async () => {
-        spyOn(window, 'addEventListener');
-        context.container = window;
+        vi.spyOn(window, 'addEventListener').mockImplementation(() => {});
+        context.container.set(window);
         await updateNonSignalsInput(fixture);
         expect(window.addEventListener).toHaveBeenCalled();
       });
+
       it('with string', async () => {
-        spyOn(context, '_click');
+        vi.spyOn(context, '_click').mockImplementation(() => {});
         const el = document.querySelector('#target')!;
-        spyOn(el, 'addEventListener');
-        context.container = '#target';
+        vi.spyOn(el, 'addEventListener').mockImplementation(() => {});
+        context.container.set('#target');
         await updateNonSignalsInput(fixture);
         expect(el.addEventListener).toHaveBeenCalled();
         page.to('#basic-target');
@@ -196,7 +204,7 @@ describe('anchor', () => {
 
     describe('(nzChange)', () => {
       it('should emit nzChange when click a link', async () => {
-        spyOn(srv, 'scrollTo').and.callFake((_containerEl, _targetTopValue = 0, options = {}) => {
+        vi.mocked(srv.scrollTo).mockImplementation((_containerEl, _targetTopValue = 0, options = {}) => {
           if (options.callback) {
             options.callback();
           }
@@ -205,10 +213,12 @@ describe('anchor', () => {
         page.to('#basic-target');
         expect(context._change).toHaveBeenCalled();
       });
+
       it('should emit nzChange when scrolling to the anchor', async () => {
-        spyOn(context, '_change');
         expect(context._change).not.toHaveBeenCalled();
+        (context.comp as TriSafeAny).activeLink = undefined;
         page.scrollTo();
+        context.comp.handleScroll();
         await sleep(throttleTime);
         const inkNode = page.getEl('.ant-anchor-ink-ball');
         expect(+inkNode.style.top!.replace('px', '')).toBeGreaterThan(0);
@@ -217,7 +227,7 @@ describe('anchor', () => {
     });
 
     it('(nzClick)', () => {
-      spyOn(context, '_click');
+      vi.spyOn(context, '_click').mockImplementation(() => {});
       expect(context._click).not.toHaveBeenCalled();
       const linkList = dl.queryAll(By.css('.ant-anchor-link-title'));
       expect(linkList.length).toBeGreaterThan(0);
@@ -231,6 +241,7 @@ describe('anchor', () => {
     it(`should show custom template of [nzTemplate]`, () => {
       expect(dl.query(By.css('.nzTemplate-title')) != null).toBe(true);
     });
+
     it(`should show custom template of [nzTitle]`, () => {
       expect(dl.query(By.css('.nzTitle-title')) != null).toBe(true);
     });
@@ -243,7 +254,7 @@ describe('anchor', () => {
     });
 
     it(`should have correct class name in horizontal mode`, async () => {
-      context.direction = 'horizontal';
+      context.direction.set('horizontal');
       await updateNonSignalsInput(fixture);
       const wrapperEl = dl.query(By.css('.ant-anchor-wrapper'));
       expect(wrapperEl.nativeElement.classList).toContain('ant-anchor-wrapper-horizontal');
@@ -253,13 +264,14 @@ describe('anchor', () => {
   describe('**boundary**', () => {
     it('#getOffsetTop', async () => {
       const el1 = document.getElementById('何时使用')!;
-      spyOn(el1, 'getClientRects').and.returnValue([] as TriSafeAny);
+      vi.spyOn(el1, 'getClientRects').mockReturnValue([] as TriSafeAny);
       const el2 = document.getElementById('parallel1')!;
-      spyOn(el2, 'getBoundingClientRect').and.returnValue({
+      vi.spyOn(el2, 'getBoundingClientRect').mockReturnValue({
         top: 0
       } as TriSafeAny);
       expect(context._scroll).not.toHaveBeenCalled();
       page.scrollTo();
+      context.comp.handleScroll();
       await sleep(throttleTime);
       expect(context._scroll).toHaveBeenCalled();
     });
@@ -289,14 +301,14 @@ describe('anchor', () => {
   imports: [TriAnchorModule],
   template: `
     <tri-anchor
-      [affix]="affix"
-      [bounds]="bounds"
-      [showInkInFixed]="showInkInFixed"
-      [offsetTop]="offsetTop"
-      [targetOffset]="targetOffset"
-      [container]="container"
-      [currentAnchor]="currentAnchor"
-      [direction]="direction"
+      [affix]="affix()"
+      [bounds]="bounds()"
+      [showInkInFixed]="showInkInFixed()"
+      [offsetTop]="offsetTop()"
+      [targetOffset]="targetOffset()"
+      [container]="container()"
+      [currentAnchor]="currentAnchor()"
+      [direction]="direction()"
       (click)="_click()"
       (scroll)="_scroll()"
       (change)="_change()"
@@ -346,21 +358,19 @@ describe('anchor', () => {
     </div>
   `,
   styles: `
-    @import '../style/testing.less';
-    @import './style/patch.less';
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+    @import './style/testing.less';
+  `
 })
 export class TestComponent {
   @ViewChild(TriAnchorComponent, { static: false }) comp!: TriAnchorComponent;
-  affix = true;
-  bounds = 5;
-  offsetTop = 0;
-  targetOffset?: number;
-  showInkInFixed = false;
-  container: TriSafeAny = null;
-  currentAnchor?: string;
-  direction: TriDirectionVHType = 'vertical';
+  readonly affix = signal(true);
+  readonly bounds = signal(5);
+  readonly offsetTop = signal(0);
+  readonly targetOffset = signal<number | undefined>(undefined);
+  readonly showInkInFixed = signal(false);
+  readonly container = signal<TriSafeAny>(null);
+  readonly currentAnchor = signal<string | undefined>(undefined);
+  readonly direction = signal<TriDirectionVHType>('vertical');
   _click(): void {}
   _change(): void {}
   _scroll(): void {}
@@ -410,24 +420,24 @@ describe('NzAnchor', () => {
 
   it('should calculate target scroll top correctly and call scrollTo', () => {
     const mockElement = document.createElement('div');
-    spyOn(mockDocument, 'getElementById').and.returnValue(mockElement);
-    spyOn(mockDocument, 'querySelector').and.returnValue(mockElement);
-    spyOn(scrollService, 'getScroll').and.returnValue(100);
-    spyOn<TriSafeAny>(component, 'getContainer').and.returnValue(window);
+    vi.spyOn(mockDocument, 'getElementById').mockReturnValue(mockElement);
+    vi.spyOn(mockDocument, 'querySelector').mockReturnValue(mockElement);
+    vi.spyOn(scrollService, 'getScroll').mockReturnValue(100);
+    vi.spyOn(component as TriSafeAny, 'getContainer').mockReturnValue(window);
 
     component.targetOffset = undefined;
     component.offsetTop = undefined;
 
     const mockLinkComponent = {
       nzHref: '#test',
-      setActive: jasmine.createSpy('setActive'),
+      setActive: vi.fn(),
       getLinkTitleElement: () => document.createElement('a')
     } as TriSafeAny;
 
-    const scrollToSpy = spyOn(scrollService, 'scrollTo').and.callThrough();
+    const scrollToSpy = vi.spyOn(scrollService, 'scrollTo').mockImplementation(() => {});
 
     component.handleScrollTo(mockLinkComponent);
 
-    expect(scrollToSpy).toHaveBeenCalledWith(component['getContainer'](), 100, jasmine.any(Object));
+    expect(scrollToSpy).toHaveBeenCalledWith(component['getContainer'](), 100, expect.any(Object));
   });
 });

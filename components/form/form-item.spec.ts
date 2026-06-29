@@ -3,11 +3,11 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { TriFormModule } from 'ng-zorro-antd/form';
 
 import { TriFormItemComponent } from './form-item.component';
@@ -15,7 +15,7 @@ import { TriFormItemComponent } from './form-item.component';
 describe('nz-form-item', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideNoopAnimations()]
+      providers: [provideNzNoAnimation()]
     });
   });
 
@@ -76,8 +76,7 @@ describe('nz-form-item', () => {
       <tri-form-item layout="vertical" />
       <tri-form-item />
     </form>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestHorizontalFormWithVerticalItemComponent {}
 
@@ -88,7 +87,6 @@ export class TriTestHorizontalFormWithVerticalItemComponent {}
       <tri-form-item layout="horizontal" />
       <tri-form-item />
     </form>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestVerticalFormWithHorizontalItemComponent {}

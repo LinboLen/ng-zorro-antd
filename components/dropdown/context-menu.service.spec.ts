@@ -5,12 +5,19 @@
 
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { OverlayContainer, ScrollDispatcher } from '@angular/cdk/overlay';
-import { ChangeDetectionStrategy, Component, Provider, Type, ViewChild, inject } from '@angular/core';
-import { ComponentFixture, fakeAsync, inject as testingInject, TestBed, tick } from '@angular/core/testing';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { Component, Provider, Type, ViewChild, inject } from '@angular/core';
+import { ComponentFixture, inject as testingInject, TestBed } from '@angular/core/testing';
 import { Subject } from 'rxjs';
 
-import { createKeyboardEvent, createMouseEvent, dispatchEvent } from 'ng-zorro-antd/core/testing';
+import { vi } from 'vitest';
+
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
+import {
+  createKeyboardEvent,
+  createMouseEvent,
+  dispatchEvent,
+  updateNonSignalsInput
+} from 'ng-zorro-antd/core/testing';
 import { TriMenuModule } from 'ng-zorro-antd/menu';
 
 import { TriContextMenuService } from './context-menu.service';
@@ -23,7 +30,7 @@ describe('context-menu', () => {
 
   function createComponent<T>(component: Type<T>, providers: Provider[] = []): ComponentFixture<T> {
     TestBed.configureTestingModule({
-      providers: [provideNoopAnimations(), ...providers]
+      providers: [provideNzNoAnimation(), ...providers]
     });
 
     testingInject([OverlayContainer], (oc: OverlayContainer) => {
@@ -41,110 +48,92 @@ describe('context-menu', () => {
     })
   );
 
-  it('should create dropdown', fakeAsync(() => {
+  async function stabilize<T>(fixture: ComponentFixture<T>): Promise<void> {
+    fixture.detectChanges();
+    await updateNonSignalsInput(fixture);
+    fixture.detectChanges();
+  }
+
+  it('should create dropdown', async () => {
     const fixture = createComponent(TriTestDropdownContextMenuComponent);
     fixture.detectChanges();
     expect(overlayContainerElement.textContent).toBe('');
     fixture.detectChanges();
-    expect(() => {
-      const fakeEvent = createMouseEvent('contextmenu', 300, 300);
-      const component = fixture.componentInstance;
-      const viewRef = component.contextMenuService.create(fakeEvent, component.dropdownMenuComponent);
-      expect(viewRef).toBeTruthy();
-      fixture.detectChanges();
-      tick(1000);
-      fixture.detectChanges();
-      expect(overlayContainerElement.textContent).toContain('1st menu item');
-    }).not.toThrowError();
-  }));
+    const fakeEvent = createMouseEvent('contextmenu', 300, 300);
+    const component = fixture.componentInstance;
+    const viewRef = component.contextMenuService.create(fakeEvent, component.dropdownMenuComponent);
+    expect(viewRef).toBeTruthy();
+    await stabilize(fixture);
+    expect(overlayContainerElement.textContent).toContain('1st menu item');
+  });
 
-  it('should only one dropdown exist', fakeAsync(() => {
+  it('should only one dropdown exist', async () => {
     const fixture = createComponent(TriTestDropdownContextMenuComponent);
     fixture.detectChanges();
     expect(overlayContainerElement.textContent).toBe('');
     fixture.detectChanges();
-    expect(() => {
-      let fakeEvent = createMouseEvent('contextmenu', 0, 0);
-      const component = fixture.componentInstance;
-      component.contextMenuService.create(fakeEvent, component.dropdownMenuComponent);
-      fixture.detectChanges();
-      tick(1000);
-      fixture.detectChanges();
-      expect(overlayContainerElement.textContent).toContain('1st menu item');
-      fakeEvent = createMouseEvent('contextmenu', window.innerWidth, window.innerHeight);
-      component.contextMenuService.create(fakeEvent, component.dropdownMenuComponent);
-      fixture.detectChanges();
-      tick(1000);
-      fixture.detectChanges();
-      expect(overlayContainerElement.textContent).toContain('1st menu item');
-    }).not.toThrowError();
-  }));
+    let fakeEvent = createMouseEvent('contextmenu', 0, 0);
+    const component = fixture.componentInstance;
+    component.contextMenuService.create(fakeEvent, component.dropdownMenuComponent);
+    await stabilize(fixture);
+    expect(overlayContainerElement.textContent).toContain('1st menu item');
 
-  it('should dropdown close when scroll', fakeAsync(() => {
+    fakeEvent = createMouseEvent('contextmenu', window.innerWidth, window.innerHeight);
+    component.contextMenuService.create(fakeEvent, component.dropdownMenuComponent);
+    await stabilize(fixture);
+    expect(overlayContainerElement.textContent).toContain('1st menu item');
+  });
+
+  it('should dropdown close when scroll', async () => {
     const scrolledSubject = new Subject<void>();
     const fixture = createComponent(TriTestDropdownContextMenuComponent, [
       { provide: ScrollDispatcher, useFactory: () => ({ scrolled: () => scrolledSubject }) }
     ]);
     fixture.detectChanges();
     expect(overlayContainerElement.textContent).toBe('');
-    expect(() => {
-      const fakeEvent = createMouseEvent('contextmenu', 0, 0);
-      const component = fixture.componentInstance;
-      component.contextMenuService.create(fakeEvent, component.dropdownMenuComponent);
-      fixture.detectChanges();
-      tick(1000);
-      fixture.detectChanges();
-      expect(overlayContainerElement.textContent).toContain('1st menu item');
-      scrolledSubject.next();
-      fixture.detectChanges();
-      tick(1000);
-      fixture.detectChanges();
-      expect(overlayContainerElement.textContent).toBe('');
-    }).not.toThrowError();
-  }));
+    const fakeEvent = createMouseEvent('contextmenu', 0, 0);
+    const component = fixture.componentInstance;
+    component.contextMenuService.create(fakeEvent, component.dropdownMenuComponent);
+    await stabilize(fixture);
+    expect(overlayContainerElement.textContent).toContain('1st menu item');
 
-  it('should backdrop work with click', fakeAsync(() => {
+    scrolledSubject.next();
+    await stabilize(fixture);
+    expect(overlayContainerElement.textContent).toBe('');
+  });
+
+  it('should backdrop work with click', async () => {
     const fixture = createComponent(TriTestDropdownContextMenuComponent);
     fixture.detectChanges();
     expect(overlayContainerElement.textContent).toBe('');
     fixture.detectChanges();
-    expect(() => {
-      const fakeEvent = createMouseEvent('contextmenu', 300, 300);
-      const component = fixture.componentInstance;
-      component.contextMenuService.create(fakeEvent, component.dropdownMenuComponent);
-      fixture.detectChanges();
-      tick(1000);
-      fixture.detectChanges();
-      expect(overlayContainerElement.textContent).toContain('1st menu item');
-      document.body.click();
-      fixture.detectChanges();
-      tick(1000);
-      fixture.detectChanges();
-      expect(overlayContainerElement.textContent).toBe('');
-    }).not.toThrowError();
-  }));
+    const fakeEvent = createMouseEvent('contextmenu', 300, 300);
+    const component = fixture.componentInstance;
+    component.contextMenuService.create(fakeEvent, component.dropdownMenuComponent);
+    await stabilize(fixture);
+    expect(overlayContainerElement.textContent).toContain('1st menu item');
 
-  it('should backdrop work with keyboard event ESCAPE', fakeAsync(() => {
+    document.body.click();
+    await stabilize(fixture);
+    expect(overlayContainerElement.textContent).toBe('');
+  });
+
+  it('should backdrop work with keyboard event ESCAPE', async () => {
     const fixture = createComponent(TriTestDropdownContextMenuComponent);
     const keyboardEvent = createKeyboardEvent('keydown', ESCAPE, undefined, 'Escape');
     fixture.detectChanges();
     expect(overlayContainerElement.textContent).toBe('');
     fixture.detectChanges();
-    expect(() => {
-      const fakeEvent = createMouseEvent('contextmenu', 300, 300);
-      const component = fixture.componentInstance;
-      component.contextMenuService.create(fakeEvent, component.dropdownMenuComponent);
-      fixture.detectChanges();
-      tick(1000);
-      fixture.detectChanges();
-      expect(overlayContainerElement.textContent).toContain('1st menu item');
-      dispatchEvent(document.body, keyboardEvent);
-      fixture.detectChanges();
-      tick(1000);
-      fixture.detectChanges();
-      expect(overlayContainerElement.textContent).toBe('');
-    }).not.toThrowError();
-  }));
+    const fakeEvent = createMouseEvent('contextmenu', 300, 300);
+    const component = fixture.componentInstance;
+    component.contextMenuService.create(fakeEvent, component.dropdownMenuComponent);
+    await stabilize(fixture);
+    expect(overlayContainerElement.textContent).toContain('1st menu item');
+
+    dispatchEvent(document.body, keyboardEvent);
+    await stabilize(fixture);
+    expect(overlayContainerElement.textContent).toBe('');
+  });
 
   it('should not call the method close if the overlay is clicked inside', async () => {
     const fixture = createComponent(TriTestDropdownContextMenuComponent);
@@ -155,7 +144,7 @@ describe('context-menu', () => {
     fixture.detectChanges();
     await fixture.whenStable();
     fixture.detectChanges();
-    const closeSpy = spyOn(component.contextMenuService, 'close');
+    const closeSpy = vi.spyOn(component.contextMenuService, 'close');
     overlayContainerElement.querySelector('ul')!.click();
     expect(closeSpy).toHaveBeenCalledTimes(0);
     document.body.click();
@@ -173,8 +162,7 @@ describe('context-menu', () => {
         <li tri-menu-item>3rd menu item</li>
       </ul>
     </tri-dropdown-menu>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestDropdownContextMenuComponent {
   public readonly contextMenuService = inject(TriContextMenuService);

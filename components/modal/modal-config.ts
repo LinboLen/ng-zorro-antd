@@ -5,7 +5,6 @@
 
 import { InjectionToken } from '@angular/core';
 
-import { TriConfigKey } from 'ng-zorro-antd/core/config';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
 export const ZOOM_CLASS_NAME_MAP = {
@@ -23,7 +22,7 @@ export const FADE_CLASS_NAME_MAP = {
 };
 
 export const MODAL_MASK_CLASS_NAME = 'ant-modal-mask';
-export const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'modal';
+export const TRI_CONFIG_MODULE_NAME = 'modal';
 export const TRI_MODAL_DATA = new InjectionToken<TriSafeAny>(
   typeof ngDevMode !== 'undefined' && ngDevMode ? 'nz-modal-data' : ''
 );

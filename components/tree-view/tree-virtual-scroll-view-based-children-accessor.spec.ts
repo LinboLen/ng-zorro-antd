@@ -5,60 +5,25 @@
 
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { CdkTreeNodeOutletContext } from '@angular/cdk/tree';
-import { ChangeDetectionStrategy, Component, OnInit, TrackByFunction, ViewChild } from '@angular/core';
+import { Component, OnInit, signal, TrackByFunction, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { dispatchFakeEvent } from 'ng-zorro-antd/core/testing';
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
 import { TriTreeViewNestedDataSource } from './nested-data-source';
-import { TriTreeNodeComponent } from './node';
 import { TriTreeNodePaddingDirective } from './padding';
-import { waitForNextAnimationFrame } from './tree-view-based-children-accessor.spec';
+import { finishInit, triggerScroll } from './tree-view-testing';
 import { TriTreeViewModule } from './tree-view.module';
 import { TriTreeVirtualScrollViewComponent } from './tree-virtual-scroll-view';
-
-/**
- * Finish initializing the virtual scroll component at the beginning of a test.
- * @param fixture Test Component include NzTreeVirtualScrollViewComponent
- */
-export async function finishInit(fixture: ComponentFixture<TriSafeAny>): Promise<void> {
-  // set the height of the viewport to 180px, the height of node to 30px.
-  fixture.debugElement.nativeElement
-    .querySelector('.cdk-virtual-scroll-viewport')!
-    .setAttribute('style', 'height: 180px; width: 200px;');
-  fixture.debugElement.queryAll(By.directive(TriTreeNodeComponent))!.map(node => {
-    node.nativeElement.setAttribute('style', 'width: 100%; height: 30px;');
-  });
-  // render the viewport.
-  await fixture.whenStable();
-
-  // Flush the initial fake scroll event.
-  await waitForNextAnimationFrame(); // flush animation frame
-  await fixture.whenStable();
-}
-
-/**
- * Trigger a scroll event on the viewport (optionally setting a new scroll offset).
- * @param viewport virtual scroll viewport
- * @param offset scroll distance
- */
-export async function triggerScroll(viewport: CdkVirtualScrollViewport, offset?: number): Promise<void> {
-  if (offset !== undefined) {
-    viewport.scrollToOffset(offset);
-  }
-  dispatchFakeEvent(viewport.scrollable!.getElementRef().nativeElement, 'scroll');
-  await waitForNextAnimationFrame();
-}
 
 describe('virtual scroll based nzChildrenAccessor', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideNzIconsTesting(), provideNoopAnimations()]
+      providers: [provideNzIconsTesting(), provideNzNoAnimation()]
     });
   });
 
@@ -82,7 +47,7 @@ describe('virtual scroll based nzChildrenAccessor', () => {
       // viewport size = 180
       expect(viewport.getViewportSize()).toBe(180);
       // itemSize = 30, nums of initial nodes = 100
-      expect(viewport._totalContentHeight()).toBe(`${testComponent.itemSize * 100}px`);
+      expect(viewport._totalContentHeight()).toBe(`${testComponent.itemSize() * 100}px`);
       // maxBufferPx / 30 + 180 / itemSize = 4 + 6 = 10
       expect(fixture.debugElement.queryAll(By.css('nz-tree-node')).length).toBe(10);
       expect(viewport.getRenderedRange()).toEqual({
@@ -113,22 +78,26 @@ describe('virtual scroll based nzChildrenAccessor', () => {
 
     it('should render correct nodes when scroll', async () => {
       await finishInit(fixture);
-      await triggerScroll(viewport, testComponent.itemSize * 10);
+      await triggerScroll(viewport, testComponent.itemSize() * 10);
       await fixture.whenStable();
       // start: 10 - minBufferPx / 30 = 8, end: 10 + 180 / 30 + maxBufferPx / 30 = 20
       expect(viewport.getRenderedRange()).toEqual({
         start: 8,
         end: 20
       });
-      expect(viewport.getOffsetToRenderedContentStart()).toBe(testComponent.itemSize * 10 - testComponent.minBufferPx);
+      expect(viewport.getOffsetToRenderedContentStart()).toBe(
+        testComponent.itemSize() * 10 - testComponent.minBufferPx()
+      );
       expect(fixture.debugElement.query(By.css('nz-tree-node')).componentInstance.data.name).toBe('0-8');
-      await triggerScroll(viewport, testComponent.itemSize * 25);
+      await triggerScroll(viewport, testComponent.itemSize() * 25);
       await fixture.whenStable();
       expect(viewport.getRenderedRange()).toEqual({
         start: 23,
         end: 35
       });
-      expect(viewport.getOffsetToRenderedContentStart()).toBe(testComponent.itemSize * 25 - testComponent.minBufferPx);
+      expect(viewport.getOffsetToRenderedContentStart()).toBe(
+        testComponent.itemSize() * 25 - testComponent.minBufferPx()
+      );
       expect(fixture.debugElement.query(By.css('nz-tree-node')).componentInstance.data.name).toBe('0-23');
     });
 
@@ -160,14 +129,14 @@ describe('virtual scroll based nzChildrenAccessor', () => {
     });
 
     it('should nzItemSize work', async () => {
-      testComponent.itemSize *= 2; // 60
+      testComponent.itemSize.set(testComponent.itemSize() * 2); // 60
       await finishInit(fixture);
       expect(viewport.getRenderedRange()).toEqual({
         start: 0,
         // 180 / 60 + maxBufferPx / 60 = 3 + 2 = 5
         end: 5
       });
-      await triggerScroll(viewport, testComponent.itemSize * 5);
+      await triggerScroll(viewport, testComponent.itemSize() * 5);
       await fixture.whenStable();
       expect(viewport.getRenderedRange()).toEqual({
         // 5 - minBufferPx / 60 = 5 - 1 = 4
@@ -178,15 +147,15 @@ describe('virtual scroll based nzChildrenAccessor', () => {
     });
 
     it('should nzMinBufferPx and nzMaxBufferPx work', async () => {
-      testComponent.minBufferPx = testComponent.itemSize; // 30
-      testComponent.maxBufferPx = testComponent.itemSize; // 30
+      testComponent.minBufferPx.set(testComponent.itemSize()); // 30
+      testComponent.maxBufferPx.set(testComponent.itemSize()); // 30
       await finishInit(fixture);
       expect(viewport.getRenderedRange()).toEqual({
         start: 0,
         // 180 / 30 + maxBufferPx / 30 = 6 + 1 = 7
         end: 7
       });
-      await triggerScroll(viewport, testComponent.itemSize * 5);
+      await triggerScroll(viewport, testComponent.itemSize() * 5);
       await fixture.whenStable();
       expect(viewport.getRenderedRange()).toEqual({
         // 5 - minBufferPx / itemSize = 5 - 1 = 4
@@ -200,7 +169,7 @@ describe('virtual scroll based nzChildrenAccessor', () => {
       await finishInit(fixture);
       const treeView = fixture.debugElement.query(By.css('nz-tree-virtual-scroll-view'));
       expect(treeView.nativeElement.classList).not.toContain('ant-tree-directory');
-      testComponent.directoryTree = true;
+      testComponent.directoryTree.set(true);
       fixture.changeDetectorRef.markForCheck();
       await fixture.whenStable();
       expect(treeView.nativeElement.classList).toContain('ant-tree-directory');
@@ -211,7 +180,7 @@ describe('virtual scroll based nzChildrenAccessor', () => {
       await finishInit(fixture);
       const treeView = fixture.debugElement.query(By.css('nz-tree-virtual-scroll-view'));
       expect(treeView.nativeElement.classList).not.toContain('ant-tree-block-node');
-      testComponent.blockNode = true;
+      testComponent.blockNode.set(true);
       fixture.changeDetectorRef.markForCheck();
       await fixture.whenStable();
       expect(treeView.nativeElement.classList).toContain('ant-tree-block-node');
@@ -229,7 +198,7 @@ describe('virtual scroll based nzChildrenAccessor', () => {
       expect(fixture.debugElement.query(By.css('nz-tree-node')).componentInstance.data.name).toBe('v1-0-0');
 
       // set trackBy to null, default use node self instead
-      testComponent.trackBy = null!;
+      testComponent.trackBy.set(null!);
       // change name format from 'v1-0-x' to 'v2-0-x'
       testComponent.dataSource.setData(dig('v2-0'));
       await finishInit(fixture);
@@ -238,7 +207,7 @@ describe('virtual scroll based nzChildrenAccessor', () => {
       expect(fixture.debugElement.query(By.css('nz-tree-node')).componentInstance.data.name).toBe('v2-0-0');
 
       // rerender new data depends on whether the index is the same (always same)
-      testComponent.trackBy = (index: number, _node: TreeNode) => index;
+      testComponent.trackBy.set((index: number, _node: TreeNode) => index);
       // change name format from 'v2-0-x' to 'v3-0-x'
       testComponent.dataSource.setData(dig('v3-0'));
       await finishInit(fixture);
@@ -335,12 +304,12 @@ const TREE_DATA: TreeNode[] = dig();
     <tri-tree-virtual-scroll-view
       [dataSource]="dataSource"
       [childrenAccessor]="childrenAccessor"
-      [itemSize]="itemSize"
-      [minBufferPx]="minBufferPx"
-      [maxBufferPx]="maxBufferPx"
-      [directoryTree]="directoryTree"
-      [blockNode]="blockNode"
-      [trackBy]="trackBy"
+      [itemSize]="itemSize()"
+      [minBufferPx]="minBufferPx()"
+      [maxBufferPx]="maxBufferPx()"
+      [directoryTree]="directoryTree()"
+      [blockNode]="blockNode()"
+      [trackBy]="trackBy()"
     >
       <tri-tree-node *treeNodeDef="let node" treeNodePadding [expandable]="false">
         <tri-tree-node-toggle treeNodeNoopToggle />
@@ -354,20 +323,19 @@ const TREE_DATA: TreeNode[] = dig();
         {{ node.name }}
       </tri-tree-node>
     </tri-tree-virtual-scroll-view>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestTreeViewVirtualScrollWithChildrenAccessorComponent implements OnInit {
   @ViewChild(TriTreeVirtualScrollViewComponent, { static: true }) tree!: TriTreeVirtualScrollViewComponent<TreeNode>;
   readonly childrenAccessor = (dataNode: TreeNode): TreeNode[] => dataNode.children ?? [];
   readonly hasChild = (_: number, node: TreeNode): boolean => !!node.children?.length;
   dataSource!: TriTreeViewNestedDataSource<TreeNode>;
-  directoryTree: boolean = false;
-  blockNode: boolean = false;
-  itemSize = 30;
-  minBufferPx = 30 * 2;
-  maxBufferPx = 30 * 4;
-  trackBy: TrackByFunction<TreeNode> = (_index: number, value: TreeNode): TriSafeAny => value;
+  readonly directoryTree = signal(false);
+  readonly blockNode = signal(false);
+  readonly itemSize = signal(30);
+  readonly minBufferPx = signal(30 * 2);
+  readonly maxBufferPx = signal(30 * 4);
+  readonly trackBy = signal<TrackByFunction<TreeNode>>((_index: number, value: TreeNode): TriSafeAny => value);
 
   ngOnInit(): void {
     this.dataSource = new TriTreeViewNestedDataSource(this.tree, TREE_DATA);

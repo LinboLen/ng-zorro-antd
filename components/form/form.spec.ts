@@ -4,19 +4,11 @@
  */
 
 import { NgTemplateOutlet } from '@angular/common';
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  DebugElement,
-  provideZoneChangeDetection,
-  TemplateRef,
-  ViewChild
-} from '@angular/core';
+import { Component, DebugElement, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { TriFormModule } from 'ng-zorro-antd/form/form.module';
 
 import { TriFormDirective, TriFormLayoutType } from './form.directive';
@@ -24,9 +16,8 @@ import { TriRequiredMark } from './types';
 
 describe('form', () => {
   beforeEach(() => {
-    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideZoneChangeDetection(), provideNoopAnimations()]
+      providers: [provideNzNoAnimation()]
     });
   });
 
@@ -48,14 +39,14 @@ describe('form', () => {
     });
 
     it('should layout work', () => {
-      testComponent.layout = 'vertical';
+      testComponent.layout.set('vertical');
 
       fixture.detectChanges();
 
       expect(form.nativeElement.classList).toContain('ant-form-vertical');
       expect(form.nativeElement.classList).not.toContain('ant-form-horizontal');
 
-      testComponent.layout = 'inline';
+      testComponent.layout.set('inline');
 
       fixture.detectChanges();
 
@@ -77,9 +68,9 @@ describe('form', () => {
     });
 
     afterEach(() => {
-      testComponent.defaultNoColon = false;
-      testComponent.noColon = false;
-      testComponent.testPriority = false;
+      testComponent.defaultNoColon.set(false);
+      testComponent.noColon.set(false);
+      testComponent.testPriority.set(false);
     });
 
     it('should set default `NoColon` value', () => {
@@ -88,7 +79,7 @@ describe('form', () => {
       );
       labels.forEach(label => expect(label.classList).not.toContain('ant-form-item-no-colon'));
 
-      testComponent.defaultNoColon = true;
+      testComponent.defaultNoColon.set(true);
 
       fixture.detectChanges();
 
@@ -101,12 +92,12 @@ describe('form', () => {
       );
       labels.forEach(label => expect(label.classList).not.toContain('ant-form-item-no-colon'));
 
-      testComponent.defaultNoColon = true;
+      testComponent.defaultNoColon.set(true);
 
       fixture.detectChanges();
 
       labels.forEach(label => expect(label.classList).toContain('ant-form-item-no-colon'));
-      testComponent.testPriority = true;
+      testComponent.testPriority.set(true);
 
       fixture.detectChanges();
 
@@ -119,8 +110,8 @@ describe('form', () => {
         }
       });
 
-      testComponent.defaultNoColon = false;
-      testComponent.noColon = true;
+      testComponent.defaultNoColon.set(false);
+      testComponent.noColon.set(true);
 
       fixture.detectChanges();
 
@@ -156,7 +147,7 @@ describe('form', () => {
     });
 
     it('should handle boolean required mark (false)', () => {
-      testComponent.requiredMark = false;
+      testComponent.requiredMark.set(false);
       fixture.detectChanges();
 
       const requiredLabel = form.nativeElement.querySelector('.required-label label');
@@ -169,7 +160,7 @@ describe('form', () => {
     });
 
     it('should handle optional required mark', () => {
-      testComponent.requiredMark = 'optional';
+      testComponent.requiredMark.set('optional');
       fixture.detectChanges();
 
       const requiredLabel = form.nativeElement.querySelector('.required-label label');
@@ -181,7 +172,7 @@ describe('form', () => {
     });
 
     it('should handle custom template required mark', () => {
-      testComponent.useCustomTemplate = true;
+      testComponent.useCustomTemplate.set(true);
       fixture.detectChanges();
 
       const requiredLabel = form.nativeElement.querySelector('.required-label');
@@ -197,14 +188,14 @@ describe('form', () => {
       const formDirective = form.injector.get(TriFormDirective);
       expect(formDirective.requiredMark()).toBe(true);
 
-      testComponent.requiredMark = 'optional';
+      testComponent.requiredMark.set('optional');
       fixture.detectChanges();
 
       expect(formDirective.requiredMark()).toBe('optional');
     });
 
     it('should handle template context correctly', () => {
-      testComponent.useCustomTemplate = true;
+      testComponent.useCustomTemplate.set(true);
       fixture.detectChanges();
 
       const customTemplateElement = form.nativeElement.querySelector('.custom-required');
@@ -219,26 +210,25 @@ describe('form', () => {
 
 @Component({
   imports: [TriFormModule],
-  template: `<form tri-form [layout]="layout"></form>`,
-  changeDetection: ChangeDetectionStrategy.Eager
+  template: `<form tri-form [layout]="layout()"></form>`
 })
 export class TriTestFormDirectiveComponent {
-  layout: TriFormLayoutType = 'horizontal';
+  readonly layout = signal<TriFormLayoutType>('horizontal');
 }
 
 @Component({
   imports: [TriFormModule],
   template: `
-    <form tri-form [noColon]="defaultNoColon">
+    <form tri-form [noColon]="defaultNoColon()">
       <tri-form-item>
         <tri-form-label>Label</tri-form-label>
       </tri-form-item>
       <tri-form-item>
         <tri-form-label>Label</tri-form-label>
       </tri-form-item>
-      @if (testPriority) {
+      @if (testPriority()) {
         <tri-form-item>
-          <tri-form-label [noColon]="noColon">TEST_PRIORITY</tri-form-label>
+          <tri-form-label [noColon]="noColon()">TEST_PRIORITY</tri-form-label>
         </tri-form-item>
       }
     </form>
@@ -246,9 +236,40 @@ export class TriTestFormDirectiveComponent {
   changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriTestFormLabelIntegrateComponent {
-  defaultNoColon = false;
-  testPriority = false;
-  noColon = false;
+  readonly defaultNoColon = signal(false);
+  readonly testPriority = signal(false);
+  readonly noColon = signal(false);
+}
+
+@Component({
+  imports: [TriFormModule, NgTemplateOutlet],
+  template: `
+    <form tri-form [requiredMark]="useCustomTemplate() ? customRequiredMarkTemplate : requiredMark()">
+      <tri-form-item class="required-label">
+        <tri-form-label required>
+          <span class="label-content">Required Field</span>
+        </tri-form-label>
+      </tri-form-item>
+      <tri-form-item class="optional-label">
+        <tri-form-label>
+          <span class="label-content">Optional Field</span>
+        </tri-form-label>
+      </tri-form-item>
+    </form>
+
+    <ng-template #customRequiredMarkTemplate let-label let-required="required">
+      @if (required) {
+        <span class="custom-required">REQUIRED</span>
+      } @else {
+        <span class="custom-optional">OPTIONAL</span>
+      }
+      <ng-container *ngTemplateOutlet="label" />
+    </ng-template>
+  `
+})
+export class TriTestFormRequiredMarkComponent {
+  readonly requiredMark = signal<TriRequiredMark>(true);
+  readonly useCustomTemplate = signal(false);
 }
 
 @Component({

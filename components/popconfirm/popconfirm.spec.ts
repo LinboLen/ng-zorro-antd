@@ -4,19 +4,14 @@
  */
 
 import { OverlayContainer } from '@angular/cdk/overlay';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  provideZoneChangeDetection,
-  signal,
-  ViewChild
-} from '@angular/core';
-import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
+import { Component, ElementRef, signal, ViewChild } from '@angular/core';
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { Observable } from 'rxjs';
+import { delay, of, Observable } from 'rxjs';
 
+import { vi } from 'vitest';
+
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { dispatchMouseEvent } from 'ng-zorro-antd/core/testing';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 import { TriAutoFocusType } from 'ng-zorro-antd/popconfirm/popconfirm';
@@ -31,9 +26,8 @@ describe('popconfirm', () => {
   let overlayContainerElement: HTMLElement;
 
   beforeEach(() => {
-    // todo: use zoneless
     TestBed.configureTestingModule({
-      providers: [provideNzIconsTesting(), provideNoopAnimations(), provideZoneChangeDetection()]
+      providers: [provideNzIconsTesting(), provideNzNoAnimation()]
     });
     fixture = TestBed.createComponent(TriPopconfirmTestNewComponent);
     component = fixture.componentInstance;
@@ -44,6 +38,9 @@ describe('popconfirm', () => {
     overlayContainer = oc;
     overlayContainerElement = oc.getContainerElement();
   }));
+
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
 
   afterEach(() => {
     overlayContainer.ngOnDestroy();
@@ -59,17 +56,25 @@ describe('popconfirm', () => {
 
   function waitingForTooltipToggling(): void {
     fixture.detectChanges();
-    tick(500);
+    vi.advanceTimersByTime(500);
     fixture.detectChanges();
   }
 
-  it('should support custom icon', fakeAsync(() => {
-    component.icon = 'question-circle';
+  it('should support custom icon', () => {
+    component.icon.set('question-circle');
     const triggerElement = component.iconTemplate.nativeElement;
     dispatchMouseEvent(triggerElement, 'click');
     waitingForTooltipToggling();
     expect(overlayContainerElement.querySelector('.anticon-exclamation-circle')).toBeFalsy();
-  }));
+  });
+
+  it('should hide icon when nzIcon is set to null', () => {
+    component.icon.set(null);
+    const triggerElement = component.iconTemplate.nativeElement;
+    dispatchMouseEvent(triggerElement, 'click');
+    waitingForTooltipToggling();
+    expect(overlayContainerElement.querySelector('.ant-popover-message-icon')).toBeFalsy();
+  });
 
   it('should hide icon when nzIcon is set to null', fakeAsync(() => {
     component.icon = null;
@@ -89,7 +94,7 @@ describe('popconfirm', () => {
   });
 
   it('should support nzOkType danger case', () => {
-    component.okType = 'danger';
+    component.okType.set('danger');
     fixture.detectChanges();
 
     const triggerElement = component.stringTemplate.nativeElement;
@@ -101,14 +106,14 @@ describe('popconfirm', () => {
   });
 
   it('should support nzOkDisabled case', () => {
-    component.okDisabled = true;
+    component.okDisabled.set(true);
     fixture.detectChanges();
 
     const triggerElement = component.stringTemplate.nativeElement;
     dispatchMouseEvent(triggerElement, 'click');
     fixture.detectChanges();
 
-    expect(getTooltipTrigger(1).disabled).toBeTrue();
+    expect(getTooltipTrigger(1).disabled).toBe(true);
   });
 
   it('should support nzOkButtonProps', () => {
@@ -117,17 +122,17 @@ describe('popconfirm', () => {
     dispatchMouseEvent(triggerElement, 'click');
     component.okButtonProps.update(props => ({ ...props, nzDisabled: true }));
     fixture.detectChanges();
-    expect(getTooltipTrigger(1).disabled).toBeTrue();
+    expect(getTooltipTrigger(1).disabled).toBe(true);
   });
 
   it('should support nzCancelButtonProps and disabled the cancel button', () => {
     fixture.detectChanges();
     const triggerElement = component.stringTemplate.nativeElement;
     dispatchMouseEvent(triggerElement, 'click');
-    expect(getTooltipTrigger(0).disabled).toBeFalse();
+    expect(getTooltipTrigger(0).disabled).toBe(false);
     component.cancelButtonProps.update(props => ({ ...props, nzDisabled: true }));
     fixture.detectChanges();
-    expect(getTooltipTrigger(0).disabled).toBeTrue();
+    expect(getTooltipTrigger(0).disabled).toBe(true);
   });
 
   it('should support nzCancelButtonProps and support danger on close button', () => {
@@ -139,7 +144,7 @@ describe('popconfirm', () => {
     expect(getTooltipTrigger(0).classList).toContain('ant-btn-dangerous');
   });
 
-  it('should cancel work', fakeAsync(() => {
+  it('should cancel work', () => {
     const triggerElement = component.stringTemplate.nativeElement;
 
     dispatchMouseEvent(triggerElement, 'click');
@@ -153,9 +158,9 @@ describe('popconfirm', () => {
     expect(component.confirm).toHaveBeenCalledTimes(0);
     expect(component.cancel).toHaveBeenCalledTimes(1);
     expect(getTitleText()).toBeNull();
-  }));
+  });
 
-  it('should confirm work', fakeAsync(() => {
+  it('should confirm work', () => {
     const triggerElement = component.stringTemplate.nativeElement;
 
     dispatchMouseEvent(triggerElement, 'click');
@@ -169,30 +174,30 @@ describe('popconfirm', () => {
     expect(component.confirm).toHaveBeenCalledTimes(1);
     expect(component.cancel).toHaveBeenCalledTimes(0);
     expect(getTitleText()).toBeNull();
-  }));
+  });
 
-  it('should autofocus work', fakeAsync(() => {
+  it('should autofocus work', () => {
     let focusElement;
 
     focusElement = fixture.debugElement.query(By.css(':focus'));
     expect(focusElement).toBeNull();
 
-    component.autoFocus = 'cancel';
+    component.autoFocus.set('cancel');
     fixture.detectChanges();
     focusElement = fixture.debugElement.query(By.css(':focus'));
     expect(focusElement?.nativeElement).toBe(getTooltipTrigger(0));
 
-    component.autoFocus = 'ok';
+    component.autoFocus.set('ok');
     fixture.detectChanges();
     focusElement = fixture.debugElement.query(By.css(':focus'));
     expect(focusElement?.nativeElement).toBe(getTooltipTrigger(1));
-  }));
+  });
 
-  it('should condition work', fakeAsync(() => {
+  it('should condition work', () => {
     expect(component.confirm).toHaveBeenCalledTimes(0);
     expect(component.cancel).toHaveBeenCalledTimes(0);
 
-    component.condition = true;
+    component.condition.set(true);
     fixture.detectChanges();
     const triggerElement = component.stringTemplate.nativeElement;
 
@@ -201,9 +206,9 @@ describe('popconfirm', () => {
     expect(getTitleText()).toBeNull();
     expect(component.confirm).toHaveBeenCalledTimes(1);
     expect(component.cancel).toHaveBeenCalledTimes(0);
-  }));
+  });
 
-  it('should before confirm work', fakeAsync(() => {
+  it('should before confirm work', () => {
     const triggerElement = component.stringTemplate.nativeElement;
 
     dispatchMouseEvent(triggerElement, 'click');
@@ -212,7 +217,7 @@ describe('popconfirm', () => {
     expect(component.confirm).toHaveBeenCalledTimes(0);
     expect(component.cancel).toHaveBeenCalledTimes(0);
 
-    component.beforeConfirm = () => false;
+    component.beforeConfirm.set(() => false);
     fixture.detectChanges();
 
     dispatchMouseEvent(getTooltipTrigger(1), 'click');
@@ -220,9 +225,9 @@ describe('popconfirm', () => {
     expect(component.confirm).toHaveBeenCalledTimes(0);
     expect(component.cancel).toHaveBeenCalledTimes(0);
     expect(getTitleText()!.textContent).toContain('title-string');
-  }));
+  });
 
-  it('should before confirm observable work', fakeAsync(() => {
+  it('should before confirm observable work', () => {
     const triggerElement = component.stringTemplate.nativeElement;
 
     dispatchMouseEvent(triggerElement, 'click');
@@ -231,23 +236,17 @@ describe('popconfirm', () => {
     expect(component.confirm).toHaveBeenCalledTimes(0);
     expect(component.cancel).toHaveBeenCalledTimes(0);
 
-    component.beforeConfirm = () =>
-      new Observable(observer => {
-        setTimeout(() => {
-          observer.next(true);
-          observer.complete();
-        }, 200);
-      });
+    component.beforeConfirm.set(() => of(true).pipe(delay(200)));
 
     dispatchMouseEvent(getTooltipTrigger(1), 'click');
-    tick(200 + 10);
+    vi.advanceTimersByTime(200 + 10);
     waitingForTooltipToggling();
     expect(getTitleText()).toBeNull();
     expect(component.confirm).toHaveBeenCalledTimes(1);
     expect(component.cancel).toHaveBeenCalledTimes(0);
-  }));
+  });
 
-  it('should before confirm promise work', fakeAsync(() => {
+  it('should before confirm promise work', async () => {
     const triggerElement = component.stringTemplate.nativeElement;
 
     dispatchMouseEvent(triggerElement, 'click');
@@ -256,66 +255,69 @@ describe('popconfirm', () => {
     expect(component.confirm).toHaveBeenCalledTimes(0);
     expect(component.cancel).toHaveBeenCalledTimes(0);
 
-    component.beforeConfirm = () =>
-      new Promise(resolve => {
-        setTimeout(() => {
-          resolve(true);
-        }, 200);
-      });
+    component.beforeConfirm.set(
+      () =>
+        new Promise(resolve => {
+          setTimeout(() => {
+            resolve(true);
+          }, 200);
+        })
+    );
 
     dispatchMouseEvent(getTooltipTrigger(1), 'click');
-    tick(200 + 10);
+    vi.advanceTimersByTime(200 + 10);
+    await fixture.whenStable();
     waitingForTooltipToggling();
     expect(getTitleText()).toBeNull();
     expect(component.confirm).toHaveBeenCalledTimes(1);
     expect(component.cancel).toHaveBeenCalledTimes(0);
-  }));
+  });
 
-  it('should nzPopconfirmShowArrow work', fakeAsync(() => {
+  it('should nzPopconfirmShowArrow work', () => {
     const triggerElement = component.stringTemplate.nativeElement;
     dispatchMouseEvent(triggerElement, 'click');
 
-    component.popconfirmShowArrow = false;
+    component.popconfirmShowArrow.set(false);
     fixture.detectChanges();
     expect(overlayContainerElement.querySelector('.ant-popover-arrow')).toBeFalsy();
 
-    component.popconfirmShowArrow = true;
+    component.popconfirmShowArrow.set(true);
     fixture.detectChanges();
     expect(overlayContainerElement.querySelector('.ant-popover-arrow')).toBeTruthy();
-  }));
+  });
 
-  it('should nzPopconfirmBackdrop work', fakeAsync(() => {
-    component.popconfirmBackdrop = true;
+  it('should nzPopconfirmBackdrop work', () => {
+    component.popconfirmBackdrop.set(true);
     fixture.detectChanges();
     const triggerElement = component.stringTemplate.nativeElement;
     dispatchMouseEvent(triggerElement, 'click');
     fixture.detectChanges();
     const boundingBox = overlayContainerElement.children[0];
     expect(boundingBox.children[0].classList).toContain('cdk-overlay-backdrop');
-  }));
+  });
 
-  it('should change overlayClass when the nzPopconfirmOverlayClassName is changed', fakeAsync(() => {
+  it('should change overlayClass when the nzPopconfirmOverlayClassName is changed', () => {
     const triggerElement = component.stringTemplate.nativeElement;
 
     dispatchMouseEvent(triggerElement, 'click');
     waitingForTooltipToggling();
 
-    component.class = 'testClass2';
+    component.class.set('testClass2');
     fixture.detectChanges();
 
     expect(overlayContainerElement.querySelector<HTMLElement>('.testClass')).toBeNull();
     expect(overlayContainerElement.querySelector<HTMLElement>('.testClass2')).not.toBeNull();
-  }));
+  });
 
-  it('should nzPopconfirmOverlayClassName support classes listed in the string (space delimited)', fakeAsync(() => {
+  it('should nzPopconfirmOverlayClassName support classes listed in the string (space delimited)', () => {
     const triggerElement = component.stringTemplate.nativeElement;
-    component.class = 'testClass1 testClass2';
+    component.class.set('testClass1 testClass2');
 
     dispatchMouseEvent(triggerElement, 'click');
     waitingForTooltipToggling();
 
     expect(overlayContainerElement.querySelector('.testClass1.testClass2')).not.toBeNull();
-  }));
+  });
 });
 
 @Component({
@@ -326,15 +328,15 @@ describe('popconfirm', () => {
       #stringTemplate
       popconfirmTitle="title-string"
       okText="ok-text"
-      [okType]="okType"
-      [okDisabled]="okDisabled"
+      [okType]="okType()"
+      [okDisabled]="okDisabled()"
       cancelText="cancel-text"
-      [autofocus]="autoFocus"
-      [condition]="condition"
-      [beforeConfirm]="beforeConfirm"
-      [popconfirmShowArrow]="popconfirmShowArrow"
-      [popconfirmBackdrop]="popconfirmBackdrop"
-      [popconfirmOverlayClassName]="class"
+      [autofocus]="autoFocus()"
+      [condition]="condition()"
+      [beforeConfirm]="beforeConfirm()"
+      [popconfirmShowArrow]="popconfirmShowArrow()"
+      [popconfirmBackdrop]="popconfirmBackdrop()"
+      [popconfirmOverlayClassName]="class()"
       (onConfirm)="confirm()"
       (onCancel)="cancel()"
       [okButtonProps]="okButtonProps()"
@@ -345,7 +347,7 @@ describe('popconfirm', () => {
     <a
       tri-popconfirm
       #templateTemplate
-      [icon]="icon"
+      [icon]="icon()"
       [popconfirmTitle]="titleTemplate"
       (onConfirm)="confirm()"
       (onCancel)="cancel()"
@@ -353,32 +355,32 @@ describe('popconfirm', () => {
       Delete
     </a>
 
-    <a tri-popconfirm #iconTemplate [icon]="icon">Delete</a>
+    <a tri-popconfirm #iconTemplate [icon]="icon()">Delete</a>
 
     <ng-template #titleTemplate>title-template</ng-template>
   `,
   changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TriPopconfirmTestNewComponent {
-  confirm = jasmine.createSpy('confirm');
-  cancel = jasmine.createSpy('cancel');
-  condition = false;
-  okType: string = 'default';
-  okDisabled: boolean = false;
+  confirm = vi.fn();
+  cancel = vi.fn();
+  readonly condition = signal(false);
+  readonly okType = signal<string>('default');
+  readonly okDisabled = signal<boolean>(false);
   cancelText = 'Cancel';
   okText = 'Ok';
   okButtonProps = signal<TriPopConfirmButtonProps>({ nzDisabled: false });
   cancelButtonProps = signal<TriPopConfirmButtonProps>({ nzDisabled: false });
-  popconfirmShowArrow = true;
-  icon: string | null | undefined = undefined;
-  popconfirmBackdrop = false;
-  autoFocus: TriAutoFocusType = null;
-  beforeConfirm?: () => Observable<boolean> | Promise<boolean> | boolean = undefined;
+  readonly popconfirmShowArrow = signal(true);
+  readonly icon = signal<string | null | undefined>(undefined);
+  readonly popconfirmBackdrop = signal(false);
+  readonly autoFocus = signal<TriAutoFocusType>(null);
+  readonly beforeConfirm = signal<(() => Observable<boolean> | Promise<boolean> | boolean) | undefined>(undefined);
 
   @ViewChild('stringTemplate', { static: false }) stringTemplate!: ElementRef;
   @ViewChild('templateTemplate', { static: false }) templateTemplate!: ElementRef;
   @ViewChild('iconTemplate', { static: false }) iconTemplate!: ElementRef;
 
   visible = false;
-  class = 'testClass';
+  readonly class = signal('testClass');
 }

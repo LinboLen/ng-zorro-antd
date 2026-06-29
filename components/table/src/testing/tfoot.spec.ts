@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, ElementRef, provideZoneChangeDetection, inject } from '@angular/core';
+import { Component, ElementRef, inject, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TriTableModule } from '../table.module';
@@ -30,8 +30,8 @@ describe('tfoot', () => {
   });
 
   it('should fixed work', () => {
-    component.scrollY = '100px';
-    component.fixed = true;
+    component.scrollY.set('100px');
+    component.fixed.set(true);
     fixture.detectChanges();
 
     const tfoot = component.elementRef.nativeElement.querySelector('div.ant-table-summary tfoot.ant-table-summary');
@@ -39,8 +39,8 @@ describe('tfoot', () => {
   });
 
   it('should fixed not work when scrollY is not set', () => {
-    component.scrollY = null;
-    component.fixed = true;
+    component.scrollY.set(null);
+    component.fixed.set(true);
     fixture.detectChanges();
 
     const tfoot = component.elementRef.nativeElement.querySelector('div.ant-table-summary tfoot.ant-table-summary');
@@ -48,8 +48,8 @@ describe('tfoot', () => {
   });
 
   it('should fixed at top work', () => {
-    component.scrollY = '100px';
-    component.fixed = 'top';
+    component.scrollY.set('100px');
+    component.fixed.set('top');
     fixture.detectChanges();
 
     const tfoot = component.elementRef.nativeElement.querySelector('div.ant-table-header tfoot.ant-table-summary');
@@ -60,7 +60,7 @@ describe('tfoot', () => {
 @Component({
   imports: [TriTableModule],
   template: `
-    <tri-table [scroll]="{ x: scrollX, y: scrollY }">
+    <tri-table [scroll]="{ x: scrollX(), y: scrollY() }">
       <thead>
         <th></th>
         <th></th>
@@ -71,16 +71,15 @@ describe('tfoot', () => {
           <td>2</td>
         </tr>
       </tbody>
-      <tfoot summary [fixed]="fixed">
+      <tfoot summary [fixed]="fixed()">
         <td colspan="2">summary</td>
       </tfoot>
     </tri-table>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TestComponent {
   readonly elementRef = inject(ElementRef);
-  scrollX: string | null = null;
-  scrollY: string | null = null;
-  fixed: TriTableSummaryFixedType | boolean = false;
+  readonly scrollX = signal<string | null>(null);
+  readonly scrollY = signal<string | null>(null);
+  readonly fixed = signal<TriTableSummaryFixedType | boolean>(false);
 }

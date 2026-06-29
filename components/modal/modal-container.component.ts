@@ -6,7 +6,7 @@
 import { CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop';
 import { CdkScrollable } from '@angular/cdk/overlay';
 import { CdkPortalOutlet, PortalModule } from '@angular/cdk/portal';
-import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 import { TriPipesModule } from 'ng-zorro-antd/pipes';
 
@@ -18,6 +18,15 @@ import { TriModalTitleComponent } from './modal-title.component';
 @Component({
   selector: 'tri-modal-container',
   exportAs: 'triModalContainer',
+  imports: [
+    TriModalCloseComponent,
+    TriModalTitleComponent,
+    PortalModule,
+    TriModalFooterComponent,
+    TriPipesModule,
+    CdkDrag,
+    CdkDragHandle
+  ],
   hostDirectives: [CdkScrollable],
   template: `
     <div
@@ -56,8 +65,6 @@ import { TriModalTitleComponent } from './modal-title.component';
       </div>
     </div>
   `,
-  // Using OnPush for modal caused footer can not to detect changes. we can fix it when 8.x.
-  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     tabindex: '-1',
     role: 'dialog',
@@ -66,16 +73,7 @@ import { TriModalTitleComponent } from './modal-title.component';
     '[class.tri-modal-centered]': 'centered',
     '[style.zIndex]': 'config.nzZIndex',
     '(click)': 'onContainerClick($event)'
-  },
-  imports: [
-    TriModalCloseComponent,
-    TriModalTitleComponent,
-    PortalModule,
-    TriModalFooterComponent,
-    TriPipesModule,
-    CdkDrag,
-    CdkDragHandle
-  ]
+  }
 })
 export class TriModalContainerComponent extends BaseModalContainerComponent implements OnInit {
   @ViewChild(CdkPortalOutlet, { static: true }) set _portalOutlet(portalOutlet: CdkPortalOutlet) {
@@ -83,6 +81,12 @@ export class TriModalContainerComponent extends BaseModalContainerComponent impl
   }
   @ViewChild('modalElement', { static: true }) set _modalElementRef(elementRef: ElementRef<HTMLDivElement>) {
     this.modalElementRef = elementRef;
+  }
+  @ViewChild(TriModalFooterComponent) private modalFooter?: TriModalFooterComponent;
+
+  override markForCheck(): void {
+    super.markForCheck();
+    this.modalFooter?.markForCheck();
   }
 
   ngOnInit(): void {
