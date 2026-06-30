@@ -451,12 +451,3 @@ export class TestAnchorComponent {
 export class TestButtonFinalSizeComponent {
   readonly size = signal<TriButtonSize>('default');
 }
-
-@Component({
-  imports: [TriButtonModule],
-  template: ` <button tri-button [size]="size">Button</button> `,
-  changeDetection: ChangeDetectionStrategy.Eager
-})
-export class TestButtonFinalSizeComponent {
-  size: TriButtonSize = 'default';
-}

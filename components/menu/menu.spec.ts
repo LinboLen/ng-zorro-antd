@@ -975,8 +975,7 @@ export class TriTestMenuSiderCurrentComponent {
         </ul>
       </li>
     </ul>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestMenuSwitchModeComponent {
   readonly mode = signal(false);

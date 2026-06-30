@@ -293,20 +293,3 @@ export class TriTestDropdownArrowComponent {
   readonly arrow = signal(false);
   readonly placement = signal<TriPlacementType>('bottomLeft');
 }
-
-@Component({
-  imports: [TriDropdownModule, TriMenuModule],
-  template: `
-    <a tri-dropdown [dropdownMenu]="menu" [arrow]="arrow" [placement]="placement" trigger="hover"> Trigger </a>
-    <tri-dropdown-menu #menu="nzDropdownMenu">
-      <ul tri-menu>
-        <li tri-menu-item>1st menu item</li>
-      </ul>
-    </tri-dropdown-menu>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
-})
-export class TriTestDropdownArrowComponent {
-  arrow = false;
-  placement: TriPlacementType = 'bottomLeft';
-}

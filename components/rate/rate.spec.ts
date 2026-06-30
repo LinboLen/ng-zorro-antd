@@ -327,8 +327,7 @@ export class TriTestRateBasicComponent {
     <form>
       <tri-rate [formControl]="formControl" [disabled]="disabled()" />
     </form>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestRateFormComponent {
   formControl = new FormControl(1);

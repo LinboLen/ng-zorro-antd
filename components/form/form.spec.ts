@@ -267,15 +267,16 @@ export class TriTestFormLabelIntegrateComponent {
     </ng-template>
   `
 })
-export class TriTestFormRequiredMarkComponent {
-  readonly requiredMark = signal<TriRequiredMark>(true);
-  readonly useCustomTemplate = signal(false);
+export class TriTestFormLabelIntegrateComponent {
+  readonly defaultNoColon = signal(false);
+  readonly testPriority = signal(false);
+  readonly noColon = signal(false);
 }
 
 @Component({
   imports: [TriFormModule, NgTemplateOutlet],
   template: `
-    <form tri-form [requiredMark]="useCustomTemplate ? customRequiredMarkTemplate : requiredMark">
+    <form tri-form [requiredMark]="useCustomTemplate() ? customRequiredMarkTemplate : requiredMark()">
       <tri-form-item class="required-label">
         <tri-form-label required>
           <span class="label-content">Required Field</span>
@@ -296,19 +297,9 @@ export class TriTestFormRequiredMarkComponent {
       }
       <ng-container *ngTemplateOutlet="label" />
     </ng-template>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
-export class TriTestFormRequiredMarkComponent implements AfterViewInit {
-  requiredMark: TriRequiredMark = true;
-  useCustomTemplate = false;
-
-  @ViewChild('customRequiredMarkTemplate', { static: true })
-  customRequiredMarkTemplate!: TemplateRef<{ $implicit: TemplateRef<void>; required: boolean }>;
-
-  ngAfterViewInit(): void {
-    if (this.useCustomTemplate) {
-      this.requiredMark = this.customRequiredMarkTemplate;
-    }
-  }
+export class TriTestFormRequiredMarkComponent {
+  readonly requiredMark = signal<TriRequiredMark>(true);
+  readonly useCustomTemplate = signal(false);
 }

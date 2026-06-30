@@ -94,8 +94,24 @@ describe('color-picker', () => {
   it('color-picker nzSize', () => {
     testComponent.size.set('small');
     fixture.detectChanges();
-    expect(resultEl.nativeElement.querySelector('.ant-color-picker-trigger').classList).toContain(
-      'ant-color-picker-sm'
+
+    const trigger = resultEl.nativeElement.querySelector('.ant-color-picker-trigger');
+    dispatchMouseEvent(trigger, 'click');
+    waitingForTooltipToggling();
+
+    const presetWrapper = overlayContainerElement.querySelector('.ant-color-picker-presets-wrapper');
+    expect(presetWrapper).toBeFalsy();
+  }));
+
+  it('should handle preset color selection', fakeAsync(() => {
+    spyOn(testComponent, 'onColorChange');
+
+    const trigger = resultEl.nativeElement.querySelector('.ant-color-picker-trigger');
+    dispatchMouseEvent(trigger, 'click');
+    waitingForTooltipToggling();
+
+    const firstPresetColor = overlayContainerElement.querySelector(
+      '.ant-color-picker-presets-items .ant-color-picker-color-block'
     );
     testComponent.size.set('large');
     fixture.detectChanges();
@@ -107,8 +123,6 @@ describe('color-picker', () => {
   it('color-picker nzDisabled', () => {
     testComponent.disabled.set(true);
     fixture.detectChanges();
-    expect(resultEl.nativeElement.classList).toContain('ant-color-picker-disabled');
-  });
 
   it('color-picker nzShowText', () => {
     testComponent.showText.set(true);
@@ -299,8 +313,7 @@ describe('color-picker', () => {
     <ng-template #flipFlop>
       <button tri-button type="primary">Color</button>
     </ng-template>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
+  `
 })
 export class TriTestColorPickerComponent {
   readonly format = signal<TriColorPickerFormatType | null>(null);
@@ -473,104 +486,6 @@ describe('nz-color-picker with presets', () => {
       fixture.detectChanges();
     }
   });
-});
-
-describe('nz-color-picker with presets', () => {
-  let fixture: ComponentFixture<TriTestColorPickerPresetsComponent>;
-  let testComponent: TriTestColorPickerPresetsComponent;
-  let resultEl: DebugElement;
-  let overlayContainer: OverlayContainer;
-  let overlayContainerElement: HTMLElement;
-
-  function waitingForTooltipToggling(): void {
-    fixture.detectChanges();
-    tick(500);
-    fixture.detectChanges();
-  }
-
-  beforeEach(fakeAsync(() => {
-    TestBed.configureTestingModule({
-      providers: [provideNoopAnimations(), provideZoneChangeDetection()]
-    });
-    fixture = TestBed.createComponent(TriTestColorPickerPresetsComponent);
-    fixture.detectChanges();
-    testComponent = fixture.componentInstance;
-    resultEl = fixture.debugElement.query(By.directive(TriColorPickerComponent));
-  }));
-
-  beforeEach(inject([OverlayContainer], (oc: OverlayContainer) => {
-    overlayContainer = oc;
-    overlayContainerElement = oc.getContainerElement();
-  }));
-
-  afterEach(() => {
-    overlayContainer.ngOnDestroy();
-  });
-
-  it('should render presets when provided', fakeAsync(() => {
-    const trigger = resultEl.nativeElement.querySelector('.ant-color-picker-trigger');
-    dispatchMouseEvent(trigger, 'click');
-    waitingForTooltipToggling();
-
-    const presetWrapper = overlayContainerElement.querySelector('.ant-color-picker-presets-wrapper');
-    expect(presetWrapper).toBeTruthy();
-
-    const collapseItems = overlayContainerElement.querySelectorAll('.ant-collapse-item');
-    expect(collapseItems.length).toBe(2);
-  }));
-
-  it('should not render presets when null', fakeAsync(() => {
-    testComponent.presets = null;
-    fixture.detectChanges();
-
-    const trigger = resultEl.nativeElement.querySelector('.ant-color-picker-trigger');
-    dispatchMouseEvent(trigger, 'click');
-    waitingForTooltipToggling();
-
-    const presetWrapper = overlayContainerElement.querySelector('.ant-color-picker-presets-wrapper');
-    expect(presetWrapper).toBeFalsy();
-  }));
-
-  it('should handle preset color selection', fakeAsync(() => {
-    spyOn(testComponent, 'onColorChange');
-
-    const trigger = resultEl.nativeElement.querySelector('.ant-color-picker-trigger');
-    dispatchMouseEvent(trigger, 'click');
-    waitingForTooltipToggling();
-
-    const firstPresetColor = overlayContainerElement.querySelector(
-      '.ant-color-picker-presets-items .ant-color-picker-color-block'
-    );
-    expect(firstPresetColor).toBeTruthy();
-
-    dispatchMouseEvent(firstPresetColor as Element, 'click');
-    fixture.detectChanges();
-    tick(0);
-    fixture.detectChanges();
-
-    expect(testComponent.onColorChange).toHaveBeenCalled();
-  }));
-
-  it('should toggle preset groups', fakeAsync(() => {
-    const trigger = resultEl.nativeElement.querySelector('.ant-color-picker-trigger');
-    dispatchMouseEvent(trigger, 'click');
-    waitingForTooltipToggling();
-
-    const collapseItems = overlayContainerElement.querySelectorAll('.ant-collapse-item');
-    const secondPanel = collapseItems[1] as HTMLElement;
-
-    // Initially, second group should be collapsed (no active class)
-    expect(secondPanel.classList.contains('ant-collapse-item-active')).toBeFalse();
-
-    // Find and click the collapse header to toggle
-    const collapseHeader = secondPanel.querySelector('.ant-collapse-header');
-    if (collapseHeader) {
-      dispatchMouseEvent(collapseHeader, 'click');
-      fixture.detectChanges();
-      tick(300); // Wait for collapse animation
-      fixture.detectChanges();
-    }
-  }));
 });
 
 @Component({

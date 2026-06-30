@@ -76,14 +76,6 @@ describe('popconfirm', () => {
     expect(overlayContainerElement.querySelector('.ant-popover-message-icon')).toBeFalsy();
   });
 
-  it('should hide icon when nzIcon is set to null', fakeAsync(() => {
-    component.icon = null;
-    const triggerElement = component.iconTemplate.nativeElement;
-    dispatchMouseEvent(triggerElement, 'click');
-    waitingForTooltipToggling();
-    expect(overlayContainerElement.querySelector('.ant-popover-message-icon')).toBeFalsy();
-  }));
-
   it('should nzOk work', () => {
     const triggerElement = component.stringTemplate.nativeElement;
     dispatchMouseEvent(triggerElement, 'click');

@@ -56,10 +56,6 @@ describe('modal with animation', () => {
     fixture = TestBed.createComponent(TestWithServiceComponent);
   });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(TestWithServiceComponent);
-  });
-
   afterEach(() => {
     overlayContainer.ngOnDestroy();
   });
@@ -189,10 +185,6 @@ describe('modal', () => {
     mockLocation = TestBed.inject(Location) as SpyLocation;
     overlayContainer = TestBed.inject(OverlayContainer);
     overlayContainerElement = overlayContainer.getContainerElement();
-    fixture = TestBed.createComponent(TestWithServiceComponent);
-  });
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(TestWithServiceComponent);
   });
 

@@ -803,7 +803,7 @@ describe('tabs', () => {
       fixture.componentInstance.selectedIndex.set(2);
       await stabilize(fixture, 32);
       expect(element.querySelectorAll('.ant-tabs-tabpane').length).toBe(3);
-    }));
+    });
 
     it('should render inactive tab when forceRender is true', async () => {
       fixture.componentInstance.forceRender.set(true);
@@ -1300,23 +1300,6 @@ class SimpleTabsWithExtraContentComponent {
       <tri-tab title="Tab 2">Content of Tab Pane 2</tri-tab>
     </tri-tabs>
   `
-})
-class IndicatorTabsTestComponent {
-  readonly selectedIndex = signal(1);
-  readonly position = signal<TriTabPosition>('top');
-  readonly indicator = signal<TriIndicator | undefined>(undefined);
-}
-
-@Component({
-  imports: [TriTabsModule],
-  template: `
-    <tri-tabs [tabPosition]="position()" [indicator]="indicator()" [(selectedIndexChange)]="selectedIndex">
-      <tri-tab title="Tab 0">Content of Tab Pane 0</tri-tab>
-      <tri-tab title="Tab 1">Content of Tab Pane 1</tri-tab>
-      <tri-tab title="Tab 2">Content of Tab Pane 2</tri-tab>
-    </tri-tabs>
-  `,
-  changeDetection: ChangeDetectionStrategy.Eager
 })
 class IndicatorTabsTestComponent {
   readonly selectedIndex = signal(1);
