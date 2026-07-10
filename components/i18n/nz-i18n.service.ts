@@ -28,7 +28,7 @@ export class TriI18nService {
 
   constructor() {
     this.setLocale(inject(TRI_I18N, { optional: true }) || zh_CN);
-    this.setDateLocale(inject(TRI_DATE_LOCALE, { optional: true }) as DateLocale); // TODO: fix the type
+    this.setDateLocale(inject<DateLocale>(TRI_DATE_LOCALE, { optional: true }));
   }
 
   // [NOTE] Performance issue: this method may called by every change detections
@@ -68,10 +68,16 @@ export class TriI18nService {
     return this._locale ? this._locale.locale : '';
   }
 
-  setDateLocale(dateLocale: DateLocale): void {
-    this.dateLocale = dateLocale;
+  /**
+   * @deprecated Intended for internal use only. Provide {@link TRI_DATE_LOCALE} instead.
+   */
+  setDateLocale(dateLocale: DateLocale | null): void {
+    this.dateLocale = dateLocale!;
   }
 
+  /**
+   * @deprecated Intended for internal use only. Use `inject(NZ_DATE_LOCALE)` instead.
+   */
   getDateLocale(): DateLocale {
     return this.dateLocale;
   }

@@ -14,21 +14,10 @@ import {
 import { TriCalendarHeaderComponent } from './calendar-header.component';
 import { TriCalendarComponent } from './calendar.component';
 
+const CELL_DIRECTIVES = [TriDateCellDirective, TriDateFullCellDirective, TriMonthCellDirective, TriMonthFullCellDirective];
+
 @NgModule({
-  imports: [
-    TriCalendarHeaderComponent,
-    TriCalendarComponent,
-    TriDateCellDirective,
-    TriDateFullCellDirective,
-    TriMonthCellDirective,
-    TriMonthFullCellDirective
-  ],
-  exports: [
-    TriCalendarComponent,
-    TriDateCellDirective,
-    TriDateFullCellDirective,
-    TriMonthCellDirective,
-    TriMonthFullCellDirective
-  ]
+  imports: [TriCalendarHeaderComponent, TriCalendarComponent, ...CELL_DIRECTIVES],
+  exports: [TriCalendarComponent, ...CELL_DIRECTIVES]
 })
 export class TriCalendarModule {}

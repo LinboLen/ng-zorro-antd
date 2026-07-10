@@ -1,8 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { getISOWeek } from 'date-fns';
-
 import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 @Component({
@@ -11,7 +9,7 @@ import { TriDatePickerModule } from 'ng-zorro-antd/date-picker';
   template: `
     <tri-date-picker [(ngModel)]="date" (ngModelChange)="onChange($event)" />
     <br />
-    <tri-date-picker mode="week" [(ngModel)]="date" (ngModelChange)="getWeek($event)" />
+    <tri-date-picker mode="week" [(ngModel)]="date" (ngModelChange)="onChange($event)" />
     <br />
     <tri-date-picker mode="month" [(ngModel)]="date" (ngModelChange)="onChange($event)" />
     <br />
@@ -30,9 +28,5 @@ export class TriDemoDatePickerBasicComponent {
 
   onChange(result: Date): void {
     console.log('onChange: ', result);
-  }
-
-  getWeek(result: Date): void {
-    console.log('week: ', getISOWeek(result));
   }
 }

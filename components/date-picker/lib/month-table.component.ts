@@ -3,26 +3,25 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, inject, OnChanges, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, inject, OnChanges, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
-import { CandyDate } from 'ng-zorro-antd/core/time';
+import { CandyDate, TriDateAdapter } from 'ng-zorro-antd/core/time';
 import { valueFunctionProp } from 'ng-zorro-antd/core/util';
-import { DateHelperService } from 'ng-zorro-antd/i18n';
 
 import { AbstractTable } from './abstract-table';
 import { DateBodyRow, DateCell } from './interface';
+import { transCompatFormat } from './util';
 
 @Component({
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: '',
   templateUrl: 'abstract-table.html',
-  imports: [TriStringTemplateOutletDirective]
+  imports: [TriStringTemplateOutletDirective],
+  encapsulation: ViewEncapsulation.None
 })
 export class MonthTableComponent extends AbstractTable implements OnChanges, OnInit {
-  private readonly dateHelper = inject(DateHelperService);
+  private readonly dateAdapter = inject(TriDateAdapter);
 
   override MAX_ROW = 4;
   override MAX_COL = 3;
@@ -44,7 +43,7 @@ export class MonthTableComponent extends AbstractTable implements OnChanges, OnI
       for (let colIndex = 0; colIndex < this.MAX_COL; colIndex++) {
         const month = this.activeDate.setMonth(monthValue);
         const isDisabled = this.isDisabledMonth(month);
-        const content = this.dateHelper.format(month.nativeDate, 'MMM');
+        const content = this.dateAdapter.format(month.nativeDate, transCompatFormat(this.locale.monthFormat || 'MMM'));
         const cell: DateCell = {
           trackByIndex: colIndex,
           value: month.nativeDate,

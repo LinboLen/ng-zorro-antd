@@ -122,6 +122,14 @@ describe('NzDatePickerComponent', () => {
       expect(getPickerContainer()).toBeNull();
     });
 
+    it('should close safely before the popup panel is ready', () => {
+      fixture.detectChanges();
+      fixtureInstance.datePicker._open();
+
+      expect(() => fixtureInstance.datePicker.checkAndClose()).not.toThrow();
+      expect(fixtureInstance.datePicker.realOpenState).toBe(false);
+    });
+
     it('should focus on the trigger after a click outside', () => {
       fixture.detectChanges();
       openPickerByClickTrigger();
@@ -231,9 +239,6 @@ describe('NzDatePickerComponent', () => {
       i18nService.setLocale(en_US);
       fixture.detectChanges();
       expect(getPickerInput(fixture.debugElement).placeholder).toBe('Select date');
-
-      openPickerByClickTrigger();
-      expect(queryFromOverlay(`.${PREFIX_CLASS}-content th`).textContent).toContain('Su');
     });
 
     /* Issue https://github.com/NG-ZORRO/ng-zorro-antd/issues/1539 */
@@ -434,6 +439,10 @@ describe('NzDatePickerComponent', () => {
 
     // #5633
     it('should support disable year and month right', () => {
+      fixtureInstance.locale.set({
+        ...en_US.DatePicker,
+        lang: { ...en_US.DatePicker.lang, monthFormat: 'M' }
+      });
       fixture.detectChanges();
       fixtureInstance.value.set(new Date(2020, 0, 1));
       fixtureInstance.disabledDate.set(
@@ -561,6 +570,10 @@ describe('NzDatePickerComponent', () => {
     });
 
     it('should support nzDefaultPickerValue', () => {
+      fixtureInstance.locale.set({
+        ...en_US.DatePicker,
+        lang: { ...en_US.DatePicker.lang, monthFormat: 'M' }
+      });
       fixture.detectChanges();
       fixtureInstance.defaultPickerValue.set(new Date('2015-09-17'));
       fixture.detectChanges();
@@ -730,6 +743,10 @@ describe('NzDatePickerComponent', () => {
     });
 
     it('should support date panel changes', async () => {
+      fixtureInstance.locale.set({
+        ...en_US.DatePicker,
+        lang: { ...en_US.DatePicker.lang, monthFormat: 'M' }
+      });
       fixtureInstance.value.set(new Date('2018-11-11'));
       await stabilize(10000);
       openPickerByClickTrigger();

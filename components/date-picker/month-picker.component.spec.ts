@@ -21,6 +21,7 @@ import { TriDatePickerSizeType } from 'ng-zorro-antd/date-picker/date-picker.com
 import { getPickerAbstract, getPickerInput } from 'ng-zorro-antd/date-picker/testing/util';
 import { PREFIX_CLASS } from 'ng-zorro-antd/date-picker/util';
 import { TriDatePickerI18nInterface, TriDatePickerLangI18nInterface } from 'ng-zorro-antd/i18n';
+import en_US from 'ng-zorro-antd/i18n/languages/en_US';
 import { TriInputModule } from 'ng-zorro-antd/input';
 
 import { TriDatePickerModule } from './date-picker.module';
@@ -133,6 +134,10 @@ describe('month-picker', () => {
     });
 
     it('should support nzDisabledDate', async () => {
+      fixtureInstance.locale.set({
+        ...en_US.DatePicker,
+        lang: { ...en_US.DatePicker.lang, monthFormat: 'M' }
+      });
       fixture.detectChanges();
       const compareDate = new Date('2018-11-15 00:00:00');
       fixtureInstance.value.set(new Date('2018-11-11 12:12:12'));
@@ -202,6 +207,10 @@ describe('month-picker', () => {
     });
 
     it('should support nzValue', async () => {
+      fixtureInstance.locale.set({
+        ...en_US.DatePicker,
+        lang: { ...en_US.DatePicker.lang, monthFormat: 'M' }
+      });
       fixtureInstance.value.set(new Date('2018-11-22'));
       await stabilize();
       await openPickerByClickTrigger();
@@ -209,6 +218,10 @@ describe('month-picker', () => {
     });
 
     it('should support nzOnChange', async () => {
+      fixtureInstance.locale.set({
+        ...en_US.DatePicker,
+        lang: { ...en_US.DatePicker.lang, monthFormat: 'M' }
+      });
       fixtureInstance.value.set(new Date('2018-11'));
       const nzOnChange = vi.spyOn(fixtureInstance, 'nzOnChange');
       fixture.detectChanges();
@@ -294,6 +307,10 @@ describe('month-picker', () => {
     });
 
     it('should support selected month active', async () => {
+      fixtureInstance.locale.set({
+        ...en_US.DatePicker,
+        lang: { ...en_US.DatePicker.lang, monthFormat: 'M月' }
+      });
       fixtureInstance.value.set(new Date('2019-7-13 15:10:00'));
       await stabilize();
 
@@ -309,6 +326,10 @@ describe('month-picker', () => {
     beforeEach(() => fixtureInstance.useSuite.set(3));
 
     it('should specified date provide by "modelValue" be chosen', async () => {
+      fixtureInstance.locale.set({
+        ...en_US.DatePicker,
+        lang: { ...en_US.DatePicker.lang, monthFormat: 'M' }
+      });
       fixtureInstance.modelValue.set(new Date('2018-11'));
       await stabilize();
       expect(getSelectedMonthCell().textContent).toContain('11');
@@ -390,10 +411,10 @@ describe('month-picker', () => {
         <tri-date-picker mode="month" [open]="open()" />
       }
       @case (3) {
-        <tri-date-picker mode="month" open [(ngModel)]="modelValue" />
+        <tri-date-picker mode="month" open [locale]="locale()!" [(ngModel)]="modelValue" />
       }
       @case (4) {
-        <tri-month-picker open [(ngModel)]="modelValue" />
+        <tri-month-picker open [locale]="locale()!" [(ngModel)]="modelValue" />
       }
     }
   `,

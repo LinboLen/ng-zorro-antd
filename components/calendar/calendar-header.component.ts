@@ -16,17 +16,19 @@ import {
   booleanAttribute,
   inject
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
 import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
-import { CandyDate } from 'ng-zorro-antd/core/time';
-import { DateHelperService, TriI18nService } from 'ng-zorro-antd/i18n';
+import { CandyDate, TriDateAdapter } from 'ng-zorro-antd/core/time';
+import { TriI18nPipe } from 'ng-zorro-antd/i18n';
 import { TriRadioModule } from 'ng-zorro-antd/radio';
 import { TriSelectModule, TriSelectSizeType } from 'ng-zorro-antd/select';
 
 @Component({
   selector: 'tri-calendar-header',
   exportAs: 'triCalendarHeader',
+  imports: [FormsModule, TriI18nPipe, TriSelectModule, TriRadioModule, TriStringTemplateOutletDirective],
   encapsulation: ViewEncapsulation.None,
   template: `
     @if (customHeader) {
@@ -65,8 +67,8 @@ import { TriSelectModule, TriSelectSizeType } from 'ng-zorro-antd/select';
           (ngModelChange)="modeChange.emit($event)"
           [size]="size"
         >
-          <label tri-radio-button value="month">{{ monthTypeText }}</label>
-          <label tri-radio-button value="year">{{ yearTypeText }}</label>
+          <label tri-radio-button value="month">{{ 'Calendar.lang.month' | nzI18n }}</label>
+          <label tri-radio-button value="year">{{ 'Calendar.lang.year' | nzI18n }}</label>
         </tri-radio-group>
       </div>
     }
@@ -74,16 +76,14 @@ import { TriSelectModule, TriSelectSizeType } from 'ng-zorro-antd/select';
   host: {
     class: 'tri-fullcalendar-header',
     '[style.display]': `'block'`
-  },
-  imports: [TriSelectModule, FormsModule, TriRadioModule, TriStringTemplateOutletDirective]
+  }
 })
 export class TriCalendarHeaderComponent implements OnInit, OnChanges {
-  private readonly dateHelper = inject(DateHelperService);
-  private readonly i18n = inject(TriI18nService);
+  private readonly dateAdapter = inject(TriDateAdapter);
 
   @Input() mode: 'month' | 'year' = 'month';
   @Input({ transform: booleanAttribute }) fullscreen: boolean = true;
-  @Input() activeDate: CandyDate = new CandyDate();
+  @Input() activeDate = new CandyDate();
   @Input() customHeader?: string | TemplateRef<void>;
 
   @Output() readonly modeChange = new EventEmitter<'month' | 'year'>();
@@ -107,12 +107,11 @@ export class TriCalendarHeaderComponent implements OnInit, OnChanges {
     return this.fullscreen ? 'default' : 'small';
   }
 
-  get yearTypeText(): string {
-    return this.i18n.getLocale().Calendar.lang.year;
-  }
-
-  get monthTypeText(): string {
-    return this.i18n.getLocale().Calendar.lang.month;
+  constructor() {
+    this.dateAdapter.localeChanges.pipe(takeUntilDestroyed()).subscribe(() => {
+      this.setUpYears();
+      this.setUpMonths();
+    });
   }
 
   ngOnInit(): void {
@@ -121,10 +120,9 @@ export class TriCalendarHeaderComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['activeDate']) {
-      const previousActiveDate = changes['activeDate'].previousValue as CandyDate;
-      const currentActiveDate = changes['activeDate'].currentValue as CandyDate;
-      if (previousActiveDate?.getYear() !== currentActiveDate?.getYear()) {
+    const { activeDate } = changes;
+    if (activeDate) {
+      if (activeDate.previousValue?.getYear() !== activeDate.currentValue?.getYear()) {
         this.setUpYears();
       }
     }
@@ -150,7 +148,7 @@ export class TriCalendarHeaderComponent implements OnInit, OnChanges {
 
     for (let i = 0; i < 12; i++) {
       const dateInMonth = this.activeDate.setMonth(i);
-      const monthText = this.dateHelper.format(dateInMonth.nativeDate, 'MMM');
+      const monthText = this.dateAdapter.format(dateInMonth.nativeDate, 'MMM');
       this.months.push({ label: monthText, value: i });
     }
   }

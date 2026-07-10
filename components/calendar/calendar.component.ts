@@ -23,12 +23,13 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { CandyDate } from 'ng-zorro-antd/core/time';
 import { LibPackerModule } from 'ng-zorro-antd/date-picker';
+import { TriCalendarI18nInterface, TriI18nService } from 'ng-zorro-antd/i18n';
 
 import {
-  TriDateCellDirective as DateCell,
-  TriDateFullCellDirective as DateFullCell,
-  TriMonthCellDirective as MonthCell,
-  TriMonthFullCellDirective as MonthFullCell
+  TriDateCellDirective,
+  TriDateFullCellDirective,
+  TriMonthCellDirective,
+  TriMonthFullCellDirective
 } from './calendar-cells';
 import { TriCalendarHeaderComponent } from './calendar-header.component';
 
@@ -60,6 +61,7 @@ type TriCalendarDateTemplate = TemplateRef<{ $implicit: Date }>;
               [prefixCls]="prefixCls"
               [value]="activeDate"
               [activeDate]="activeDate"
+              [locale]="locale"
               [cellRender]="$any(dateCell)"
               [fullCellRender]="$any(dateFullCell)"
               [disabledDate]="disabledDate"
@@ -70,6 +72,7 @@ type TriCalendarDateTemplate = TemplateRef<{ $implicit: Date }>;
               [prefixCls]="prefixCls"
               [value]="activeDate"
               [activeDate]="activeDate"
+              [locale]="locale"
               [cellRender]="$any(monthCell)"
               [fullCellRender]="$any(monthFullCell)"
               (valueChange)="onDateSelect($event)"
@@ -89,10 +92,12 @@ type TriCalendarDateTemplate = TemplateRef<{ $implicit: Date }>;
 })
 export class TriCalendarComponent implements ControlValueAccessor, OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
+  private readonly i18n = inject(TriI18nService);
   protected readonly dir = inject(Directionality).valueSignal;
 
-  activeDate: CandyDate = new CandyDate();
-  prefixCls: string = 'ant-picker-calendar';
+  locale!: TriCalendarI18nInterface;
+  activeDate = new CandyDate();
+  prefixCls = 'ant-picker-calendar';
 
   private onChangeFn: (date: Date) => void = () => {};
   private onTouchFn: () => void = () => {};
@@ -111,33 +116,42 @@ export class TriCalendarComponent implements ControlValueAccessor, OnChanges {
    * because { static: false } will make @Input property get delayed
    **/
   @Input() dateCell?: TriCalendarDateTemplate;
-  @ContentChild(DateCell, { static: false, read: TemplateRef }) dateCellChild?: TriCalendarDateTemplate;
+  @ContentChild(TriDateCellDirective, { static: false, read: TemplateRef })
+  dateCellChild?: TriCalendarDateTemplate;
   get _dateCell(): TriCalendarDateTemplate {
     return (this.dateCell || this.dateCellChild)!;
   }
 
   @Input() dateFullCell?: TriCalendarDateTemplate;
-  @ContentChild(DateFullCell, { static: false, read: TemplateRef }) dateFullCellChild?: TriCalendarDateTemplate;
+  @ContentChild(TriDateFullCellDirective, { static: false, read: TemplateRef })
+  dateFullCellChild?: TriCalendarDateTemplate;
   get _dateFullCell(): TriCalendarDateTemplate {
     return (this.dateFullCell || this.dateFullCellChild)!;
   }
 
   @Input() monthCell?: TriCalendarDateTemplate;
-  @ContentChild(MonthCell, { static: false, read: TemplateRef }) monthCellChild?: TriCalendarDateTemplate;
+  @ContentChild(TriMonthCellDirective, { static: false, read: TemplateRef })
+  monthCellChild?: TriCalendarDateTemplate;
   get _monthCell(): TriCalendarDateTemplate {
     return (this.monthCell || this.monthCellChild)!;
   }
 
   @Input() monthFullCell?: TriCalendarDateTemplate;
-  @ContentChild(MonthFullCell, { static: false, read: TemplateRef }) monthFullCellChild?: TriCalendarDateTemplate;
+  @ContentChild(TriMonthFullCellDirective, { static: false, read: TemplateRef })
+  monthFullCellChild?: TriCalendarDateTemplate;
   get _monthFullCell(): TriCalendarDateTemplate {
     return (this.monthFullCell || this.monthFullCellChild)!;
   }
 
   @Input() customHeader?: string | TemplateRef<void>;
+  @Input({ transform: booleanAttribute }) fullscreen = true;
 
-  @Input({ transform: booleanAttribute })
-  fullscreen: boolean = true;
+  constructor() {
+    this.i18n.localeChange.pipe(takeUntilDestroyed()).subscribe(() => {
+      this.locale = this.i18n.getLocaleData('Calendar', {}).lang;
+      this.cdr.markForCheck();
+    });
+  }
 
   onModeChange(mode: TriCalendarMode): void {
     this.modeChange.emit(mode);
@@ -162,7 +176,6 @@ export class TriCalendarComponent implements ControlValueAccessor, OnChanges {
 
   writeValue(value: Date | null): void {
     this.updateDate(new CandyDate(value as Date), false);
-    this.cdr.markForCheck();
   }
 
   registerOnChange(fn: (date: Date) => void): void {
@@ -182,6 +195,8 @@ export class TriCalendarComponent implements ControlValueAccessor, OnChanges {
       this.selectChange.emit(date.nativeDate);
       this.valueChange.emit(date.nativeDate);
     }
+
+    this.cdr.markForCheck();
   }
 
   ngOnChanges(changes: SimpleChanges): void {

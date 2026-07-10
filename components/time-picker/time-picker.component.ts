@@ -36,8 +36,6 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/f
 import { Observable, of } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 
-import { isValid } from 'date-fns';
-
 import { slideAnimationEnter, slideAnimationLeave } from 'ng-zorro-antd/core/animation';
 import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
 import {
@@ -49,6 +47,7 @@ import {
 import { warn } from 'ng-zorro-antd/core/logger';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { DATE_PICKER_POSITION_MAP, DEFAULT_DATE_PICKER_POSITIONS, TriOverlayModule } from 'ng-zorro-antd/core/overlay';
+import { TriDateAdapter } from 'ng-zorro-antd/core/time';
 import {
   NgClassInterface,
   TriPlacement,
@@ -59,7 +58,7 @@ import {
   TriVariant
 } from 'ng-zorro-antd/core/types';
 import { generateClassName, getStatusClassNames, isNil } from 'ng-zorro-antd/core/util';
-import { DateHelperService, TriI18nService } from 'ng-zorro-antd/i18n';
+import { TriI18nService } from 'ng-zorro-antd/i18n';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
@@ -195,14 +194,15 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'timePicker';
 export class TriTimePickerComponent implements ControlValueAccessor, OnInit, AfterViewInit, OnChanges {
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
-  public configService = inject(TriConfigService);
-  protected i18n = inject(TriI18nService);
-  private elementRef = inject(ElementRef);
-  private renderer = inject(Renderer2);
-  private cdr = inject(ChangeDetectorRef);
-  private dateHelper = inject(DateHelperService);
-  private platform = inject(Platform);
-  private destroyRef = inject(DestroyRef);
+  public readonly configService = inject(TriConfigService);
+  protected readonly i18n = inject(TriI18nService);
+  protected readonly dir = inject(Directionality).valueSignal;
+  private readonly elementRef = inject(ElementRef);
+  private readonly renderer = inject(Renderer2);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly dateAdapter = inject(TriDateAdapter);
+  private readonly platform = inject(Platform);
+  private readonly destroyRef = inject(DestroyRef);
 
   protected readonly dir = inject(Directionality).valueSignal;
 
@@ -287,11 +287,12 @@ export class TriTimePickerComponent implements ControlValueAccessor, OnInit, Aft
   }
 
   setValue(value: Date | null, syncPreValue: boolean = false): void {
+    const valid = value && this.dateAdapter.isValid(value);
     if (syncPreValue) {
-      this.preValue = isValid(value) ? new Date(value!) : null;
+      this.preValue = valid ? new Date(value!) : null;
     }
-    this.value = isValid(value) ? new Date(value!) : null;
-    this.inputValue = this.dateHelper.format(value, this.format);
+    this.value = valid ? new Date(value!) : null;
+    this.inputValue = valid ? this.dateAdapter.format(value!, this.format) : '';
     this.cdr.markForCheck();
   }
 
@@ -361,7 +362,7 @@ export class TriTimePickerComponent implements ControlValueAccessor, OnInit, Aft
   }
 
   onKeyupEnter(): void {
-    if (this.open && isValid(this.value)) {
+    if (this.open && this.value && this.dateAdapter.isValid(this.value)) {
       this.setCurrentValueAndClose();
     } else if (!this.open) {
       this._open();
@@ -480,8 +481,8 @@ export class TriTimePickerComponent implements ControlValueAccessor, OnInit, Aft
   }
 
   parseTimeString(str: string): void {
-    const value = this.dateHelper.parseTime(str, this.format) || null;
-    if (isValid(value)) {
+    const value = this.dateAdapter.parseTime(str, this.format) || null;
+    if (value && this.dateAdapter.isValid(value)) {
       this.value = value;
       this.cdr.markForCheck();
     }

@@ -3,26 +3,24 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, inject, ViewEncapsulation } from '@angular/core';
+import { Component, inject, ViewEncapsulation } from '@angular/core';
 
 import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
-import { CandyDate } from 'ng-zorro-antd/core/time';
+import { CandyDate, TriDateAdapter } from 'ng-zorro-antd/core/time';
 import { valueFunctionProp } from 'ng-zorro-antd/core/util';
-import { DateHelperService } from 'ng-zorro-antd/i18n';
 
 import { AbstractTable } from './abstract-table';
 import { DateBodyRow, DateCell, YearCell } from './interface';
 
 @Component({
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: '',
   templateUrl: 'abstract-table.html',
-  imports: [TriStringTemplateOutletDirective]
+  imports: [TriStringTemplateOutletDirective],
+  encapsulation: ViewEncapsulation.None
 })
 export class YearTableComponent extends AbstractTable {
-  private readonly dateHelper = inject(DateHelperService);
+  private readonly dateAdapter = inject(TriDateAdapter);
 
   override MAX_ROW = 4;
   override MAX_COL = 3;
@@ -47,7 +45,7 @@ export class YearTableComponent extends AbstractTable {
       for (let colIndex = 0; colIndex < this.MAX_COL; colIndex++) {
         const yearNum = previousYear + yearValue;
         const year = this.activeDate.setYear(yearNum);
-        const content = this.dateHelper.format(year.nativeDate, 'yyyy');
+        const content = this.dateAdapter.format(year.nativeDate, 'yyyy');
         const isDisabled = this.isDisabledYear(year);
         const cell: YearCell = {
           trackByIndex: colIndex,

@@ -45,7 +45,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
 
 import { TriResizeObserver } from 'ng-zorro-antd/cdk/resize-observer';
 import { slideAnimationEnter, slideAnimationLeave } from 'ng-zorro-antd/core/animation';
-import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
 import {
   TRI_FORM_SIZE,
   TRI_FORM_VARIANT,
@@ -54,7 +54,7 @@ import {
 } from 'ng-zorro-antd/core/form';
 import { TriOutletModule } from 'ng-zorro-antd/core/outlet';
 import { DATE_PICKER_POSITION_MAP, DEFAULT_DATE_PICKER_POSITIONS, TriOverlayModule } from 'ng-zorro-antd/core/overlay';
-import { CandyDate, cloneDate, CompatibleValue, wrongSortOrder } from 'ng-zorro-antd/core/time';
+import { CandyDate, cloneDate, CompatibleValue, TriDateAdapter, wrongSortOrder } from 'ng-zorro-antd/core/time';
 import {
   BooleanInput,
   FunctionProp,
@@ -75,12 +75,7 @@ import {
   toBoolean,
   valueFunctionProp
 } from 'ng-zorro-antd/core/util';
-import {
-  DateHelperService,
-  TriDatePickerI18nInterface,
-  TriDatePickerLangI18nInterface,
-  TriI18nService
-} from 'ng-zorro-antd/i18n';
+import { TriDatePickerI18nInterface, TriDatePickerLangI18nInterface, TriI18nService } from 'ng-zorro-antd/i18n';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
@@ -278,17 +273,17 @@ export type TriDatePickerSizeType = 'large' | 'default' | 'small';
   ]
 })
 export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit, ControlValueAccessor {
-  public configService = inject(TriConfigService);
-  public datePickerService = inject(DatePickerService);
-  protected i18n = inject(TriI18nService);
-  protected cdr = inject(ChangeDetectorRef);
-  private renderer = inject(Renderer2);
-  private elementRef = inject(ElementRef<HTMLElement>);
-  private dateHelper = inject(DateHelperService);
-  private resizeObserver = inject(TriResizeObserver);
-  private platform = inject(Platform);
-  private destroyRef = inject(DestroyRef);
+  public readonly datePickerService = inject(DatePickerService);
+  protected readonly i18n = inject(TriI18nService);
+  protected readonly cdr = inject(ChangeDetectorRef);
   protected readonly dir = inject(Directionality).valueSignal;
+  private readonly renderer = inject(Renderer2);
+  private readonly elementRef = inject(ElementRef<HTMLElement>);
+  private readonly dateAdapter = inject(TriDateAdapter);
+  private readonly resizeObserver = inject(TriResizeObserver);
+  private readonly platform = inject(Platform);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly formStatusService = inject(TriFormStatusService, { optional: true });
 
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
@@ -308,7 +303,6 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
   private isCustomFormat: boolean = false;
   #showTime: SupportTimeOptions | boolean = false;
   private isNzDisableFirstChange: boolean = true;
-  // --- Common API
   readonly inline = input(false, { transform: booleanAttribute });
   @Input({ transform: booleanAttribute }) allowClear: boolean = true;
   @Input({ transform: booleanAttribute }) autoFocus: boolean = false;
@@ -352,11 +346,8 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
     this.#showTime = typeof value === 'object' ? value : toBoolean(value);
   }
 
-  // ------------------------------------------------------------------------
-  // Input API Start
-  // ------------------------------------------------------------------------
   @ViewChild(CdkConnectedOverlay, { static: false }) cdkConnectedOverlay?: CdkConnectedOverlay;
-  @ViewChild(DateRangePopupComponent, { static: false }) panel!: DateRangePopupComponent;
+  @ViewChild(DateRangePopupComponent, { static: false }) panel?: DateRangePopupComponent;
   @ViewChild('separatorElement', { static: false }) separatorElement?: ElementRef;
   @ViewChild('pickerInput', { static: false }) pickerInput?: ElementRef<HTMLInputElement>;
   @ViewChildren('rangePickerInput') rangePickerInputs?: QueryList<ElementRef<HTMLInputElement>>;
@@ -560,6 +551,12 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
       return;
     }
 
+    if (!this.panel) {
+      this.datePickerService.setValue(this.datePickerService.initialValue!);
+      this.close();
+      return;
+    }
+
     if (this.panel.isAllowed(this.datePickerService.value!, true)) {
       if (Array.isArray(this.datePickerService.value) && wrongSortOrder(this.datePickerService.value)) {
         const index = this.datePickerService.getActiveIndex();
@@ -611,8 +608,8 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
     this.cdr.markForCheck();
   }
 
-  formatValue(value: CandyDate): string {
-    return this.dateHelper.format(value && (value as CandyDate).nativeDate, this.format);
+  formatValue(value: CandyDate | null): string {
+    return value ? this.dateAdapter.format(value.nativeDate, this.format) : '';
   }
 
   onInputChange(value: string, isEnter: boolean = false): void {
@@ -631,7 +628,7 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
 
     const date = this.checkValidDate(value);
     // Can only change date when it's open
-    if (date && this.realOpenState) {
+    if (date && this.realOpenState && this.panel) {
       this.panel.changeValueFromSelect(date, isEnter);
     }
   }
@@ -641,9 +638,9 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
   }
 
   private checkValidDate(value: string): CandyDate | null {
-    const date = new CandyDate(this.dateHelper.parseDate(value, this.format));
+    const date = new CandyDate(this.dateAdapter.parse(value, this.format));
 
-    if (!date.isValid() || value !== this.dateHelper.format(date.nativeDate, this.format)) {
+    if (!date.isValid() || value !== this.dateAdapter.format(date.nativeDate, this.format)) {
       return null;
     }
 
@@ -670,12 +667,6 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
   isOpenHandledByUser(): boolean {
     return this.open !== undefined;
   }
-
-  private formStatusService = inject(TriFormStatusService, { optional: true });
-
-  // ------------------------------------------------------------------------
-  // Input API End
-  // ------------------------------------------------------------------------
 
   ngOnInit(): void {
     this.formStatusService?.formStatusChanges
@@ -747,18 +738,19 @@ export class TriDatePickerComponent implements OnInit, OnChanges, AfterViewInit,
     });
   }
 
-  ngOnChanges({
-    nzStatus,
-    nzPlacement,
-    nzPopupStyle,
-    nzPlaceHolder,
-    nzLocale,
-    nzFormat,
-    nzRenderExtraFooter,
-    nzMode,
-    nzSize,
-    nzVariant
-  }: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
+    const {
+      nzStatus,
+      nzPlacement,
+      nzPopupStyle,
+      nzPlaceHolder,
+      nzLocale,
+      nzFormat,
+      nzRenderExtraFooter,
+      nzMode,
+      nzSize,
+      nzVariant
+    } = changes;
     if (nzPopupStyle) {
       // Always assign the popup style patch
       this.popupStyle = this.popupStyle ? { ...this.popupStyle, ...POPUP_STYLE_PATCH } : POPUP_STYLE_PATCH;
