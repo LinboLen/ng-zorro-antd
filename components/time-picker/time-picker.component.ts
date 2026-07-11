@@ -204,8 +204,6 @@ export class TriTimePickerComponent implements ControlValueAccessor, OnInit, Aft
   private readonly platform = inject(Platform);
   private readonly destroyRef = inject(DestroyRef);
 
-  protected readonly dir = inject(Directionality).valueSignal;
-
   private _onChange?: (value: Date | null) => void;
   private _onTouched?: () => void;
   private isNzDisableFirstChange: boolean = true;
