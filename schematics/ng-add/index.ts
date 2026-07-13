@@ -33,13 +33,6 @@ export default function (options: Schema): Rule {
           version: zorroVersion,
           type: NodeDependencyType.Default
         });
-        if ((options.dateAdapter || 'date-fns') === 'date-fns') {
-          addPackageJsonDependency(host, {
-            name: 'date-fns',
-            version: dateFnsVersion,
-            type: NodeDependencyType.Default
-          });
-        }
         if (options.gestures) {
           addPackageJsonDependency(host, {
             name: 'hammerjs',
