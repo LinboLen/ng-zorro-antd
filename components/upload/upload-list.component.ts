@@ -31,7 +31,13 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TriProgressModule } from 'ng-zorro-antd/progress';
 import { TriTooltipModule } from 'ng-zorro-antd/tooltip';
 
-import { TriIconRenderTemplate, TriShowUploadList, TriUploadFile, TriUploadListType } from './interface';
+import {
+  TriIconRenderTemplate,
+  TriShowUploadList,
+  TriShowUploadListIcon,
+  TriUploadFile,
+  TriUploadListType
+} from './interface';
 
 const isImageFileType = (type: string): boolean => !!type && type.indexOf('image/') === 0;
 
@@ -45,6 +51,8 @@ interface UploadListFile extends TriUploadFile {
   isUploading?: boolean;
   iconType?: UploadListIconType;
   showDownload?: boolean;
+  showRemove?: boolean;
+  showPreview?: boolean;
 }
 
 @Component({
@@ -226,8 +234,11 @@ export class TriUploadListComponent implements OnChanges {
       });
   }
 
-  private showDownload(file: TriUploadFile): boolean {
-    return !!(this.icons.showDownloadIcon && file.status === 'done');
+  private resolveShowIcon(showIcon: TriShowUploadListIcon | undefined, file: TriUploadFile): boolean {
+    if (!showIcon) {
+      return false;
+    }
+    return typeof showIcon === 'function' ? showIcon(file) : showIcon;
   }
 
   private fixData(): void {
@@ -237,7 +248,9 @@ export class TriUploadListComponent implements OnChanges {
       file.linkProps = typeof file.linkProps === 'string' ? JSON.parse(file.linkProps) : file.linkProps;
       file.isImageUrl = this.previewIsImage ? this.previewIsImage(file) : this.isImageUrl(file);
       file.iconType = this.getIconType(file);
-      file.showDownload = this.showDownload(file);
+      file.showDownload = this.resolveShowIcon(this.icons.showDownloadIcon, file) && file.status === 'done';
+      file.showRemove = this.resolveShowIcon(this.icons.showRemoveIcon, file);
+      file.showPreview = this.resolveShowIcon(this.icons.showPreviewIcon, file);
     });
   }
 

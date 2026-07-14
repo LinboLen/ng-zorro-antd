@@ -44,10 +44,15 @@ export interface TriUploadChangeParam {
   type?: string;
 }
 
+export type TriShowUploadListIcon = boolean | ((file: TriUploadFile) => boolean);
 export interface TriShowUploadList {
-  showRemoveIcon?: boolean;
-  showPreviewIcon?: boolean;
-  showDownloadIcon?: boolean;
+  showRemoveIcon?: TriShowUploadListIcon;
+  showPreviewIcon?: TriShowUploadListIcon;
+  showDownloadIcon?: TriShowUploadListIcon;
+  extra?: TemplateRef<{ $implicit: TriUploadFile }>;
+  downloadIcon?: TemplateRef<{ $implicit: TriUploadFile }>;
+  removeIcon?: TemplateRef<{ $implicit: TriUploadFile }>;
+  previewIcon?: TemplateRef<{ $implicit: TriUploadFile }>;
 }
 
 export type TriBeforeUploadFileType =
