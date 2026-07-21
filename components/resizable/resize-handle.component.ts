@@ -25,14 +25,7 @@ import { TriResizableService } from './resizable.service';
 export type TriCursorType = 'window' | 'grid';
 
 export type TriResizeDirection =
-  | 'top'
-  | 'right'
-  | 'bottom'
-  | 'left'
-  | 'topRight'
-  | 'bottomRight'
-  | 'bottomLeft'
-  | 'topLeft';
+  'top' | 'right' | 'bottom' | 'left' | 'topRight' | 'bottomRight' | 'bottomLeft' | 'topLeft';
 
 export class TriResizeHandleMouseDownEvent {
   constructor(

@@ -72,7 +72,6 @@ $descriptions-prefix-cls: "#{$ant-prefix}-descriptions";
     color: $text-color;
     font-size: $font-size-base;
     line-height: $line-height-base;
-    word-break: break-word;
     overflow-wrap: break-word;
   }
   &-item {

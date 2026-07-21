@@ -68,7 +68,7 @@ $timeline-prefix-cls: "#{$ant-prefix}-timeline";
       position: relative;
       top: -($font-size-base * $line-height-base - $font-size-base) + 1px;
       margin: 0 0 0 $margin-lg + 2px;
-      word-break: break-word;
+      overflow-wrap: break-word;
     }
     &-last {
       > .#{$timeline-prefix-cls}-item-tail {

@@ -291,7 +291,6 @@ $color-picker-prefix-cls: "#{$ant-prefix}-color-picker";
       inset-inline-start: 46.5%;
     }
     // For bright backgrounds, use dark tick for contrast
-    &-color-bright#{&}-color-checked::after,
     &-color-checked#{&}-color-bright::after {
       border-color: rgba(0, 0, 0, 0.88);
     }

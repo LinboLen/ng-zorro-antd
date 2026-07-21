@@ -24,7 +24,7 @@ $comment-prefix-cls: "#{$ant-prefix}-comment";
     flex: 1 1 auto;
     min-width: 1px;
     font-size: $comment-font-size-base;
-    word-wrap: break-word;
+    overflow-wrap: break-word;
     &-author {
       display: flex;
       flex-wrap: wrap;
