@@ -1985,6 +1985,42 @@ describe('finalSize', () => {
     fixture.detectChanges();
     expect(switchElement.firstElementChild!.classList).toContain('ant-switch-small');
   });
+
+  testDirectionality(() => TriTestSwitchBasicComponent, By.css('.ant-switch'), 'ant-switch');
+});
+
+describe('finalSize', () => {
+  let fixture: ComponentFixture<TriTestSwitchBasicComponent>;
+  let switchElement: HTMLElement;
+  let formSizeSignal: WritableSignal<TriSizeLDSType>;
+
+  beforeEach(() => {
+    formSizeSignal = signal<TriSizeDSType>('default');
+  });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+
+  it('should set correctly the size from the formSize signal', () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: TRI_FORM_SIZE, useValue: formSizeSignal }]
+    });
+    fixture = TestBed.createComponent(TriTestSwitchBasicComponent);
+    switchElement = fixture.debugElement.query(By.directive(TriSwitchComponent)).nativeElement;
+    fixture.detectChanges();
+    formSizeSignal.set('small');
+    fixture.detectChanges();
+    expect(switchElement.firstElementChild!.classList).toContain('ant-switch-small');
+  });
+
+  it('should set correctly the size from the component input', () => {
+    fixture = TestBed.createComponent(TriTestSwitchBasicComponent);
+    switchElement = fixture.debugElement.query(By.directive(TriSwitchComponent)).nativeElement;
+    fixture.componentInstance.size.set('small');
+    fixture.detectChanges();
+    expect(switchElement.firstElementChild!.classList).toContain('ant-switch-small');
+  });
 });
 
 async function stabilize<T>(fixture: ComponentFixture<T>): Promise<void> {
