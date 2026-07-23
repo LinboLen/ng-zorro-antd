@@ -3,6 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { TriPresetColor, TriStatusColor } from 'ng-zorro-antd/core/color';
+import { generateSitemap } from '../prerender/sitemap';
 
-export type TriTagColor = TriPresetColor | TriStatusColor | (string & {});
+// Run sitemap script on the output directory, to create sitemap.xml (gulp `site:sitemap`).
+generateSitemap();
