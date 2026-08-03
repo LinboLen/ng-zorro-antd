@@ -6,6 +6,7 @@
 import { Component, DebugElement, signal, viewChild, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { disabled, form, FormField } from '@angular/forms/signals';
 import { By } from '@angular/platform-browser';
 
 import { TRI_FORM_SIZE, TRI_FORM_VARIANT } from 'ng-zorro-antd/core/form';
@@ -155,6 +156,24 @@ describe('input', () => {
         expect(inputElement.nativeElement.classList).toContain('ant-input-disabled');
         expect(inputElement.nativeElement.getAttribute('disabled')).toBe('true');
       });
+    });
+  });
+
+  describe('input with Signal Forms', () => {
+    it('should reflect the disabled field state', async () => {
+      const fixture = TestBed.createComponent(TriTestInputSignalFormComponent);
+      fixture.autoDetectChanges();
+      await fixture.whenStable();
+
+      const input = fixture.debugElement.query(By.directive(TriInputDirective)).nativeElement as HTMLInputElement;
+      expect(input.disabled).toBe(false);
+      expect(input.classList).not.toContain('ant-input-disabled');
+
+      fixture.componentInstance.isDisabled.set(true);
+      await fixture.whenStable();
+
+      expect(input.disabled).toBe(true);
+      expect(input.classList).toContain('ant-input-disabled');
     });
   });
 
@@ -422,6 +441,18 @@ export class TriTestInputFormComponent {
   disable(): void {
     this.formControl.disable();
   }
+}
+
+@Component({
+  imports: [FormField, TriInputModule],
+  template: `<input tri-input [formField]="form.name" />`
+})
+export class TriTestInputSignalFormComponent {
+  readonly model = signal({ name: '' });
+  readonly isDisabled = signal(false);
+  readonly form = form(this.model, path => {
+    disabled(path.name, () => this.isDisabled());
+  });
 }
 
 // status

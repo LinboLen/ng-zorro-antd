@@ -7,17 +7,15 @@ import {
   AfterContentInit,
   Component,
   ContentChild,
-  DestroyRef,
   ElementRef,
+  effect,
   inject,
+  Injector,
   Input,
   isDevMode,
   numberAttribute,
   Renderer2
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { EMPTY } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
 
 import { isNotNil } from 'ng-zorro-antd/core/util';
 
@@ -32,7 +30,7 @@ import { TriInputDirective } from './input.directive';
 })
 export class TriTextareaCountComponent implements AfterContentInit {
   private renderer = inject(Renderer2);
-  private destroyRef = inject(DestroyRef);
+  private injector = inject(Injector);
   private elementRef: ElementRef<HTMLElement> = inject(ElementRef);
 
   @ContentChild(TriInputDirective, { static: true }) inputDirective!: TriInputDirective;
@@ -45,18 +43,7 @@ export class TriTextareaCountComponent implements AfterContentInit {
       throw new Error('[nz-textarea-count]: Could not find matching textarea[nz-input] child.');
     }
 
-    if (this.inputDirective.ngControl) {
-      const valueChanges = this.inputDirective.ngControl.valueChanges || EMPTY;
-      valueChanges
-        .pipe(
-          takeUntilDestroyed(this.destroyRef),
-          map(() => this.inputDirective.ngControl!.value),
-          startWith(this.inputDirective.ngControl.value as string)
-        )
-        .subscribe(value => {
-          this.setDataCount(value);
-        });
-    }
+    effect(() => this.setDataCount(this.inputDirective.value()), { injector: this.injector });
   }
 
   setDataCount(value: string): void {
