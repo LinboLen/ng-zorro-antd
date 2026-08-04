@@ -666,6 +666,9 @@ export class TriSelectComponent implements ControlValueAccessor, OnInit, AfterCo
       };
       const listOfValue = covertModelToList(modelValue, this.mode);
       this.listOfValue = listOfValue;
+      if (!this.open) {
+        this.activatedValue = listOfValue[0] ?? null;
+      }
       this.listOfValue$.next(listOfValue);
       this.cdr.markForCheck();
     }
