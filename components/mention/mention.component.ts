@@ -445,12 +445,7 @@ export class TriMentionComponent implements OnInit, AfterViewInit, OnChanges {
           ? value.indexOf(TRI_MENTION_CONFIG.split, selectionStart)
           : value.length;
       const mention = value.substring(startPos, endPos);
-      if (
-        (startPos > 0 && value[startPos - 1] !== TRI_MENTION_CONFIG.split) ||
-        startPos < 0 ||
-        mention.includes(prefix[i], 1) ||
-        mention.includes(TRI_MENTION_CONFIG.split)
-      ) {
+      if (startPos < 0 || mention.includes(prefix[i], 1) || mention.includes(TRI_MENTION_CONFIG.split)) {
         this.cursorMention = null;
         this.cursorMentionStart = -1;
         this.cursorMentionEnd = -1;

@@ -49,17 +49,6 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'dropdown';
 
 const listOfPositions: POSITION_TYPE[] = ['bottomLeft', 'bottomRight', 'topRight', 'topLeft'];
 
-const normalizePlacementForClass = (p: TriPlacementType): TriDropdownMenuComponent['placement'] => {
-  // Map center placements to generic top/bottom classes for styling
-  if (p === 'topCenter') {
-    return 'top';
-  }
-  if (p === 'bottomCenter') {
-    return 'bottom';
-  }
-  return p as TriDropdownMenuComponent['placement'];
-};
-
 @Directive({
   selector: '[tri-dropdown]',
   exportAs: 'triDropdown',
@@ -174,7 +163,7 @@ export class TriDropdownDirective implements AfterViewInit, OnChanges {
               )
               .subscribe(placement => {
                 if (placement) {
-                  this.setDropdownMenuValue('placement', normalizePlacementForClass(placement));
+                  this.dropdownMenu?.placement.set(this.placement);
                 }
               });
 
@@ -218,7 +207,7 @@ export class TriDropdownDirective implements AfterViewInit, OnChanges {
             }
             // Initialize arrow and placement on open
             this.setDropdownMenuValue('nzArrow', this.arrow);
-            this.setDropdownMenuValue('placement', normalizePlacementForClass(this.placement));
+            this.dropdownMenu?.placement.set(this.placement);
             this.overlayRef.attach(this.portal);
           } else {
             /** detach overlayRef if needed **/
@@ -263,7 +252,7 @@ export class TriDropdownDirective implements AfterViewInit, OnChanges {
       this.setDropdownMenuValue('nzArrow', this.arrow);
     }
     if (nzPlacement) {
-      this.setDropdownMenuValue('placement', normalizePlacementForClass(this.placement));
+      this.dropdownMenu?.placement.set(this.placement);
     }
   }
 }

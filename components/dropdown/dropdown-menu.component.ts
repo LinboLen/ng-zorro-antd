@@ -16,6 +16,7 @@ import {
   ViewContainerRef,
   ViewEncapsulation,
   inject,
+  signal,
   type AnimationCallbackEvent
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
@@ -44,16 +45,16 @@ export type TriPlacementType = 'bottomLeft' | 'bottomCenter' | 'bottomRight' | '
         class="tri-dropdown"
         [class.tri-dropdown-rtl]="dir() === 'rtl'"
         [class.tri-dropdown-show-arrow]="arrow"
-        [class.tri-dropdown-placement-bottomLeft]="placement === 'bottomLeft'"
-        [class.tri-dropdown-placement-bottomRight]="placement === 'bottomRight'"
-        [class.tri-dropdown-placement-bottom]="placement === 'bottom'"
-        [class.tri-dropdown-placement-topLeft]="placement === 'topLeft'"
-        [class.tri-dropdown-placement-topRight]="placement === 'topRight'"
-        [class.tri-dropdown-placement-top]="placement === 'top'"
+        [class.tri-dropdown-placement-bottomLeft]="placement() === 'bottomLeft'"
+        [class.tri-dropdown-placement-bottomRight]="placement() === 'bottomRight'"
+        [class.tri-dropdown-placement-bottom]="placement() === 'bottomCenter'"
+        [class.tri-dropdown-placement-topLeft]="placement() === 'topLeft'"
+        [class.tri-dropdown-placement-topRight]="placement() === 'topRight'"
+        [class.tri-dropdown-placement-top]="placement() === 'topCenter'"
         [class]="overlayClassName"
         [style]="overlayStyle"
-        [animate.enter]="dropdownAnimationEnter()"
-        [animate.leave]="dropdownAnimationLeave()"
+        [animate.enter]="slideAnimationEnter()"
+        [animate.leave]="slideAnimationLeave()"
         (animate.leave)="onAnimationEvent($event)"
         [noAnimation]="!!noAnimation?.nzNoAnimation?.()"
         (mouseenter)="setMouseState(true)"
@@ -86,10 +87,14 @@ export class TriDropdownMenuComponent implements AfterContentInit {
   overlayClassName: string = '';
   overlayStyle: IndexableObject = {};
   arrow: boolean = false;
-  placement: TriPlacementType | 'bottom' | 'top' = 'bottomLeft';
 
-  protected readonly dropdownAnimationEnter = slideAnimationEnter();
-  protected readonly dropdownAnimationLeave = slideAnimationLeave();
+  readonly placement = signal<TriPlacementType>('bottomLeft');
+  protected readonly slideAnimationEnter = slideAnimationEnter(() =>
+    this.placement().startsWith('top') ? 'down' : 'up'
+  );
+  protected readonly slideAnimationLeave = slideAnimationLeave(() =>
+    this.placement().startsWith('top') ? 'down' : 'up'
+  );
 
   onAnimationEvent(event: AnimationCallbackEvent): void {
     const element = event.target as HTMLElement;
