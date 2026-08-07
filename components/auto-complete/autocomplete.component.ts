@@ -112,6 +112,7 @@ export class TriAutocompleteComponent implements AfterContentInit, AfterViewInit
   @Input() overlayStyle: Record<string, string> = {};
   @Input({ transform: booleanAttribute }) defaultActiveFirstOption = true;
   @Input({ transform: booleanAttribute }) backfill = false;
+  @Input({ transform: booleanAttribute }) dropdownMatchSelectWidth = true;
   @Input() compareWith: CompareWith = (o1, o2) => o1 === o2;
   @Input() dataSource?: AutocompleteDataSource;
   @Output()

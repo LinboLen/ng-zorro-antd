@@ -19,7 +19,7 @@ import {
   ViewChildren,
   signal
 } from '@angular/core';
-import { ComponentFixture, inject as testingInject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, inject as testingInject } from '@angular/core/testing';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
@@ -302,6 +302,27 @@ describe('auto-complete', () => {
 
       const overlayPane = overlayContainerElement.querySelector('.cdk-overlay-pane') as HTMLElement;
       expect(Math.ceil(parseFloat(overlayPane.style.width))).toBe(500);
+    });
+
+    it('should apply dropdown match select width', () => {
+      component.dropdownMatchSelectWidth.set(true);
+      component.width.set(500);
+      fixture.detectChanges();
+
+      component.trigger.openPanel();
+      fixture.detectChanges();
+
+      const overlayPane = overlayContainerElement.querySelector('.cdk-overlay-pane') as HTMLElement;
+      expect(Math.ceil(parseFloat(overlayPane.style.width))).toBe(500);
+
+      component.dropdownMatchSelectWidth.set(false);
+      component.trigger.closePanel();
+      fixture.detectChanges();
+
+      component.trigger.openPanel();
+      fixture.detectChanges();
+
+      expect(Math.ceil(parseFloat(overlayPane.style.width))).not.toBe(500);
     });
 
     it('should backfill display value when DOWN key is pressed', async () => {
@@ -902,6 +923,7 @@ class TriTestSimpleAutocompleteComponent {
       [overlayClassName]="overlayClassName()"
       [overlayStyle]="overlayStyle()"
       [dataSource]="options()"
+      [dropdownMatchSelectWidth]="dropdownMatchSelectWidth()"
       [defaultActiveFirstOption]="false"
       backfill
       #auto
@@ -911,6 +933,7 @@ class TriTestSimpleAutocompleteComponent {
 class TriTestAutocompletePropertyComponent {
   inputValue?: string;
   readonly width = signal<number | undefined>(undefined);
+  readonly dropdownMatchSelectWidth = signal(true);
   readonly overlayClassName = signal('');
   readonly overlayStyle = signal({});
   readonly options = signal(['Burns Bay Road', 'Downing Street', 'Wall Street']);

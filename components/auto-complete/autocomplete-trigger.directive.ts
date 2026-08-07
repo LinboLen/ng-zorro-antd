@@ -263,12 +263,14 @@ export class TriAutocompleteTriggerDirective implements AfterViewInit, ControlVa
     }
 
     if (!this.overlayRef) {
+      const width = this.autocomplete.width || this.getHostWidth();
+      const dropdownMatchSelectWidth = this.autocomplete.dropdownMatchSelectWidth;
       this.overlayRef = createOverlayRef(this.injector, {
         positionStrategy: this.getOverlayPosition(),
         disposeOnNavigation: true,
         scrollStrategy: createRepositionScrollStrategy(this.injector),
-        // default host element width
-        width: this.autocomplete.width || this.getHostWidth()
+        minWidth: dropdownMatchSelectWidth ? undefined : width,
+        width: dropdownMatchSelectWidth ? width : undefined
       });
     }
 
@@ -289,7 +291,9 @@ export class TriAutocompleteTriggerDirective implements AfterViewInit, ControlVa
 
   private updateStatus(): void {
     if (this.overlayRef) {
-      this.overlayRef.updateSize({ width: this.autocomplete.width || this.getHostWidth() });
+      const dropdownMatchSelectWidth = this.autocomplete.dropdownMatchSelectWidth;
+      const width = this.autocomplete.width || this.getHostWidth();
+      this.overlayRef.updateSize({ width: dropdownMatchSelectWidth ? width : undefined });
     }
     this.autocomplete.setVisibility();
     this.resetActiveItem();

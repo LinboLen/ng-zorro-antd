@@ -6,6 +6,7 @@
 import {
   afterEveryRender,
   ChangeDetectorRef,
+  computed,
   Component,
   ElementRef,
   EventEmitter,
@@ -18,13 +19,24 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { of, switchMap } from 'rxjs';
 
-import { TriConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
-import { TriShapeSCType, TriSizeLDSType } from 'ng-zorro-antd/core/types';
-import { toCssPixel } from 'ng-zorro-antd/core/util';
+import { TriConfigKey, withConfigFactory, WithConfig } from 'ng-zorro-antd/core/config';
+import {
+  gridResponsiveMap,
+  NzBreakpointEnum,
+  TriBreakpointService,
+  type Breakpoint,
+  type ResponsiveLike
+} from 'ng-zorro-antd/core/services';
+import type { TriShapeSCType, TriSizeLDSType } from 'ng-zorro-antd/core/types';
+import { isPlainObject, toCssPixel } from 'ng-zorro-antd/core/util';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 
 const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'avatar';
+const withConfig = withConfigFactory(TRI_CONFIG_MODULE_NAME);
+export type TriAvatarSize = TriSizeLDSType | number | Partial<ResponsiveLike<number>>;
 
 /** https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-loading */
 type TriAvatarLoading = 'eager' | 'lazy';
@@ -55,24 +67,23 @@ type TriAvatarFetchPriority = 'high' | 'low' | 'auto';
   `,
   host: {
     class: 'tri-avatar',
-    '[class.tri-avatar-lg]': `size === 'large'`,
-    '[class.tri-avatar-sm]': `size === 'small'`,
+    '[class.tri-avatar-lg]': `size() === 'large'`,
+    '[class.tri-avatar-sm]': `size() === 'small'`,
     '[class.tri-avatar-square]': `shape === 'square'`,
     '[class.tri-avatar-circle]': `shape === 'circle'`,
     '[class.tri-avatar-icon]': `icon`,
     '[class.tri-avatar-image]': `hasSrc`,
-    '[style.width]': 'customSize',
-    '[style.height]': 'customSize',
-    '[style.line-height]': 'customSize',
-    // nzSize type is number when customSize is true
-    '[style.font-size.px]': '(hasIcon && customSize) ? $any(nzSize) / 2 : null'
+    '[style.width]': 'customSize()',
+    '[style.height]': 'customSize()',
+    '[style.line-height]': 'customSize()',
+    '[style.font-size.px]': 'hasIcon ? customFontSize() : null'
   },
   encapsulation: ViewEncapsulation.None
 })
 export class TriAvatarComponent implements OnChanges {
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
   @Input() @WithConfig() shape: TriShapeSCType = 'circle';
-  @Input() @WithConfig() size: TriSizeLDSType | number = 'default';
+  readonly size = input<TriAvatarSize>();
   @Input({ transform: numberAttribute }) @WithConfig() gap = 4;
   @Input() text?: string;
   @Input() src?: string;
@@ -86,12 +97,39 @@ export class TriAvatarComponent implements OnChanges {
   hasText: boolean = false;
   hasSrc: boolean = true;
   hasIcon: boolean = false;
-  customSize: string | null = null;
-
-  @ViewChild('textEl', { static: false }) textEl?: ElementRef<HTMLSpanElement>;
 
   private el: HTMLElement = inject(ElementRef).nativeElement;
   private cdr = inject(ChangeDetectorRef);
+  private breakpointService = inject(TriBreakpointService);
+
+  protected readonly _size = withConfig('nzSize', this.size, 'default');
+  private readonly currentBreakpoint = toSignal(
+    toObservable(this._size).pipe(
+      switchMap(size =>
+        isPlainObject<Partial<ResponsiveLike<number>>>(size)
+          ? this.breakpointService.subscribe(gridResponsiveMap)
+          : of(NzBreakpointEnum.md)
+      )
+    ),
+    { initialValue: NzBreakpointEnum.md }
+  );
+  private readonly currentSize = computed(() => {
+    const size = this._size();
+
+    return isPlainObject<Partial<ResponsiveLike<number>>>(size) ? size[this.currentBreakpoint() as Breakpoint] : size;
+  });
+  protected readonly customSize = computed(() => {
+    const size = this.currentSize();
+
+    return typeof size === 'number' ? toCssPixel(size) : null;
+  });
+  protected readonly customFontSize = computed(() => {
+    const size = this.currentSize();
+
+    return typeof size === 'number' ? size / 2 : null;
+  });
+
+  @ViewChild('textEl', { static: false }) textEl?: ElementRef<HTMLSpanElement>;
 
   constructor() {
     afterEveryRender(() => this.calcStringSize());
@@ -109,8 +147,6 @@ export class TriAvatarComponent implements OnChanges {
         this.hasText = true;
       }
       this.cdr.detectChanges();
-      this.setSizeStyle();
-      this.calcStringSize();
     }
   }
 
@@ -118,9 +154,6 @@ export class TriAvatarComponent implements OnChanges {
     this.hasText = !this.src && !!this.text;
     this.hasIcon = !this.src && !!this.icon;
     this.hasSrc = !!this.src;
-
-    this.setSizeStyle();
-    this.calcStringSize();
   }
 
   private calcStringSize(): void {
@@ -135,16 +168,6 @@ export class TriAvatarComponent implements OnChanges {
     const scale = avatarWidth - offset < childrenWidth ? (avatarWidth - offset) / childrenWidth : 1;
 
     textEl.style.transform = `scale(${scale}) translateX(-50%)`;
-    textEl.style.lineHeight = this.customSize || '';
-  }
-
-  private setSizeStyle(): void {
-    if (typeof this.size === 'number') {
-      this.customSize = toCssPixel(this.size);
-    } else {
-      this.customSize = null;
-    }
-
-    this.cdr.markForCheck();
+    textEl.style.lineHeight = this.customSize() || '';
   }
 }

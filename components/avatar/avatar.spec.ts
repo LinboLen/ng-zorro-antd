@@ -6,13 +6,15 @@
 import { Component, DebugElement, ViewChild, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { BehaviorSubject } from 'rxjs';
 
+import { NzBreakpointEnum, TriBreakpointService } from 'ng-zorro-antd/core/services';
 import { createFakeEvent, updateNonSignalsInput } from 'ng-zorro-antd/core/testing';
-import { TriSafeAny, TriShapeSCType, TriSizeLDSType } from 'ng-zorro-antd/core/types';
+import { TriSafeAny, TriShapeSCType } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 
 import { TriAvatarGroupComponent } from './avatar-group.component';
-import { TriAvatarComponent } from './avatar.component';
+import { TriAvatarComponent, TriAvatarSize } from './avatar.component';
 import { TriAvatarModule } from './avatar.module';
 
 const imageBase64 =
@@ -48,14 +50,29 @@ describe('avatar', () => {
   let fixture: ComponentFixture<TestAvatarComponent>;
   let context: TestAvatarComponent;
   let dl: DebugElement;
+  let breakpoint$: BehaviorSubject<NzBreakpointEnum>;
+  let breakpointSubscriptionCount: number;
 
   function getImageElement(): HTMLImageElement {
     return dl.query(By.css('img')).nativeElement;
   }
 
   beforeEach(async () => {
+    breakpoint$ = new BehaviorSubject<NzBreakpointEnum>(NzBreakpointEnum.md);
+    breakpointSubscriptionCount = 0;
     TestBed.configureTestingModule({
-      providers: [provideNzIconsTesting(), provideZoneChangeDetection()]
+      providers: [
+        provideNzIconsTesting(),
+        {
+          provide: TriBreakpointService,
+          useValue: {
+            subscribe: () => {
+              breakpointSubscriptionCount++;
+              return breakpoint$.asObservable();
+            }
+          }
+        }
+      ]
     });
 
     fixture = TestBed.createComponent(TestAvatarComponent);
@@ -230,6 +247,57 @@ describe('avatar', () => {
       expect(hostStyle.fontSize === `${64 / 2}px`).toBe(true);
     });
 
+    it('should not subscribe to breakpoints for a non-responsive size', async () => {
+      context.size.set(64);
+      await updateNonSignalsInput(fixture);
+
+      expect(breakpointSubscriptionCount).toBe(0);
+    });
+
+    it('responsive size', async () => {
+      context.size.set({ xs: 24, md: 40, lg: 64, xxxl: 120 });
+      context.icon.set('user');
+      context.src.set(undefined);
+      await updateNonSignalsInput(fixture);
+
+      const hostStyle = dl.nativeElement.querySelector('nz-avatar').style;
+      breakpoint$.next(NzBreakpointEnum.lg);
+      await fixture.whenStable();
+      expect(hostStyle.height).toBe('64px');
+      expect(hostStyle.width).toBe('64px');
+      expect(hostStyle.lineHeight).toBe('64px');
+      expect(hostStyle.fontSize).toBe('32px');
+
+      breakpoint$.next(NzBreakpointEnum.xs);
+      await fixture.whenStable();
+      expect(hostStyle.height).toBe('24px');
+      expect(hostStyle.width).toBe('24px');
+      expect(hostStyle.lineHeight).toBe('24px');
+      expect(hostStyle.fontSize).toBe('12px');
+
+      breakpoint$.next(NzBreakpointEnum.xxxl);
+      await fixture.whenStable();
+      expect(hostStyle.height).toBe('120px');
+      expect(hostStyle.width).toBe('120px');
+      expect(hostStyle.lineHeight).toBe('120px');
+      expect(hostStyle.fontSize).toBe('60px');
+    });
+
+    it('should clear responsive size when current breakpoint has no value', async () => {
+      context.size.set({ xs: 24 });
+      context.icon.set('user');
+      context.src.set(undefined);
+      await updateNonSignalsInput(fixture);
+
+      const hostStyle = dl.nativeElement.querySelector('nz-avatar').style;
+      breakpoint$.next(NzBreakpointEnum.lg);
+      await fixture.whenStable();
+      expect(hostStyle.height).toBe('');
+      expect(hostStyle.width).toBe('');
+      expect(hostStyle.lineHeight).toBe('');
+      expect(hostStyle.fontSize).toBe('');
+    });
+
     it('should set `lineHeight` on the text element considering `nzSize`', async () => {
       const size = 64;
       context.icon.set(undefined);
@@ -360,7 +428,7 @@ function getScaleFromCSSTransform(transform: string): number {
 class TestAvatarComponent {
   @ViewChild('comp', { static: false }) comp!: TriAvatarComponent;
   readonly shape = signal<TriShapeSCType>('square');
-  readonly size = signal<TriSizeLDSType | number>('large');
+  readonly size = signal<TriAvatarSize>('large');
   readonly gap = signal(4);
   readonly icon = signal<string | undefined>('user');
   readonly text = signal<string | undefined>('A');

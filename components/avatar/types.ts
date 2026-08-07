@@ -3,11 +3,13 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { TriShapeSCType, TriSizeLDSType } from 'ng-zorro-antd/core/types';
+import type { TriShapeSCType } from 'ng-zorro-antd/core/types';
+
+import type { TriAvatarSize } from './avatar.component';
 
 export interface TriAvatarProps {
   shape?: TriShapeSCType;
-  size?: TriSizeLDSType | number;
+  size?: TriAvatarSize;
   gap?: number;
   src?: string;
   srcSet?: string;
