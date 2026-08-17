@@ -33,6 +33,7 @@ import {
   OnChanges,
   OnInit,
   Output,
+  reflectComponentType,
   Renderer2,
   SimpleChanges,
   TemplateRef,
@@ -425,12 +426,25 @@ export class TriDrawerComponent<T extends {} = TriSafeAny, R = TriSafeAny, D ext
       });
       const componentPortal = new ComponentPortal<T>(this.content, null, childInjector);
       this.componentRef = this.bodyPortalOutlet!.attachComponentPortal(componentPortal);
-
       this.componentInstance = this.componentRef.instance;
-      /**TODO
-       * When nzContentParam will be remove in the next major version, we have to remove the following line
-       * **/
-      Object.assign(this.componentRef.instance!, this.data || this.contentParams);
+
+      /**
+       * @todo `nzContentParams` will be removed in v23, we have to remove the following logics
+       */
+      const contentParams = this.data || this.contentParams;
+      const signalInputNames = new Set(
+        reflectComponentType(this.content)
+          ?.inputs.filter(input => input.isSignal)
+          .map(input => input.propName)
+      );
+
+      for (const [key, value] of Object.entries(contentParams ?? {})) {
+        // skip signal inputs
+        if (!signalInputNames.has(key)) {
+          const instance = this.componentRef.instance as Record<string, unknown>;
+          instance[key] = value;
+        }
+      }
       this.componentRef.changeDetectorRef.detectChanges();
     }
   }

@@ -27,7 +27,9 @@ export interface TriDrawerOptionsOfComponent<T = TriSafeAny, D = TriSafeAny> {
   extra?: string | TemplateRef<{}>;
   footer?: string | TemplateRef<{}>;
   content?: TemplateRef<{ $implicit: D; drawerRef: TriDrawerRef }> | Type<T>;
-  /**@Deprecated**/
+  /**
+   * @deprecated will be removed in v23, please use `nzData` instead
+   */
   contentParams?: Partial<T & D>;
   data?: D;
   nzMaskStyle?: object;
