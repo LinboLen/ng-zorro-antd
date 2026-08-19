@@ -23,12 +23,11 @@ import {
   TemplateRef,
   ViewEncapsulation
 } from '@angular/core';
-import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { EMPTY, startWith, switchMap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriFormItemFeedbackIconComponent } from 'ng-zorro-antd/core/form';
-import { getStatusClassNames, getVariantClassNames, isNotNil, isNumberFinite } from 'ng-zorro-antd/core/util';
+import { getStatusClassNames, getVariantClassNames, isNumberFinite } from 'ng-zorro-antd/core/util';
 import { TriIconModule } from 'ng-zorro-antd/icon';
 import { TRI_SPACE_COMPACT_ITEM_TYPE, TRI_SPACE_COMPACT_SIZE, TriSpaceCompactItemDirective } from 'ng-zorro-antd/space';
 
@@ -273,20 +272,16 @@ export class TriInputWrapperComponent {
     };
   });
 
-  protected readonly inputValue = toSignal(
-    toObservable(this.inputDir).pipe(
-      switchMap(inputDir => {
-        const ngControl = inputDir.ngControl;
-        if (!ngControl) return EMPTY;
-        return (ngControl.valueChanges ?? EMPTY).pipe(startWith(ngControl.value as string));
-      })
-    )
-  );
+  // Reads through the input directive, which already resolves the value from
+  // whichever binding is in use. Subscribing to `ngControl.valueChanges` here
+  // instead would miss Signal Forms entirely: its interop `NgControl` exposes
+  // no `valueChanges`, so the count would freeze at the value the input
+  // happened to hold when the wrapper first saw it.
+  protected readonly inputValue = computed(() => this.inputDir().value());
   protected readonly formattedValue = computed(() => {
     const countConfig = this.count();
-    const inputValue = this.inputValue();
+    const value = this.inputValue();
     const countMax = countConfig?.max ?? 0;
-    const value = isNotNil(inputValue) ? String(inputValue) : '';
     let formattedValue = value;
 
     if (countConfig?.exceedFormatter) {
@@ -341,15 +336,15 @@ export class TriInputWrapperComponent {
         const inputValue = this.inputValue();
         const formattedValue = this.formattedValue();
 
-        if (isNotNil(inputValue) && formattedValue !== inputValue) {
-          this.inputDir().ngControl?.control?.setValue(formattedValue);
+        if (formattedValue !== inputValue) {
+          this.inputDir().writeValue(formattedValue);
         }
       }
     });
   }
 
   _clear(): void {
-    this.inputDir().ngControl?.control?.setValue('');
+    this.inputDir().writeValue('');
     this.clear.emit();
   }
 }

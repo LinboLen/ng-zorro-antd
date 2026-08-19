@@ -6,9 +6,6 @@ $cron-expression-prefix-cls: "#{$ant-prefix}-cron-expression";
   flex-wrap: nowrap;
   &-content {
     width: 100%;
-    .#{$cron-expression-prefix-cls}-input-group-error-focus {
-      box-shadow: 0 0 0 $outline-width $error-color-outline;
-    }
   }
   nz-cron-expression-input {
     width: 20%;
@@ -25,11 +22,6 @@ $cron-expression-prefix-cls: "#{$ant-prefix}-cron-expression";
       outline: none;
       box-shadow: none !important;
     }
-  }
-  &-input-group-focus {
-    border-color: $primary-color;
-    outline: 0;
-    box-shadow: 0 0 0 $outline-width $primary-color-outline;
   }
   nz-cron-expression-label {
     width: 20%;

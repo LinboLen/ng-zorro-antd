@@ -9,9 +9,11 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
+import { TriStatus } from 'ng-zorro-antd/core/types';
 import { TriCronExpressionComponent } from 'ng-zorro-antd/cron-expression/cron-expression.component';
 import { TriCronExpressionModule } from 'ng-zorro-antd/cron-expression/cron-expression.module';
 import { TriCronExpressionSize } from 'ng-zorro-antd/cron-expression/typings';
+import { TriFormControlStatusType, TriFormModule } from 'ng-zorro-antd/form';
 
 describe('cron-expression', () => {
   beforeEach(() => {
@@ -63,6 +65,44 @@ describe('cron-expression', () => {
       fixture.detectChanges();
       expect(resultEl.nativeElement.querySelector('.ant-cron-expression-input-group').classList).toContain(
         'ant-input-borderless'
+      );
+    });
+
+    it('should nzStatus work', () => {
+      testComponent.status.set('error');
+      fixture.detectChanges();
+      expect(resultEl.nativeElement.querySelector('.ant-cron-expression-input-group').classList).toContain(
+        'ant-input-status-error'
+      );
+
+      testComponent.status.set('warning');
+      fixture.detectChanges();
+      expect(resultEl.nativeElement.querySelector('.ant-cron-expression-input-group').classList).toContain(
+        'ant-input-status-warning'
+      );
+      expect(resultEl.nativeElement.querySelector('.ant-cron-expression-input-group').classList).not.toContain(
+        'ant-input-status-error'
+      );
+
+      testComponent.status.set('');
+      fixture.detectChanges();
+      expect(resultEl.nativeElement.querySelector('.ant-cron-expression-input-group').classList).not.toContain(
+        'ant-input-status-warning'
+      );
+    });
+
+    it('should use standard input focus class', () => {
+      fixture.detectChanges();
+      resultEl.componentInstance.focusEffect('minute');
+      fixture.detectChanges();
+      expect(resultEl.nativeElement.querySelector('.ant-cron-expression-input-group').classList).toContain(
+        'ant-input-focused'
+      );
+
+      resultEl.componentInstance.blurEffect();
+      fixture.detectChanges();
+      expect(resultEl.nativeElement.querySelector('.ant-cron-expression-input-group').classList).not.toContain(
+        'ant-input-focused'
       );
     });
 
@@ -123,6 +163,54 @@ describe('cron-expression', () => {
         'ant-input-disabled'
       );
     });
+
+    it('should reflect parent FormControl validation status', () => {
+      fixture.detectChanges();
+      testComponent.formControl.markAsTouched();
+      testComponent.formControl.setErrors({ external: true });
+      fixture.detectChanges();
+      expect(resultEl.nativeElement.querySelector('.ant-cron-expression-input-group').classList).toContain(
+        'ant-input-status-error'
+      );
+
+      testComponent.formControl.setErrors(null);
+      fixture.detectChanges();
+      expect(resultEl.nativeElement.querySelector('.ant-cron-expression-input-group').classList).not.toContain(
+        'ant-input-status-error'
+      );
+    });
+  });
+
+  describe('form status', () => {
+    let fixture: ComponentFixture<TriTestCronExpressionStatusInFormComponent>;
+    let resultEl: DebugElement;
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(TriTestCronExpressionStatusInFormComponent);
+      resultEl = fixture.debugElement.query(By.directive(TriCronExpressionComponent));
+    });
+
+    it.each(['error', 'warning', 'success', 'validating'] as const)(
+      'should reflect %s status from nz-form-control',
+      status => {
+        fixture.componentInstance.status.set(status);
+        fixture.detectChanges();
+        expect(resultEl.nativeElement.querySelector('.ant-cron-expression-input-group').classList).toContain(
+          `ant-input-status-${status}`
+        );
+      }
+    );
+
+    it('should prioritize internal validation error', () => {
+      fixture.componentInstance.status.set('warning');
+      fixture.detectChanges();
+      resultEl.componentInstance.getValue({ label: 'minute', value: 'invalid' });
+      fixture.detectChanges();
+
+      const classList = resultEl.nativeElement.querySelector('.ant-cron-expression-input-group').classList;
+      expect(classList).toContain('ant-input-status-error');
+      expect(classList).not.toContain('ant-input-status-warning');
+    });
   });
 });
 
@@ -134,6 +222,7 @@ describe('cron-expression', () => {
       [collapseDisable]="collapseDisable()"
       [disabled]="disabled()"
       [borderless]="borderless()"
+      [status]="status()"
       [extra]="shortcuts"
       [semantic]="semanticTemplate"
     />
@@ -149,11 +238,16 @@ export class TriTestCronExpressionComponent {
   readonly disabled = signal(false);
   readonly borderless = signal(false);
   readonly collapseDisable = signal(false);
+  readonly status = signal<TriStatus>('');
 }
 
 @Component({
-  imports: [ReactiveFormsModule, TriCronExpressionModule],
-  template: `<tri-cron-expression [formControl]="formControl" />`
+  imports: [ReactiveFormsModule, TriCronExpressionModule, TriFormModule],
+  template: `
+    <tri-form-control>
+      <tri-cron-expression [formControl]="formControl" />
+    </tri-form-control>
+  `
 })
 export class TriTestCronExpressionFormComponent {
   formControl = new FormControl('1 1 1 * *');
@@ -161,4 +255,16 @@ export class TriTestCronExpressionFormComponent {
   disable(): void {
     this.formControl.disable();
   }
+}
+
+@Component({
+  imports: [TriCronExpressionModule, TriFormModule],
+  template: `
+    <tri-form-control [validateStatus]="status()">
+      <tri-cron-expression />
+    </tri-form-control>
+  `
+})
+export class TriTestCronExpressionStatusInFormComponent {
+  readonly status = signal<TriFormControlStatusType>('');
 }

@@ -8,9 +8,11 @@ import {
   booleanAttribute,
   ChangeDetectorRef,
   Component,
+  computed,
   DestroyRef,
   forwardRef,
   inject,
+  input,
   Input,
   OnChanges,
   OnInit,
@@ -18,7 +20,7 @@ import {
   TemplateRef,
   ViewEncapsulation
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -30,10 +32,13 @@ import {
   ValidatorFn,
   Validators
 } from '@angular/forms';
+import { map } from 'rxjs/operators';
 
 import { CronExpressionParser } from 'cron-parser';
 
-import { TriSafeAny } from 'ng-zorro-antd/core/types';
+import { TriFormStatusService } from 'ng-zorro-antd/core/form';
+import { TriSafeAny, TriStatus } from 'ng-zorro-antd/core/types';
+import { getStatusClassNames } from 'ng-zorro-antd/core/util';
 import { TriCronExpressionI18nInterface, TriI18nService } from 'ng-zorro-antd/i18n';
 
 import { TriCronExpressionInputComponent } from './cron-expression-input.component';
@@ -57,12 +62,11 @@ function labelsOfType(type: TriCronExpressionType): TimeType[] {
       <div class="tri-cron-expression-content">
         <div
           class="tri-input tri-cron-expression-input-group"
+          [class]="statusClasses()"
           [class.tri-input-lg]="size === 'large'"
           [class.tri-input-sm]="size === 'small'"
           [class.tri-input-borderless]="borderless"
-          [class.tri-cron-expression-input-group-focus]="focus && !borderless"
-          [class.tri-input-status-error]="form.invalid && !borderless"
-          [class.tri-cron-expression-input-group-error-focus]="form.invalid && focus && !borderless"
+          [class.tri-input-focused]="focus"
           [class.tri-input-disabled]="disabled"
         >
           @for (label of labels; track label) {
@@ -127,7 +131,9 @@ export class TriCronExpressionComponent implements OnInit, OnChanges, ControlVal
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly i18n = inject(TriI18nService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly formStatusService = inject(TriFormStatusService, { optional: true });
 
+  readonly status = input<TriStatus>('');
   @Input() size: TriCronExpressionSize = 'default';
   @Input() type: TriCronExpressionType = 'linux';
   @Input({ transform: booleanAttribute }) collapseDisable: boolean = false;
@@ -167,6 +173,16 @@ export class TriCronExpressionComponent implements OnInit, OnChanges, ControlVal
     },
     { validators: this.cronValidatorFn }
   );
+  private readonly inheritedStatus = this.formStatusService
+    ? toSignal(this.formStatusService.formStatusChanges.pipe(map(({ status }) => status)), {
+        initialValue: ''
+      })
+    : this.status;
+  private readonly internalFormStatus = toSignal(this.form.statusChanges, { initialValue: this.form.status });
+  private readonly finalStatus = computed(() =>
+    this.internalFormStatus() === 'INVALID' ? 'error' : this.inheritedStatus()
+  );
+  protected readonly statusClasses = computed(() => getStatusClassNames('ant-input', this.finalStatus()));
 
   onChange: TriSafeAny = () => {};
   onTouch: () => void = () => null;
