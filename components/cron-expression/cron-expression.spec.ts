@@ -249,6 +249,22 @@ export class TriTestCronExpressionComponent {
     </tri-form-control>
   `
 })
+export class TriTestCronExpressionComponent {
+  readonly size = signal<TriCronExpressionSize>('default');
+  readonly disabled = signal(false);
+  readonly borderless = signal(false);
+  readonly collapseDisable = signal(false);
+  readonly status = signal<TriStatus>('');
+}
+
+@Component({
+  imports: [ReactiveFormsModule, TriCronExpressionModule, TriFormModule],
+  template: `
+    <tri-form-control>
+      <tri-cron-expression [formControl]="formControl" />
+    </tri-form-control>
+  `
+})
 export class TriTestCronExpressionFormComponent {
   formControl = new FormControl('1 1 1 * *');
 
