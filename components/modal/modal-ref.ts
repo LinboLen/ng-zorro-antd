@@ -132,10 +132,8 @@ export class TriModalRef<T = TriSafeAny, R = TriSafeAny> implements TriModalLega
     }
     this.result = result;
     this.state = TriModalState.CLOSING;
-    this.containerInstance._startLeaveAnimation(() => {
-      this.overlayRef.detachBackdrop();
-      this._finishDialogClose();
-    });
+    this.overlayRef.detachBackdrop();
+    this.containerInstance._startLeaveAnimation();
   }
 
   updateConfig(config: ModalOptions): void {
