@@ -18,19 +18,19 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { TriResizeObserver, TriResizeObserverFactory } from './resize-observer.service';
+import { TriResizeObserver } from './resize-observer.service';
 
 @Directive({
-  selector: '[triResizeObserver]',
-  providers: [TriResizeObserverFactory]
+  selector: '[triResizeObserver]'
 })
 export class TriResizeObserverDirective implements AfterContentInit, OnChanges {
-  private resizeObserver = inject(TriResizeObserver);
-  private elementRef = inject(ElementRef<HTMLElement>);
-  private destroyRef = inject(DestroyRef);
+  private readonly resizeObserver = inject(TriResizeObserver);
+  private readonly elementRef = inject(ElementRef<HTMLElement>);
+  private readonly destroyRef = inject(DestroyRef);
 
-  @Output() readonly resizeObserve = new EventEmitter<ResizeObserverEntry[]>();
   @Input({ transform: booleanAttribute }) resizeObserverDisabled = false;
+  @Output() readonly resizeObserve = new EventEmitter<ResizeObserverEntry[]>();
+
   private currentSubscription: Subscription | null = null;
 
   private subscribe(): void {
@@ -51,9 +51,10 @@ export class TriResizeObserverDirective implements AfterContentInit, OnChanges {
       this.subscribe();
     }
   }
+
   ngOnChanges(changes: SimpleChanges): void {
-    const { nzResizeObserve } = changes;
-    if (nzResizeObserve) {
+    const { nzResizeObserverDisabled } = changes;
+    if (nzResizeObserverDisabled) {
       if (this.resizeObserverDisabled) {
         this.unsubscribe();
       } else {
