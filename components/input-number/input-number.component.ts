@@ -408,6 +408,11 @@ export class TriInputNumberComponent implements OnInit, ControlValueAccessor {
   }
 
   #step(event: MouseEvent | KeyboardEvent, up: boolean, emitter: TriInputNumberStepEmitter): void {
+    // Ignore step since field is readonly
+    if (this.readOnly()) {
+      return;
+    }
+
     // Ignore step since out of range
     if ((up && this.upDisabled()) || (!up && this.downDisabled())) {
       return;
