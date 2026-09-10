@@ -125,11 +125,14 @@ describe('time-picker', () => {
 
       testComponent.timePickerComponent.setDisabledState(true);
       await stabilize(fixture);
+      // Some browser engines don't blur a focused input synchronously when it becomes disabled,
+      // so the input is blurred explicitly to reliably test that focus() is a no-op while disabled.
+      input.blur();
       expect(inputElement.disabled).toBe(true);
       expect(timeElement.nativeElement.classList).toContain('ant-picker-disabled');
       expect(timeElement.componentInstance.nzDisabled).toBeTruthy();
       testComponent.timePickerComponent.focus();
-      fixture.detectChanges();
+      await stabilize(fixture);
       expect(input === document.activeElement).toBe(false);
     });
 
