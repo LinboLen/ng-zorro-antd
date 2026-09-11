@@ -37,7 +37,7 @@ import { TriIconPatchService, TriIconService } from './icon.service';
   host: {
     role: 'img',
     '[class]': `hostClass()`,
-    '[attr.aria-label]': 'nzType()'
+    '[attr.aria-label]': 'ariaLabel() ?? nzType()'
   }
 })
 export class TriIconDirective extends IconBase implements AfterContentChecked {
@@ -56,6 +56,7 @@ export class TriIconDirective extends IconBase implements AfterContentChecked {
   readonly spin = input(false, { transform: booleanAttribute });
   readonly rotate = input(0, { transform: numberAttribute });
   readonly iconfont = input<string>();
+  readonly ariaLabel = input<string | null>(undefined, { alias: 'aria-label' });
 
   protected readonly hostClass = computed(() => {
     const type = this.type();

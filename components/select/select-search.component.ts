@@ -30,6 +30,7 @@ import { COMPOSITION_BUFFER_MODE, FormsModule } from '@angular/forms';
       autocomplete="off"
       class="tri-select-selection-search-input"
       [ngModel]="value"
+      [ngModelOptions]="{ standalone: true }"
       [attr.autofocus]="autofocus ? 'autofocus' : null"
       [disabled]="disabled"
       [style.opacity]="showInput ? null : 0"
