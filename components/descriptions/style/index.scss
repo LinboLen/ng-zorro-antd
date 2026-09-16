@@ -2,6 +2,9 @@
 @import "../../style/mixins/index";
 $descriptions-prefix-cls: "#{$ant-prefix}-descriptions";
 .#{$descriptions-prefix-cls} {
+  &-rtl {
+    direction: rtl;
+  }
   &-header {
     display: flex;
     align-items: center;
@@ -18,7 +21,7 @@ $descriptions-prefix-cls: "#{$ant-prefix}-descriptions";
     text-overflow: ellipsis;
   }
   &-extra {
-    margin-left: auto;
+    margin-inline-start: auto;
     color: $descriptions-extra-color;
     font-size: $font-size-base;
   }
@@ -54,7 +57,8 @@ $descriptions-prefix-cls: "#{$ant-prefix}-descriptions";
       }
       position: relative;
       top: -0.5px;
-      margin: 0 $descriptions-item-label-colon-margin-right 0 $descriptions-item-label-colon-margin-left;
+      margin-block: 0;
+      margin-inline: $descriptions-item-label-colon-margin-left $descriptions-item-label-colon-margin-right;
     }
     &.#{$descriptions-prefix-cls}-item-no-colon::after {
       content: " ";
@@ -113,9 +117,9 @@ $descriptions-prefix-cls: "#{$ant-prefix}-descriptions";
     .#{$descriptions-prefix-cls}-item-label,
     .#{$descriptions-prefix-cls}-item-content {
       padding: $descriptions-default-padding;
-      border-right: 1px solid $border-color-split;
+      border-inline-end: 1px solid $border-color-split;
       &:last-child {
-        border-right: none;
+        border-inline-end: none;
       }
     }
     .#{$descriptions-prefix-cls}-item-label {
@@ -144,4 +148,3 @@ $descriptions-prefix-cls: "#{$ant-prefix}-descriptions";
     }
   }
 }
-@import "./rtl";

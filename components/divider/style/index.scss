@@ -12,7 +12,7 @@ $divider-prefix-cls: "#{$ant-prefix}-divider";
     margin: 0 $divider-vertical-gutter;
     vertical-align: middle;
     border-top: 0;
-    border-left: $border-width-base solid $divider-color;
+    border-inline-start: $border-width-base solid $divider-color;
   }
   &-horizontal {
     display: flex;
@@ -93,7 +93,7 @@ $divider-prefix-cls: "#{$ant-prefix}-divider";
       width: 100%;
     }
     .#{$divider-prefix-cls}-inner-text {
-      padding-left: 0;
+      padding-inline-start: 0;
     }
   }
   &-horizontal#{&}-with-text-right#{&}-no-default-orientation-margin-right {
@@ -104,8 +104,7 @@ $divider-prefix-cls: "#{$ant-prefix}-divider";
       width: 0;
     }
     .#{$divider-prefix-cls}-inner-text {
-      padding-right: 0;
+      padding-inline-end: 0;
     }
   }
 }
-@import "./rtl";

@@ -52,4 +52,3 @@ $tooltip-prefix-cls: "#{$ant-prefix}-tooltip";
 @include generator-tooltip-preset-color;
 // Animations
 @include zoom-motion("zoom-big-fast", antZoomBig, $animation-duration-fast);
-@import "./rtl";

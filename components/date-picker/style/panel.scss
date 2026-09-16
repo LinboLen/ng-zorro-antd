@@ -15,6 +15,17 @@ $picker-cell-inner-cls: "#{$picker-prefix-cls}-cell-inner";
       border-color: $primary-color;
     }
   }
+  &-panel-rtl {
+    direction: rtl;
+    .#{$picker-prefix-cls}-prev-icon,
+    .#{$picker-prefix-cls}-super-prev-icon {
+      transform: rotate(135deg);
+    }
+    .#{$picker-prefix-cls}-next-icon,
+    .#{$picker-prefix-cls}-super-next-icon {
+      transform: rotate(-45deg);
+    }
+  }
   // ========================================================
 
   // =                     Shared Panel                     =
@@ -199,10 +210,10 @@ $picker-cell-inner-cls: "#{$picker-prefix-cls}-cell-inner";
       }
     }
     &-in-view#{&}-range-start::before {
-      left: 50%;
+      inset-inline-start: 50%;
     }
     &-in-view#{&}-range-end::before {
-      right: 50%;
+      inset-inline-end: 50%;
     }
     // >>> Range Hover
     &-in-view#{&}-range-hover-start:not(&-in-range):not(&-range-start):not(&-range-end),
@@ -228,8 +239,8 @@ $picker-cell-inner-cls: "#{$picker-prefix-cls}-cell-inner";
     &-range-hover-start::after,
     &-range-hover-end::after,
     &-range-hover::after {
-      right: 0;
-      left: 2px;
+      inset-inline-end: 0;
+      inset-inline-start: 2px;
     }
     // Hover with in range
     &-in-view#{&}-in-range#{&}-range-hover::before,
@@ -247,11 +258,13 @@ $picker-cell-inner-cls: "#{$picker-prefix-cls}-cell-inner";
     }
     // range start border-radius
     &-in-view#{&}-range-start:not(&-range-start-single):not(&-range-end) .#{$cellClassName} {
-      border-radius: $border-radius-base 0 0 $border-radius-base;
+      border-start-start-radius: $border-radius-base;
+      border-end-start-radius: $border-radius-base;
     }
     // range end border-radius
     &-in-view#{&}-range-end:not(&-range-end-single):not(&-range-start) .#{$cellClassName} {
-      border-radius: 0 $border-radius-base $border-radius-base 0;
+      border-start-end-radius: $border-radius-base;
+      border-end-end-radius: $border-radius-base;
     }
     // DatePanel only
     .#{$picker-prefix-cls}-date-panel &-in-view#{&}-in-range#{&}-range-hover-start .#{$cellClassName},
@@ -267,19 +280,19 @@ $picker-cell-inner-cls: "#{$picker-prefix-cls}-cell-inner";
       }
     }
     .#{$picker-prefix-cls}-date-panel &-in-view#{&}-in-range#{&}-range-hover-start .#{$cellClassName}::after {
-      right: -5px - $border-width-base;
-      left: 0;
+      inset-inline-end: -5px - $border-width-base;
+      inset-inline-start: 0;
     }
     .#{$picker-prefix-cls}-date-panel &-in-view#{&}-in-range#{&}-range-hover-end .#{$cellClassName}::after {
-      right: 0;
-      left: -5px - $border-width-base;
+      inset-inline-end: 0;
+      inset-inline-start: -5px - $border-width-base;
     }
     // Hover with range start & end
     &-range-hover#{&}-range-start::after {
-      right: 50%;
+      inset-inline-end: 50%;
     }
     &-range-hover#{&}-range-end::after {
-      left: 50%;
+      inset-inline-start: 50%;
     }
     // Edge start
     @at-root tr > &-in-view#{&}-range-hover:first-child::after,
@@ -287,10 +300,10 @@ $picker-cell-inner-cls: "#{$picker-prefix-cls}-cell-inner";
       &-in-view#{&}-start#{&}-range-hover-edge-start#{&}-range-hover-edge-start-near-range::after,
       &-in-view#{&}-range-hover-edge-start:not(&-range-hover-edge-start-near-range)::after,
       &-in-view#{&}-range-hover-start::after {
-      left: 6px;
-      border-left: $border-width-base dashed $picker-date-hover-range-border-color;
-      border-top-left-radius: $border-radius-base;
-      border-bottom-left-radius: $border-radius-base;
+      inset-inline-start: 6px;
+      border-inline-start: $border-width-base dashed $picker-date-hover-range-border-color;
+      border-start-start-radius: $border-radius-base;
+      border-end-start-radius: $border-radius-base;
     }
     // Edge end
     @at-root tr > &-in-view#{&}-range-hover:last-child::after,
@@ -298,10 +311,10 @@ $picker-cell-inner-cls: "#{$picker-prefix-cls}-cell-inner";
       &-in-view#{&}-end#{&}-range-hover-edge-end#{&}-range-hover-edge-end-near-range::after,
       &-in-view#{&}-range-hover-edge-end:not(&-range-hover-edge-end-near-range)::after,
       &-in-view#{&}-range-hover-end::after {
-      right: 6px;
-      border-right: $border-width-base dashed $picker-date-hover-range-border-color;
-      border-top-right-radius: $border-radius-base;
-      border-bottom-right-radius: $border-radius-base;
+      inset-inline-end: 6px;
+      border-inline-end: $border-width-base dashed $picker-date-hover-range-border-color;
+      border-start-end-radius: $border-radius-base;
+      border-end-end-radius: $border-radius-base;
     }
     // >>> Disabled
     &-disabled {
@@ -406,24 +419,16 @@ $picker-cell-inner-cls: "#{$picker-prefix-cls}-cell-inner";
       width: $picker-year-month-cell-width;
     }
     .#{$picker-prefix-cls}-cell-range-hover-start::after {
-      left: $hover-cell-fixed-distance;
-      border-left: $border-width-base dashed $picker-date-hover-range-border-color;
-      border-radius: $border-radius-base 0 0 $border-radius-base;
-      .#{$picker-prefix-cls}-panel-rtl & {
-        right: $hover-cell-fixed-distance;
-        border-right: $border-width-base dashed $picker-date-hover-range-border-color;
-        border-radius: 0 $border-radius-base $border-radius-base 0;
-      }
+      inset-inline-start: $hover-cell-fixed-distance;
+      border-inline-start: $border-width-base dashed $picker-date-hover-range-border-color;
+      border-start-start-radius: $border-radius-base;
+      border-end-start-radius: $border-radius-base;
     }
     .#{$picker-prefix-cls}-cell-range-hover-end::after {
-      right: $hover-cell-fixed-distance;
-      border-right: $border-width-base dashed $picker-date-hover-range-border-color;
-      border-radius: 0 $border-radius-base $border-radius-base 0;
-      .#{$picker-prefix-cls}-panel-rtl & {
-        left: $hover-cell-fixed-distance;
-        border-left: $border-width-base dashed $picker-date-hover-range-border-color;
-        border-radius: $border-radius-base 0 0 $border-radius-base;
-      }
+      inset-inline-end: $hover-cell-fixed-distance;
+      border-inline-end: $border-width-base dashed $picker-date-hover-range-border-color;
+      border-start-end-radius: $border-radius-base;
+      border-end-end-radius: $border-radius-base;
     }
   }
   // ====================== Week Panel ======================

@@ -13,4 +13,3 @@ $tree-node-prefix-cls: "#{$tree-prefix-cls}-treenode";
 .#{$tree-prefix-cls} {
   @include antTreeFn($tree-prefix-cls);
 }
-@import "./rtl";

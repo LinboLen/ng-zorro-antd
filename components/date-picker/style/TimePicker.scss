@@ -52,8 +52,7 @@
       overflow-y: auto;
     }
     &:first-child {
-      margin-left: 0;
-      border-left: 0;
+      margin-inline: 0;
     }
     &:last-child {
       border-right: 0;

@@ -1,4 +1,5 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
   NonNullableFormBuilder,
@@ -6,8 +7,7 @@ import {
   ValidationErrors,
   Validators
 } from '@angular/forms';
-import { Observable, Observer, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable, Observer } from 'rxjs';
 
 import { TriButtonModule } from 'ng-zorro-antd/button';
 import { TriFormModule } from 'ng-zorro-antd/form';
@@ -17,7 +17,7 @@ import { TriInputModule } from 'ng-zorro-antd/input';
   selector: 'tri-demo-form-validate-reactive',
   imports: [ReactiveFormsModule, TriButtonModule, TriFormModule, TriInputModule],
   template: `
-    <form tri-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <form tri-form [formGroup]="form" (ngSubmit)="submit()">
       <tri-form-item>
         <tri-form-label [span]="7" required>Username</tri-form-label>
         <tri-form-control [span]="12" hasFeedback validatingTip="Validating..." [errorTip]="userErrorTpl">
@@ -76,8 +76,8 @@ import { TriInputModule } from 'ng-zorro-antd/input';
       </tri-form-item>
       <tri-form-item>
         <tri-form-control [offset]="7" [span]="12">
-          <button tri-button type="primary" [disabled]="!validateForm.valid">Submit</button>
-          <button tri-button (click)="resetForm($event)">Reset</button>
+          <button tri-button type="primary" [disabled]="!form.valid">Submit</button>
+          <button tri-button (click)="reset()">Reset</button>
         </tri-form-control>
       </tri-form-item>
     </form>
@@ -88,14 +88,14 @@ import { TriInputModule } from 'ng-zorro-antd/input';
     }
 
     button {
-      margin-left: 8px;
+      margin-inline-end: 8px;
     }
   `
 })
-export class TriDemoFormValidateReactiveComponent implements OnInit, OnDestroy {
-  private fb = inject(NonNullableFormBuilder);
-  private destroy$ = new Subject<void>();
-  validateForm = this.fb.group({
+export class TriDemoFormValidateReactiveComponent {
+  private readonly fb = inject(NonNullableFormBuilder);
+
+  form = this.fb.group({
     userName: this.fb.control('', [Validators.required], [this.userNameAsyncValidator]),
     email: this.fb.control('', [Validators.email, Validators.required]),
     password: this.fb.control('', [Validators.required]),
@@ -103,24 +103,18 @@ export class TriDemoFormValidateReactiveComponent implements OnInit, OnDestroy {
     comment: this.fb.control('', [Validators.required])
   });
 
-  ngOnInit(): void {
-    this.validateForm.controls.password.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.validateForm.controls.confirm.updateValueAndValidity();
+  constructor() {
+    this.form.controls.password.valueChanges.pipe(takeUntilDestroyed()).subscribe(() => {
+      this.form.controls.confirm.updateValueAndValidity();
     });
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+  submit(): void {
+    console.log('submit', this.form.value);
   }
 
-  submitForm(): void {
-    console.log('submit', this.validateForm.value);
-  }
-
-  resetForm(e: MouseEvent): void {
-    e.preventDefault();
-    this.validateForm.reset();
+  reset(): void {
+    this.form.reset();
   }
 
   userNameAsyncValidator(control: AbstractControl): Observable<ValidationErrors | null> {

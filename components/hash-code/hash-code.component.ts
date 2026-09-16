@@ -35,9 +35,7 @@ import { TriModeType } from './typings';
           <ng-template [stringTemplateOutlet]="logo">{{ logo }}</ng-template>
         </div>
       </div>
-    }
-
-    @if (mode === 'single' || mode === 'rect') {
+    } @else {
       <div class="tri-hash-code-header-copy" (click)="copyHandle()">
         <tri-icon type="copy" theme="outline" />
       </div>

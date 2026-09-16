@@ -17,7 +17,7 @@ import { TriTableModule } from 'ng-zorro-antd/table';
         </tr>
       </thead>
       <tbody>
-        @for (data of table.data; track data) {
+        @for (data of table.data; track data.id) {
           <tr>
             <td [expand]="expandSet.has(data.id)" [expandIcon]="expandIcon"></td>
             <td>{{ data.name }}</td>

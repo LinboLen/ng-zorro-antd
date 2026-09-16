@@ -14,7 +14,7 @@ $radio-button-focus-shadow: $radio-focus-shadow;
     z-index: 1;
   }
   > .#{$ant-prefix}-badge:not(:first-child) > .#{$radio-prefix-cls}-button-wrapper {
-    border-left: none;
+    border-inline-start: none;
   }
 }
 // 一般状态
@@ -23,8 +23,11 @@ $radio-button-focus-shadow: $radio-focus-shadow;
   position: relative;
   display: inline-flex;
   align-items: baseline;
-  margin-right: $radio-wrapper-margin-right;
+  margin-inline-end: $radio-wrapper-margin-right;
   cursor: pointer;
+  &-rtl {
+    direction: rtl;
+  }
   &-disabled {
     cursor: not-allowed;
   }
@@ -48,6 +51,9 @@ $radio-button-focus-shadow: $radio-focus-shadow;
   display: inline-block;
   outline: none;
   cursor: pointer;
+  &-rtl {
+    direction: rtl;
+  }
   .#{$radio-prefix-cls}-wrapper:hover &,
   &:hover .#{$radio-inner-prefix-cls},
   &-input:focus + .#{$radio-inner-prefix-cls} {
@@ -168,7 +174,7 @@ span.#{$radio-prefix-cls} + * {
 
   // https://gw.alipayobjects.com/zos/rmsportal/VFTfKXJuogBAXcvfAUWJ.gif
   border-top-width: $border-width-base + 0.02px;
-  border-left-width: 0;
+  border-inline-start-width: 0;
   cursor: pointer;
   transition:
     color 0.3s,
@@ -181,7 +187,7 @@ span.#{$radio-prefix-cls} + * {
   > .#{$radio-prefix-cls}-button {
     position: absolute;
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     z-index: -1;
     width: 100%;
     height: 100%;
@@ -200,7 +206,7 @@ span.#{$radio-prefix-cls} + * {
     &::before {
       position: absolute;
       top: $border-width-base * -1;
-      left: -1px;
+      inset-inline-start: -1px;
       display: block;
       box-sizing: content-box;
       width: 1px;
@@ -212,11 +218,13 @@ span.#{$radio-prefix-cls} + * {
     }
   }
   &:first-child {
-    border-left: $border-width-base $border-style-base $border-color-base;
-    border-radius: $border-radius-base 0 0 $border-radius-base;
+    border-inline-start: $border-width-base $border-style-base $border-color-base;
+    border-start-start-radius: $border-radius-base;
+    border-end-start-radius: $border-radius-base;
   }
   &:last-child {
-    border-radius: 0 $border-radius-base $border-radius-base 0;
+    border-start-end-radius: $border-radius-base;
+    border-end-end-radius: $border-radius-base;
   }
   &:first-child:last-child {
     border-radius: $border-radius-base;
@@ -295,7 +303,7 @@ span.#{$radio-prefix-cls} + * {
       border-color: $border-color-base;
     }
     &:first-child {
-      border-left-color: $border-color-base;
+      border-inline-start-color: $border-color-base;
     }
   }
   &-disabled#{&}-checked {
@@ -315,4 +323,3 @@ span.#{$radio-prefix-cls} + * {
     opacity: 0;
   }
 }
-@import "./rtl";

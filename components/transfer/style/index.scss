@@ -1,15 +1,18 @@
 @import "../../style/themes/index";
 @import "../../style/mixins/index";
 @import "../../checkbox/style/mixin";
+$transfer-prefix-cls: "#{$ant-prefix}-transfer";
 @import "./customize";
 @import "./status";
-$transfer-prefix-cls: "#{$ant-prefix}-transfer";
 $transfer-header-vertical-padding: ceil((($transfer-header-height - 1px - $font-size-base * $line-height-base) / 2));
 .#{$transfer-prefix-cls} {
   @include reset-component;
   position: relative;
   display: flex;
   align-items: stretch;
+  &-rtl {
+    direction: rtl;
+  }
   &-disabled {
     .#{$transfer-prefix-cls}-list {
       background: $transfer-disabled-bg;
@@ -27,8 +30,12 @@ $transfer-header-vertical-padding: ceil((($transfer-header-height - 1px - $font-
       height: auto;
     }
     &-search {
+      padding-inline: $control-padding-horizontal-sm;
       .anticon-search {
         color: $disabled-color;
+      }
+      &-action {
+        inset-inline-end: 12px;
       }
     }
     &-header {
@@ -43,7 +50,7 @@ $transfer-header-vertical-padding: ceil((($transfer-header-height - 1px - $font-
       border-bottom: $border-width-base $border-style-base $border-color-split;
       border-radius: $border-radius-base $border-radius-base 0 0;
       > *:not(:last-child) {
-        margin-right: 4px;
+        margin-inline-end: 4px;
       }
       > * {
         flex: none;
@@ -52,7 +59,7 @@ $transfer-header-vertical-padding: ceil((($transfer-header-height - 1px - $font-
         flex: auto;
         overflow: hidden;
         white-space: nowrap;
-        text-align: right;
+        text-align: end;
         text-overflow: ellipsis;
       }
       &-dropdown {
@@ -90,7 +97,7 @@ $transfer-header-vertical-padding: ceil((($transfer-header-height - 1px - $font-
         line-height: $transfer-item-height - 2 * $transfer-item-padding-vertical;
         transition: all 0.3s;
         > *:not(:last-child) {
-          margin-right: 8px;
+          margin-inline-end: 8px;
         }
         > * {
           flex: none;
@@ -111,10 +118,8 @@ $transfer-header-vertical-padding: ceil((($transfer-header-height - 1px - $font-
           }
           &::after {
             position: absolute;
-            top: -$transfer-item-padding-vertical;
-            right: -50%;
-            bottom: -$transfer-item-padding-vertical;
-            left: -50%;
+            inset-block: -$transfer-item-padding-vertical;
+            inset-inline: -50%;
             content: "";
           }
         }
@@ -143,7 +148,7 @@ $transfer-header-vertical-padding: ceil((($transfer-header-height - 1px - $font-
     }
     &-pagination {
       padding: $padding-xs 0;
-      text-align: right;
+      text-align: end;
       border-top: $border-width-base $border-style-base $border-color-split;
     }
     &-body-not-found {
@@ -178,4 +183,3 @@ $transfer-header-vertical-padding: ceil((($transfer-header-height - 1px - $font-
     max-height: ($transfer-header-height / 2) - 22;
   }
 }
-@import "./rtl";

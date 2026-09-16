@@ -11,9 +11,12 @@ $skeleton-block-radius: $border-radius-base;
 .#{$skeleton-prefix-cls} {
   display: table;
   width: 100%;
+  &-rtl {
+    direction: rtl;
+  }
   &-header {
     display: table-cell;
-    padding-right: $padding-md;
+    padding-inline-end: $padding-md;
     vertical-align: top;
     // Avatar
     .#{$skeleton-avatar-prefix-cls} {
@@ -216,10 +219,8 @@ $skeleton-block-radius: $border-radius-base;
   background: transparent;
   &::after {
     position: absolute;
-    top: 0;
-    right: -150%;
-    bottom: 0;
-    left: -150%;
+    inset-block: 0;
+    inset-inline: -150%;
     background: linear-gradient(90deg, $skeleton-color 25%, $skeleton-to-color 37%, $skeleton-color 63%);
     animation: "#{$skeleton-prefix-cls}-loading" 1.4s ease infinite;
     content: "";
@@ -233,4 +234,3 @@ $skeleton-block-radius: $border-radius-base;
     transform: translateX(37.5%);
   }
 }
-@import "./rtl";

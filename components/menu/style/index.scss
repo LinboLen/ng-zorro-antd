@@ -12,13 +12,12 @@ $menu-animation-duration-normal: 0.15s;
 .#{$menu-prefix-cls} {
   @include reset-component;
   margin-bottom: 0;
-  padding-left: 0;
+  padding-inline-start: 0;
   // Override default ul/ol
   color: $menu-item-color;
   font-size: $menu-item-font-size;
   line-height: 0;
   // Fix display inline-block gap
-  text-align: left;
   list-style: none;
   background: $menu-bg;
   outline: none;
@@ -29,6 +28,9 @@ $menu-animation-duration-normal: 0.15s;
   @include clearfix;
   &#{&}-root:focus-visible {
     @include accessibility-focus;
+  }
+  &#{&}-rtl {
+    direction: rtl;
   }
   ul,
   ol {
@@ -90,10 +92,7 @@ $menu-animation-duration-normal: 0.15s;
     }
     &::before {
       position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
+      inset: 0;
       background-color: transparent;
       content: "";
     }
@@ -137,10 +136,10 @@ $menu-animation-duration-normal: 0.15s;
   &-inline,
   &-vertical,
   &-vertical-left {
-    border-right: $border-width-base $border-style-base $border-color-split;
+    border-inline-end: $border-width-base $border-style-base $border-color-split;
   }
   &-vertical-right {
-    border-left: $border-width-base $border-style-base $border-color-split;
+    border-inline-start: $border-width-base $border-style-base $border-color-split;
   }
   &-vertical#{&}-sub,
   &-vertical-left#{&}-sub,
@@ -149,7 +148,7 @@ $menu-animation-duration-normal: 0.15s;
     max-height: calc(100vh - 100px);
     padding: 0;
     overflow: hidden;
-    border-right: 0;
+    border-inline-end: 0;
     // https://github.com/ant-design/ant-design/issues/22244
 
     // https://github.com/ant-design/ant-design/issues/26812
@@ -158,11 +157,11 @@ $menu-animation-duration-normal: 0.15s;
       overflow-y: auto;
     }
     .#{$menu-prefix-cls}-item {
-      left: 0;
-      margin-left: 0;
-      border-right: 0;
+      inset-inline-start: 0;
+      margin-inline-start: 0;
+      border-inline-end: 0;
       &::after {
-        border-right: 0;
+        border-inline-end: 0;
       }
     }
     > .#{$menu-prefix-cls}-item,
@@ -201,7 +200,7 @@ $menu-animation-duration-normal: 0.15s;
         margin $animation-duration-slow $ease-in-out,
         color $animation-duration-slow;
       + span {
-        margin-left: $menu-icon-margin-right;
+        margin-inline-start: $menu-icon-margin-right;
         opacity: 1;
         transition:
           opacity $animation-duration-slow $ease-in-out,
@@ -215,7 +214,7 @@ $menu-animation-duration-normal: 0.15s;
     &.#{$menu-prefix-cls}-item-only-child {
       > .#{$iconfont-css-prefix},
       > .#{$menu-prefix-cls}-item-icon {
-        margin-right: 0;
+        margin-inline-end: 0;
       }
     }
     &:not(.$menu-prefix-cls-item-disabled):focus-visible {
@@ -238,9 +237,8 @@ $menu-animation-duration-normal: 0.15s;
       &::before {
         position: absolute;
         top: -7px;
-        right: 0;
         bottom: 0;
-        left: 0;
+        inset-inline: 0;
         z-index: -1;
         width: 100%;
         height: 100%;
@@ -251,7 +249,7 @@ $menu-animation-duration-normal: 0.15s;
     // https://github.com/ant-design/ant-design/issues/13955
     &-placement-rightTop::before {
       top: 0;
-      left: -7px;
+      inset-inline-start: -7px;
     }
     > .#{$menu-prefix-cls} {
       background-color: $menu-bg;
@@ -267,7 +265,7 @@ $menu-animation-duration-normal: 0.15s;
     &-arrow {
       position: absolute;
       top: 50%;
-      right: 16px;
+      inset-inline-end: 16px;
       width: 10px;
       color: $menu-item-color;
       transform: translateY(-50%);
@@ -359,9 +357,8 @@ $menu-animation-duration-normal: 0.15s;
       vertical-align: bottom;
       &::after {
         position: absolute;
-        right: $menu-item-padding-horizontal;
         bottom: 0;
-        left: $menu-item-padding-horizontal;
+        inset-inline: $menu-item-padding-horizontal;
         border-bottom: 2px solid transparent;
         transition: border-color $animation-duration-slow $ease-in-out;
         content: "";
@@ -400,9 +397,9 @@ $menu-animation-duration-normal: 0.15s;
       &::after {
         position: absolute;
         top: 0;
-        right: 0;
         bottom: 0;
-        border-right: $menu-item-active-border-width solid $menu-highlight-color;
+        inset-inline-end: 0;
+        border-inline-end: $menu-item-active-border-width solid $menu-highlight-color;
         transform: scaleY(0.0001);
         opacity: 0;
         transition:
@@ -437,7 +434,7 @@ $menu-animation-duration-normal: 0.15s;
   &-vertical {
     .#{$menu-prefix-cls}-item-group-list .#{$menu-prefix-cls}-submenu-title,
     .#{$menu-prefix-cls}-submenu-title {
-      padding-right: 34px;
+      padding-inline-end: 34px;
     }
   }
   &-inline {
@@ -458,7 +455,7 @@ $menu-animation-duration-normal: 0.15s;
     }
     .#{$menu-prefix-cls}-item-group-list .#{$menu-prefix-cls}-submenu-title,
     .#{$menu-prefix-cls}-submenu-title {
-      padding-right: 34px;
+      padding-inline-end: 34px;
     }
     // Motion enhance for first level
     &.#{$menu-prefix-cls}-root {
@@ -491,7 +488,7 @@ $menu-animation-duration-normal: 0.15s;
       > .#{$menu-prefix-cls}-submenu
       > .#{$menu-prefix-cls}-submenu-title,
     > .#{$menu-prefix-cls}-submenu > .#{$menu-prefix-cls}-submenu-title {
-      left: 0;
+      inset-inline-start: 0;
       padding: 0 "calc(50% - #{$menu-icon-size-lg} / 2)";
       text-overflow: clip;
       .#{$menu-prefix-cls}-submenu-arrow {
@@ -523,8 +520,7 @@ $menu-animation-duration-normal: 0.15s;
       }
     }
     .#{$menu-prefix-cls}-item-group-title {
-      padding-right: 4px;
-      padding-left: 4px;
+      padding-inline: 4px;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -567,7 +563,7 @@ $menu-animation-duration-normal: 0.15s;
       list-style-type: disc;
     }
     & .#{$menu-prefix-cls}-item-group-title {
-      padding-left: 32px;
+      padding-inline-start: 32px;
     }
   }
   // Disabled state sets text to gray and nukes hover/tab effects
@@ -610,4 +606,3 @@ $menu-animation-duration-normal: 0.15s;
 }
 @import "./light";
 @import "./dark";
-@import "./rtl";

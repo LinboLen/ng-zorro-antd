@@ -8,13 +8,13 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   selector: 'tri-demo-float-button-open',
   imports: [FormsModule, TriFloatButtonModule, TriSwitchModule],
   template: `
-    <div class="open">
+    <div class="container">
       <tri-float-button-group
         icon="customer-service"
         [open]="isOpen()"
         type="primary"
         trigger="click"
-        style="right: 24px"
+        style="inset-inline-end: 24px"
         (openChange)="onOpenChange($event)"
       >
         <tri-float-button />
@@ -24,7 +24,7 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
     </div>
   `,
   styles: `
-    .open {
+    .container {
       height: 300px;
       position: relative;
     }

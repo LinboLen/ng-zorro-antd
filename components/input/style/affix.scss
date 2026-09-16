@@ -46,19 +46,19 @@ $input-affix-margin: 4px;
     flex: none;
     align-items: center;
     > *:not(:last-child) {
-      margin-right: 8px;
+      margin-inline-end: 8px;
     }
   }
   &-show-count-suffix {
     color: $text-color-secondary;
   }
   &-show-count-has-suffix {
-    margin-right: 2px;
+    margin-inline-end: 2px;
   }
   &-prefix {
-    margin-right: $input-affix-margin;
+    margin-inline-end: $input-affix-margin;
   }
   &-suffix {
-    margin-left: $input-affix-margin;
+    margin-inline-start: $input-affix-margin;
   }
 }

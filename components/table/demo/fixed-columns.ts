@@ -23,7 +23,7 @@ import { TriTableModule } from 'ng-zorro-antd/table';
         </tr>
       </thead>
       <tbody>
-        @for (data of columnTable.data; track data) {
+        @for (data of columnTable.data; track data.key) {
           <tr>
             <td left>{{ data.name }}</td>
             <td left>{{ data.age }}</td>

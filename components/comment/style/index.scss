@@ -4,6 +4,9 @@ $comment-prefix-cls: "#{$ant-prefix}-comment";
 .#{$comment-prefix-cls} {
   position: relative;
   background-color: $comment-bg;
+  &-rtl {
+    direction: rtl;
+  }
   &-inner {
     display: flex;
     padding: $comment-padding-base;
@@ -11,7 +14,7 @@ $comment-prefix-cls: "#{$ant-prefix}-comment";
   &-avatar {
     position: relative;
     flex-shrink: 0;
-    margin-right: $margin-sm;
+    margin-inline-end: $margin-sm;
     cursor: pointer;
     img {
       width: 32px;
@@ -33,7 +36,7 @@ $comment-prefix-cls: "#{$ant-prefix}-comment";
       font-size: $comment-font-size-base;
       & > a,
       & > span {
-        padding-right: $padding-xs;
+        padding-inline-end: $padding-xs;
         font-size: $comment-font-size-sm;
         line-height: 18px;
       }
@@ -62,12 +65,12 @@ $comment-prefix-cls: "#{$ant-prefix}-comment";
   &-actions {
     margin-top: $comment-actions-margin-top;
     margin-bottom: $comment-actions-margin-bottom;
-    padding-left: 0;
+    padding-inline-start: 0;
     > li {
       display: inline-block;
       color: $comment-action-color;
       > span {
-        margin-right: 10px;
+        margin-inline-end: 10px;
         color: $comment-action-color;
         font-size: $comment-font-size-sm;
         cursor: pointer;
@@ -80,7 +83,6 @@ $comment-prefix-cls: "#{$ant-prefix}-comment";
     }
   }
   &-nested {
-    margin-left: $comment-nest-indent;
+    margin-inline-start: $comment-nest-indent;
   }
 }
-@import "./rtl";

@@ -7,51 +7,19 @@ import { TriFloatButtonModule } from 'ng-zorro-antd/float-button';
   imports: [TriFloatButtonModule],
   template: `
     <div class="container">
-      <div class="anchor">
-        <tri-float-button-group
-          class="up"
-          icon="up"
-          type="primary"
-          trigger="click"
-          (onOpenChange)="openChange($event)"
-          placement="top"
-        >
-          <tri-float-button />
-          <tri-float-button icon="comment" />
-        </tri-float-button-group>
-        <tri-float-button-group
-          class="down"
-          icon="down"
-          type="primary"
-          trigger="click"
-          (onOpenChange)="openChange($event)"
-          placement="bottom"
-        >
-          <tri-float-button />
-          <tri-float-button icon="comment" />
-        </tri-float-button-group>
-        <tri-float-button-group
-          class="left"
-          icon="left"
-          type="primary"
-          trigger="click"
-          (onOpenChange)="openChange($event)"
-          placement="left"
-        >
-          <tri-float-button />
-          <tri-float-button icon="comment" />
-        </tri-float-button-group>
-        <tri-float-button-group
-          class="right"
-          icon="right"
-          type="primary"
-          trigger="click"
-          (onOpenChange)="openChange($event)"
-          placement="right"
-        >
-          <tri-float-button />
-          <tri-float-button icon="comment" />
-        </tri-float-button-group>
+      <div class="box">
+        @for (placement of placements; track placement) {
+          <tri-float-button-group
+            [class]="placement"
+            [icon]="icons[$index]"
+            type="primary"
+            trigger="click"
+            [placement]="placement"
+          >
+            <tri-float-button />
+            <tri-float-button icon="comment" />
+          </tri-float-button-group>
+        }
       </div>
     </div>
   `,
@@ -59,28 +27,28 @@ import { TriFloatButtonModule } from 'ng-zorro-antd/float-button';
     .container {
       display: flex;
       height: 300px;
-      justify-content: center;
+      justify-content: space-evenly;
       align-items: center;
 
-      .anchor {
+      .box {
         height: 100px;
         width: 100px;
         position: relative;
 
-        .up {
+        .top {
           inset-inline-end: 30px;
           bottom: 80px;
         }
-        .down {
+        .bottom {
           inset-inline-end: 30px;
           bottom: -20px;
         }
         .left {
-          inset-inline-end: 80px;
+          right: 80px;
           bottom: 30px;
         }
         .right {
-          inset-inline-end: -20px;
+          left: 80px;
           bottom: 30px;
         }
       }
@@ -91,7 +59,6 @@ import { TriFloatButtonModule } from 'ng-zorro-antd/float-button';
   `
 })
 export class TriDemoFloatButtonGroupPlacementComponent {
-  openChange(status: boolean): void {
-    console.log(status);
-  }
+  readonly placements = ['top', 'bottom', 'left', 'right'] as const;
+  readonly icons = ['up', 'down', 'left', 'right'];
 }

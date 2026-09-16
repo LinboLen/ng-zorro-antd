@@ -5,6 +5,9 @@ $calendar-picker-prefix-cls: "#{$ant-prefix}-picker";
 .#{$calendar-prefix-cls} {
   @include reset-component;
   background: $calendar-full-bg;
+  &-rtl {
+    direction: rtl;
+  }
   // ========================= Header =========================
   &-header {
     display: flex;
@@ -15,10 +18,10 @@ $calendar-picker-prefix-cls: "#{$ant-prefix}-picker";
     }
     .#{$calendar-prefix-cls}-month-select {
       min-width: 70px;
-      margin-left: $padding-xs;
+      margin-inline-start: $padding-xs;
     }
     .#{$calendar-prefix-cls}-mode-switch {
-      margin-left: $padding-xs;
+      margin-inline-start: $padding-xs;
     }
   }
   .#{$calendar-picker-prefix-cls}-panel {
@@ -41,8 +44,7 @@ $calendar-picker-prefix-cls: "#{$ant-prefix}-picker";
   &-mini {
     border-radius: $border-radius-base;
     .#{$calendar-picker-prefix-cls}-calendar-header {
-      padding-right: $padding-xs;
-      padding-left: $padding-xs;
+      padding-inline: $padding-xs;
     }
     .#{$calendar-picker-prefix-cls}-panel {
       border-radius: 0 0 $border-radius-base $border-radius-base;
@@ -64,7 +66,7 @@ $calendar-picker-prefix-cls: "#{$ant-prefix}-picker";
     .#{$calendar-picker-prefix-cls}-panel {
       display: block;
       width: 100%;
-      text-align: right;
+      text-align: end;
       background: $calendar-full-bg;
       border: 0;
       .#{$calendar-picker-prefix-cls}-body {
@@ -74,7 +76,8 @@ $calendar-picker-prefix-cls: "#{$ant-prefix}-picker";
         }
         th {
           height: auto;
-          padding: 0 12px 5px 0;
+          padding-block-end: 5px;
+          padding-inline-end: 12px;
           line-height: 18px;
         }
       }
@@ -124,7 +127,7 @@ $calendar-picker-prefix-cls: "#{$ant-prefix}-picker";
           overflow-y: auto;
           color: $text-color;
           line-height: $line-height-base;
-          text-align: left;
+          text-align: start;
         }
         &-today {
           border-color: $primary-color;
@@ -149,7 +152,7 @@ $calendar-picker-prefix-cls: "#{$ant-prefix}-picker";
       .#{$calendar-prefix-cls}-mode-switch {
         width: 100%;
         margin-top: $padding-xs;
-        margin-left: 0;
+        margin-inline-start: 0;
         > label {
           width: 50%;
           text-align: center;
@@ -158,4 +161,3 @@ $calendar-picker-prefix-cls: "#{$ant-prefix}-picker";
     }
   }
 }
-@import "./rtl";

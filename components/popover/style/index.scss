@@ -12,7 +12,7 @@ $popover-prefix-cls: "#{$ant-prefix}-popover";
   max-width: 100vw;
   font-weight: normal;
   white-space: normal;
-  text-align: left;
+  text-align: start;
   cursor: auto;
   user-select: text;
   &-content {
@@ -64,16 +64,16 @@ $popover-prefix-cls: "#{$ant-prefix}-popover";
     font-size: $font-size-base;
     &-icon {
       display: inline-block;
-      margin-right: 8px;
+      margin-inline-end: 8px;
       color: $warning-color;
       font-size: $font-size-base;
     }
   }
   &-buttons {
     margin-bottom: 4px;
-    text-align: right;
+    text-align: end;
     button:not(:first-child) {
-      margin-left: 8px;
+      margin-inline-start: 8px;
     }
   }
   // Arrow Style
@@ -97,4 +97,3 @@ $popover-prefix-cls: "#{$ant-prefix}-popover";
 @include generator-popover-preset-color;
 // Animations
 @include zoom-motion("zoom-big", antZoomBig);
-@import "./rtl";

@@ -12,9 +12,9 @@ import { TriProgressModule } from 'ng-zorro-antd/progress';
   `,
   styles: `
     nz-progress {
-      margin-right: 8px;
-      margin-bottom: 8px;
       display: inline-block;
+      margin-inline-end: 8px;
+      margin-bottom: 8px;
     }
   `
 })

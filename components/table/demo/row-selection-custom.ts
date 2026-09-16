@@ -33,7 +33,7 @@ interface ItemData {
         </tr>
       </thead>
       <tbody>
-        @for (data of rowSelectionTable.data; track data) {
+        @for (data of rowSelectionTable.data; track data.id) {
           <tr>
             <td [checked]="setOfCheckedId().has(data.id)" (checkedChange)="onItemChecked(data.id, $event)"></td>
             <td>{{ data.name }}</td>

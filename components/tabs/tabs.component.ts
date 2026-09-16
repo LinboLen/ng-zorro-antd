@@ -88,7 +88,7 @@ let nextId = 0;
         @for (tab of tabs; track tab) {
           <div
             class="tri-tabs-tab"
-            [style.margin-right.px]="position === 'horizontal' ? tabBarGutter : null"
+            [style.margin-inline-end.px]="position === 'horizontal' ? tabBarGutter : null"
             [style.margin-bottom.px]="position === 'vertical' ? tabBarGutter : null"
             [class.tri-tabs-tab-active]="selectedIndex === $index"
             [class.tri-tabs-tab-disabled]="disabled"

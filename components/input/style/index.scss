@@ -9,10 +9,17 @@ $input-prefix-cls: "#{$ant-prefix}-input";
 .#{$input-prefix-cls} {
   @include reset-component;
   @include input;
+  &-rtl,
+  &-textarea-rtl {
+    direction: rtl;
+  }
   //== Style for input-group: input with label, with button or dropdown...
   &-group {
     @include reset-component;
     @include input-group(("#{$input-prefix-cls}"));
+    &-rtl {
+      direction: rtl;
+    }
     &-wrapper {
       display: inline-block;
       width: 100%;
@@ -20,6 +27,9 @@ $input-prefix-cls: "#{$ant-prefix}-input";
       vertical-align: top;
       // https://github.com/ant-design/ant-design/issues/6403
       @include input-group-wrapper-compact(("#{$input-prefix-cls}"));
+      &-rtl {
+        direction: rtl;
+      }
     }
   }
   &-password-icon {
@@ -53,7 +63,7 @@ $input-prefix-cls: "#{$ant-prefix}-input";
       height: 100%;
     }
     &::after {
-      float: right;
+      float: inline-end;
       color: $text-color-secondary;
       white-space: nowrap;
       content: attr(data-count);
@@ -68,7 +78,7 @@ $input-prefix-cls: "#{$ant-prefix}-input";
   &-textarea-suffix {
     position: absolute;
     top: 0;
-    right: $input-padding-horizontal-base;
+    inset-inline-end: $input-padding-horizontal-base;
     bottom: 0;
     z-index: 1;
     display: inline-flex;
@@ -87,5 +97,3 @@ $input-prefix-cls: "#{$ant-prefix}-input";
   @include compact-item(("#{$input-prefix-cls}-group-wrapper", "#{$input-prefix-cls}-group-addon"));
 }
 @import "./search-input";
-@import "./rtl";
-@import "./IE11";

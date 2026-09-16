@@ -16,6 +16,9 @@ $splitter-prefix-cls: "#{$ant-prefix}-splitter";
   line-height: $line-height-base;
   list-style: none;
   $half-trigger-size: calc($splitter-split-trigger-size / 2);
+  &-rtl {
+    direction: rtl;
+  }
   &-horizontal {
     flex-direction: row;
   }
@@ -219,4 +222,3 @@ $splitter-prefix-cls: "#{$ant-prefix}-splitter";
     }
   }
 }
-@import "./rtl";

@@ -3,6 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
+import { Directionality } from '@angular/cdk/bidi';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterContentInit,
@@ -20,7 +21,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { TriConfigKey, TriConfigService, WithConfig } from 'ng-zorro-antd/core/config';
+import { TriConfigKey, WithConfig } from 'ng-zorro-antd/core/config';
 import { TriStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -52,6 +53,7 @@ const SPACE_SIZE: Record<TriSpaceType, number> = {
   `,
   host: {
     class: 'tri-space',
+    '[class.tri-space-rtl]': `dir() === 'rtl'`,
     '[class.tri-space-horizontal]': 'direction === "horizontal"',
     '[class.tri-space-vertical]': 'direction === "vertical"',
     '[class.tri-space-align-start]': 'mergedAlign === "start"',
@@ -67,9 +69,9 @@ const SPACE_SIZE: Record<TriSpaceType, number> = {
 export class TriSpaceComponent implements OnChanges, AfterContentInit {
   readonly _nzModuleName: TriConfigKey = TRI_CONFIG_MODULE_NAME;
 
-  configService = inject(TriConfigService);
-  private cdr = inject(ChangeDetectorRef);
-  private destroyRef = inject(DestroyRef);
+  protected readonly dir = inject(Directionality).valueSignal;
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly destroyRef = inject(DestroyRef);
 
   @Input() direction: TriSpaceDirection = 'horizontal';
   @Input() align?: TriSpaceAlign;

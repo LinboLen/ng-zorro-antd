@@ -22,7 +22,7 @@ $input-prefix-cls: "#{$ant-prefix}-input";
     visibility: hidden;
   }
   &-has-suffix {
-    margin: 0 $input-affix-margin;
+    margin-inline: $input-affix-margin;
   }
 }
 // ======================= TextArea ========================
@@ -31,7 +31,7 @@ $input-prefix-cls: "#{$ant-prefix}-input";
   .#{$input-prefix-cls}-clear-icon {
     position: absolute;
     top: 8px;
-    right: 8px;
+    inset-inline-end: 8px;
     z-index: 1;
   }
 }

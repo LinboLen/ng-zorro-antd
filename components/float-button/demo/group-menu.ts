@@ -12,7 +12,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
         icon="customer-service"
         type="primary"
         trigger="click"
-        style="right: 24px"
+        style="inset-inline-end: 24px"
         (onOpenChange)="openChange($event)"
       >
         <tri-float-button />
@@ -22,7 +22,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
         icon="customer-service"
         type="primary"
         trigger="hover"
-        style="right: 94px"
+        style="inset-inline-end: 94px"
         (onOpenChange)="openChange($event)"
       >
         <tri-float-button />

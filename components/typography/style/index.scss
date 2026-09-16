@@ -5,6 +5,9 @@ $typography-prefix-cls: "#{$ant-prefix}-typography";
 .#{$typography-prefix-cls} {
   color: $text-color;
   overflow-wrap: break-word;
+  &-rtl {
+    direction: rtl;
+  }
   &#{&}-secondary {
     color: $text-color-secondary;
   }
@@ -154,7 +157,7 @@ $typography-prefix-cls: "#{$ant-prefix}-typography";
   &-edit,
   &-copy {
     @include operation-unit;
-    margin-left: 4px;
+    margin-inline-start: 4px;
   }
   &-copy-success {
     &,
@@ -167,13 +170,13 @@ $typography-prefix-cls: "#{$ant-prefix}-typography";
   &-edit-content {
     position: relative;
     @at-root div#{&} {
-      left: -$input-padding-horizontal - 1px;
+      inset-inline-start: -$input-padding-horizontal - 1px;
       margin-top: -$input-padding-vertical-base - 1px;
       margin-bottom: calc(1em - $input-padding-vertical-base - 1px);
     }
     &-confirm {
       position: absolute;
-      right: 10px;
+      inset-inline-end: 10px;
       bottom: 8px;
       color: $text-color-secondary;
       // default style
@@ -198,8 +201,8 @@ $typography-prefix-cls: "#{$ant-prefix}-typography";
     margin: 0 0 1em;
     padding: 0;
     li {
-      margin: 0 0 0 20px;
-      padding: 0 0 0 4px;
+      margin-inline-start: 20px;
+      padding-inline-start: 4px;
     }
   }
   ul {
@@ -235,8 +238,8 @@ $typography-prefix-cls: "#{$ant-prefix}-typography";
     }
   }
   blockquote {
-    padding: 0 0 0 0.6em;
-    border-left: 4px solid rgba(100, 100, 100, 0.2);
+    padding-inline-start: 0.6em;
+    border-inline-start: 4px solid rgba(100, 100, 100, 0.2);
     opacity: 0.85;
   }
   // ============ Ellipsis ============
@@ -263,4 +266,3 @@ $typography-prefix-cls: "#{$ant-prefix}-typography";
     -webkit-box-orient: vertical;
   }
 }
-@import "./rtl";

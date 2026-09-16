@@ -4,7 +4,6 @@
 @import "../../button/style/mixin";
 @import "../../grid/style/mixin";
 @import "./animation";
-@import "./components";
 @import "./inline";
 @import "./horizontal";
 @import "./vertical";
@@ -16,6 +15,9 @@ $form-font-height: ceil($font-size-base * $line-height-base);
 .#{$form-prefix-cls} {
   @include reset-component;
   @include reset-form;
+  &-rtl {
+    direction: rtl;
+  }
   .#{$form-prefix-cls}-text {
     display: inline-block;
     padding-right: 8px;
@@ -74,10 +76,10 @@ $form-font-height: ceil($font-size-base * $line-height-base);
     flex-grow: 0;
     overflow: hidden;
     white-space: nowrap;
-    text-align: right;
+    text-align: end;
     vertical-align: middle;
     &-left {
-      text-align: left;
+      text-align: start;
     }
     &-wrap {
       overflow: unset;
@@ -101,7 +103,7 @@ $form-font-height: ceil($font-size-base * $line-height-base);
           .$form-item-prefix-cls-required-mark-hidden
         )::before {
         display: inline-block;
-        margin-right: 4px;
+        margin-inline-end: 4px;
         color: $label-required-color;
         font-size: $form-item-label-font-size;
         font-family: SimSun, sans-serif;
@@ -114,7 +116,7 @@ $form-font-height: ceil($font-size-base * $line-height-base);
       // Optional mark
       .#{$form-item-prefix-cls}-optional {
         display: inline-block;
-        margin-left: $margin-xss;
+        margin-inline-start: $margin-xss;
         color: $text-color-secondary;
         .#{$form-prefix-cls}-hide-required-mark & {
           display: none;
@@ -136,7 +138,7 @@ $form-font-height: ceil($font-size-base * $line-height-base);
         }
         position: relative;
         top: -0.5px;
-        margin: 0 $form-item-label-colon-margin-right 0 $form-item-label-colon-margin-left;
+        margin-inline: $form-item-label-colon-margin-left $form-item-label-colon-margin-right;
       }
       &.#{$form-item-prefix-cls}-no-colon::after {
         content: " ";
@@ -295,4 +297,3 @@ $form-font-height: ceil($font-size-base * $line-height-base);
     opacity: 1;
   }
 }
-@import "./rtl";

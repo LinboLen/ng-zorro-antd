@@ -10,12 +10,12 @@ $select-tree-prefix-cls: "#{$ant-prefix}-select-tree";
   )
 );
 .#{$tree-select-prefix-cls} {
+  &-rtl {
+    direction: rtl;
+  }
   // ======================= Dropdown =======================
   &-dropdown {
     padding: $padding-xs ($padding-xs / 2);
-    &-rtl {
-      direction: rtl;
-    }
     // ======================== Tree ========================
     .#{$select-tree-prefix-cls} {
       border-radius: 0;

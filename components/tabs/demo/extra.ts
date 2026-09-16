@@ -28,10 +28,10 @@ import { TriTabsModule } from 'ng-zorro-antd/tabs';
 
     <tri-tabs>
       @if (positions().includes('start')) {
-        <button *tabBarExtraContent="'start'" tri-button [style.margin-right.px]="16">Start Extra Action</button>
+        <button *tabBarExtraContent="'start'" tri-button style="margin-inline-end: 16px;">Start Extra Action</button>
       }
       @if (positions().includes('end')) {
-        <button *tabBarExtraContent="'end'" tri-button [style.margin-left.px]="16">End Extra Action</button>
+        <button *tabBarExtraContent="'end'" tri-button style="margin-inline-start: 16px;">End Extra Action</button>
       }
 
       @for (tab of tabs; track tab) {

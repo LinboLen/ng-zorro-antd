@@ -8,9 +8,9 @@ import { TriSwitchModule } from 'ng-zorro-antd/switch';
   selector: 'tri-demo-slider-reverse',
   imports: [FormsModule, TriSliderModule, TriSwitchModule],
   template: `
-    <tri-slider [ngModel]="30" [reverse]="reverse" />
-    <tri-slider range [ngModel]="[20, 50]" [reverse]="reverse" />
-    <tri-slider [marks]="marks" [ngModel]="30" [reverse]="reverse" />
+    <tri-slider [ngModel]="30" [reverse]="reverse()" />
+    <tri-slider range [ngModel]="[20, 50]" [reverse]="reverse()" />
+    <tri-slider [marks]="marks" [ngModel]="30" [reverse]="reverse()" />
     Reversed:
     <tri-switch size="small" [(ngModel)]="reverse" />
   `,

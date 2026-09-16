@@ -15,7 +15,7 @@ import { TriBadgeModule } from 'ng-zorro-antd/badge';
   `,
   styles: `
     nz-badge {
-      margin-right: 20px;
+      margin-inline-end: 20px;
     }
 
     .head-example {

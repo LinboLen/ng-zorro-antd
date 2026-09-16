@@ -89,7 +89,7 @@ const passiveEventListenerOptions = normalizePassiveListenerOptions({ passive: t
           [active]="movingIndex()?.index === $index"
           [vertical]="layout() === 'vertical'"
           [lazy]="lazy()"
-          [constrainedOffset]="constrainedOffset()"
+          [constrainedOffset]="previewOffset()"
           (offsetStart)="startResize($index, $event)"
           (collapse)="collapse($index, $event)"
         ></div>
@@ -289,6 +289,10 @@ export class TriSplitterComponent {
    * Constrained by the min and max size of the target panel.
    */
   protected readonly constrainedOffset = signal<number>(0);
+  protected readonly previewOffset = computed(() => {
+    const offset = this.constrainedOffset();
+    return this.layout() === 'horizontal' && this.dir() === 'rtl' ? -offset : offset;
+  });
   /**
    * The resizable information of each splitter bar.
    */

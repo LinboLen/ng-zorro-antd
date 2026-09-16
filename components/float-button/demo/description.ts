@@ -7,8 +7,8 @@ import { TriFloatButtonModule } from 'ng-zorro-antd/float-button';
   imports: [TriFloatButtonModule],
   template: `
     <div class="description">
-      <tri-float-button icon="file-text" description="HELP" shape="square" style="right: 24px" />
-      <tri-float-button description="HELP" shape="square" style="right: 94px" />
+      <tri-float-button icon="file-text" description="HELP" shape="square" style="inset-inline-end: 24px" />
+      <tri-float-button description="HELP" shape="square" style="inset-inline-end: 94px" />
     </div>
   `,
   styles: `

@@ -14,6 +14,9 @@ $mention-prefix-cls: "#{$ant-prefix}-mentions";
   line-height: $line-height-base;
   white-space: pre-wrap;
   vertical-align: bottom;
+  &-rtl {
+    direction: rtl;
+  }
   // =================== Status ===================
   &-disabled {
     > .#{$ant-prefix}-input {
@@ -172,4 +175,3 @@ $mention-prefix-cls: "#{$ant-prefix}-mentions";
     }
   }
 }
-@import "./rtl";

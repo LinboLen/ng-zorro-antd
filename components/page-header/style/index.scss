@@ -6,6 +6,9 @@ $pageheader-prefix-cls: "#{$ant-prefix}-page-header";
   position: relative;
   padding: $page-header-padding-vertical $page-header-padding;
   background-color: $component-background;
+  &-rtl {
+    direction: rtl;
+  }
   &-ghost {
     background-color: $page-header-ghost-bg;
   }
@@ -16,7 +19,7 @@ $pageheader-prefix-cls: "#{$ant-prefix}-page-header";
     padding-bottom: 0;
   }
   &-back {
-    margin-right: $margin-md;
+    margin-inline-end: $margin-md;
     font-size: 16px;
     line-height: 1;
     &-button {
@@ -47,7 +50,7 @@ $pageheader-prefix-cls: "#{$ant-prefix}-page-header";
       overflow: hidden;
     }
     &-title {
-      margin-right: $margin-sm;
+      margin-inline-end: $margin-sm;
       margin-bottom: 0;
       color: $heading-color;
       font-weight: 600;
@@ -56,10 +59,10 @@ $pageheader-prefix-cls: "#{$ant-prefix}-page-header";
       @include text-overflow-ellipsis;
     }
     .#{$ant-prefix}-avatar {
-      margin-right: $margin-sm;
+      margin-inline-end: $margin-sm;
     }
     &-sub-title {
-      margin-right: $margin-sm;
+      margin-inline-end: $margin-sm;
       color: $text-color-secondary;
       font-size: $page-header-heading-sub-title;
       line-height: $line-height-base;
@@ -96,4 +99,3 @@ $pageheader-prefix-cls: "#{$ant-prefix}-page-header";
     flex-wrap: wrap;
   }
 }
-@import "./rtl";

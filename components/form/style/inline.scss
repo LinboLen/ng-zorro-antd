@@ -7,7 +7,7 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
   .#{$form-prefix-cls}-item {
     flex: none;
     flex-wrap: nowrap;
-    margin-right: 16px;
+    margin-inline-end: 16px;
     margin-bottom: 0;
     &-with-help {
       margin-bottom: $form-item-margin-bottom;

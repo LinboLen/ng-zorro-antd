@@ -31,7 +31,7 @@ $pagination-prefix-cls: "#{$ant-prefix}-pagination";
   &-total-text {
     display: inline-block;
     height: $pagination-item-size;
-    margin-right: 8px;
+    margin-inline-end: 8px;
     line-height: $pagination-item-size - 2px;
     vertical-align: middle;
   }
@@ -39,7 +39,7 @@ $pagination-prefix-cls: "#{$ant-prefix}-pagination";
     display: inline-block;
     min-width: $pagination-item-size;
     height: $pagination-item-size;
-    margin-right: 8px;
+    margin-inline-end: 8px;
     font-family: $pagination-font-family;
     line-height: $pagination-item-size - 2px;
     text-align: center;
@@ -110,19 +110,13 @@ $pagination-prefix-cls: "#{$ant-prefix}-pagination";
         opacity: 0;
         transition: all 0.2s;
         &-svg {
-          top: 0;
-          right: 0;
-          bottom: 0;
-          left: 0;
+          inset: 0;
           margin: auto;
         }
       }
       .#{$pagination-prefix-cls}-item-ellipsis {
         position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
+        inset: 0;
         display: block;
         margin: auto;
         color: $disabled-color;
@@ -154,7 +148,7 @@ $pagination-prefix-cls: "#{$ant-prefix}-pagination";
   &-prev,
   &-jump-prev,
   &-jump-next {
-    margin-right: 8px;
+    margin-inline-end: 8px;
   }
   &-prev,
   &-next,
@@ -227,11 +221,12 @@ $pagination-prefix-cls: "#{$ant-prefix}-pagination";
     }
   }
   &-slash {
-    margin: 0 10px 0 5px;
+    margin-block: 0;
+    margin-inline: 5px 10px;
   }
   &-options {
     display: inline-block;
-    margin-left: 16px;
+    margin-inline-start: 16px;
     vertical-align: middle;
     // IE11 css hack. `*::-ms-backdrop,` is a must have
     @media all and (-ms-high-contrast: none) {
@@ -247,7 +242,7 @@ $pagination-prefix-cls: "#{$ant-prefix}-pagination";
     &-quick-jumper {
       display: inline-block;
       height: $input-height-base;
-      margin-left: $margin-xs;
+      margin-inline-start: $margin-xs;
       line-height: $input-height-base;
       vertical-align: top;
       input {
@@ -276,11 +271,11 @@ $pagination-prefix-cls: "#{$ant-prefix}-pagination";
   &-simple &-simple-pager {
     display: inline-block;
     height: $pagination-item-size-sm;
-    margin-right: 8px;
+    margin-inline-end: 8px;
     input {
       box-sizing: border-box;
       height: 100%;
-      margin-right: 8px;
+      margin-inline-end: 8px;
       padding: 0 6px;
       text-align: center;
       background-color: $pagination-item-input-bg;
@@ -337,11 +332,11 @@ $pagination-prefix-cls: "#{$ant-prefix}-pagination";
   &#{&}-mini &-jump-prev,
   &#{&}-mini &-jump-next {
     height: $pagination-item-size-sm;
-    margin-right: 0;
+    margin-inline-end: 0;
     line-height: $pagination-item-size-sm;
   }
   &#{&}-mini &-options {
-    margin-left: 2px;
+    margin-inline-start: 2px;
     &-size-changer {
       top: $pagination-mini-options-size-changer-top;
     }
@@ -408,4 +403,3 @@ $pagination-prefix-cls: "#{$ant-prefix}-pagination";
     display: none;
   }
 }
-@import "./rtl";

@@ -9,12 +9,15 @@ $alert-prefix-cls: "#{$ant-prefix}-alert";
   padding: $alert-padding-vertical $alert-padding-horizontal;
   overflow-wrap: break-word;
   border-radius: $border-radius-base;
+  &-rtl {
+    direction: rtl;
+  }
   &-content {
     flex: 1;
     min-width: 0;
   }
   &-icon {
-    margin-right: $margin-xs;
+    margin-inline-end: $margin-xs;
   }
   &-description {
     display: none;
@@ -54,10 +57,10 @@ $alert-prefix-cls: "#{$ant-prefix}-alert";
     }
   }
   &-action {
-    margin-left: $margin-xs;
+    margin-inline-start: $margin-xs;
   }
   &-close-icon {
-    margin-left: $margin-xs;
+    margin-inline-start: $margin-xs;
     padding: 0;
     overflow: hidden;
     font-size: $font-size-sm;
@@ -89,7 +92,7 @@ $alert-prefix-cls: "#{$ant-prefix}-alert";
     padding: $alert-with-description-no-icon-padding-vertical 15px;
   }
   &-with-description &-icon {
-    margin-right: $alert-with-description-padding-vertical;
+    margin-inline-end: $alert-with-description-padding-vertical;
     font-size: $alert-with-description-icon-size;
   }
   &-with-description &-message {
@@ -127,4 +130,3 @@ $alert-prefix-cls: "#{$ant-prefix}-alert";
     border-radius: 0;
   }
 }
-@import "./rtl";

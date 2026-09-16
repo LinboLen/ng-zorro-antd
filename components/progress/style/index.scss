@@ -4,6 +4,9 @@ $progress-prefix-cls: "#{$ant-prefix}-progress";
 .#{$progress-prefix-cls} {
   @include reset-component;
   display: inline-block;
+  &-rtl {
+    direction: rtl;
+  }
   &-line {
     position: relative;
     width: 100%;
@@ -19,7 +22,7 @@ $progress-prefix-cls: "#{$ant-prefix}-progress";
     &-item {
       flex-shrink: 0;
       min-width: 2px;
-      margin-right: 2px;
+      margin-inline-end: 2px;
       background: $progress-steps-item-bg;
       transition: all 0.3s;
       &-active {
@@ -34,11 +37,11 @@ $progress-prefix-cls: "#{$ant-prefix}-progress";
   &-outer {
     display: inline-block;
     width: 100%;
-    margin-right: 0;
-    padding-right: 0;
+    margin-inline-end: 0;
+    padding-inline-end: 0;
     .#{$progress-prefix-cls}-show-info & {
-      margin-right: "calc(-2em - 8px)";
-      padding-right: "calc(2em + 8px)";
+      margin-inline-end: "calc(-2em - 8px)";
+      padding-inline-end: "calc(2em + 8px)";
     }
   }
   &-inner {
@@ -71,18 +74,18 @@ $progress-prefix-cls: "#{$ant-prefix}-progress";
   &-success-bg {
     position: absolute;
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     background-color: $success-color;
   }
   &-text {
     display: inline-block;
     width: 2em;
-    margin-left: 8px;
+    margin-inline-start: 8px;
     color: $progress-info-text-color;
     font-size: $progress-text-font-size;
     line-height: 1;
     white-space: nowrap;
-    text-align: left;
+    text-align: start;
     vertical-align: middle;
     word-break: normal;
     .#{$iconfont-css-prefix} {
@@ -176,4 +179,3 @@ $progress-prefix-cls: "#{$ant-prefix}-progress";
     opacity: 0;
   }
 }
-@import "./rtl";

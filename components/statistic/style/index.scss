@@ -3,6 +3,9 @@
 $statistic-prefix-cls: "#{$ant-prefix}-statistic";
 .#{$statistic-prefix-cls} {
   @include reset-component;
+  &-rtl {
+    direction: rtl;
+  }
   &-title {
     margin-bottom: $margin-xss;
     color: $text-color-secondary;
@@ -24,11 +27,10 @@ $statistic-prefix-cls: "#{$ant-prefix}-statistic";
       display: inline-block;
     }
     &-prefix {
-      margin-right: 4px;
+      margin-inline-end: 4px;
     }
     &-suffix {
-      margin-left: 4px;
+      margin-inline-start: 4px;
     }
   }
 }
-@import "./rtl";

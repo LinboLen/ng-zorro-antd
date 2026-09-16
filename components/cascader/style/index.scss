@@ -12,7 +12,7 @@ $cascader-prefix-cls: "#{$ant-prefix}-cascader";
   width: 184px;
   &-checkbox {
     top: 0;
-    margin-right: $padding-xs;
+    margin-inline-end: $padding-xs;
   }
   &-menus {
     display: flex;
@@ -77,7 +77,7 @@ $cascader-prefix-cls: "#{$ant-prefix}-cascader";
       }
       &-expand &-expand-icon,
       &-loading-icon {
-        margin-left: $padding-xss;
+        margin-inline-start: $padding-xss;
         color: $text-color-secondary;
         font-size: 10px;
         .#{$cascader-prefix-cls}-menu-item-disabled#{&} {
@@ -92,4 +92,3 @@ $cascader-prefix-cls: "#{$ant-prefix}-cascader";
   // ===================== Compact Item Styles =====================
   @include compact-item($cascader-prefix-cls);
 }
-@import "./rtl";

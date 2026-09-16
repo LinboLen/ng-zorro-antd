@@ -35,10 +35,10 @@
     transform: translateX(-50%) translateY(100%) rotate(180deg);
   }
   &-placement-topLeft > &-arrow {
-    left: $arrow-offset-horizontal;
+    inset-inline-start: $arrow-offset-horizontal;
   }
   &-placement-topRight > &-arrow {
-    right: $arrow-offset-horizontal;
+    inset-inline-end: $arrow-offset-horizontal;
   }
   // >>>>> Bottom
   &-placement-bottom > &-arrow,
@@ -52,10 +52,10 @@
     transform: translateX(-50%) translateY(-100%);
   }
   &-placement-bottomLeft > &-arrow {
-    left: $arrow-offset-horizontal;
+    inset-inline-start: $arrow-offset-horizontal;
   }
   &-placement-bottomRight > &-arrow {
-    right: $arrow-offset-horizontal;
+    inset-inline-end: $arrow-offset-horizontal;
   }
   // >>>>> Left
   &-placement-left > &-arrow,

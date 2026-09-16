@@ -39,9 +39,6 @@ cdk-virtual-scroll-viewport.ant-table-body {
     }
   }
 }
-.ant-table-wrapper-rtl .ant-table thead > tr > th.ant-table-selection-column {
-  text-align: center;
-}
 // virtual scroll border
 .#{$table-prefix-cls}.#{$table-prefix-cls}-bordered {
   > .#{$table-prefix-cls}-container {
@@ -52,7 +49,7 @@ cdk-virtual-scroll-viewport.ant-table-body {
         > tbody > tr > td,
         > tfoot > tr > th,
         > tfoot > tr > td {
-          border-right: $table-border;
+          border-inline-end: $table-border;
         }
         // ============================ Header ============================
         > thead {

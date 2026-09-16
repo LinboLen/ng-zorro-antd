@@ -12,6 +12,9 @@ $spin-dot-default: $text-color-secondary;
   vertical-align: middle;
   opacity: 0;
   transition: transform 0.3s $ease-in-out-circ;
+  &-rtl {
+    direction: rtl;
+  }
   &-spinning {
     position: static;
     display: inline-block;
@@ -193,4 +196,3 @@ $spin-dot-default: $text-color-secondary;
     transform: rotate(360deg);
   }
 }
-@import "./rtl";

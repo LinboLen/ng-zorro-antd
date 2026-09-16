@@ -72,6 +72,9 @@ $select-prefix-cls: "#{$ant-prefix}-select";
   position: relative;
   display: inline-flex;
   cursor: pointer;
+  &-rtl {
+    direction: rtl;
+  }
   &:not(&-customize-input) &-selector {
     @include select-selector;
     @include select-search-input-without-border;
@@ -206,6 +209,9 @@ $select-prefix-cls: "#{$ant-prefix}-select";
     border-radius: $border-radius-base;
     outline: none;
     box-shadow: $box-shadow-base;
+    &-rtl {
+      direction: rtl;
+    }
     &.#{$ant-prefix}-slide-up-enter.#{$ant-prefix}-slide-up-enter-active#{&}-placement-bottomLeft,
     &.#{$ant-prefix}-slide-up-appear.#{$ant-prefix}-slide-up-appear-active#{&}-placement-bottomLeft {
       animation-name: antSlideUpIn;
@@ -357,4 +363,3 @@ $select-prefix-cls: "#{$ant-prefix}-select";
   // ===================== Compact Item Styles =====================
   @include compact-item(($select-prefix-cls, "#{$select-prefix-cls}-selector", "#{$select-prefix-cls}-focused"));
 }
-@import "./rtl";

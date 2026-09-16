@@ -2,7 +2,7 @@
   .#{$steps-prefix-cls}-item {
     overflow: visible;
     &-tail {
-      margin-left: 58px;
+      margin-inline-start: 58px;
       padding: 3.5px 24px;
     }
     &-content {
@@ -13,11 +13,10 @@
     }
     &-icon {
       display: inline-block;
-      margin-left: 42px;
+      margin-inline-start: 42px;
     }
     &-title {
-      padding-right: 0;
-      padding-left: 0;
+      padding-inline: 0;
       &::after {
         display: none;
       }
@@ -25,14 +24,14 @@
     &-subtitle {
       display: block;
       margin-bottom: 4px;
-      margin-left: 0;
+      margin-inline-start: 0;
       line-height: $line-height-base;
     }
   }
   &.#{$steps-prefix-cls}-small:not(.$steps-prefix-cls-dot) {
     .#{$steps-prefix-cls}-item {
       &-icon {
-        margin-left: 46px;
+        margin-inline-start: 46px;
       }
     }
   }

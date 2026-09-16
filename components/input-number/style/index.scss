@@ -8,6 +8,12 @@ $form-item-prefix-cls: "#{$ant-prefix}-form-item";
 .#{$input-number-prefix-cls} {
   @include reset-component;
   @include input;
+  &-rtl {
+    direction: rtl;
+    .#{$input-number-prefix-cls}-input {
+      direction: rtl;
+    }
+  }
   //== Style for input-group: input with label, with button or dropdown...
   &-group {
     @include reset-component;
@@ -36,7 +42,7 @@ $form-item-prefix-cls: "#{$ant-prefix}-form-item";
     font-weight: bold;
     line-height: 0;
     text-align: center;
-    border-left: $border-width-base $border-style-base $input-number-handler-border-color;
+    border-inline-start: $border-width-base $border-style-base $input-number-handler-border-color;
     transition: all 0.1s linear;
     &:active {
       background: $input-number-handler-active-bg;
@@ -50,7 +56,7 @@ $form-item-prefix-cls: "#{$ant-prefix}-form-item";
   &-handler-down-inner {
     @include iconfont-mixin;
     position: absolute;
-    right: 4px;
+    inset-inline-end: 4px;
     width: 12px;
     height: 12px;
     color: $text-color-secondary;
@@ -85,7 +91,7 @@ $form-item-prefix-cls: "#{$ant-prefix}-form-item";
     width: 100%;
     height: $input-height-base - 2px;
     padding: 0 $control-padding-horizontal - 1px;
-    text-align: left;
+    text-align: start;
     background-color: transparent;
     border: 0;
     border-radius: $control-border-radius;
@@ -119,11 +125,12 @@ $form-item-prefix-cls: "#{$ant-prefix}-form-item";
   &-handler-wrap {
     position: absolute;
     top: 0;
-    right: 0;
+    inset-inline-end: 0;
     width: 22px;
     height: 100%;
     background: $input-number-handler-bg;
-    border-radius: 0 $control-border-radius $control-border-radius 0;
+    border-start-end-radius: $control-border-radius;
+    border-end-end-radius: $control-border-radius;
     opacity: 0;
     transition: opacity 0.24s linear 0.1s;
     // Fix input number inside Menu makes icon too large
@@ -138,12 +145,12 @@ $form-item-prefix-cls: "#{$ant-prefix}-form-item";
         align-items: center;
         justify-content: center;
         min-width: auto;
-        margin-right: 0;
+        margin-inline-end: 0;
         font-size: 7px;
       }
     }
     .#{$input-number-prefix-cls}-borderless & {
-      border-left-width: 0;
+      border-inline-start-width: 0;
     }
   }
   &-handler-wrap:hover &-handler {
@@ -154,7 +161,7 @@ $form-item-prefix-cls: "#{$ant-prefix}-form-item";
     opacity: 1;
   }
   &-handler-up {
-    border-top-right-radius: $control-border-radius;
+    border-start-end-radius: $control-border-radius;
     cursor: pointer;
     &-inner {
       top: 50%;
@@ -168,7 +175,7 @@ $form-item-prefix-cls: "#{$ant-prefix}-form-item";
   &-handler-down {
     top: 0;
     border-top: $border-width-base $border-style-base $input-number-handler-border-color;
-    border-bottom-right-radius: $control-border-radius;
+    border-end-end-radius: $control-border-radius;
     cursor: pointer;
     &-inner {
       top: 50%;
@@ -214,4 +221,3 @@ $form-item-prefix-cls: "#{$ant-prefix}-form-item";
     )
   );
 }
-@import "./rtl";

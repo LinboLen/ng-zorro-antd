@@ -8,7 +8,7 @@ import { TriTabsModule } from 'ng-zorro-antd/tabs';
   selector: 'tri-demo-tabs-link-router',
   imports: [RouterLink, TriTabsModule, TriButtonModule],
   template: `
-    <div style="margin-bottom: 16px;">
+    <div style="margin-block-end: 16px;">
       <button tri-button (click)="newTab()">ADD</button>
     </div>
     <tri-tabs linkRouter>

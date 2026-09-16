@@ -10,4 +10,7 @@ $space-compact-prefix-cls: "#{$ant-prefix}-space-compact";
   &-vertical {
     flex-direction: column;
   }
+  &-rtl {
+    direction: rtl;
+  }
 }

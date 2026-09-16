@@ -7,7 +7,7 @@ import { TriTabsModule } from 'ng-zorro-antd/tabs';
   selector: 'tri-demo-tabs-custom-add-trigger',
   imports: [TriButtonModule, TriTabsModule],
   template: `
-    <div style="margin-bottom: 16px;">
+    <div style="margin-block-end: 16px;">
       <button tri-button (click)="newTab()">ADD</button>
     </div>
     <tri-tabs [(selectedIndexChange)]="index" type="editable-card" hideAdd (close)="closeTab($event)">

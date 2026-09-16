@@ -11,6 +11,9 @@ $rate-prefix-cls: "#{$ant-prefix}-rate";
   line-height: unset;
   list-style: none;
   outline: none;
+  &-rtl {
+    direction: rtl;
+  }
   &-disabled &-star {
     cursor: default;
     > div:hover {
@@ -23,7 +26,7 @@ $rate-prefix-cls: "#{$ant-prefix}-rate";
     color: inherit;
     cursor: pointer;
     &:not(:last-child) {
-      margin-right: 8px;
+      margin-inline-end: 8px;
     }
     > div {
       transition:
@@ -52,7 +55,7 @@ $rate-prefix-cls: "#{$ant-prefix}-rate";
     &-first {
       position: absolute;
       top: 0;
-      left: 0;
+      inset-inline-start: 0;
       width: 50%;
       height: 100%;
       overflow: hidden;
@@ -73,4 +76,3 @@ $rate-prefix-cls: "#{$ant-prefix}-rate";
     font-size: $font-size-base;
   }
 }
-@import "./rtl";

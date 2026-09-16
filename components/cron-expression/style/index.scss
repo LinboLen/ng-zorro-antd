@@ -41,7 +41,7 @@ $cron-expression-prefix-cls: "#{$ant-prefix}-cron-expression";
     color: $primary-color;
   }
   &-map {
-    margin-left: $margin-sm;
+    margin-inline-start: $margin-sm;
   }
   &-preview {
     display: flex;
@@ -58,7 +58,7 @@ $cron-expression-prefix-cls: "#{$ant-prefix}-cron-expression";
       display: flex;
       flex: 0 0 220px;
       align-items: center;
-      padding-left: $padding-md;
+      padding-inline-start: $padding-md;
     }
     &-list,
     &-icon {

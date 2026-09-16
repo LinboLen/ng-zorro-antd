@@ -9,6 +9,9 @@ $message-prefix-cls: "#{$ant-prefix}-message";
   z-index: $zindex-message;
   width: 100%;
   pointer-events: none;
+  &-rtl {
+    direction: rtl;
+  }
   &-notice {
     padding: 8px;
     text-align: center;
@@ -37,9 +40,8 @@ $message-prefix-cls: "#{$ant-prefix}-message";
   .#{$iconfont-css-prefix} {
     position: relative;
     top: 1px;
-    margin-right: 8px;
+    margin-inline-end: 8px;
     font-size: $font-size-lg;
   }
 }
-@import "./rtl";
 @import "./animation";

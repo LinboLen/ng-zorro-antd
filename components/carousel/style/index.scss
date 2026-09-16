@@ -9,6 +9,9 @@ $carousel-arrow-bg-hover: fade(black, 30%);
 $carousel-arrow-color: $white;
 .#{$carousel-prefix-cls} {
   @include reset-component;
+  &-rtl {
+    direction: rtl;
+  }
   .slick-slider {
     position: relative;
     display: block;
@@ -61,7 +64,7 @@ $carousel-arrow-color: $white;
   .slick-track {
     position: relative;
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     display: block;
     &::before,
     &::after {
@@ -77,7 +80,7 @@ $carousel-arrow-color: $white;
   }
   .slick-slide {
     display: none;
-    float: left;
+    float: inline-start;
     height: 100%;
     min-height: 1px;
     img {
@@ -154,15 +157,13 @@ $carousel-arrow-color: $white;
     }
   }
   .slick-prev {
-    right: auto;
-    left: $carousel-arrow-offset;
+    inset-inline-start: $carousel-arrow-offset;
     &::after {
       transform: rotate(-45deg);
     }
   }
   .slick-next {
-    right: $carousel-arrow-offset;
-    left: auto;
+    inset-inline-end: $carousel-arrow-offset;
     &::after {
       transform: rotate(135deg);
     }
@@ -191,16 +192,16 @@ $carousel-arrow-color: $white;
   }
   .slick-dots {
     position: absolute;
-    right: 0;
+    inset-inline-end: 0;
     bottom: 0;
-    left: 0;
+    inset-inline-start: 0;
     z-index: 15;
     display: flex !important;
     justify-content: center;
-    margin-right: 15%;
+    margin-inline-end: 15%;
     margin-bottom: 0;
-    margin-left: 15%;
-    padding-left: 0;
+    margin-inline-start: 15%;
+    padding-inline-start: 0;
     list-style: none;
     &-bottom {
       bottom: 12px;
@@ -244,9 +245,9 @@ $carousel-arrow-color: $white;
         &::after {
           position: absolute;
           top: -$carousel-dot-margin;
-          right: -$carousel-dot-margin;
+          inset-inline-end: -$carousel-dot-margin;
           bottom: -$carousel-dot-margin;
-          left: -$carousel-dot-margin;
+          inset-inline-start: -$carousel-dot-margin;
           content: "";
         }
       }
@@ -274,12 +275,10 @@ $carousel-arrow-color: $white;
     margin: 0;
     transform: translateY(-50%);
     &-left {
-      right: auto;
-      left: 12px;
+      inset-inline-start: 12px;
     }
     &-right {
-      right: 12px;
-      left: auto;
+      inset-inline-end: 12px;
     }
     li {
       width: $carousel-dot-height;
@@ -301,4 +300,3 @@ $carousel-arrow-color: $white;
     }
   }
 }
-@import "./rtl";

@@ -10,6 +10,9 @@ $dialog-prefix-cls: "#{$ant-prefix}-modal";
   padding-bottom: 24px;
   &-wrap {
     z-index: $zindex-modal;
+    &-rtl {
+      direction: rtl;
+    }
   }
   &-title {
     margin: 0;
@@ -31,7 +34,7 @@ $dialog-prefix-cls: "#{$ant-prefix}-modal";
   &-close {
     position: absolute;
     top: 0;
-    right: 0;
+    inset-inline-end: 0;
     z-index: $zindex-popup-close;
     padding: 0;
     color: $modal-close-color;
@@ -75,13 +78,13 @@ $dialog-prefix-cls: "#{$ant-prefix}-modal";
   }
   &-footer {
     padding: $modal-footer-padding-vertical $modal-footer-padding-horizontal;
-    text-align: right;
+    text-align: end;
     background: $modal-footer-bg;
     border-top: $modal-footer-border-width $modal-footer-border-style $modal-footer-border-color-split;
     border-radius: 0 0 $modal-border-radius $modal-border-radius;
     .#{$ant-prefix}-btn + .#{$ant-prefix}-btn:not(.$ant-prefix-dropdown-trigger) {
       margin-bottom: 0;
-      margin-left: 8px;
+      margin-inline-start: 8px;
     }
   }
   &-open {

@@ -3,14 +3,14 @@
     .#{$list-prefix-cls} {
       &-item {
         &-action {
-          margin-left: 24px;
+          margin-inline-start: 24px;
         }
       }
     }
     .#{$list-prefix-cls}-vertical {
       .#{$list-prefix-cls}-item {
         &-extra {
-          margin-left: 24px;
+          margin-inline-start: 24px;
         }
       }
     }
@@ -22,7 +22,7 @@
       &-item {
         flex-wrap: wrap;
         &-action {
-          margin-left: 12px;
+          margin-inline-start: 12px;
         }
       }
     }

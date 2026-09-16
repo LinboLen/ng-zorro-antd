@@ -3,16 +3,13 @@
   border: 1px solid $border-color-base;
   border-radius: $border-radius-base;
   .#{$list-prefix-cls}-header {
-    padding-right: $padding-lg;
-    padding-left: $padding-lg;
+    padding-inline: $padding-lg;
   }
   .#{$list-prefix-cls}-footer {
-    padding-right: $padding-lg;
-    padding-left: $padding-lg;
+    padding-inline: $padding-lg;
   }
   .#{$list-prefix-cls}-item {
-    padding-right: $padding-lg;
-    padding-left: $padding-lg;
+    padding-inline: $padding-lg;
   }
   .#{$list-prefix-cls}-pagination {
     margin: $margin-md $margin-lg;

@@ -28,7 +28,7 @@ import { TriTransferModule, TransferChange, TransferItem, TransferSelectChange }
         let-onItemSelectAll="onItemSelectAll"
         let-onItemSelect="onItemSelect"
       >
-        <tri-table #t [data]="$asTransferItems(items)" size="small">
+        <tri-table #t [data]="items" size="small">
           <thead>
             <tr>
               <th
@@ -82,7 +82,6 @@ export class TriDemoTransferTableTransferComponent {
       direction: [2, 3].includes(i) ? 'right' : undefined
     }))
   );
-  readonly $asTransferItems = (data: unknown): TransferItem[] => data as TransferItem[];
   readonly disabled = signal(false);
   readonly showSearch = signal(false);
 

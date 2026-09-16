@@ -9,8 +9,8 @@ import { TriPopoverModule } from 'ng-zorro-antd/popover';
   template: `
     <button
       tri-button
-      tri-popover
       type="primary"
+      tri-popover
       popoverTitle="Title"
       popoverTrigger="click"
       [popoverContent]="contentTemplate"
@@ -20,9 +20,8 @@ import { TriPopoverModule } from 'ng-zorro-antd/popover';
     >
       Click me
     </button>
-    >
     <ng-template #contentTemplate>
-      <button tri-button size="small" type="primary" (click)="visibleChange(false)"> Close me </button>
+      <button tri-button size="small" type="primary" (click)="visibleChange(false)">Close me</button>
     </ng-template>
   `
 })
