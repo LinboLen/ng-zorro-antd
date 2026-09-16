@@ -152,6 +152,47 @@ describe('descriptions', () => {
       expect(componentElement.classList).not.toContain('ant-descriptions-rtl');
     });
   });
+
+  // fix #9927
+  describe('resize', () => {
+    let fixture: ComponentFixture<TriTestDescriptionsResponsiveContentComponent>;
+    let componentElement: HTMLElement;
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(TriTestDescriptionsResponsiveContentComponent);
+      componentElement = fixture.debugElement.nativeElement;
+      fixture.detectChanges();
+    });
+
+    it('should keep item content after resizing down and back up', async () => {
+      const getContents = (): Array<string | undefined> =>
+        Array.from(componentElement.querySelectorAll('.ant-descriptions-item-content')).map(item =>
+          item.textContent?.trim()
+        );
+
+      viewport.set(1200, 1000);
+      window.dispatchEvent(new Event('resize'));
+      fixture.detectChanges();
+      await updateNonSignalsInput(fixture, 1000);
+      fixture.detectChanges();
+
+      viewport.set(320, 600);
+      window.dispatchEvent(new Event('resize'));
+      fixture.detectChanges();
+      await updateNonSignalsInput(fixture, 1000);
+      fixture.detectChanges();
+
+      viewport.set(1200, 1000);
+      window.dispatchEvent(new Event('resize'));
+      fixture.detectChanges();
+      await updateNonSignalsInput(fixture, 1000);
+      fixture.detectChanges();
+
+      viewport.reset();
+
+      expect(getContents()).toEqual(['UserName content', 'Telephone content', 'Live content']);
+    });
+  });
 });
 
 @Component({
@@ -172,3 +213,16 @@ export class TriTestDescriptionsComponent {
   readonly title = signal('Title');
   readonly itemTitle = signal('Item Title ');
 }
+
+@Component({
+  imports: [TriDescriptionsModule],
+  selector: 'tri-test-descriptions-responsive-content',
+  template: `
+    <tri-descriptions>
+      <tri-descriptions-item title="UserName">UserName content</tri-descriptions-item>
+      <tri-descriptions-item title="Telephone">Telephone content</tri-descriptions-item>
+      <tri-descriptions-item title="Live">Live content</tri-descriptions-item>
+    </tri-descriptions>
+  `
+})
+export class TriTestDescriptionsResponsiveContentComponent {}

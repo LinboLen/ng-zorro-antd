@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { EnvironmentProviders, InjectionToken, makeEnvironmentProviders, Type } from '@angular/core';
+import { EnvironmentProviders, inject, InjectionToken, makeEnvironmentProviders, Type } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
@@ -25,12 +25,19 @@ export interface TriDateAdapterConfig<TLocale = unknown> extends TriDateConfig {
   locale?: TLocale;
 }
 
+/** Factory for creating a date adapter configuration in an injection context. */
+export type TriDateAdapterConfigFactory<TLocale = unknown> = () => TriDateAdapterConfig<TLocale>;
+
+const TRI_DATE_ADAPTER_CONFIG = new InjectionToken<TriDateAdapterConfig>(
+  typeof ngDevMode !== 'undefined' && ngDevMode ? 'nz-date-adapter-config' : ''
+);
+
 /**
  * Provides a custom NzDateAdapter implementation.
  * Use this when you want to provide your own adapter implementation.
  *
  * @param adapterClass The adapter class to use (must extend NzDateAdapter)
- * @param config Optional configuration for the adapter
+ * @param config Optional configuration or configuration factory for the adapter
  * @returns EnvironmentProviders for the adapter
  *
  * @example
@@ -42,15 +49,26 @@ export interface TriDateAdapterConfig<TLocale = unknown> extends TriDateConfig {
  */
 export function provideNzDateAdapter<TDate, TLocale, TAdapter extends TriDateAdapter<TDate, TLocale>>(
   adapterClass: Type<TAdapter>,
-  config?: TriDateAdapterConfig<TLocale>
+  config?: TriDateAdapterConfig<TLocale> | TriDateAdapterConfigFactory<TLocale>
 ): EnvironmentProviders {
-  const { locale, ...dateConfig } = config ?? {};
-
   return makeEnvironmentProviders([
+    {
+      provide: TRI_DATE_ADAPTER_CONFIG,
+      useFactory: typeof config === 'function' ? config : () => config ?? {}
+    },
     adapterClass,
     { provide: TriDateAdapter, useExisting: adapterClass },
-    { provide: TRI_DATE_CONFIG, useValue: { ...TRI_DATE_CONFIG_DEFAULT, ...dateConfig } },
-    ...(locale !== undefined ? [{ provide: TRI_DATE_LOCALE, useValue: locale }] : [])
+    {
+      provide: TRI_DATE_CONFIG,
+      useFactory: (): TriDateConfig => {
+        const { locale: _locale, ...dateConfig } = inject(TRI_DATE_ADAPTER_CONFIG);
+        return { ...TRI_DATE_CONFIG_DEFAULT, ...dateConfig };
+      }
+    },
+    {
+      provide: TRI_DATE_LOCALE,
+      useFactory: (): unknown => inject(TRI_DATE_ADAPTER_CONFIG).locale
+    }
   ]);
 }
 

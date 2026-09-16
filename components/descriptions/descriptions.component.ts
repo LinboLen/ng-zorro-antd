@@ -70,7 +70,7 @@ const DEFAULT_COLUMN_NUM = 3;
           @if (layout === 'horizontal') {
             @for (row of itemMatrix; track $index; let i = $index) {
               <tr class="tri-descriptions-row">
-                @for (item of row; track $index; let isLast = $last) {
+                @for (item of row; track item.content; let isLast = $last) {
                   @if (!bordered) {
                     <td class="tri-descriptions-item" [colSpan]="item.span">
                       <div class="tri-descriptions-item-container">
@@ -103,7 +103,7 @@ const DEFAULT_COLUMN_NUM = 3;
             @if (!bordered) {
               @for (row of itemMatrix; track $index; let i = $index) {
                 <tr class="tri-descriptions-row">
-                  @for (item of row; track $index; let isLast = $last) {
+                  @for (item of row; track item.content; let isLast = $last) {
                     <td class="tri-descriptions-item" [colSpan]="item.span">
                       <div class="tri-descriptions-item-container">
                         <span class="tri-descriptions-item-label" [class.tri-descriptions-item-no-colon]="!colon">
@@ -116,7 +116,7 @@ const DEFAULT_COLUMN_NUM = 3;
                   }
                 </tr>
                 <tr class="tri-descriptions-row">
-                  @for (item of row; track $index; let isLast = $last) {
+                  @for (item of row; track item.content; let isLast = $last) {
                     <td class="tri-descriptions-item" [colSpan]="item.span">
                       <div class="tri-descriptions-item-container">
                         <span class="tri-descriptions-item-content">
@@ -130,7 +130,7 @@ const DEFAULT_COLUMN_NUM = 3;
             } @else {
               @for (row of itemMatrix; track $index; let i = $index) {
                 <tr class="tri-descriptions-row">
-                  @for (item of row; track $index; let isLast = $last) {
+                  @for (item of row; track item.content; let isLast = $last) {
                     <td class="tri-descriptions-item-label" [colSpan]="item.span">
                       <ng-container *stringTemplateOutlet="item.title">
                         {{ item.title }}
@@ -139,7 +139,7 @@ const DEFAULT_COLUMN_NUM = 3;
                   }
                 </tr>
                 <tr class="tri-descriptions-row">
-                  @for (item of row; track $index; let isLast = $last) {
+                  @for (item of row; track item.content; let isLast = $last) {
                     <td class="tri-descriptions-item-content" [colSpan]="item.span">
                       <ng-template [ngTemplateOutlet]="item.content" />
                     </td>

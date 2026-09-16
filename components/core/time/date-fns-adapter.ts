@@ -30,7 +30,7 @@ import {
 
 import { TriSafeAny } from 'ng-zorro-antd/core/types';
 
-import { TriDateAdapter, TriDateAdapterConfig, provideNzDateAdapter } from './date-adapter';
+import { TriDateAdapter, TriDateAdapterConfig, TriDateAdapterConfigFactory, provideNzDateAdapter } from './date-adapter';
 import { TRI_DATE_CONFIG, TRI_DATE_LOCALE } from './date-config';
 
 /** Configuration for date-fns date adapter. */
@@ -38,6 +38,9 @@ export interface TriDateFnsAdapterConfig extends TriDateAdapterConfig<Locale> {
   /** Locale object from date-fns. */
   locale?: Locale;
 }
+
+/** Factory for creating date-fns adapter configuration in an injection context. */
+export type TriDateFnsAdapterConfigFactory = TriDateAdapterConfigFactory<Locale>;
 
 /**
  * Date adapter for date-fns.
@@ -309,7 +312,7 @@ export class DateFnsDateAdapter extends TriDateAdapter<Date, Locale> {
  * Provides the DateFnsDateAdapter as the NzDateAdapter implementation.
  * DateFnsDateAdapter uses date-fns library for date operations.
  *
- * @param config Optional configuration for the adapter
+ * @param config Optional configuration or configuration factory for the adapter
  * @returns EnvironmentProviders for the DateFnsDateAdapter
  *
  * @example
@@ -319,8 +322,22 @@ export class DateFnsDateAdapter extends TriDateAdapter<Date, Locale> {
  * };
  * ```
  *
+ * The factory form runs in an injection context:
+ * ```typescript
+ * import { inject, LOCALE_ID } from '@angular/core';
+ * import { enUS, zhCN } from 'date-fns/locale';
+ *
+ * providers: [
+ *   provideNzDateFnsAdapter(() => ({
+ *     locale: inject(LOCALE_ID).startsWith('zh') ? zhCN : enUS
+ *   }))
+ * ]
+ * ```
+ *
  * @note Requires date-fns as a peer dependency.
  */
-export function provideNzDateFnsAdapter(config?: TriDateFnsAdapterConfig): EnvironmentProviders {
+export function provideNzDateFnsAdapter(
+  config?: TriDateFnsAdapterConfig | TriDateFnsAdapterConfigFactory
+): EnvironmentProviders {
   return provideNzDateAdapter(DateFnsDateAdapter, config);
 }
