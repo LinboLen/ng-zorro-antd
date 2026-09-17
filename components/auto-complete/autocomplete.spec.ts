@@ -42,6 +42,7 @@ import {
   TriAutocompleteComponent,
   TriAutocompleteModule,
   TriAutocompleteOptionComponent,
+  TriAutocompleteOriginDirective,
   TriAutocompleteTriggerDirective,
   TriOptionSelectionChange
 } from './index';
@@ -875,6 +876,22 @@ describe('auto-complete', () => {
       fixture.detectChanges();
       expect(componentInstance.trigger['elementRef'].nativeElement).toEqual(componentInstance.inputRef.nativeElement);
     });
+
+    it('should use the custom origin as the dropdown target', () => {
+      const componentInstance = fixture.componentInstance;
+      componentInstance.connectedToOrigin.set(true);
+      fixture.detectChanges();
+      vi.spyOn(componentInstance.origin.elementRef.nativeElement, 'getBoundingClientRect').mockReturnValue(
+        new DOMRect(0, 0, 320, 32)
+      );
+
+      componentInstance.trigger.openPanel();
+      fixture.detectChanges();
+
+      expect(componentInstance.trigger['getConnectedElement']()).toBe(componentInstance.origin.elementRef);
+      const overlayPane = overlayContainerElement.querySelector('.cdk-overlay-pane') as HTMLElement;
+      expect(Math.ceil(parseFloat(overlayPane.style.width))).toBe(320);
+    });
   });
 });
 
@@ -1084,8 +1101,15 @@ class TriTestAutocompleteWithObjectOptionComponent {
 @Component({
   imports: [TriAutocompleteModule, TriInputModule],
   template: `
-    <tri-input-wrapper #inputGroupComponent>
-      <input #input placeholder="input here" tri-input size="large" [autocomplete]="auto" />
+    <tri-input-wrapper autocompleteOrigin #origin="nzAutocompleteOrigin">
+      <input
+        #input
+        placeholder="input here"
+        tri-input
+        size="large"
+        [autocomplete]="auto"
+        [autocompleteConnectedTo]="connectedToOrigin() ? origin : undefined"
+      />
       <tri-autocomplete #auto>
         <tri-auto-option value="value">label</tri-auto-option>
       </tri-autocomplete>
@@ -1093,6 +1117,8 @@ class TriTestAutocompleteWithObjectOptionComponent {
   `
 })
 class TriTestAutocompleteWithGroupInputComponent {
+  readonly connectedToOrigin = signal(false);
+  @ViewChild(TriAutocompleteOriginDirective, { static: true }) origin!: TriAutocompleteOriginDirective;
   @ViewChild(TriAutocompleteTriggerDirective, { static: true }) trigger!: TriAutocompleteTriggerDirective;
   @ViewChild('input', { static: true, read: ElementRef }) inputRef!: ElementRef;
 }

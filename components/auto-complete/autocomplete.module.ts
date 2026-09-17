@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 
 import { TriAutocompleteOptgroupComponent } from './autocomplete-optgroup.component';
 import { TriAutocompleteOptionComponent } from './autocomplete-option.component';
+import { TriAutocompleteOriginDirective } from './autocomplete-origin.directive';
 import { TriAutocompleteTriggerDirective } from './autocomplete-trigger.directive';
 import { TriAutocompleteComponent } from './autocomplete.component';
 
@@ -14,12 +15,14 @@ import { TriAutocompleteComponent } from './autocomplete.component';
   exports: [
     TriAutocompleteComponent,
     TriAutocompleteOptionComponent,
+    TriAutocompleteOriginDirective,
     TriAutocompleteTriggerDirective,
     TriAutocompleteOptgroupComponent
   ],
   imports: [
     TriAutocompleteComponent,
     TriAutocompleteOptionComponent,
+    TriAutocompleteOriginDirective,
     TriAutocompleteTriggerDirective,
     TriAutocompleteOptgroupComponent
   ]

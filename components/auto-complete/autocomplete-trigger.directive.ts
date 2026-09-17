@@ -35,6 +35,7 @@ import { delay, filter, tap } from 'rxjs/operators';
 import { TriSafeAny, OnChangeType, OnTouchedType } from 'ng-zorro-antd/core/types';
 
 import { TriAutocompleteOptionComponent } from './autocomplete-option.component';
+import { TriAutocompleteOriginDirective } from './autocomplete-origin.directive';
 import { TriAutocompleteComponent } from './autocomplete.component';
 import { getNzAutocompleteMissingPanelError } from './error';
 
@@ -68,6 +69,8 @@ export class TriAutocompleteTriggerDirective implements AfterViewInit, ControlVa
 
   /** Bind nzAutocomplete component */
   @Input() autocomplete!: TriAutocompleteComponent;
+  /** Element that the autocomplete panel should be positioned relative to. */
+  @Input() autocompleteConnectedTo?: TriAutocompleteOriginDirective;
 
   onChange: OnChangeType = () => {};
   onTouched: OnTouchedType = () => {};
@@ -247,7 +250,15 @@ export class TriAutocompleteTriggerDirective implements AfterViewInit, ControlVa
 
   private subscribeOverlayOutsideClick(): Subscription {
     return this.overlayRef!.outsidePointerEvents()
-      .pipe(filter((e: MouseEvent) => !this.elementRef.nativeElement.contains(e.target)))
+      .pipe(
+        filter((e: MouseEvent) => {
+          const target = e.target as Node;
+          return (
+            !this.elementRef.nativeElement.contains(target) &&
+            !this.getConnectedElement().nativeElement.contains(target)
+          );
+        })
+      )
       .subscribe(() => {
         this.closePanel();
       });
@@ -293,6 +304,7 @@ export class TriAutocompleteTriggerDirective implements AfterViewInit, ControlVa
     if (this.overlayRef) {
       const dropdownMatchSelectWidth = this.autocomplete.dropdownMatchSelectWidth;
       const width = this.autocomplete.width || this.getHostWidth();
+      this.positionStrategy.setOrigin(this.getConnectedElement());
       this.overlayRef.updateSize({ width: dropdownMatchSelectWidth ? width : undefined });
     }
     this.autocomplete.setVisibility();
@@ -309,7 +321,7 @@ export class TriAutocompleteTriggerDirective implements AfterViewInit, ControlVa
   }
 
   private getOverlayPosition(): PositionStrategy {
-    return (this.positionStrategy = createFlexibleConnectedPositionStrategy(this.injector, this.elementRef)
+    return (this.positionStrategy = createFlexibleConnectedPositionStrategy(this.injector, this.getConnectedElement())
       .withFlexibleDimensions(false)
       .withPush(false)
       .withPositions([
@@ -320,7 +332,11 @@ export class TriAutocompleteTriggerDirective implements AfterViewInit, ControlVa
   }
 
   private getHostWidth(): number {
-    return this.elementRef.nativeElement.getBoundingClientRect().width;
+    return this.getConnectedElement().nativeElement.getBoundingClientRect().width;
+  }
+
+  private getConnectedElement(): ElementRef<HTMLElement> {
+    return this.autocompleteConnectedTo?.elementRef ?? this.elementRef;
   }
 
   private resetActiveItem(): void {
