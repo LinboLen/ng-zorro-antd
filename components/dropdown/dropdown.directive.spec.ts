@@ -174,6 +174,31 @@ describe('dropdown', () => {
     expect(nullBackdrop).toBeNull();
   });
 
+  it('should disappear if Escape pressed after a click triggered submenu is closed', async () => {
+    const fixture = TestBed.createComponent(TriTestDropdownSubmenuComponent);
+    fixture.detectChanges();
+    const dropdownElement = fixture.debugElement.query(By.directive(TriDropdownDirective)).nativeElement;
+
+    dispatchFakeEvent(dropdownElement, 'click');
+    await stabilize(fixture, 1000);
+    expect(overlayContainerElement.querySelector('.ant-dropdown')).not.toBeNull();
+
+    const submenuTitle = overlayContainerElement.querySelector('.ant-dropdown-menu-submenu-title')!;
+    dispatchFakeEvent(submenuTitle, 'click');
+    await stabilize(fixture, 1000);
+    expect(overlayContainerElement.querySelector('.sub-menu-item')).not.toBeNull();
+
+    /** the first Escape detaches the submenu overlay **/
+    dispatchKeyboardEvent(document.body, 'keydown', ESCAPE);
+    await stabilize(fixture, 1000);
+    expect(overlayContainerElement.querySelector('.sub-menu-item')).toBeNull();
+
+    /** the second Escape should close the dropdown itself **/
+    dispatchKeyboardEvent(document.body, 'keydown', ESCAPE);
+    await stabilize(fixture, 1000);
+    expect(overlayContainerElement.querySelector('.ant-dropdown')).toBeNull();
+  });
+
   it('should nzOverlayClassName and nzOverlayStyle work', async () => {
     const fixture = TestBed.createComponent(TriTestDropdownComponent);
     fixture.detectChanges();
@@ -292,3 +317,20 @@ export class TriTestDropdownArrowComponent {
   readonly arrow = signal(false);
   readonly placement = signal<TriPlacementType>('bottomLeft');
 }
+
+@Component({
+  imports: [TriDropdownModule, TriMenuModule],
+  template: `
+    <a tri-dropdown [dropdownMenu]="menu" trigger="click">Trigger</a>
+    <tri-dropdown-menu #menu="nzDropdownMenu">
+      <ul tri-menu>
+        <li tri-submenu title="Submenu" triggerSubMenuAction="click">
+          <ul>
+            <li tri-menu-item class="sub-menu-item">Sub menu item</li>
+          </ul>
+        </li>
+      </ul>
+    </tri-dropdown-menu>
+  `
+})
+export class TriTestDropdownSubmenuComponent {}

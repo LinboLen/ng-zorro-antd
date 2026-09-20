@@ -51,7 +51,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'rate';
       [class]="classMap"
       (keydown)="onKeyDown($event); $event.preventDefault()"
       (mouseleave)="onRateLeave(); $event.stopPropagation()"
-      [tabindex]="disabled ? -1 : 1"
+      [tabindex]="disabled ? -1 : 0"
     >
       @for (star of starArray; track star) {
         <li

@@ -101,6 +101,7 @@ const listOfHorizontalPositions = [
         [cdkConnectedOverlayOpen]="open"
         cdkConnectedOverlayTransformOriginOn=".ant-menu-submenu"
         (overlayOutsideClick)="setMouseEnterState(false)"
+        (detach)="setMouseEnterState(false)"
       >
         <div
           tri-submenu-none-inline-child
