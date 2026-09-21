@@ -8,6 +8,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, DebugElement, signal } from '@angular/core';
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { AbstractControl, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { form, FormField } from '@angular/forms/signals';
 import { By } from '@angular/platform-browser';
 
 import { vi } from 'vitest';
@@ -888,6 +889,21 @@ describe('slider', () => {
     });
   });
 
+  describe('signal forms (formField)', () => {
+    let fixture: ComponentFixture<TriTestSliderInSignalFormComponent>;
+
+    it('should display the initial value provided via [formField]', () => {
+      fixture = TestBed.createComponent(TriTestSliderInSignalFormComponent);
+      fixture.detectChanges();
+      const slider = fixture.debugElement.query(By.directive(TriSliderComponent)).componentInstance;
+      const handle = fixture.nativeElement.querySelector('.ant-slider-handle') as HTMLElement;
+      expect(slider.value).toBe(1200);
+      expect(slider.handles[0].offset).toBe(100);
+      expect(slider.handles[0].value).toBe(1200);
+      expect(handle.style.left).toBe('100%');
+    });
+  });
+
   describe('support keyboard event', () => {
     let fixture: ComponentFixture<TriTestSliderKeyboardComponent>;
     let testComponent: TriTestSliderKeyboardComponent;
@@ -1139,6 +1155,15 @@ class SliderWithFormControlComponent {
   enable(): void {
     this.formControl.enable();
   }
+}
+
+@Component({
+  imports: [FormField, TriSliderModule],
+  template: `<tri-slider [formField]="myForm.width" [min]="500" [max]="1200" />`
+})
+class TriTestSliderInSignalFormComponent {
+  readonly model = signal({ width: 1200 });
+  readonly myForm = form(this.model);
 }
 
 @Component({

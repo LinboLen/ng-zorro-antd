@@ -174,6 +174,8 @@ export class TriSliderComponent implements ControlValueAccessor, OnInit, OnChang
 
     if (this.getValue() === null) {
       this.setValue(this.formatValue(null));
+    } else {
+      this.updateTrackAndHandles();
     }
   }
 
