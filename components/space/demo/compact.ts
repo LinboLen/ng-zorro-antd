@@ -166,7 +166,7 @@ import { TriTreeSelectModule } from 'ng-zorro-antd/tree-select';
     </tri-space-compact>
     <br />
     <tri-space-compact block>
-      <tri-input-wrapper addOnBefore="Http://" addOnAfter=".com" [style.width.%]="50">
+      <tri-input-wrapper addonBefore="Http://" addonAfter=".com" [style.width.%]="50">
         <input tri-input placeholder="input here" />
       </tri-input-wrapper>
       <tri-input-number>
