@@ -164,6 +164,7 @@ import { PREFIX_CLASS } from './util';
         <tri-time-picker-panel
           [inDatePicker]="true"
           [ngModel]="value?.nativeDate"
+          [ngModelOptions]="{ standalone: true }"
           (ngModelChange)="onSelectTime($event)"
           [format]="$any(format)"
           [hourStep]="$any(hourStep)"

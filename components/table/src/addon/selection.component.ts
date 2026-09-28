@@ -20,6 +20,7 @@ import { TriIconModule } from 'ng-zorro-antd/icon';
         tri-checkbox
         [class.tri-table-selection-select-all-custom]="showRowSelection"
         [ngModel]="checked"
+        [ngModelOptions]="{ standalone: true }"
         [disabled]="disabled"
         [indeterminate]="indeterminate"
         [attr.aria-label]="label"

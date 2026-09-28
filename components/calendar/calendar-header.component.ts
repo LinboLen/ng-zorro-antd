@@ -40,6 +40,7 @@ import { TriSelectModule, TriSelectSizeType } from 'ng-zorro-antd/select';
           [size]="size"
           [dropdownMatchSelectWidth]="false"
           [ngModel]="activeYear"
+          [ngModelOptions]="{ standalone: true }"
           (ngModelChange)="updateYear($event)"
         >
           @for (year of years; track year.value) {
@@ -53,6 +54,7 @@ import { TriSelectModule, TriSelectSizeType } from 'ng-zorro-antd/select';
             [size]="size"
             [dropdownMatchSelectWidth]="false"
             [ngModel]="activeMonth"
+            [ngModelOptions]="{ standalone: true }"
             (ngModelChange)="monthChange.emit($event)"
           >
             @for (month of months; track month.value) {
@@ -64,6 +66,7 @@ import { TriSelectModule, TriSelectSizeType } from 'ng-zorro-antd/select';
         <tri-radio-group
           class="tri-picker-calendar-mode-switch"
           [(ngModel)]="mode"
+          [ngModelOptions]="{ standalone: true }"
           (ngModelChange)="modeChange.emit($event)"
           [size]="size"
         >

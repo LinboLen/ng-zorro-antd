@@ -61,9 +61,19 @@ interface TriThItemInterface {
             @for (f of listOfParsedFilter; track f.value) {
               <li tri-menu-item [selected]="f.checked" (click)="check(f)">
                 @if (!filterMultiple) {
-                  <label tri-radio [ngModel]="f.checked" (ngModelChange)="check(f)"></label>
+                  <label
+                    tri-radio
+                    [ngModel]="f.checked"
+                    [ngModelOptions]="{ standalone: true }"
+                    (ngModelChange)="check(f)"
+                  ></label>
                 } @else {
-                  <label tri-checkbox [ngModel]="f.checked" (ngModelChange)="check(f)"></label>
+                  <label
+                    tri-checkbox
+                    [ngModel]="f.checked"
+                    [ngModelOptions]="{ standalone: true }"
+                    (ngModelChange)="check(f)"
+                  ></label>
                 }
                 <span>{{ f.text }}</span>
               </li>

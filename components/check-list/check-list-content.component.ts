@@ -96,7 +96,9 @@ import { TriItemProps } from './typings';
           <button tri-button (click)="visible.set(true)">{{ i18n.cancel }}</button>
         </div>
         <div class="tri-check-list-close-check-other">
-          <label tri-checkbox [(ngModel)]="checked">{{ i18n.checkListCheckOther }}</label>
+          <label tri-checkbox [(ngModel)]="checked" [ngModelOptions]="{ standalone: true }">{{
+            i18n.checkListCheckOther
+          }}</label>
         </div>
       </div>
     }

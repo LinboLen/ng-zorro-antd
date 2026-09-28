@@ -116,6 +116,7 @@ export type TriDatePickerSizeType = 'large' | 'default' | 'small';
             [disabled]="disabled"
             [readOnly]="inputReadOnly"
             [(ngModel)]="inputValue"
+            [ngModelOptions]="{ standalone: true }"
             placeholder="{{ getPlaceholder() }}"
             [size]="inputSize"
             autocomplete="off"
@@ -163,6 +164,7 @@ export type TriDatePickerSizeType = 'large' | 'default' | 'small';
         (focus)="onFocus($event, partType)"
         (keyup.enter)="onKeyupEnter($event)"
         [(ngModel)]="inputValue[datePickerService.getActiveIndex(partType)]"
+        [ngModelOptions]="{ standalone: true }"
         (ngModelChange)="onInputChange($event)"
         placeholder="{{ getPlaceholder(partType) }}"
       />

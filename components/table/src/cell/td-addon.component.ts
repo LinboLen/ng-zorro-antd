@@ -47,6 +47,7 @@ import { TriRowIndentDirective } from '../addon/row-indent.directive';
         tri-checkbox
         [disabled]="disabled"
         [ngModel]="checked"
+        [ngModelOptions]="{ standalone: true }"
         [indeterminate]="indeterminate"
         [attr.aria-label]="label"
         (ngModelChange)="onCheckedChange($event)"

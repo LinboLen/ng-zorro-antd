@@ -20,6 +20,7 @@ import { TriSelectModule } from 'ng-zorro-antd/select';
         [disabled]="disabled"
         [size]="size"
         [ngModel]="pageSize"
+        [ngModelOptions]="{ standalone: true }"
         (ngModelChange)="onPageSizeChange($event)"
       >
         @for (option of listOfPageSizeOption; track option.value) {

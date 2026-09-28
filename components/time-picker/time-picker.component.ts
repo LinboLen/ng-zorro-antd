@@ -85,6 +85,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'timePicker';
         autocomplete="off"
         [placeholder]="placeHolder || (i18nPlaceHolder$ | async)"
         [(ngModel)]="inputValue"
+        [ngModelOptions]="{ standalone: true }"
         [disabled]="disabled"
         [readOnly]="inputReadOnly"
         (focus)="onFocus(true)"
@@ -147,6 +148,7 @@ const TRI_CONFIG_MODULE_NAME: TriConfigKey = 'timePicker';
               [okText]="okText"
               [allowEmpty]="allowEmpty"
               [(ngModel)]="value"
+              [ngModelOptions]="{ standalone: true }"
               (ngModelChange)="onPanelValueChange($event)"
               (closePanel)="closePanel()"
             />

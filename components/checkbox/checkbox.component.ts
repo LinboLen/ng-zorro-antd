@@ -52,6 +52,7 @@ import { TRI_CHECKBOX_GROUP } from './tokens';
         [attr.name]="name || checkboxGroupComponent?.nzName()"
         [checked]="checked"
         [ngModel]="checked"
+        [ngModelOptions]="{ standalone: true }"
         [disabled]="disabled || (checkboxGroupComponent?.finalDisabled() ?? false)"
         (ngModelChange)="innerCheckedChange($event)"
       />
