@@ -257,17 +257,19 @@ export class TriImagePreviewComponent implements OnInit {
         this.ngZone.run(() => this.wheelZoomEventHandler(event));
       });
 
-    fromEventOutsideAngular<KeyboardEvent>(this.document, 'keydown')
-      .pipe(
-        filter(event => event.keyCode === ESCAPE),
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe(() => {
-        this.ngZone.run(() => {
-          this.onClose();
-          this.markForCheck();
+    if (this.config.keyboard) {
+      fromEventOutsideAngular<KeyboardEvent>(this.document, 'keydown')
+        .pipe(
+          filter(event => event.keyCode === ESCAPE),
+          takeUntilDestroyed(this.destroyRef)
+        )
+        .subscribe(() => {
+          this.ngZone.run(() => {
+            this.onClose();
+            this.markForCheck();
+          });
         });
-      });
+    }
   }
 
   setImages(images: TriImage[], scaleStepMap?: Map<string, number>): void {
